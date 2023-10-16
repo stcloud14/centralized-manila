@@ -13,7 +13,7 @@ import './charts/ChartjsConfig';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import News from './pages/News';
-import RPTax from './pages/RPTax';
+import RPTaxPayment from './pages/RPTaxPayment';
 
 function App() {
 
@@ -31,7 +31,7 @@ function App() {
         <Route exact path="/" element={<Dashboard />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/news" element={<News />} />
-        <Route exact path="/rptax" element={<RPTax />} />
+        <Route exact path="/rptaxpayment" element={<RPTaxPayment />} />
       </Routes>
     </>
   );
