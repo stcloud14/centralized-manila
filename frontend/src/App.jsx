@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/news" element={<News />} />
         <Route exact path="/rptaxpayment" element={<RPTaxPayment />} />
