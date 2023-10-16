@@ -62,7 +62,7 @@
 }
 
 .flatpickr-day {
-    @apply bg-slate-50 dark:bg-[#181818] text-sm font-medium text-slate-600 dark:text-slate-100;
+    @apply text-sm font-medium bg-slate-50 text-slate-600 dark:bg-[#181818] dark:text-slate-100 dark:hover:text-[#181818];
     max-width: var(--daySize);
     height: var(--daySize);
     line-height: var(--daySize);
@@ -227,7 +227,7 @@
 }
 
 span.flatpickr-weekday {
-    @apply text-slate-400 dark:text-slate-500 font-medium text-xs;
+    @apply text-slate-400 dark:text-[#aaaaaa] font-medium text-xs;
 }
 
 .flatpickr-calendar.arrowTop::before,
