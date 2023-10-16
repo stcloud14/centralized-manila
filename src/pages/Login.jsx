@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import LoginForm from '../components/LoginForm';
+import LoginImage from '../components/LoginImage';
 
 function Login() {
     return (
         <main>
-            <div className='grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 ms-4 mt-4 me-4 gap-4'>
-            <div className="col-span-2">
-                <LoginForm />
-            </div>
+            <div className='grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1'>
+                <div>
+                    <LoginForm />
+                </div>
 
-            <div className="col-span-1">
-                <Card02 />
-            </div>
-            
-        
+                <div>
+                    <LoginImage />
+                </div>
             </div>
         </main>
     );

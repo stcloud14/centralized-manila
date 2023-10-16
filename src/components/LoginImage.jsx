@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { tailwindConfig, hexToRGB } from '../../utils/Utils';
 
-function LoginImage() {
+function LoginForm() {
 
     return (
         <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
@@ -25,4 +27,4 @@ function LoginImage() {
 
 }
 
-export default LoginImage
+export default LoginForm
