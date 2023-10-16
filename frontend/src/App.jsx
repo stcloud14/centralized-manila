@@ -11,6 +11,7 @@ import './charts/ChartjsConfig';
 
 // Import pages
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import News from './pages/News';
@@ -30,6 +31,7 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<Login />} />
+        <Route exact path="/register" element={<Register />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/news" element={<News />} />
