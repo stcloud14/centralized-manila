@@ -62,11 +62,15 @@
 }
 
 .flatpickr-day {
-    @apply text-sm font-medium bg-slate-50 text-slate-600 dark:bg-[#181818] dark:text-slate-100 dark:hover:text-[#181818];
+    @apply text-sm font-medium bg-slate-50 dark:bg-[#181818] dark:text-slate-100 dark:hover:text-[#181818];
     max-width: var(--daySize);
     height: var(--daySize);
     line-height: var(--daySize);
 }
+
+.flatpickr-day:hover {
+    @apply text-gray-950 !important;
+  }
 
 .flatpickr-day,
 .flatpickr-day.prevMonthDay,
