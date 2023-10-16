@@ -6,7 +6,7 @@ function SignUpForm() {
     <div className='bg-white'>
       <div className='flex justify-center'>
         <div className='flex flex-col items-center'>
-          <img src='./src/images/mnl.svg' width="100" height="100" className='mt-14' />
+          <img src='./src/images/mnl.svg' width="100" height="100" className='mt-10' />
           <h1 className='font-normal mb-16'>Centralized Manila</h1>
         </div>
       </div>
@@ -40,16 +40,20 @@ function SignUpForm() {
                 </div>
 
                 <div>
-                <h1 className='italic text-xs'>- Minimum of 8 Characters</h1>
-                <h1 className='italic text-xs'>- At Least one uppercase and lowercase letter</h1>
-                <h1 className='italic text-xs'>- At least one symbol</h1>
-                <h1 className='italic text-xs'>- At least one number</h1>
+                  <h1 className='italic text-xs'>- Minimum of 8 Characters</h1>
+                  <h1 className='italic text-xs'>- At Least one uppercase and lowercase letter</h1>
+                  <h1 className='italic text-xs'>- At least one symbol</h1>
+                  <h1 className='italic text-xs'>- At least one number</h1>
                 </div>
                 
                 <div class="flex flex-col items-center">
-                  <button type="submit" class="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Register</button>
+                  <button type="submit" class="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Register</button>
                 </div>
             </form>
+
+            <div className="mt-4 font-semibold text-sm text-slate-500 text-center">
+                Already have an account? <a className="text-red-600 hover:underline hover:underline-offset-4" href="../">Login Here</a>
+            </div>
     </div>
   );
 }

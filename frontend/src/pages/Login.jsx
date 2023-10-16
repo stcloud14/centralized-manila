@@ -33,7 +33,7 @@ function Login() {
             <p className="mx-4 mb-0 text-center font-semibold text-slate-500">Or</p>
             </div>
             <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
-            Don't have an account? <a className="text-red-600 hover:underline hover:underline-offset-4" href="#">Register</a>
+                Don't have an account? <a className="text-red-600 hover:underline hover:underline-offset-4" href="../register">Register</a>
             </div>
         </div>
         </section>
