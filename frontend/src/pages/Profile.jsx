@@ -57,7 +57,7 @@ const Profile =()=>{
                  
             {userPersonal.map((user)=>(
             <form>
-              <h1 className='mb-7'>Personal Information</h1>
+              <h1 className='mb-16 text-center font-medium'>Personal Information</h1>
             
               <div class="grid md:grid-cols-1 md:gap-6">
                 <div class="relative z-0 w-full mb-6 group">
@@ -175,7 +175,7 @@ const Profile =()=>{
                 </div>
               </div>
               
-              <div class="flex flex-col items-center md:flex-row md:justify-end">
+              <div class="flex flex-col items-center md:flex-row md:justify-end mt-7">
                   <button type="submit" class="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Save Changes</button>
               </div>
             </form>
