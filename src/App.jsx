@@ -10,6 +10,7 @@ import './css/style.css';
 import './charts/ChartjsConfig';
 
 // Import pages
+import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import News from './pages/News';
@@ -28,7 +29,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/" element={<Login />} />
+        <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/news" element={<News />} />
         <Route exact path="/rptax" element={<RPTax />} />

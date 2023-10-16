@@ -78,7 +78,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           </button>
 
           {/* Logo */}
-          <NavLink end to="/" className="block">
+          <NavLink end to="/dashboard" className="block">
               <img src='./src/images/mnl.svg' width="32" height="32" viewBox="0 0 50 50"/>
           </NavLink>
           
@@ -98,7 +98,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
              {/* Dashboard */}
              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
-                <NavLink end to="/"
+                <NavLink end to="/dashboard"
                   className="block text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600 truncate transition duration-150"
                 >
                   <div className="flex items-center">
