@@ -13,7 +13,9 @@ import './charts/ChartjsConfig';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
+import PersonalInfo from './pages/PersonalInfo';
+import ContactInfo from './pages/ContactInfo';
+import GovInfo from './pages/GovInfo';
 import News from './pages/News';
 import RPTaxPayment from './pages/RPTaxPayment';
 
@@ -33,7 +35,9 @@ function App() {
         <Route exact path="/" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
-        <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="/personalinfo" element={<PersonalInfo />} />
+        <Route exact path="/contactinfo" element={<ContactInfo />} />
+        <Route exact path="/govinfo" element={<GovInfo />} />
         <Route exact path="/news" element={<News />} />
         <Route exact path="/rptaxpayment" element={<RPTaxPayment />} />
       </Routes>

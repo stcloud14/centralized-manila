@@ -8,7 +8,7 @@ import Flatpickr from 'react-flatpickr';
 
 import 'flatpickr/dist/themes/airbnb.css';
 
-const Profile =()=>{
+const PersonalInfo =()=>{
 
   const [userPersonal, setUserPersonal]=useState([])
   // const id = 'RL1741';
@@ -190,4 +190,4 @@ const Profile =()=>{
   );
 }
 
-export default Profile;
+export default PersonalInfo;
