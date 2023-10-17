@@ -94,12 +94,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </span>
               <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Pages</span>
             </h3>
-            <ul className="mt-3 text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600">
+            <ul className="mt-3 text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600">
 
              {/* Dashboard */}
              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink end to="/dashboard"
-                  className="block text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600 truncate transition duration-150"
+                  className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
                 >
                   <div className="flex items-center">
                     <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
@@ -123,7 +123,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className="block text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600 truncate transition duration-150"
+                        className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -205,7 +205,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className="block text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600 truncate transition duration-150"
+                        className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -283,7 +283,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
              {/* News */}
              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink end to="/news"
-                  className="block text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600 truncate transition duration-150"
+                  className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
                 >
                   <div className="flex items-center">
                     <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
@@ -308,7 +308,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 <NavLink
                   end
                   to="/campaigns"
-                  className="block text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600 truncate transition duration-150"
+                  className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
                 >
                   <div className="flex items-center">
                     <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
@@ -335,7 +335,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className="block text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600 truncate transition duration-150"
+                        className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -477,7 +477,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className="block text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600 truncate transition duration-150"
+                        className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -537,7 +537,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className="block text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600 truncate transition duration-150"
+                        className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -610,7 +610,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className="block text-slate-700 hover:text-red-600 dark:text-white dark:hover:text-red-600 truncate transition duration-150"
+                        className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
