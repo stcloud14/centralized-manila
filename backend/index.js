@@ -6,9 +6,8 @@ const app = express()
 const conn2 = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "miles",
-    database: "clientdatabase"
-
+    password: "admin",
+    database: "clientdatabase",
 })
 
 app.use(express.json())
