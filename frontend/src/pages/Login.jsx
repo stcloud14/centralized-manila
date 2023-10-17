@@ -3,26 +3,30 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
  
 function Login() {
-    const navigate = useNavigate(); // Move this line inside the function
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [loginSuccess, setLoginSuccess] = useState(""); // New state to track successful login
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8800/login", { mobile_no: username, user_pass: password });
+      const response = await axios.post("http://localhost:8800/login", {
+        mobile_no: username,
+        user_pass: password,
+      });
       if (response.data.message === "Authentication successful") {
-        setLoginSuccess("Authentication successful");
-        navigate("/dashboard"); // Move this line inside the if block
+        // Authentication successful, navigate to the dashboard
+        navigate("/dashboard");
       } else {
-        setLoginError("Authentication failed"); // Set error message for unsuccessful login
+        // Authentication failed, show an error message
+        setLoginError("Authentication failed");
       }
     } catch (error) {
+      // Handle any network or server errors
       console.error(error);
-      setLoginError(error.response.data.message); // Set error message from the server response
+      setLoginError("Authentication failed. Please check your credentials.");
     }
   };
     
@@ -60,7 +64,7 @@ function Login() {
                     <a className="text-yellow-500 hover:text-blue-700 hover:text-yellow-600" href="#">Forgot Password?</a>
                 </div>
 
-                <div className="text-center">
+                {/* <div className="text-center">
                     <button className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800" type="submit">Login</button>
                     {loginError ? (
                 <p className="text-red-600">{loginError}</p>
@@ -68,7 +72,19 @@ function Login() {
                 {loginSuccess ? (
                 <p className="text-green-600">{loginSuccess}</p>
                 ) : null}
-                </div>
+                </div> */}
+
+                <div className="text-center md:text-left">
+              <button
+                className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider"
+                type="submit"
+              >
+                Login
+              </button>
+              {loginError && (
+                <p className="text-red-600">{loginError}</p>
+              )}
+            </div>
             </form>
             
 
