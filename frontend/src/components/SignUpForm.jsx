@@ -7,7 +7,7 @@ function SignUpForm() {
       <div className='flex justify-center'>
         <div className='flex flex-col items-center'>
           <img src='./src/images/mnl.svg' width="100" height="100" className='mt-10' />
-          <h1 className='font-normal mb-16'>Centralized Manila</h1>
+          <h1 className='font-normal mb-16 text-slate-500'>Centralized Manila</h1>
         </div>
       </div>
 
@@ -51,8 +51,8 @@ function SignUpForm() {
                 </div>
             </form>
 
-            <div className="mt-4 font-semibold text-sm text-slate-500 text-center">
-                Already have an account? <a className="text-red-600 hover:underline hover:underline-offset-4" href="../">Login Here</a>
+            <div className="mt-4   text-sm text-slate-500 text-center">
+                Already have an account? <a className="text-emerald-500 font-bold hover:text-emerald-700" href="../">Login Here</a>
             </div>
     </div>
   );

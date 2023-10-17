@@ -58,33 +58,23 @@ function Login() {
                 
                 <div className="mt-4 flex justify-between font-semibold text-sm">
                     <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
-                        <input className="mr-1" type="checkbox" />
+                        <input className="mr-2 mt-0.5" type="checkbox" />
                         <span>Remember Me</span>
                     </label>
                     <a className="text-yellow-500 hover:text-blue-700 hover:text-yellow-600" href="#">Forgot Password?</a>
                 </div>
 
-                {/* <div className="text-center">
-                    <button className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800" type="submit">Login</button>
-                    {loginError ? (
-                <p className="text-red-600">{loginError}</p>
-                ) : null}
-                {loginSuccess ? (
-                <p className="text-green-600">{loginSuccess}</p>
-                ) : null}
-                </div> */}
-
-                <div className="text-center md:text-left">
-              <button
-                className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider"
-                type="submit"
-              >
-                Login
-              </button>
-              {loginError && (
-                <p className="text-red-600">{loginError}</p>
-              )}
-            </div>
+                <div className="text-center my-5">
+                  <button
+                    className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                    type="submit"
+                  >
+                    Login
+                  </button>
+                  {loginError && (
+                    <p className="text-red-600">{loginError}</p>
+                  )}
+                </div>
             </form>
             
 
