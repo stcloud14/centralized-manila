@@ -43,6 +43,7 @@ app.get("/profile", (req, res)=>{
         });
       });
       
+      //ContactInfo
       app.get('/profile/:id', (req, res) => {
         const id = req.params.id; // Get the user ID from the route parameter
         const sql = "SELECT * FROM user_contact WHERE user_id = ?";
@@ -56,7 +57,19 @@ app.get("/profile", (req, res)=>{
         });
     });
     
-
+  // Government id
+  app.get('/profile/:id', (req, res) => {
+    const id = req.params.id; // Get the user ID from the route parameter
+    const sql = "SELECT * FROM user_gov_id WHERE user_id = ?";
+    conn2.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving data');
+        } else {
+            res.json(result);
+        }
+    });
+});
 
 
 // app.post("/furns", (req, res)=>{
