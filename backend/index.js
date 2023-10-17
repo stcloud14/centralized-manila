@@ -26,7 +26,6 @@ app.get("/profile", (req, res)=>{
     })
 })
 
-
     app.get('/profile:id', (req, res) => {
         const id = req.params.user_id; // 'RL1741'
         const sql = "SELECT * FROM user_personal WHERE user_id = 'RL1741'";
@@ -42,33 +41,33 @@ app.get("/profile", (req, res)=>{
         });
       });
       
-      //ContactInfo
-      app.get('/profile/:id', (req, res) => {
-        const id = req.params.id; // Get the user ID from the route parameter
+      // Contact Info
+      app.get('/profile/contact/:id', (req, res) => {
+        const id = req.params.id;
         const sql = "SELECT * FROM user_contact WHERE user_id = ?";
         conn2.query(sql, [id], (err, result) => {
             if (err) {
                 console.error(err);
-                res.status(500).send('Error retrieving data');
+                res.status(500).send('Error retrieving contact info');
             } else {
                 res.json(result);
             }
         });
     });
-    
-  // Government id
-  app.get('/profile/:id', (req, res) => {
-    const id = req.params.id; // Get the user ID from the route parameter
-    const sql = "SELECT * FROM user_gov_id WHERE user_id = ?";
-    conn2.query(sql, [id], (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error retrieving data');
-        } else {
-            res.json(result);
-        }
+
+    // Government ID
+    app.get("/profile/gov/:id", (req, res) => {
+        const userId = req.params.id;
+        const sql = "SELECT * FROM user_gov_id WHERE user_id = ?";
+        conn2.query(sql, [userId], (err, result) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error retrieving government info');
+            } else {
+                res.json(result);
+            }
+        });
     });
-});
 
 
 // app.post("/furns", (req, res)=>{

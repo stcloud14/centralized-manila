@@ -17,7 +17,7 @@ const GovernmentInfo =()=>{
     const userId = 'RL1741'; // Replace this with the actual user ID
     const fetchUserPersonal = async () => {
         try {
-            const res = await axios.get(`http://localhost:8800/profile/${userId}`);
+            const res = await axios.get(`http://localhost:8800/profile/gov/${userId}`);
             setUserPersonal(res.data);
         } catch (err) {
             console.log(err);
