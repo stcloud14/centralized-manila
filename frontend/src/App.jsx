@@ -15,7 +15,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import PersonalInfo from './pages/PersonalInfo';
 import ContactInfo from './pages/ContactInfo';
-import GovInfo from './pages/GovInfo';
+import GovernmentInfo from './pages/GovernmentInfo';
 import News from './pages/News';
 import RPTaxPayment from './pages/RPTaxPayment';
 
@@ -36,8 +36,8 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/personalinfo" element={<PersonalInfo />} />
-        <Route exact path="/contactinfo" element={<ContactInfo />} />
-        <Route exact path="/govinfo" element={<GovInfo />} />
+        <Route exact path="/contact" element={<ContactInfo />} />
+        <Route exact path="/govinfo" element={<GovernmentInfo />} />
         <Route exact path="/news" element={<News />} />
         <Route exact path="/rptaxpayment" element={<RPTaxPayment />} />
       </Routes>
