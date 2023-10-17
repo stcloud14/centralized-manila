@@ -10,7 +10,7 @@ app.use(cors());
 const conn2 = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "adb011812adb",
+  password: "admin",
   database: "clientdatabase",
 });
 
@@ -74,6 +74,34 @@ app.get("/profile", (req, res)=>{
       }
     });
   });
+
+
+  app.get('/profile/:id', (req, res) => {
+    const id = req.params.id; // Get the user ID from the route parameter
+    const sql = "SELECT * FROM user_contact WHERE user_id = ?";
+    conn2.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving data');
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+    // Government Information
+    app.get('/profile/:id', (req, res) => {
+      const id = req.params.id; // Get the user ID from the route parameter
+      const sql = "SELECT * FROM user_gov_id WHERE user_id = ?";
+      conn2.query(sql, [id], (err, result) => {
+          if (err) {
+              console.error(err);
+              res.status(500).send('Error retrieving data');
+          } else {
+              res.json(result);
+          }
+      });
+});
       
 
 
