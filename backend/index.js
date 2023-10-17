@@ -27,9 +27,6 @@ conn2.connect((err) => {
 app.post("/login", (req, res) => {
   const { mobile_no, user_pass } = req.body;
 
-  // Log the received credentials for debugging
-  console.log("Received credentials:", mobile_no, user_pass);
-
   // SQL query to check user credentials
   const sql = "SELECT * FROM user_auth WHERE mobile_no = ? AND user_pass = ?";
 
@@ -49,28 +46,33 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.get("/profile", (req, res) => {
-  // Replace this with logic to fetch the user's personal information from your database
-  // You may need to use the user's ID or some other identifier to fetch their data
-  const userId = req.user.id; // Replace with the actual user's ID
 
-  // Query the database to fetch the user's personal information
-  const sql = "SELECT * FROM user_profile WHERE user_id = ?";
-  conn2.query(sql, [userId], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Error occurred while fetching user profile." });
-    }
+        //Profile Information
+        app.get("/profile", (req, res)=>{
+          const q= "SELECT * FROM user_personal WHERE user_id = 'RL1741'"
+          conn2.query(q,(err, data)=>{
+                  if(err) return res.json(err)
+                  return res.json(data)
+          })
+        })
 
-    if (results.length === 1) {
-      // User profile found
-      return res.json(results[0]);
-    } else {
-      // User profile not found
-      return res.status(404).json({ message: "User profile not found" });
-    }
-  });
-});
+
+        app.get('/profile/:user_id', (req, res) => {
+          const user_id = req.params.user_id;
+
+          // SQL query to fetch the user's profile data
+          const sql = "SELECT * FROM user_personal WHERE user_id = ?";
+
+          conn2.query(sql, [user_id], (err, result) => {
+            if (err) {
+              console.error(err);
+              res.status(500).send('Error retrieving data');
+            } else {
+              res.json(result);
+            }
+          });
+        });
+            
 
       // Contact Info
       app.get('/profile/contact/:id', (req, res) => {
