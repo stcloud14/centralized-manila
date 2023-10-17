@@ -28,8 +28,8 @@ function GovernmentInfo() {
               
                 
             <form>
-            <h1 className='font-medium text-center'>Government Identification Information</h1>
-            <h1 className='mb-7 text-sm italic text-center'>Edit your government ID</h1>
+            <h1 className='font-medium text-center'>Profile</h1>
+              <h1 className='mb-7 text-sm italic text-center'>Government Information</h1>
             
             
               <div className="grid md:grid-cols-2 md:gap-6">

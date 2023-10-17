@@ -57,7 +57,8 @@ const ContactInfo =()=>{
                  
             {userPersonal.map((user)=>(
             <form>
-              <h1 className='mb-16 text-center font-medium'>User Contact</h1>
+              <h1 className='font-medium text-center'>Profile</h1>
+              <h1 className='mb-7 text-sm italic text-center'>Contact Information</h1>
             
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">

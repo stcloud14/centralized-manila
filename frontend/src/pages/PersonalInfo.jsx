@@ -57,7 +57,8 @@ const PersonalInfo =()=>{
                  
             {userPersonal.map((user)=>(
             <form>
-              <h1 className='mb-16 text-center font-medium'>Personal Information</h1>
+              <h1 className='font-medium text-center'>Profile</h1>
+              <h1 className='mb-7 text-sm italic text-center'>Personal Information</h1>
             
               <div className="grid md:grid-cols-1 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
