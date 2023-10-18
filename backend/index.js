@@ -11,7 +11,7 @@ app.use(cors());
 const conn2 = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "admin",
+  password: "adb011812adb",
   database: "clientdatabase",
 });
 
@@ -24,39 +24,17 @@ conn2.connect((err) => {
 });
 
 // Define a route for user authentication
-app.post("/login", (req, res) => {
-  const { mobile_no, user_pass } = req.body;
-
-  // SQL query to check user credentials
-  const sql = "SELECT * FROM user_auth WHERE mobile_no = ? AND user_pass = ?";
-
-  conn2.query(sql, [mobile_no, user_pass], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Error occurred while authenticating." });
-    }
-
-    if (results.length === 1) {
-      // Authentication successful
-      return res.json({ message: "Authentication successful" });
-    } else {
-      // Authentication failed
-      return res.status(401).json({ message: "Authentication failed" });
-    }
-  });
-});
 
 
-        //Profile Information
-        app.get("/profile", (req, res)=>{
-          const q= "SELECT * FROM user_personal WHERE user_id = 'RL1741'"
-          conn2.query(q,(err, data)=>{
-                  if(err) return res.json(err)
-                  return res.json(data)
-          })
-        })
 
-
+        // //Profile Information
+        // app.get("/profile", (req, res)=>{
+        //   const q= "SELECT * FROM user_personal WHERE user_id = 'RL1741'"
+        //   conn2.query(q,(err, data)=>{
+        //           if(err) return res.json(err)
+        //           return res.json(data)
+        //   })
+        // })
         app.get('/profile/:user_id', (req, res) => {
           const user_id = req.params.user_id;
 
@@ -74,11 +52,14 @@ app.post("/login", (req, res) => {
         });
             
 
+
       // Contact Info
-      app.get('/profile/contact/:id', (req, res) => {
-        const id = req.params.id;
+      app.get('/profile/contact/:user_id', (req, res) => {
+        const user_id = req.params.user_id;
+        
         const sql = "SELECT * FROM user_contact WHERE user_id = ?";
-        conn2.query(sql, [id], (err, result) => {
+        
+        conn2.query(sql, [user_id], (err, result) => {
             if (err) {
                 console.error(err);
                 res.status(500).send('Error retrieving contact info');
@@ -89,10 +70,10 @@ app.post("/login", (req, res) => {
     });
 
     // Government ID
-    app.get("/profile/gov/:id", (req, res) => {
-        const userId = req.params.id;
+    app.get("/profile/govinfo/:user_id", (req, res) => {
+        const user_id = req.params.user_id;
         const sql = "SELECT * FROM user_gov_id WHERE user_id = ?";
-        conn2.query(sql, [userId], (err, result) => {
+        conn2.query(sql, [user_id], (err, result) => {
             if (err) {
                 console.error(err);
                 res.status(500).send('Error retrieving government info');
@@ -155,6 +136,23 @@ app.post("/login", (req, res) => {
 
 app.get("/", (req, res)=>{
   res.json("hello, this is the backend")
+});
+
+app.get("/login/:username/:password", (req, res) => {
+  const username = req.params.username
+  const password = req.params.password
+  console.log(username, password)
+
+  // SQL query to check user credentials
+  const sql = "SELECT * FROM user_auth WHERE mobile_no = ? AND user_pass = ?";
+
+  conn2.query(sql, [username, password], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Error occurred while authenticating." });
+    }
+    return res.status(200).json(results)
+  });
 });
 
 app.listen(8800, () => {

@@ -12,17 +12,16 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8800/login", {
-        mobile_no: username,
-        user_pass: password,
-      });
-      if (response.data.message === "Authentication successful") {
+      const response = await axios.get(`http://localhost:8800/login/${username}/${password}`);
+      if (response.status === 200) {
         // Authentication successful, navigate to the dashboard
-        navigate("/dashboard");
+        const {user_id} = response.data[0];
+        navigate(`/dashboard/${user_id}`);
       } else {
         // Authentication failed, show an error message
         setLoginError("Authentication failed");
       }
+      console.log(response);
     } catch (error) {
       // Handle any network or server errors
       console.error(error);

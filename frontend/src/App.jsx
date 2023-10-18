@@ -34,10 +34,10 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
-        <Route exact path="/dashboard" element={<Dashboard />} />
-        <Route exact path="/personalinfo" element={<PersonalInfo />} />
-        <Route exact path="/contact" element={<ContactInfo />} />
-        <Route exact path="/govinfo" element={<GovernmentInfo />} />
+        <Route exact path="/dashboard/:user_id" element={<Dashboard />} />
+        <Route exact path="/personalinfo/:user_id" element={<PersonalInfo />} />
+        <Route exact path="/contact/:user_id" element={<ContactInfo />} />
+        <Route exact path="/govinfo/:user_id" element={<GovernmentInfo />} />
         <Route exact path="/news" element={<News />} />
         <Route exact path="/rptaxpayment" element={<RPTaxPayment />} />
       </Routes>

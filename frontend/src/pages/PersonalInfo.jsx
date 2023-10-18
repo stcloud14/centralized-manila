@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import {Link} from "react-router-dom"
 
+
+import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Flatpickr from 'react-flatpickr';
@@ -10,13 +12,18 @@ import 'flatpickr/dist/themes/airbnb.css';
 
 const PersonalInfo =()=>{
 
+  const location = useLocation();
+  const { pathname } = location;
+  console.log(pathname);
+  const user_id = pathname.split("/")[2];
+
   const [userPersonal, setUserPersonal]=useState([])
   // const id = 'RL1741';
      
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
             try{
-                const res= await axios.get("http://localhost:8800/profile/")
+                const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
                 setUserPersonal(res.data)
             }catch(err){
                 console.log(err)

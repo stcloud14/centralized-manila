@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-
+import logo from "../images/mnl.svg"
 import SidebarLinkGroup from './SidebarLinkGroup';
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
   const { pathname } = location;
-
+  console.log(pathname);
+  const user_id = pathname.split("/")[2];
   const trigger = useRef(null);
   const sidebar = useRef(null);
 
@@ -79,7 +80,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
           {/* Logo */}
           <NavLink end to="/" className="block">
-              <img src='./src/images/mnl.svg' width="32" height="32" viewBox="0 0 50 50"/>
+              <img src={logo} width="32" height="32" viewBox="0 0 50 50"/>
           </NavLink>
           
         </div>
@@ -98,7 +99,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
              {/* Dashboard */}
              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
-                <NavLink end to="/dashboard"
+                <NavLink end to={`/dashboard/${user_id}`}
                   className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
                 >
                   <div className="flex items-center">
@@ -157,7 +158,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/personalinfo"
+                              to={`/personalinfo/${user_id}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -171,7 +172,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/contact"
+                              to={`/contact/${user_id}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -185,7 +186,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/govinfo"
+                              to={`/govinfo/${user_id}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
