@@ -88,7 +88,7 @@ function Dashboard() {
               <DashboardCard09 />
               {/* Card (Customers) */}
               <DashboardCard10 />
-              {/* Card (Reasons for Refunds) */}
+              {/* Card (Reasons htmlFor Refunds) */}
               <DashboardCard11 />
               {/* Card (Recent Activity) */}
               <DashboardCard12 />
