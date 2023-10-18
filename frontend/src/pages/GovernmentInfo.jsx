@@ -4,7 +4,6 @@ import {Link} from "react-router-dom"
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-import Flatpickr from 'react-flatpickr';
 
 import 'flatpickr/dist/themes/airbnb.css';
 
