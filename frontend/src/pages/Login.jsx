@@ -34,8 +34,8 @@ function Login() {
       {/* Left Side*/}
       <div className="lg:w-1/2 lg:ms-20">
         <img src="../src/images/mnl.svg" alt="Centralized Manila Logo" className="lg:h-60 md:h-40 sm:h-28 h-28 mx-auto" />
-        <h1 className='text-center font-medium text-2xl'>Centralized Manila</h1>
-        <h1 className='text-center'>Welcome! Sign up to stay tuned about the updates.</h1>
+        <h1 className='text-center font-medium text-slate-600 text-2xl'>Centralized Manila</h1>
+        <h1 className='text-center text-slate-600 px-10'>Welcome! Sign up to stay tuned about the updates.</h1>
       </div>
 
       {/* Right Side*/}
@@ -47,7 +47,7 @@ function Login() {
                   <div className="relative z-0 w-full group">
                     <input type="text" id="login_mobile" name="login_mobile" placeholder=' ' className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer" value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    autoComplete="off"/>
+                    autoComplete='off'/>
                     
                     <label htmlFor="login_mobile" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile Number</label>
                   </div>
@@ -75,8 +75,8 @@ function Login() {
                     Login
                   </button>
                   {loginError && (
-                    <p className="text-red-600">{loginError}</p>
-                  )}
+                        <p className="text-red-600 p-2 text-xs rounded-full mt-5">{loginError}</p>
+                      )}
                 </div>
 
             <div className="my-5 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
