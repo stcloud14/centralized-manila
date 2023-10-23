@@ -122,6 +122,33 @@ router.get('/govinfo/:user_id', (req, res) => {
         );
       });
 
+      router.put('/govinfo/:user_id', (req, res) => {
+        const user_id = req.params.user_id;
+      
+        const {
+          user_tin_id,
+          user_pgb_id,
+          user_philh_id,
+          user_sss_id,
+          user_gsis_id,
+          user_natl_id,
+        } = req.body;
+        console.log(req.body);
+        // Assuming you want to update the 'user_personal' table
+        conn2.query(
+          'UPDATE user_gov_id SET `user_tin_id`=?, `user_pgb_id`=?, `user_philh_id`=?, `user_sss_id`=?, `user_gsis_id`=?, `user_natl_id`=?  WHERE user_id=?',
+          [user_tin_id, user_pgb_id, user_philh_id, user_sss_id, user_gsis_id, user_natl_id, user_id],
+          (error, results, fields) => {
+            if (error) {
+              console.error(error);
+              res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+              res.status(200).json({ message: 'Update successful' });
+            }
+          }
+        );
+      });
+
 
 
 // // Contact Info
