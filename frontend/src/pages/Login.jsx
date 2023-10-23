@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'
  
 function Login() {
   const navigate = useNavigate();
@@ -31,14 +32,21 @@ function Login() {
     
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-white justify-center items-center">
-      {/* Left Side*/}
+      {/* Go Back Button */}
+      <NavLink end to="/" className="absolute top-6 left-6">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </NavLink>
+      
+      {/* Left Side */}
       <div className="lg:w-1/2 lg:ms-20">
         <img src="../src/images/mnl.svg" alt="Centralized Manila Logo" className="lg:h-60 md:h-40 sm:h-28 h-28 mx-auto" />
         <h1 className='text-center font-medium text-slate-600 text-2xl'>Centralized Manila</h1>
         <h1 className='text-center text-slate-600 px-10'>Welcome! Sign up to stay tuned about the updates.</h1>
       </div>
 
-      {/* Right Side*/}
+      {/* Right Side */}
       <div className="lg:w-1/2">
       <div className='p-8 lg:me-40 lg:ms-4 lg:pt-10'>
       <form onSubmit={handleSubmit}>
