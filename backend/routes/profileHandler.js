@@ -30,7 +30,38 @@ router.get('/:user_id', (req, res) => {
         }
     });
     });
-        
+
+
+    router.put('/:user_id', (req, res) => {
+        const user_id = req.params.user_id;
+      
+        const {
+          f_name,
+          m_name,
+          l_name,
+          suffix,
+          sex_id,
+          cvl_id,
+          b_date,
+          b_place,
+          email,
+        } = req.body;
+        console.log(req.body);
+        // Assuming you want to update the 'user_personal' table
+        conn2.query(
+          'UPDATE user_personal SET `f_name`=?, `m_name`=?, `l_name`=?, `suffix`=?, `sex_id`=?, `cvl_id`=?, `b_date`=?, `b_place`=?, `email`= ? WHERE user_id=?',
+          [f_name, m_name, l_name, suffix, sex_id, cvl_id, new Date(b_date), b_place, email, user_id],
+          (error, results, fields) => {
+            if (error) {
+              console.error(error);
+              res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+              res.status(200).json({ message: 'Update successful' });
+            }
+          }
+        );
+      });
+
 
 
 // Contact Info
