@@ -34,11 +34,11 @@ function Login() {
     <div className="flex flex-col lg:flex-row h-screen bg-white justify-center items-center">
       {/* Go Back Button */}
       <NavLink end to="/" className="absolute top-6 left-6">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-        </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+        <path className='stroke-slate-600' fillRule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clipRule="evenodd" />
+      </svg>
       </NavLink>
-      
+
       {/* Left Side */}
       <div className="lg:w-1/2 lg:ms-20">
         <img src="../src/images/mnl.svg" alt="Centralized Manila Logo" className="lg:h-60 md:h-40 sm:h-28 h-28 mx-auto" />
@@ -52,7 +52,7 @@ function Login() {
       <form onSubmit={handleSubmit}>
         <h1 className='text-center mb-10 text-black text-slate-600'>Welcome to <span className='font-medium text-blue-500'>Centralized</span><span className='font-medium text-red-500'> Manila</span></h1>
                 <div className="grid md:grid-cols-1 md:gap-6">
-                  <div className="relative z-0 w-full group">
+                  <div className="relative z-0 w-full lg:mb-0 mb-4 group">
                     <input type="text" id="login_mobile" name="login_mobile" placeholder=' ' className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer" value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     autoComplete='off'/>

@@ -40,7 +40,7 @@ const Card = ({ imageSrc, description, isHovered, handleHover, handleLeave, to }
     backgroundColor: isHovered ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.3)',
     color: isHovered ? 'black' : 'white', // Text color changes to black when hovered
     boxShadow: isHovered
-      ? '0 4px 6px rgba(255, 255, 255, 0.7), 0 -4px 6px rgba(255, 255, 255, 0.7)'
+      ? '0 4px 6px rgba(255, 255, 255, 0.7), 0 -4px 6px rgba(255, 255, 255, 0.9)'
       : 'none',
     transition: 'background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, color 0.3s ease-in-out',
   };
