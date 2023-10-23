@@ -125,6 +125,7 @@ const PersonalInfo =()=>{
                 </div>
               </div>
 
+              {/* Row 3 - Sfu */}
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.suffix} type="text" name="suffix" id="suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
@@ -140,43 +141,50 @@ const PersonalInfo =()=>{
                 </div>
                 
                 {/* Row 3 - Birthdate input */}
-                <div className="relative z-0 w-full mb-6 group ">
+                <div className="relative z-0 w-full mb-6 group">
                   <Flatpickr
                     value={userPersonal.b_date}
-                    onChange={(date) =>  setUserPersonal((prevData) => ({
-                      ...prevData,
-                      b_date: date,
-                    }))} 
+                    onChange={(date) =>
+                      setUserPersonal((prevData) => ({
+                        ...prevData,
+                        b_date: date,
+                      }))
+                    }
                     options={{
                       dateFormat: 'Y-m-d',
                       altInput: true,
                       altFormat: 'F j, Y',
-                      altInputClass: 'block py-2.5 px-0 w-full bg-transparent text-sm text-gray-900 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer',
-                      appendTo: document.body, // This is important htmlFor custom styling
+                      altInputClass:
+                        'block py-2.5 px-0 w-full bg-transparent text-sm text-gray-900 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer',
+                      appendTo: document.body,
                       onOpen: function (selectedDates, dateStr, instance) {
-                        // Check if dark mode is active and target the month dropdown
                         if (document.documentElement.classList.contains('dark')) {
-                          const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                          const monthDropdown = instance.calendarContainer.querySelector(
+                            '.flatpickr-monthDropdown-months'
+                          );
                           if (monthDropdown) {
-                            monthDropdown.style.backgroundColor = '#212121'; // Set the desired background color htmlFor dark mode
+                            monthDropdown.style.backgroundColor = '#212121';
                           }
                         }
                       },
                       onClose: function (selectedDates, dateStr, instance) {
-                        // Reset the background color when the date picker is closed
-                        const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                          '.flatpickr-monthDropdown-months'
+                        );
                         if (monthDropdown) {
-                          monthDropdown.style.backgroundColor = ''; // Reset the background color
+                          monthDropdown.style.backgroundColor = '';
                         }
                       },
                     }}
-                      // required
+                    
                   />
                   <label
                     htmlFor="birthdate"
-                    className="peer-focus:font-medium absolute bg-transparent text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    className={`peer-focus:font-medium absolute bg-transparent text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 ${
+                      userPersonal.b_date ? 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : ''
+                    }`}
                   >
-                    Birthdate
+                    {userPersonal.b_date ? 'Birthdate' : 'Birthdate'}
                   </label>
                 </div>
                 
