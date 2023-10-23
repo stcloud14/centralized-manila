@@ -1,7 +1,8 @@
 import express from "express";
 import cors from 'cors';
-import profileHandler from './routes/profileHandler.js';
+
 import login from './routes/login.js'
+import profileHandler from './routes/profileHandler.js';
 import register from './routes/register.js'
 
 const app = express();
