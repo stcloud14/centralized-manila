@@ -42,11 +42,16 @@ const PersonalInfo =()=>{
       }));
     };
 
+    const [isSuccess, setIsSuccess] = useState(false); // New state for success message
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        await axios.put(`http://localhost:8800/profile/${user_id}`, userPersonal)
+        await axios
+          .put(`http://localhost:8800/profile/${user_id}`, userPersonal)
           .then((res) => {
+            setIsSuccess(true); // Set success state to true
+            handleCloseModal(); // Close the modal
             console.log('User credentials updated successfully');
           })
           .catch((err) => {
@@ -56,8 +61,7 @@ const PersonalInfo =()=>{
         console.error(err);
       }
     };
-    
-    //Modal
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleProceed = (e) => {
@@ -102,6 +106,13 @@ const PersonalInfo =()=>{
             <form onSubmit={handleSubmit}>
               <h1 className='font-medium text-center'>Profile</h1>
               <h1 className='mb-7 text-sm italic text-center'>Personal Information</h1>
+
+              {isSuccess && (
+              <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
+                Success! Your changes have been saved.
+              </div>
+              )}
+
             
               <div className="grid md:grid-cols-1 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
@@ -230,11 +241,15 @@ const PersonalInfo =()=>{
               </div>
 
               <div className="flex flex-col items-center md:flex-row md:justify-end mt-7">
-                <button type="submit" onClick={handleProceed} className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Save Changes</button>
+                <button
+                  type="submit"
+                  onClick={handleProceed}
+                  className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                >
+                  Save Changes
+                </button>
               </div>
             </form>
-            
-
             </div>
           </div>
         </main>
@@ -259,24 +274,25 @@ const PersonalInfo =()=>{
                 </div>
               </div>
               <div className="bg-white dark:bg-[#181818] px-4 py-3 gap-3 sm:px-6 sm:flex sm:flex-row-reverse">
-              <button
+                <button
                   onClick={handleSubmit}
                   type="button"
-                  className="text-white bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  className="text-white bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
                   Confirm
                 </button>
-              <button
+                <button
                   onClick={handleCloseModal}
                   type="button"
-                  className="text-slate-500 ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800">
+                  className="text-slate-500 ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                >
                   Cancel
-              </button>
-                
+                </button>
               </div>
             </div>
           </div>
         </div>
-      )}
+        )}
       </div>
     </div>
   );
