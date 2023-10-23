@@ -6,7 +6,6 @@ import {Link} from "react-router-dom"
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-import Flatpickr from 'react-flatpickr';
 
 import 'flatpickr/dist/themes/airbnb.css';
 
@@ -18,12 +17,11 @@ const ContactInfo =()=>{
   const user_id = pathname.split("/")[2];
 
   const [userPersonal, setUserPersonal]=useState([])
-  // const id = 'RL1741';
       
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
             try{
-                const res= await axios.get(`http://localhost:8800/profile/contact/${user_id}`);
+                const res= await axios.get(`http://localhost:8800/profile/contact/${user_id}`)
                 setUserPersonal(res.data);
             }catch(err){
                 console.log(err)

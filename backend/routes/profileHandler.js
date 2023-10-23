@@ -27,9 +27,27 @@ router.get('/:user_id', (req, res) => {
         res.status(500).send('Error retrieving data');
         } else {
         res.json(result);
+
         }
     });
     });
+
+
+router.get('/contact/:user_id', (req, res) => {
+      const user_id = req.params.user_id;
+      
+      const sql = "SELECT * FROM user_contact WHERE user_id = ?";
+      
+      conn2.query(sql, [user_id], (err, result) => {
+          if (err) {
+              console.error(err);
+              res.status(500).send('Error retrieving contact info');
+          } else {
+              res.json(result);
+              console.log(result)
+          }
+      });
+  });
 
 
     router.put('/:user_id', (req, res) => {
@@ -64,21 +82,21 @@ router.get('/:user_id', (req, res) => {
 
 
 
-// Contact Info
-router.get('/contact/:user_id', (req, res) => {
-    const user_id = req.params.user_id;
+// // Contact Info
+// router.get('/contact/:user_id', (req, res) => {
+//     const user_id = req.params.user_id;
     
-    const sql = "SELECT * FROM user_contact WHERE user_id = ?";
+//     const sql = "SELECT * FROM user_contact WHERE user_id = ?";
     
-    conn2.query(sql, [user_id], (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error retrieving contact info');
-        } else {
-            res.json(result);
-        }
-    });
-});
+//     conn2.query(sql, [user_id], (err, result) => {
+//         if (err) {
+//             console.error(err);
+//             res.status(500).send('Error retrieving contact info');
+//         } else {
+//             res.json(result);
+//         }
+//     });
+// });
 
 // Government ID
 router.get('/govinfo/:user_id', (req, res) => {
