@@ -18,6 +18,7 @@ import ContactInfo from './pages/ContactInfo';
 import GovernmentInfo from './pages/GovernmentInfo';
 import News from './pages/News';
 import RPTaxPayment from './pages/RPTaxPayment';
+import Blank from './pages/Blank';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
         <Route exact path="/govinfo/:user_id" element={<GovernmentInfo />} />
         <Route exact path="/news" element={<News />} />
         <Route exact path="/rptaxpayment" element={<RPTaxPayment />} />
+        <Route exact path="/blank" element={<Blank />} />
       </Routes>
     </>
   );
