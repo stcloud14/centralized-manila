@@ -49,6 +49,20 @@ router.get('/contact/:user_id', (req, res) => {
       });
   });
 
+// Government ID
+router.get('/govinfo/:user_id', (req, res) => {
+  const user_id = req.params.user_id;
+  const sql = "SELECT * FROM user_gov_id WHERE user_id = ?";
+  conn2.query(sql, [user_id], (err, result) => {
+      if (err) {
+          console.error(err);
+          res.status(500).send('Error retrieving government info');
+      } else {
+          res.json(result);
+      }
+  });
+});
+
 
     router.put('/:user_id', (req, res) => {
         const user_id = req.params.user_id;
@@ -80,6 +94,34 @@ router.get('/contact/:user_id', (req, res) => {
         );
       });
 
+      router.put('/contact/:user_id', (req, res) => {
+        const user_id = req.params.user_id;
+      
+        const {
+          user_email,
+          mobile_no,
+          tel_no,
+          user_municipal,
+          user_brgy,
+          user_dist,
+          user_addr,
+        } = req.body;
+        console.log(req.body);
+        // Assuming you want to update the 'user_personal' table
+        conn2.query(
+          'UPDATE user_contact SET `user_email`=?, `mobile_no`=?, `tel_no`=?, `user_municipal`=?, `user_brgy`=?, `user_dist`=?, `user_addr`=?  WHERE user_id=?',
+          [user_email, mobile_no, tel_no, user_municipal, user_brgy, user_dist, user_addr, user_id],
+          (error, results, fields) => {
+            if (error) {
+              console.error(error);
+              res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+              res.status(200).json({ message: 'Update successful' });
+            }
+          }
+        );
+      });
+
 
 
 // // Contact Info
@@ -98,19 +140,7 @@ router.get('/contact/:user_id', (req, res) => {
 //     });
 // });
 
-// Government ID
-router.get('/govinfo/:user_id', (req, res) => {
-    const user_id = req.params.user_id;
-    const sql = "SELECT * FROM user_gov_id WHERE user_id = ?";
-    conn2.query(sql, [user_id], (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error retrieving government info');
-        } else {
-            res.json(result);
-        }
-    });
-});
+
 
 
 export default router;

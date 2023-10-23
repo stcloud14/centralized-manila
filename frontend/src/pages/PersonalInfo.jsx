@@ -20,7 +20,7 @@ const PersonalInfo =()=>{
   const [userPersonal, setUserPersonal]=useState({})
 
   // const id = 'RL1741';
-     console.log(userPersonal);
+    console.log(userPersonal);
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
             try{
