@@ -15,7 +15,7 @@ const LandingPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Card
             imageSrc="./src/images/mnl.svg" // Replace with the URL of your image
-            description="User"
+            description="Citizen Portal"
             isHovered={isCard1Hovered}
             handleHover={() => setCard1Hovered(true)}
             handleLeave={() => setCard1Hovered(false)}
@@ -23,7 +23,7 @@ const LandingPage = () => {
           />
           <Card
             imageSrc="./src/images/mnl_admin.svg" // Replace with the URL of your image
-            description="Admin"
+            description="Admin Portal"
             isHovered={isCard2Hovered}
             handleHover={() => setCard2Hovered(true)}
             handleLeave={() => setCard2Hovered(false)}
@@ -38,7 +38,7 @@ const LandingPage = () => {
 const Card = ({ imageSrc, description, isHovered, handleHover, handleLeave, to }) => {
   const cardStyle = {
     backgroundColor: isHovered ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.3)',
-    color: isHovered ? 'black' : 'white', // Text color changes to black when hovered
+    color: isHovered ? 'black' : 'black', // Text color changes to black when hovered
     boxShadow: isHovered
       ? '0 4px 6px rgba(255, 255, 255, 0.7), 0 -4px 6px rgba(255, 255, 255, 0.9)'
       : 'none',
