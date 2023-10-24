@@ -21,6 +21,7 @@ import GovernmentInfo from './pages/GovernmentInfo';
 import News from './pages/News';
 import RPTaxPayment from './pages/RPTaxPayment';
 import Blank from './pages/Blank';
+import Dash from './pages/Dash';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
         <Route exact path="/news" element={<News />} />
         <Route exact path="/rptaxpayment/:user_id" element={<RPTaxPayment />} />
         <Route exact path="/blank" element={<Blank />} />
+        <Route exact path="/dash/:user_id" element={<Dash />} />
       </Routes>
     </>
   );

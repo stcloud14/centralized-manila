@@ -2,7 +2,7 @@ import React from 'react';
 
 function WelcomeBanner() {
   return (
-    <div className="relative bg-indigo-200 dark:bg-indigo-500 p-4 sm:p-6 rounded-sm overflow-hidden mb-8">
+    <div className="relative px-2 sm:px-2 rounded-sm overflow-hidden mb-4">
       {/* Background illustration */}
       <div className="absolute right-0 top-0 -mt-4 mr-16 pointer-events-none hidden xl:block" aria-hidden="true">
         
@@ -10,8 +10,16 @@ function WelcomeBanner() {
 
       {/* Content */}
       <div className="relative">
-        <h1 className="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold mb-1">Centralized Manila</h1>
-        <p className="dark:text-indigo-200">Here is what’s happening with your projects today:</p>
+        <h1 className="text-sm lg:text-3xl md:text-3xl text-slate-800 dark:text-slate-100 font-medium mb-1">
+          Welcome to Centralized
+          <span className='text-blue-600'> M</span>
+          <span className='text-red-500'>a</span>
+          <span className='text-yellow-500'>n</span>
+          <span className='text-green-500'>i</span>
+          <span className='text-blue-600'>l</span>
+          <span className='text-red-500'>a</span>!
+          </h1>
+        <p className="lg:text-sm dark:text-slate-100 font-thin text-xs">Discover what's happening today.</p>
       </div>
     </div>
   );
