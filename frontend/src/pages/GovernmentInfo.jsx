@@ -53,6 +53,10 @@ const GovernmentInfo =()=>{
           setIsSuccess(true); // Set success state to true
           handleCloseModal(); // Close the modal
           console.log('User credentials updated successfully');
+
+          setTimeout(() => {
+            setIsSuccess(false);
+          }, 3000);
         })
         .catch((err) => {
           console.error(err);
