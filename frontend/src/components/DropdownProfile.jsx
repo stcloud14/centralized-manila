@@ -56,7 +56,7 @@ function DropdownProfile({
       </button>
 
       <Transition
-        className={`origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
+        className={`origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-[#181818] border border-slate-200 dark:border-[#3d3d3d] py-1.5 rounded shadow-lg overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
         show={dropdownOpen}
         enter="transition ease-out duration-200 transform"
         enterStart="opacity-0 -translate-y-2"
@@ -70,14 +70,14 @@ function DropdownProfile({
           onFocus={() => setDropdownOpen(true)}
           onBlur={() => setDropdownOpen(false)}
         >
-          <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-slate-700">
+          <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-[#3d3d3d]">
             <div className="font-medium text-slate-800 dark:text-slate-100">Acme Inc.</div>
             <div className="text-xs text-slate-500 dark:text-slate-400 italic">Administrator</div>
           </div>
           <ul>
             <li>
               <Link
-                className="font-medium text-sm text-slate-600 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
+                className="font-medium text-sm text-slate-600 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-600 flex items-center py-1 px-3"
                 to="/settings"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
@@ -86,7 +86,7 @@ function DropdownProfile({
             </li>
             <li>
               <Link
-                className="font-medium text-sm text-slate-600 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
+                className="font-medium text-sm text-slate-600 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-600 flex items-center py-1 px-3"
                 to="/"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
