@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import axios from 'axios'
 
+import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 
@@ -7,8 +9,12 @@ import 'flatpickr/dist/themes/airbnb.css';
 
 function RPTaxPayment() {
 
+  const location = useLocation();
+  const { pathname } = location;
+  console.log(pathname);
+  const user_id = pathname.split("/")[2];
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [birthdate, setBirthdate] = useState(new Date());
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

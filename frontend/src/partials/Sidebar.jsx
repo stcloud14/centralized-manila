@@ -246,7 +246,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/rptaxpayment"
+                              to={`/rptaxpayment/${user_id}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }

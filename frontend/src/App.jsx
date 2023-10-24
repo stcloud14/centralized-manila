@@ -44,7 +44,7 @@ function App() {
         <Route exact path="/contact/:user_id" element={<ContactInfo />} />
         <Route exact path="/govinfo/:user_id" element={<GovernmentInfo />} />
         <Route exact path="/news" element={<News />} />
-        <Route exact path="/rptaxpayment" element={<RPTaxPayment />} />
+        <Route exact path="/rptaxpayment/:user_id" element={<RPTaxPayment />} />
         <Route exact path="/blank" element={<Blank />} />
       </Routes>
     </>
