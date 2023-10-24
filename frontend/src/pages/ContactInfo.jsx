@@ -52,9 +52,13 @@ const ContactInfo =()=>{
       await axios
         .put(`http://localhost:8800/profile/contact/${user_id}`, userPersonal)
         .then((res) => {
-          setIsSuccess(true); // Set success state to true
-          handleCloseModal(); // Close the modal
+          setIsSuccess(true);
+          handleCloseModal();
           console.log('User credentials updated successfully');
+
+          setTimeout(() => {
+            setIsSuccess(false);
+          }, 3000);
         })
         .catch((err) => {
           console.error(err);
