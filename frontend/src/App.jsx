@@ -11,7 +11,6 @@ import './charts/ChartjsConfig';
 
 // Import pages
 import LandingPage from './pages/LandingPage';
-import Login from './pages/Login';
 import LoginAdmin from './pages/LoginAdmin';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -37,7 +36,6 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/indexuser" element={<Login />} />
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/dashboard/:user_id" element={<Dashboard />} />

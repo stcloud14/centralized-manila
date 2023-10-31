@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ThemeToggle from '../components/ThemeToggle';
 
 function LandingPage() {
 
@@ -31,7 +32,7 @@ function LandingPage() {
   };
     
   return (
-    <div className="relative h-screen bg-[url('./src/images/manila-v3.jpg')] lg:bg-cover bg-no-repeat bg-top">
+    <div className="relative h-screen bg-[url('./src/images/manila-v2.jpg')] dark:bg-[url('./src/images/manila-hd.png')] lg:bg-cover bg-no-repeat bg-top">
       <div className="flex flex-col md:flex-row h-full">
         {/* Left Section */}
         <div className="md:w-1/2 flex items-center justify-center lg:mb-0 mb-5">
@@ -55,7 +56,7 @@ function LandingPage() {
 
         {/* Right Section */}
         <div className="md:w-1/2 flex items-center justify-center lg:mx-auto mx-5">
-          <div className="bg-white bg-opacity-80 lg:p-16 p-10 rounded-3xl shadow-lg">
+          <div className="bg-white dark:bg-opacity-100 bg-opacity-90 lg:p-16 p-10 rounded-3xl shadow-lg">
           <h1 className='text-center mb-10 lg:text-lg text-md tracking-[.020em]'>
             <span className='font-medium text-slate-600'>"Maligayang pagdating, </span>
             <span className='font-bold text-blue-500'>Manileño!"</span>
@@ -107,7 +108,7 @@ function LandingPage() {
             </form>
           </div>
         </div>
-
+        <ThemeToggle/>
         {/* Footer */}
         <div className="absolute bottom-0 w-full text-center text-sm text-gray-500 py-3 drop-shadow-xl">
           Copyright &copy; {new Date().getFullYear()} |
