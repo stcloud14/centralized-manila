@@ -49,7 +49,7 @@ function Login() {
       {/* Right Side */}
       <div className="lg:w-1/2">
       <div className='p-8 lg:me-40 lg:ms-4 lg:pt-10'>
-      <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
         <h1 className='text-center mb-10 text-black text-slate-600'>Welcome to <span className='font-medium text-blue-500'>Centralized</span><span className='font-medium text-red-500'> Manila</span></h1>
                 <div className="grid md:grid-cols-1 md:gap-6">
                   <div className="relative z-0 w-full lg:mb-0 mb-4 group">
