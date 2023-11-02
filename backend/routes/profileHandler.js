@@ -3,8 +3,6 @@ import conn2 from './connection.js';
 
 const router = Router();
 
-
-
 // //Profile Information
 // app.get("/profile", (req, res)=>{
 //   const q= "SELECT * FROM user_personal WHERE user_id = 'RL1741'"
@@ -13,7 +11,6 @@ const router = Router();
 //           return res.json(data)
 //   })
 // })
-
 
 router.get('/:user_id', (req, res) => {
     const user_id = req.params.user_id;

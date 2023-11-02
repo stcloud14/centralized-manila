@@ -21,8 +21,6 @@ function DropdownProfile({
   const dropdown = useRef(null);
 
   const [userPersonal, setUserPersonal]=useState({})
-
-  // const id = 'RL1741';
     console.log(userPersonal);
     useEffect(()=>{
         const fetchUserPersonal= async()=>{

@@ -83,7 +83,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           </button>
 
           {/* Logo */}
-          <NavLink end to="/dashboard" className="block">
+          <NavLink end to={`/dashboard/${user_id}`} className="block">
               <img src={logo} width="32" height="32" viewBox="0 0 50 50"/>
           </NavLink>
           
@@ -279,7 +279,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/blank"
+                              to={`/Rptaxclearance/${user_id}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
