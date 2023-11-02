@@ -94,7 +94,7 @@ function DropdownProfile({
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-slate-700">
-            <div className="font-medium text-slate-800 dark:text-slate-100">Acme Inc.</div>
+            <div className="font-medium text-slate-800 dark:text-slate-100">{userPersonal.f_name} {userPersonal.l_name}</div>
             <div className="text-xs text-slate-500 dark:text-slate-400 italic">Administrator</div>
           </div>
           <ul>
