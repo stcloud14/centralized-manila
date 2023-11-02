@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Transition from '../utils/Transition';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 // import UserAvatar from '../images/user-avatar-32.png';
 
@@ -8,10 +10,31 @@ function DropdownProfile({
   align
 }) {
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const location = useLocation();
+  const { pathname } = location;
+  console.log(pathname);
+  const user_id = pathname.split("/")[2];
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef(null);
   const dropdown = useRef(null);
+
+  const [userPersonal, setUserPersonal]=useState({})
+
+  // const id = 'RL1741';
+    console.log(userPersonal);
+    useEffect(()=>{
+        const fetchUserPersonal= async()=>{
+            try{
+                const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
+                setUserPersonal(res.data[0])
+            }catch(err){
+                console.log(err)
+            }
+        }
+        fetchUserPersonal()
+    },[])
 
   // close on click outside
   useEffect(() => {
@@ -48,7 +71,7 @@ function DropdownProfile({
           <path className="fill-blue-600" fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" />
         </svg>
         <div className="flex items-center truncate">
-          <span className="truncate ml-2 mr-1 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">Rufi MNL</span>
+          <span className="truncate ml-2 mr-1 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{userPersonal.f_name}</span>
           <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
           </svg>
@@ -56,7 +79,7 @@ function DropdownProfile({
       </button>
 
       <Transition
-        className={`origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-[#181818] border border-slate-200 dark:border-[#3d3d3d] py-1.5 rounded shadow-lg overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
+        className={`origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
         show={dropdownOpen}
         enter="transition ease-out duration-200 transform"
         enterStart="opacity-0 -translate-y-2"
@@ -70,14 +93,14 @@ function DropdownProfile({
           onFocus={() => setDropdownOpen(true)}
           onBlur={() => setDropdownOpen(false)}
         >
-          <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-[#3d3d3d]">
+          <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-slate-700">
             <div className="font-medium text-slate-800 dark:text-slate-100">Acme Inc.</div>
             <div className="text-xs text-slate-500 dark:text-slate-400 italic">Administrator</div>
           </div>
           <ul>
             <li>
               <Link
-                className="font-medium text-sm text-slate-600 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-600 flex items-center py-1 px-3"
+                className="font-medium text-sm text-slate-600 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
                 to="/settings"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
@@ -86,7 +109,7 @@ function DropdownProfile({
             </li>
             <li>
               <Link
-                className="font-medium text-sm text-slate-600 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-600 flex items-center py-1 px-3"
+                className="font-medium text-sm text-slate-600 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
                 to="/"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
