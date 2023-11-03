@@ -16,7 +16,7 @@ const GovernmentInfo =()=>{
   console.log(pathname);
   const user_id = pathname.split("/")[2];
 
-  const [userPersonal, setUserPersonal]=useState([])
+  const [userPersonal, setUserPersonal]=useState({})
   // const id = 'RL1741';
 
     console.log(userPersonal)

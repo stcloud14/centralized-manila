@@ -19,7 +19,6 @@ const PersonalInfo =()=>{
 
   const [userPersonal, setUserPersonal]=useState({})
 
-  // const id = 'RL1741';
     console.log(userPersonal);
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
@@ -64,7 +63,7 @@ const PersonalInfo =()=>{
       } catch (err) {
         console.error(err);
       }
-    };
+    }; 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 

@@ -47,18 +47,31 @@ router.get('/contact/:user_id', (req, res) => {
   });
 
 // Government ID
-router.get('/govinfo/:user_id', (req, res) => {
-  const user_id = req.params.user_id;
-  const sql = "SELECT * FROM user_gov_id WHERE user_id = ?";
-  conn2.query(sql, [user_id], (err, result) => {
-      if (err) {
-          console.error(err);
-          res.status(500).send('Error retrieving government info');
-      } else {
-          res.json(result);
-      }
+  router.get('/govinfo/:user_id', (req, res) => {
+    const user_id = req.params.user_id;
+    const sql = "SELECT * FROM user_gov_id WHERE user_id = ?";
+    conn2.query(sql, [user_id], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving government info');
+        } else {
+            res.json(result);
+        }
+    });
   });
-});
+
+  router.get('/rptaxpayment/:user_id', (req, res) => {
+    const user_id = req.params.user_id;
+    const sql = "SELECT * FROM rp_tax WHERE user_id = ?";
+    conn2.query(sql, [user_id], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving government info');
+        } else {
+            res.json(result);
+        }
+    });
+  });
 
 
     router.put('/:user_id', (req, res) => {
@@ -135,6 +148,30 @@ router.get('/govinfo/:user_id', (req, res) => {
         conn2.query(
           'UPDATE user_gov_id SET `user_tin_id`=?, `user_pgb_id`=?, `user_philh_id`=?, `user_sss_id`=?, `user_gsis_id`=?, `user_natl_id`=?  WHERE user_id=?',
           [user_tin_id, user_pgb_id, user_philh_id, user_sss_id, user_gsis_id, user_natl_id, user_id],
+          (error, results, fields) => {
+            if (error) {
+              console.error(error);
+              res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+              res.status(200).json({ message: 'Update successful' });
+            }
+          }
+        );
+      });
+
+
+      router.put('/rptaxpayment/:user_id', (req, res) => {
+        const user_id = req.params.user_id;
+        const {
+          rp_tdn,
+          rp_pin,
+          rp_year,
+          rp_period,
+        } = req.body;
+        console.log(req.body);
+        conn2.query(
+          'UPDATE rp_tax SET `rp_tdn`=?, `rp_pin`=?, `rp_year`=?, `rp_period`=? WHERE user_id=?',
+          [rp_tdn, rp_pin, rp_year, rp_period, user_id],
           (error, results, fields) => {
             if (error) {
               console.error(error);
