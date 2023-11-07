@@ -19,7 +19,7 @@ import ContactInfo from './pages/ContactInfo';
 import GovernmentInfo from './pages/GovernmentInfo';
 import News from './pages/News';
 import RPTaxPayment from './pages/RPTaxPayment';
-import Rptaxclearance from './pages/Rptaxclearance';
+import RPTaxClearance from './pages/RPTaxClearance';
 import Dash from './pages/Dash';
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
         <Route exact path="/govinfo/:user_id" element={<GovernmentInfo />} />
         <Route exact path="/news" element={<News />} />
         <Route exact path="/rptaxpayment/:user_id" element={<RPTaxPayment/>} />
-        <Route exact path="/rptaxclearance/:user_id" element={<Rptaxclearance/>} />
+        <Route exact path="/rptaxclearance/:user_id" element={<RPTaxClearance/>} />
         <Route exact path="/dash/:user_id" element={<Dash />} />
       </Routes>
     </>

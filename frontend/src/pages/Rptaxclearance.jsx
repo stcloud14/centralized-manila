@@ -7,7 +7,7 @@ import Header from '../partials/Header';
 
 import 'flatpickr/dist/themes/airbnb.css';
 
-function Rptaxclearance() {
+function RPTaxClearance() {
 
   const location = useLocation();
   const { pathname } = location;
@@ -67,4 +67,4 @@ function Rptaxclearance() {
   );
 }
 
-export default Rptaxclearance;
+export default RPTaxClearance;

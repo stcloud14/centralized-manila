@@ -116,7 +116,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       <path className="fill-slate-500" d="M12 7.875a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" />
                     </svg>
                     <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                      Dashboard
+                      Home
                     </span>
                   </div>
                 </NavLink>
@@ -279,7 +279,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to={`/Rptaxclearance/${user_id}`}
+                              to={`/rptaxclearance/${user_id}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
