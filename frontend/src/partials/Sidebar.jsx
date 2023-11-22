@@ -25,7 +25,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
     return () => document.removeEventListener('click', clickHandler);
   });
 
-  // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }) => {
       if (!sidebarOpen || keyCode !== 27) return;
@@ -83,7 +82,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           </button>
 
           {/* Logo */}
-          <NavLink end to={`/dashboard/${user_id}`} className="block">
+          <NavLink end to={`/home/${user_id}`} className="block">
               <img src={logo} width="32" height="32" viewBox="0 0 50 50"/>
           </NavLink>
           
@@ -102,9 +101,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             </h3>
             <ul className="submenu mt-3 text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600">
             
-             {/* Dashboard */}
+             {/* Home */}
              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
-                <NavLink end to={`/dashboard/${user_id}`}
+                <NavLink end to={`/home/${user_id}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }

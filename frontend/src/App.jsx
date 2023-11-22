@@ -13,7 +13,7 @@ import './charts/ChartjsConfig';
 import LandingPage from './pages/LandingPage';
 import LoginAdmin from './pages/LoginAdmin';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
 import PersonalInfo from './pages/PersonalInfo';
 import ContactInfo from './pages/ContactInfo';
 import GovernmentInfo from './pages/GovernmentInfo';
@@ -38,7 +38,7 @@ function App() {
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
         <Route exact path="/register" element={<Register />} />
-        <Route exact path="/dashboard/:user_id" element={<Dashboard />} />
+        <Route exact path="/home/:user_id" element={<Home />} />
         <Route exact path="/personalinfo/:user_id" element={<PersonalInfo />} />
         <Route exact path="/contact/:user_id" element={<ContactInfo />} />
         <Route exact path="/govinfo/:user_id" element={<GovernmentInfo />} />
