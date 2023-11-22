@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ThemeToggle from '../components/ThemeToggle';
+import ThemeToggle from '../partials/ThemeToggle';
 
 function LandingPage() {
 

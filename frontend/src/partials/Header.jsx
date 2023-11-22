@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import SearchModal from '../components/ModalSearch';
-import UserMenu from '../components/DropdownProfile';
-import ThemeToggle from '../components/ThemeToggle';
+import SearchModal from './ModalSearch';
+import UserMenu from './DropdownProfile';
+import ThemeToggle from './ThemeToggle';
 
 function Header({ sidebarOpen, setSidebarOpen }) {
   const [searchModalOpen, setSearchModalOpen] = useState(false);

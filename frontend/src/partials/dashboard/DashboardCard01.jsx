@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LineChart from '../../charts/LineChart01';
 import Icon from '../../images/icon-01.svg';
-import EditMenu from '../../components/DropdownEditMenu';
+import EditMenu from '../../partials/DropdownEditMenu';
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from '../../utils/Utils';
@@ -97,7 +97,7 @@ function DashboardCard01() {
             </li>
           </EditMenu>
         </header>
-        <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Acme Plus</h2>
+        <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Text 1</h2>
         <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">Sales</div>
         <div className="flex items-start">
           <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">$24,780</div>
