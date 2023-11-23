@@ -3,7 +3,6 @@
 /* Customise flatpickr */
 * {
     --calendarPadding: 24px;
-    --daySize: 36px;
     --daysWidth: calc(var(--daySize)*7);
 }
 
