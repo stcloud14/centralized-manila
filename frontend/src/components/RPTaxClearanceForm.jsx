@@ -5,8 +5,6 @@ import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 
-import 'flatpickr/dist/themes/airbnb.css';
-
 function RPTaxClearanceForm() {
 
   const location = useLocation();
@@ -15,9 +13,6 @@ function RPTaxClearanceForm() {
   const user_id = pathname.split("/")[2];
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-
-  
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

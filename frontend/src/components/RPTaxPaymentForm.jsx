@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 
-
-
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 
-
-import 'flatpickr/dist/themes/airbnb.css';
 
 const RPTaxPaymentForm =()=>{
 
