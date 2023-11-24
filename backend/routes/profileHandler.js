@@ -13,21 +13,38 @@ const router = Router();
 // })
 
 router.get('/:user_id', (req, res) => {
-    const user_id = req.params.user_id;
+  const user_id = req.params.user_id;
 
-    // SQL query to fetch the user's profile data
-    const sql = "SELECT * FROM user_personal WHERE user_id = ?";
+  // SQL query to fetch the user's profile data and contact data
+  const sql = "SELECT * FROM user_personal WHERE user_id = ?";
+  const sql1 = "SELECT * FROM birth_info WHERE user_id = ?";
 
-    conn2.query(sql, [user_id], (err, result) => {
-        if (err) {
-        console.error(err);
-        res.status(500).send('Error retrieving data');
-        } else {
-        res.json(result);
+  conn2.query(sql, [user_id], (err, result) => {
+      if (err) {
+          console.error(err);
+          res.status(500).send('Error retrieving data');
+      } else {
+          const userPersonalData = result;
 
-        }
-    });
-    });
+          // Execute the second query to get contact data
+          conn2.query(sql1, [user_id], (err1, result1) => {
+              if (err1) {
+                  console.error(err1);
+                  res.status(500).send('Error retrieving contact data');
+              } else {
+                  const userBirthData = result1;
+
+                  const userData = {
+                      user_personal: userPersonalData,
+                      birth_info: userBirthData
+                  };
+
+                  res.json(userData);
+              }
+          });
+      }
+  });
+});
 
 
 router.get('/contact/:user_id', (req, res) => {
@@ -74,32 +91,49 @@ router.get('/contact/:user_id', (req, res) => {
   });
 
 
-    router.put('/:user_id', (req, res) => {
-        const user_id = req.params.user_id;
-      
-        const {
+  router.put('/:user_id', (req, res) => {
+    const user_id = req.params.user_id;
+  
+    const {
           f_name,
           m_name,
           l_name,
-          suffix,
+          suffix_id,
           sex_id,
           cvl_id,
-        } = req.body;
-        console.log(req.body);
-        // Assuming you want to update the 'user_personal' table
-        conn2.query(
-          'UPDATE user_personal SET `f_name`=?, `m_name`=?, `l_name`=?, `suffix_id`=?, `sex_id`=?, `cvl_id`=? WHERE user_id=?',
-          [f_name, m_name, l_name, suffix, sex_id, cvl_id, user_id],
-          (error, results, fields) => {
-            if (error) {
-              console.error(error);
-              res.status(500).json({ error: 'Internal Server Error' });
-            } else {
-              res.status(200).json({ message: 'Update successful' });
+          res_id,
+          czn_id,
+          birth_date,
+          birth_place
+          } = req.body;
+    
+  
+    // Update user_personal table
+    conn2.query(
+      'UPDATE user_personal SET `f_name`=?, `m_name`=?, `l_name`=?, `suffix_id`=?, `sex_id`=?, `cvl_id`=?, `res_id`=?, `czn_id`=? WHERE user_id=?',
+      [f_name, m_name, l_name, suffix_id, sex_id, cvl_id, res_id, czn_id, user_id],
+      (error, results, fields) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+          // Update birth_info table
+          conn2.query(
+            'UPDATE birth_info SET `birth_date`=?, `birth_place`=? WHERE user_id=?',
+            [birth_date, birth_place, user_id],
+            (errorBirth, resultsBirth, fieldsBirth) => {
+              if (errorBirth) {
+                console.error(errorBirth);
+                res.status(500).json({ error: 'Internal Server Error' });
+              } else {
+                res.status(200).json({ message: 'Update successful' });
+              }
             }
-          }
-        );
-      });
+          );
+        }
+      }
+    );
+  });
 
       router.put('/contact/:user_id', (req, res) => {
         const user_id = req.params.user_id;
