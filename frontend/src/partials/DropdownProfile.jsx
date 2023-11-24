@@ -21,12 +21,15 @@ function DropdownProfile({
   const dropdown = useRef(null);
 
   const [userPersonal, setUserPersonal]=useState({})
-    console.log(userPersonal);
+  const [userBirth, setUserBirth]=useState({})
+
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
             try{
                 const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
-                setUserPersonal(res.data[0])
+                setUserPersonal(res.data.user_personal[0])
+                setUserBirth(res.data.birth_info[0])
+
             }catch(err){
                 console.log(err)
             }
