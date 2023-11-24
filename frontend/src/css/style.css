@@ -9,6 +9,14 @@
 
 @import 'tailwindcss/utilities';
 
+/* Autocomplete Modification Transparent Background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 /* width */
 /* ::-webkit-scrollbar {
     width: 10px;
