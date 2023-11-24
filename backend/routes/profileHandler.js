@@ -191,28 +191,28 @@ router.get('/contact/:user_id', (req, res) => {
       });
 
 
-      router.put('/rptaxpayment/:user_id', (req, res) => {
-        const user_id = req.params.user_id;
-        const {
-          rp_tdn,
-          rp_pin,
-          rp_year,
-          rp_period,
-        } = req.body;
-        console.log(req.body);
-        conn2.query(
-          'UPDATE rp_tax SET `rp_tdn`=?, `rp_pin`=?, `rp_year`=?, `rp_period`=? WHERE user_id=?',
-          [rp_tdn, rp_pin, rp_year, rp_period, user_id],
-          (error, results, fields) => {
-            if (error) {
-              console.error(error);
-              res.status(500).json({ error: 'Internal Server Error' });
-            } else {
-              res.status(200).json({ message: 'Update successful' });
-            }
-          }
-        );
-      });
+      // router.put('/rptaxpayment/:user_id', (req, res) => {
+      //   const user_id = req.params.user_id;
+      //   const {
+      //     rp_tdn,
+      //     rp_pin,
+      //     rp_year,
+      //     rp_period,
+      //   } = req.body;
+      //   console.log(req.body);
+      //   conn2.query(
+      //     'UPDATE rp_tax SET `rp_tdn`=?, `rp_pin`=?, `rp_year`=?, `rp_period`=? WHERE user_id=?',
+      //     [rp_tdn, rp_pin, rp_year, rp_period, user_id],
+      //     (error, results, fields) => {
+      //       if (error) {
+      //         console.error(error);
+      //         res.status(500).json({ error: 'Internal Server Error' });
+      //       } else {
+      //         res.status(200).json({ message: 'Update successful' });
+      //       }
+      //     }
+      //   );
+      // });
 
 
 
