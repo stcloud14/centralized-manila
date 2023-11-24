@@ -43,7 +43,7 @@ const RPTaxPaymentForm =()=>{
     e.preventDefault();
     try {
       await axios
-        .put(`http://localhost:8800/profile/rptaxpayment/${user_id}`, userPersonal)
+        .post(`http://localhost:8800/profile/rptaxpayment/`, userPersonal)
         .then((res) => {
           setIsSuccess(true); // Set success state to true
           handleCloseModal(); // Close the modal
@@ -73,12 +73,6 @@ const RPTaxPaymentForm =()=>{
     setIsModalOpen(false);
   };
 
-
-
-
-
-
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
 
@@ -95,62 +89,111 @@ const RPTaxPaymentForm =()=>{
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
         <main>
-          <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
-            <div className="px-5 py-5">
-              
-                
-            <form onSubmit={handleSubmit}>
-            <h1 className='font-medium text-center'>Real Property Tax</h1>
-              <h1 className='mb-7 text-sm italic text-center'>Tax Payment</h1>
+          <div className="flex flex-col h-full justify-between mx-4 my-4">
+            <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
+              <div className="px-5 py-5">
+                <form className="max-w-md mx-auto">
+                  {/* Header */}
+                  <h1 className="font-medium text-center">Real Property Tax</h1>
+                  <h1 className="mb-7 text-sm italic text-center">Tax Clearance</h1>
 
-              {isSuccess && (
-              <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
-                Success! Your changes have been saved.
-              </div>
-              )}
-  
-              <div className="grid md:grid-cols-1 md:gap-6 md:mx-96 mt-24">
-              <div className="relative z-0 w-full mb-2 group">
-                  <input onChange={handleInputChange} value={userPersonal.rp_tdn}  type="text" name="rp_tdn" id="rp_tdn" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
-                  <label htmlFor="first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Account Name</label>
-                </div>
-                <div className="relative z-0 w-full mb-2 group">
-                  <input onChange={handleInputChange} value={userPersonal.rp_tdn}  type="text" name="rp_tdn" id="rp_tdn" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                  <label htmlFor="first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tax Declaration Number (TDN)</label>
-                </div>
-                <div className="relative z-0 w-full mb-2 group">
-                  <input onChange={handleInputChange} value={userPersonal.rp_pin} type="text" name="rp_pin" id="rp_pin" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                  <label htmlFor="middle_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Property Identification Number (PIN)</label>
-                </div>
-                <div className="relative z-0 w-full mb-2 group">
-                  <input onChange={handleInputChange} value={userPersonal.rp_year} type="text" name="rp_year" id="rp_year" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                  <label htmlFor="last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Year</label>
-                </div>
-                <div className="relative z-0 w-full mb-2 group">
-                  <select onChange={handleInputChange} value={userPersonal.sex_id} name="sex_id" id="period" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" disabled selected>Select Period</option>
-                    <option value="1" className='dark:bg-[#3d3d3d]'>1st Quarter</option>
-                    <option value="2"className='dark:bg-[#3d3d3d]'>2nd Quarter</option>
-                    <option value="3"className='dark:bg-[#3d3d3d]'>3rd Quarter</option>
-                    <option value="4"className='dark:bg-[#3d3d3d]'>4th Quarter</option>
-                  </select>
-                  <label htmlFor="period" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Period</label>
-                </div>
-                <div className="relative z-0 w-full mb-2 group">
-                  <input onChange={handleInputChange} value={userPersonal.rp_period} type="text" name="rp_period" id="rp_year" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                  <label htmlFor="last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Amount</label>
-                </div>
-              </div>
-           
-              <div className="flex flex-col items-center md:flex-row md:justify-end mt-7">
-                  <button 
-                  onClick={handleProceed} 
-                  type="submit" 
-                  className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
-                    Proceed</button>
-              </div>
-            </form>
+                  {/* Input Fields */}
+                  <div className="grid gap-6 mt-24">
+                      <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text" name="acc_name" id="acc_name" placeholder=" " onChange={handleInputChange} value={userPersonal.acc_name}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          required
+                        />
+                        <label
+                          htmlFor="acc_name"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Account Name
+                        </label>
+                      </div>
 
+                      <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text" name="rp_tdn" id="rp_tdn" placeholder=" " onChange={handleInputChange} value={userPersonal.rp_tdn}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          required
+                        />
+                        <label
+                          htmlFor="rp_tdn"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Tax Declaration Number (TDN)
+                        </label>
+                      </div>
+
+                      <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text" name="rp_pin" id="rp_pin" placeholder=" " onChange={handleInputChange} value={userPersonal.rp_pin}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          required
+                        />
+                        <label
+                          htmlFor="rp_pin"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Property Identification Number (PIN)
+                        </label>
+                      </div>
+
+                      <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text" name="rp_year" id="rp_year" placeholder=" " onChange={handleInputChange} value={userPersonal.rp_year}
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          required
+                        />
+                        <label
+                          htmlFor="rp_year"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Year
+                        </label>
+                      </div>
+
+                      <div className="relative z-0 w-full mb-6 group">
+                        <select onChange={handleInputChange} value={userPersonal.period} name="period" id="period" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                          <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Period</option>
+                          <option value="1st Quarter" className='dark:bg-[#3d3d3d]'>1st Quarter</option>
+                          <option value="2nd Quarter"className='dark:bg-[#3d3d3d]'>2nd Quarter</option>
+                          <option value="3rd Quarter"className='dark:bg-[#3d3d3d]'>3rd Quarter</option>
+                          <option value="4th Quarter"className='dark:bg-[#3d3d3d]'>4th Quarter</option>
+                        </select>
+                        <label htmlFor="period" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Period</label>
+                      </div>
+
+                      {/* <div className="relative z-0 w-full mb-6 group">
+                        <input
+                          type="text" name="rp_amount" id="rp_amount" placeholder=" "
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          required
+                        />
+                        <label
+                          htmlFor="rp_amount"
+                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >
+                          Amount
+                        </label>
+                      </div> */}
+
+                    </div>
+
+
+                    {/* Submit Button */}
+                    <div className="flex justify-end items-end mt-10 mb-4">
+                      <button 
+                          onClick={handleProceed} 
+                          type="submit" 
+                          className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                            Proceed
+                      </button>
+                    </div>
+                </form>
+              </div>
             </div>
           </div>
         </main>

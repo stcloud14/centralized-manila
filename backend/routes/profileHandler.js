@@ -198,7 +198,28 @@ router.get('/contact/:user_id', (req, res) => {
 //     });
 // });
 
-
+router.post('/rptaxpayment/', (req, res) => {
+  const {
+    acc_name,
+    rp_tdn,
+    rp_pin,
+    rp_year,
+    period,
+  } = req.body;
+  console.log(req.body);
+  conn2.query(
+    'INSERT INTO rp_tax ( `acc_name`, `rp_tdn`, `rp_pin`, `year`, `period`) VALUES (?, ?, ?, ?, ?)',
+    [acc_name, rp_tdn, rp_pin, rp_year, period],
+    (error, results, fields) => {
+      if (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+        res.status(200).json({ message: 'Update successful' });
+      }
+    }
+  );
+});
 
 
 export default router;
