@@ -50,7 +50,12 @@ router.get('/:user_id', (req, res) => {
 router.get('/contact/:user_id', (req, res) => {
       const user_id = req.params.user_id;
       
-      const sql = "SELECT * FROM user_contact WHERE user_id = ?";
+      const sql = "SELECT uc.user_id, uc.user_email, uc.mobile_no, uc.tel_no, mc.city_name, mb.brgy_name, md.dist_name, ai.addr_complete_info \
+      FROM user_contact uc JOIN metromanila_cities mc ON uc.city_id = mc.city_id \
+      JOIN manila_brgy mb ON uc.brgy_id = mb.brgy_id \
+      JOIN manila_district md ON uc.dist_id = md.dist_id \
+      JOIN address_info ai ON uc.addr_info_id = ai.addr_info_id \
+      WHERE uc.user_id = ?";
       
       conn2.query(sql, [user_id], (err, result) => {
           if (err) {

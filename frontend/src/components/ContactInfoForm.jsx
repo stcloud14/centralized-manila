@@ -17,27 +17,26 @@ const ContactInfoForm =()=>{
   console.log(pathname);
   const user_id = pathname.split("/")[2];
 
-  const [userPersonal, setUserPersonal]=useState({})
+  const [userContact, setUserContact]=useState({})
 
-  // const id = 'RL1741';
-  console.log(userPersonal);
+  console.log(userContact);
     useEffect(()=>{
-        const fetchUserPersonal= async()=>{
+        const fetchUserContact= async()=>{
             try{
                 const res= await axios.get(`http://localhost:8800/profile/contact/${user_id}`)
-                setUserPersonal(res.data[0])
+                setUserContact(res.data[0])
             }catch(err){
                 console.log(err)
             }
         }
-        fetchUserPersonal()
+        fetchUserContact()
   }, [])
 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    setUserPersonal((prevData) => ({
+    setUserContact((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -50,7 +49,7 @@ const ContactInfoForm =()=>{
     e.preventDefault();
     try {
       await axios
-        .put(`http://localhost:8800/profile/contact/${user_id}`, userPersonal)
+        .put(`http://localhost:8800/profile/contact/${user_id}`, userContact)
         .then((res) => {
           setIsSuccess(true);
           handleCloseModal();
@@ -121,19 +120,19 @@ const ContactInfoForm =()=>{
             
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input value={userPersonal.user_id} type="text" name="user_id" id="user_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " readOnly/>
+                  <input value={userContact.user_id} type="text" name="user_id" id="user_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " readOnly/>
                   <label htmlFor="user_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ID</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.user_email} type="text" name="user_email" id="user_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
+                  <input onChange={handleInputChange} value={userContact.user_email} type="text" name="user_email" id="user_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
                   <label htmlFor="user_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.mobile_no} type="text" name="mobile_no" id="mobile_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                  <input onChange={handleInputChange} value={userContact.mobile_no} type="text" name="mobile_no" id="mobile_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                   <label htmlFor="mobile_no" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile No.</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.tel_no} type="text" name="tel_no" id="tel_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                  <input onChange={handleInputChange} value={userContact.tel_no} type="text" name="tel_no" id="tel_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                   <label htmlFor="tel_no" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Telephone No.</label>
                 </div>
                
@@ -142,16 +141,16 @@ const ContactInfoForm =()=>{
             
               <div className="grid md:grid-cols-3 md:gap-6 py-5">
               <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.user_municipal} type="text" name="user_municipal" id="user_municipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userContact.city_name} type="text" name="user_municipal" id="user_municipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
                   <label htmlFor="user_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                 </div>
 
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.user_brgy} type="text" name="user_brgy" id="user_brgy" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userContact.brgy_name} type="text" name="user_brgy" id="user_brgy" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
                   <label htmlFor="user_brgy" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Barangay</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.user_dist} type="text" name="user_dist" id="user_dist" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userContact.dist_name} type="text" name="user_dist" id="user_dist" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
                   <label htmlFor="user_dist" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">District</label>
                 </div>
               </div>
@@ -159,7 +158,7 @@ const ContactInfoForm =()=>{
 
               <div className="grid md:grid-cols-1 md:gap-6 py-5">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.user_addr} type="text" name="user_addr" id="user_addr" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userContact.addr_complete_info} type="text" name="user_addr" id="user_addr" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
                   <label htmlFor="user_addr" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
                 </div>
               </div>
