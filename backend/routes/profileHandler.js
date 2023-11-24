@@ -84,15 +84,12 @@ router.get('/contact/:user_id', (req, res) => {
           suffix,
           sex_id,
           cvl_id,
-          b_date,
-          b_place,
-          email,
         } = req.body;
         console.log(req.body);
         // Assuming you want to update the 'user_personal' table
         conn2.query(
-          'UPDATE user_personal SET `f_name`=?, `m_name`=?, `l_name`=?, `suffix`=?, `sex_id`=?, `cvl_id`=?, `b_date`=?, `b_place`=?, `email`= ? WHERE user_id=?',
-          [f_name, m_name, l_name, suffix, sex_id, cvl_id, new Date(b_date), b_place, email, user_id],
+          'UPDATE user_personal SET `f_name`=?, `m_name`=?, `l_name`=?, `suffix_id`=?, `sex_id`=?, `cvl_id`=? WHERE user_id=?',
+          [f_name, m_name, l_name, suffix, sex_id, cvl_id, user_id],
           (error, results, fields) => {
             if (error) {
               console.error(error);
