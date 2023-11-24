@@ -167,7 +167,12 @@ const PersonalInfoForm =()=>{
                   <Flatpickr
                     value={userBirth.birth_date}
                     onChange={(date) => {
-                      const formattedDate = date.length > 0 ? date[0].toISOString().split('T')[0] : '';
+                      const formattedDate = date.length > 0 ? (() => {
+                        const originalDate = new Date(date[0]);
+                        originalDate.setDate(originalDate.getDate() + 1);
+                        return originalDate.toISOString().split('T')[0];
+                      })() : '';
+                      
                       setUserBirth((prevData) => ({
                         ...prevData,
                         birth_date: formattedDate,
@@ -233,7 +238,7 @@ const PersonalInfoForm =()=>{
 
                 {/* Row 5 - Citizenship */}
                 <div className="relative z-0 w-full mb-6 group">
-                <select onChange={handleChangePersonal} value={userPersonal.czn_id} name="cvl_id" id="citizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                <select onChange={handleChangePersonal} value={userPersonal.czn_id} name="czn_id" id="citizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                     <option value="0" disabled selected>Select Citizenship</option>
                     <option value="1" className='dark:bg-[#3d3d3d]'>Citizen</option>
                     <option value="2" className='dark:bg-[#3d3d3d]'>Permanent Resident</option>
@@ -244,7 +249,7 @@ const PersonalInfoForm =()=>{
 
                 {/* Row 5 - Residency Status */}
                 <div className="relative z-0 w-full mb-6 group">
-                <select onChange={handleChangePersonal} value={userPersonal.res_id} name="cvl_id" id="residency" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                <select onChange={handleChangePersonal} value={userPersonal.res_id} name="res_id" id="residency" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                     <option value="0" disabled selected>Select Residency Status</option>
                     <option value="1" className='dark:bg-[#3d3d3d]'>Resident</option>
                     <option value="2" className='dark:bg-[#3d3d3d]'>Non-Resident</option>
