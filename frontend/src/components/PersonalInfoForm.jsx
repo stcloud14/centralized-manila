@@ -151,7 +151,7 @@ const PersonalInfoForm =()=>{
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                 <select onChange={handleChangePersonal} value={userPersonal.suffix_id} name="suffix_id" id="suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" disabled selected>Select Suffix</option>
+                    <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Suffix</option>
                     <option value="1" className='dark:bg-[#3d3d3d]'>Sr.</option>
                     <option value="2"className='dark:bg-[#3d3d3d]'>Jr.</option>
                     <option value="3"className='dark:bg-[#3d3d3d]'>II</option>
@@ -162,7 +162,7 @@ const PersonalInfoForm =()=>{
                 </div>
                 <div className="relative z-0 w-full mb-6 group" >
                   <select onChange={handleChangePersonal} value={userPersonal.sex_id} name="sex_id" id="sex" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" disabled selected>Select Sex</option>
+                    <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Sex</option>
                     <option value="1" className='dark:bg-[#3d3d3d]'>Male</option>
                     <option value="2"className='dark:bg-[#3d3d3d]'>Female</option>
                   </select>
@@ -230,11 +230,11 @@ const PersonalInfoForm =()=>{
                 </div>
               </div>
               
-              {/* Row 5 - Civil Status */}
+              {/* Row 4 - Civil Status */}
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <select onChange={handleChangePersonal} value={userPersonal.cvl_id} name="cvl_id" id="civil_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" disabled selected>Select Civil Status</option>
+                    <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Civil Status</option>
                     <option value="1" className='dark:bg-[#3d3d3d]'>Single</option>
                     <option value="2" className='dark:bg-[#3d3d3d]'>Married</option>
                     <option value="3" className='dark:bg-[#3d3d3d]'>Divorced</option>
@@ -243,10 +243,10 @@ const PersonalInfoForm =()=>{
                   <label htmlFor="civil_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                 </div>
 
-                {/* Row 5 - Citizenship */}
+                {/* Row 4 - Citizenship */}
                 <div className="relative z-0 w-full mb-6 group">
                 <select onChange={handleChangePersonal} value={userPersonal.czn_id} name="czn_id" id="citizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" disabled selected>Select Citizenship</option>
+                    <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Citizenship</option>
                     <option value="1" className='dark:bg-[#3d3d3d]'>Citizen</option>
                     <option value="2" className='dark:bg-[#3d3d3d]'>Permanent Resident</option>
                     <option value="3" className='dark:bg-[#3d3d3d]'>Temporary Resident</option>
@@ -254,7 +254,7 @@ const PersonalInfoForm =()=>{
                   <label htmlFor="citizenship" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                 </div>
 
-                {/* Row 5 - Residency Status */}
+                {/* Row 4 - Residency Status */}
                 <div className="relative z-0 w-full mb-6 group">
                 <select onChange={handleChangePersonal} value={userPersonal.res_id} name="res_id" id="residency" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                     <option value="0" disabled selected>Select Residency Status</option>

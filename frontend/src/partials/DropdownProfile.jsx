@@ -105,7 +105,7 @@ function DropdownProfile({
           <ul>
             <li>
               <Link
-                className="font-medium text-sm text-slate-600 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
+                className="font-medium text-sm text-slate-400 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
                 to="/settings"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
@@ -114,7 +114,7 @@ function DropdownProfile({
             </li>
             <li>
               <Link
-                className="font-medium text-sm text-slate-600 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
+                className="font-medium text-sm text-slate-400 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
                 to="/"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >

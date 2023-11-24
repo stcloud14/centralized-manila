@@ -19,7 +19,7 @@ function WelcomeBanner() {
           <span className='text-blue-600'>l</span>
           <span className='text-red-500'>a</span>!
           </h1>
-        <p className="lg:text-sm dark:text-slate-100 font-thin text-xs">Discover what's happening today.</p>
+        <p className="lg:text-sm dark:text-slate-400 font-thin text-xs">Discover what's happening today.</p>
       </div>
     </div>
   );
