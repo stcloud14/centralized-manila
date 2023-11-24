@@ -232,14 +232,23 @@ const PersonalInfoForm =()=>{
 
                 {/* Row 5 - Citizenship */}
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.czn_id} type="text" name="czn_id" id="citizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                <select onChange={handleInputChange} value={userPersonal.cvl_id} name="cvl_id" id="citizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <option value="0" disabled selected>Select Citizenship</option>
+                    <option value="1" className='dark:bg-[#3d3d3d]'>Citizen</option>
+                    <option value="2" className='dark:bg-[#3d3d3d]'>Permanent Resident</option>
+                    <option value="3" className='dark:bg-[#3d3d3d]'>Temporary Resident</option>
+                  </select>
                   <label htmlFor="citizenship" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                 </div>
 
                 {/* Row 5 - Residency Status */}
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.res_id} type="text" name="res_id" id="residency_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
-                  <label htmlFor="residency_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
+                <select onChange={handleInputChange} value={userPersonal.cvl_id} name="cvl_id" id="residency" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <option value="0" disabled selected>Select Residency Status</option>
+                    <option value="1" className='dark:bg-[#3d3d3d]'>Resident</option>
+                    <option value="2" className='dark:bg-[#3d3d3d]'>Non-Resident</option>
+                  </select>
+                  <label htmlFor="residency" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
                 </div>
               </div>
 
