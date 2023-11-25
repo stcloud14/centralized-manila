@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import conn2 from './connection.js';
+import { v4 as uuidv4 } from 'uuid';
 
 const router = Router();
 
@@ -193,13 +194,13 @@ router.get('/payment/', async (req, res) => {
   
   
   router.post('/payment/', async (req, res) => {
-    const primaryKey = generatePrimaryKey(req.body.rp_tdn, req.body.rp_pin);
+    const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
   
     const query = "INSERT INTO rp_tax (`acc_name`, `rp_tdn`, `rp_pin`, `year`, `period_id`, `transaction_id`) VALUES (?, ?, ?, ?, ?, ?)";
-    const values = [req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period, primaryKey];
+    const values = [req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period, transID];
   
     const query1 = "INSERT INTO transaction_info (`amount`, `transaction_id`) VALUES (?, ?)";
-    const values1 = [req.body.amount, primaryKey];
+    const values1 = [req.body.amount, transID];
   
     try {
     const result = await queryDatabase(query, values);
@@ -231,18 +232,27 @@ router.get('/payment/', async (req, res) => {
     });
   }
 
-  function generatePrimaryKey(rp_tdn, rp_pin) {
+//   function generatePrimaryKey(rp_tdn, rp_pin) {
 
-    // Extract the last 4 digits of the mobile number
-    const last4DigitsTdn = rp_tdn.slice(-4);
+//     // Extract the last 4 digits of the mobile number
+//     const last4DigitsTdn = rp_tdn.slice(-4);
   
-    const last4DigitsPin = rp_pin.slice(-4);
+//     const last4DigitsPin = rp_pin.slice(-4);
   
-    // Concatenate the components to create the primary key
-    const primaryKey = `${last4DigitsTdn}${last4DigitsPin}`;
+//     // Concatenate the components to create the primary key
+//     const primaryKey = `${last4DigitsTdn}${last4DigitsPin}`;
   
-    console.log(primaryKey)
-    return primaryKey;
+//     console.log(primaryKey)
+//     return primaryKey;
+//   }
+
+
+  function generateTransactionID() {
+    const timestamp = new Date().getTime();
+    const uniqueID = uuidv4().split('-').join('').substring(0, 9); // Use a portion of UUID
+    const transactionID = `${timestamp}-${uniqueID}`;
+
+    return transactionID;
   }
 
   export default router;
