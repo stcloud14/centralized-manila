@@ -203,16 +203,49 @@ const RPTaxPaymentForm =()=>{
                 &#8203;
               </span>
               <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="mx-auto mt-4">
-                    <div className="font-medium text-slate-700 dark:text-white sm:mt-0" id="modal-headline">
-                      <h1>
-                        Tax Payment
-                      </h1>
+                <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="mx-auto mt-2">
+                    <div className="sm:mt-0" id="modal-headline">   
+                      <div className="mx-auto">
+                        <div className="mb-6">
+                          <span className="font-bold md:text-lg text-sm">Tax Payment</span>
+                        </div>
 
-                      <div>
-                        <span className='pe-10'>Tax Declaration Number</span>
-                        <span>Tax Declaration Number</span>
+                        <div className="mb-6">
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
+                            <span className="whitespace-nowrap ml-4">BQ-16543-00120</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
+                            <span className="whitespace-nowrap ml-4">119-7-584-328-009</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Account Name</span>
+                            <span className="whitespace-nowrap ml-4">LAGARAS, RUFI CARL P.</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">From</span>
+                            <span className="whitespace-nowrap ml-4">2023 - 1st Quarter</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">To</span>
+                            <span className="whitespace-nowrap ml-4">2023 - 4th Quarter</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Date Processed</span>
+                            <span className="whitespace-nowrap ml-4">July 15, 2023</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Expiration Date</span>
+                            <span className="whitespace-nowrap ml-4">July 15, 2024</span>
+                          </div>
+                          <hr className='mt-7 mb-1'/>
+                          <div className="flex justify-between">
+                            <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">P 1500.00</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
