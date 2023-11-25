@@ -106,8 +106,8 @@ return (
             <div className="px-5 py-5">
               
             <form onSubmit={handleSubmit}>
-            <h1 className='font-medium text-center'>Profile</h1>
-              <h1 className='mb-7 text-sm italic text-center'>Government Information</h1>     
+            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Profile</h1>
+            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Government Information</h1>    
 
               {isSuccess && (
               <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
