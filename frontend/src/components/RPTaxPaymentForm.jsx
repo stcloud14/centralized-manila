@@ -16,17 +16,17 @@ const RPTaxPaymentForm =()=>{
   const [userPersonal, setUserPersonal]=useState({})
    console.log(userPersonal);
 
-    useEffect(()=>{
-        const fetchUserPersonal= async()=>{
-            try{
-                const res= await axios.get(`http://localhost:8800/profile/rptaxpayment/${user_id}`);
-                setUserPersonal(res.data[0]);
-            }catch(err){
-                console.log(err)
-            }
-        }
-        fetchUserPersonal();
-    },[])
+    // useEffect(()=>{
+    //     const fetchUserPersonal= async()=>{
+    //         try{
+    //             const res= await axios.get(`http://localhost:8800/profile/rptaxpayment/${user_id}`);
+    //             setUserPersonal(res.data[0]);
+    //         }catch(err){
+    //             console.log(err)
+    //         }
+    //     }
+    //     fetchUserPersonal();
+    // },[])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,25 +41,26 @@ const RPTaxPaymentForm =()=>{
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     try {
-      await axios
-        .post(`http://localhost:8800/profile/rptaxpayment/`, userPersonal)
-        .then((res) => {
-          setIsSuccess(true); // Set success state to true
-          handleCloseModal(); // Close the modal
-          console.log('User credentials updated successfully');
-
-          setTimeout(() => {
-            setIsSuccess(false);
-          }, 3000);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      const response = await axios.post(`http://localhost:8800/profile/rptaxpayment/`, userPersonal);
+  
+      // Check the response status before proceeding
+      if (response.status === 200) {
+        setIsSuccess(true); // Set success state to true
+        handleCloseModal(); // Close the modal
+        console.log('User credentials updated successfully');
+  
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 3000);
+      } else {
+        console.error('Error updating user credentials:', response.statusText);
+      }
     } catch (err) {
-      console.error(err);
+      console.error('Error updating user credentials:', err);
     }
-  }; 
+  };
 
   
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -166,19 +167,19 @@ const RPTaxPaymentForm =()=>{
                         <label htmlFor="period" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Period</label>
                       </div>
 
-                      {/* <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-6 group">
                         <input
-                          type="text" name="rp_amount" id="rp_amount" placeholder=" "
+                          type="text" name="amount" id="amount" placeholder=" " onChange={handleInputChange} value={userPersonal.amount}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           required
                         />
                         <label
-                          htmlFor="rp_amount"
+                          htmlFor="amount"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >
                           Amount
                         </label>
-                      </div> */}
+                      </div>
 
                     </div>
 
