@@ -275,23 +275,22 @@ const RPTaxPaymentForm =()=>{
                   <div className="mx-auto mt-2">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
-                        <div className="mb-10">
+                        <div className="mb-6">
                           <span className="font-bold md:text-lg text-sm">Tax Payment</span>
                         </div>
 
-                        <div className="">
+                        <div className="mb-6">
+                         <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Account Name</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxPayment.acc_name || '-'}</span>
+                          </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
                             <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_tdn || '-'}</span>
-
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
                             <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_pin || '-'}</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Account Name</span>
-                            <span className="whitespace-nowrap ml-4">{rptaxPayment.acc_name || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">From</span>
