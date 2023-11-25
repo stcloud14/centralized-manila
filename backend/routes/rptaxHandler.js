@@ -200,8 +200,10 @@ router.get('/payment/', async (req, res) => {
     const user_id = req.params.user_id;
     const rptdn = req.body.rp_tdn;
     const rppin = req.body.rp_pin;
+    const amount = req.body.amount;
     const plainRptdn = rptdn.replace(/-/g, '');
     const plainRppin = rppin.replace(/-/g, '');
+    const plainAmount = amount.replace(/-/g, '');
     const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
     const transType = '1';
     const statusType = 'Pending';
@@ -215,7 +217,7 @@ router.get('/payment/', async (req, res) => {
     const values1 = [req.body.acc_name, plainRptdn, plainRppin, req.body.rp_year, req.body.period, transID];
   
     const query2 = "INSERT INTO transaction_info (`amount`, `transaction_id`) VALUES (?, ?)";
-    const values2 = [req.body.amount, transID];
+    const values2 = [plainAmount, transID];
   
     try {
     const result = await queryDatabase(query, values);

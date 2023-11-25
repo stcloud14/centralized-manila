@@ -57,8 +57,29 @@ const RPTaxPaymentForm =()=>{
       ...prevData,
       [name]: formattedWithDashes,
     }));
+
+
+    } else if (name === 'amount') {
+      const { name, value } = e.target;
+
+    // Remove non-digit characters
+    const formattedValue = value.replace(/\D/g, '');
+
+    let formattedWithCommas = '';
+    for (let i = 0; i < formattedValue.length; i++) {
+      if (i > 0 && (formattedValue.length - i) % 3 === 0) {
+        formattedWithCommas += ',';
+      }
+      formattedWithCommas += formattedValue[i];
     }
-    else {
+
+    setRptaxPayment((prevData) => ({
+      ...prevData,
+      [name]: formattedWithCommas,
+    }));
+
+
+    } else {
       setRptaxPayment((prevData) => ({
         ...prevData,
         [name]: value,
