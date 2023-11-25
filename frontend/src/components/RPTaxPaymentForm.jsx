@@ -10,16 +10,18 @@ const RPTaxPaymentForm =()=>{
 
   const location = useLocation();
   const { pathname } = location;
-  console.log(pathname);
   const user_id = pathname.split("/")[2];
 
-  const [userPersonal, setUserPersonal]=useState({})
-   console.log(userPersonal);
+  const date = new Date();
+    const currentDate = date.toISOString().split('T')[0];
+
+  const [rptaxPayment, setrptaxPayment]=useState({})
+   console.log(rptaxPayment);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    setUserPersonal((prevData) => ({
+    setrptaxPayment((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -31,7 +33,7 @@ const RPTaxPaymentForm =()=>{
     e.preventDefault();
   
     try {
-      const response = await axios.post(`http://localhost:8800/rptax/payment/${user_id}`, userPersonal);
+      const response = await axios.post(`http://localhost:8800/rptax/payment/${user_id}`, rptaxPayment);
   
       // Check the response status before proceeding
       if (response.status === 200) {
@@ -96,7 +98,7 @@ const RPTaxPaymentForm =()=>{
                   <div className="grid gap-6 mt-24">
                       <div className="relative z-0 w-full mb-6 group">
                         <input
-                          type="text" name="acc_name" id="acc_name" placeholder=" " onChange={handleInputChange} value={userPersonal.acc_name}
+                          type="text" name="acc_name" id="acc_name" placeholder=" " onChange={handleInputChange} value={rptaxPayment.acc_name}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           required
                         />
@@ -110,7 +112,7 @@ const RPTaxPaymentForm =()=>{
 
                       <div className="relative z-0 w-full mb-6 group">
                         <input
-                          type="text" name="rp_tdn" id="rp_tdn" placeholder=" " onChange={handleInputChange} value={userPersonal.rp_tdn}
+                          type="text" name="rp_tdn" id="rp_tdn" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_tdn}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           required
                         />
@@ -124,7 +126,7 @@ const RPTaxPaymentForm =()=>{
 
                       <div className="relative z-0 w-full mb-6 group">
                         <input
-                          type="text" name="rp_pin" id="rp_pin" placeholder=" " onChange={handleInputChange} value={userPersonal.rp_pin}
+                          type="text" name="rp_pin" id="rp_pin" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_pin}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           required
                         />
@@ -138,7 +140,7 @@ const RPTaxPaymentForm =()=>{
 
                       <div className="relative z-0 w-full mb-6 group">
                         <input
-                          type="text" name="rp_year" id="rp_year" placeholder=" " onChange={handleInputChange} value={userPersonal.rp_year}
+                          type="text" name="rp_year" id="rp_year" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_year}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           required
                         />
@@ -151,7 +153,7 @@ const RPTaxPaymentForm =()=>{
                       </div>
 
                       <div className="relative z-0 w-full mb-6 group">
-                        <select onChange={handleInputChange} value={userPersonal.period} name="period" id="period" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                        <select onChange={handleInputChange} value={rptaxPayment.period} name="period" id="period" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                           <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Period</option>
                           <option value="1st Quarter" className='dark:bg-[#3d3d3d]'>1st Quarter</option>
                           <option value="2nd Quarter"className='dark:bg-[#3d3d3d]'>2nd Quarter</option>
@@ -163,7 +165,7 @@ const RPTaxPaymentForm =()=>{
 
                       <div className="relative z-0 w-full mb-6 group">
                         <input
-                          type="text" name="amount" id="amount" placeholder=" " onChange={handleInputChange} value={userPersonal.amount}
+                          type="text" name="amount" id="amount" placeholder=" " onChange={handleInputChange} value={rptaxPayment.amount}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           required
                         />
@@ -214,36 +216,32 @@ const RPTaxPaymentForm =()=>{
                         <div className="mb-6">
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                            <span className="whitespace-nowrap ml-4">BQ-16543-00120</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_tdn}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                            <span className="whitespace-nowrap ml-4">119-7-584-328-009</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_pin}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Account Name</span>
-                            <span className="whitespace-nowrap ml-4">LAGARAS, RUFI CARL P.</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxPayment.acc_name}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">From</span>
-                            <span className="whitespace-nowrap ml-4">2023 - 1st Quarter</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_year} - 1st Quarter</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">To</span>
-                            <span className="whitespace-nowrap ml-4">2023 - 4th Quarter</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_year} - {rptaxPayment.period}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap ml-4">July 15, 2023</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Expiration Date</span>
-                            <span className="whitespace-nowrap ml-4">July 15, 2024</span>
+                            <span className="whitespace-nowrap ml-4">{currentDate}</span>
                           </div>
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">P 1500.00</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">P {rptaxPayment.amount}</span>
                           </div>
                         </div>
                       </div>
