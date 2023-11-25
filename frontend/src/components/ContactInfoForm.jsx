@@ -78,16 +78,6 @@ const ContactInfoForm =()=>{
     setIsModalOpen(false);
   };
 
-
-    // const handleDelete= async(id)=>{
-    //     try{
-    //         await axios.delete("http://localhost:8800/furns/" +id)
-    //         window.location.reload()
-    //     }catch(err){
-    //         console.log(err)
-    //     }
-    // }
-
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [birthdate, setBirthdate] = useState(new Date());
  
