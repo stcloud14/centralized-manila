@@ -216,12 +216,14 @@ router.get('/payment/', async (req, res) => {
     try {
     const result = await queryDatabase(query, values);
     const result1 = await queryDatabase(query1, values1);
+    const result2 = await queryDatabase(query2, values2);
   
   
     res.json({
         message: "Successfully executed",
-        rp_tax_result: result,
-        transaction_info_result: result1,
+        user_transaction_result: result,
+        rp_tax_result: result1,
+        transaction_info_result: result2,
   
     });
     } catch (err) {
