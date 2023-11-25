@@ -20,6 +20,7 @@ import GovernmentInfo from './pages/GovernmentInfo';
 import News from './pages/News';
 import RPTaxPayment from './pages/RPTaxPayment';
 import RPTaxClearance from './pages/RPTaxClearance';
+import TransactionHistory from './pages/TransactionHistory';
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
         <Route exact path="/news" element={<News />} />
         <Route exact path="/rptaxpayment/:user_id" element={<RPTaxPayment/>} />
         <Route exact path="/rptaxclearance/:user_id" element={<RPTaxClearance/>} />
+        <Route exact path="/transachistory/:user_id" element={<TransactionHistory/>} />
       </Routes>
     </>
   );
