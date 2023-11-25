@@ -16,18 +16,6 @@ const RPTaxPaymentForm =()=>{
   const [userPersonal, setUserPersonal]=useState({})
    console.log(userPersonal);
 
-    // useEffect(()=>{
-    //     const fetchUserPersonal= async()=>{
-    //         try{
-    //             const res= await axios.get(`http://localhost:8800/rptax/payment/${user_id}`);
-    //             setUserPersonal(res.data[0]);
-    //         }catch(err){
-    //             console.log(err)
-    //         }
-    //     }
-    //     fetchUserPersonal();
-    // },[])
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -43,7 +31,7 @@ const RPTaxPaymentForm =()=>{
     e.preventDefault();
   
     try {
-      const response = await axios.post(`http://localhost:8800/rptax/payment/`, userPersonal);
+      const response = await axios.post(`http://localhost:8800/rptax/payment/${user_id}`, userPersonal);
   
       // Check the response status before proceeding
       if (response.status === 200) {
@@ -97,6 +85,12 @@ const RPTaxPaymentForm =()=>{
                   {/* Header */}
                   <h1 className="font-medium text-center">Real Property Tax</h1>
                   <h1 className="mb-7 text-sm italic text-center">Tax Clearance</h1>
+
+                  {/* {isSuccess && (
+              <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
+                Success! Your changes have been saved.
+              </div>
+              )} */}
 
                   {/* Input Fields */}
                   <div className="grid gap-6 mt-24">

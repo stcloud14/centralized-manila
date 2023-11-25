@@ -177,15 +177,18 @@ const router = Router();
 // }
 
 router.get('/payment/', async (req, res) => {
-    const query = "SELECT * FROM rp_tax";
-    const query1 = "SELECT * FROM transaction_info";
+
+    const query = "SELECT * FROM user_transaction";
+    const query1 = "SELECT * FROM rp_tax";
+    const query2 = "SELECT * FROM transaction_info";
   
     try {
     const result = await queryDatabase(query);
     const result1 = await queryDatabase(query1);
+    const result2 = await queryDatabase(query2);
   
     
-    res.json({ user_reg: result, user_auth: result1 });
+    res.json({ user_transaction: result, rp_tax: result1, transaction_info: result2 });
     } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
@@ -193,14 +196,22 @@ router.get('/payment/', async (req, res) => {
   });
   
   
-  router.post('/payment/', async (req, res) => {
+  router.post('/payment/:user_id', async (req, res) => {
+    const user_id = req.params.user_id;
     const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
+    const transType = '1';
+    const statusType = 'Pending';
+    const date = new Date();
+    const currentDate = date.toISOString().split('T')[0];
+
+    const query = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
+    const values = [transID, user_id, transType, statusType, currentDate];
   
-    const query = "INSERT INTO rp_tax (`acc_name`, `rp_tdn`, `rp_pin`, `year`, `period_id`, `transaction_id`) VALUES (?, ?, ?, ?, ?, ?)";
-    const values = [req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period, transID];
+    const query1 = "INSERT INTO rp_tax (`acc_name`, `rp_tdn`, `rp_pin`, `year`, `period_id`, `transaction_id`) VALUES (?, ?, ?, ?, ?, ?)";
+    const values1 = [req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period, transID];
   
-    const query1 = "INSERT INTO transaction_info (`amount`, `transaction_id`) VALUES (?, ?)";
-    const values1 = [req.body.amount, transID];
+    const query2 = "INSERT INTO transaction_info (`amount`, `transaction_id`) VALUES (?, ?)";
+    const values2 = [req.body.amount, transID];
   
     try {
     const result = await queryDatabase(query, values);
@@ -232,23 +243,8 @@ router.get('/payment/', async (req, res) => {
     });
   }
 
-//   function generatePrimaryKey(rp_tdn, rp_pin) {
-
-//     // Extract the last 4 digits of the mobile number
-//     const last4DigitsTdn = rp_tdn.slice(-4);
-  
-//     const last4DigitsPin = rp_pin.slice(-4);
-  
-//     // Concatenate the components to create the primary key
-//     const primaryKey = `${last4DigitsTdn}${last4DigitsPin}`;
-  
-//     console.log(primaryKey)
-//     return primaryKey;
-//   }
-
-
   function generateTransactionID() {
-    const timestamp = new Date().getTime();
+    const timestamp = new Date().getTime().toString().slice(0, 8);
     const uniqueID = uuidv4().split('-').join('').substring(0, 9); // Use a portion of UUID
     const transactionID = `${timestamp}-${uniqueID}`;
 
