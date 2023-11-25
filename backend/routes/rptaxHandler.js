@@ -188,7 +188,64 @@ router.get('/payment/', async (req, res) => {
     const result2 = await queryDatabase(query2);
   
     
-    res.json({ user_transaction: result, rp_tax: result1, transaction_info: result2 });
+    res.json({ user_transaction: result, rptax_payment: result1, transaction_info: result2 });
+    } catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving data');
+    }
+  });
+  
+  
+  router.post('/payment/:user_id', async (req, res) => {
+    const user_id = req.params.user_id;
+    const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
+    const transType = '1';
+    const statusType = 'Pending';
+    const date = new Date();
+    const currentDate = date.toISOString().split('T')[0];
+
+    const query = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
+    const values = [transID, user_id, transType, statusType, currentDate];
+  
+    const query1 = "INSERT INTO rptax_payment (`acc_name`, `rp_tdn`, `rp_pin`, `year`, `period_id`, `transaction_id`) VALUES (?, ?, ?, ?, ?, ?)";
+    const values1 = [req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period, transID];
+  
+    const query2 = "INSERT INTO transaction_info (`amount`, `transaction_id`) VALUES (?, ?)";
+    const values2 = [req.body.amount, transID];
+  
+    try {
+    const result = await queryDatabase(query, values);
+    const result1 = await queryDatabase(query1, values1);
+    const result2 = await queryDatabase(query2, values2);
+  
+  
+    res.json({
+        message: "Successfully executed",
+        user_transaction_result: result,
+        rptax_payment_result: result1,
+        transaction_info_result: result2,
+  
+    });
+    } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error executing queries" });
+    }
+  });
+
+
+  router.get('/clearance/', async (req, res) => {
+
+    const query = "SELECT * FROM user_transaction";
+    const query1 = "SELECT * FROM rptax_clearance";
+    const query2 = "SELECT * FROM transaction_info";
+  
+    try {
+    const result = await queryDatabase(query);
+    const result1 = await queryDatabase(query1);
+    const result2 = await queryDatabase(query2);
+  
+    
+    res.json({ user_transaction: result, rptax_clearance: result1, transaction_info: result2 });
     } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
