@@ -147,7 +147,7 @@ const RPTaxPaymentForm =()=>{
               <div className="px-5 py-5">
                 <form className="max-w-md mx-auto">
                   <h1 className='font-medium text-center text-slate-700 dark:text-white'>Real Property Tax</h1>
-                  <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Tax Payment</h1>
+                  <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Payment</h1>
 
                   {/* {isSuccess && (
               <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
@@ -155,8 +155,8 @@ const RPTaxPaymentForm =()=>{
               </div>
               )} */}
 
-                  <div className="grid gap-6 mt-24">
-                      <div className="relative z-0 w-full mb-6 group">
+                  <div className="grid gap-6">
+                      <div className="relative z-0 w-full mb-2 group">
                         <input
                           type="text" name="acc_name" id="acc_name" placeholder=" " onChange={handleInputChange} value={rptaxPayment.acc_name}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -170,7 +170,7 @@ const RPTaxPaymentForm =()=>{
                         </label>
                       </div>
 
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-2 group">
                         <input
                           type="text" name="rp_tdn" id="rp_tdn" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_tdn} maxLength={14}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -184,10 +184,10 @@ const RPTaxPaymentForm =()=>{
                         </label>
                       </div>
 
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full group">
                         <input
                           type="text" name="rp_pin" id="rp_pin" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_pin} maxLength={18}
-                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                          className="block pyt-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           required
                         />
                         <label
@@ -196,9 +196,16 @@ const RPTaxPaymentForm =()=>{
                         >
                           Property Identification Number (PIN)
                         </label>
+                        {/* checkboxxx */}
+                        <div className="flex items-center mt-1.5 text-xs">
+                          <label className="flex text-slate-500 dark:text-gray-400 hover:text-slate-600 cursor-pointer">
+                              <input className="mr-1.5 mt-0.5 w-3.5 h-3.5 border-2 border-gray-400 dark:border-gray-500 rounded bg-transparent text-emerald-500 pointer-events-none focus:ring-emerald-500" type="checkbox" />
+                              <span>19-digit PIN</span>
+                          </label>
+                        </div>
                       </div>
-
-                      <div className="relative z-0 w-full mb-6 group">
+                      
+                      <div className="relative z-0 w-full mb-2 group">
                         <input
                           type="text" name="rp_year" id="rp_year" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_year}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -212,7 +219,7 @@ const RPTaxPaymentForm =()=>{
                         </label>
                       </div>
 
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-2 group">
                         <select onChange={handleInputChange} value={rptaxPayment.period} name="period" id="period" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                           <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Period</option>
                           <option value="1st Quarter" className='dark:bg-[#3d3d3d]'>1st Quarter</option>
@@ -223,7 +230,7 @@ const RPTaxPaymentForm =()=>{
                         <label htmlFor="period" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Period</label>
                       </div>
 
-                      <div className="relative z-0 w-full mb-6 group">
+                      <div className="relative z-0 w-full mb-2 group">
                         <input
                           type="text" name="amount" id="amount" placeholder=" " onChange={handleInputChange} value={rptaxPayment.amount}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -237,8 +244,7 @@ const RPTaxPaymentForm =()=>{
                         </label>
                       </div>
 
-                    </div>
-
+                  </div>
 
                     {/* Submit Button */}
                     <div className="flex justify-end items-end mt-10 mb-4">
@@ -269,11 +275,11 @@ const RPTaxPaymentForm =()=>{
                   <div className="mx-auto mt-2">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
-                        <div className="mb-6">
+                        <div className="">
                           <span className="font-bold md:text-lg text-sm">Tax Payment</span>
                         </div>
 
-                        <div className="mb-6">
+                        <div className="">
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
                             <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_tdn || '-'}</span>
