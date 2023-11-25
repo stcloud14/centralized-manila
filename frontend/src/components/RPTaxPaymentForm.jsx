@@ -19,7 +19,7 @@ const RPTaxPaymentForm =()=>{
     // useEffect(()=>{
     //     const fetchUserPersonal= async()=>{
     //         try{
-    //             const res= await axios.get(`http://localhost:8800/profile/rptaxpayment/${user_id}`);
+    //             const res= await axios.get(`http://localhost:8800/rptax/payment/${user_id}`);
     //             setUserPersonal(res.data[0]);
     //         }catch(err){
     //             console.log(err)
@@ -43,7 +43,7 @@ const RPTaxPaymentForm =()=>{
     e.preventDefault();
   
     try {
-      const response = await axios.post(`http://localhost:8800/profile/rptaxpayment/`, userPersonal);
+      const response = await axios.post(`http://localhost:8800/rptax/payment/`, userPersonal);
   
       // Check the response status before proceeding
       if (response.status === 200) {
