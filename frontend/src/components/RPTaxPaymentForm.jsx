@@ -275,7 +275,7 @@ const RPTaxPaymentForm =()=>{
                   <div className="mx-auto mt-2">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
-                        <div className="">
+                        <div className="mb-10">
                           <span className="font-bold md:text-lg text-sm">Tax Payment</span>
                         </div>
 
