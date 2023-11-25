@@ -15,17 +15,58 @@ const RPTaxPaymentForm =()=>{
   const date = new Date();
     const currentDate = date.toISOString().split('T')[0];
 
-  const [rptaxPayment, setrptaxPayment]=useState({})
+  const [rptaxPayment, setRptaxPayment]=useState({})
    console.log(rptaxPayment);
 
-  const handleInputChange = (e) => {
+   const handleInputChange = (e) => {
     const { name, value } = e.target;
+  
+    if (name === 'rp_tdn') {
+      const { name, value } = e.target;
 
-    setrptaxPayment((prevData) => ({
+    const formattedValue = value.replace(/\W/g, '');
+
+    let formattedWithDashes = '';
+    for (let i = 0; i < formattedValue.length; i++) {
+      if (i === 2 || i === 7) {
+        formattedWithDashes += '-';
+      }
+      formattedWithDashes += formattedValue[i];
+    }
+
+    setRptaxPayment((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: formattedWithDashes,
     }));
+
+    } else if (name === 'rp_pin') {
+      const { name, value } = e.target;
+
+    // Remove non-digit characters
+    const formattedValue = value.replace(/\D/g, '');
+
+    let formattedWithDashes = '';
+    for (let i = 0; i < formattedValue.length; i++) {
+      if (i === 3 || i === 5 || i === 8 || i === 11) {
+        formattedWithDashes += '-';
+      }
+      formattedWithDashes += formattedValue[i];
+    }
+
+    setRptaxPayment((prevData) => ({
+      ...prevData,
+      [name]: formattedWithDashes,
+    }));
+    }
+    else {
+      setRptaxPayment((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
+  
+  
 
   const [isSuccess, setIsSuccess] = useState(false); // New state for success message
 
@@ -112,7 +153,7 @@ const RPTaxPaymentForm =()=>{
 
                       <div className="relative z-0 w-full mb-6 group">
                         <input
-                          type="text" name="rp_tdn" id="rp_tdn" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_tdn}
+                          type="text" name="rp_tdn" id="rp_tdn" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_tdn} maxLength={14}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           required
                         />
@@ -126,7 +167,7 @@ const RPTaxPaymentForm =()=>{
 
                       <div className="relative z-0 w-full mb-6 group">
                         <input
-                          type="text" name="rp_pin" id="rp_pin" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_pin}
+                          type="text" name="rp_pin" id="rp_pin" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_pin} maxLength={18}
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           required
                         />

@@ -198,6 +198,10 @@ router.get('/payment/', async (req, res) => {
   
   router.post('/payment/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
+    const rptdn = req.body.rp_tdn;
+    const rppin = req.body.rp_pin;
+    const plainRptdn = rptdn.replace(/-/g, '');
+    const plainRppin = rppin.replace(/-/g, '');
     const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
     const transType = '1';
     const statusType = 'Pending';
@@ -208,7 +212,7 @@ router.get('/payment/', async (req, res) => {
     const values = [transID, user_id, transType, statusType, currentDate];
   
     const query1 = "INSERT INTO rptax_payment (`acc_name`, `rp_tdn`, `rp_pin`, `year`, `period_id`, `transaction_id`) VALUES (?, ?, ?, ?, ?, ?)";
-    const values1 = [req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period, transID];
+    const values1 = [req.body.acc_name, plainRptdn, plainRppin, req.body.rp_year, req.body.period, transID];
   
     const query2 = "INSERT INTO transaction_info (`amount`, `transaction_id`) VALUES (?, ?)";
     const values2 = [req.body.amount, transID];
