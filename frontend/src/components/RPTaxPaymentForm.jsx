@@ -216,19 +216,24 @@ const RPTaxPaymentForm =()=>{
                         <div className="mb-6">
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                            <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_tdn}</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_tdn || '-'}</span>
+
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                            <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_pin}</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_pin || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Account Name</span>
-                            <span className="whitespace-nowrap ml-4">{rptaxPayment.acc_name}</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxPayment.acc_name || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">From</span>
+                            {rptaxPayment.rp_year ? (
                             <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_year} - 1st Quarter</span>
+                            ) : (
+                            <span className="whitespace-nowrap ml-4">-</span>
+                            )}
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">To</span>
@@ -241,7 +246,7 @@ const RPTaxPaymentForm =()=>{
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">P {rptaxPayment.amount}</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">P {rptaxPayment.amount || '---'}</span>
                           </div>
                         </div>
                       </div>
