@@ -215,7 +215,7 @@ const handleCheckboxChange = (e) => {
                         {/* checkboxxx */}
                         <div className="flex items-center mt-1.5 text-xs">
                           <label className="flex text-slate-500 dark:text-gray-400 hover:text-slate-600 cursor-pointer">
-                              <input className="mr-1.5 mt-0.5 w-3.5 h-3.5 border-2 border-gray-400 dark:border-gray-500 rounded bg-transparent text-emerald-500 pointer-events-none focus:ring-emerald-500" type="checkbox" onChange={handleCheckboxChange} checked={isChecked} />
+                              <input className="mr-1.5 mt-0.5 w-3.5 h-3.5 border-2 border-gray-400 rounded bg-transparent text-emerald-500 pointer-events-none focus:ring-emerald-500" type="checkbox" onChange={handleCheckboxChange} checked={isChecked} />
                               <span>19-digit PIN</span>
                           </label>
                         </div>
