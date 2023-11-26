@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-import WelcomeBanner from '../components/WelcomeBanner'
-import EmbeddedPage from '../components/EmbeddedPage'
+import WelcomeBanner from '../partials/home/WelcomeBanner'
+import EmbeddedPage from '../partials/home/EmbeddedPage'
 
 const HomeForm =()=>{
 
