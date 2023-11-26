@@ -10,8 +10,15 @@ import Header from '../partials/Header';
 
 import 'flatpickr/dist/themes/airbnb.css';
 import CityDropdown from './CityDropdown';
+import BarangayDropdown from './RegionDropdown';
+import DistrictDropdown from './ProvinceDropdown';
+import RegionDropdown from './RegionDropdown';
+import ProvinceDropdown from './ProvinceDropdown';
 
 const ContactInfoForm =()=>{
+  const [selectedRegion, setSelectedRegion] = useState('');
+  const [selectedProvince, setSelectedProvince] = useState('');
+  
 
   const location = useLocation();
   const { pathname } = location;
@@ -43,6 +50,14 @@ const ContactInfoForm =()=>{
     }));
   };
 
+  const handleRegionChange = (event) => {
+    setSelectedRegion(event.target.value);
+    setSelectedProvince(''); // Reset the selected province when the region changes
+  };
+
+  const handleProvinceChange = (event) => {
+    setSelectedProvince(event.target.value);
+  };
   
   const [isSuccess, setIsSuccess] = useState(false); // New state for success message
 
@@ -100,8 +115,8 @@ const ContactInfoForm =()=>{
             <div className="px-5 py-5">
                  
             <form onSubmit={handleSubmit}>
-            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Profile</h1>
-            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Contact Information</h1>
+              <h1 className='font-medium text-center'>Profile</h1>
+              <h1 className='mb-7 text-sm italic text-center'>Contact Information</h1>
 
               {isSuccess && (
               <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
@@ -109,7 +124,11 @@ const ContactInfoForm =()=>{
               </div>
               )}
             
-              <div className="grid md:grid-cols-3 md:gap-6">
+              <div className="grid md:grid-cols-4 md:gap-6">
+                <div className="col-span-1 relative z-0 w-full mb-6 group">
+                  <input value={userContact.user_id} type="text" name="user_id" id="user_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " readOnly/>
+                  <label htmlFor="user_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ID</label>
+                </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userContact.user_email} type="text" name="user_email" id="user_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
                   <label htmlFor="user_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
@@ -127,23 +146,27 @@ const ContactInfoForm =()=>{
               
             
               <div className="grid md:grid-cols-3 md:gap-6 py-5">
-              <div className="col-span-1 relative z-0 w-full mb-6 group">
+                <div className="col-span-1 relative z-0 w-full mb-6 group">
+                <select onChange={handleInputChange} value={userContact.region_id} name="region_id" id="user_region" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " >
+                    <RegionDropdown  />
+                  </select>
+                  <label htmlFor="user_brgy" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
+                </div>
+                <div className="col-span-1 relative z-0 w-full mb-6 group">
+                <select onChange={handleInputChange} value={userContact.prov_id} name="prov_id" id="user_prov" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " >
+                  <ProvinceDropdown selectedRegion={userContact.region_id} onChange={handleProvinceChange} />
+                </select>
+                  <label htmlFor="user_dist" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
+                </div>
+                <div className="col-span-1 relative z-0 w-full mb-6 group">
               <select onChange={handleInputChange} value={userContact.city_id} name="city_id" id="municipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                  <CityDropdown />
+                  <CityDropdown  selectedProvince={userContact.prov_id} onChange={handleInputChange}/>
                   </select>
                   <label htmlFor="municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                 </div>
-
-                <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userContact.brgy_name} type="text" name="user_brgy" id="user_brgy" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
-                  <label htmlFor="user_brgy" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Barangay</label>
-                </div>
-                <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userContact.dist_name} type="text" name="user_dist" id="user_dist" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
-                  <label htmlFor="user_dist" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">District</label>
-                </div>
               </div>
               
+
               <div className="grid md:grid-cols-1 md:gap-6 py-5">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userContact.addr_complete_info} type="text" name="user_addr" id="user_addr" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
