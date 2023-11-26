@@ -2,14 +2,14 @@ import React from 'react';
 
   const MunicipalDropdown = ({ value, selectedProvince }) => {
       const municipalOptions = [
-        { value: '1A1', label: 'Adams', province: '1A1' },
+        
         { value: '1A2', label: 'Bacarra', province: '1A1' },
         { value: '1A3', label: 'Badoc', province: '1A1' },
         { value: '1A4', label: 'Bangui', province: '1A1' },
         { value: '1A5', label: 'City of Batac', province: '1A1' },
         { value: '1A6', label: 'Burgos', province: '1A1' },
         { value: '1A7', label: 'Carasi', province: '1A1' },
-        { value: '1A8', label: 'Currimao', province: '1A1' },
+        { value: '1A8', label: 'Currimao', province: '1A1' },{ value: '1A1', label: 'Adams', province: '1A1' },
         { value: '1A9', label: 'Dingras', province: '1A1' },
         { value: '1A10', label: 'Dumalneg', province: '1A1' },
         { value: '1A11', label: 'Espiritu', province: '1A1' },
