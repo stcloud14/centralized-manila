@@ -13,80 +13,96 @@ const RPTaxPaymentForm =()=>{
   const user_id = pathname.split("/")[2];
 
   const date = new Date();
-    const currentDate = date.toISOString().split('T')[0];
+  const currentDate = date.toISOString().split('T')[0];
 
   const [rptaxPayment, setRptaxPayment]=useState({})
    console.log(rptaxPayment);
 
-   const handleInputChange = (e) => {
+  const handleInputChange = (e) => {
+  const { name, value } = e.target;
+
+  if (name === 'rp_tdn') {
+  const { name, value } = e.target;
+
+  const formattedValue = value.replace(/\W/g, '');
+
+  let formattedWithDashes = '';
+  for (let i = 0; i < formattedValue.length; i++) {
+    if (i === 2 || i === 7) {
+      formattedWithDashes += '-';
+    }
+    formattedWithDashes += formattedValue[i];
+  }
+
+  setRptaxPayment((prevData) => ({
+    ...prevData,
+    [name]: formattedWithDashes,
+  }));
+
+  } else if (name === 'rp_pin') {
+  const { name, value } = e.target;
+
+  let formattedValue;
+
+  if (value.length <= 18) {
+    formattedValue = value.replace(/\D/g, '');
+  } else {
+    formattedValue = value.replace(/\W/g, '');
+  }
+
+  let formattedWithDashes = '';
+  for (let i = 0; i < formattedValue.length; i++) {
+    if (i === 3 || i === 5 || i === 8 || i === 11 || i === 14) {
+      formattedWithDashes += '-';
+    }
+    formattedWithDashes += formattedValue[i];
+  }
+
+  setRptaxPayment((prevData) => ({
+    ...prevData,
+    [name]: formattedWithDashes,
+  }));
+
+
+  } else if (name === 'amount') {
     const { name, value } = e.target;
+
+  const formattedValue = value.replace(/\D/g, '');
+
+  let formattedWithCommas = '';
+  for (let i = 0; i < formattedValue.length; i++) {
+    if (i > 0 && (formattedValue.length - i) % 3 === 0) {
+      formattedWithCommas += ',';
+    }
+    formattedWithCommas += formattedValue[i];
+  }
+
+  setRptaxPayment((prevData) => ({
+    ...prevData,
+    [name]: formattedWithCommas,
+  }));
+
+
+  } else {
+    setRptaxPayment((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+};
+
+const [isChecked, setIsChecked] = useState(false);
   
-    if (name === 'rp_tdn') {
-      const { name, value } = e.target;
+const handleCheckboxChange = (e) => {
+  setIsChecked(e.target.checked);
 
-    const formattedValue = value.replace(/\W/g, '');
+  const inputField = document.getElementById('rp_pin');
+  inputField.maxLength = e.target.checked ? 24 : 18;
 
-    let formattedWithDashes = '';
-    for (let i = 0; i < formattedValue.length; i++) {
-      if (i === 2 || i === 7) {
-        formattedWithDashes += '-';
-      }
-      formattedWithDashes += formattedValue[i];
-    }
-
-    setRptaxPayment((prevData) => ({
-      ...prevData,
-      [name]: formattedWithDashes,
-    }));
-
-    } else if (name === 'rp_pin') {
-      const { name, value } = e.target;
-
-    // Remove non-digit characters
-    const formattedValue = value.replace(/\D/g, '');
-
-    let formattedWithDashes = '';
-    for (let i = 0; i < formattedValue.length; i++) {
-      if (i === 3 || i === 5 || i === 8 || i === 11) {
-        formattedWithDashes += '-';
-      }
-      formattedWithDashes += formattedValue[i];
-    }
-
-    setRptaxPayment((prevData) => ({
-      ...prevData,
-      [name]: formattedWithDashes,
-    }));
-
-
-    } else if (name === 'amount') {
-      const { name, value } = e.target;
-
-    // Remove non-digit characters
-    const formattedValue = value.replace(/\D/g, '');
-
-    let formattedWithCommas = '';
-    for (let i = 0; i < formattedValue.length; i++) {
-      if (i > 0 && (formattedValue.length - i) % 3 === 0) {
-        formattedWithCommas += ',';
-      }
-      formattedWithCommas += formattedValue[i];
-    }
-
-    setRptaxPayment((prevData) => ({
-      ...prevData,
-      [name]: formattedWithCommas,
-    }));
-
-
-    } else {
-      setRptaxPayment((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
-  
+  if (!e.target.checked && rptaxPayment.rp_pin.length > 18) {
+    setRptaxPayment({ ...rptaxPayment, rp_pin: rptaxPayment.rp_pin.slice(0, 18) });
+  }
+};
   
 
   const [isSuccess, setIsSuccess] = useState(false); // New state for success message
@@ -186,7 +202,7 @@ const RPTaxPaymentForm =()=>{
 
                       <div className="relative z-0 w-full group">
                         <input
-                          type="text" name="rp_pin" id="rp_pin" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_pin} maxLength={18}
+                          type="text" name="rp_pin" id="rp_pin" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_pin} maxLength={isChecked ? 24 : 18}
                           className="block pyt-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           required
                         />
@@ -199,7 +215,7 @@ const RPTaxPaymentForm =()=>{
                         {/* checkboxxx */}
                         <div className="flex items-center mt-1.5 text-xs">
                           <label className="flex text-slate-500 dark:text-gray-400 hover:text-slate-600 cursor-pointer">
-                              <input className="mr-1.5 mt-0.5 w-3.5 h-3.5 border-2 border-gray-400 dark:border-gray-500 rounded bg-transparent text-emerald-500 pointer-events-none focus:ring-emerald-500" type="checkbox" />
+                              <input className="mr-1.5 mt-0.5 w-3.5 h-3.5 border-2 border-gray-400 dark:border-gray-500 rounded bg-transparent text-emerald-500 pointer-events-none focus:ring-emerald-500" type="checkbox" onChange={handleCheckboxChange} checked={isChecked} />
                               <span>19-digit PIN</span>
                           </label>
                         </div>
