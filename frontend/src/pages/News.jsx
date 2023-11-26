@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-import Card01 from '../partials/news/Card01';
-import Card02 from '../partials/news/Card02';
-import Card03 from '../partials/news/Card03';
-import Card04 from '../partials/news/Card04';
-import Card05 from '../partials/news/Card05';
+import Card01 from '../partials/misc/Card01';
+import Card02 from '../partials/misc/Card02';
 
 function Button3() {
 
