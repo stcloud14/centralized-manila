@@ -44,9 +44,11 @@ const ContactInfoForm =()=>{
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
+    const updatedValue = name === "user_email" ? value : (isNaN(value) ? value.toUpperCase() : value);
+
     setUserContact((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: updatedValue,
     }));
   };
 

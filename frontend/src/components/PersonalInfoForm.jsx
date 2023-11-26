@@ -33,15 +33,17 @@ const PersonalInfoForm =()=>{
         fetchUserPersonal()
     },[])
     
-    const handleChangePersonal = (e) => {
-      const { name, value } = e.target;
+  const handleChangePersonal = (e) => {
+  const { name, value } = e.target;
 
-      const value1 = value === "0" ? null : value;
-  
-      setUserPersonal((prevData) => ({
-        ...prevData,
-        [name]: value1,
-      }));
+  const updatedValue = isNaN(value) ? value.toUpperCase() : value;
+
+  const finalValue = updatedValue === "0" ? null : updatedValue;
+
+  setUserPersonal((prevData) => ({
+    ...prevData,
+    [name]: finalValue,
+  }));
       
     };
 
