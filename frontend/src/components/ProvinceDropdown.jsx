@@ -64,16 +64,17 @@ import React from 'react';
             { value: '13A2', label: 'Sarangani', region: '13'	 },
             { value: '13A3', label: 'South Cotabato', region: '13'	 },
             { value: '13A4', label: 'Sultan Kudarat', region: '13'	 },
-            //NCR
-                // ------------------------------->
-
+            { value: '14A1', label: 'First District'	, region: '14'	 },
+            { value: '14A2', label: 'Second District'	, region: '14'	 },
+            { value: '14A3', label: 'Third District'	, region: '14'	 },
+            { value: '14A4', label: 'Fourth District'	, region: '14'	 },
             { value: '15A1', label: 'Abra', region: '15'	 },
             { value: '15A2', label: 'Apayao', region: '15'	 },
             { value: '15A3', label: 'Benguet', region: '15' },
             { value: '15A4', label: 'Ifugao', region: '15'	 },
-            { value: '16A1', label: 'Lanao del Sur', region: '16'	 },
-            { value: '16A2', label: 'Maguindanao', region: '16'	 },
-            { value: '16A3', label: 'Basilan', region: '16'	 },
+            { value: '16A1', label: 'Basilan', region: '16'	 },
+            { value: '16A2', label: 'Lanao del Sur', region: '16'	 },
+            { value: '16A3', label: 'Maguindanao', region: '16'	 },
             { value: '16A4', label: 'Sulu', region: '16'	 },
             { value: '16A5', label: 'Tawi-Tawi', region: '16'	 },
             { value: '17A1', label: 'Agusan del Norte', region: '17'	 },
