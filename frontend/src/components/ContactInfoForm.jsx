@@ -10,10 +10,10 @@ import Header from '../partials/Header';
 
 import 'flatpickr/dist/themes/airbnb.css';
 import CityDropdown from './CityDropdown';
-import BarangayDropdown from './RegionDropdown';
-import DistrictDropdown from './ProvinceDropdown';
-import RegionDropdown from './RegionDropdown';
-import ProvinceDropdown from './ProvinceDropdown';
+import BarangayDropdown from '../partials/profile/RegionDropdown';
+import DistrictDropdown from '../partials/profile/ProvinceDropdown';
+import RegionDropdown from '../partials/profile/RegionDropdown';
+import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 
 const ContactInfoForm =()=>{
   const [selectedRegion, setSelectedRegion] = useState('');
