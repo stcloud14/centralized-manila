@@ -21,10 +21,14 @@ const RPTaxPaymentForm =()=>{
   const handleInputChange = (e) => {
   const { name, value } = e.target;
 
+  const updatedValue = isNaN(value) ? value.toUpperCase() : value;
+
   if (name === 'rp_tdn') {
   const { name, value } = e.target;
 
-  const formattedValue = value.replace(/\W/g, '');
+  const updatedValue = isNaN(value) ? value.toUpperCase() : value;
+
+  const formattedValue = updatedValue.replace(/\W/g, '');
 
   let formattedWithDashes = '';
   for (let i = 0; i < formattedValue.length; i++) {
@@ -42,12 +46,14 @@ const RPTaxPaymentForm =()=>{
   } else if (name === 'rp_pin') {
   const { name, value } = e.target;
 
+  const updatedValue = isNaN(value) ? value.toUpperCase() : value;
+
   let formattedValue;
 
-  if (value.length <= 18) {
-    formattedValue = value.replace(/\D/g, '');
+  if (updatedValue.length <= 18) {
+    formattedValue = updatedValue.replace(/\D/g, '');
   } else {
-    formattedValue = value.replace(/\W/g, '');
+    formattedValue = updatedValue.replace(/\W/g, '');
   }
 
   let formattedWithDashes = '';
@@ -86,7 +92,7 @@ const RPTaxPaymentForm =()=>{
   } else {
     setRptaxPayment((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: updatedValue,
     }));
   }
 };
