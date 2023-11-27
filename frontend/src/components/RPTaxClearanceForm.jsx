@@ -159,7 +159,7 @@ const RPTaxClearanceForm =()=>{
             <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
               <div className="px-5 py-5">
                 <form className="max-w-md mx-auto">
-                  <h1 className='font-medium text-center text-slate-700 dark:text-white'>Real Property Tax</h1>
+                  <h1 className='font-medium text-center text-slate-700 dark:text-white'>Tax Clearance</h1>
                   <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Payment</h1>
 
                   {/* {isSuccess && (
