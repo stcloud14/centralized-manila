@@ -13,9 +13,11 @@ const SignUpForm =()=>{
 
 const navigate = useNavigate()
 
-const handleChange=(e)=>{
-    setUserReg((prev)=>({...prev, [e.target.name]: e.target.value}))
-    };
+const handleChange = (e) => {
+  const uppercasedValue = e.target.value.toUpperCase();
+  setUserReg((prev) => ({ ...prev, [e.target.name]: uppercasedValue }));
+};
+
 
 const handleClick= async e=>{
     e.preventDefault()
@@ -43,11 +45,11 @@ console.log(userReg)
             <div className=' form px-6 sm:px-6 md:px-12 lg:px-64'>
             <div className="grid md:grid-cols-2 md:gap-6 sm:grid-cols-1">
                     <div className=" relative z-0 w-full mb-6 group">
-                    <input onChange={handleChange} type="text" name="f_name" id="f_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <input onChange={handleChange} value={userReg.f_name} type="text" name="f_name" id="f_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                     <label htmlFor="f_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleChange} type="text" name="l_name" id="l_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <input onChange={handleChange} value={userReg.l_name} type="text" name="l_name" id="l_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                     <label htmlFor="l_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
                     </div>
                 </div>
