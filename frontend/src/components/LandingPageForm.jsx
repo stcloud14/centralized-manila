@@ -13,7 +13,8 @@ const LandingPageForm =()=>{
   const navigate = useNavigate();
 
   const { mobile_no, user_pass } = userAuth;
-  console.log(mobile_no && user_pass);
+  console.log(mobile_no);
+  console.log(user_pass);
   const [loginError, setLoginError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -86,7 +87,7 @@ const LandingPageForm =()=>{
                     <div className="grid md:grid-cols-1 md:gap-6">
                       <div className="relative z-0 w-full lg:mb-0 mb-4 group">
                         <input type="text" id="mobile_no" name="mobile_no" placeholder=' ' className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" 
-                        value={userAuth.mobile_no} maxLength={14} onChange={handleChange}/>           
+                        value={`+63 ${userAuth.mobile_no}`} maxLength={14} onChange={handleChange}/>           
                         <label htmlFor="mobile_no" className="peer-focus:font-medium appearance-none absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile Number (+63)</label>
                       </div>
 
