@@ -25,13 +25,16 @@ router.get("/", async (req, res) => {
 
 
 router.post('/', async (req, res) => {
-    const primaryKey = generatePrimaryKey(req.body.f_name, req.body.l_name, req.body.mobile_no);
+    const mobile_no = req.body.mobile_no;
+    const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
+
+    const primaryKey = generatePrimaryKey(req.body.f_name, req.body.l_name, plainMobileNo);
 
     const query = "INSERT INTO user_reg (`f_name`, `l_name`, `mobile_no`, `user_id`) VALUES (?, ?, ?, ?)";
-    const values = [req.body.f_name, req.body.l_name, req.body.mobile_no, primaryKey];
+    const values = [req.body.f_name, req.body.l_name, plainMobileNo, primaryKey];
 
     const query1 = "INSERT INTO user_auth (`mobile_no`, `user_pass`, `user_id`) VALUES (?, ?, ?)";
-    const values1 = [req.body.mobile_no, req.body.user_pass, primaryKey];
+    const values1 = [plainMobileNo, req.body.user_pass, primaryKey];
 
     // const query2 = "INSERT INTO user_personal (`f_name`, `l_name`, `user_id`) VALUES ( ?, ?, ?)";
     // const values2 = [req.body.f_name, req.body.l_name, primaryKey];
