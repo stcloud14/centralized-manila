@@ -47,7 +47,7 @@ const RPTaxPaymentForm =()=>{
         formattedWithDashes += '-' + formattedValue.slice(2, 7);
       }
       if (formattedValue.length > 7) {
-        formattedWithDashes += '-' + formattedValue.slice(7, 1);
+        formattedWithDashes += '-' + formattedValue.slice(7, 14);
       }
   
       setRptaxPayment((prevData) => ({
