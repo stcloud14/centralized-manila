@@ -41,21 +41,33 @@ router.get('/:user_id', (req, res) => {
 router.get('/contact/:user_id', (req, res) => {
   const user_id = req.params.user_id;
   
-  const sql = "SELECT uc.user_id, uc.user_email, uc.mobile_no, uc.tel_no, mr.region_name, mp.prov_name, mc.city_name, ai.addr_complete_info \
-  FROM user_contact uc JOIN metromanila_cities mc ON uc.city_id = mc.city_id \
-  JOIN manila_region mr ON uc.region_id = mr.region_id \
-  JOIN manila_province md ON uc.prov_id = mp.prov_id \
-  JOIN address_info ai ON uc.addr_info_id = ai.addr_info_id \
-  WHERE uc.user_id = ?";
-  
+  const sql = `
+    SELECT
+      uc.user_email,
+      uc.mobile_no,
+      uc.tel_no,
+      mr.region_id,
+      mp.prov_id,
+      mc.city_id,
+      uc.house_floor,
+      uc.bldg_name,
+      uc.brgy_dist,
+      uc.zip_code
+    FROM
+      user_contact uc
+    LEFT JOIN manila_region mr ON uc.region_id = mr.region_id
+    LEFT JOIN manila_province mp ON uc.prov_id = mp.prov_id
+    LEFT JOIN manila_cities mc ON uc.city_id = mc.city_id
+    WHERE uc.user_id = ?`;
+
   conn2.query(sql, [user_id], (err, result) => {
-      if (err) {
-          console.error(err);
-          res.status(500).send('Error retrieving contact info');
-      } else {
-          res.json(result);
-          console.log(result)
-      }
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error retrieving contact info');
+    } else {
+      res.json(result);
+      console.log(result);
+    }
   });
 });
 
@@ -138,16 +150,18 @@ router.get('/contact/:user_id', (req, res) => {
           user_email,
           mobile_no,
           tel_no,
-          user_municipal,
-          user_brgy,
-          user_dist,
-          user_addr,
+          house_floor,
+          bldg_name,
+          brgy_dist,
+          zip_code,
+          region_id, // Assuming these values are provided by your dropdowns
+          prov_id,
+          city_id,
         } = req.body;
-        console.log(req.body);
-        // Assuming you want to update the 'user_personal' table
+      
         conn2.query(
-          'UPDATE user_contact SET `user_email`=?, `mobile_no`=?, `tel_no`=?, `user_municipal`=?, `user_brgy`=?, `user_dist`=?, `user_addr`=?  WHERE user_id=?',
-          [user_email, mobile_no, tel_no, user_municipal, user_brgy, user_dist, user_addr, user_id],
+          'UPDATE user_contact SET `user_email`=?, `mobile_no`=?, `tel_no`=?, `house_floor`=?, `bldg_name`=?, `brgy_dist`=?, `zip_code`=?, `region_id`=?, `prov_id`=?, `city_id`=? WHERE user_id=?',
+          [user_email, mobile_no, tel_no, house_floor, bldg_name, brgy_dist, zip_code, region_id, prov_id, city_id, user_id],
           (error, results, fields) => {
             if (error) {
               console.error(error);
@@ -158,6 +172,7 @@ router.get('/contact/:user_id', (req, res) => {
           }
         );
       });
+
 
       router.put('/govinfo/:user_id', (req, res) => {
         const user_id = req.params.user_id;

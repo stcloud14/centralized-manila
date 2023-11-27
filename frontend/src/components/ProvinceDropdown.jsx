@@ -93,7 +93,7 @@ import React from 'react';
             <>
             <option value="" className='dark:bg-[#3d3d3d]'>Select Province</option>
             {filteredProvinces.map((option) => (
-                <option key={option.value} value={option.value} className='dark:bg-[#3d3d3d]'>
+                <option key={option.value} value={option.value} className='dark:bg-[#3d3d3d]'> {option.value}
                 {option.label}
                 </option>
             ))}

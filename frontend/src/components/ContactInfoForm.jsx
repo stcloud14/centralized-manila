@@ -16,9 +16,11 @@ import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 
 const ContactInfoForm =()=>{
+  const [regions, setRegions] = useState([]);
+  const [provinces, setProvinces] = useState([]);
+  const [cities, setCities] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState('');
   const [selectedProvince, setSelectedProvince] = useState('');
-  
 
   const location = useLocation();
   const { pathname } = location;
@@ -34,32 +36,32 @@ const ContactInfoForm =()=>{
                 const res= await axios.get(`http://localhost:8800/profile/contact/${user_id}`)
                 setUserContact(res.data[0])
             }catch(err){
-                console.log(err)
+                console.log(err)  
             }
         }
         fetchUserContact()
-  }, [])
+  }, [user_id])
 
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
 
-    const updatedValue = name === "user_email" ? value : (isNaN(value) ? value.toUpperCase() : value);
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+    
+      if (name === 'region_id') {
+        setSelectedRegion(value);
+        setSelectedProvince(''); // Reset selected province when changing region
+      } else if (name === 'prov_id') {
+        setSelectedProvince(value);
+      }
+    
+      setUserContact((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    };
+    
 
-    setUserContact((prevData) => ({
-      ...prevData,
-      [name]: updatedValue,
-    }));
-  };
-
-  const handleRegionChange = (event) => {
-    setSelectedRegion(event.target.value);
-    setSelectedProvince(''); // Reset the selected province when the region changes
-  };
-
-  const handleProvinceChange = (event) => {
-    setSelectedProvince(event.target.value);
-  };
+  
   
   const [isSuccess, setIsSuccess] = useState(false); // New state for success message
 
@@ -144,39 +146,39 @@ const ContactInfoForm =()=>{
             
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                <select onChange={handleRegionChange} value={selectedRegion} name="region_id" id="user_region" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
-                    <RegionDropdown selectedRegion={selectedRegion} onChange={handleRegionChange} />
+                <select onChange={handleInputChange} value={userContact.region_id} name="region_id" id="user_region" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
+                    <RegionDropdown regions={regions} value={selectedRegion} onChange={handleInputChange} />
                   </select>
                   <label htmlFor="user_brgy" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                <select onChange={handleProvinceChange} value={selectedProvince} name="prov_id" id="user_prov" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
-                  <ProvinceDropdown selectedRegion={selectedRegion} onChange={handleProvinceChange} />
+                <select onChange={handleInputChange} value={userContact.prov_id} name="prov_id" id="user_prov" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
+                  <ProvinceDropdown provinces={provinces} selectedRegion={selectedRegion} value={selectedProvince} onChange={handleInputChange} />
                 </select>
                   <label htmlFor="user_dist" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                 <select onChange={handleInputChange} value={userContact.city_id} name="city_id" id="municipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                  <CityDropdown selectedProvince={selectedProvince} onChange={handleInputChange}/>
+                  <CityDropdown cities={cities} selectedProvince={selectedProvince} onChange={handleInputChange}/>
                 </select>
                   <label htmlFor="municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                 </div>
               </div>
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange="" value="" type="text" name="" id="user_house" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userContact.house_floor} type="text" name="house_floor" id="user_house" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
                   <label htmlFor="user_house" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">House No. / Unit / Floor</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange="" value=""  type="text" name="" id="user_street" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userContact.bldg_name} type="text" name="bldg_name" id="user_street" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
                   <label htmlFor="user_street" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Street / Building Name</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange="" value=""  type="text" name="" id="user_brgy" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userContact.brgy_dist}  type="text" name="brgy_dist" id="user_brgy" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
                   <label htmlFor="user_brgy" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Barangay / Zone / District</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange="" value=""  type="text" name="" id="user_zip" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userContact.zip_code}  type="text" name="zip_code" id="user_zip" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
                   <label htmlFor="user_zip" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Zip Code</label>
                 </div>
               </div>
