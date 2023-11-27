@@ -20,7 +20,7 @@ const handleChange = (e) => {
 
     const uppercasedValue = (name === 'f_name' || name === 'l_name') ? value.toUpperCase() : value;
 
-    setUserReg((prev) => ({ ...prev, [e.target.name]: uppercasedValue }));
+    setUserReg((prev) => ({ ...prev, [name]: uppercasedValue }));
 
   } else if (name === 'mobile_no') {
 

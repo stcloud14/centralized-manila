@@ -5,16 +5,21 @@ import ThemeToggle from '../partials/ThemeToggle';
 
 const LandingPageForm =()=>{
 
+  const [userAuth, setUserAuth] = useState({
+      mobile_no:"",
+      user_pass:"",
+  });
+
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { mobile_no, user_pass } = userAuth;
+  console.log(mobile_no && user_pass);
   const [loginError, setLoginError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`http://localhost:8800/login/${username}/${password}`);
+      const response = await axios.get(`http://localhost:8800/login/${mobile_no}/${user_pass}`);
       if (response.status === 200) {
         // Authentication successful, navigate to the dashboard
         const {user_id} = response.data[0];
@@ -28,6 +33,22 @@ const LandingPageForm =()=>{
       // Handle any network or server errors
       console.error(error);
       setLoginError("Authentication failed. Please check your credentials.");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+  
+    if (name === 'mobile_no') {
+  
+      const rawValue = value.replace('+63 ', '');
+  
+      const formattedValue = rawValue.replace(/\D/g, '');
+  
+      setUserAuth((prev) => ({ ...prev, [name]: formattedValue }));
+      
+    } else {
+      setUserAuth((prev) => ({ ...prev, [name]: [value] }));
     }
   };
     
@@ -64,15 +85,15 @@ const LandingPageForm =()=>{
               <form onSubmit={handleSubmit}>
                     <div className="grid md:grid-cols-1 md:gap-6">
                       <div className="relative z-0 w-full lg:mb-0 mb-4 group">
-                        <input type="text" id="login_mobile" name="login_mobile" placeholder=' ' className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" 
-                        value={username} onChange={(e) => setUsername(e.target.value)}/>           
-                        <label htmlFor="login_mobile" className="peer-focus:font-medium appearance-none absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile Number</label>
+                        <input type="text" id="mobile_no" name="mobile_no" placeholder=' ' className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" 
+                        value={userAuth.mobile_no} maxLength={14} onChange={handleChange}/>           
+                        <label htmlFor="mobile_no" className="peer-focus:font-medium appearance-none absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile Number (+63)</label>
                       </div>
 
                       <div className="relative z-0 w-full mb-6 group">
-                        <input type="password" id="login_pass" name="login_pass" placeholder=' ' className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-                        value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <label htmlFor="login_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>  
+                        <input type="password" id="user_pass" name="user_pass" placeholder=' ' className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                        value={userAuth.user_pass} onChange={handleChange} />
+                        <label htmlFor="user_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>  
                       </div>
                     </div>
 
