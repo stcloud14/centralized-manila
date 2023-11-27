@@ -10,6 +10,7 @@ router.get("/", async (req, res) => {
     const query2 = "SELECT * FROM user_personal";
     const query3 = "SELECT * FROM user_contact";
     const query4 = "SELECT * FROM birth_info";
+    const query5 = "SELECT * FROM user_gov_id";
 
     try {
     const result = await queryDatabase(query);
@@ -17,8 +18,9 @@ router.get("/", async (req, res) => {
     const result2 = await queryDatabase(query2);
     const result3 = await queryDatabase(query3);
     const result4 = await queryDatabase(query4);
+    const result5 = await queryDatabase(query5);
     
-    res.json({ user_reg: result, user_auth: result1, user_personal: result2, user_contact: result3, birth_info: result4 });
+    res.json({ user_reg: result, user_auth: result1, user_personal: result2, user_contact: result3, birth_info: result4, user_gov_id: result5 });
     } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
@@ -47,12 +49,16 @@ router.post('/', async (req, res) => {
     const query4 = "INSERT INTO birth_info (`user_id`) VALUES (?)";
     const values4 = [primaryKey];
 
+    const query5 = "INSERT INTO user_gov_id (`user_id`) VALUES (?)";
+    const values5 = [primaryKey];
+
     try {
     const result = await queryDatabase(query, values);
     const result1 = await queryDatabase(query1, values1);
     const result2 = await queryDatabase(query2, values2);
     const result3 = await queryDatabase(query3, values3);
     const result4 = await queryDatabase(query4, values4);
+    const result5 = await queryDatabase(query5, values5);
 
     res.json({
         message: "Successfully executed",
@@ -61,6 +67,7 @@ router.post('/', async (req, res) => {
         user_personal_result: result2,
         user_contact_result: result3,
         birth_info_result: result4,
+        user_gov_id_result: result5,
     });
     } catch (err) {
     console.error(err);
