@@ -24,25 +24,41 @@ const RPTaxPaymentForm =()=>{
   const updatedValue = isNaN(value) ? value.toUpperCase() : value;
 
   if (name === 'rp_tdn') {
-  const { name, value } = e.target;
+    const { name: inputName, value } = e.target;
+  
+    // Extract the first two characters and the remaining characters
+    const firstTwoLetters = value.substring(0, 2).toUpperCase(); // Convert to uppercase
+    const remainingCharacters = value.substring(2);
+  
+    // Check if the first two characters are letters
+    const areFirstTwoLettersValid = /^[A-Za-z]{0,1}$|^[A-Za-z]{2}[0-9]*$/.test(firstTwoLetters);
 
-  const updatedValue = isNaN(value) ? value.toUpperCase() : value;
-
-  const formattedValue = updatedValue.replace(/\W/g, '');
-
-  let formattedWithDashes = '';
-  for (let i = 0; i < formattedValue.length; i++) {
-    if (i === 2 || i === 7) {
-      formattedWithDashes += '-';
+  
+    if (areFirstTwoLettersValid) {
+      // Remove non-numeric characters from the remaining input
+      const cleanedRemainingCharacters = remainingCharacters.replace(/[^0-9]/g, '');
+  
+      // Combine the first two letters with the cleaned numeric characters
+      const formattedValue = firstTwoLetters + cleanedRemainingCharacters;
+  
+      // Format the value with dashes
+      let formattedWithDashes = formattedValue.slice(0, 2);
+      if (formattedValue.length > 2) {
+        formattedWithDashes += '-' + formattedValue.slice(2, 6);
+      }
+      if (formattedValue.length > 6) {
+        formattedWithDashes += '-' + formattedValue.slice(6, 10);
+      }
+  
+      setRptaxPayment((prevData) => ({
+        ...prevData,
+        [inputName]: formattedWithDashes,
+      }));
+    } else {
+      console.log('Please enter valid first 2 letters.');
     }
-    formattedWithDashes += formattedValue[i];
-  }
-
-  setRptaxPayment((prevData) => ({
-    ...prevData,
-    [name]: formattedWithDashes,
-  }));
-
+  
+  
   } else if (name === 'rp_pin') {
   const { name, value } = e.target;
 
