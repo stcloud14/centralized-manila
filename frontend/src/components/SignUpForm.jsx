@@ -58,7 +58,7 @@ const handleClick= async e=>{
       if (existenceCheckResponse.data.exists) {
         // User exists, display a message or redirect to the login page
         alert(existenceCheckResponse.data.message);
-        navigate("/");
+        navigate("/register");
       } else {
         // User does not exist, proceed with registration
         await axios.post("http://localhost:8800/register", userReg);
