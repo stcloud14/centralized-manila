@@ -86,6 +86,17 @@ const RPTaxPaymentForm =()=>{
   }));
 
 
+  } else if (name === 'rp_year') {
+    const { name, value } = e.target;
+
+  const formattedValue = value.replace(/\D/g, '');
+
+  setRptaxPayment((prevData) => ({
+    ...prevData,
+    [name]: formattedValue,
+  }));
+
+
   } else if (name === 'amount') {
     const { name, value } = e.target;
 
