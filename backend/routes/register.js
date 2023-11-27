@@ -27,6 +27,28 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.post('/check-existence', async (req, res) => {
+    const { f_name, l_name, mobile_no } = req.body;
+  
+    const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
+    const primaryKey = generatePrimaryKey(f_name, l_name, plainMobileNo);
+  
+    const query = "SELECT * FROM user_reg WHERE user_id = ?";
+    const values = [primaryKey];
+  
+    try {
+      const result = await queryDatabase(query, values);
+      if (result.length > 0) {
+        res.json({ exists: true, message: "User already exists. Proceed to login." });
+      } else {
+        res.json({ exists: false, message: "User does not exist. Proceed to register." });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Error checking user existence" });
+    }
+  });
+
 
 router.post('/', async (req, res) => {
     const mobile_no = req.body.mobile_no;
