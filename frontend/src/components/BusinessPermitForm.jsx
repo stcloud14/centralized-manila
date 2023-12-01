@@ -17,7 +17,6 @@ const PersonalInfoForm =()=>{
   const user_id = pathname.split("/")[2];
 
   const [userPersonal, setUserPersonal]=useState({})
-  const [userBirth, setUserBirth]=useState({})
 
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
@@ -32,32 +31,6 @@ const PersonalInfoForm =()=>{
         }
         fetchUserPersonal()
     },[])
-    
-  const handleChangePersonal = (e) => {
-  const { name, value } = e.target;
-
-  const updatedValue = isNaN(value) ? value.toUpperCase() : value;
-
-  const finalValue = updatedValue === "0" ? null : updatedValue;
-
-  setUserPersonal((prevData) => ({
-    ...prevData,
-    [name]: finalValue,
-  }));
-      
-    };
-
-    const handleChangeBirth = (e) => {
-      const { name, value } = e.target;
-  
-      setUserBirth((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-      
-    };
-
-    const [isSuccess, setIsSuccess] = useState(false); // New state for success message
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -99,7 +72,6 @@ const PersonalInfoForm =()=>{
     };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [birthdate, setBirthdate] = useState(new Date());
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -121,123 +93,28 @@ const PersonalInfoForm =()=>{
             <form onSubmit={handleSubmit}>
             <h1 className='font-medium text-center text-slate-700 dark:text-white'>Profile</h1>
             <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Personal Information</h1>
-
-              {isSuccess && (
-              <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
-                Success! Your changes have been saved.
-              </div>
-              )}
-
-            
-              {/* Row 1 */}
+      
+              {/* Row 1 - Name */}
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleChangePersonal} value={userPersonal.f_name} type="text" name="f_name" id="first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                  <input type="text" id="first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                   <label htmlFor="first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleChangePersonal} value={userPersonal.m_name} type="text" name="m_name" id="middle_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                  <input type="text" id="middle_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                   <label htmlFor="middle_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleChangePersonal} value={userPersonal.l_name} type="text" name="l_name" id="last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                  <input type="text" id="last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                   <label htmlFor="last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
                 </div>
               </div>
 
+          
               {/* Row 2 */}
-              <div className="grid md:grid-cols-4 md:gap-6">
-                <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.suffix_type} name="suffix_type" id="suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
-                    <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
-                    <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                    <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                    <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                    <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                    <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                    <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                    <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                    <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                    <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                    <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
-                  </select>
-                  <label htmlFor="suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
-                </div>
-
-                <div className="relative z-0 w-full mb-6 group" >
-                  <select onChange={handleChangePersonal} value={userPersonal.sex_type} name="sex_type" id="sex" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                    <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Sex</option>
-                    <option value="Male" className='dark:bg-[#3d3d3d]'>Male</option>
-                    <option value="Female"className='dark:bg-[#3d3d3d]'>Female</option>
-                  </select>
-                  <label htmlFor="sex" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
-                </div>
-                
-                <div className="relative z-0 w-full mb-6 group">
-                  <Flatpickr
-                    value={userBirth.birth_date}
-                    onChange={(date) => {
-                      const formattedDate = date.length > 0 ? (() => {
-                        const originalDate = new Date(date[0]);
-                        originalDate.setDate(originalDate.getDate() + 1);
-                        return originalDate.toISOString().split('T')[0];
-                      })() : '';
-                      
-                      setUserBirth((prevData) => ({
-                        ...prevData,
-                        birth_date: formattedDate,
-                      }))
-                    }}
-                    options={{
-                      dateFormat: 'Y-m-d',
-                      altInput: true,
-                      altFormat: 'F j, Y',
-                      altInputClass:
-                        'block py-2.5 px-0 w-full bg-transparent text-sm text-gray-900 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer',
-                      appendTo: document.body,
-                      onOpen: function (selectedDates, dateStr, instance) {
-                        if (document.documentElement.classList.contains('dark')) {
-                          const monthDropdown = instance.calendarContainer.querySelector(
-                            '.flatpickr-monthDropdown-months'
-                          );
-                          if (monthDropdown) {
-                            monthDropdown.style.backgroundColor = '#212121';
-                          }
-                        }
-                      },
-                      onClose: function (selectedDates, dateStr, instance) {
-                        const monthDropdown = instance.calendarContainer.querySelector(
-                          '.flatpickr-monthDropdown-months'
-                        );
-                        if (monthDropdown) {
-                          monthDropdown.style.backgroundColor = '';
-                        }
-                      },
-                    }}
-                    
-                  />
-                  <label
-                    htmlFor="birthdate"
-                    className={`peer-focus:font-medium absolute bg-transparent text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 ${
-                      userBirth.birth_date ? 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : ''
-                    }`}
-                  >
-                    {userBirth.birth_date ? 'Birthdate' : 'Birthdate'}
-                  </label>
-                </div>
-                
-                <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleChangeBirth} value={userBirth.birth_place} type="text" name="birth_place" id="birth_place" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                  <label htmlFor="birth_place" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Place of Birth</label>
-                </div>
-              </div>
-              
-              {/* Row 3 */}
               <div className="grid md:grid-cols-3 md:gap-6">
-
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.cvl_status} name="cvl_status" id="civil_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                  <select id="civil_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                     <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Civil Status</option>
                     <option value="Single" className='dark:bg-[#3d3d3d]'>Single</option>
                     <option value="Married" className='dark:bg-[#3d3d3d]'>Married</option>
@@ -248,7 +125,7 @@ const PersonalInfoForm =()=>{
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.czn_status} name="czn_status" id="citizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                  <select id="citizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                     <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Citizenship</option>
                     <option value="Citizen" className='dark:bg-[#3d3d3d]'>Citizen</option>
                     <option value="Permanent Resident" className='dark:bg-[#3d3d3d]'>Permanent Resident</option>
@@ -257,8 +134,9 @@ const PersonalInfoForm =()=>{
                   <label htmlFor="citizenship" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                 </div>
 
+                {/* Row 3 - Residency Status */}
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.res_status} name="res_status" id="residency" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                  <select id="residency" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                     <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Residency Status</option>
                     <option value="Resident" className='dark:bg-[#3d3d3d]'>Resident</option>
                     <option value="Non-Resident" className='dark:bg-[#3d3d3d]'>Non-Resident</option>

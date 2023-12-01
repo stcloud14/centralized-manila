@@ -17,10 +17,11 @@ import Home from './pages/Home';
 import PersonalInfo from './pages/PersonalInfo';
 import ContactInfo from './pages/ContactInfo';
 import GovernmentInfo from './pages/GovernmentInfo';
-import News from './pages/News';
+import Blank from './pages/Blank';
 import RPTaxPayment from './pages/RPTaxPayment';
 import RPTaxClearance from './pages/RPTaxClearance';
 import TransactionHistory from './pages/TransactionHistory';
+import BusinessPermit from './pages/BusinessPermit';
 
 function App() {
 
@@ -42,10 +43,11 @@ function App() {
         <Route exact path="/personalinfo/:user_id" element={<PersonalInfo />} />
         <Route exact path="/contact/:user_id" element={<ContactInfo />} />
         <Route exact path="/govinfo/:user_id" element={<GovernmentInfo />} />
-        <Route exact path="/news" element={<News />} />
+        <Route exact path="/blank" element={<Blank />} />
         <Route exact path="/rptaxpayment/:user_id" element={<RPTaxPayment/>} />
         <Route exact path="/rptaxclearance/:user_id" element={<RPTaxClearance/>} />
         <Route exact path="/transachistory/:user_id" element={<TransactionHistory/>} />
+        <Route exact path="/businesspermit/:user_id" element={<BusinessPermit/>} />
       </Routes>
     </>
   );
