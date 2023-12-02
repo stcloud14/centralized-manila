@@ -310,7 +310,7 @@ router.get('/payment/', async (req, res) => {
 
   function generateTransactionID() {
     const timestamp = new Date().getTime().toString().slice(0, 8);
-    const uniqueID = uuidv4().split('-').join('').substring(0, 9); // Use a portion of UUID
+    const uniqueID = uuidv4().split('-').join('').substring(0, 9).toUpperCase();
     const transactionID = `${timestamp}-${uniqueID}`;
 
     return transactionID;

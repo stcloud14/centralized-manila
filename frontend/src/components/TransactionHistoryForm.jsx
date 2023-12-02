@@ -148,7 +148,7 @@ const TransactionHistoryForm =()=>{
 
                     <tr key={index} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white">
                           {userTransaction.transaction_id}
                         </div>
                       </td>
