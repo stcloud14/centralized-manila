@@ -113,8 +113,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_lname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
+                    <select id="birthc_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
                       <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
                       <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
                       <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
@@ -130,8 +130,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_sex" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]'selected>Select Sex</option>
+                    <select id="birthc_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]' disabled>Select Sex</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                     </select>
@@ -146,8 +146,8 @@ const BirthCertificateForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-4 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_ownerregion" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Region</option>
+                    <select id="birthc_ownerregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Region</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -156,8 +156,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_ownerregion" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_ownerprovince" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Province</option>
+                    <select id="birthc_ownerprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Province</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -166,8 +166,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_ownerprovince" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_ownermunicipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Municipal</option>
+                    <select id="birthc_ownermunicipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Municipal</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -247,8 +247,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_fatherlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_fathersuffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
+                    <select id="birthc_fathersuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
                       <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
                       <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
                       <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
@@ -283,8 +283,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_motherlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_mothersuffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
+                    <select id="birthc_mothersuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
                       <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
                       <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
                       <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
@@ -320,8 +320,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_reqlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_reqsuffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
+                    <select id="birthc_reqsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
                       <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
                       <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
                       <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
@@ -356,8 +356,8 @@ const BirthCertificateForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_reqregion" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Region</option>
+                    <select id="birthc_reqregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Region</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -366,8 +366,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_reqregion" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_reqprovince" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Province</option>
+                    <select id="birthc_reqprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Province</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -376,8 +376,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_reqprovince" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_reqmunicipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Municipal</option>
+                    <select id="birthc_reqmunicipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Municipal</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -443,8 +443,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_nocopies" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No. of Copies</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_print" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]'selected>Select What to Print</option>
+                    <select id="birthc_print" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select What to Print</option>
                       <option className='dark:bg-[#3d3d3d]'>Front (P50)</option>
                       <option className='dark:bg-[#3d3d3d]'>Back (P50)</option>
                       <option className='dark:bg-[#3d3d3d]'>Front and Back (P100)</option>
@@ -455,8 +455,8 @@ const BirthCertificateForm =()=>{
                 {/* Row 3 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_purpose" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]'selected>Select Purpose</option>
+                    <select id="birthc_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Purpose</option>
                       <option className='dark:bg-[#3d3d3d]'>Claim Benefits / Loan</option>
                       <option className='dark:bg-[#3d3d3d]'>Passport / Travel</option>
                       <option className='dark:bg-[#3d3d3d]'>School Requirements</option>
@@ -466,8 +466,8 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_purpose" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Purpose</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="birthc_validid" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]'selected>Select Valid ID to Present Upon Claiming</option>
+                    <select id="birthc_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
                       <option className='dark:bg-[#3d3d3d]'>SSS</option>
                       <option className='dark:bg-[#3d3d3d]'>UMID</option>
                       <option className='dark:bg-[#3d3d3d]'>PHILHEALTH</option>
