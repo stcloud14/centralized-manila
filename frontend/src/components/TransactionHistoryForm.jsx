@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
+import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 
 const TransactionHistoryForm =()=>{
 
@@ -13,40 +14,61 @@ const TransactionHistoryForm =()=>{
   const user_id = pathname.split("/")[2];
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userTransaction, setUserTransaction]=useState([]);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    try {
-      //const response = await axios.post(`http://localhost:8800/rptax/payment/${user_id}`, userPersonal);
-  
-      // Check the response status before proceeding
-      if (response.status === 200) {
-        setIsSuccess(true); // Set success state to true
-        handleCloseModal(); // Close the modal
-        console.log('User credentials updated successfully');
-  
-        setTimeout(() => {
-          setIsSuccess(false);
-        }, 3000);
-      } else {
-        console.error('Error updating user credentials:', response.statusText);
+  useEffect(()=>{
+    const fetchUserTransaction = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/transachistory/${user_id}`);
+        setUserTransaction(res.data);
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.error('Error updating user credentials:', err);
-    }
-  };
+    };
+    fetchUserTransaction();
+  }, [user_id]);
+  
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  
+  //   try {
+  //     //const response = await axios.post(`http://localhost:8800/rptax/payment/${user_id}`, userPersonal);
+  
+  //     // Check the response status before proceeding
+  //     if (response.status === 200) {
+  //       setIsSuccess(true); // Set success state to true
+  //       handleCloseModal(); // Close the modal
+  //       console.log('User credentials updated successfully');
+  
+  //       setTimeout(() => {
+  //         setIsSuccess(false);
+  //       }, 3000);
+  //     } else {
+  //       console.error('Error updating user credentials:', response.statusText);
+  //     }
+  //   } catch (err) {
+  //     console.error('Error updating user credentials:', err);
+  //   }
+  // };
 
   
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // const handleProceed = (e) => {
+  //   e.preventDefault();
+  //   setIsModalOpen(true);
+  // };
+  
+  const handleOpenModal = (transaction) => {
 
-  const handleProceed = (e) => {
-    e.preventDefault();
     setIsModalOpen(true);
+    setSelectedTransaction(transaction);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedTransaction(null);
   };
 
   return (
@@ -80,14 +102,14 @@ const TransactionHistoryForm =()=>{
                     />
                   </div>
                 
-                  <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded-full mr-2 inline-flex items-center">
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded-full mr-2 inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
                       <path className="stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
                     </svg>
                     <span>Filter</span>
                   </button>
                 
-                  <button class="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 rounded-full inline-flex items-center">
+                  <button className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 rounded-full inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
@@ -122,113 +144,45 @@ const TransactionHistoryForm =()=>{
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                00057382
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                08/28/2023
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                06:29 AM
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                Birth Certificate
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="px-10 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                  Paid
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                P 299.00
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                              <div className="group">
-                                <a onClick={handleProceed} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" href="">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:stroke-white">
-                                    <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                    <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                  </svg>   
-                                  <span className="text-xs font-normal">&nbsp;View Details</span>
-                                </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                00089234
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                07/14/2023
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                03:14 PM
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                Tax Payment
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="px-7 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                  Pending
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                P 1499.00
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                              <div className="group">
-                                <a onClick={handleProceed} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" href="">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:stroke-white">
-                                    <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                    <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                  </svg>   
-                                  <span className="text-xs font-normal">&nbsp;View Details</span>
-                                </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                00024671
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                12/09/2023
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                03:14 PM
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                Tax Clearance
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="px-6 py-1 text-xs font-semibold rounded-full bg-red-300 text-red-800">
-                                  Canceled
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                P 1499.00
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                              <div className="group">
-                                <a onClick={handleProceed} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" href="">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:stroke-white">
-                                    <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                    <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                  </svg>   
-                                  <span className="text-xs font-normal">&nbsp;View Details</span>
-                                </a>
-                              </div>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
+                    {userTransaction.map((transaction) => (
+
+                    <tr key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                          {transaction.transaction_id}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                        {transaction.date}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                        {transaction.time}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                        {transaction.trans_type}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-10 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                          {transaction.status_type}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                        P {transaction.amount}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div className="group">
+                          <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:stroke-white">
+                              <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                              <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>   
+                            <span className="text-xs font-normal">&nbsp;View Details</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  </tbody>
                   </table>
                 </div>
               </div>
@@ -236,104 +190,9 @@ const TransactionHistoryForm =()=>{
           </div>
         </main>
 
-        {isModalOpen && (
-          <div className="fixed z-50 inset-0 overflow-y-auto">
-            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
-              <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-              </div>
-              <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                &#8203;
-              </span>
-              <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
-                <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="mx-auto mt-2">
-                    <div className="sm:mt-0" id="modal-headline">   
-                      <div className="mx-auto">
-                        <div className="mb-6">
-                          <span className="font-bold md:text-lg text-sm">Transaction Details</span>
-                        </div>
-
-                        <div className="mb-6">
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                            <span className="whitespace-nowrap ml-4">BQ-16543-00120</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                            <span className="whitespace-nowrap ml-4">119-7-584-328-009</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Permit Type</span>
-                            <span className="whitespace-nowrap ml-4">REAL PROPERTY TAX (RPTax)</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Transaction Type</span>
-                            <span className="whitespace-nowrap ml-4">TAX PAYMENT</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Transaction Number</span>
-                            <span className="whitespace-nowrap ml-4">542312454</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Date & Time</span>
-                            <span className="whitespace-nowrap ml-4">05/09/2023 1:25 PM</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap ml-4">AUTHORIZATION LETTER</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Period</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Remarks</span>
-                            <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Reference Number</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Status</span>
-                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">PENDING PAYMENT</span>
-                          </div>
-
-                          <hr className='mt-7 mb-1'/>
-                          <div className="flex justify-between">
-                            <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4"> P 1,020.00</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
-                  <div className="flex items-center space-x-2 mt-auto">
-                      <button
-                          onClick={handleCloseModal}
-                          type="button"
-                          className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                      >
-                          <p>Cancel</p>
-                      </button>
-                      <button
-                          onClick={handleSubmit}
-                          type="button"
-                          className="text-white text-xs px-5 py-2 text-center mb-0 md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                      >
-                          <p>Proceed</p>
-                      </button>
-                  </div>
-              </div>
-
-              </div>
-            </div>
-          </div>
-        )}  
+        {isModalOpen && selectedTransaction && (
+        <ModalTransaction selectedTransaction={selectedTransaction} modalType={selectedTransaction.trans_type} onClose={handleCloseModal} />
+      )}
 
       </div>
     </div>
