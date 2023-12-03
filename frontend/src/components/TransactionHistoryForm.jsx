@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
+import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 
 const TransactionHistoryForm =()=>{
 
@@ -14,7 +15,9 @@ const TransactionHistoryForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userTransaction, setUserTransaction]=useState([]);
-  const [modalContent, setModalContent] = useState({});
+  // const [modalContent, setModalContent] = useState({});
+  // const [modalType, setModalType] = useState('');
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   useEffect(()=>{
     const fetchUserTransaction = async () => {
@@ -51,24 +54,23 @@ const TransactionHistoryForm =()=>{
     }
   };
 
-  const handleOpenModal = (userTransaction, index) => {
-
-    const valuesToDisplay = userTransaction[index];
-
-    setModalContent(valuesToDisplay);
-
-    setIsModalOpen(true);
-  };
   
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  
   const handleProceed = (e) => {
     e.preventDefault();
     setIsModalOpen(true);
   };
+  
+  const handleOpenModal = (transaction) => {
+
+    setIsModalOpen(true);
+    setSelectedTransaction(transaction);
+  };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedTransaction(null);
   };
 
   return (
@@ -144,40 +146,40 @@ const TransactionHistoryForm =()=>{
                         </tr>
                     </thead>
                     <tbody>
-                    {userTransaction.map((userTransaction, index) => (
+                    {userTransaction.map((transaction) => (
 
-                    <tr key={index} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+                    <tr key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                          {userTransaction.transaction_id}
+                          {transaction.transaction_id}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                        {userTransaction.date}
+                        {transaction.date}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                        {userTransaction.time}
+                        {transaction.time}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                        {userTransaction.trans_type}
+                        {transaction.trans_type}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="px-10 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                          {userTransaction.status_type}
+                          {transaction.status_type}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                        P {userTransaction.amount}
+                        P {transaction.amount}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="group">
-                          <a onClick={() => openModal(transaction, index)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" href="">
+                          <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:stroke-white">
                               <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                               <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>   
                             <span className="text-xs font-normal">&nbsp;View Details</span>
-                          </a>
+                          </div>
                         </div>
                       </td>
                     </tr>
@@ -190,104 +192,9 @@ const TransactionHistoryForm =()=>{
           </div>
         </main>
 
-        {isModalOpen && (
-          <div className="fixed z-50 inset-0 overflow-y-auto">
-            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
-              <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-              </div>
-              <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                &#8203;
-              </span>
-              <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
-                <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="mx-auto mt-2">
-                    <div className="sm:mt-0" id="modal-headline">   
-                      <div className="mx-auto">
-                        <div className="mb-6">
-                          <span className="font-bold md:text-lg text-sm">Transaction Details</span>
-                        </div>
-
-                        <div className="mb-6">
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap ml-4">{modalContent.transaction_id}</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Tax Identification Number (TDN)</span>
-                            <span className="whitespace-nowrap ml-4">{modalContent.transaction_id}</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                            <span className="whitespace-nowrap ml-4">119-7-584-328-009</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Transaction Type</span>
-                            <span className="whitespace-nowrap ml-4">REAL PROPERTY TAX (RPTax)</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Transaction Number</span>
-                            <span className="whitespace-nowrap ml-4">542312454</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Date & Time</span>
-                            <span className="whitespace-nowrap ml-4">05/09/2023 1:25 PM</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap ml-4">AUTHORIZATION LETTER</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Period</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Remarks</span>
-                            <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Reference Number</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Status</span>
-                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">PENDING PAYMENT</span>
-                          </div>
-
-                          <hr className='mt-7 mb-1'/>
-                          <div className="flex justify-between">
-                            <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4"> P 1,020.00</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
-                  <div className="flex items-center space-x-2 mt-auto">
-                      <button
-                          onClick={handleCloseModal}
-                          type="button"
-                          className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                      >
-                          <p>Cancel</p>
-                      </button>
-                      <button
-                          onClick={handleSubmit}
-                          type="button"
-                          className="text-white text-xs px-5 py-2 text-center mb-0 md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                      >
-                          <p>Proceed</p>
-                      </button>
-                  </div>
-              </div>
-
-              </div>
-            </div>
-          </div>
-        )}  
+        {isModalOpen && selectedTransaction && (
+        <ModalTransaction selectedTransaction={selectedTransaction} modalType={selectedTransaction.trans_type} onClose={handleCloseModal} />
+      )}
 
       </div>
     </div>
