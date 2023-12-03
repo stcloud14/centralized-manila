@@ -112,8 +112,8 @@ const CedulaForm =()=>{
                     <label htmlFor="ctc_mname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
+                    <select id="ctc_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
                       <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
                       <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
                       <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
@@ -129,8 +129,8 @@ const CedulaForm =()=>{
                     <label htmlFor="ctc_suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_sex" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]'selected>Select Sex</option>
+                    <select id="ctc_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                     </select>
@@ -145,8 +145,8 @@ const CedulaForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_region" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Region</option>
+                    <select id="ctc_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Region</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -155,8 +155,8 @@ const CedulaForm =()=>{
                     <label htmlFor="ctc_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_province" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Province</option>
+                    <select id="ctc_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Province</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -165,8 +165,8 @@ const CedulaForm =()=>{
                     <label htmlFor="ctc_province" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_municipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Municipal</option>
+                    <select id="ctc_municipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Municipal</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -202,8 +202,8 @@ const CedulaForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-6 md:gap-6">
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <select id="ctc_civilstatus" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Civil Status</option>
+                    <select id="ctc_civilstatus" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Civil Status</option>
                       <option className='dark:bg-[#3d3d3d]'>Single</option>
                       <option className='dark:bg-[#3d3d3d]'>Married</option>
                       <option className='dark:bg-[#3d3d3d]'>Separated</option>
@@ -212,8 +212,8 @@ const CedulaForm =()=>{
                     <label htmlFor="ctc_civilstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <select id="ctc_countryofcitizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Country of Citizenship</option>
+                    <select id="ctc_countryofcitizenship" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Country of Citizenship</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -245,8 +245,8 @@ const CedulaForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_employmentstatus" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Employment Status</option>
+                    <select id="ctc_employmentstatus" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Employment Status</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
@@ -314,8 +314,8 @@ const CedulaForm =()=>{
                 {/* Row 2 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_validid" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]'selected>Select Valid ID to Present Upon Claiming</option>
+                    <select id="ctc_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
                       <option className='dark:bg-[#3d3d3d]'>SSS</option>
                       <option className='dark:bg-[#3d3d3d]'>UMID</option>
                       <option className='dark:bg-[#3d3d3d]'>PHILHEALTH</option>
@@ -329,10 +329,10 @@ const CedulaForm =()=>{
                     <label htmlFor="ctc_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_profession" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]'selected>Select Profession/Occupation/Business</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                    <select id="ctc_profession" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Profession/Occupation/Business</option>
+                      <option value="Option" className='dark:bg-[#3d3d3d]'>Option</option>
+                      <option value="Option" className='dark:bg-[#3d3d3d]'>Option</option>
                     </select>
                     <label htmlFor="ctc_profession" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession/Occupation/Business</label>
                   </div>
