@@ -105,7 +105,7 @@ const TransactionHistoryForm = () => {
                     <div className=" text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-md px-4 py-1.5">
                       Transaction ID: {transaction.transaction_id}
                     </div>
-                    <div className="px-4 pt-2 pb-3.5">
+                    <div className="px-4 py-5">
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: {transaction.date}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time: {transaction.time}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
@@ -113,7 +113,7 @@ const TransactionHistoryForm = () => {
                         Status: <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-green-100 text-green-800">{transaction.status_type}</span>
                       </div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P {transaction.amount}</div>
-                      <div className="group">
+                      <div className="mt-5 group">
                         <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full mt-2">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
                             <path className="stroke-blue-500" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
@@ -164,22 +164,22 @@ const TransactionHistoryForm = () => {
                     <table className="w-full text-left text-xs md:text-sm rtl:text-right text-gray-500 dark:text-gray-400">
                       <thead className="text-gray-700 uppercase bg-slate-200 dark:bg-[#212121] dark:text-slate-400">
                           <tr>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                              <th scope="col" className="pl-6 pr-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                                   Transaction ID
                               </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                              <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                                   Date
                               </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                              <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                                   Time
                               </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                              <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                                   Type
                               </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                              <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                                   Status
                               </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                              <th scope="col" className="pl-3 pr-6 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                                   Amount
                               </th>
                               <th>
@@ -191,31 +191,31 @@ const TransactionHistoryForm = () => {
                       {userTransaction.map((transaction) => (
 
                       <tr key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="pl-6 pr-3 py-4 whitespace-nowrap">
                           <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white">
                             {transaction.transaction_id}
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                        <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                           {transaction.date}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                        <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                           {transaction.time}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                        <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                           {transaction.trans_type}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-3 py-4 whitespace-nowrap">
                           <span className="px-10 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
                             {transaction.status_type}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                        <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                           P {transaction.amount}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
+                        <td className="pl-3 pr-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
                           <div className="group">
-                            <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" >
+                            <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center px-4 p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" >
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:stroke-white">
                                 <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                                 <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
