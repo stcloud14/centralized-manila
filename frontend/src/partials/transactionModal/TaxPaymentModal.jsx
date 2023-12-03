@@ -22,42 +22,42 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
 
                         <div className="mb-6">
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
-                          </div>
-                          {/* <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Tax Identification Number (TDN)</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_tdn}</span>
-                          </div> */}
-                          {/* <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                            <span className="whitespace-nowrap ml-4">119-7-584-328-009</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Transaction Number</span>
-                            <span className="whitespace-nowrap ml-4">542312454</span>
-                          </div> */}
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Date</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Time</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction Type</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.trans_type}</span>
                           </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Transaction ID</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Account Name</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.acc_name}</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Tax Identification Number (TDN)</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.rtp_tdn}</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.rtp_pin}</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">From</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.year_id} - 1st Quarter</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">To</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.year_id} - {selectedTransaction.period_id}</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Date Processed</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Time Processed</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
+                          </div>
                           {/* <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap ml-4">AUTHORIZATION LETTER</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Period</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Remarks</span>
                             <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
                           </div> */}
