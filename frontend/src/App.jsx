@@ -23,6 +23,7 @@ import RPTaxClearance from './pages/RPTaxClearance';
 import TransactionHistory from './pages/TransactionHistory';
 import BusinessPermit from './pages/BusinessPermit';
 import Cedula from './pages/Cedula';
+import BirthCertificate from './pages/BirthCertificate';
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
         <Route exact path="/transachistory/:user_id" element={<TransactionHistory/>} />
         <Route exact path="/businesspermit/:user_id" element={<BusinessPermit/>} />
         <Route exact path="/cedula/:user_id" element={<Cedula/>} />
+        <Route exact path="/birthcertificate/:user_id" element={<BirthCertificate/>} />
       </Routes>
     </>
   );

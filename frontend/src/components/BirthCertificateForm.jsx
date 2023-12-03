@@ -10,7 +10,7 @@ import Flatpickr from 'react-flatpickr';
 
 import 'flatpickr/dist/themes/airbnb.css';
 
-const CedulaForm =()=>{
+const BirthCertificateForm =()=>{
 
   const location = useLocation();
   const { pathname } = location;
@@ -447,4 +447,4 @@ const CedulaForm =()=>{
   );
 }
 
-export default CedulaForm;
+export default BirthCertificateForm;
