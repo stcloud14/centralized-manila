@@ -114,15 +114,19 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
           &#8203;
         </span>
-        <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
-          <div className="max-h-[20rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-0 sm:p-6 sm:pb-0 overflow-y-auto">
-            <div className="mx-auto mt-2">
+        <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
+          <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 overflow-y-auto">
+                          <div className="mb-6">
+                          <span className="font-bold md:text-lg text-sm">Cedula Transaction Details</span>
+                          </div>
+                        </div>
+          
+          
+          
+          <div className="max-h-[20rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pb-0 sm:px-6 sm:pb-0 overflow-y-auto">
+            <div className="mx-auto">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
-                        <div className="mb-6">
-                          <span className="font-bold md:text-lg text-sm">Cedula Transaction Details</span>
-                        </div>
-
                         <div className="mb-0">
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
