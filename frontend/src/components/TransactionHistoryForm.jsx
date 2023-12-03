@@ -15,8 +15,6 @@ const TransactionHistoryForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userTransaction, setUserTransaction]=useState([]);
-  // const [modalContent, setModalContent] = useState({});
-  // const [modalType, setModalType] = useState('');
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   useEffect(()=>{
@@ -31,36 +29,36 @@ const TransactionHistoryForm =()=>{
     fetchUserTransaction();
   }, [user_id]);
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
   
-    try {
-      //const response = await axios.post(`http://localhost:8800/rptax/payment/${user_id}`, userPersonal);
+  //   try {
+  //     //const response = await axios.post(`http://localhost:8800/rptax/payment/${user_id}`, userPersonal);
   
-      // Check the response status before proceeding
-      if (response.status === 200) {
-        setIsSuccess(true); // Set success state to true
-        handleCloseModal(); // Close the modal
-        console.log('User credentials updated successfully');
+  //     // Check the response status before proceeding
+  //     if (response.status === 200) {
+  //       setIsSuccess(true); // Set success state to true
+  //       handleCloseModal(); // Close the modal
+  //       console.log('User credentials updated successfully');
   
-        setTimeout(() => {
-          setIsSuccess(false);
-        }, 3000);
-      } else {
-        console.error('Error updating user credentials:', response.statusText);
-      }
-    } catch (err) {
-      console.error('Error updating user credentials:', err);
-    }
-  };
+  //       setTimeout(() => {
+  //         setIsSuccess(false);
+  //       }, 3000);
+  //     } else {
+  //       console.error('Error updating user credentials:', response.statusText);
+  //     }
+  //   } catch (err) {
+  //     console.error('Error updating user credentials:', err);
+  //   }
+  // };
 
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  const handleProceed = (e) => {
-    e.preventDefault();
-    setIsModalOpen(true);
-  };
+  // const handleProceed = (e) => {
+  //   e.preventDefault();
+  //   setIsModalOpen(true);
+  // };
   
   const handleOpenModal = (transaction) => {
 
