@@ -336,8 +336,8 @@ const handleCheckboxChange = (e) => {
                       </div>
 
                       <div className="relative z-0 w-full mb-2 group">
-                        <select onChange={handleInputChange} value={rptaxPayment.period} name="period" id="period" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                          <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Period</option>
+                        <select onChange={handleInputChange} value={rptaxPayment.period} defaultValue={0} name="period" id="period" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                          <option value="0" className='dark:bg-[#3d3d3d]'>Select Period</option>
                           <option value="1st Quarter" className='dark:bg-[#3d3d3d]'>1st Quarter</option>
                           <option value="2nd Quarter"className='dark:bg-[#3d3d3d]'>2nd Quarter</option>
                           <option value="3rd Quarter"className='dark:bg-[#3d3d3d]'>3rd Quarter</option>
