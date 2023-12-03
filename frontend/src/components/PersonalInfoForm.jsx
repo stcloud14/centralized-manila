@@ -148,8 +148,8 @@ const PersonalInfoForm =()=>{
               {/* Row 2 */}
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.suffix_type} name="suffix_type" id="suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
+                  <select onChange={handleChangePersonal} value={userPersonal.suffix_type} defaultValue={0} name="suffix_type" id="suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
                     <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
                     <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
                     <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
@@ -166,8 +166,8 @@ const PersonalInfoForm =()=>{
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group" >
-                  <select onChange={handleChangePersonal} value={userPersonal.sex_type} name="sex_type" id="sex" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                    <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Sex</option>
+                  <select onChange={handleChangePersonal} value={userPersonal.sex_type} defaultValue={0} name="sex_type" id="sex" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
                     <option value="Male" className='dark:bg-[#3d3d3d]'>Male</option>
                     <option value="Female"className='dark:bg-[#3d3d3d]'>Female</option>
                   </select>
@@ -237,8 +237,8 @@ const PersonalInfoForm =()=>{
               <div className="grid md:grid-cols-3 md:gap-6">
 
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.cvl_status} name="cvl_status" id="civil_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Civil Status</option>
+                  <select onChange={handleChangePersonal} value={userPersonal.cvl_status} defaultValue={0} name="cvl_status" id="civil_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Civil Status</option>
                     <option value="Single" className='dark:bg-[#3d3d3d]'>Single</option>
                     <option value="Married" className='dark:bg-[#3d3d3d]'>Married</option>
                     <option value="Separated" className='dark:bg-[#3d3d3d]'>Separated</option>
@@ -248,8 +248,8 @@ const PersonalInfoForm =()=>{
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.czn_status} name="czn_status" id="citizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Citizenship</option>
+                  <select onChange={handleChangePersonal} value={userPersonal.czn_status} defaultValue={0} name="czn_status" id="citizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Citizenship</option>
                     <option value="Citizen" className='dark:bg-[#3d3d3d]'>Citizen</option>
                     <option value="Permanent Resident" className='dark:bg-[#3d3d3d]'>Permanent Resident</option>
                     <option value="Temporary Resident" className='dark:bg-[#3d3d3d]'>Temporary Resident</option>
@@ -258,8 +258,8 @@ const PersonalInfoForm =()=>{
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.res_status} name="res_status" id="residency" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" className='dark:bg-[#3d3d3d]' disabled selected>Select Residency Status</option>
+                  <select onChange={handleChangePersonal} value={userPersonal.res_status} defaultValue={0} name="res_status" id="residency" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Residency Status</option>
                     <option value="Resident" className='dark:bg-[#3d3d3d]'>Resident</option>
                     <option value="Non-Resident" className='dark:bg-[#3d3d3d]'>Non-Resident</option>
                   </select>
