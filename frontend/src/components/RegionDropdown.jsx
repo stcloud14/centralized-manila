@@ -2,7 +2,7 @@ import React from 'react';
 
 const RegionDropdown = ({ onChange, value }) => {
   const regionOptions = [
-    { value: "", label: 'Select Region' },
+    { value: "0", label: 'Select Region' },
     { value: "1", label: 'Region I - Ilocos Region' },
     { value: "2", label: 'Region II - Cagayan Valley' },
     { value: "3", label: 'Region III - Central Luzon' },
