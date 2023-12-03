@@ -219,7 +219,7 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
                   </div>
                 </div>
 
-              <div className="mx-auto bg-white dark:bg-[#212121] text-slate-700 dark:text-white ml-0 mr-1 md:mr-6 px-3 pt-0 pb-4 xs:px-4 sm:pl-6 sm:pb-4">
+              <div className="mx-auto bg-white dark:bg-[#212121] text-slate-700 dark:text-white mr-1 md:mr-2 xl:mr-6 pl-4 px-3 pt-0 pb-4 xs:px-4 sm:pl-6 sm:pb-4">
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
