@@ -1,8 +1,8 @@
-import BusinessPermitForm from "../components/CedulaForm";
+import CedulaForm from "../components/CedulaForm";
 
 function Cedula() {
   return (  
-    <BusinessPermitForm />
+    <CedulaForm />
   );
 }
 
