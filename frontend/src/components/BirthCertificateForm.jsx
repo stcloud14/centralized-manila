@@ -92,27 +92,28 @@ const BirthCertificateForm =()=>{
                  
            
             <form onSubmit={handleSubmit}>
-            <h1 className='font-medium text-center text-slate-700 dark:text-white'>CTC / Cedula</h1>
-            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'></h1>
+            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Local Civil Registry</h1>
+            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Birth Certificate</h1>
 
-              {/* Group 1 - Owner's Information*/}
+              {/* Group 1 - Document Owner's Personal Information*/}
               <div className='pt-0.5'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Owner’s Information</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white mt-4'>Document Owner's Personal Information</h1>
+                <h1 className='text-xs text-slate-700 dark:text-white my-1.5'>Use Maiden Name for Married Woman</h1>
                 <div className="grid md:grid-cols-8 md:gap-6">
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <input type="text" id="ctc_lname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_lname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
+                    <input type="text" id="birthc_lname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_lname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <input type="text" id="ctc_fname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_fname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
+                    <input type="text" id="birthc_fname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_fname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <input type="text" id="ctc_mname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_mname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
+                    <input type="text" id="birthc_mname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_lname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select id="birthc_suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
                       <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
                       <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
@@ -126,141 +127,57 @@ const BirthCertificateForm =()=>{
                       <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
                       <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
                     </select>
-                    <label htmlFor="ctc_suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
+                    <label htmlFor="birthc_suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_sex" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select id="birthc_sex" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <option className='dark:bg-[#3d3d3d]'selected>Select Sex</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                     </select>
-                    <label htmlFor="ctc_sex" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
+                    <label htmlFor="birthc_sex" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
                   </div>
                 </div>
               </div>
 
-              {/* Group 2- Address */}
+              {/* Group 2 - Document Owner's Place of Birth */}
               <div className='pt-6'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Address</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Document Owner's Place of Birth</h1>
                 {/* Row 1 */}
-                <div className="grid md:grid-cols-3 md:gap-6">
+                <div className="grid md:grid-cols-4 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_region" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select id="birthc_ownerregion" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <option className='dark:bg-[#3d3d3d]' disabled selected>Select Region</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                     </select>
-                    <label htmlFor="ctc_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
+                    <label htmlFor="birthc_ownerregion" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_province" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select id="birthc_ownerprovince" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <option className='dark:bg-[#3d3d3d]' disabled selected>Select Province</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                     </select>
-                    <label htmlFor="ctc_province" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
+                    <label htmlFor="birthc_ownerprovince" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_municipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select id="birthc_ownermunicipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <option className='dark:bg-[#3d3d3d]' disabled selected>Select Municipal</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                     </select>
-                    <label htmlFor="ctc_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
-                  </div>
-                </div>
-                {/* Row 2 */}
-                <div className="grid md:grid-cols-7 md:gap-6">
-                  <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <input type="text" id="ctc_brgy" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_brgy" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Barangay</label>
-                  </div>
-                  <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <input type="text" id="ctc_hnum" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_hnum" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">House No. / Unit Floor</label>
-                  </div>
-                  <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <input type="text" id="ctc_street" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_street" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Street / Building Name</label>
-                  </div>
-                  <div className="relative z-0 w-full mb-6 group">
-                    <input type="text" id="ctc_zip" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_zip" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Zip Code</label>
-                  </div>
-                </div>
-              </div>
-
-                {/* Group 3 - Other Information */}
-                <div className='pt-6'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Other Information</h1>
-                {/* Row 1 */}
-                <div className="grid md:grid-cols-6 md:gap-6">
-                  <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <select id="ctc_civilstatus" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Civil Status</option>
-                      <option className='dark:bg-[#3d3d3d]'>Single</option>
-                      <option className='dark:bg-[#3d3d3d]'>Married</option>
-                      <option className='dark:bg-[#3d3d3d]'>Separated</option>
-                      <option className='dark:bg-[#3d3d3d]'>Widowed</option>
-                    </select>
-                    <label htmlFor="ctc_civilstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
-                  </div>
-                  <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <select id="ctc_countryofcitizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Country of Citizenship</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                    </select>
-                    <label htmlFor="ctc_countryofcitizenship" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Country of Citizenship</label>
-                  </div>
-                  <div className="relative z-0 w-full mb-6 group">
-                    <input type="text" id="ctc_height" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_height" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Height (ft)</label>
-                  </div>
-                  <div className="relative z-0 w-full mb-6 group">
-                    <input type="text" id="ctc_weight" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_weight" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Weight (kg)</label>
-                  </div>
-                </div>
-                {/* Row 2 */}
-                <div className="grid md:grid-cols-1 md:gap-6">
-                  <div className="relative z-0 w-full mb-6 group">
-                    <input type="text" id="ctc_aliencor" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_aliencor" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alien Certificate of Registration No. (if alien)</label>
-                  </div>
-                </div>
-              </div>
-
-              {/* Group 4 - Transaction Information*/}
-              <div className='pt-6'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Transaction Information</h1>
-                {/* Row 1 */}
-                <div className="grid md:grid-cols-3 md:gap-6">
-                  <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_employmentstatus" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Employment Status</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                    </select>
-                    <label htmlFor="ctc_employmentstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Employment Status</label>
-                  </div>
-                  <div className="relative z-0 w-full mb-6 group">
-                    <input type="text" id="ctc_taxpayeraccno" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_taxpayeraccno" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tax Payer Account No.</label>
+                    <label htmlFor="birthc_ownermunicipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                   <Flatpickr
-                    value={0}
+                    value={userBirth.birth_date}
                     onChange={(date) => {
                       const formattedDate = date.length > 0 ? (() => {
                         const originalDate = new Date(date[0]);
@@ -302,86 +219,279 @@ const BirthCertificateForm =()=>{
                     
                   />
                   <label
-                    htmlFor="residencetaxdue"
+                    htmlFor="dateofbirth"
                     className={`peer-focus:font-medium absolute bg-transparent text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 ${
                       userBirth.birth_date ? 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : ''
                     }`}
                   >
-                    {userBirth.birth_date ? 'Residence Tax Due' : 'Residence Tax Due'}
+                    {userBirth.birth_date ? 'Date of Birth' : 'Date of Birth'}
                   </label>
+                  </div>
+                </div>
+              </div> 
+
+              {/* Group 3 - Father's Name of Document Owner*/}
+              <div className='pt-6'>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Father's Name of Document Owner</h1>
+                <div className="grid md:grid-cols-4 md:gap-6">
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_fatherlname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_fatherlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_fatherfname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_fatherfname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_fathermname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_fatherlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <select id="birthc_fathersuffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
+                      <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
+                      <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
+                      <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
+                      <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
+                      <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
+                      <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
+                      <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
+                      <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
+                      <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
+                      <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
+                      <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                    </select>
+                    <label htmlFor="birthc_fathersuffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Group 4 - Mother's Name of Document Owner*/}
+              <div className='pt-6'>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Mother's Name of Document Owner</h1>
+                <div className="grid md:grid-cols-4 md:gap-6">
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_motherlname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_motherlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_motherfname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_motherfname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_mothermname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_motherlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <select id="birthc_mothersuffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
+                      <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
+                      <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
+                      <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
+                      <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
+                      <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
+                      <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
+                      <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
+                      <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
+                      <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
+                      <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
+                      <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                    </select>
+                    <label htmlFor="birthc_mothersuffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Group 5 - Requestor Personal Information*/}
+              <div className='pt-6'>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Requestor Personal Information</h1>
+                {/* Row 1 */}
+                <div className="grid md:grid-cols-4 md:gap-6">
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_reqlname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_reqfname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqmotherfname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_reqmname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <select id="birthc_reqsuffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'selected>Select Suffix</option>
+                      <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
+                      <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
+                      <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
+                      <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
+                      <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
+                      <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
+                      <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
+                      <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
+                      <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
+                      <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
+                      <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                    </select>
+                    <label htmlFor="birthc_reqrsuffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
                 </div>
                 {/* Row 2 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_validid" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]'selected>Select Valid ID to Present Upon Claiming</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                    </select>
-                    <label htmlFor="ctc_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming</label>
+                    <input type="text" id="birthc_reqrrelation" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqrelation" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Relationship to the Owner</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select id="ctc_profession" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option className='dark:bg-[#3d3d3d]'selected>Select Profession/Occupation/Business</option>
+                    <input type="text" id="birthc_reqtin" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqtin" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Requestor's Tax Identification Number (TIN) if known</label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Group 6 - Mailing Address */}
+              <div className='pt-6'>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Mailing Address</h1>
+                {/* Row 1 */}
+                <div className="grid md:grid-cols-3 md:gap-6">
+                  <div className="relative z-0 w-full mb-6 group">
+                    <select id="birthc_reqregion" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Region</option>
+                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                       <option className='dark:bg-[#3d3d3d]'>Option</option>
                     </select>
-                    <label htmlFor="ctc_profession" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession/Occupation/Business</label>
+                    <label htmlFor="birthc_reqregion" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <select id="birthc_reqprovince" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Province</option>
+                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                    </select>
+                    <label htmlFor="birthc_reqprovince" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <select id="birthc_reqmunicipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option className='dark:bg-[#3d3d3d]' disabled selected>Select Municipal</option>
+                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                    </select>
+                    <label htmlFor="birthc_reqmunicipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
+                  </div>
+                </div>
+                {/* Row 2 */}
+                <div className="grid md:grid-cols-7 md:gap-6">
+                  <div className="relative z-0 w-full mb-6 md:col-span-2 group">
+                    <input type="text" id="birthc_reqbrgy" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqbrgy" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Barangay</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 md:col-span-2 group">
+                    <input type="text" id="birthc_reqhnum" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqhnum" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">House No. / Unit Floor</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 md:col-span-2 group">
+                    <input type="text" id="birthc_reqstreet" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqstreet" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Street / Building Name</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_reqzip" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqzip" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Zip Code</label>
                   </div>
                 </div>
                 {/* Row 3 */}
-                <h1 className='text-sm text-slate-700 dark:text-white'>Additional Residence Tax on the following items owned or earned in the Philippines (Tax not exceeded P5,000)</h1>
-                {/* Row 4 */}
-                <h1 className='text-xs text-slate-700 dark:text-white mt-2.5 mb-1.5'>Income from Real Property (P1 for every P1,000)</h1>
-                  <div className="grid md:grid-cols-2 md:gap-6">
-                    <div className="relative z-0 w-full mb-6 group">
-                      <input type="text" id="ctc_incomeca" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                      <label htmlFor="ctc_incometa" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Taxable Amount</label>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
-                      <input type="text" id="ctc_incomeca" readonly className="pointer-events-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                      <label htmlFor="ctc_incomeca" className="pointer-events-none peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cedula Amount</label>
-                    </div>
-                </div>
-                {/* Row 5 */}
-                <h1 className='text-xs text-slate-700 dark:text-white mb-1.5'>Gross Receipts or Earnings derived from Business during the preceding year (P1 for every P1,000)</h1>
-                  <div className="grid md:grid-cols-2 md:gap-6">
-                    <div className="relative z-0 w-full mb-6 group">
-                      <input type="text" id="ctc_grossta" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                      <label htmlFor="ctc_grossta" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Taxable Amount</label>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
-                      <input type="text" id="ctc_grossca" readonly className="pointer-events-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                      <label htmlFor="ctc_grossca" className="pointer-events-none peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cedula Amount</label>
-                    </div>
-                </div>
-                {/* Row 6 */}
-                <h1 className='text-xs text-slate-700 dark:text-white mb-1.5'>Salaries or Gross Receipts or Earnings derived from exercise of profession or pursuit of any occupation (P1 for every P1,000)</h1>
-                  <div className="grid md:grid-cols-2 md:gap-6">
-                    <div className="relative z-0 w-full mb-6 group">
-                      <input type="text" id="ctc_salariesta" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                      <label htmlFor="ctc_salariesta" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Taxable Amount</label>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
-                      <input type="none" id="ctc_salariesca" readonly className="pointer-events-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                      <label htmlFor="ctc_salariesca" className="pointer-events-none peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cedula Amount</label>
-                    </div>
+                <div className="grid md:grid-cols-2 md:gap-6">
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_reqtelnum" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqtelnum" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Telephone No.</label>
                   </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_reqmobnum" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_reqmobnum" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile No.</label>
+                  </div>
+                </div>
               </div>
 
-              {/* Group 5 - Computation */}
+              {/* Group 7 - Transaction Information*/}
+              <div className='pt-6'>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Transaction Information</h1>
+                {/* Row 1 */}
+                <div className="grid md:grid-cols-2 md:gap-6">
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_country" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_country" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Specify Country ONLY if Born Abroad</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_bren" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_bren" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Birth Registry Number (BReN) if known</label>
+                  </div>
+                </div>
+                {/* Row 2 */}
+                <div className="grid md:grid-cols-4 md:gap-6">
+                  <div className="relative z-0 w-full mb-6 md:col-span-2 group">
+                    <input type="text" id="birthc_hospital" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_hospital" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hospital Name / Name of Midwife / Hilot (if born home/clinic) </label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="birthc_nocopies" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                    <label htmlFor="birthc_nocopies" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No. of Copies</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <select id="birthc_print" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option className='dark:bg-[#3d3d3d]'selected>Select What to Print</option>
+                      <option className='dark:bg-[#3d3d3d]'>Front (P50)</option>
+                      <option className='dark:bg-[#3d3d3d]'>Back (P50)</option>
+                      <option className='dark:bg-[#3d3d3d]'>Front and Back (P100)</option>
+                    </select>
+                    <label htmlFor="birthc_print" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">What to Print</label>
+                  </div>
+                </div>
+                {/* Row 3 */}
+                <div className="grid md:grid-cols-2 md:gap-6">
+                <div className="relative z-0 w-full mb-6 group">
+                    <select id="birthc_purpose" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option className='dark:bg-[#3d3d3d]'selected>Select Purpose</option>
+                      <option className='dark:bg-[#3d3d3d]'>Claim Benefits / Loan</option>
+                      <option className='dark:bg-[#3d3d3d]'>Passport / Travel</option>
+                      <option className='dark:bg-[#3d3d3d]'>School Requirements</option>
+                      <option className='dark:bg-[#3d3d3d]'>Employment Local</option>
+                      <option className='dark:bg-[#3d3d3d]'>Employment Abroad</option>
+                    </select>
+                    <label htmlFor="birthc_purpose" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Purpose</label>
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <select id="birthc_validid" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option className='dark:bg-[#3d3d3d]'selected>Select Valid ID to Present Upon Claiming</option>
+                      <option className='dark:bg-[#3d3d3d]'>SSS</option>
+                      <option className='dark:bg-[#3d3d3d]'>UMID</option>
+                      <option className='dark:bg-[#3d3d3d]'>PHILHEALTH</option>
+                      <option className='dark:bg-[#3d3d3d]'>DRIVER'S LICENSE</option>
+                      <option className='dark:bg-[#3d3d3d]'>VOTER'S ID</option>
+                      <option className='dark:bg-[#3d3d3d]'>SENIOR CITIZEN'S ID</option>
+                      <option className='dark:bg-[#3d3d3d]'>POSTAL ID</option>
+                      <option className='dark:bg-[#3d3d3d]'>BARANGAY ID</option>
+                      <option className='dark:bg-[#3d3d3d]'>AUTHORIZATION LETTER</option>
+                    </select>
+                    <label htmlFor="birthc_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming</label>
+                  </div>
+                </div> 
+              </div>
+
+              {/* Group 8 - Computation */}
               <div className="flex justify-center md:justify-end text-sm">
                  <div className="w-full md:w-1/2">
-                     <div className="flex justify-between">
-                         <span className="font-medium whitespace-nowrap">Total (+P Basic Amount)</span>
-                     </div>
                      <div className="flex justify-between mt-2">
-                         <span className="whitespace-nowrap">Total</span>
+                         <span className="font-medium whitespace-nowrap">Print Fee</span>
                          <span className="whitespace-nowrap">P0.00</span>
                      </div>
                      <div className="flex justify-between mt-2">
-                         <span className="whitespace-nowrap">Interest (20%)</span>
+                         <span className="font-medium whitespace-nowrap">Rush Service Fee</span>
                          <span className="whitespace-nowrap">P0.00</span>
                      </div>
                      <hr className='mt-2.5 mb-1'/>
