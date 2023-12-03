@@ -115,7 +115,7 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
           &#8203;
         </span>
         <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
-          <div className="max-h-[20rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 overflow-y-auto">
+          <div className="max-h-[20rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-0 sm:p-6 sm:pb-0 overflow-y-auto">
             <div className="mx-auto mt-2">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
@@ -123,7 +123,7 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
                           <span className="font-bold md:text-lg text-sm">Cedula Transaction Details</span>
                         </div>
 
-                        <div className="mb-6">
+                        <div className="mb-0">
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
@@ -219,7 +219,7 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
                   </div>
                 </div>
 
-              <div className="mx-auto bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div className="mx-auto bg-white dark:bg-[#212121] text-slate-700 dark:text-white ml-0 mr-1 md:mr-6 px-3 pt-0 pb-4 xs:px-4 sm:pl-6 sm:pb-4">
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
@@ -248,7 +248,7 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
                           </div>
                         </div>
 
-                <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
+                <div className="bg-white dark:bg-[#212121] mr-0 md:mr-2 px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
                   <div className="flex items-center space-x-2 mt-auto">
                       <button
