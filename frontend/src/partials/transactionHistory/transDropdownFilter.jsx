@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const TransDropdownFilter = ({ }) => {
+const TransDropdownFilter =()=>{
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -21,10 +21,10 @@ const TransDropdownFilter = ({ }) => {
         <ul className="text-xs text-center text-gray-700 dark:text-gray-200 space-y-2" aria-labelledby="dropdownDefaultButton">
             <li>
                 <span className="flex items-center justify-center px-4 py-2 font-medium border-b border-slate-200 dark:border-[#3d3d3d]">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
-                </svg>
-                Filter By
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+                    </svg>
+                    Filter By
                 </span>
             </li>
             <li>
