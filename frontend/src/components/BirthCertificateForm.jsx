@@ -283,9 +283,9 @@ const BirthCertificateForm =()=>{
                 </div>
               </div>
 
-              {/* Group 5 - Requestor Personal Information*/}
+              {/* Group 5 - Requestor's Personal Information*/}
               <div className='pt-6'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Requestor Personal Information</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Requestor's Personal Information</h1>
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-4 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
@@ -488,7 +488,7 @@ const BirthCertificateForm =()=>{
                   type="submit"
                   onClick={handleProceed}
                   className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
-                  Save Changes
+                  Proceed
                 </button>
               </div>
             </form>
