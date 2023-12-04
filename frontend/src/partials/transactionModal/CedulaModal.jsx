@@ -20,7 +20,7 @@ const CedulaModal = ({ selectedTransaction, onClose }) => {
           
           
           
-          <div className="max-h-[19.5rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pb-0 sm:px-6 sm:pb-0 overflow-y-auto">
+          <div className="max-h-[19.5rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
             <div className="mx-auto">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
@@ -120,7 +120,7 @@ const CedulaModal = ({ selectedTransaction, onClose }) => {
                   </div>
                 </div>
 
-              <div className="mx-auto bg-white dark:bg-[#212121] text-slate-700 dark:text-white mr-1 md:mr-2 xl:mr-6 pl-4 px-3 pt-0 pb-4 xs:px-4 sm:pl-6 sm:pb-4">
+              <div className="mx-auto bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10 ">
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
