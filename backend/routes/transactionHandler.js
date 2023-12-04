@@ -15,17 +15,6 @@ router.get('/:user_id', async (req, res) => {
     \
     tc.rp_tdn AS rtc_tdn, tc.rp_pin AS rtc_pin, \
     \
-    bp.sex_type, bp.bus_info_id, bp.bus_owner_id, bp.bus_contact_id, bp.bus_addr_id, \
-    \
-    ct.l_name, ct.f_name, ct.m_name, ct.sex_id, ct.suffix_id, ct.addr_info_id, \
-    ct.ced_trans_info_id, ct.ced_other_info_id, \
-    \
-    bc.birth_parents_id, bc.birth_tin_no, bc.owner_rel, bc.bcert_info_id, \
-    \
-    dc.death_name, dc.death_date, dc.suffix_type, dc.sex_type, dc.death_req_id, \
-    \
-    mc.person_info_id, mc.marriage_details_id, mc.consent_info_id \
-    \
     FROM user_transaction ut \
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
@@ -81,3 +70,14 @@ function queryDatabase(query, values) {
 
 
 export default router;
+
+// bp.sex_type, bp.bus_info_id, bp.bus_owner_id, bp.bus_contact_id, bp.bus_addr_id, \
+// \
+// ct.l_name, ct.f_name, ct.m_name, ct.sex_id, ct.suffix_id, ct.addr_info_id, \
+// ct.ced_trans_info_id, ct.ced_other_info_id, \
+// \
+// bc.birth_parents_id, bc.birth_tin_no, bc.owner_rel, bc.bcert_info_id, \
+// \
+// dc.death_name, dc.death_date, dc.suffix_type, dc.sex_type, dc.death_req_id, \
+// \
+// mc.person_info_id, mc.marriage_details_id, mc.consent_info_id \

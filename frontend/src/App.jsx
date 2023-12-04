@@ -24,6 +24,8 @@ import TransactionHistory from './pages/TransactionHistory';
 import BusinessPermit from './pages/BusinessPermit';
 import Cedula from './pages/Cedula';
 import BirthCertificate from './pages/BirthCertificate';
+import MarriageCertificate from './pages/MarriageCertificate';
+import DeathCertificate from './pages/DeathCertificate';
 
 function App() {
 
@@ -52,6 +54,8 @@ function App() {
         <Route exact path="/businesspermit/:user_id" element={<BusinessPermit/>} />
         <Route exact path="/cedula/:user_id" element={<Cedula/>} />
         <Route exact path="/birthcertificate/:user_id" element={<BirthCertificate/>} />
+        <Route exact path="/marriagecertificate/:user_id" element={<MarriageCertificate/>} />
+        <Route exact path="/deathcertificate/:user_id" element={<DeathCertificate/>} />
       </Routes>
     </>
   );
