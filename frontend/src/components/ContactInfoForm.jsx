@@ -123,7 +123,7 @@ const ContactInfoForm =()=>{
               <h1 className='mb-7 text-sm italic text-center'>Contact Information</h1>
 
               {isSuccess && (
-              <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
+              <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
                 Success! Your changes have been saved.
               </div>
               )}

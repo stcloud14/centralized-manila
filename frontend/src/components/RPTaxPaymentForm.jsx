@@ -150,16 +150,16 @@ const handleCheckboxChange = (e) => {
       if (response.status === 200) {
         setIsSuccess(true); // Set success state to true
         handleCloseModal(); // Close the modal
-        console.log('User credentials updated successfully');
+        console.log('Transaction successful');
   
         setTimeout(() => {
           setIsSuccess(false);
         }, 3000);
       } else {
-        console.error('Error updating user credentials:', response.statusText);
+        console.error('Transaction error:', response.statusText);
       }
     } catch (err) {
-      console.error('Error updating user credentials:', err);
+      console.error('Transaction error:', err);
     }
   };
 
@@ -198,11 +198,11 @@ const handleCheckboxChange = (e) => {
                   <h1 className='font-medium text-center text-slate-700 dark:text-white'>Real Property Tax</h1>
                   <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Payment</h1>
 
-                  {/* {isSuccess && (
-              <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
-                Success! Your changes have been saved.
-              </div>
-              )} */}
+                  {isSuccess && (
+                  <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                    Transaction success on Real Property Tax Payment!
+                  </div>
+                  )}  
 
                   <div className="grid gap-6">
                       <div className="relative z-0 w-full mb-2 group">

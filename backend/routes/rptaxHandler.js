@@ -313,7 +313,7 @@ router.get('/payment/', async (req, res) => {
     const uniqueID = uuidv4().split('-').join('').substring(0, 9); // Use a portion of UUID
     const transactionID = `${timestamp}-${uniqueID}`;
 
-    return transactionID;
+    return transactionID.toUpperCase();
   }
 
   export default router;
