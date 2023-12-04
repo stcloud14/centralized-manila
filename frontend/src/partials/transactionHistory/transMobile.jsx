@@ -1,5 +1,6 @@
 import React from 'react';
 import StatusBadgeMobile from '../StatusBadgeMobile';
+import TransDropdownFilter from './transDropdownFilter';
 
 const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions }) => {
 
@@ -25,12 +26,20 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                     />
                   </div>
                 
-                  <button onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 rounded-full inline-flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
+                  <button onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white px-2.5 py-1 mr-2 rounded-full inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
                     <span>Clear</span>
                   </button>
+
+                  <TransDropdownFilter/>
+                  
+                  {/* <button className="bg-blue-500 hover:bg-blue-600 text-white px-1 py-1 rounded-md inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                      <path className="stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+                    </svg>
+                  </button> */}
                 </div>
                 <div className="flex text-xs mb-5">
                   <button className="group flex justify-center w-full items-center text-center p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full mt-2">
@@ -40,6 +49,25 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                     <span className="text-xs font-normal px-0.5">&nbsp;Download SOA</span>
                   </button>
                 </div>
+
+                {/* <div className="flex justify center items-center text-[0.60rem] mb-5 space-px-2 space-x-2">
+                  <div className="group flex justify-center w-full items-center text-center">
+                    <span>Sort By: </span>
+                  </div>
+                  <button className="flex justify-center w-full items-center text-center p-1 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full">
+                    <span>Date</span>
+                  </button>
+
+                  <button className="flex justify-center w-full items-center text-center p-1 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full">
+                    <span>Type</span>
+                  </button>
+                  <button className="flex justify-center w-full items-center text-center p-1 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full">
+                    <span>Status</span>
+                  </button>
+                  <button className="flex justify-center w-full items-center text-center p-1 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full">
+                    <span>Amount</span>
+                  </button>
+                </div> */}
                 {/* {filteredTransactions.length > 0 ? filteredTransactions.map((transaction) => ( */}
                 {sortedTransactions.map((transaction) => (
 
@@ -51,8 +79,8 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                       <div onClick={() => handleSortChange('date_processed')} className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: {transaction.date}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time: {transaction.time}</div>
                       <div onClick={() => handleSortChange('trans_type')} className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
-                      <div onClick={() => handleSortChange('status_type')} className="whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 my-1">
-                        Status: <StatusBadgeMobile statusType={transaction.status_type} />
+                      <div onClick={() => handleSortChange('status_type')} className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
+                        <span>Status:</span> <StatusBadgeMobile statusType={transaction.status_type} />
                       </div>
                       <div onClick={() => handleSortChange('amount')} className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P {transaction.amount}</div>
                       <div className="mt-5 group">

@@ -13,7 +13,7 @@ const getStatusColors = (statusType) => {
     case 'Expired':
       return { bgColor: 'bg-blue-200', textColor: 'text-blue-800' };
     default:
-      return { bgColor: 'bg-grey-200', textColor: 'text-black-800' };
+      return { bgColor: 'bg-gray-200', textColor: 'text-black' };
   }
 };
 
@@ -22,11 +22,11 @@ const StatusBadgeMobile = ({ statusType }) => {
   const { bgColor, textColor } = getStatusColors(statusType);  
 
   return (
-    <span
-      className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${bgColor} ${textColor}`}
-    >
-      {statusType}
-    </span>
+    <div className="flex text-center">
+      <span className={`text-[0.65rem] ml-1 py-0.5 font-semibold rounded-full ${bgColor} ${textColor} w-24`}>
+        {statusType}
+      </span>
+    </div>
   );
 };
   
