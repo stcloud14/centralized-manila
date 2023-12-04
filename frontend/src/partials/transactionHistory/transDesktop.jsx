@@ -1,36 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import StatusBadgeDesktop from '../StatusBadgeDesktop';
 
-const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, userTransaction, filteredTransactions, handleClearFilter }) => {
-
-    const [sortOrder, setSortOrder] = useState('asc');
-    const [sortOption, setSortOption] = useState('date');
-
-    const handleSortChange = (option) => {
-        setSortOption(option);
-        setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
-        };
-    
-      const sortTransactions = (transactions) => {
-        return transactions.slice().sort((a, b) => {
-          const valueA = a[sortOption];
-          const valueB = b[sortOption];
-    
-          if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
-          if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
-          return 0;
-        });
-    };
-
-    const sortedTransactions = sortTransactions(filteredTransactions.length > 0 ? filteredTransactions : userTransaction);
-
-    const SortIcon = ({ order }) => (
-      <button className="group flex items-center px-1">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-          <path className="group-hover:stroke-black dark:group-hover:stroke-white cursor-pointer" strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-        </svg>
-      </button>
-      );
+const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions }) => {
 
     return (
         <>
@@ -65,19 +36,19 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                     <table className="w-full text-left text-xs md:text-sm rtl:text-right text-gray-500 dark:text-gray-400">
                       <thead className="text-gray-700 uppercase bg-slate-200 dark:bg-[#212121] dark:text-slate-400">
                           <tr>
-                              <th onClick={() => handleSortChange('transaction_id')} scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                              <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                                   <div className="flex items-center pl-3">
-                                    Transaction ID{sortOption === 'transaction_id'} <SortIcon order={sortOrder} />
+                                    Transaction ID
                                   </div>
                               </th>
-                              <th onClick={() => handleSortChange('date')} scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                              <th onClick={() => handleSortChange('date_processed')} scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                                   <div className="flex items-center">
-                                    Date{sortOption === 'date'} <SortIcon order={sortOrder} />
+                                    Date{sortOption === 'date_processed'} <SortIcon order={sortOrder} />
                                   </div>
                               </th>
-                              <th onClick={() => handleSortChange('time')} scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                              <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                                   <div className="flex items-center">
-                                    Time{sortOption === 'time'} <SortIcon order={sortOrder} />
+                                    Time
                                   </div>
                               </th>
                               <th onClick={() => handleSortChange('trans_type')} scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
@@ -99,8 +70,8 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                           </tr>
                       </thead>
                       <tbody>
-                      {/* {filteredTransactions.length > 0 ? filteredTransactions.map((transaction) => ( */}
                       {sortedTransactions.map((transaction) => (
+                        
                       <tr key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="pl-6 pr-3 py-4 whitespace-nowrap">
                           <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white">

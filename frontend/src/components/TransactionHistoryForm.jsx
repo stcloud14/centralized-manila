@@ -20,6 +20,8 @@ const TransactionHistoryForm = () => {
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [searchInput, setSearchInput] = useState('');
   const [filteredTransactions, setFilteredTransactions] = useState([]);
+  const [sortOrder, setSortOrder] = useState('desc');
+  const [sortOption, setSortOption] = useState('date_processed');
 
 
   useEffect(() => {
@@ -80,7 +82,39 @@ const TransactionHistoryForm = () => {
   const handleClearFilter = () => {
     setSearchInput([]);
     setFilteredTransactions([]);
+    setSortOption('date_processed');
+    setSortOrder('desc')
   };
+
+
+  const handleSortChange = (option) => {
+    const newOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+  
+    setSortOption(option);
+    setSortOrder(newOrder);
+  };
+  
+  const sortTransactions = (transactions) => {
+    return transactions.slice().sort((a, b) => {
+      const valueA = a[sortOption];
+      const valueB = b[sortOption];
+  
+      if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
+      if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
+  };
+
+const sortedTransactions = sortTransactions(filteredTransactions.length > 0 ? filteredTransactions : userTransaction);
+
+
+const SortIcon = ({ order }) => (
+  <button className="group flex items-center px-1">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+      <path className="group-hover:stroke-black dark:group-hover:stroke-white cursor-pointer" strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+    </svg>
+  </button>
+  );
 
 
   return (
@@ -101,19 +135,25 @@ const TransactionHistoryForm = () => {
               <TransMobile searchInput={searchInput} 
               handleSearch={handleSearch} 
               handleSearchInputChange={handleSearchInputChange} 
-              handleOpenModal={handleOpenModal} 
-              userTransaction={userTransaction} 
-              filteredTransactions={filteredTransactions}
-              handleClearFilter={handleClearFilter} />
+              handleOpenModal={handleOpenModal}  
+              handleClearFilter={handleClearFilter} 
+              handleSortChange={handleSortChange}
+              sortOption={sortOption}
+              sortOrder={sortOrder}
+              SortIcon={SortIcon}
+              sortedTransactions={sortedTransactions} />
             ) : (
               // For Desktop View
               <TransDesktop searchInput={searchInput} 
               handleSearch={handleSearch} 
               handleSearchInputChange={handleSearchInputChange} 
               handleOpenModal={handleOpenModal} 
-              userTransaction={userTransaction} 
-              filteredTransactions={filteredTransactions}
-              handleClearFilter={handleClearFilter} />
+              handleClearFilter={handleClearFilter} 
+              handleSortChange={handleSortChange}
+              sortOption={sortOption}
+              sortOrder={sortOrder}
+              SortIcon={SortIcon}
+              sortedTransactions={sortedTransactions} />
             )}
           </div>
         </main>

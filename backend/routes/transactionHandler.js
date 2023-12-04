@@ -46,10 +46,9 @@ router.get('/:user_id', async (req, res) => {
             const userTransactions = result.map(row => {
                 const formattedDate = moment(row.date_processed).format('MMMM D, YYYY');
                 const formattedTime = moment(row.date_processed).format('h:mm A');
-                const { date_processed, ...rowExceptDateProcessed } = row;
 
                 return {
-                    ...rowExceptDateProcessed,
+                    ...row,
                     date: formattedDate,
                     time: formattedTime,
                 };

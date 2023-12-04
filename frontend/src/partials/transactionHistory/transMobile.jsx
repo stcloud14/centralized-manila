@@ -1,7 +1,7 @@
 import React from 'react';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
-const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, userTransaction, filteredTransactions, handleClearFilter }) => {
+const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions }) => {
 
     return (
         <>
@@ -40,20 +40,21 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                     <span className="text-xs font-normal px-0.5">&nbsp;Download SOA</span>
                   </button>
                 </div>
-                {filteredTransactions.length > 0 ? filteredTransactions.map((transaction) => (
+                {/* {filteredTransactions.length > 0 ? filteredTransactions.map((transaction) => ( */}
+                {sortedTransactions.map((transaction) => (
 
                   <div key={transaction.transaction_id} className="bg-white dark:bg-[#333333] shadow-md rounded-md mb-4">
                     <div className=" text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-md px-4 py-1.5">
                       Transaction ID: {transaction.transaction_id}
                     </div>
                     <div className="px-4 py-5">
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: {transaction.date}</div>
+                      <div onClick={() => handleSortChange('date_processed')} className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: {transaction.date}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time: {transaction.time}</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
-                      <div className="whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 my-1">
+                      <div onClick={() => handleSortChange('trans_type')} className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
+                      <div onClick={() => handleSortChange('status_type')} className="whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 my-1">
                         Status: <StatusBadgeMobile statusType={transaction.status_type} />
                       </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P {transaction.amount}</div>
+                      <div onClick={() => handleSortChange('amount')} className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P {transaction.amount}</div>
                       <div className="mt-5 group">
                         <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full mt-2">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
@@ -65,7 +66,8 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                       </div>
                     </div>  
                   </div>
-                )) : userTransaction.map((transaction) => (
+                ))} 
+                {/* )) : userTransaction.map((transaction) => (
                     
                     <div key={transaction.transaction_id} className="bg-white dark:bg-[#333333] shadow-md rounded-md mb-4">
                     <div className=" text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-md px-4 py-1.5">
@@ -90,7 +92,7 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                         </div>
                     </div>  
                     </div>
-                ))}
+                ))} */}
               </div>
         </div>
         </>
