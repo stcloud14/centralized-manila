@@ -1,6 +1,6 @@
 import React from 'react';
 
-    const ProvinceDropdown = ({ selectedValue, selectedRegion }) => {
+    const ProvinceDropdown = ({ selectedRegion }) => {
         const provinceOptions = [
             { value: '1A1', label: 'Ilocos Norte', region: '1' },
             { value: '1A2', label: 'Ilocos Sur', region: '1' },
