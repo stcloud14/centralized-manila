@@ -176,56 +176,37 @@ const BirthCertificateForm =()=>{
                     <label htmlFor="birthc_ownermunicipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                  <Flatpickr
-                    value={userBirth.birth_date}
-                    onChange={(date) => {
-                      const formattedDate = date.length > 0 ? (() => {
-                        const originalDate = new Date(date[0]);
-                        originalDate.setDate(originalDate.getDate() + 1);
-                        return originalDate.toISOString().split('T')[0];
-                      })() : '';
-                      
-                      setUserBirth((prevData) => ({
-                        ...prevData,
-                        birth_date: formattedDate,
-                      }))
-                    }}
-                    options={{
-                      dateFormat: 'Y-m-d',
-                      altInput: true,
-                      altFormat: 'F j, Y',
-                      altInputClass:
-                        'block py-2.5 px-0 w-full bg-transparent text-sm text-gray-900 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer',
-                      appendTo: document.body,
-                      onOpen: function (selectedDates, dateStr, instance) {
-                        if (document.documentElement.classList.contains('dark')) {
-                          const monthDropdown = instance.calendarContainer.querySelector(
-                            '.flatpickr-monthDropdown-months'
-                          );
-                          if (monthDropdown) {
-                            monthDropdown.style.backgroundColor = '#212121';
-                          }
-                        }
-                      },
-                      onClose: function (selectedDates, dateStr, instance) {
-                        const monthDropdown = instance.calendarContainer.querySelector(
-                          '.flatpickr-monthDropdown-months'
-                        );
-                        if (monthDropdown) {
-                          monthDropdown.style.backgroundColor = '';
-                        }
-                      },
-                    }}
-                    
-                  />
-                  <label
-                    htmlFor="dateofbirth"
-                    className={`peer-focus:font-medium absolute bg-transparent text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 ${
-                      userBirth.birth_date ? 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : ''
-                    }`}
-                  >
-                    {userBirth.birth_date ? 'Date of Birth' : 'Date of Birth'}
-                  </label>
+                    <Flatpickr
+                      id='birth_date'
+                      value={userBirth.birth_date}
+                      onChange={(date) => {
+                        const formattedDate = date.length > 0 ? (() => {
+                          const originalDate = new Date(date[0]);
+                          originalDate.setDate(originalDate.getDate() + 1);
+                          return originalDate.toISOString().split('T')[0];
+                        })() : '';
+                        
+                        setUserBirth((prevData) => ({
+                          ...prevData,
+                          birth_date: formattedDate,
+                        }))
+                      }}
+                      options={{
+                        dateFormat: 'Y-m-d',
+                        altInput: true,
+                        altFormat: 'F j, Y',
+                        placeholder: ' ', // Set an empty space as the initial placeholder
+                      }}
+                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    />
+                    <label
+                      htmlFor="birth_date"
+                      className={`peer-focus:font-medium absolute bg-transparent text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 ${
+                        userBirth.birth_date ? 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                      }`}
+                    >
+                      Date of Birth
+                    </label>
                   </div>
                 </div>
               </div> 

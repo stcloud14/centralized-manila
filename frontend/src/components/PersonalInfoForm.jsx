@@ -99,7 +99,6 @@ const PersonalInfoForm =()=>{
     };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [birthdate, setBirthdate] = useState(new Date());
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
