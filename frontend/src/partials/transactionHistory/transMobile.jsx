@@ -8,8 +8,8 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
         <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
               <div className="px-5 py-5">
                 <h1 className='font-medium text-center text-slate-700 dark:text-white mb-5'>Transaction History</h1>
-                <div className="flex items-center justify-end mb-3 md:px-0 md:pr-0.5 px-0.5 text-xs">
-                  <div className="relative mr-2">
+                <div className="flex justify-center items-center mb-3 md:px-0 md:pr-0.5 px-0.5 text-xs">
+                  <div className="relative mr-2 w-full">
                     <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                         <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -21,16 +21,9 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                       onKeyDown={(e) => e.key === 'Enter' && handleSearch()} 
                       type="text"
                       placeholder="Search ID..."
-                      className="bg-transparent text-xs md:text-sm border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-full w-full md:w-auto"
+                      className="bg-transparent text-xs md:text-sm border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-full w-full"
                     />
                   </div>
-                
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded-full mr-2 inline-flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
-                      <path className="stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
-                    </svg>
-                    <span>Filter</span>
-                  </button>
                 
                   <button onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 rounded-full inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
