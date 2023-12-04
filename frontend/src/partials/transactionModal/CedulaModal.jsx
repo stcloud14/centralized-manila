@@ -139,7 +139,7 @@ const CedulaModal = ({ selectedTransaction, onClose }) => {
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">PENDING PAYMENT</span>
+                            <StatusBadgeMobile statusType={selectedTransaction.status_type} />
                           </div>
 
                           <hr className='mt-7 mb-1'/>

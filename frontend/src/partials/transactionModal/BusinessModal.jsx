@@ -14,7 +14,7 @@ const BusinessModal = ({ selectedTransaction }) => {
         <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
           <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 overflow-y-auto">
                           <div className="mb-6">
-                          <span className="font-bold md:text-lg text-sm">Cedula Transaction Details</span>
+                          <span className="font-bold md:text-lg text-sm">Business Permit Transaction Details</span>
                           </div>
                         </div>
           
@@ -30,8 +30,44 @@ const BusinessModal = ({ selectedTransaction }) => {
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Owner's Name</span>
-                            <span className="whitespace-nowrap ml-4">Alvarez, Jeremiah Paul S.</span>
+                            <span className="font-medium whitespace-nowrap">Business Type</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Business Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Trade Name / Franchise</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">DTI / SEC / CDA Registration No.</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Tax Identification Number</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Last Name</span>
+                            <span className="whitespace-nowrap ml-4">Alvarez</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">First Name</span>
+                            <span className="whitespace-nowrap ml-4">Jeremiah Paul</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Middle Name</span>
+                            <span className="whitespace-nowrap ml-4">Sadaya</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Suffix</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Sex</span>
+                            <span className="whitespace-nowrap ml-4">g lang</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Email Address</span>
@@ -46,31 +82,31 @@ const BusinessModal = ({ selectedTransaction }) => {
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Region</span>
+                            <span className="font-medium whitespace-nowrap">Business Region</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Province</span>
+                            <span className="font-medium whitespace-nowrap">Business Province</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Municipal</span>
+                            <span className="font-medium whitespace-nowrap">Business Municipal</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Barangay</span>
+                            <span className="font-medium whitespace-nowrap">Business Barangay</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">House No. / Unit Floor</span>
+                            <span className="font-medium whitespace-nowrap">Business House No. / Unit Floor</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Street / Building Name</span>
+                            <span className="font-medium whitespace-nowrap">Business Street / Building Name</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Zip Code</span>
+                            <span className="font-medium whitespace-nowrap">Business Zip Code</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
@@ -102,15 +138,43 @@ const BusinessModal = ({ selectedTransaction }) => {
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Income from Real Property</span>
+                            <span className="font-medium whitespace-nowrap">Taxpayer's Region</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Earnings from Business</span>
+                            <span className="font-medium whitespace-nowrap">Taxpayer's Province</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Earnings from Profession</span>
+                            <span className="font-medium whitespace-nowrap">Taxpayer's Municipal</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Taxpayer's Barangay</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Taxpayer's House No. / Unit Floor</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Taxpayer's Street / Building Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Taxpayer's Zip Code</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Owned</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Lessor Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Monthly Rental</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                         </div>
@@ -139,7 +203,7 @@ const BusinessModal = ({ selectedTransaction }) => {
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">PENDING PAYMENT</span>
+                            <StatusBadgeMobile statusType={selectedTransaction.status_type} />
                           </div>
 
                           <hr className='mt-7 mb-1'/>
