@@ -1,6 +1,7 @@
 import React from 'react';
 
-    const RegionDropdown = ({ onChange, value }) => {
+    const RegionDropdown = () => {
+
         return (
             <>
             <option value="" className='dark:bg-[#3d3d3d]'>Select Region</option>

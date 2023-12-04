@@ -1,7 +1,7 @@
 import React from 'react';
 
-  const MunicipalDropdown = ({ value, selectedProvince }) => {
-      const municipalOptions = [
+  const CityDropdown = ({ selectedProvince }) => {
+      const cityOptions = [
         
         { value: '1A2', label: 'Bacarra', province: '1A1' },
         { value: '1A3', label: 'Badoc', province: '1A1' },
@@ -1517,20 +1517,20 @@ import React from 'react';
         
       ];
 
-      const filteredMunicipalities = municipalOptions.filter(
-        (municipality) => municipality.province === selectedProvince
+      const filteredCities = cityOptions.filter(
+        (city) => city.province === selectedProvince
       );
 
       return (
         <>
-          <option value="" className='dark:bg-[#3d3d3d]'>Select Municipal</option>
-          {filteredMunicipalities.map((option) => (
-            <option key={option.value} value={option.value} className='dark:bg-[#3d3d3d]'>
-              {option.label}
+          <option value="" className='dark:bg-[#3d3d3d]'>Select City</option>
+          {filteredCities.map((city) => (
+            <option key={city.value} value={city.value} className='dark:bg-[#3d3d3d]'>
+              {city.label}
             </option>
           ))}
         </>
       );
   };
 
-export default MunicipalDropdown;
+export default CityDropdown;

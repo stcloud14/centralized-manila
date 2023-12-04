@@ -21,6 +21,7 @@ const ContactInfoForm =()=>{
   const [cities, setCities] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState('');
   const [selectedProvince, setSelectedProvince] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
 
   const location = useLocation();
   const { pathname } = location;
@@ -44,21 +45,28 @@ const ContactInfoForm =()=>{
 
 
 
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-    
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+  
+    setUserContact((prevData) => {
+      
       if (name === 'region_id') {
-        setSelectedRegion(value);
-        setSelectedProvince(''); // Reset selected province when changing region
-      } else if (name === 'prov_id') {
-        setSelectedProvince(value);
+        
+        return {
+          ...prevData,
+          region_id: value,
+          prov_id: '',
+          city_id: '',
+        };
       }
-    
-      setUserContact((prevData) => ({
+  
+      return {
         ...prevData,
         [name]: value,
-      }));
-    };
+      };
+    });
+  };
+  
     
 
   
@@ -147,19 +155,20 @@ const ContactInfoForm =()=>{
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                 <select onChange={handleInputChange} value={userContact.region_id} name="region_id" id="user_region" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
-                    <RegionDropdown regions={regions} value={selectedRegion} onChange={handleInputChange} />
-                  </select>
+                    <RegionDropdown />
+                </select>
                   <label htmlFor="user_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                 <select onChange={handleInputChange} value={userContact.prov_id} name="prov_id" id="user_prov" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
-                  <ProvinceDropdown provinces={provinces} selectedRegion={selectedRegion} value={selectedProvince} onChange={handleInputChange} />
+                  <ProvinceDropdown selectedRegion={userContact.region_id} /> 
                 </select>
                   <label htmlFor="user_prov" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                 <select onChange={handleInputChange} value={userContact.city_id} name="city_id" id="user_municipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                  <CityDropdown cities={cities} selectedProvince={selectedProvince} onChange={handleInputChange}/>
+                  <CityDropdown selectedProvince={userContact.prov_id} />
+                 
                 </select>
                   <label htmlFor="user_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                 </div>

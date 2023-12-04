@@ -1,6 +1,6 @@
 import React from 'react';
 
-    const ProvinceDropdown = ({ onChange, value, selectedRegion }) => {
+    const ProvinceDropdown = ({ selectedValue, selectedRegion }) => {
         const provinceOptions = [
             { value: '1A1', label: 'Ilocos Norte', region: '1' },
             { value: '1A2', label: 'Ilocos Sur', region: '1' },
@@ -85,20 +85,22 @@ import React from 'react';
             
         ];
 
-        const filteredProvinces = provinceOptions.filter(
-            (province) => province.region === selectedRegion
-        );
-
-        return (
+        
+        const filteredProvince = provinceOptions.filter(
+            (province) => province.region == selectedRegion
+          );
+    
+          return (
             <>
-            <option value="" className='dark:bg-[#3d3d3d]'>Select Province</option>
-            {filteredProvinces.map((option) => (
-                <option key={option.value} value={option.value} className='dark:bg-[#3d3d3d]'>
-                {option.label}
+              <option value="" className='dark:bg-[#3d3d3d]'>Select Province</option>
+              {filteredProvince.map((province) => (
+                <option key={province.value} value={province.value} className='dark:bg-[#3d3d3d]'>
+                  {province.label}
                 </option>
-            ))}
+              ))}
             </>
-        );
+          );
     };
 
 export default ProvinceDropdown;
+
