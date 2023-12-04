@@ -18,6 +18,9 @@ const TransactionHistoryForm = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userTransaction, setUserTransaction] = useState([]);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
+
 
   useEffect(() => {
     const fetchUserTransaction = async () => {
@@ -56,6 +59,23 @@ const TransactionHistoryForm = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+
+  const handleSearchInputChange = (e) => {
+    const input = e.target.value;
+    const inputUpperCase = input.toUpperCase();
+
+    setSearchInput(inputUpperCase);
+  };
+
+  const handleSearch = () => {
+
+    const filteredTransactions = userTransaction.filter(transaction => 
+    transaction.transaction_id.toString().includes(searchInput)
+    );
+  
+    setFilteredTransactions(filteredTransactions);
+  };
 
 
   return (
@@ -151,7 +171,7 @@ const TransactionHistoryForm = () => {
                           <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                         </svg>
                       </span>
-                      <input type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full md:w-80 border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-full w-full md:w-auto"/>
+                      <input value={searchInput} onChange={handleSearchInputChange}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full md:w-80 border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-full w-full md:w-auto"/>
 
                     </div>
                     <div className="flex space-x-2">
@@ -206,7 +226,7 @@ const TransactionHistoryForm = () => {
                           </tr>
                       </thead>
                       <tbody>
-                      {userTransaction.map((transaction) => (
+                      {filteredTransactions.length > 0 ? filteredTransactions.map((transaction) => (
 
                       <tr key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="pl-6 pr-3 py-4 whitespace-nowrap">
@@ -241,7 +261,43 @@ const TransactionHistoryForm = () => {
                           </div>
                         </td>
                       </tr>
-                    ))}
+                      )) : userTransaction.map((transaction) => (
+
+                      <tr key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+                        <td className="pl-6 pr-3 py-4 whitespace-nowrap">
+                          <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                            {transaction.transaction_id}
+                          </div>
+                        </td>
+                        <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                          {transaction.date}
+                        </td>
+                        <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                          {transaction.time}
+                        </td>
+                        <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                          {transaction.trans_type}
+                        </td>
+                        <td className="px-3 py-4 whitespace-nowrap">
+                          <StatusBadgeDesktop statusType={transaction.status_type} />
+                        </td>
+                        <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                          P {transaction.amount}
+                        </td>
+                        <td className="pl-3 pr-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
+                          <div className="group">
+                            <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center px-4 p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" >
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:stroke-white">
+                                <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>   
+                              <span className="text-xs font-normal">&nbsp;View Details</span>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))} 
+
                     </tbody>
                     </table>
                   </div>
