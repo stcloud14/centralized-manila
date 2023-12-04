@@ -538,4 +538,4 @@ const DeathCertificateForm =()=>{
   );
 }
 
-export default BirthCertificateForm;
+export default DeathCertificateForm;

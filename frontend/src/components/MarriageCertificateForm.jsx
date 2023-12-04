@@ -538,4 +538,4 @@ const MarriageCertificateForm =()=>{
   );
 }
 
-export default BirthCertificateForm;
+export default MarriageCertificateForm;
