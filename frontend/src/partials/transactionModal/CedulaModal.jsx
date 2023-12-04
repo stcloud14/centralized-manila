@@ -30,7 +30,7 @@ const CedulaModal = ({ selectedTransaction, onClose }) => {
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Owner's Information</span>
+                            <span className="font-medium whitespace-nowrap">Owner's Name</span>
                             <span className="whitespace-nowrap ml-4">Alvarez, Jeremiah Paul S.</span>
                           </div>
                           <div className="flex justify-between mb-1">
