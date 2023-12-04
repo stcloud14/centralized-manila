@@ -13,7 +13,7 @@ router.get('/:user_id', async (req, res) => {
     \
     tp.acc_name, tp.rp_tdn AS rtp_tdn, tp.rp_pin AS rtp_pin, tp.year_id, tp.period_id, \
     \
-    tc.rp_tdn AS rtc_tdn, tc.rp_pin AS rtc_pin, \
+    tc.rp_tdn AS rtc_tdn, tc.rp_pin AS rtc_pin \
     \
     FROM user_transaction ut \
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
