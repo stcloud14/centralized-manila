@@ -38,7 +38,7 @@ function DropdownProfile({
             }
         }
         fetchUserPersonal()
-    },[])
+    },[userPersonal])
 
   // close on click outside
   useEffect(() => {

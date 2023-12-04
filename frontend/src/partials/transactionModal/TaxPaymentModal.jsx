@@ -123,7 +123,7 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
           
           
           
-          <div className="max-h-[20rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pb-0 sm:px-6 sm:pb-0 overflow-y-auto">
+          <div className="max-h-[19.5rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pb-0 sm:px-6 sm:pb-0 overflow-y-auto">
             <div className="mx-auto">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
