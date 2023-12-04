@@ -5,6 +5,9 @@ import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
+import StatusBadgeMobile from '../partials/StatusBadgeMobile';
+import StatusBadgeDesktop from '../partials/StatusBadgeDesktop';
+
 
 const TransactionHistoryForm = () => {
 
@@ -53,6 +56,7 @@ const TransactionHistoryForm = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -118,7 +122,7 @@ const TransactionHistoryForm = () => {
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time: {transaction.time}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
                       <div className="whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 my-1">
-                        Status: <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-green-100 text-green-800">{transaction.status_type}</span>
+                        Status: <StatusBadgeMobile statusType={transaction.status_type} />
                       </div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P {transaction.amount}</div>
                       <div className="mt-5 group">
@@ -222,9 +226,7 @@ const TransactionHistoryForm = () => {
                           {transaction.trans_type}
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap">
-                          <span className="px-10 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                            {transaction.status_type}
-                          </span>
+                          <StatusBadgeDesktop statusType={transaction.status_type} />
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                           P {transaction.amount}
