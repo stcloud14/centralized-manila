@@ -17,6 +17,7 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                       </svg>
                     </span>
                     <input
+                      id="searchInput"
                       value={searchInput}
                       onChange={handleSearchInputChange} 
                       onKeyDown={(e) => e.key === 'Enter' && handleSearch()} 
