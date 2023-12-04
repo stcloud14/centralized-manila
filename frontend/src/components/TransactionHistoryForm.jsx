@@ -77,24 +77,6 @@ const TransactionHistoryForm = () => {
     setFilteredTransactions(filteredTransactions);
   };
 
-  const handleFilterBy = () => {
-
-    switch (selectedFilter) {
-      case 'transaction_id':
-        return transaction.transaction_id.toString().includes(searchInput);
-      case 'date':
-        return transaction.date.includes(searchInput);
-      case 'time':
-        return transaction.time.includes(searchInput);
-      case 'trans_type':
-        return transaction.trans_type.includes(searchInput);
-      case 'status_type':
-        return transaction.status_type.includes(searchInput);
-      default:
-        return true;
-    }
-  }
-
   const handleClearFilter = () => {
     setSearchInput([]);
     setFilteredTransactions([]);

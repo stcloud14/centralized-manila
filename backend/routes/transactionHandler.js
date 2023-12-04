@@ -17,7 +17,8 @@ router.get('/:user_id', async (req, res) => {
     \
     bp.sex_type, bp.bus_info_id, bp.bus_owner_id, bp.bus_contact_id, bp.bus_addr_id, \
     \
-    ct.ced_acc_no, ct.emp_type, ct.profession, ct.valid_id, \
+    ct.l_name, ct.f_name, ct.m_name, ct.sex_id, ct.suffix_id, ct.addr_info_id, \
+    ct.ced_trans_info_id, ct.ced_other_info_id, \
     \
     bc.birth_parents_id, bc.birth_tin_no, bc.owner_rel, bc.bcert_info_id, \
     \
