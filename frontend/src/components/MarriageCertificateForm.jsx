@@ -9,6 +9,9 @@ import Header from '../partials/Header';
 import Flatpickr from 'react-flatpickr';
 
 import 'flatpickr/dist/themes/airbnb.css';
+import CityDropdown from '../partials/profile/CityDropdown';
+import RegionDropdown from '../partials/profile/RegionDropdown';
+import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 
 const MarriageCertificateForm =()=>{
 
@@ -113,18 +116,18 @@ const MarriageCertificateForm =()=>{
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="marriagec_hsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                      <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
-                      <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                      <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                      <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                      <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                      <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                      <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                      <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                      <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                      <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                      <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                        <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
+                        <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
+                        <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
+                        <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
+                        <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
+                        <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
+                        <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
+                        <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
+                        <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
+                        <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
+                        <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
+                        <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
                     </select>
                     <label htmlFor="marriagec_hsuffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
@@ -150,18 +153,18 @@ const MarriageCertificateForm =()=>{
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="marriagec_wsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                      <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
-                      <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                      <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                      <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                      <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                      <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                      <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                      <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                      <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                      <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                      <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                        <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
+                        <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
+                        <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
+                        <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
+                        <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
+                        <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
+                        <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
+                        <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
+                        <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
+                        <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
+                        <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
+                        <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
                     </select>
                     <label htmlFor="marriagec_wsuffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
@@ -174,31 +177,19 @@ const MarriageCertificateForm =()=>{
                 <div className="grid md:grid-cols-4 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="marriagec_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Region</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <RegionDropdown />
                     </select>
                     <label htmlFor="marriagec_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="marriagec_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Province</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <ProvinceDropdown selectedRegion='' /> 
                     </select>
                     <label htmlFor="marriagec_province" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="marriagec_municipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Municipal</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <CityDropdown selectedProvince='' />
                     </select>
                     <label htmlFor="marriagec_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                   </div>
@@ -257,18 +248,18 @@ const MarriageCertificateForm =()=>{
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="marriagec_reqsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                      <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
-                      <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                      <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                      <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                      <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                      <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                      <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                      <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                      <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                      <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                      <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                        <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
+                        <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
+                        <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
+                        <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
+                        <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
+                        <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
+                        <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
+                        <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
+                        <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
+                        <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
+                        <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
+                        <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
                     </select>
                     <label htmlFor="marriagec_reqsuffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
@@ -296,31 +287,19 @@ const MarriageCertificateForm =()=>{
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="marriagec_reqregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Region</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <RegionDropdown />
                     </select>
                     <label htmlFor="marriagec_reqregion" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="marriagec_reqprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Province</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <ProvinceDropdown selectedRegion='' /> 
                     </select>
                     <label htmlFor="marriagec_reqprovince" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="marriagec_reqmunicipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Municipal</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <CityDropdown selectedProvince='' />
                     </select>
                     <label htmlFor="marriagec_reqmunicipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                   </div>
