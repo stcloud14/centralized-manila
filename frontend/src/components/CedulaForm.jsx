@@ -9,6 +9,9 @@ import Header from '../partials/Header';
 import Flatpickr from 'react-flatpickr';
 
 import 'flatpickr/dist/themes/airbnb.css';
+import CityDropdown from '../partials/profile/CityDropdown';
+import RegionDropdown from '../partials/profile/RegionDropdown';
+import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 
 const CedulaForm =()=>{
 
@@ -113,26 +116,26 @@ const CedulaForm =()=>{
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="ctc_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                      <option value="Sr." className='dark:bg-[#3d3d3d]'>Sr.</option>
-                      <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                      <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                      <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                      <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                      <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                      <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                      <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                      <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                      <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                      <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                        <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
+                        <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
+                        <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
+                        <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
+                        <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
+                        <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
+                        <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
+                        <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
+                        <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
+                        <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
+                        <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
+                        <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
                     </select>
                     <label htmlFor="ctc_suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="ctc_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
+                    <option value="MALE" className='dark:bg-[#3d3d3d]'>Male</option>
+                    <option value="FEMALE"className='dark:bg-[#3d3d3d]'>Female</option>
                     </select>
                     <label htmlFor="ctc_sex" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
                   </div>
@@ -146,31 +149,19 @@ const CedulaForm =()=>{
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="ctc_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Region</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                       <RegionDropdown />
                     </select>
                     <label htmlFor="ctc_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="ctc_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Province</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                    <ProvinceDropdown selectedRegion='' /> 
                     </select>
                     <label htmlFor="ctc_province" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select id="ctc_municipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Municipal</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                    <CityDropdown selectedProvince='' />
                     </select>
                     <label htmlFor="ctc_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                   </div>
@@ -204,10 +195,10 @@ const CedulaForm =()=>{
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
                     <select id="ctc_civilstatus" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Civil Status</option>
-                      <option className='dark:bg-[#3d3d3d]'>Single</option>
-                      <option className='dark:bg-[#3d3d3d]'>Married</option>
-                      <option className='dark:bg-[#3d3d3d]'>Separated</option>
-                      <option className='dark:bg-[#3d3d3d]'>Widowed</option>
+                      <option value="SINGLE" className='dark:bg-[#3d3d3d]'>Single</option>
+                      <option value="MARRIED" className='dark:bg-[#3d3d3d]'>Married</option>
+                      <option value="SEPARATED" className='dark:bg-[#3d3d3d]'>Separated</option>
+                      <option value="WIDOWED" className='dark:bg-[#3d3d3d]'>Widowed</option>
                     </select>
                     <label htmlFor="ctc_civilstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                   </div>
