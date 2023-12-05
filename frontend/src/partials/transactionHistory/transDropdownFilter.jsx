@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const TransDropdownFilter =()=>{
+const TransDropdownFilter =({ handleSortChange, sortOption })=>{
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -28,23 +28,23 @@ const TransDropdownFilter =()=>{
                 </span>
             </li>
             <li>
-                <a className="block px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                Date
+                <a onClick={() => handleSortChange('date_processed')} className="block px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Date {sortOption === 'date_processed'}
                 </a>
             </li>
             <li>
-                <a href="#" className="block px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                Type
+                <a onClick={() => handleSortChange('trans_type')} className="block px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Type {sortOption === 'trans_type'}
                 </a>
             </li>
             <li>
-                <a href="#" className="block px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                Status
+                <a onClick={() => handleSortChange('status_type')} className="block px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Status {sortOption === 'status_type'}
                 </a>
             </li>
             <li>
-                <a href="#" className="block px-4 pb-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                Amount
+                <a onClick={() => handleSortChange('amount')} className="block px-4 pb-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Amount {sortOption === 'amount'}
                 </a>
             </li>
         </ul>

@@ -139,8 +139,6 @@ const SortIcon = ({ order }) => (
               handleClearFilter={handleClearFilter} 
               handleSortChange={handleSortChange}
               sortOption={sortOption}
-              sortOrder={sortOrder}
-              SortIcon={SortIcon}
               sortedTransactions={sortedTransactions} />
             ) : (
               // For Desktop View
