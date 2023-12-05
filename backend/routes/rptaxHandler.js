@@ -241,23 +241,47 @@ router.get('/payment/', async (req, res) => {
 
   router.get('/clearance/', async (req, res) => {
 
-    const query = "SELECT * FROM user_transaction";
-    const query1 = "SELECT * FROM rptax_clearance";
-    const query2 = "SELECT * FROM transaction_info";
+    const query4 = "SELECT * FROM rptax_clearance";
+  
   
     try {
-    const result = await queryDatabase(query);
-    const result1 = await queryDatabase(query1);
-    const result2 = await queryDatabase(query2);
+    const result4 = await queryDatabase(query4);
+
   
     
-    res.json({ user_transaction: result, rptax_clearance: result1, transaction_info: result2 });
+    res.json({rptax_clearance: result4});
     } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
     }
   });
   
+  router.post('/clearance/', async (req, res) => {
+    const rptdn = req.body.rp_tdn;
+    const rppin = req.body.rp_pin;
+    const plainRptdn = rptdn.replace(/-/g, '');
+    const plainRppin = rppin.replace(/-/g, '');
+    const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
+
+    const query4 = "INSERT INTO rptax_clearance (`rp_tdn`, `rp_pin`, `transaction_id`) VALUES (?, ?, ?)";
+    const values4 = [plainRptdn, plainRppin, transID];
+
+    try{
+      const result4 = await queryDatabase(query4, values4);
+
+      res.json({
+        message: "Successfully executed",
+        rptax_clearance_result: result4,
+
+      });
+    }catch (err){
+      console.error(err);
+      res.status(500).json({ error: "Error executing queries" });
+    }
+
+
+  });
+
   
   router.post('/payment/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
