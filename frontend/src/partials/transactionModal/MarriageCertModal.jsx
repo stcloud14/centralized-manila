@@ -62,15 +62,15 @@ const MarriageModal = ({ selectedTransaction, onClose }) => {
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Place of Marriage Region</span>
+                            <span className="font-medium whitespace-nowrap">Region of Marriage</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Place of Marriage Province</span>
+                            <span className="font-medium whitespace-nowrap">Province of Marriage</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Place of Marriage Municipal</span>
+                            <span className="font-medium whitespace-nowrap">Municipal of Marriage</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
