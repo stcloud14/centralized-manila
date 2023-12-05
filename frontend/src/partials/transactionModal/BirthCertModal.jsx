@@ -122,6 +122,14 @@ const BirthModal = ({ selectedTransaction, onClose }) => {
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Telephone No.</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Mobile No.</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
@@ -147,14 +155,6 @@ const BirthModal = ({ selectedTransaction, onClose }) => {
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Mobile No.</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
@@ -230,13 +230,6 @@ const BirthModal = ({ selectedTransaction, onClose }) => {
                           className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                       >
                           <p>Cancel</p>
-                      </button>
-                      <button
-                        //   onClick={handleSubmit}
-                          type="button"
-                          className="text-white text-xs px-5 py-2 text-center mb-0 md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                      >
-                          <p>Proceed</p>
                       </button>
                   </div>
               </div>

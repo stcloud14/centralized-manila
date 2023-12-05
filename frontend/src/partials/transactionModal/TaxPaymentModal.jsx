@@ -263,13 +263,6 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
                       >
                           <p>Cancel</p>
                       </button>
-                      <button
-                        //   onClick={handleSubmit}
-                          type="button"
-                          className="text-white text-xs px-5 py-2 text-center mb-0 md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                      >
-                          <p>Proceed</p>
-                      </button>
                   </div>
               </div>
 
