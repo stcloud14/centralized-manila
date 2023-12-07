@@ -12,6 +12,9 @@ const RPTaxClearanceForm =()=>{
   console.log(pathname);
   const user_id = pathname.split("/")[2];
 
+  const date = new Date();
+  const currentDate = date.toISOString().split('T')[0];
+
   const [rptaxClearance, setRptaxClearance]=useState({})
   console.log(rptaxClearance);
 
@@ -111,7 +114,7 @@ const RPTaxClearanceForm =()=>{
     e.preventDefault();
   
     try {
-      const response = await axios.post(`http://localhost:8800/rptax/clearance/`, rptaxClearance);
+      const response = await axios.post(`http://localhost:8800/rptax/clearance/${user_id}`, rptaxClearance);
   
       // Check the response status before proceeding
       if (response.status === 200) {
