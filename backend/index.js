@@ -6,6 +6,7 @@ import register from './routes/register.js'
 import profileHandler from './routes/profileHandler.js';
 import rptaxHandler from './routes/rptaxHandler.js';
 import transactionHandler from './routes/transactionHandler.js';
+import birthCertHandler from './routes/birthCertHandler.js'
 import deathCertHandler from './routes/deathCertHandler.js'
 
 const app = express();
@@ -18,6 +19,7 @@ app.use('/register', register);
 app.use('/profile', profileHandler);
 app.use('/rptax', rptaxHandler);
 app.use('/transachistory', transactionHandler);
+app.use('/birthcertificate', birthCertHandler);
 app.use('/deathcertificate', deathCertHandler);
 
 
