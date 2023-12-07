@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 
 import { useLocation } from 'react-router-dom';
@@ -12,7 +12,10 @@ const RPTaxClearanceForm =()=>{
   console.log(pathname);
   const user_id = pathname.split("/")[2];
 
-  const [rptaxClearance, setRptaxPayment]=useState({})
+  const date = new Date();
+  const currentDate = date.toISOString().split('T')[0];
+
+  const [rptaxClearance, setRptaxClearance]=useState({})
   console.log(rptaxClearance);
 
   const handleInputChange = (e) => {
@@ -42,13 +45,13 @@ const RPTaxClearanceForm =()=>{
         // Format the value with dashes
         let formattedWithDashes = formattedValue.slice(0, 2);
         if (formattedValue.length > 2) {
-          formattedWithDashes += '-' + formattedValue.slice(2, 6);
+          formattedWithDashes += '-' + formattedValue.slice(2, 7);
         }
-        if (formattedValue.length > 6) {
-          formattedWithDashes += '-' + formattedValue.slice(6, 10);
+        if (formattedValue.length > 7) {
+          formattedWithDashes += '-' + formattedValue.slice(6, 14);
         }
     
-        setRptaxPayment((prevData) => ({
+        setRptaxClearance((prevData) => ({
           ...prevData,
           [inputName]: formattedWithDashes,
         }));
@@ -78,12 +81,13 @@ const RPTaxClearanceForm =()=>{
       formattedWithDashes += formattedValue[i];
     }
   
-    setRptaxPayment((prevData) => ({
+    setRptaxClearance((prevData) => ({
       ...prevData,
       [name]: formattedWithDashes,
     }));
+
   } else {
-    setRptaxPayment((prevData) => ({
+    setRptaxClearance((prevData) => ({
       ...prevData,
       [name]: updatedValue,
     }));
@@ -99,8 +103,8 @@ const RPTaxClearanceForm =()=>{
       const inputField = document.getElementById('rp_pin');
       inputField.maxLength = e.target.checked ? 24 : 18;
     
-      if (!e.target.checked && rptaxPayment.rp_pin.length > 18) {
-        setRptaxPayment({ ...rptaxPayment, rp_pin: rptaxPayment.rp_pin.slice(0, 18) });
+      if (!e.target.checked && rptaxClearance.rp_pin.length > 18) {
+        setRptaxCLearance({ ...rptaxClearance, rp_pin: rptaxClearance.rp_pin.slice(0, 18) });
       }
     };
 
@@ -110,7 +114,7 @@ const RPTaxClearanceForm =()=>{
     e.preventDefault();
   
     try {
-      const response = await axios.post(`http://localhost:8800/rptax/payment/${user_id}`, rptaxPayment);
+      const response = await axios.post(`http://localhost:8800/rptax/clearance/${user_id}`, rptaxClearance);
   
       // Check the response status before proceeding
       if (response.status === 200) {
@@ -162,11 +166,11 @@ const RPTaxClearanceForm =()=>{
                   <h1 className='font-medium text-center text-slate-700 dark:text-white'>Tax Clearance</h1>
                   <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Payment</h1>
 
-                  {/* {isSuccess && (
+                  {isSuccess && (
               <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
                 Success! Your changes have been saved.
               </div>
-              )} */}
+              )}
 
                   <div className="grid gap-6">
                       <div className="relative z-0 w-full mb-2 group">
@@ -235,7 +239,7 @@ const RPTaxClearanceForm =()=>{
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
                         <div className="mb-6">
-                          <span className="font-bold md:text-lg text-sm">Tax Payment</span>
+                          <span className="font-bold md:text-lg text-sm">Tax Clearance</span>
                         </div>
 
                         <div className="mb-6">
@@ -244,12 +248,12 @@ const RPTaxClearanceForm =()=>{
                             <span className="whitespace-nowrap ml-4">{rptaxPayment.acc_name || '-'}</span>
                           </div> */}
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                            <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_tdn || '-'}</span>
+                            <span className="font-medium whitespace-nowrap">Tax Declaration Number(TDN)</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxClearance.rp_tdn || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                            <span className="whitespace-nowrap ml-4">{rptaxPayment.rp_pin || '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{rptaxClearance.rp_pin || '-'}</span>
                           </div>
                           {/* <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">From</span>

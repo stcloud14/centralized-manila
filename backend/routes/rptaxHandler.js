@@ -239,61 +239,97 @@ router.get('/payment/', async (req, res) => {
   });
 
 
-  router.get('/clearance/', async (req, res) => {
+  router.get('/clearance/:user_id', async (req, res) => {
 
-    const query = "SELECT * FROM user_transaction";
-    const query1 = "SELECT * FROM rptax_clearance";
-    const query2 = "SELECT * FROM transaction_info";
+    const query4 = "SELECT * FROM rptax_clearance";
+    const query5 = "SELECT * FROM user_transaction";
   
     try {
-    const result = await queryDatabase(query);
-    const result1 = await queryDatabase(query1);
-    const result2 = await queryDatabase(query2);
+    const result4 = await queryDatabase(query4);
+    const result5 = await queryDatabase(query5);
+
   
     
-    res.json({ user_transaction: result, rptax_clearance: result1, transaction_info: result2 });
+    res.json({rptax_clearance: result4, user_transaction: result5});
     } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
     }
   });
   
-  
-  router.post('/payment/:user_id', async (req, res) => {
+  router.post('/clearance/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
+    const rptdn = req.body.rp_tdn;
+    const rppin = req.body.rp_pin;
+    const plainRptdn = rptdn.replace(/-/g, '');
+    const plainRppin = rppin.replace(/-/g, '');
     const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
-    const transType = '1';
+    const transType = '2';
     const statusType = 'Pending';
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
-    const query = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
-    const values = [transID, user_id, transType, statusType, formattedDate];
-  
-    const query1 = "INSERT INTO rptax_payment (`acc_name`, `rp_tdn`, `rp_pin`, `year_id`, `period_id`, `transaction_id`) VALUES (?, ?, ?, ?, ?, ?)";
-    const values1 = [req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period, transID];
-  
-    const query2 = "INSERT INTO transaction_info (`amount`, `transaction_id`) VALUES (?, ?)";
-    const values2 = [req.body.amount, transID];
-  
-    try {
-    const result = await queryDatabase(query, values);
-    const result1 = await queryDatabase(query1, values1);
-    const result2 = await queryDatabase(query2, values2);
-  
-  
-    res.json({
+    const query4 = "INSERT INTO rptax_clearance (`rp_tdn`, `rp_pin`, `transaction_id`) VALUES (?, ?, ?)";
+    const values4 = [plainRptdn, plainRppin, transID];
+
+    const query5 = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
+    const values5 = [transID, user_id, transType, statusType, formattedDate];
+
+
+    try{
+      const result4 = await queryDatabase(query4, values4);
+      const result5 = await queryDatabase(query5, values5);
+
+      res.json({
         message: "Successfully executed",
-        user_transaction_result: result,
-        rp_tax_result: result1,
-        transaction_info_result: result2,
-  
-    });
-    } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Error executing queries" });
+        rptax_clearance_result: result4,
+        user_transaction_result: result5,
+
+      });
+    }catch (err){
+      console.error(err);
+      res.status(500).json({ error: "Error executing queries" });
     }
+
+
   });
+
+  
+  // router.post('/payment/:user_id', async (req, res) => {
+  //   const user_id = req.params.user_id;
+  //   const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
+  //   const transType = '1';
+  //   const statusType = 'Pending';
+  //   const date = new Date();
+  //   const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
+  //   const query = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
+  //   const values = [transID, user_id, transType, statusType, formattedDate];
+  
+  //   const query1 = "INSERT INTO rptax_payment (`acc_name`, `rp_tdn`, `rp_pin`, `year_id`, `period_id`, `transaction_id`) VALUES (?, ?, ?, ?, ?, ?)";
+  //   const values1 = [req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period, transID];
+  
+  //   const query2 = "INSERT INTO transaction_info (`amount`, `transaction_id`) VALUES (?, ?)";
+  //   const values2 = [req.body.amount, transID];
+  
+  //   try {
+  //   const result = await queryDatabase(query, values);
+  //   const result1 = await queryDatabase(query1, values1);
+  //   const result2 = await queryDatabase(query2, values2);
+  
+  
+  //   res.json({
+  //       message: "Successfully executed",
+  //       user_transaction_result: result,
+  //       rp_tax_result: result1,
+  //       transaction_info_result: result2,
+  
+  //   });
+  //   } catch (err) {
+  //   console.error(err);
+  //   res.status(500).json({ error: "Error executing queries" });
+  //   }
+  // });
   
   
   function queryDatabase(query, values) {

@@ -9,7 +9,7 @@ router.get('/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
 
     const query = "SELECT ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, \
-    ti.amount, ti.copies, ti.print_type, ti.valid_id, ti.purpose, \
+    ti.amount, ti.copies, ti.print_type, ti.valid_id, ti.purpose_id, \
     \
     tp.acc_name, tp.rp_tdn AS rtp_tdn, tp.rp_pin AS rtp_pin, tp.year_id, tp.period_id, \
     \
