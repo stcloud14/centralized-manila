@@ -177,6 +177,54 @@ const BusinessModal = ({ selectedTransaction }) => {
                             <span className="font-medium whitespace-nowrap">Monthly Rental</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Tax Incentives from any Government Entity</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">DTI Registration</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Paid-up and Subscribed Page</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Articles of Primary and Secondary Purpose</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">NGA-Contract of Lease</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">SEC Registration</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Building</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Fire Safety Inspection Certificate</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Page 2 Document</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Page 3 Document</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Page 4 Document</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Page 5 Document</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
                         </div>
                         
                       </div>

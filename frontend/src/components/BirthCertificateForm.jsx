@@ -477,7 +477,7 @@ const BirthCertificateForm =()=>{
 
         {isModalOpen && (
           <div className="fixed z-50 inset-0 overflow-y-auto">
-            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
               <div className="fixed inset-0 transition-opacity" aria-hidden="true">
                 <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
               </div>
@@ -485,14 +485,201 @@ const BirthCertificateForm =()=>{
                 &#8203;
               </span>
               <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="mx-auto mt-4">
-                    <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                      Are you sure you want to save these changes?
-                    </span>
+                <div className="bg-white dark:bg-[#212121] pt-5 pb-4 sm:pb-4">
+                  <div className="mx-auto mt-2">
+                  <div className="sm:mt-0" id="modal-headline">   
+                      <div className="mx-auto">
+                        <div>
+                          <span className="font-bold md:text-lg text-sm">Birth Certificate</span>
+                        </div>
+
+                        <div className="max-h-[19.5rem] px-4 sm:px-6 sm:pt-6 overflow-y-auto">
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Document Owner's Last Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Document Owner's First Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Document Owner's Middle Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Document Owner's Suffix</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Document Owner's Sex</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Document Owner's Region</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Document Owner's Province</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Document Owner's Municipal</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Document Owner's Date of Birth</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Father's Last Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Father's First Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Father's Middle Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Father's Suffix</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Mother's Last Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Mother's First Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Mother's Middle Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Mother's Suffix</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Requestor Last Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Requestor First Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Requestor Middle Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Requestor Suffix</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Requestor's Relationship to the Owner</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Requestor's Tax Identification Number</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Telephone No.</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Mobile No.</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Region</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Province</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Municipal</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Barangay</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">House No. / Unit Floor</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Street / Building Name</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Zip Code</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Country</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Birth Registry Number (BReN)</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Hospital Name / Name of Midwife / Hilot</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">No. of Copies</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">What to Print</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Purpose</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                        </div>
+
+
+                      <div className="px-4 sm:px-6 md:pr-6 lg:pr-10">
+                        <div className="flex justify-between mb-1">
+                          <span className="font-medium whitespace-nowrap">Date Processed</span>
+                          <span className="whitespace-nowrap ml-4">-</span>
+                        </div>
+                        <div className="flex justify-between mb-1">
+                          <span className="font-medium whitespace-nowrap">Print Fee</span>
+                          <span className="whitespace-nowrap ml-4">P ---</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium whitespace-nowrap">Rush Fee</span>
+                          <span className="whitespace-nowrap ml-4">P ---</span>
+                        </div>
+                       <hr className='mt-7 mb-1'/>
+                        <div className="flex justify-between">
+                          <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
+                          <span className="font-semibold whitespace-nowrap ml-4">P ---</span>
+                         </div>
+
+                      </div>
+                       
+                      </div>
+                    </div>
+                    
                   </div>
                 </div>
-                <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:pl-6 flex justify-end">
                   <button
                     onClick={handleCloseModal}
                     type="button"
