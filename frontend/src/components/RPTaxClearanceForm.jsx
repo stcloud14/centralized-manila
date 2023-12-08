@@ -48,7 +48,7 @@ const RPTaxClearanceForm =()=>{
           formattedWithDashes += '-' + formattedValue.slice(2, 7);
         }
         if (formattedValue.length > 7) {
-          formattedWithDashes += '-' + formattedValue.slice(6, 14);
+          formattedWithDashes += '-' + formattedValue.slice(7, 14);
         }
     
         setRptaxClearance((prevData) => ({
