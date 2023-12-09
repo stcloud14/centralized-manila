@@ -33,11 +33,11 @@ router.get('/:user_id', async (req, res) => {
     LEFT JOIN birth_requestor br ON ut.transaction_id = br.transaction_id AND br.transaction_id IS NOT NULL \
     \
     LEFT JOIN death_cert dc ON ut.transaction_id = dc.transaction_id AND dc.transaction_id IS NOT NULL \
-    LEFT JOIN death_owner do ON ut.transaction_id = do.transaction_id AND do.transaction_id IS NOT NULL \
+    LEFT JOIN death_doc_owner do ON ut.transaction_id = do.transaction_id AND do.transaction_id IS NOT NULL \
     LEFT JOIN death_requestor dr ON ut.transaction_id = dr.transaction_id AND dr.transaction_id IS NOT NULL \
     \
     LEFT JOIN marriage_cert mc ON ut.transaction_id = mc.transaction_id AND mc.transaction_id IS NOT NULL \
-    WHERE user_id = 'RL1741'";
+    WHERE ut.user_id = ?";
 
 
     try {
