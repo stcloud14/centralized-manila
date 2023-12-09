@@ -21,7 +21,7 @@ const BirthModal = ({ selectedTransaction, onClose }) => {
           
           
           
-          <div className="max-h-[19.5rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
+          <div className="max-h-[19.5rem] pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
             <div className="mx-auto">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
@@ -196,7 +196,7 @@ const BirthModal = ({ selectedTransaction, onClose }) => {
                   </div>
                 </div>
 
-              <div className="mx-auto bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10">
+              <div className="mx-auto pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10">
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
@@ -227,7 +227,7 @@ const BirthModal = ({ selectedTransaction, onClose }) => {
                           </div>
                         </div>
 
-                <div className="bg-white dark:bg-[#212121] mr-0 md:mr-2 px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
+                <div className="mr-0 md:mr-2 px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
                   <div className="flex items-center space-x-2 mt-auto">
                       <button
