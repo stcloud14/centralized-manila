@@ -12,7 +12,6 @@ import 'flatpickr/dist/themes/airbnb.css';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 import CityDropdown from '../partials/profile/CityDropdown';
-import DynamicModal from './DynamicModal';
 
 
 const DeathCertificateForm =()=>{
@@ -532,7 +531,7 @@ const DeathCertificateForm =()=>{
                       </div>
 
                       <div className="max-h-[19.5rem] px-4 sm:px-6 sm:pt-6 overflow-y-auto">
-                      <DynamicModal data={deathCert} labels={labels} />
+                      {/* <DynamicModal data={deathCert} labels={labels} /> */}
                       </div>
 
 
