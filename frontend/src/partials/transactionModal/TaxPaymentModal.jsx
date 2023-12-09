@@ -137,19 +137,19 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
                           </div>
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rtp_tdn ? selectedTransaction.rtp_tdn : '-'}</span>
+                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_tdn ? selectedTransaction.rp_tdn : '-'}</span>
                            </div>
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rtp_pin ? selectedTransaction.rtp_pin : '-'}</span>
+                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_pin ? selectedTransaction.rp_pin : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">From</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.year_id} - 1st Quarter</span>
+                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_year} - 1st Quarter</span>
                            </div>
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">To</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.year_id} - {selectedTransaction.period_id}</span>
+                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_year} - {selectedTransaction.period}</span>
                            </div>
                           {/* <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>

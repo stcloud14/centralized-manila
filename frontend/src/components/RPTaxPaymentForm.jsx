@@ -14,13 +14,6 @@ const RPTaxPaymentForm =()=>{
   const { pathname } = location;
   const user_id = pathname.split("/")[2];
 
-  const [rptaxPaymentForm, setBirthCert] = useState((prevData) => ({
-    ...prevData,
-    birthc_amount: 0,
-    initialPrint: 0,
-    printDisplay: 0,
-  }));
-
   const date = new Date();
   const currentDate = date.toISOString().split('T')[0];
 
@@ -103,6 +96,14 @@ const RPTaxPaymentForm =()=>{
   setRptaxPayment((prevData) => ({
     ...prevData,
     [name]: formattedValue,
+  }));
+
+  } else if (name === 'period') {
+    const { name, value } = e.target;
+
+  setRptaxPayment((prevData) => ({
+    ...prevData,
+    [name]: value,
   }));
 
 
@@ -278,10 +279,10 @@ const handleCheckboxChange = (e) => {
                       <div className="relative z-0 w-full mb-2 group">
                         <select onChange={handleInputChange} value={rptaxPayment.period} defaultValue={0} name="period" id="period" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                           <option value="0" className='dark:bg-[#3d3d3d]'>Select Period</option>
-                          <option value="1ST QUARTER" className='dark:bg-[#3d3d3d]'>1st Quarter</option>
-                          <option value="2ND QUARTER"className='dark:bg-[#3d3d3d]'>2nd Quarter</option>
-                          <option value="3RD QUARTER"className='dark:bg-[#3d3d3d]'>3rd Quarter</option>
-                          <option value="4TH QUARTER"className='dark:bg-[#3d3d3d]'>4th Quarter</option>
+                          <option value="1st Quarter" className='dark:bg-[#3d3d3d]'>1st Quarter</option>
+                          <option value="2nd Quarter"className='dark:bg-[#3d3d3d]'>2nd Quarter</option>
+                          <option value="3rd Quarter"className='dark:bg-[#3d3d3d]'>3rd Quarter</option>
+                          <option value="4th Quarter"className='dark:bg-[#3d3d3d]'>4th Quarter</option>
                         </select>
                         <label htmlFor="period" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Period</label>
                       </div>
@@ -396,7 +397,7 @@ const handleCheckboxChange = (e) => {
         )}    */}
 
         {isModalOpen && (
-          <ModalTransaction selectedTransaction={rptaxPaymentForm} modalType={'Real Property Tax Payment'} onClose={handleCloseModal} onSubmit={handleSubmit} />
+          <ModalTransaction selectedTransaction={rptaxPayment} modalType={'Real Property Tax Payment'} onClose={handleCloseModal} onSubmit={handleSubmit} />
         )}
 
         
