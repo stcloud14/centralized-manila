@@ -1,7 +1,7 @@
 import React from 'react';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
-const MarriageModal = ({ selectedTransaction, onClose }) => {
+const BcertModal = ({ selectedTransaction, onClose }) => {
  
   return (
     <div className="fixed z-50 inset-0 ">
@@ -15,7 +15,7 @@ const MarriageModal = ({ selectedTransaction, onClose }) => {
         <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
           <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 overflow-y-auto">
                           <div className="mb-6">
-                          <span className="font-bold md:text-lg text-sm">Marriage Certificate Transaction Details</span>
+                          <span className="font-bold md:text-lg text-sm">Cedula Transaction Details</span>
                           </div>
                         </div>
           
@@ -31,80 +31,8 @@ const MarriageModal = ({ selectedTransaction, onClose }) => {
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Husband's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Husband's First Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Husband's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Husband's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Wife's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Wife's First Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Wife's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Wife's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Region of Marriage</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Province of Marriage</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Municipal of Marriage</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Date of Marriage</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor's Relationship to the Owner</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Mobile No.</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="font-medium whitespace-nowrap">Owner's Information</span>
+                            <span className="whitespace-nowrap ml-4">Alvarez, Jeremiah Paul S.</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
@@ -135,19 +63,55 @@ const MarriageModal = ({ selectedTransaction, onClose }) => {
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">No. of Copies</span>
+                            <span className="font-medium whitespace-nowrap">Civil Status</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">What to Print</span>
+                            <span className="font-medium whitespace-nowrap">Country of Citizenship</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Purpose</span>
+                            <span className="font-medium whitespace-nowrap">Height (ft)</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Weight (kg)</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Alien Certificate of Registration No.</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Employment Status</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Tax Payer Account No.</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Residence Tax Due</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Profession/Occupation/Business</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Income from Real Property</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Earnings from Business</span>
+                            <span className="whitespace-nowrap ml-4">-</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Earnings from Profession</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                         </div>
@@ -157,7 +121,7 @@ const MarriageModal = ({ selectedTransaction, onClose }) => {
                   </div>
                 </div>
 
-              <div className="mx-auto pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10 ">
+              <div className="pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10 ">
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
@@ -205,4 +169,50 @@ const MarriageModal = ({ selectedTransaction, onClose }) => {
   );
 };
 
-export default MarriageModal;
+export default BcertModal;
+
+
+
+
+
+// const labels = {
+//     birthc_lname: 'Document Owner\'s Last Name',
+//     birthc_fname: 'Document Owner\'s First Name',
+//     birthc_mname: 'Document Owner\'s Middle Name',
+//     birthc_suffix: 'Document Owner\'s Suffix',
+//     birthc_sex: 'Document Owner\'s Sex',
+//     birthc_ownerregion: 'Document Owner\'s Region',
+//     birthc_ownerprovince: 'Document Owner\'s Province',
+//     birthc_ownermunicipal: 'Document Owner\'s Municipal',
+//     birthc_date: 'Document Owner\'s Date of Birth',
+//     birthc_fatherlname: 'Father\'s Last Name',
+//     birthc_fatherfname: 'Father\'s First Name',
+//     birthc_fathermname: 'Father\'s Middle Name',
+//     birthc_fathersuffix: 'Father\'s Middle Name',
+//     birthc_motherlname: 'Mother\'s Last Name',
+//     birthc_motherfname: 'Mother\'s First Name',
+//     birthc_mothermname: 'Mother\'s Middle Name',
+//     birthc_mothersuffix: 'Mother\'s Suffix',
+//     birthc_reqlname: 'Requestor\'s Last Name',
+//     birthc_reqfname: 'Requestor\'s First Name',
+//     birthc_reqmname: 'Requestor\'s Middle Name',
+//     birthc_reqsuffix: 'Requestor\'s Suffix',
+//     birthc_reqrelation: 'Requestor\'s Relationship to the Owner',
+//     birthc_reqtin: 'Requestor\'s Tax Identification Number',
+//     birthc_reqtelnum: 'Telephone No.',
+//     birthc_reqmobnum: 'Mobile No.',
+//     birthc_reqregion: 'Region',
+//     birthc_reqprovince: 'Province',
+//     birthc_reqmunicipal: 'City',
+//     birthc_reqbrgy: 'Barangay',
+//     birthc_reqhnum: 'House No. / Unit Floor',
+//     birthc_reqstreet: 'Street / Building Name',
+//     birthc_reqzip: 'Zip Code',
+//     birthc_country: 'Country',
+//     birthc_bren: 'Birth Registry Number (BReN)',
+//     birthc_hospital: 'Hospital Name / Name of Midwife / Hilot',
+//     birthc_nocopies: 'No. of Copies',
+//     birthc_print: 'What to Print',
+//     birthc_purpose: 'Purpose',
+//     birthc_validid: 'Valid ID to Present Upon Claiming',
+//   }

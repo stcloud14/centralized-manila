@@ -12,7 +12,6 @@ import 'flatpickr/dist/themes/airbnb.css';
 import CityDropdown from '../partials/profile/CityDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
-import DynamicModal from './DynamicModal';
 
 const BirthCertificateForm =()=>{
 
@@ -20,54 +19,12 @@ const BirthCertificateForm =()=>{
   const { pathname } = location;
   const user_id = pathname.split("/")[2];
 
-  const [birthCert, setBirthCert] = useState((prevData) => ({
+  const [birthCert, setBirthCert] = useState(() => ({
     ...prevData,
     birthc_amount: 0,
     initialPrint: 0,
     printDisplay: 0,
   }));
-
-  const labels = {
-    birthc_lname: 'Document Owner\'s Last Name',
-    birthc_fname: 'Document Owner\'s First Name',
-    birthc_mname: 'Document Owner\'s Middle Name',
-    birthc_suffix: 'Document Owner\'s Suffix',
-    birthc_sex: 'Document Owner\'s Sex',
-    birthc_ownerregion: 'Document Owner\'s Region',
-    birthc_ownerprovince: 'Document Owner\'s Province',
-    birthc_ownermunicipal: 'Document Owner\'s Municipal',
-    birthc_date: 'Document Owner\'s Date of Birth',
-    birthc_fatherlname: 'Father\'s Last Name',
-    birthc_fatherfname: 'Father\'s First Name',
-    birthc_fathermname: 'Father\'s Middle Name',
-    birthc_fathersuffix: 'Father\'s Middle Name',
-    birthc_motherlname: 'Mother\'s Last Name',
-    birthc_motherfname: 'Mother\'s First Name',
-    birthc_mothermname: 'Mother\'s Middle Name',
-    birthc_mothersuffix: 'Mother\'s Suffix',
-    birthc_reqlname: 'Requestor\'s Last Name',
-    birthc_reqfname: 'Requestor\'s First Name',
-    birthc_reqmname: 'Requestor\'s Middle Name',
-    birthc_reqsuffix: 'Requestor\'s Suffix',
-    birthc_reqrelation: 'Requestor\'s Relationship to the Owner',
-    birthc_reqtin: 'Requestor\'s Tax Identification Number',
-    birthc_reqtelnum: 'Telephone No.',
-    birthc_reqmobnum: 'Mobile No.',
-    birthc_reqregion: 'Region',
-    birthc_reqprovince: 'Province',
-    birthc_reqmunicipal: 'City',
-    birthc_reqbrgy: 'Barangay',
-    birthc_reqhnum: 'House No. / Unit Floor',
-    birthc_reqstreet: 'Street / Building Name',
-    birthc_reqzip: 'Zip Code',
-    birthc_country: 'Country',
-    birthc_bren: 'Birth Registry Number (BReN)',
-    birthc_hospital: 'Hospital Name / Name of Midwife / Hilot',
-    birthc_nocopies: 'No. of Copies',
-    birthc_print: 'What to Print',
-    birthc_purpose: 'Purpose',
-    birthc_validid: 'Valid ID to Present Upon Claiming',
-  }
 
   const [isSuccess, setIsSuccess] = useState(false);
 

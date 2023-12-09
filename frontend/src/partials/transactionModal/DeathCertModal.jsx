@@ -1,4 +1,5 @@
 import React from 'react';
+import StatusBadgeMobile from '../StatusBadgeMobile';
 
 const DeathModal = ({ selectedTransaction, onClose }) => {
  
