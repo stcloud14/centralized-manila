@@ -148,7 +148,7 @@ const [sidebarOpen, setSidebarOpen] = useState(false);
 const handleInputChange = (e) => {
   const { name, id, value } = e.target;
   const updatedValue = isNaN(value) ? value.toUpperCase() : value;
-  
+  const numericValue = value.replace(/[^0-9]/g, '');
   
 
   setCtcCedula((prevData) => {
@@ -175,6 +175,7 @@ const handleInputChange = (e) => {
       return {
       ...prevData,
       [id]: updatedValue,
+      [id]: numericValue,
     };
   }
 });
