@@ -151,22 +151,27 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                 </div>
 
               <div className="mx-auto pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10 ">
+                          {selectedTransaction.date ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
                           </div>
+                          ) : null}
+
+                          {selectedTransaction.time ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
                           </div>
+                          ) : null}
                           {/* <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Remarks</span>
                             <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
                           </div> */}
-                          <div className="flex justify-between mb-1">
+                          {/* <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Reference Number</span>
                             <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
+                          </div> */}
                           {selectedTransaction.transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
@@ -177,7 +182,7 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4"> P 1,020.00</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">P {selectedTransaction.deathc_amount ? selectedTransaction.deathc_amount : '0'}</span>
                           </div>
                         </div>
 

@@ -22,13 +22,6 @@ const CedulaForm =()=>{
   const { pathname } = location;
   const user_id = pathname.split("/")[2];  
 
-  const [cedulaCert, setBirthCert] = useState((prevData) => ({
-    ...prevData,
-    birthc_amount: 0,
-    initialPrint: 0,
-    printDisplay: 0,
-  }));
-
   const [CtcCedula, setCtcCedula] = useState((prevData) => ({
     ...prevData,
     ctc_salariesta: '',
@@ -509,7 +502,7 @@ const handleInputChange = (e) => {
         </main>
 
         {isModalOpen && (
-          <ModalTransaction selectedTransaction={cedulaCert} modalType={'Community Tax Certificate'} onClose={handleCloseModal} onSubmit={handleSubmit} />
+          <ModalTransaction selectedTransaction={CtcCedula} modalType={'Community Tax Certificate'} onClose={handleCloseModal} onSubmit={handleSubmit} />
         )}
         
       </div>

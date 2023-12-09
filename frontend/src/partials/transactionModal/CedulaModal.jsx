@@ -171,7 +171,7 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4"> P {selectedTransaction.birthc_amount}</span>
+                            <span className="font-semibold whitespace-nowrap ml-4"> P {selectedTransaction.deathc_purpose ? selectedTransaction.deathc_purpose : '-'}</span>
                           </div>
                         </div>
 
