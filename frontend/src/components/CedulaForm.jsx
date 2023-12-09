@@ -24,27 +24,21 @@ const CedulaForm =()=>{
 
   const [CtcCedula, setCtcCedula] = useState((prevData) => ({
     ...prevData,
-    ctc_salariesta: '',
-    ctc_salariesca: '',
-    ctc_grossta: '',
-    ctc_grossca: '',
-    ctc_incomeca: '',
-    ctc_cedamount: '',
+    ctc_cedamount: 0,
+    ctc_grossca: 0,
+    ctc_salariesca: 0,
+    ctc_totalamount: 0,
+    ctc_interest: 0,
+    ctc_amountpayable: 0,
   }));
   
   const [isSuccess, setIsSuccess] = useState(false);
-
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     try {
-      const response = await axios.post(`http://localhost:8800/cedula/${user_id}`, {
-        ...CtcCedula,
-        ctc_amount: totalAmountPaid,
-        // Add other necessary fields here
-      });
+      const response = await axios.post(`http://localhost:8800/cedula/${user_id}`, CtcCedula);
   
       // Check the response status before proceeding
       if (response.status === 200) {
@@ -74,92 +68,80 @@ const handleCloseModal = () => {
   setIsModalOpen(false);
 };
 
-useEffect(() => {
-  const handleTaxableAmountChange = (id, taxableId, cedulaId) => {
-    const taxableAmountInput = document.getElementById(taxableId);
-    const cedulaAmountInput = document.getElementById(cedulaId);
-
-    // Get the value from Taxable Amount input
-    const taxableAmount = parseFloat(taxableAmountInput.value) || 0;
-
-    // Calculate Cedula Amount (1% of Taxable Amount) and round it
-    const cedulaAmount = Math.round(taxableAmount * 0.001);
-
-    // Update Cedula Amount input
-    cedulaAmountInput.value = cedulaAmount;
-
-    // Update state
-    setCtcCedula((prevData) => ({
-      ...prevData,
-      [id]: taxableAmountInput.value,
-      [cedulaId]: cedulaAmount,
-    }));
-  };
-
-  const handleTaxableSalariestaChange = () => {
-    handleTaxableAmountChange('ctc_salariesta', 'ctc_salariesta', 'ctc_salariesca');
-  };
-
-  const handleTaxableGrosstaChange = () => {
-    handleTaxableAmountChange('ctc_grossta', 'ctc_grossta', 'ctc_grossca');
-  };
-
-  const handleTaxableRealPropChange = () => {
-    handleTaxableAmountChange('ctc_incomeca', 'ctc_incomeca', 'ctc_cedamount');
-  };
-
-  const taxableSalariestaInput = document.getElementById('ctc_salariesta');
-  const taxableGrosstaInput = document.getElementById('ctc_grossta');
-  const taxableRealPropInput = document.getElementById('ctc_incomeca');
-
-
-  // Add input event listeners to Taxable Amount inputs
-  taxableSalariestaInput.addEventListener('input', handleTaxableSalariestaChange);
-  taxableGrosstaInput.addEventListener('input', handleTaxableGrosstaChange);
-  taxableRealPropInput.addEventListener('input', handleTaxableRealPropChange);
-
-
-  // Clean up the event listeners when the component is unmounted
-  return () => {
-    taxableSalariestaInput.removeEventListener('input', handleTaxableSalariestaChange);
-    taxableGrosstaInput.removeEventListener('input', handleTaxableGrosstaChange);
-    taxableRealPropInput.removeEventListener('input', handleTaxableRealPropChange);
-
-  };
-}, []);
-
-
-const totalCedulaAmount = Math.round(Object.values(CtcCedula)
-  .filter((value) => !isNaN(parseFloat(value)))
-  .reduce((acc, amount) => acc + parseFloat(amount), 0) * 0.001)
-  .toFixed(2);
-
-const interestAmount = Math.round(totalCedulaAmount * 0.2).toFixed(2);
-
-const totalAmountPaid = Math.round(parseFloat(totalCedulaAmount) + parseFloat(interestAmount)).toFixed(2);
-
-console.log('Total Cedula Amount:', totalCedulaAmount);
-console.log('Interest Amount (20%):', interestAmount);
-console.log('Total Amount Paid:', totalAmountPaid);
-
-
-
 const [sidebarOpen, setSidebarOpen] = useState(false);
 
 
 const handleInputChange = (e) => {
   const { name, id, value } = e.target;
   const updatedValue = isNaN(value) ? value.toUpperCase() : value;
-  const numericValue = value.replace(/[^0-9]/g, '');
+  const numericValue = value.replace(/\D/g, '');
+  
   
 
   setCtcCedula((prevData) => {
 
-    if (name === 'ctc_cznstatus') {
-        
+    if (name === 'ctc_incomeca') {
+
+      const incomeCedAmount = equivalentAmount({ value });
+      const grossCedAmount = prevData.ctc_grossca || 0;
+      const salariesCedAmount = prevData.ctc_salariesca || 0;
+
+      const totalAmountPartial = incomeCedAmount + grossCedAmount + salariesCedAmount; 
+      const totalAmount = totalAmountPartial.toFixed(2);
+
+      const [totalInterest, totalAmountPaid] = totalingAmount({ totalAmount });
+
       return {
         ...prevData,
-        ctc_cznstatus: value,
+        [name]: numericValue,
+        ctc_cedamount: incomeCedAmount,
+        ctc_totalamount: totalAmount,
+        ctc_interest: totalInterest,
+        ctc_amountpayable: totalAmountPaid,
+      };
+    }
+
+    if (name === 'ctc_grossta') {
+
+      const grossCedAmount = equivalentAmount({ value });
+      const incomeCedAmount = prevData.ctc_cedamount || 0;
+      const salariesCedAmount = prevData.ctc_salariesca || 0;
+
+      const totalAmountPartial = incomeCedAmount + grossCedAmount + salariesCedAmount; 
+      const totalAmount = totalAmountPartial.toFixed(2);
+
+      const [totalInterest, totalAmountPaid] = totalingAmount({ totalAmount });
+
+
+      return {
+        ...prevData,
+        [name]: numericValue,
+        ctc_grossca: grossCedAmount,
+        ctc_totalamount: totalAmount,
+        ctc_interest: totalInterest,
+        ctc_amountpayable: totalAmountPaid,
+      };
+    }
+
+    if (name === 'ctc_salariesta') {
+
+      const salariesCedAmount = equivalentAmount({ value });
+      const incomeCedAmount = prevData.ctc_cedamount || 0;
+      const grossCedAmount = prevData.ctc_grossca || 0;
+
+      const totalAmountPartial = incomeCedAmount + grossCedAmount + salariesCedAmount; 
+      const totalAmount = totalAmountPartial.toFixed(2);
+
+      const [totalInterest, totalAmountPaid] = totalingAmount({ totalAmount });
+
+
+      return {
+        ...prevData,
+        [name]: numericValue,
+        ctc_salariesca: salariesCedAmount,
+        ctc_totalamount: totalAmount,
+        ctc_interest: totalInterest,
+        ctc_amountpayable: totalAmountPaid,
       };
     }
     
@@ -177,11 +159,59 @@ const handleInputChange = (e) => {
       return {
       ...prevData,
       [id]: updatedValue,
-      [id]: numericValue,
     };
   }
 });
 };
+
+
+
+
+// function formatNumberWithCommas(value) {
+
+//   let formattedWithCommas = '';
+//   for (let i = 0; i < numericValue.length; i++) {
+//     if (i > 0 && (numericValue.length - i) % 3 === 0) {
+//       formattedWithCommas += ',';
+//     }
+//     formattedWithCommas += numericValue[i];
+//   }
+
+//   return {
+//     formattedValue: formattedWithCommas,
+//   };
+// }
+
+
+function equivalentAmount({ value }) {
+  if (value > 0) {
+    // Get the value from Taxable Amount input
+    const taxableAmount = parseFloat(value) || 0;
+
+    // Calculate Cedula Amount (1% of Taxable Amount) and round it
+    const cedulaAmount = Math.round(taxableAmount * 0.001);
+
+    return cedulaAmount;
+
+  } else {
+
+    return 0;
+  }
+}
+
+function totalingAmount({ totalAmount }) {
+  if (totalAmount > 0) {
+    const totalInterest = Math.round(totalAmount * 0.2).toFixed(2);
+    const totalAmountPaid = Math.round(parseFloat(totalAmount) + parseFloat(totalInterest)).toFixed(2);
+  
+    return [totalInterest, totalAmountPaid];
+
+  } else {
+
+    return [0, 0];
+  }
+}
+
 
 
   console.log(CtcCedula);
@@ -424,11 +454,11 @@ const handleInputChange = (e) => {
                 <h1 className='text-xs text-slate-700 dark:text-white mt-2.5 mb-1.5'>Income from Real Property (P1 for every P1,000)</h1>
                   <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
-                      <input type="text" id="ctc_incomeca" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                      <input onChange={handleInputChange} type="text" name="ctc_incomeca" id="ctc_incomeca" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
                       <label htmlFor="ctc_incomeca" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Taxable Amount</label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
-                      <input type="text" id="ctc_cedamount" readOnly className="pointer-events-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                      <input value={CtcCedula.ctc_cedamount !== 0 ? CtcCedula.ctc_cedamount : ''} type="text" name="ctc_cedamount" id="ctc_cedamount" readOnly className="pointer-events-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
                       <label htmlFor="ctc_cedamount" className="pointer-events-none peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cedula Amount</label>
                     </div>
                 </div>
@@ -436,11 +466,11 @@ const handleInputChange = (e) => {
                 <h1 className='text-xs text-slate-700 dark:text-white mb-1.5'>Gross Receipts or Earnings derived from Business during the preceding year (P1 for every P1,000)</h1>
                   <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
-                      <input type="text" id="ctc_grossta" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                      <input onChange={handleInputChange} type="text" name="ctc_grossta" id="ctc_grossta" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
                       <label htmlFor="ctc_grossta" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Taxable Amount</label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
-                      <input type="text" id="ctc_grossca" readOnly value={CtcCedula.ctc_grossca} className="pointer-events-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                      <input value={CtcCedula.ctc_grossca !== 0 ? CtcCedula.ctc_grossca : ''} type="text" name="ctc_grossca" id="ctc_grossca" readOnly className="pointer-events-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
                       <label htmlFor="ctc_grossca" className="pointer-events-none peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cedula Amount</label>
                     </div>
                 </div>
@@ -448,15 +478,16 @@ const handleInputChange = (e) => {
                 <h1 className='text-xs text-slate-700 dark:text-white mb-1.5'>Salaries or Gross Receipts or Earnings derived from exercise of profession or pursuit of any occupation (P1 for every P1,000)</h1>
                   <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
-                      <input type="text" id="ctc_salariesta" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
+                      <input onChange={handleInputChange} type="text" name="ctc_salariesta" id="ctc_salariesta" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
                       <label htmlFor="ctc_salariesta" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Taxable Amount</label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
- <input
+          <input
             type="text"
             id="ctc_salariesca"
+            name="ctc_salariesca"
             readOnly
-            value={CtcCedula.ctc_salariesca}
+            value={CtcCedula.ctc_salariesca !== 0 ? CtcCedula.ctc_salariesca : ''}
             className="pointer-events-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=""
             required
@@ -473,17 +504,17 @@ const handleInputChange = (e) => {
               </div>
               <div className="flex justify-between mt-2">
                 <span className="whitespace-nowrap">Total</span>
-                <span className="whitespace-nowrap">P{totalCedulaAmount}</span>
+                <span className="whitespace-nowrap">P {CtcCedula.ctc_totalamount}</span>
               </div>
               <div className="flex justify-between mt-2">
                     <span className="whitespace-nowrap">Interest (20%)</span>
-                    <span id="ctc_interest" className="whitespace-nowrap">P{interestAmount}</span>
+                    <span id="ctc_interest" className="whitespace-nowrap">P {CtcCedula.ctc_interest}</span>
                   </div>
 
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">
-                  <span className="font-medium whitespace-nowrap">Total Amount Paid</span>
-                  <span id="ctc_amount" className="whitespace-nowrap">P{totalAmountPaid}</span>
+                  <span className="font-medium whitespace-nowrap">Total Amount To Pay</span>
+                  <span name="ctc_amount" id="ctc_amount" className="whitespace-nowrap">P {CtcCedula.ctc_amountpayable}</span>
                 </div>
                  </div>
               </div>

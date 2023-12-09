@@ -38,7 +38,7 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">First Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.ctc_lname ? selectedTransaction.ctc_lname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.ctc_fname ? selectedTransaction.ctc_fname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Middle Name</span>
@@ -157,10 +157,10 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Remarks</span>
                             <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
                           </div> */}
-                          <div className="flex justify-between mb-1">
+                          {/* <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Reference Number</span>
                             <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
+                          </div> */}
                           {selectedTransaction.status_type ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
@@ -171,7 +171,7 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4"> P {selectedTransaction.deathc_purpose ? selectedTransaction.deathc_purpose : '-'}</span>
+                            <span className="font-semibold whitespace-nowrap ml-4"> P {selectedTransaction.ctc_amountpayable ? selectedTransaction.ctc_amountpayable : '-'}</span>
                           </div>
                         </div>
 
