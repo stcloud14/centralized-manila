@@ -7,7 +7,7 @@ import BirthModal from './BirthCertModal';
 import DeathModal from './DeathCertModal';
 import MarriageModal from './MarriageCertModal';
 
-const ModalTransaction = ({ modalType, onClose, selectedTransaction }) => {
+const ModalTransaction = ({ modalType, onClose, onSubmit, selectedTransaction }) => {
 
     let ModalComponent;
   
@@ -41,7 +41,7 @@ const ModalTransaction = ({ modalType, onClose, selectedTransaction }) => {
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <ModalComponent selectedTransaction={selectedTransaction} onClose={onClose} />
+        <ModalComponent selectedTransaction={selectedTransaction} onClose={onClose} onSubmit={onSubmit} />
       </div>
     </div>
   );
