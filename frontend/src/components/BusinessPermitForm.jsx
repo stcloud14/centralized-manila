@@ -11,7 +11,7 @@ import CityDropdown from '../partials/profile/CityDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 
-const PersonalInfoForm =()=>{
+const BusinessPermitForm =()=>{
 
   const location = useLocation();
   const { pathname } = location;
@@ -757,4 +757,4 @@ const PersonalInfoForm =()=>{
   );
 }
 
-export default PersonalInfoForm;
+export default BusinessPermitForm;
