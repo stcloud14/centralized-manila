@@ -12,6 +12,7 @@ import 'flatpickr/dist/themes/airbnb.css';
 import CityDropdown from '../partials/profile/CityDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
+import CountryDropdwon from '../partials/profile/CountryDropdown';
 
 const CedulaForm =()=>{
 
@@ -30,6 +31,8 @@ const CedulaForm =()=>{
   }));
   
   const [isSuccess, setIsSuccess] = useState(false);
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -138,14 +141,25 @@ console.log('Interest Amount (20%):', interestAmount);
 console.log('Total Amount Paid:', totalAmountPaid);
 
 
+
 const [sidebarOpen, setSidebarOpen] = useState(false);
 
 
 const handleInputChange = (e) => {
-  const { id, value } = e.target;
+  const { name, id, value } = e.target;
   const updatedValue = isNaN(value) ? value.toUpperCase() : value;
+  
+  
 
   setCtcCedula((prevData) => {
+
+    if (name === 'ctc_cznstatus') {
+        
+      return {
+        ...prevData,
+        ctc_cznstatus: value,
+      };
+    }
     
 
     if (id === 'ctc_region') {
@@ -299,11 +313,8 @@ const handleInputChange = (e) => {
                     <label htmlFor="ctc_civilstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                  <select onChange={handleInputChange} value={CtcCedula.ctc_cznstatus} defaultValue={0} name="ctc_cznstatus" id="ctc_cznstatus" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Country of Citizenship</option>
-                    <option value="COUNTRY A" className='dark:bg-[#3d3d3d]'>Country A</option>
-                    <option value="COUNTRY B" className='dark:bg-[#3d3d3d]'>Country B</option>
-                    <option value="COUNTRY C" className='dark:bg-[#3d3d3d]'>Country C</option>
+                  <select onChange={handleInputChange} value={CtcCedula.ctc_cznstatus} name="ctc_cznstatus" id="ctc_cznstatus" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="">
+                  <CountryDropdwon />
                   </select>
                     <label htmlFor="ctc_cznstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Country of Citizenship</label>
                   </div>
