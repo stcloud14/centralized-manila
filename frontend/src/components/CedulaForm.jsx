@@ -14,11 +14,20 @@ import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 import CountryDropdwon from '../partials/profile/CountryDropdown';
 
+import ModalTransaction from '../partials/transactionModal/ModalTransaction';
+
 const CedulaForm =()=>{
 
   const location = useLocation();
   const { pathname } = location;
   const user_id = pathname.split("/")[2];  
+
+  const [cedulaCert, setBirthCert] = useState((prevData) => ({
+    ...prevData,
+    birthc_amount: 0,
+    initialPrint: 0,
+    printDisplay: 0,
+  }));
 
   const [CtcCedula, setCtcCedula] = useState((prevData) => ({
     ...prevData,
@@ -357,7 +366,7 @@ const handleInputChange = (e) => {
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <Flatpickr
-                      id='residencetaxdue'
+                      id='ctc_residencetaxdue'
                       value={CtcCedula.birth_date}
                       onChange={(date) => {
                         const formattedDate = date.length > 0 ? (() => {
@@ -500,42 +509,9 @@ const handleInputChange = (e) => {
         </main>
 
         {isModalOpen && (
-          <div className="fixed z-50 inset-0 overflow-y-auto">
-            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-              <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-              </div>
-              <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                &#8203;
-              </span>
-              <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="mx-auto mt-4">
-                    <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                      Are you sure you want to save these changes?
-                    </span>
-                  </div>
-                </div>
-                <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
-                  <button
-                    onClick={handleCloseModal}
-                    type="button"
-                    className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                  >
-                    <p>Cancel</p>
-                  </button>
-                  <button
-                    onClick={handleSubmit}
-                    type="button"
-                    className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    <p>Proceed</p>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )} 
+          <ModalTransaction selectedTransaction={cedulaCert} modalType={'Community Tax Certificate'} onClose={handleCloseModal} onSubmit={handleSubmit} />
+        )}
+        
       </div>
     </div>
   );
