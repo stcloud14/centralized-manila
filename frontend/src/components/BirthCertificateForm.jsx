@@ -13,13 +13,15 @@ import CityDropdown from '../partials/profile/CityDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 
+import ModalTransaction from '../partials/transactionModal/ModalTransaction';
+
 const BirthCertificateForm =()=>{
 
   const location = useLocation();
   const { pathname } = location;
   const user_id = pathname.split("/")[2];
 
-  const [birthCert, setBirthCert] = useState(() => ({
+  const [birthCert, setBirthCert] = useState((prevData) => ({
     ...prevData,
     birthc_amount: 0,
     initialPrint: 0,
@@ -570,75 +572,7 @@ const BirthCertificateForm =()=>{
         </main>
 
         {isModalOpen && (
-          <div className="fixed z-50 inset-0 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
-            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-              &#8203;
-            </span>
-            <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
-              <div className="bg-white dark:bg-[#212121] pt-5 pb-4 sm:pb-4">
-                <div className="mx-auto mt-2">
-                <div className="sm:mt-0" id="modal-headline">   
-                    <div className="mx-auto">
-                      <div>
-                        <span className="font-bold md:text-lg text-sm">Birth Certificate</span>
-                      </div>
-
-                      <div className="max-h-[19.5rem] px-4 sm:px-6 sm:pt-6 overflow-y-auto">
-                      <DynamicModal data={birthCert} labels={labels} />
-                      </div>
-
-
-                      <div className="px-4 sm:px-6 md:pr-6 lg:pr-10">
-                        <div className="flex justify-between mb-1">
-                          <span className="font-medium whitespace-nowrap">Date Processed</span>
-                          <span className="whitespace-nowrap ml-4">{birthCert.formattedDate}</span>
-                        </div>
-                        <div className="flex justify-between mb-1">
-                          <span className="font-medium whitespace-nowrap">Print Fee</span>
-                          <span className="whitespace-nowrap ml-4">{`P ${birthCert.printDisplay.toFixed(2)}`}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="font-medium whitespace-nowrap">Rush Fee</span>
-                          <span className="whitespace-nowrap ml-4">P0.00</span>
-                        </div>
-                       <hr className='mt-7 mb-1'/>
-                        <div className="flex justify-between">
-                          <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                          <span className="font-semibold whitespace-nowrap ml-4">{`P ${birthCert.birthc_amount.toFixed(2)}`}</span>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:pl-6 flex justify-end">
-                <button
-                  onClick={handleCloseModal}
-                  type="button"
-                  className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                >
-                  <p>Cancel</p>
-                </button>
-                <button
-                  // onClick={handleSubmit}
-                  type="button"
-                  className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  <p>Proceed</p>
-                </button>
-              </div>
-
-          </div>
-          </div>
-          </div>
-          
-          
-          
+          <ModalTransaction selectedTransaction={birthCert} modalType={'Birth Certificate'} onClose={handleCloseModal} />
         )}
 
     </div>
