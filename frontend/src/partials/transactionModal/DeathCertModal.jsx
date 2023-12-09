@@ -191,6 +191,15 @@ const DeathModal = ({ selectedTransaction, onClose }) => {
                       >
                           <p>Cancel</p>
                       </button>
+                      {selectedTransaction.transaction_id ? null : (
+                      <button
+                          onClick={onSubmit}
+                          type="button"
+                          className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                          <p>Submit</p>
+                    </button>
+                    )}
                   </div>
               </div>
 
