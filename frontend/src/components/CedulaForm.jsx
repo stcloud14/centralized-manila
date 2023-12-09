@@ -78,7 +78,7 @@ useEffect(() => {
     const taxableAmount = parseFloat(taxableAmountInput.value) || 0;
 
     // Calculate Cedula Amount (1% of Taxable Amount) and round it
-    const cedulaAmount = Math.round(taxableAmount * 0.01);
+    const cedulaAmount = Math.round(taxableAmount * 0.001);
 
     // Update Cedula Amount input
     cedulaAmountInput.value = cedulaAmount;

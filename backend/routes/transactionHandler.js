@@ -21,9 +21,21 @@ router.get('/:user_id', async (req, res) => {
     LEFT JOIN rptax_payment tp ON ut.transaction_id = tp.transaction_id AND tp.transaction_id IS NOT NULL \
     LEFT JOIN rptax_clearance tc ON ut.transaction_id = tc.transaction_id AND tc.transaction_id IS NOT NULL \
     LEFT JOIN bus_permit bp ON ut.transaction_id = bp.transaction_id AND bp.transaction_id IS NOT NULL \
-    LEFT JOIN cedula_tax ct ON ut.transaction_id = ct.transaction_id AND ct.transaction_id IS NOT NULL \
+    \
+    LEFT JOIN cedula_cert cd ON ut.transaction_id = cd.transaction_id AND cd.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_doc_owner cdo ON ut.transaction_id = cdo.transaction_id AND cdo.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_other_info coi ON ut.transaction_id = coi.transaction_id AND coi.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_transaction_info cti ON ut.transaction_id = cti.transaction_id AND cti.transaction_id IS NOT NULL \
+    \
     LEFT JOIN birth_cert bc ON ut.transaction_id = bc.transaction_id AND bc.transaction_id IS NOT NULL \
+    LEFT JOIN birth_doc_owner bdo ON ut.transaction_id = bdo.transaction_id AND bdo.transaction_id IS NOT NULL \
+    LEFT JOIN birth_info bi ON ut.transaction_id = bi.transaction_id AND bi.transaction_id IS NOT NULL \
+    LEFT JOIN birth_requestor br ON ut.transaction_id = br.transaction_id AND br.transaction_id IS NOT NULL \
+    \
     LEFT JOIN death_cert dc ON ut.transaction_id = dc.transaction_id AND dc.transaction_id IS NOT NULL \
+    LEFT JOIN death_owner do ON ut.transaction_id = do.transaction_id AND do.transaction_id IS NOT NULL \
+    LEFT JOIN death_requestor dr ON ut.transaction_id = dr.transaction_id AND dr.transaction_id IS NOT NULL \
+    \
     LEFT JOIN marriage_cert mc ON ut.transaction_id = mc.transaction_id AND mc.transaction_id IS NOT NULL \
     WHERE user_id = 'RL1741'";
 
