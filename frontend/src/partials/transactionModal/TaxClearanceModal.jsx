@@ -18,7 +18,7 @@ const TaxClearanceModal = ({ selectedTransaction, onClose }) => {
                         <div className="sm:mt-0" id="modal-headline">   
                           <div className="mx-auto">
                             <div className="mb-6">
-                              <span className="font-bold md:text-lg text-sm">Transaction Details</span>
+                              <span className="font-bold md:text-lg text-sm">Tax Clearance Transaction Details</span>
                             </div>
     
                             <div className="mb-6">
@@ -39,22 +39,18 @@ const TaxClearanceModal = ({ selectedTransaction, onClose }) => {
                                 <span className="whitespace-nowrap ml-4">542312454</span>
                               </div> */}
                               <div className="flex justify-between mb-1">
-                                <span className="font-medium whitespace-nowrap">Date</span>
-                                <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
-                              </div>
-                              <div className="flex justify-between mb-1">
-                                <span className="font-medium whitespace-nowrap">Time</span>
-                                <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
-                              </div>
-                              <div className="flex justify-between mb-1">
-                                <span className="font-medium whitespace-nowrap">Transaction Type</span>
-                                <span className="whitespace-nowrap ml-4">{selectedTransaction.trans_type}</span>
-                              </div>
-                              {/* <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
                                 <span className="whitespace-nowrap ml-4">AUTHORIZATION LETTER</span>
                               </div>
                               <div className="flex justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Date Processed</span>
+                                <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
+                              </div>
+                              <div className="flex justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Time Processed</span>
+                                <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
+                              </div>
+                              {/* <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Period</span>
                                 <span className="whitespace-nowrap ml-4">-</span>
                               </div>
@@ -68,7 +64,7 @@ const TaxClearanceModal = ({ selectedTransaction, onClose }) => {
                               </div> */}
                               <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Status</span>
-                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">{selectedTransaction.status_type}</span>
+                                <StatusBadgeMobile statusType={selectedTransaction.status_type} />
                               </div>
     
                               <hr className='mt-7 mb-1'/>
