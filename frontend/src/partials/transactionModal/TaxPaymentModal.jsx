@@ -143,10 +143,12 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
                              <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
                              <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_pin ? selectedTransaction.rp_pin : '-'}</span>
                           </div>
+                          
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">From</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_year} - 1st Quarter</span>
+                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_year ? selectedTransaction.rp_year + ' - 1st Quarter' : '-'}</span>
                            </div>
+
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">To</span>
                              <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_year} - {selectedTransaction.period}</span>
@@ -155,26 +157,31 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
                             <span className="whitespace-nowrap ml-4">AUTHORIZATION LETTER</span>
                           </div> */}
+                          {selectedTransaction.date ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
                           </div>
+                          ) : null}
+
+                          {selectedTransaction.time ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
                           </div>
-                          {/* <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Period</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div> */}
+                          ) : null}
+                          
                           {/* <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Remarks</span>
                             <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
                           </div> */}
+                          {/* {selectedTransaction.status_type ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Reference Number</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
+                          ) : null} */}
+
                           {selectedTransaction.status_type ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
@@ -185,7 +192,7 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">{selectedTransaction.amount}</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">{selectedTransaction.amount ? selectedTransaction.amount : '-'}</span>
                           </div>
                         </div>
                       </div>
