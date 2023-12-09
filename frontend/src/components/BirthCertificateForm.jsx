@@ -572,7 +572,7 @@ const BirthCertificateForm =()=>{
         </main>
 
         {isModalOpen && (
-          <ModalTransaction selectedTransaction={birthCert} modalType={'Birth Certificate'} onClose={handleCloseModal} />
+          <ModalTransaction selectedTransaction={birthCert} modalType={'Birth Certificate'} onClose={handleCloseModal} onSubmit={handleSubmit} />
         )}
 
     </div>

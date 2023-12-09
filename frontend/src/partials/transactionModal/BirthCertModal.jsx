@@ -1,7 +1,7 @@
 import React from 'react';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
-const BirthModal = ({ selectedTransaction, onClose }) => {
+const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
  
   return (
     <div className="fixed z-50 inset-0 ">
@@ -197,23 +197,35 @@ const BirthModal = ({ selectedTransaction, onClose }) => {
                 </div>
 
               <div className="mx-auto pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10">
+                          {selectedTransaction.date ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
                           </div>
+                          ) : null}
+
+                          {selectedTransaction.time ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
                           </div>
-                          {/* <div className="flex justify-between mb-1">
+                          ) : null}
+
+                          {/* {selectedTransaction.transaction_id ? (
+                          <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Remarks</span>
                             <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
-                          </div> */}
+                          </div>
+                          ) : null} */}
+
+                          {/* {selectedTransaction.transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Reference Number</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
-                          {selectedTransaction.transaction_id ? (
+                          ) : null} */}
+
+                          {selectedTransaction.status_type ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
                             <StatusBadgeMobile statusType={selectedTransaction.status_type} />
@@ -235,8 +247,18 @@ const BirthModal = ({ selectedTransaction, onClose }) => {
                           type="button"
                           className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                       >
-                          <p>Cancel</p>
+                          <p>Close</p>
                       </button>
+                      
+                      {selectedTransaction.transaction_id ? null : (
+                      <button
+                          onClick={onSubmit}
+                          type="button"
+                          className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                          <p>Submit</p>
+                    </button>
+                    )}
                   </div>
               </div>
 
