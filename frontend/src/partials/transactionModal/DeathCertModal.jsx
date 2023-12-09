@@ -25,122 +25,123 @@ const DeathModal = ({ selectedTransaction, onClose }) => {
             <div className="mx-auto">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
-                        <div className="mb-0">
+                        <div className="mb-0">{selectedTransaction.transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
                           </div>
+                        ) : null}
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_lname ? selectedTransaction.deathc_lname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's First Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_fname ? selectedTransaction.deathc_fname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_mname ? selectedTransaction.deathc_mname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_suffix ? selectedTransaction.deathc_suffix : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Sex</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_sex ? selectedTransaction.deathc_sex : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region of Death</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_region ? selectedTransaction.deathc_region : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province of Death</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_province ? selectedTransaction.deathc_province : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal of Death</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_municipal ? selectedTransaction.deathc_municipal : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date of Death</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_date ? selectedTransaction.deathc_date : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqlname ? selectedTransaction.deathc_reqlname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqfname ? selectedTransaction.deathc_reqfname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqmname ? selectedTransaction.deathc_reqmname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqsuffix ? selectedTransaction.deathc_reqsuffix : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor's Relationship to the Owner</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="font-medium whitespace-nowrap">Relationship to the Owner</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqrelation ? selectedTransaction.deathc_reqrelation : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_telno ? selectedTransaction.deathc_telno : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mobile No.</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_mobileno ? selectedTransaction.deathc_mobileno : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqregion ? selectedTransaction.deathc_reqregion : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqprovince ? selectedTransaction.deathc_reqprovince : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqmunicipal ? selectedTransaction.deathc_reqmunicipal : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Barangay</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqbrgy ? selectedTransaction.deathc_reqbrgy : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">House No. / Unit Floor</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqhnum ? selectedTransaction.deathc_reqhnum : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Street / Building Name</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
-                          </div>
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Registry Number</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqstreet ? selectedTransaction.deathc_reqstreet : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_reqzip ? selectedTransaction.deathc_reqzip : '-'}</span>
+                          </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Registry Number</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_regnum ? selectedTransaction.deathc_regnum : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Copies</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_nocopies ? selectedTransaction.deathc_nocopies : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">What to Print</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_print ? selectedTransaction.deathc_print : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Purpose</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_purpose ? selectedTransaction.deathc_purpose : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_validid ? selectedTransaction.deathc_validid : '-'}</span>
                           </div>
                         </div>
                         
@@ -166,10 +167,12 @@ const DeathModal = ({ selectedTransaction, onClose }) => {
                             <span className="font-medium whitespace-nowrap">Reference Number</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
+                          {selectedTransaction.transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
                             <StatusBadgeMobile statusType={selectedTransaction.status_type} />
                           </div>
+                          ) : null}
 
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">

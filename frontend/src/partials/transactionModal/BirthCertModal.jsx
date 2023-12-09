@@ -34,39 +34,39 @@ const BirthModal = ({ selectedTransaction, onClose }) => {
                         ) : null}
 
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Document Owner's Last Name</span>
+                            <span className="font-medium whitespace-nowrap">Owner's Last Name</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_lname ? selectedTransaction.birthc_lname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Document Owner's First Name</span>
+                            <span className="font-medium whitespace-nowrap">Owner's First Name</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_fname ? selectedTransaction.birthc_fname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Document Owner's Middle Name</span>
+                            <span className="font-medium whitespace-nowrap">Owner's Middle Name</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_mname ? selectedTransaction.birthc_mname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Document Owner's Suffix</span>
+                            <span className="font-medium whitespace-nowrap">Owner's Suffix</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_suffix ? selectedTransaction.birthc_suffix : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Document Owner's Sex</span>
+                            <span className="font-medium whitespace-nowrap">Owner's Sex</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_sex ? selectedTransaction.birthc_sex : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Document Owner's Region</span>
+                            <span className="font-medium whitespace-nowrap">Owner's Region</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_ownerregion ? selectedTransaction.birthc_ownerregion : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Document Owner's Province</span>
+                            <span className="font-medium whitespace-nowrap">Owner's Province</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_ownerprovince ? selectedTransaction.birthc_ownerprovince : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Document Owner's Municipal</span>
+                            <span className="font-medium whitespace-nowrap">Owner's Municipal</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_ownermunicipal ? selectedTransaction.birthc_ownermunicipal : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Document Owner's Date of Birth</span>
+                            <span className="font-medium whitespace-nowrap">Owner's Date of Birth</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_date ? selectedTransaction.birthc_date : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
@@ -102,27 +102,27 @@ const BirthModal = ({ selectedTransaction, onClose }) => {
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_mothersuffix ? selectedTransaction.birthc_mothersuffix : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor Last Name</span>
+                            <span className="font-medium whitespace-nowrap">Requestor's Last Name</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqlname ? selectedTransaction.birthc_reqlname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor First Name</span>
+                            <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqfname ? selectedTransaction.birthc_reqfname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor Middle Name</span>
+                            <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqmname ? selectedTransaction.birthc_reqmname : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor Suffix</span>
+                            <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqsuffix ? selectedTransaction.birthc_reqsuffix : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor's Relationship to the Owner</span>
+                            <span className="font-medium whitespace-nowrap">Relationship to the Owner</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqrelation ? selectedTransaction.birthc_reqrelation : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Requestor's Tax Identification Number</span>
+                            <span className="font-medium whitespace-nowrap">Tax Identification Number</span>
                             <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqtin ? selectedTransaction.birthc_reqtin : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
