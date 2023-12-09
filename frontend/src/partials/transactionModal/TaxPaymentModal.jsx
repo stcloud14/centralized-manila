@@ -125,21 +125,23 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
                         </div>
 
                       <div className="mb-6">
-                        <div className="flex justify-between mb-1">
-                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
-                         </div>
+                        {selectedTransaction.transaction_id ? (
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Transaction ID</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
+                          </div>
+                        ) : null}
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">Account Name</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.acc_name}</span>
+                             <span className="whitespace-nowrap ml-4">{selectedTransaction.acc_name ? selectedTransaction.acc_name : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rtp_tdn}</span>
+                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rtp_tdn ? selectedTransaction.rtp_tdn : '-'}</span>
                            </div>
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rtp_pin}</span>
+                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rtp_pin ? selectedTransaction.rtp_pin : '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">From</span>
@@ -173,10 +175,12 @@ const TaxPaymentModal = ({ selectedTransaction, onClose }) => {
                             <span className="font-medium whitespace-nowrap">Reference Number</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
+                          {selectedTransaction.status_type ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
                             <StatusBadgeMobile statusType={selectedTransaction.status_type} />
                           </div>
+                          ) : null}
 
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">

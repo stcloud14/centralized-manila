@@ -6,12 +6,20 @@ import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import YearDropdown from '../partials/YearDropdown';
 
+import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 
 const RPTaxPaymentForm =()=>{
 
   const location = useLocation();
   const { pathname } = location;
   const user_id = pathname.split("/")[2];
+
+  const [rptaxPaymentForm, setBirthCert] = useState((prevData) => ({
+    ...prevData,
+    birthc_amount: 0,
+    initialPrint: 0,
+    printDisplay: 0,
+  }));
 
   const date = new Date();
   const currentDate = date.toISOString().split('T')[0];
@@ -309,7 +317,7 @@ const handleCheckboxChange = (e) => {
           </div>
         </main>
 
-        {isModalOpen && (
+        {/* {isModalOpen && (
           <div className="fixed z-50 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
               <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -385,7 +393,11 @@ const handleCheckboxChange = (e) => {
               </div>
             </div>
           </div>
-        )}   
+        )}    */}
+
+        {isModalOpen && (
+          <ModalTransaction selectedTransaction={rptaxPaymentForm} modalType={'Real Property Tax Payment'} onClose={handleCloseModal} onSubmit={handleSubmit} />
+        )}
 
         
 
