@@ -54,8 +54,9 @@ const LandingPageForm =()=>{
   };
     
   return (
-    <div className="relative h-screen bg-[url('./src/images/manila-hd.png')] dark:bg-[url('./src/images/manila-v2.jpg')] bg-cover bg-no-repeat bg-top">
+    <div className="relative lg:h-screen md:h-screen min-h-screen bg-[url('./src/images/manila-hd.png')] dark:bg-[url('./src/images/manila-v2.jpg')] bg-cover bg-no-repeat bg-top">
       <div className="flex flex-col md:flex-row h-full">
+        
         {/* Left Section */}
         <div className="md:w-1/2 flex items-center justify-center lg:mb-0 mb-5">
           <div className="text-center lg:pt-0 pt-20">
@@ -126,9 +127,12 @@ const LandingPageForm =()=>{
                   Don't have an account? <a className="text-emerald-500 font-bold hover:text-emerald-700" href="../register">Register Here!</a>
                 </div>
             </form>
+            <div className="absolute top-4 right-4">
+              <ThemeToggle />
+            </div>
           </div>
         </div>
-        <ThemeToggle/>
+        
         {/* Footer */}
         <div className="md:absolute relative bottom-0 w-full text-center text-sm text-gray-500 py-3 drop-shadow-xl">
           Copyright &copy; {new Date().getFullYear()} |
@@ -141,9 +145,8 @@ const LandingPageForm =()=>{
               <span className="hover:font-medium hover:text-red-500">B</span>
           </a>
         </div>
+      
       </div>
-     
-
     </div>
   );
 }
