@@ -30,8 +30,13 @@ router.get('/:user_id', async (req, res) => {
     do.l_name AS dthl_name, do.f_name AS dthf_name, do.m_name AS dthm_name, do.suffix_type AS dthsuffix, do.sex_type AS dthsex, \
     dr.l_name AS dthrl_name, dr.f_name AS dthrf_name, dr.m_name AS dthrm_name, dr.suffix_type AS dthrsuffix, dr.owner_rel AS dthrowner_rel, dr.mobile_no AS dthrmobile_no, dr.tel_no AS dthrtel_no, \
     \
+    ai.email AS aiemail, ai.mobile_no AS aimobile_no, ai.tel_no AS aitel_no, ai.region_id AS airegion_id, ai.prov_id AS aiprov_id, ai.city_id AS aicity_id, ai.brgy_dist AS aibrgy_dist, ai.house_floor AS aihouse_floor, ai.bldg_name AS aibldg_name, ai.zip_code AS aizip_code, \
     \
-    ai.email AS aiemail, ai.mobile_no AS aimobile_no, ai.tel_no AS aitel_no, ai.region_id AS airegion_id, ai.prov_id AS aiprov_id, ai.city_id AS aicity_id, ai.brgy_dist AS aibrgy_dist, ai.house_floor AS aihouse_floor, ai.bldg_name AS aibldg_name, ai.zip_code AS aizip_code \
+    r.region_name AS dthregion, p.prov_name AS dthprovince, c.city_name AS dthcity, \
+    \
+    vt.valid_id_type AS dthvaltype, \
+    pt.purpose_type AS dthpurposetype \
+    \
     \
     FROM user_transaction ut \
     \
@@ -62,6 +67,14 @@ router.get('/:user_id', async (req, res) => {
     LEFT JOIN death_requestor dr ON ut.transaction_id = dr.transaction_id AND dr.transaction_id IS NOT NULL \
     \
     LEFT JOIN marriage_cert mc ON ut.transaction_id = mc.transaction_id AND mc.transaction_id IS NOT NULL \
+    \
+    LEFT JOIN region r ON dc.region_id = r.region_id \
+    LEFT JOIN province p ON dc.prov_id = p.prov_id \
+    LEFT JOIN cities c ON dc.city_id = c.city_id \
+    \
+    LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
+    LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    \
     WHERE ut.user_id = ?";
 
 
@@ -113,3 +126,7 @@ export default router;
 // bp.sex_type, bp.bus_info_id, bp.bus_owner_id, bp.bus_contact_id, bp.bus_addr_id, \
 
 // mc.person_info_id, mc.marriage_details_id, mc.consent_info_id \
+
+// LEFT JOIN region r1 ON ai.region_id = r1.region_id \
+//     LEFT JOIN province p1 ON ai.prov_id = p1.prov_id \
+//     LEFT JOIN cities c1 ON ai.city_id = c1.city_id \

@@ -60,15 +60,15 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region of Death</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_regionLabel ? selectedTransaction.deathc_regionLabel : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_regionLabel || selectedTransaction.dthregion || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province of Death</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_provinceLabel ? selectedTransaction.deathc_provinceLabel : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_provinceLabel || selectedTransaction.dthprovince || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal of Death</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_municipalLabel ? selectedTransaction.deathc_municipalLabel : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_municipalLabel || selectedTransaction.dthcity || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date of Death</span>
@@ -152,11 +152,11 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Purpose</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_purposeLabel || selectedTransaction.purpose_id || '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_purposeLabel || selectedTransaction.dthpurposetype || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_valididLabel || selectedTransaction.valid_id || '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{selectedTransaction.deathc_valididLabel || selectedTransaction.dthvaltype || '-'}</span>
                           </div>
                         </div>
                         
@@ -197,7 +197,8 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">P {selectedTransaction.deathc_amount ? `${selectedTransaction.deathc_amount}.00` : '-'}</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">{`${selectedTransaction.deathc_amount ? selectedTransaction.deathc_amount + '.00' : selectedTransaction.amount || '-'}`}</span>
+
                           </div>
                         </div>
 
