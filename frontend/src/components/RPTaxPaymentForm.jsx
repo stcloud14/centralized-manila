@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 
 import { useLocation } from 'react-router-dom';
@@ -148,7 +148,9 @@ const handleCheckboxChange = (e) => {
 };
   
 
-  const [isSuccess, setIsSuccess] = useState(false); // New state for success message
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const contentRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -158,8 +160,9 @@ const handleCheckboxChange = (e) => {
   
       // Check the response status before proceeding
       if (response.status === 200) {
-        setIsSuccess(true); // Set success state to true
-        handleCloseModal(); // Close the modal
+        setIsSuccess(true);
+        handleCloseModal();
+        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
         console.log('Transaction successful');
   
         setTimeout(() => {
@@ -200,7 +203,7 @@ const handleCheckboxChange = (e) => {
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <main>
+        <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col h-full justify-between mx-4 my-4">
             <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
               <div className="px-5 py-5">
@@ -209,7 +212,7 @@ const handleCheckboxChange = (e) => {
                   <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Payment</h1>
 
                   {isSuccess && (
-                  <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                  <div className="text-emerald-700 text-sm bg-emerald-200 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
                     Transaction success on Real Property Tax Payment!
                   </div>
                   )}  
