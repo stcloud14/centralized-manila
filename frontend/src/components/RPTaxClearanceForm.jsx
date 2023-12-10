@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 
 import { useLocation } from 'react-router-dom';
@@ -110,18 +110,20 @@ const RPTaxClearanceForm =()=>{
       }
     };
 
-  const [isSuccess, setIsSuccess] = useState(false); // New state for success message
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const contentRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     try {
       const response = await axios.post(`http://localhost:8800/rptax/clearance/${user_id}`, rptaxClearance);
-  
-      // Check the response status before proceeding
+
       if (response.status === 200) {
-        setIsSuccess(true); // Set success state to true
-        handleCloseModal(); // Close the modal
+        setIsSuccess(true);
+        handleCloseModal();
+        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
         console.log('User credentials updated successfully');
   
         setTimeout(() => {
@@ -160,19 +162,18 @@ const RPTaxClearanceForm =()=>{
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <main>
-          <div className="flex flex-col h-full justify-between mx-4 my-4">
-            <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
-              <div className="px-5 py-5">
+        <main ref={contentRef} className="overflow-y-auto">
+          <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
+            <div className="px-5 py-5">
                 <form className="max-w-md mx-auto">
                   <h1 className='font-medium text-center text-slate-700 dark:text-white'>Tax Clearance</h1>
                   <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Payment</h1>
 
                   {isSuccess && (
-              <div className="text-emerald-500 bg-emerald-100 text-center rounded-full py-1.5 mb-5">
-                Success! Your changes have been saved.
-              </div>
-              )}
+                  <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                    Transaction success on Real Property Tax Clearance!
+                  </div>
+                  )}
 
                   <div className="grid gap-6">
                       <div className="relative z-0 w-full mb-2 group">
@@ -223,7 +224,6 @@ const RPTaxClearanceForm =()=>{
                 </form>
               </div>
             </div>
-          </div>
         </main>
 
         {isModalOpen && (

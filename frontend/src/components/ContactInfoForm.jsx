@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import {Link} from "react-router-dom"
 
@@ -59,11 +59,9 @@ const ContactInfoForm =()=>{
     });
   };
   
-    
-
-  
-  
   const [isSuccess, setIsSuccess] = useState(false); // New state for success message
+
+  const contentRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,6 +71,7 @@ const ContactInfoForm =()=>{
         .then((res) => {
           setIsSuccess(true);
           handleCloseModal();
+          contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
           console.log('User credentials updated successfully');
 
           setTimeout(() => {
@@ -114,7 +113,7 @@ const ContactInfoForm =()=>{
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <main>
+        <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-5 py-5">
                  
@@ -123,7 +122,7 @@ const ContactInfoForm =()=>{
               <h1 className='mb-7 text-sm italic text-center'>Contact Information</h1>
 
               {isSuccess && (
-              <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+              <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
                 Success! Your changes have been saved.
               </div>
               )}
