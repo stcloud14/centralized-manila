@@ -27,6 +27,14 @@ const DeathCertificateForm =()=>{
     deathc_amount: 0,
     initialPrint: 0,
     printDisplay: 0,
+    deathc_regionLabel: '',
+    deathc_provinceLabel: '',
+    deathc_municipalLabel: '',
+    deathc_reqregionLabel: '',
+    deathc_reqprovinceLabel: '',
+    deathc_reqmunicipalLabel: '',
+    deathc_purposeLabel: '',
+    deathc_valididLabel: '',
   }));
 
   
@@ -103,22 +111,94 @@ const DeathCertificateForm =()=>{
       }
 
       if (id === 'deathc_region') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
         
         return {
           ...prevData,
           [id]: value,
           deathc_province: '',
           deathc_municipal: '',
+          deathc_regionLabel: label,
+        };
+      }
+
+      if (id === 'deathc_province') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          deathc_provinceLabel: label,
+        };
+      }
+
+      if (id === 'deathc_municipal') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          deathc_municipalLabel: label,
         };
       }
       
       if (id === 'deathc_reqregion') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
         
         return {
           ...prevData,
           [id]: value,
           deathc_reqprovince: '',
           deathc_reqmunicipal: '',
+          deathc_reqregionLabel: label,
+        };
+      }
+
+      if (id === 'deathc_reqprovince') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          deathc_reqprovinceLabel: label,
+        };
+      }
+
+      if (id === 'deathc_reqmunicipal') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          deathc_reqmunicipalLabel: label,
+        };
+      }
+
+      if (id === 'deathc_purpose') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          deathc_purposeLabel: label,
+        };
+      }
+      
+      if (id === 'deathc_validid') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          deathc_valididLabel: label,
         };
       }
 
@@ -485,7 +565,7 @@ const DeathCertificateForm =()=>{
         </main>
 
         {isModalOpen && (
-          <ModalTransaction selectedTransaction={deathCert} modalType={'Death Certificate'} onClose={handleCloseModal} />
+          <ModalTransaction selectedTransaction={deathCert} modalType={'Death Certificate'} onClose={handleCloseModal} onSubmit={handleSubmit} />
         )}
 
 
