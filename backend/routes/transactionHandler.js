@@ -25,7 +25,6 @@ router.get('/:user_id', async (req, res) => {
     
         if (result.length > 0) {
             const userTransactions = result.map(row => {
-                // const formattedDthDate = moment(row.dthdeath_date).format('MMMM D, YYYY');
                 const formattedDate = moment(row.date_processed).format('MMMM D, YYYY');
                 const formattedTime = moment(row.date_processed).format('h:mm A');
 
@@ -33,7 +32,6 @@ router.get('/:user_id', async (req, res) => {
                     ...row,
                     date: formattedDate,
                     time: formattedTime,
-                    // death_date: formattedDthDate,
                 };
             });
 
@@ -48,42 +46,6 @@ router.get('/:user_id', async (req, res) => {
     }
 });
 
-
-router.get('/taxpayment/:transaction_id', async (req, res) => {
-    const transaction_id = req.params.transaction_id;
-
-    const query = "SELECT tp.acc_name, tp.rp_tdn, tp.rp_pin, tp.year_id, tp.period_id \
-    \
-    FROM rptax_payment tp WHERE transaction_id = ?";
-
-
-    try {
-        const result = await queryDatabase(query, [user_id]);
-    
-        if (result.length > 0) {
-            const userTransactions = result.map(row => {
-                // const formattedDthDate = moment(row.dthdeath_date).format('MMMM D, YYYY');
-                const formattedDate = moment(row.date_processed).format('MMMM D, YYYY');
-                const formattedTime = moment(row.date_processed).format('h:mm A');
-
-                return {
-                    ...row,
-                    date: formattedDate,
-                    time: formattedTime,
-                    // death_date: formattedDthDate,
-                };
-            });
-
-            res.json(userTransactions);
-        } else {
-            // Handle case where no rows were returned
-            res.status(404).send('No records found for the specified user_id');
-        }
-        } catch (err) {
-        console.error(err);
-        res.status(500).send('Error retrieving data');
-    }
-});
 
 
 router.get('/deathcert/:transaction_id', async (req, res) => {

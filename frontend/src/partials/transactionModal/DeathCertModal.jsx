@@ -5,7 +5,7 @@ import StatusBadgeMobile from '../StatusBadgeMobile';
 
 const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
 
-  const { transaction_id, status_type, date_processed, amount } = selectedTransaction;
+  const { transaction_id, status_type, date_processed } = selectedTransaction;
 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
@@ -16,15 +16,20 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
 
   useEffect(() => {
     const fetchDeathTransaction = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/transachistory/deathcert/${transaction_id}`);
-        setDeathTransaction(res.data[0]);
-      } catch (err) {
-        console.error(err);
+      if (transaction_id) {
+        try {
+          const res = await axios.get(`http://localhost:8800/transachistory/deathcert/${transaction_id}`);
+          setDeathTransaction(res.data[0]);
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        setDeathTransaction(selectedTransaction)
       }
     };
     fetchDeathTransaction();
   }, [transaction_id]);
+  
  
 
   return (
@@ -39,7 +44,7 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
         <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
           <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 overflow-y-auto">
                           <div className="mb-6">
-                          <span className="font-bold md:text-lg text-sm">Death Certificate Transaction Details</span>
+                          <span className="font-bold md:text-lg text-sm">Transaction Details</span>
                           </div>
                         </div>
           
@@ -188,14 +193,14 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                 </div>
 
               <div className="mx-auto pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10 ">
-                          {date ? (
+                          {transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
                             <span className="whitespace-nowrap ml-4">{date}</span>
                           </div>
                           ) : null}
 
-                          {time ? (
+                          {transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
                             <span className="whitespace-nowrap ml-4">{time}</span>
