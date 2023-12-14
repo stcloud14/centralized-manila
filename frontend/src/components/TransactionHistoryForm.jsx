@@ -116,6 +116,8 @@ const SortIcon = ({ order }) => (
   </button>
   );
 
+console.log(userTransaction)
+
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
