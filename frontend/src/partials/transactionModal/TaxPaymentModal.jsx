@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
 const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
@@ -24,39 +26,39 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
   //                       <div className="mb-6">
   //                         <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">Transaction Type</span>
-  //                           <span className="whitespace-nowrap ml-4">{selectedTransaction.trans_type}</span>
+  //                           <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.trans_type}</span>
   //                         </div>
   //                         <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">Transaction ID</span>
-  //                           <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
+  //                           <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.transaction_id}</span>
   //                         </div>
   //                         <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">Account Name</span>
-  //                           <span className="whitespace-nowrap ml-4">{selectedTransaction.acc_name}</span>
+  //                           <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.acc_name}</span>
   //                         </div>
   //                         <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">Tax Identification Number (TDN)</span>
-  //                           <span className="whitespace-nowrap ml-4">{selectedTransaction.rtp_tdn}</span>
+  //                           <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.rtp_tdn}</span>
   //                         </div>
   //                         <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-  //                           <span className="whitespace-nowrap ml-4">{selectedTransaction.rtp_pin}</span>
+  //                           <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.rtp_pin}</span>
   //                         </div>
   //                         <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">From</span>
-  //                           <span className="whitespace-nowrap ml-4">{selectedTransaction.year_id} - 1st Quarter</span>
+  //                           <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.year_id} - 1st Quarter</span>
   //                         </div>
   //                         <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">To</span>
-  //                           <span className="whitespace-nowrap ml-4">{selectedTransaction.year_id} - {selectedTransaction.period_id}</span>
+  //                           <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.year_id} - {taxPaymentTransaction.period_id}</span>
   //                         </div>
   //                         <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">Date Processed</span>
-  //                           <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
+  //                           <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.date}</span>
   //                         </div>
   //                         <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">Time Processed</span>
-  //                           <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
+  //                           <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.time}</span>
   //                         </div>
   //                         {/* <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">Remarks</span>
@@ -68,13 +70,13 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
   //                         </div> */}
   //                         <div className="flex justify-between mb-1">
   //                           <span className="font-medium whitespace-nowrap">Status</span>
-  //                           <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">{selectedTransaction.status_type}</span>
+  //                           <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">{taxPaymentTransaction.status_type}</span>
   //                         </div>
 
   //                         <hr className='mt-7 mb-1'/>
   //                         <div className="flex justify-between">
   //                           <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-  //                           <span className="font-semibold whitespace-nowrap ml-4">{selectedTransaction.amount}</span>
+  //                           <span className="font-semibold whitespace-nowrap ml-4">{taxPaymentTransaction.amount}</span>
   //                         </div>
   //                       </div>
   //                     </div>
@@ -106,6 +108,32 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
   //         </div>
   // );
 
+  const { transaction_id, status_type, date_processed, amount } = selectedTransaction;
+
+  const date = moment(date_processed).format('MMMM D, YYYY');
+  const time = moment(date_processed).format('h:mm A');
+
+  const [taxPaymentTransaction, setTaxPaymentTransaction] = useState([]);
+
+  console.log(taxPaymentTransaction)
+
+  useEffect(() => {
+    const fetchTaxPaymentTransaction = async () => {
+      if (transaction_id) {
+        try {
+          const res = await axios.get(`http://localhost:8800/transachistory/taxpayment/${transaction_id}`);
+          setTaxPaymentTransaction(res.data[0]);
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        setTaxPaymentTransaction(selectedTransaction)
+      }
+    };
+    fetchTaxPaymentTransaction();
+  }, [transaction_id]);
+
+
   return (
     <div className="fixed z-50 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
@@ -125,49 +153,51 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
                         </div>
 
                       <div className="mb-6">
-                        {selectedTransaction.transaction_id ? (
+                        {transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
+                            <span className="whitespace-nowrap ml-4">{transaction_id}</span>
                           </div>
                         ) : null}
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">Account Name</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.acc_name ? selectedTransaction.acc_name : '-'}</span>
+                             <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.acc_name || taxPaymentTransaction.tp_acc_name || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_tdn ? selectedTransaction.rp_tdn : '-'}</span>
+                             <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.rp_tdn || taxPaymentTransaction.tp_rp_tdn || '-'}</span>
                            </div>
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_pin ? selectedTransaction.rp_pin : '-'}</span>
+                             <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.rp_pin || taxPaymentTransaction.tp_rp_pin || '-'}</span>
                           </div>
                           
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">From</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_year ? selectedTransaction.rp_year + ' - 1st Quarter' : '-'}</span>
+                             <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.year_label? `${taxPaymentTransaction.year_label} - 1st Quarter`: taxPaymentTransaction.tp_year? `${taxPaymentTransaction.tp_year} - 1st Quarter`: '-'}
+                             </span>
                            </div>
 
                           <div className="flex justify-between mb-1">
                              <span className="font-medium whitespace-nowrap">To</span>
-                             <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_year} - {selectedTransaction.period}</span>
+                             <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.year_label? `${taxPaymentTransaction.year_label} - ${taxPaymentTransaction.period}`: taxPaymentTransaction.tp_year? `${taxPaymentTransaction.tp_year} - ${taxPaymentTransaction.tp_period}`: '-'}
+                             </span>
                            </div>
                           {/* <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
                             <span className="whitespace-nowrap ml-4">AUTHORIZATION LETTER</span>
                           </div> */}
-                          {selectedTransaction.date ? (
+                          {transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
+                            <span className="whitespace-nowrap ml-4">{date}</span>
                           </div>
                           ) : null}
 
-                          {selectedTransaction.time ? (
+                          {transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
+                            <span className="whitespace-nowrap ml-4">{time}</span>
                           </div>
                           ) : null}
                           
@@ -175,24 +205,24 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Remarks</span>
                             <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
                           </div> */}
-                          {/* {selectedTransaction.status_type ? (
+                          {/* {taxPaymentTransaction.status_type ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Reference Number</span>
                             <span className="whitespace-nowrap ml-4">-</span>
                           </div>
                           ) : null} */}
 
-                          {selectedTransaction.status_type ? (
+                          {status_type ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <StatusBadgeMobile statusType={selectedTransaction.status_type} />
+                            <StatusBadgeMobile statusType={status_type} />
                           </div>
                           ) : null}
 
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">P {selectedTransaction.amount ? selectedTransaction.amount : '0'}</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">P {taxPaymentTransaction.amount || amount || '-'}</span>
                           </div>
                         </div>
                       </div>
@@ -210,7 +240,7 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <p>Close</p>
                       </button>
 
-                      {selectedTransaction.transaction_id ? null : (
+                      {transaction_id ? null : (
                       <button
                           onClick={onSubmit}
                           type="button"

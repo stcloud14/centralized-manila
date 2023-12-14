@@ -81,23 +81,50 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
         const result = await queryDatabase(query, [transaction_id]);
     
         if (result.length > 0) {
-            const deathTransactions = result.map(row => {
-                const formattedDate = moment(row.death_date).format('MMMM D, YYYY');
-
-                return {
-                    ...row,
-                    death_date: formattedDate,
-                };
-            });
-            res.json(deathTransactions);
-
+            const formattedDate = moment(result[0].death_date).format('MMMM D, YYYY');
+    
+            const deathTransaction = {
+                ...result[0],
+                death_date: formattedDate,
+            };
+    
+            res.json(deathTransaction);
         } else {
             res.status(404).send('No records found for the specified transaction_id');
         }
-        } catch (err) {
+    } catch (err) {
         console.error(err);
         res.status(500).send('Error retrieving data');
-    }
+    }    
+});
+
+
+router.get('/taxpayment/:transaction_id', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
+    y.year_period AS tp_year, tp.period_id AS tp_period, ti.amount \
+    \
+    FROM rptax_payment tp \
+    \
+    LEFT JOIN transaction_info ti ON tp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN year y ON tp.year_id = y.year_id \
+    \
+    WHERE tp.transaction_id = ?";
+
+
+    try {
+        const result = await queryDatabase(query, [transaction_id]);
+    
+        if (result.length > 0) {
+            res.json(result[0]);
+        } else {
+            res.status(404).send('No records found for the specified transaction_id');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving data');
+    }    
 });
 
 

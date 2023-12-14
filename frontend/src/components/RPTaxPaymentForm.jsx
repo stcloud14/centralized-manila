@@ -17,8 +17,12 @@ const RPTaxPaymentForm =()=>{
   const date = new Date();
   const currentDate = date.toISOString().split('T')[0];
 
-  const [rptaxPayment, setRptaxPayment]=useState({})
-   console.log(rptaxPayment);
+  const [rptaxPayment, setRptaxPayment]=useState((prevData) => ({
+    ...prevData,
+    year_label: '',
+  }));
+
+  console.log(rptaxPayment);
 
   const handleInputChange = (e) => {
   const { name, value } = e.target;
@@ -89,15 +93,16 @@ const RPTaxPaymentForm =()=>{
 
 
   } else if (name === 'rp_year') {
-    const { name, value } = e.target;
 
-  const formattedValue = value.replace(/\D/g, '');
+  const label = e.target.options[e.target.selectedIndex].text;
 
   setRptaxPayment((prevData) => ({
     ...prevData,
-    [name]: formattedValue,
+    [name]: value,
+    year_label: label,
   }));
 
+  
   } else if (name === 'period') {
     const { name, value } = e.target;
 

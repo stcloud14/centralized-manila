@@ -213,11 +213,11 @@ router.get('/payment/', async (req, res) => {
     const query = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
     const values = [transID, user_id, transType, statusType, formattedDate];
   
-    const query1 = "INSERT INTO rptax_payment (`acc_name`, `rp_tdn`, `rp_pin`, `year_id`, `period_id`, `transaction_id`) VALUES (?, ?, ?, ?, ?, ?)";
-    const values1 = [req.body.acc_name, plainRptdn, plainRppin, req.body.rp_year, req.body.period, transID];
+    const query1 = "INSERT INTO rptax_payment (`transaction_id`, `acc_name`, `rp_tdn`, `rp_pin`, `year_id`, `period_id`) VALUES (?, ?, ?, ?, ?, ?)";
+    const values1 = [transID, req.body.acc_name, plainRptdn, plainRppin, req.body.rp_year, req.body.period];
   
-    const query2 = "INSERT INTO transaction_info (`amount`, `transaction_id`) VALUES (?, ?)";
-    const values2 = [plainAmount, transID];
+    const query2 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";
+    const values2 = [transID, plainAmount];
   
     try {
     const result = await queryDatabase(query, values);
