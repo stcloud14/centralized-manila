@@ -139,15 +139,33 @@ const RPTaxClearanceForm =()=>{
 
   
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+
 
   const handleProceed = (e) => {
     e.preventDefault();
-    setIsModalOpen(true);
+
+    // Please fill up the necessary forms
+    const requiredFields = ['rp_tdn', 'rp_pin']; //The input fields that is required
+    const isIncomplete = requiredFields.some((field) => !rptaxClearance[field]);
+
+    if (isIncomplete) {    
+      setShowWarning(true); // Show warning message and prevent opening the modal
+     
+      setTimeout(() => {
+        setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
+      }, 4000);
+    } else {
+      
+      setIsModalOpen(true);// Proceed to open the modal
+    }
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setShowWarning(false);
   };
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -173,6 +191,12 @@ const RPTaxClearanceForm =()=>{
                   <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
                     Transaction success on Real Property Tax Clearance!
                   </div>
+                  )}
+
+                  {showWarning && (
+                    <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                      Please fill in all required fields before proceeding.
+                    </div>
                   )}
 
                   <div className="grid gap-6">
