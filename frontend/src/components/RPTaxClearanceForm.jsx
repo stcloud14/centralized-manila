@@ -149,7 +149,8 @@ const RPTaxClearanceForm =()=>{
     const requiredFields = ['rp_tdn', 'rp_pin']; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !rptaxClearance[field]);
 
-    if (isIncomplete) {    
+    if (isIncomplete) {
+      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
       setShowWarning(true); // Show warning message and prevent opening the modal
      
       setTimeout(() => {
