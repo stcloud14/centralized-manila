@@ -46,7 +46,7 @@ router.get('/:user_id', async (req, res) => {
     }
 });
 
-
+// INPUT BIRTH CERT HERE
 
 router.get('/deathcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
@@ -97,7 +97,6 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
         res.status(500).send('Error retrieving data');
     }    
 });
-
 
 router.get('/taxpayment/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;

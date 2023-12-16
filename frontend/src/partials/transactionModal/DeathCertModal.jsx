@@ -58,7 +58,7 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                         ) : null}
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction?.deathc_lname || deathTransaction?.l_name || '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_lname || deathTransaction.l_name || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's First Name</span>
