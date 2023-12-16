@@ -9,22 +9,17 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
-
-  const [deathTransaction, setDeathTransaction] = useState([]);
-
-  console.log(deathTransaction)
+  
+  const [deathTransaction, setDeathTransaction] = useState({});
 
   useEffect(() => {
     const fetchDeathTransaction = async () => {
-      if (transaction_id) {
-        try {
-          const res = await axios.get(`http://localhost:8800/transachistory/deathcert/${transaction_id}`);
-          setDeathTransaction(res.data[0]);
-        } catch (err) {
-          console.error(err);
-        }
-      } else {
-        setDeathTransaction(selectedTransaction)
+      try {
+        const res = await axios.get(`http://localhost:8800/transachistory/deathcert/${transaction_id}`);
+        setDeathTransaction(res.data);
+        console.log(res.data);
+      } catch (err) {
+        console.error(err);
       }
     };
     fetchDeathTransaction();
@@ -44,7 +39,7 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
         <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
           <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 overflow-y-auto">
                           <div className="mb-6">
-                          <span className="font-bold md:text-lg text-sm">Transaction Details</span>
+                          <span className="font-bold md:text-lg text-sm">Death Certificate Transaction Details</span>
                           </div>
                         </div>
           
@@ -54,7 +49,8 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
             <div className="mx-auto">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
-                        <div className="mb-0">{deathTransaction.transaction_id ? (
+                        <div className="mb-0">
+                        {deathTransaction.transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
                             <span className="whitespace-nowrap ml-4">{deathTransaction.transaction_id}</span>
@@ -62,8 +58,7 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                         ) : null}
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_lname || deathTransaction.l_name || '-'}</span>
-
+                            <span className="whitespace-nowrap ml-4">{deathTransaction?.deathc_lname || deathTransaction?.l_name || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's First Name</span>
@@ -186,7 +181,6 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_valididLabel || deathTransaction.valid_id_type || '-'}</span>
                           </div>
                         </div>
-                        
                       </div>
                     </div>
                   </div>
@@ -199,7 +193,6 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="whitespace-nowrap ml-4">{date}</span>
                           </div>
                           ) : null}
-
                           {transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>

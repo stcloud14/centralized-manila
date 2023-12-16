@@ -51,7 +51,7 @@ router.get('/:user_id', async (req, res) => {
 router.get('/deathcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT r.region_name AS region, p.prov_name AS province, c.city_name AS city, dc.death_date, \
+    const query = "SELECT r.region_name AS region, p.prov_name AS province, c.city_name AS city, dc.transaction_id, dc.death_date, \
     do.l_name, do.f_name, do.m_name, do.suffix_type, do.sex_type, \
     dr.l_name AS reql_name, dr.f_name AS reqf_name, dr.m_name AS reqm_name, dr.suffix_type AS reqsuffix, \
     dr.owner_rel, dr.mobile_no, dr.tel_no, \
