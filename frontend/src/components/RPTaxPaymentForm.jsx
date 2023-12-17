@@ -183,14 +183,31 @@ const handleCheckboxChange = (e) => {
 
   
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   const handleProceed = (e) => {
     e.preventDefault();
-    setIsModalOpen(true);
+
+    // Please fill up the necessary forms
+    const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
+    const isIncomplete = requiredFields.some((field) => !rptaxPayment[field]);
+
+    if (isIncomplete) {
+      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
+      setShowWarning(true); // Show warning message and prevent opening the modal
+     
+      setTimeout(() => {
+        setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
+      }, 4000);
+    } else {
+      
+      setIsModalOpen(true);// Proceed to open the modal
+    }
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setShowWarning(false);
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -220,6 +237,12 @@ const handleCheckboxChange = (e) => {
                   <div className="text-emerald-700 text-sm bg-emerald-200 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
                     Transaction success on Real Property Tax Payment!
                   </div>
+                  )}
+
+                  {showWarning && (
+                    <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                      Please fill in all required fields before proceeding.
+                    </div>
                   )}  
 
                   <div className="grid gap-6">
