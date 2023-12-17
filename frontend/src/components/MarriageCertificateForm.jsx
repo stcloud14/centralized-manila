@@ -140,7 +140,7 @@ const MarriageCertificateForm =()=>{
         return {
           ...prevData,
           [id]: value,
-          marriage_municipalLabel: label,
+          marriagec_municipalLabel: label,
         };
       }
 
@@ -176,7 +176,7 @@ const MarriageCertificateForm =()=>{
         return {
           ...prevData,
           [id]: value,
-          marriage_reqmunicipalLabel: label,
+          marriagec_reqmunicipalLabel: label,
         };
       }
 
