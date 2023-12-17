@@ -106,7 +106,7 @@ const RPTaxClearanceForm =()=>{
       inputField.maxLength = e.target.checked ? 24 : 18;
     
       if (!e.target.checked && rptaxClearance.rp_pin.length > 18) {
-        setRptaxCLearance({ ...rptaxClearance, rp_pin: rptaxClearance.rp_pin.slice(0, 18) });
+        setRptaxClearance({ ...rptaxClearance, rp_pin: rptaxClearance.rp_pin.slice(0, 18) });
       }
     };
 

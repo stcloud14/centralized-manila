@@ -94,7 +94,22 @@ const PersonalInfoForm =()=>{
 
     const handleProceed = (e) => {
       e.preventDefault();
-      setIsModalOpen(true);
+      
+      // Please fill up the necessary forms
+    const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
+    const isIncomplete = requiredFields.some((field) => !rptaxPayment[field]);
+
+    if (isIncomplete) {
+      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
+      setShowWarning(true); // Show warning message and prevent opening the modal
+     
+      setTimeout(() => {
+        setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
+      }, 4000);
+    } else {
+      
+      setIsModalOpen(true);// Proceed to open the modal
+    }
     };
   
     const handleCloseModal = () => {
