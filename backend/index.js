@@ -8,6 +8,7 @@ import rptaxHandler from './routes/rptaxHandler.js';
 import transactionHandler from './routes/transactionHandler.js';
 import birthCertHandler from './routes/birthCertHandler.js'
 import deathCertHandler from './routes/deathCertHandler.js'
+import marriageCertHandler from './routes/marriageCertHandler.js'
 import cedulaHandler from './routes/cedulaHandler.js'
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/rptax', rptaxHandler);
 app.use('/transachistory', transactionHandler);
 app.use('/birthcertificate', birthCertHandler);
 app.use('/deathcertificate', deathCertHandler);
+app.use('marriagecertifiacate', marriageCertHandler)
 app.use('/cedula', cedulaHandler);
 
 
