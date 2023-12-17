@@ -87,13 +87,14 @@ const ContactInfoForm =()=>{
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   const handleProceed = (e) => {
     e.preventDefault();
     
     // Please fill up the necessary forms
     const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
-    const isIncomplete = requiredFields.some((field) => !rptaxPayment[field]);
+    const isIncomplete = requiredFields.some((field) => !userContact[field]);
 
     if (isIncomplete) {
       contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
@@ -141,6 +142,12 @@ const ContactInfoForm =()=>{
                 Success! Your changes have been saved.
               </div>
               )}
+
+              {showWarning && (
+                <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                  Please fill in all required fields before proceeding.
+                </div>
+              )} 
             
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">

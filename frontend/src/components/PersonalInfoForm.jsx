@@ -91,15 +91,18 @@ const PersonalInfoForm =()=>{
     }; 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showWarning, setShowWarning] = useState(false);
 
     const handleProceed = (e) => {
       e.preventDefault();
       
       // Please fill up the necessary forms
     const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
-    const isIncomplete = requiredFields.some((field) => !rptaxPayment[field]);
+    const requiredFields1 = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
+    const isIncomplete = requiredFields.some((field) => !userPersonal[field]);
+    const isIncomplete1 = requiredFields1.some((field) => !userBirth[field]);
 
-    if (isIncomplete) {
+    if (isIncomplete && isIncomplete1) {
       contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
       setShowWarning(true); // Show warning message and prevent opening the modal
      
@@ -144,6 +147,12 @@ const PersonalInfoForm =()=>{
                 Success! Your changes have been saved.
               </div>
               )}
+
+              {showWarning && (
+                <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                  Please fill in all required fields before proceeding.
+                </div>
+              )} 
 
             
               {/* Row 1 */}
