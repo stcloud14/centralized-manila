@@ -23,7 +23,7 @@ app.use('/rptax', rptaxHandler);
 app.use('/transachistory', transactionHandler);
 app.use('/birthcertificate', birthCertHandler);
 app.use('/deathcertificate', deathCertHandler);
-app.use('marriagecertifiacate', marriageCertHandler)
+app.use('/marriagecertificate', marriageCertHandler)
 app.use('/cedula', cedulaHandler);
 
 
