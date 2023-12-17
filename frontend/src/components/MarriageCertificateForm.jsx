@@ -38,6 +38,8 @@ const MarriageCertificateForm =()=>{
   }));
   const [isSuccess, setIsSuccess] = useState(false);
 
+  console.log(marriageCert)
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       

@@ -14,12 +14,15 @@ const MarriageModal = ({ selectedTransaction, onClose, onSubmit }) => {
 
   useEffect(() => {
     const fetchMarriageTransaction = async () => {
+      if (transaction_id) {
       try {
         const res = await axios.get(`http://localhost:8800/transachistory/marriagecert/${transaction_id}`);
         setMarriageTransaction(res.data);
         console.log(res.data);
       } catch (err) {
         console.error(err);
+      }} else {
+        setMarriageTransaction(selectedTransaction);
       }
     };
     fetchMarriageTransaction();

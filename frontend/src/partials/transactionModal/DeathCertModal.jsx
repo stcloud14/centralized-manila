@@ -14,12 +14,15 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
 
   useEffect(() => {
     const fetchDeathTransaction = async () => {
+      if (transaction_id) {
       try {
         const res = await axios.get(`http://localhost:8800/transachistory/deathcert/${transaction_id}`);
         setDeathTransaction(res.data);
         console.log(res.data);
       } catch (err) {
         console.error(err);
+      }} else {
+        setMarriageTransaction(selectedTransaction);
       }
     };
     fetchDeathTransaction();
