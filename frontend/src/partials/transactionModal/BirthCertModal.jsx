@@ -243,7 +243,7 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           </div>
                           ) : null}
 
-                          {birthTransaction.time ? (
+                          {transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
                             <span className="whitespace-nowrap ml-4">{time}</span>
