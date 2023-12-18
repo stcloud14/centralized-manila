@@ -1,7 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
 const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
+
+  const { transaction_id, status_type, date_processed } = selectedTransaction;
+
+  const date = moment(date_processed).format('MMMM D, YYYY');
+  const time = moment(date_processed).format('h:mm A');
+  
+  const [birthTransaction, setBirthTransaction] = useState({});
+
+  useEffect(() => {
+    const fetchBirthTransaction = async () => {
+      if (transaction_id) {
+        try {
+          const res = await axios.get(`http://localhost:8800/transachistory/birthcert/${transaction_id}`);
+          setBirthTransaction(res.data);
+          console.log(res.data);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      else {
+        setBirthTransaction(selectedTransaction);
+      }
+    };
+    fetchBirthTransaction();
+  }, [transaction_id]);
  
   return (
     <div className="fixed z-50 inset-0 ">
@@ -26,168 +53,180 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
                         <div className="mb-0">
-                        {selectedTransaction.transaction_id ? (
+                        {birthTransaction.transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.transaction_id}</span>
                           </div>
                         ) : null}
-
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_lname ? selectedTransaction.birthc_lname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_lname || birthTransaction.l_name || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's First Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_fname ? selectedTransaction.birthc_fname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_fname || birthTransaction.f_name || '-'}</span>
                           </div>
+                          {birthTransaction.birthc_mname ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_mname ? selectedTransaction.birthc_mname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_mname || birthTransaction.m_name || '-'}</span>
                           </div>
+                          ) : null}
+                          {birthTransaction.birthc_suffix ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_suffix ? selectedTransaction.birthc_suffix : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_suffix || birthTransaction.suffix_type || '-'}</span>
                           </div>
+                          ) : null}
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Sex</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_sex ? selectedTransaction.birthc_sex : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_sex || birthTransaction.sex_type || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Region</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_ownerregion ? selectedTransaction.birthc_ownerregion : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_regionLabel || birthTransaction.region || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Province</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_ownerprovince ? selectedTransaction.birthc_ownerprovince : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_provinceLabel || birthTransaction.province || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Municipal</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_ownermunicipal ? selectedTransaction.birthc_ownermunicipal : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_municipalLabel || birthTransaction.municipal || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Date of Birth</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_date ? selectedTransaction.birthc_date : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_date || birthTransaction.birth_date || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Father's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_fatherlname ? selectedTransaction.birthc_fatherlname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_fatherlname || birthTransaction.father_lname || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Father's First Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_fatherfname ? selectedTransaction.birthc_fatherfname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_fatherfname || birthTransaction.father_fname || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Father's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_fathermname ? selectedTransaction.birthc_fathermname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_fathermname || birthTransaction.father_mname || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Father's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_fathersuffix ? selectedTransaction.birthc_fathersuffix : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_fathersuffix || birthTransaction.fathersuffix || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mother's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_motherlname ? selectedTransaction.birthc_motherlname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_motherlname || birthTransaction.mother_lname || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mother's First Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_motherfname ? selectedTransaction.birthc_motherfname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_motherfname || birthTransaction.mother_fname || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mother's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_mothermname ? selectedTransaction.birthc_mothermname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_mothermname || birthTransaction.mother_mname || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mother's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_mothersuffix ? selectedTransaction.birthc_mothersuffix : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_mothersuffix || birthTransaction.mothersuffix || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqlname ? selectedTransaction.birthc_reqlname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqlname || birthTransaction.reql_name || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqfname ? selectedTransaction.birthc_reqfname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqfname || birthTransaction.reqf_name || '-'}</span>
                           </div>
+                          {birthTransaction.birthc_reqmname ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqmname ? selectedTransaction.birthc_reqmname : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqmname || birthTransaction.reqm_name || '-'}</span>
                           </div>
+                          ) : null}
+                          {birthTransaction.birthc_reqsuffix ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqsuffix ? selectedTransaction.birthc_reqsuffix : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqsuffix || birthTransaction.reqsuffix || '-'}</span>
                           </div>
+                          ) : null}
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Relationship to the Owner</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqrelation ? selectedTransaction.birthc_reqrelation : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqrelation || birthTransaction.owner_relation || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Identification Number</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqtin ? selectedTransaction.birthc_reqtin : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqtin || birthTransaction.requestor_tin || '-'}</span>
                           </div>
+                          {birthTransaction.birthc_reqtelnum ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqtelnum ? selectedTransaction.birthc_reqtelnum : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqtelnum || birthTransaction.tel_no || '-'}</span>
                           </div>
+                          ) : null}
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mobile No.</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqmobnum ? selectedTransaction.birthc_reqmobnum : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqmobnum || birthTransaction.mobile_no || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqregion ? selectedTransaction.birthc_reqregion : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqregionLabel || birthTransaction.reqregion || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqprovince ? selectedTransaction.birthc_reqprovince : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqprovinceLabel || birthTransaction.reqprovince || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqmunicipal ? selectedTransaction.birthc_reqmunicipal : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqmunicipalLabel || birthTransaction.reqcity || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Barangay</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqbrgy ? selectedTransaction.birthc_reqbrgy : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqbrgy || birthTransaction.brgy_dist || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">House No. / Unit Floor</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqhnum ? selectedTransaction.birthc_reqhnum : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqhnum || birthTransaction.house_floor || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Street / Building Name</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqstreet ? selectedTransaction.birthc_reqstreet : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqstreet || birthTransaction.bldg_name || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_reqzip ? selectedTransaction.birthc_reqzip : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_reqzip || birthTransaction.zip_code || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Country</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_country ? selectedTransaction.birthc_country : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_country || birthTransaction.country || '-'}</span>
                           </div>
+                          {birthTransaction.birthc_bren ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Birth Registry Number (BReN)</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_bren ? selectedTransaction.birthc_bren : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_bren || birthTransaction.birth_reg_no || '-'}</span>
                           </div>
+                          ) : null}
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Hospital Name / Name of Midwife / Hilot</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_hospital ? selectedTransaction.birthc_hospital : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_hospital || birthTransaction.hospital_name || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Copies</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_nocopies ? selectedTransaction.birthc_nocopies : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_nocopies || birthTransaction.copies || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">What to Print</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_print ? selectedTransaction.birthc_print : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_print || birthTransaction.print_type || '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Purpose</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_purpose ? selectedTransaction.birthc_purpose : '-'}</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_purposeLabel || birthTransaction.purpose_type||   '-'}</span>
                           </div>
                           <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.birthc_validid ? selectedTransaction.birthc_validid : '-'}</span>
+                            <span className="font-medium whitespace-nowrap">
+                               ID to Present Upon Claiming</span>
+                            <span className="whitespace-nowrap ml-4">{birthTransaction.birthc_valididLabel || birthTransaction.valid_id_type ||  '-'}</span>
                           </div>
                         </div>
                         
@@ -197,17 +236,17 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                 </div>
 
               <div className="mx-auto pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10">
-                          {selectedTransaction.date ? (
+                          {transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
+                            <span className="whitespace-nowrap ml-4">{date}</span>
                           </div>
                           ) : null}
 
-                          {selectedTransaction.time ? (
+                          {birthTransaction.time ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
+                            <span className="whitespace-nowrap ml-4">{time}</span>
                           </div>
                           ) : null}
 
@@ -225,17 +264,21 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           </div>
                           ) : null} */}
 
-                          {selectedTransaction.status_type ? (
+                          {transaction_id ? (
                           <div className="flex justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <StatusBadgeMobile statusType={selectedTransaction.status_type} />
+                            <StatusBadgeMobile statusType={status_type} />
                           </div>
                           ) : null}
 
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4"> P {selectedTransaction.birthc_amount}</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">                            
+                              {birthTransaction && (
+                              `P ${birthTransaction.birthc_amount !== undefined ? birthTransaction.birthc_amount + '.00' : 
+                              birthTransaction.amount !== undefined ? birthTransaction.amount + '.00' : '-'}`
+                            )}</span>
                           </div>
                         </div>
 
@@ -250,7 +293,7 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <p>Close</p>
                       </button>
                       
-                      {selectedTransaction.transaction_id ? null : (
+                      {birthTransaction.transaction_id ? null : (
                       <button
                           onClick={onSubmit}
                           type="button"

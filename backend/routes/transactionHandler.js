@@ -48,6 +48,59 @@ router.get('/:user_id', async (req, res) => {
 
 // INPUT BIRTH CERT HERE
 
+router.get('/birthcert/:transaction_id', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS municipal, bc.transaction_id, bi.birth_date, \
+    bo.l_name, bo.f_name, bo.m_name, bo.suffix_type, bo.sex_type, bo.hospital_name, bo.country, bo.birth_reg_no, \
+    br.l_name AS reql_name,br.f_name AS reqf_name, br.m_name AS reqm_name, br.suffix_type AS reqsuffix, br.owner_relation, br.requestor_tin, br.tel_no, br.mobile_no, \
+    fi.father_fname, fi.father_mname, fi.father_lname, fi.suffix_type AS fathersuffix, \
+    mi.mother_fname, mi.mother_mname, mi.mother_lname, mi.suffix_type AS mothersuffix, \
+    ti.amount, ti.copies, ti.print_type, vt.valid_id_type, pt.purpose_type, \
+    ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    \
+    FROM birth_cert bc \
+    JOIN birth_info bi ON bc.transaction_id = bi.transaction_id \
+    \
+    LEFT JOIN transaction_info ti ON bc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN address_info ai ON bc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
+    LEFT JOIN birth_doc_owner bo ON bc.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \
+    LEFT JOIN birth_requestor br ON bc.transaction_id = br.transaction_id AND br.transaction_id IS NOT NULL \
+    LEFT JOIN father_info fi ON bi.transaction_id = fi.transaction_id AND fi.transaction_id IS NOT NULL \
+    LEFT JOIN mother_info mi ON bi.transaction_id = mi.transaction_id AND mi.transaction_id IS NOT NULL \
+    LEFT JOIN region r ON bc.region_id = r.region_id \
+    LEFT JOIN region r1 ON ai.region_id = r1.region_id \
+    LEFT JOIN province p ON bc.prov_id = p.prov_id \
+    LEFT JOIN province p1 ON ai.prov_id = p1.prov_id \
+    LEFT JOIN cities c ON bc.city_id = c.city_id \
+    LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
+    LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
+    LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    \
+    WHERE  bc.transaction_id = ?"
+
+    try {
+        const result = await queryDatabase(query, [transaction_id]);
+    
+        if (result.length > 0) {
+            const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+    
+            const birthTransaction = {
+                ...result[0],
+                birth_date: formattedDate,
+            };
+    
+            res.json(birthTransaction);
+        } else {
+            res.status(404).send('No records found for the specified transaction_id');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving data');
+    }    
+});
+
 router.get('/deathcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 

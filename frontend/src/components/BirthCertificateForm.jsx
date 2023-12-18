@@ -26,6 +26,14 @@ const BirthCertificateForm =()=>{
     birthc_amount: 0,
     initialPrint: 0,
     printDisplay: 0,
+    birthc_regionLabel: '',
+    birthc_provinceLabel: '',
+    birthc_municipalLabel: '',
+    birthc_reqregionLabel: '',
+    birthc_reqprovinceLabel: '',
+    birthc_reqmunicipalLabel: '',
+    birthc_purposeLabel: '',
+    birthc_valididLabel: '',
   }));
 
   const [isSuccess, setIsSuccess] = useState(false);
@@ -62,7 +70,7 @@ const BirthCertificateForm =()=>{
     const handleProceed = (e) => {
       e.preventDefault();
       // Please fill up the necessary forms
-    const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
+    const requiredFields = ['birthc_lname']; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !birthCert[field]);
 
     if (isIncomplete) {
@@ -73,7 +81,7 @@ const BirthCertificateForm =()=>{
         setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
       }, 4000);
     } else {
-      
+        
       setIsModalOpen(true);// Proceed to open the modal
     }
     };
@@ -118,22 +126,94 @@ const BirthCertificateForm =()=>{
       }
 
       if (id === 'birthc_region') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
         
         return {
           ...prevData,
           [id]: value,
           birthc_province: '',
           birthc_municipal: '',
+          birthc_regionLabel: label,
+        };
+      }
+
+      if (id === 'birthc_province') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          birthc_provinceLabel: label,
+        };
+      }
+
+      if (id === 'birthc_municipal') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          birthc_municipalLabel: label,
         };
       }
       
       if (id === 'birthc_reqregion') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
         
         return {
           ...prevData,
           [id]: value,
           birthc_reqprovince: '',
           birthc_reqmunicipal: '',
+          birthc_reqregionLabel: label,
+        };
+      }
+
+      if (id === 'birthc_reqprovince') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          birthc_reqprovinceLabel: label,
+        };
+      }
+
+      if (id === 'birthc_reqmunicipal') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          birthc_reqmunicipalLabel: label,
+        };
+      }
+
+      if (id === 'birthc_purpose') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          birthc_purposeLabel: label,
+        };
+      }
+      
+      if (id === 'birthc_validid') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          birthc_valididLabel: label,
         };
       }
 
@@ -257,22 +337,22 @@ const BirthCertificateForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-4 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={birthCert.birthc_ownerregion} id="birthc_ownerregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={birthCert.birthc_region} id="birthc_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <RegionDropdown />
                     </select>
-                    <label htmlFor="birthc_ownerregion" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
+                    <label htmlFor="birthc_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={birthCert.birthc_ownerprovince} id="birthc_ownerprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <ProvinceDropdown selectedRegion={birthCert.birthc_ownerregion} /> 
+                    <select onChange={handleInputChange} value={birthCert.birthc_province} id="birthc_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <ProvinceDropdown selectedRegion={birthCert.birthc_region} /> 
                     </select>
-                    <label htmlFor="birthc_ownerprovince" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
+                    <label htmlFor="birthc_province" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={birthCert.birthc_ownermunicipal} id="birthc_ownermunicipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <CityDropdown selectedProvince={birthCert.birthc_ownerprovince} />
+                    <select onChange={handleInputChange} value={birthCert.birthc_municipal} id="birthc_municipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <CityDropdown selectedProvince={birthCert.birthc_province} />
                     </select>
-                    <label htmlFor="birthc_ownermunicipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
+                    <label htmlFor="birthc_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <Flatpickr
@@ -572,7 +652,7 @@ const BirthCertificateForm =()=>{
                      </div>
                      <div className="flex justify-between mt-2">
                          <span className="font-medium whitespace-nowrap">Rush Service Fee</span>
-                         <span className="whitespace-nowrap">P0.00</span>
+                         <span className="whitespace-nowrap">P50.00</span>
                      </div>
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">

@@ -41,9 +41,9 @@ router.get('/', async (req, res) => {
         birthc_mname,
         birthc_suffix,
         birthc_sex,
-        birthc_ownerregion,
-        birthc_ownerprovince,
-        birthc_ownermunicipal,
+        birthc_region,
+        birthc_province,
+        birthc_municipal,
         birthc_date,
         birthc_fatherlname,
         birthc_fatherfname,
@@ -93,7 +93,7 @@ router.get('/', async (req, res) => {
     const values1 = [transID, birthc_amount, birthc_nocopies, birthc_print, validID, purpose];
 
     const query2 = "INSERT INTO birth_cert (`transaction_id`, `region_id`, `prov_id`, `city_id`) VALUES (?, ?, ?, ?)";
-    const values2 = [transID, birthc_ownerregion, birthc_ownerprovince, birthc_ownermunicipal];
+    const values2 = [transID, birthc_region, birthc_province, birthc_municipal];
 
     const query3 = "INSERT INTO birth_doc_owner (`transaction_id`, `l_name`, `f_name`, `m_name`, `suffix_type`, `sex_type`, `hospital_name`, `country`, `birth_reg_no`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const values3 = [transID, birthc_lname, birthc_fname, birthc_mname, birthc_suffix, birthc_sex, birthc_hospital, birthc_country, birthc_bren];
