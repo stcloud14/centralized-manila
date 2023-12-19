@@ -49,10 +49,12 @@ const PersonalInfoForm =()=>{
 
     const handleChangeBirth = (e) => {
       const { name, value } = e.target;
+
+      const updatedValue = isNaN(value) ? value.toUpperCase() : value;
   
       setUserBirth((prevData) => ({
         ...prevData,
-        [name]: value,
+        [name]: updatedValue,
       }));
       
     };
