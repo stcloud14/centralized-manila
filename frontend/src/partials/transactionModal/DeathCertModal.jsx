@@ -22,7 +22,7 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
       } catch (err) {
         console.error(err);
       }} else {
-        setMarriageTransaction(selectedTransaction);
+        setDeathTransaction(selectedTransaction);
       }
     };
     fetchDeathTransaction();

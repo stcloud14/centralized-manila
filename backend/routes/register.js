@@ -10,6 +10,7 @@ router.get("/", async (req, res) => {
     const query2 = "SELECT * FROM user_personal";
     const query3 = "SELECT * FROM user_contact";
     const query4 = "SELECT * FROM user_gov_id";
+    const query5 = "SELECT * FROM birth_info";
 
     try {
     const result = await queryDatabase(query);
@@ -17,8 +18,9 @@ router.get("/", async (req, res) => {
     const result2 = await queryDatabase(query2);
     const result3 = await queryDatabase(query3);
     const result4 = await queryDatabase(query4);
+    const result5 = await queryDatabase(query5);
     
-    res.json({ user_reg: result, user_auth: result1, user_personal: result2, user_contact: result3, user_gov_id: result4 });
+    res.json({ user_reg: result, user_auth: result1, user_personal: result2, user_contact: result3, user_gov_id: result4, birth_info: result5 });
     } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
@@ -51,6 +53,7 @@ router.post('/check-existence', async (req, res) => {
 router.post('/', async (req, res) => {
     const mobile_no = req.body.mobile_no;
     const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
+    const transID = 1;
 
     const primaryKey = generatePrimaryKey(req.body.f_name, req.body.l_name, plainMobileNo);
 
@@ -69,12 +72,16 @@ router.post('/', async (req, res) => {
     const query4 = "INSERT INTO user_gov_id (`user_id`) VALUES (?)";
     const values4 = [primaryKey];
 
+    const query5 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
+    const values5 = [transID, primaryKey];
+
     try {
     const result = await queryDatabase(query, values);
     const result1 = await queryDatabase(query1, values1);
     const result2 = await queryDatabase(query2, values2);
     const result3 = await queryDatabase(query3, values3);
     const result4 = await queryDatabase(query4, values4);
+    const result5 = await queryDatabase(query5, values5);
 
     res.json({
         message: "Successfully executed",
@@ -83,6 +90,7 @@ router.post('/', async (req, res) => {
         user_personal_result: result2,
         user_contact_result: result3,
         user_gov_id_result: result4,
+        birth_info_result: result5,
     });
     } catch (err) {
     console.error(err);
