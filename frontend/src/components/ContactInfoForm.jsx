@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
-import {Link} from "react-router-dom"
 
 
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 
-
-import 'flatpickr/dist/themes/airbnb.css';
 import CityDropdown from '../partials/profile/CityDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
@@ -93,7 +90,7 @@ const ContactInfoForm =()=>{
     e.preventDefault();
     
     // Please fill up the necessary forms
-    const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
+    const requiredFields = ['user_email', 'mobile_no', 'tel_no', 'region_id', 'prov_id', 'city_id', 'house_floor', 'bldg_name', 'brgy_dist', 'zip_code']; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !userContact[field]);
 
     if (isIncomplete) {
@@ -111,12 +108,11 @@ const ContactInfoForm =()=>{
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setShowWarning(false);
   };
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [birthdate, setBirthdate] = useState(new Date());
  
-
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
 
@@ -186,6 +182,7 @@ const ContactInfoForm =()=>{
                   <label htmlFor="user_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
                 </div>
               </div>
+
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userContact.house_floor} type="text" name="house_floor" id="user_house" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />

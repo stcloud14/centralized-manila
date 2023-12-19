@@ -158,23 +158,23 @@ const PersonalInfoForm =()=>{
               {/* Row 1 */}
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleChangePersonal} value={userPersonal.f_name} type="text" name="f_name" id="first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
-                  <label htmlFor="first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
+                  <input onChange={handleChangePersonal} value={userPersonal.f_name} type="text" name="f_name" id="f_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                  <label htmlFor="f_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleChangePersonal} value={userPersonal.m_name} type="text" name="m_name" id="middle_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
-                  <label htmlFor="middle_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
+                  <input onChange={handleChangePersonal} value={userPersonal.m_name} type="text" name="m_name" id="m_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                  <label htmlFor="m_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleChangePersonal} value={userPersonal.l_name} type="text" name="l_name" id="last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
-                  <label htmlFor="last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
+                  <input onChange={handleChangePersonal} value={userPersonal.l_name} type="text" name="l_name" id="l_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                  <label htmlFor="l_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
                 </div>
               </div>
 
               {/* Row 2 */}
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                <select onChange={handleChangePersonal} value={userPersonal.suffix_type} defaultValue={0} name="suffix_type" id="suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                <select onChange={handleChangePersonal} value={userPersonal.suffix_type} defaultValue={0} name="suffix_type" id="suffix_type" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                     <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
                     <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
                     <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
@@ -188,21 +188,22 @@ const PersonalInfoForm =()=>{
                     <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
                     <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
                   </select>
-                  <label htmlFor="suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
+                  <label htmlFor="suffix_type" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group" >
-                  <select onChange={handleChangePersonal} value={userPersonal.sex_type} defaultValue={0} name="sex_type" id="sex" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                  <select onChange={handleChangePersonal} value={userPersonal.sex_type} defaultValue={0} name="sex_type" id="sex_type" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
                     <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
                     <option value="MALE" className='dark:bg-[#3d3d3d]'>Male</option>
                     <option value="FEMALE"className='dark:bg-[#3d3d3d]'>Female</option>
                   </select>
-                  <label htmlFor="sex" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
+                  <label htmlFor="sex_type" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
                 </div>
                 
                 <div className="relative z-0 w-full mb-6 group">
                   <Flatpickr
                     id='birth_date'
+                    name='birth_date'
                     value={userBirth.birth_date}
                     onChange={(date) => {
                       const formattedDate = date.length > 0 ? (() => {
@@ -244,33 +245,33 @@ const PersonalInfoForm =()=>{
               <div className="grid md:grid-cols-3 md:gap-6">
 
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.cvl_status} defaultValue={0} name="cvl_status" id="civil_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                  <select onChange={handleChangePersonal} value={userPersonal.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                     <option value="0" className='dark:bg-[#3d3d3d]'>Select Civil Status</option>
                     <option value="SINGLE" className='dark:bg-[#3d3d3d]'>Single</option>
                     <option value="MARRIED" className='dark:bg-[#3d3d3d]'>Married</option>
                     <option value="SEPARATED" className='dark:bg-[#3d3d3d]'>Separated</option>
                     <option value="WIDOWED" className='dark:bg-[#3d3d3d]'>Widowed</option>
                   </select>
-                  <label htmlFor="civil_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
+                  <label htmlFor="cvl_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.czn_status} defaultValue={0} name="czn_status" id="citizenship" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                  <select onChange={handleChangePersonal} value={userPersonal.czn_status} defaultValue={0} name="czn_status" id="czn_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                     <option value="0" className='dark:bg-[#3d3d3d]'>Select Citizenship</option>
                     <option value="CITIZEN" className='dark:bg-[#3d3d3d]'>Citizen</option>
                     <option value="PERMANENT RESIDENT" className='dark:bg-[#3d3d3d]'>Permanent Resident</option>
                     <option value="TEMPORARY RESIDENT" className='dark:bg-[#3d3d3d]'>Temporary Resident</option>
                   </select>
-                  <label htmlFor="citizenship" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
+                  <label htmlFor="czn_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.res_status} defaultValue={0} name="res_status" id="residency" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                  <select onChange={handleChangePersonal} value={userPersonal.res_status} defaultValue={0} name="res_status" id="res_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                     <option value="0" className='dark:bg-[#3d3d3d]'>Select Residency Status</option>
                     <option value="RESIDENT" className='dark:bg-[#3d3d3d]'>Resident</option>
                     <option value="NON-RESIDENT" className='dark:bg-[#3d3d3d]'>Non-Resident</option>
                   </select>
-                  <label htmlFor="residency" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
+                  <label htmlFor="res_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
                 </div>
               </div>
 

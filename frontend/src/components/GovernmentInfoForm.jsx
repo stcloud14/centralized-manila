@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
-import {Link} from "react-router-dom"
 
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 
-import 'flatpickr/dist/themes/airbnb.css';
 
 const GovernmentInfoForm =()=>{
 
@@ -75,7 +73,7 @@ const GovernmentInfoForm =()=>{
     e.preventDefault();
     
     // Please fill up the necessary forms
-    const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
+    const requiredFields = ['user_tin_id', 'user_pgb_id', 'user_philh_id', 'user_sss_id', 'user_gsis_id', 'user_natl_id']; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !userPersonal[field]);
 
     if (isIncomplete) {
@@ -93,6 +91,7 @@ const GovernmentInfoForm =()=>{
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setShowWarning(false);
   };
 
 
@@ -106,7 +105,6 @@ const GovernmentInfoForm =()=>{
     // }
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [birthdate, setBirthdate] = useState(new Date());
 
 return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -146,29 +144,29 @@ return (
                   <label htmlFor="user_tin_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tax Identification Number (TIN)</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.user_pgb_id} type="text" name="user_pgb_id" id="user_pgb_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userPersonal.user_pgb_id} type="text" name="user_pgb_id" id="user_pgb_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                   <label htmlFor="user_pgb_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">PAG-IBIG Number (PIN)</label>
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.user_philh_id} type="text" name="user_philh_id" id="user_philh_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userPersonal.user_philh_id} type="text" name="user_philh_id" id="user_philh_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                   <label htmlFor="user_philh_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Philhealth Number</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.user_sss_id} type="text" name="user_sss_id" id="user_sss_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userPersonal.user_sss_id} type="text" name="user_sss_id" id="user_sss_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                   <label htmlFor="user_sss_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">UMID/SSS Number</label>
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.user_gsis_id} type="text" name="user_gsis_id" id="user_gsis_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userPersonal.user_gsis_id} type="text" name="user_gsis_id" id="user_gsis_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                   <label htmlFor="user_gsis_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">GSIS Number</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userPersonal.user_natl_id} type="text" name="user_natl_id" id="user_natl_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+                  <input onChange={handleInputChange} value={userPersonal.user_natl_id} type="text" name="user_natl_id" id="user_natl_id" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                   <label htmlFor="user_natl_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">National ID</label>
                 </div>
               </div>
