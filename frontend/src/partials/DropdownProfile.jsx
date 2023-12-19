@@ -105,7 +105,7 @@ function DropdownProfile({
             <li>
               <Link
                 className="font-medium text-sm text-slate-400 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
-                to="/settings"
+                to={`/usersettings/${user_id}`}
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 Settings
