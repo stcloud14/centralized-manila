@@ -299,31 +299,31 @@ const MarriageCertificateForm =()=>{
                 <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Husband's Personal Information</h1>
                 <div className="grid md:grid-cols-4 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_hlname} type="text" id="marriagec_hlname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_hlname} type="text" name="marriagec_hlname" id="marriagec_hlname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_hlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_hfname} type="text" id="marriagec_hfname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_hfname} type="text" name="marriagec_hfname" id="marriagec_hfname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_hfname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_hmname} type="text" id="marriagec_hmname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_hmname} type="text" name="marriagec_hmname" id="marriagec_hmname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_hmname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_hsuffix} id="marriagec_hsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                        <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                        <option value="SR." className='dark:bg-[#3d3d3d]'>Sr.</option>
-                        <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                        <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                        <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                        <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                        <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                        <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                        <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                        <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                        <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                        <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                    <select onChange={handleInputChange} value={marriageCert.marriagec_hsuffix} name="marriagec_hsuffix" id="marriagec_hsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
+                      <option value="SR." className='dark:bg-[#3d3d3d]'>Sr.</option>
+                      <option value="JR." className='dark:bg-[#3d3d3d]'>Jr.</option>
+                      <option value="II" className='dark:bg-[#3d3d3d]'>II</option>
+                      <option value="III" className='dark:bg-[#3d3d3d]'>III</option>
+                      <option value="IV" className='dark:bg-[#3d3d3d]'>IV</option>
+                      <option value="V" className='dark:bg-[#3d3d3d]'>V</option>
+                      <option value="VI" className='dark:bg-[#3d3d3d]'>VI</option>
+                      <option value="VII" className='dark:bg-[#3d3d3d]'>VII</option>
+                      <option value="VIII" className='dark:bg-[#3d3d3d]'>VIII</option>
+                      <option value="IX" className='dark:bg-[#3d3d3d]'>IX</option>
+                      <option value="X" className='dark:bg-[#3d3d3d]'>X</option>
                     </select>
                     <label htmlFor="marriagec_hsuffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
@@ -332,35 +332,35 @@ const MarriageCertificateForm =()=>{
 
               {/* Group 2 - Wife's Personal Information*/}
               <div className='pt-6'>
-              <h1 className='font-medium text-center text-slate-700 dark:text-white mt-4'>Wife's Personal Information</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white mt-4'>Wife's Personal Information</h1>
                 <h1 className='text-xs text-slate-700 dark:text-white my-1.5'>Use Maiden Name of the Lady/Wife</h1>
                 <div className="grid md:grid-cols-4 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_wlname} type="text" id="marriagec_wlname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_wlname} type="text" name="marriagec_wlname" id="marriagec_wlname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_wlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_wfname} type="text" id="marriagec_wfname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_wfname} type="text" name="marriagec_wfname" id="marriagec_wfname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_wfname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_wmname} type="text" id="marriagec_wmname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_wmname} type="text" name="marriagec_wmname" id="marriagec_wmname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_wmname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_wsuffix} id="marriagec_wsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                        <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                        <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
-                        <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                        <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                        <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                        <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                        <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                        <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                        <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                        <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                        <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                        <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                    <select onChange={handleInputChange} value={marriageCert.marriagec_wsuffix} name="marriagec_wsuffix" id="marriagec_wsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
+                      <option value="SR." className='dark:bg-[#3d3d3d]'>Sr.</option>
+                      <option value="JR." className='dark:bg-[#3d3d3d]'>Jr.</option>
+                      <option value="II" className='dark:bg-[#3d3d3d]'>II</option>
+                      <option value="III" className='dark:bg-[#3d3d3d]'>III</option>
+                      <option value="IV" className='dark:bg-[#3d3d3d]'>IV</option>
+                      <option value="V" className='dark:bg-[#3d3d3d]'>V</option>
+                      <option value="VI" className='dark:bg-[#3d3d3d]'>VI</option>
+                      <option value="VII" className='dark:bg-[#3d3d3d]'>VII</option>
+                      <option value="VIII" className='dark:bg-[#3d3d3d]'>VIII</option>
+                      <option value="IX" className='dark:bg-[#3d3d3d]'>IX</option>
+                      <option value="X" className='dark:bg-[#3d3d3d]'>X</option>
                     </select>
                     <label htmlFor="marriagec_wsuffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
@@ -371,27 +371,28 @@ const MarriageCertificateForm =()=>{
               <div className='pt-6'>
                 <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Place of Marriage Information</h1>
                 <div className="grid md:grid-cols-4 md:gap-6">
-                  <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_region} id="marriagec_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <RegionDropdown />
-                    </select>
-                    <label htmlFor="marriagec_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
-                  </div>
-                  <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_province} id="marriagec_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <ProvinceDropdown selectedRegion={marriageCert.marriagec_region} /> 
-                    </select>
-                    <label htmlFor="marriagec_province" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
-                  </div>
-                  <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_municipal} id="marriagec_municipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <CityDropdown selectedProvince={marriageCert.marriagec_province} />
-                    </select>
-                    <label htmlFor="marriagec_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
-                  </div>
+                <div className="relative z-0 w-full mb-6 group">
+                  <select onChange={handleInputChange} value={marriageCert.marriagec_region} name="marriagec_region" id="marriagec_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                    <RegionDropdown />
+                  </select>
+                  <label htmlFor="marriagec_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
+                </div>
+                <div className="relative z-0 w-full mb-6 group">
+                  <select onChange={handleInputChange} value={marriageCert.marriagec_province} name="marriagec_province" id="marriagec_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                    <ProvinceDropdown selectedRegion={marriageCert.marriagec_region} />
+                  </select>
+                  <label htmlFor="marriagec_province" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
+                </div>
+                <div className="relative z-0 w-full mb-6 group">
+                  <select onChange={handleInputChange} value={marriageCert.marriagec_municipal} name="marriagec_municipal" id="marriagec_municipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                    <CityDropdown selectedProvince={marriageCert.marriagec_province} />
+                  </select>
+                  <label htmlFor="marriagec_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
+                </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <Flatpickr
                       id='marriagec_date'
+                      name='marriagec_date'
                       value={marriageCert.marriagec_date}
                       onChange={(date) => {
                         const formattedDate = date.length > 0 ? (() => {
@@ -431,19 +432,19 @@ const MarriageCertificateForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-4 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqlname} type="text" id="marriagec_reqlname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqlname} type="text" name="marriagec_reqlname" id="marriagec_reqlname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_reqlname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqfname} type="text" id="marriagec_reqfname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqfname} type="text" name="marriagec_reqfname" id="marriagec_reqfname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_reqfname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqmname} type="text" id="marriagec_reqmname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqmname} type="text" name="marriagec_reqmname" id="marriagec_reqmname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_reqmname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_reqsuffix} id="marriagec_reqsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={marriageCert.marriagec_reqsuffix} name="marriagec_reqsuffix" id="marriagec_reqsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                         <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
                         <option value="SR." className='dark:bg-[#3d3d3d]'>Sr.</option>
                         <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
@@ -463,14 +464,14 @@ const MarriageCertificateForm =()=>{
                 {/* Row 2 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqrelation} type="text" id="marriagec_reqrelation" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqrelation} type="text" name="marriagec_reqrelation" id="marriagec_reqrelation" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_reqrelation" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Relationship to the Owner</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_mobilenum} type="text" id="marriagec_mobileno" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_mobilenum} type="text" name="marriagec_mobileno" id="marriagec_mobileno" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_mobileno" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile Number</label>
                   </div><div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_telno} type="text" id="marriagec_telno" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_telno} type="text" name="marriagec_telno" id="marriagec_telno" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_telno" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Telephone Number</label>
                   </div>
                 </div>
@@ -482,19 +483,19 @@ const MarriageCertificateForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_reqregion} id="marriagec_reqregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={marriageCert.marriagec_reqregion} name="marriagec_reqregion" id="marriagec_reqregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <RegionDropdown />
                     </select>
                     <label htmlFor="marriagec_reqregion" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_reqprovince} id="marriagec_reqprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={marriageCert.marriagec_reqprovince} name="marriagec_reqprovince" id="marriagec_reqprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <ProvinceDropdown selectedRegion={marriageCert.marriagec_reqregion} /> 
                     </select>
                     <label htmlFor="marriagec_reqprovince" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_reqmunicipal} id="marriagec_reqmunicipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={marriageCert.marriagec_reqmunicipal} name="marriagec_reqmunicipal" id="marriagec_reqmunicipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <CityDropdown selectedProvince={marriageCert.marriagec_reqprovince} />
                     </select>
                     <label htmlFor="marriagec_reqmunicipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
@@ -503,19 +504,19 @@ const MarriageCertificateForm =()=>{
                 {/* Row 2 */}
                 <div className="grid md:grid-cols-7 md:gap-6">
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqbrgy} type="text" id="marriagec_reqbrgy" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqbrgy} type="text" name="marriagec_reqbrgy" id="marriagec_reqbrgy" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_reqbrgy" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Barangay</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqhnum} type="text" id="marriagec_reqhnum" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqhnum} type="text" name="marriagec_reqhnum" id="marriagec_reqhnum" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_reqhnum" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">House No. / Unit Floor</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqstreet} type="text" id="marriagec_reqstreet" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqstreet} type="text" name="marriagec_reqstreet" id="marriagec_reqstreet" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_reqstreet" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Street / Building Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqzip} type="text" id="marriagec_reqzip" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_reqzip} type="text" name="marriagec_reqzip" id="marriagec_reqzip" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_reqzip" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Zip Code</label>
                   </div>
                 </div>
@@ -527,7 +528,7 @@ const MarriageCertificateForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_nocopies} id="marriagec_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={marriageCert.marriagec_nocopies} name="marriagec_nocopies" id="marriagec_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                         <option value="0" className='dark:bg-[#3d3d3d]'>Select No. of Copies</option>
                         <option value="1" className='dark:bg-[#3d3d3d]'>1</option>
                         <option value="2" className='dark:bg-[#3d3d3d]'>2</option>
@@ -543,7 +544,7 @@ const MarriageCertificateForm =()=>{
                     <label htmlFor="marriagec_nocopies" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No. of Copies</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_print} id="marriagec_print" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={marriageCert.marriagec_print} name="marriagec_print" id="marriagec_print" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select What to Print</option>
                       <option value="Front" className='dark:bg-[#3d3d3d]'>Front (P50)</option>
                       <option value="Back" className='dark:bg-[#3d3d3d]'>Back (P50)</option>
@@ -555,7 +556,7 @@ const MarriageCertificateForm =()=>{
                 {/* Row 2 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_purpose} id="marriagec_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={marriageCert.marriagec_purpose} name="marriagec_purpose" id="marriagec_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Purpose</option>
                       <option value="1" className='dark:bg-[#3d3d3d]'>Claim Benefits / Loan</option>
                       <option value="2" className='dark:bg-[#3d3d3d]'>Passport / Travel</option>
@@ -566,7 +567,7 @@ const MarriageCertificateForm =()=>{
                     <label htmlFor="marriagec_purpose" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Purpose</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={marriageCert.marriagec_validid} id="marriagec_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={marriageCert.marriagec_validid} name="marriagec_validid" id="marriagec_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
                       <option value="1" className='dark:bg-[#3d3d3d]'>PASSPORT</option>
                       <option value="2" className='dark:bg-[#3d3d3d]'>SSS</option>
@@ -599,7 +600,7 @@ const MarriageCertificateForm =()=>{
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">
                          <span className="font-medium whitespace-nowrap">Total Amount Paid</span>
-                         <span id="marriagec_amount" className="whitespace-nowrap">{`P ${marriageCert.marriagec_amount.toFixed(2)}`}</span>
+                         <span name="" id="marriagec_amount" className="whitespace-nowrap">{`P ${marriageCert.marriagec_amount.toFixed(2)}`}</span>
                      </div>
                  </div>
               </div>
