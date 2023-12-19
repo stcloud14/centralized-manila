@@ -26,6 +26,7 @@ import Cedula from './pages/Cedula';
 import BirthCertificate from './pages/BirthCertificate';
 import MarriageCertificate from './pages/MarriageCertificate';
 import DeathCertificate from './pages/DeathCertificate';
+import JobHiring from './pages/JobHiring';
 
 function App() {
 
@@ -56,6 +57,7 @@ function App() {
         <Route exact path="/birthcertificate/:user_id" element={<BirthCertificate/>} />
         <Route exact path="/marriagecertificate/:user_id" element={<MarriageCertificate/>} />
         <Route exact path="/deathcertificate/:user_id" element={<DeathCertificate/>} />
+        <Route exact path="/jobhiring/:user_id" element={<JobHiring/>} />
       </Routes>
     </>
   );
