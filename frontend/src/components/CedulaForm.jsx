@@ -254,7 +254,7 @@ function totalingAmount({ totalAmount }) {
            
             <form onSubmit={handleSubmit}>
             <h1 className='font-medium text-center text-slate-700 dark:text-white'>CTC / Cedula</h1>
-            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'></h1>
+            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Community Tax Certificate</h1>
            
             {isSuccess && (
                   <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">

@@ -1,41 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-import WelcomeBanner from '../partials/home/WelcomeBanner'
-import EmbeddedPage from '../partials/home/EmbeddedPage'
 
-const HomeForm =()=>{
+const JobHiringForm =()=>{
 
+  const contentRef = useRef(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
-
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <main className="overflow-y-auto">
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            {/* Welcome banner */}
-            <WelcomeBanner />
-
-            <EmbeddedPage />
-          
-
+        {/*  Content Area of 3rd Button */}
+        <main ref={contentRef} className="overflow-y-auto">
+          <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
+            <div className="px-5 py-5">
+              <h1 className='font-medium text-center text-slate-700 dark:text-white'>Job Hiring</h1>
+            </div>
           </div>
         </main>
 
-      
 
       </div>
     </div>
   );
 }
 
-export default HomeForm;
+export default JobHiringForm;
