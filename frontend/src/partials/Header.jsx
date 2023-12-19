@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import SearchModal from './ModalSearch';
-import UserMenu from './DropdownProfile';
 import ThemeToggle from './ThemeToggle';
+import DropdownProfile from './DropdownProfile';
 
-function Header({ sidebarOpen, setSidebarOpen }) {
+function Header({ sidebarOpen, setSidebarOpen, userName }) {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   return (
@@ -62,7 +62,7 @@ function Header({ sidebarOpen, setSidebarOpen }) {
             <ThemeToggle />
             {/*  Divider */}
             <hr className="w-px h-6 bg-slate-200 dark:bg-slate-700 border-none" />
-            <UserMenu align="right" />
+            <DropdownProfile align="right" userName={userName}/>
           </div>
         </div>
       </div>

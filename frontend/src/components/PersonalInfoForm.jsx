@@ -19,12 +19,24 @@ const PersonalInfoForm =()=>{
   const [userPersonal, setUserPersonal]=useState({})
   const [userBirth, setUserBirth]=useState({})
 
+  const [userName, setUserName] = useState({
+    f_name: '',
+    l_name: '',
+  });
+
+  console.log(userName)
+  
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
             try{
                 const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
                 setUserPersonal(res.data.user_personal[0])
                 setUserBirth(res.data.birth_info[0])
+                setUserName({
+                  f_name: res.data.user_personal[0].f_name,
+                  l_name: res.data.user_personal[0].l_name,
+                });
+                
 
             }catch(err){
                 console.log(err)
@@ -79,6 +91,12 @@ const PersonalInfoForm =()=>{
         ...userPersonal,
         ...userBirth
       };
+
+      setUserName({
+        f_name: userPersonal.f_name,
+        l_name: userPersonal.l_name,
+      });
+      
 
       try {
         await axios
@@ -157,7 +175,7 @@ const PersonalInfoForm =()=>{
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
 
         {/*  Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} userName={userName} />
 
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
