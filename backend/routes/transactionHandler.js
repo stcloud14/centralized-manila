@@ -149,6 +149,56 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
     }    
 });
 
+router.get('/marriagecert/:transaction_id', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS city, mc.transaction_id, mc.marriage_date, \
+    hi.husband_fname, hi.husband_mname, hi.husband_lname, hi.suffix_type AS husband_suffix, \
+    wi.wife_fname, wi.wife_mname, wi.wife_lname, wi.suffix_type AS wife_suffix, \
+    ci.consent_lname AS reql_name, ci.consent_fname AS reqf_name, ci.consent_mname AS reqm_name, ci.suffix_type AS reqsuffix, ci.owner_rel, ci.tel_no, ci.mobile_no, \
+    ti.amount, ti.copies, ti.print_type, vt.valid_id_type, pt.purpose_type, \
+    ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    \
+    FROM marriage_cert mc \
+    \
+    LEFT JOIN transaction_info ti ON mc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN address_info ai ON mc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
+    LEFT JOIN husband_info hi ON mc.transaction_id = hi.transaction_id AND hi.transaction_id IS NOT NULL \
+    LEFT JOIN wife_info wi ON mc.transaction_id = wi.transaction_id AND wi.transaction_id IS NOT NULL \
+    LEFT JOIN consent_info ci ON mc.transaction_id = ci.transaction_id AND ci.transaction_id IS NOT NULL \
+    LEFT JOIN region r ON mc.region_id = r.region_id \
+    LEFT JOIN region r1 ON ai.region_id = r1.region_id \
+    LEFT JOIN province p ON mc.prov_id = p.prov_id \
+    LEFT JOIN province p1 ON ai.prov_id = p1.prov_id \
+    LEFT JOIN cities c ON mc.city_id = c.city_id \
+    LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
+    LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
+    LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    \
+    WHERE  mc.transaction_id = ?"
+
+    try {
+        const result = await queryDatabase(query, [transaction_id]);
+    
+        if (result.length > 0) {
+            const formattedDate = moment(result[0].marriage_date).format('MMMM D, YYYY');
+    
+            const marriageTransaction = {
+                ...result[0],
+                marriage_date: formattedDate,
+            };
+    
+            res.json(marriageTransaction);
+        } else {
+            res.status(404).send('No records found for the specified transaction_id');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving data');
+    }    
+});
+
 router.get('/taxpayment/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
@@ -177,9 +227,11 @@ router.get('/taxpayment/:transaction_id', async (req, res) => {
     }    
 });
 
+
+
 router.get('/taxclearance/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
-
+ 
     const query = "SELECT tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount \
     \
     FROM rptax_clearance tc \
