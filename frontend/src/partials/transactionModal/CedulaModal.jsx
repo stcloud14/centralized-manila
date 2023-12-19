@@ -1,7 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
 const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
+
+  const { transaction_id, status_type, date_processed } = selectedTransaction;
+
+  const date = moment(date_processed).format('MMMM D, YYYY');
+  const time = moment(date_processed).format('h:mm A');
+  
+  const [cedulaTransaction, setCedulaTransaction] = useState({});
+
+  useEffect(() => {
+    const fetchCedulaTransaction = async () => {
+      if (transaction_id) {
+        try {
+          const res = await axios.get(`http://localhost:8800/transachistory/cedula/${transaction_id}`);
+          setCedulaTransaction(res.data);
+          console.log(res.data);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      else {
+        setCedulaTransaction(selectedTransaction);
+      }
+    };
+  
+    fetchCedulaTransaction(); 
+  }, [transaction_id]);
+  
  
   return (
     <div className="fixed z-50 inset-0 ">
@@ -26,111 +55,111 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
                         <div className="mb-0">
-                        {selectedTransaction.transaction_id ? (
+                        {cedulaTransaction.transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.transaction_id}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.transaction_id}</span>
                           </div>
                         ) : null}
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Last Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_lname ? selectedTransaction.ctc_lname : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_lname || cedulaTransaction.l_name || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">First Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_fname ? selectedTransaction.ctc_fname : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_fname || cedulaTransaction.f_name || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Middle Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_mname ? selectedTransaction.ctc_mname : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_mname || cedulaTransaction.m_name || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Suffix</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_suffix ? selectedTransaction.ctc_suffix : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_suffix || cedulaTransaction.suffix_type || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Sex</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_sex ? selectedTransaction.ctc_sex : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_sex || cedulaTransaction.sex_type || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_region ? selectedTransaction.ctc_region : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_region || cedulaTransaction.region || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_province ? selectedTransaction.ctc_province : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_province || cedulaTransaction.province || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_municipal ? selectedTransaction.ctc_municipal : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_municipal || cedulaTransaction.municipality || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Barangay</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_reqbrgy ? selectedTransaction.ctc_reqbrgy : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_reqbrgy || cedulaTransaction.brgy_dist || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">House No. / Unit Floor</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_reqhnum ? selectedTransaction.ctc_reqhnum : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_reqhnum || cedulaTransaction.house_floor || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Street / Building Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_reqstreet ? selectedTransaction.ctc_reqstreet : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_reqstreet || cedulaTransaction.bldg_name || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_reqzip ? selectedTransaction.ctc_reqzip : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_reqzip || cedulaTransaction.zip_code || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Civil Status</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_civilstatus ? selectedTransaction.ctc_civilstatus : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_civilstatus || cedulaTransaction.cvl_id || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Country of Citizenship</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_cznstatus ? selectedTransaction.ctc_cznstatus : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_cznstatus || cedulaTransaction.czn_id || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Height (ft)</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_height ? selectedTransaction.ctc_height : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_height || cedulaTransaction.height || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Weight (kg)</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_weight ? selectedTransaction.ctc_weight : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_weight || cedulaTransaction.weight || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Alien Certificate of Registration No.</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_aliencor ? selectedTransaction.ctc_aliencor : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_aliencor || cedulaTransaction.acr_no || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Employment Status</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_employmentstatus ? selectedTransaction.ctc_employmentstatus : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_employmentstatus || cedulaTransaction.emp_status || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Payer Account No.</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_taxpayeraccno ? selectedTransaction.ctc_taxpayeraccno : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_taxpayeraccno || cedulaTransaction.acc_no || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Residence Tax Due</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.birthc_reqzip ? selectedTransaction.birthc_reqzip : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.birthc_reqzip || cedulaTransaction.zip_code || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_residencetaxdue ? selectedTransaction.ctc_residencetaxdue : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_validid || cedulaTransaction.valid_id || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Profession/Occupation/Business</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_profession ? selectedTransaction.ctc_profession : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_profession || cedulaTransaction.pob_status || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Income from Real Property</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_incomeca ? selectedTransaction.ctc_incomeca : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_incomeca || cedulaTransaction.income_id || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Earnings from Business</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_grossta ? selectedTransaction.ctc_grossta : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_grossta || cedulaTransaction.gross_id || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Earnings from Profession</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.ctc_salariesta ? selectedTransaction.ctc_salariesta : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_salariesta || cedulaTransaction.salary_id || '-'}</span>
                           </div>
                         </div>
                         
@@ -140,17 +169,17 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                 </div>
 
               <div className="pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10 ">
-                          {selectedTransaction.date ? (
+                          {transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.date}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
                           </div>
                           ) : null}
 
-                          {selectedTransaction.time ? (
+                          {transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.time}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{time}</span>
                           </div>
                           ) : null}
                           {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
@@ -161,17 +190,20 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Reference Number</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
                           </div> */}
-                          {selectedTransaction.status_type ? (
+                          {transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <StatusBadgeMobile statusType={selectedTransaction.status_type} />
+                            <StatusBadgeMobile statusType={status_type} />
                           </div>
                           ) : null}
 
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4"> P {selectedTransaction.ctc_amountpayable ? selectedTransaction.ctc_amountpayable : '-'}</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">  {cedulaTransaction && (
+                              `P ${cedulaTransaction.ctc_amountpayable !== undefined ? cedulaTransaction.ctc_amountpayable + '.00' : 
+                              cedulaTransaction.amount !== undefined ? cedulaTransaction.amount + '.00' : '-'}`
+                            )}</span>
                           </div>
                         </div>
 
@@ -185,7 +217,7 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                       >
                           <p>Close</p>
                       </button>
-                      {selectedTransaction.transaction_id ? null : (
+                      {cedulaTransaction.transaction_id ? null : (
                       <button
                           onClick={onSubmit}
                           type="button"

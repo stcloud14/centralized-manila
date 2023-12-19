@@ -63,6 +63,7 @@ router.post('/:user_id', async (req, res) => {
     ctc_copies,
     ctc_print,
     ctc_amount,
+    ctc_amountpayable,
     totalAmountPaid
    // deathc_amount,
 } = req.body;
@@ -81,7 +82,7 @@ const purpose = parseInt(req.body.ctc_purpose, 10) || null;
 
     
     const query1 = "INSERT INTO transaction_info (`transaction_id`, `amount`, `copies`, `print_type`, `valid_id`, `purpose_id`) VALUES (?, ?, ?, ?, ?, ?)";
-    const values1 = [transID, ctc_amount, ctc_copies, ctc_print, ctc_validid, purpose];
+    const values1 = [transID, ctc_amountpayable, ctc_copies, ctc_print, ctc_validid, purpose];
 
 
     const query2 = "INSERT INTO cedula_cert (`transaction_id`, `region_id`, `prov_id`, `city_id`) VALUES (?, ?, ?, ?)";

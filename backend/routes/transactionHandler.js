@@ -46,6 +46,56 @@ router.get('/:user_id', async (req, res) => {
     }
 });
 
+
+//---------------------------
+
+router.get('/cedula/:transaction_id', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS municipality, cc.transaction_id, \
+    co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_type, \
+    ci.cvl_id, ci.czn_id, ci.height, ci.weight, ci.acr_no, \
+    ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
+    ti.amount, ti.copies, ti.print_type, vt.valid_id_type, pt.purpose_type, \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    \
+    FROM cedula_cert cc \
+    \
+    LEFT JOIN transaction_info ti ON cc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN address_info ai ON cc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_doc_owner co ON cc.transaction_id = co.transaction_id AND co.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_other_info ci ON cc.transaction_id = ci.transaction_id AND ci.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_transaction_info ct ON cc.transaction_id = ct.transaction_id AND ct.transaction_id IS NOT NULL \
+    LEFT JOIN region r ON cc.region_id = r.region_id \
+    LEFT JOIN province p ON cc.prov_id = p.prov_id \
+    LEFT JOIN cities c ON cc.city_id = c.city_id \
+    LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
+    LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    \
+    WHERE  cc.transaction_id = ?"
+
+    try {
+        const result = await queryDatabase(query, [transaction_id]);
+    
+        if (result.length > 0) {
+            const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+    
+            const birthTransaction = {
+                ...result[0],
+                birth_date: formattedDate,
+            };
+    
+            res.json(birthTransaction);
+        } else {
+            res.status(404).send('No records found for the specified transaction_id');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving data');
+    }    
+});
+
+
 router.get('/birthcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
