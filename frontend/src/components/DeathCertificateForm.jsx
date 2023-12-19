@@ -73,7 +73,11 @@ const DeathCertificateForm =()=>{
       e.preventDefault();
       
       // Please fill up the necessary forms
-    const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
+    const requiredFields = ['deathc_lname', 'deathc_fname', 'deathc_mname', 'deathc_sex', 'deathc_region', 'deathc_province',
+    'deathc_municipal', 'deathc_date', 'deathc_reqlname', 'deathc_reqfname', 'deathc_reqmname',
+    'deathc_reqrelation', 'deathc_mobileno', 'deathc_telno', 'deathc_reqregion', 'deathc_reqprovince',
+    'deathc_reqmunicipal', 'deathc_reqbrgy', 'deathc_reqhnum', 'deathc_reqstreet', 'deathc_reqzip',
+    'deathc_regnum', 'deathc_nocopies', 'deathc_print', 'deathc_purpose', 'deathc_validid']; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !deathCert[field]);
 
     if (isIncomplete) {
@@ -91,6 +95,7 @@ const DeathCertificateForm =()=>{
   
     const handleCloseModal = () => {
       setIsModalOpen(false);
+      setShowWarning(false);
     };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -274,29 +279,28 @@ const DeathCertificateForm =()=>{
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-5 py-5">
                  
-           
             <form onSubmit={handleSubmit}>
-            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Local Civil Registry</h1>
-            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Death Certificate</h1>
+              <h1 className='font-medium text-center text-slate-700 dark:text-white'>Local Civil Registry</h1>
+              <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Death Certificate</h1>
 
-            {isSuccess && (
-                  <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
-                    Transaction success on Death Certificate!
-                  </div>
-                  )}  
+              {isSuccess && (
+              <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                Transaction success on Death Certificate!
+              </div>
+              )}  
 
-            {showWarning && (
-                    <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
-                      Please fill in all required fields before proceeding.
-                    </div>
-                  )} 
+              {showWarning && (
+              <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                Please fill in all required fields before proceeding.
+              </div>
+              )} 
 
               {/* Group 1 - Document Owner's Personal Information*/}
               <div className='pt-0.5'>
                 <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Document Owner's Personal Information</h1>
                 <div className="grid md:grid-cols-8 md:gap-6">
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
-                    <input onChange={handleInputChange} value={deathCert.deathc_lname} type="text" id="deathc_lname" style={{ borderBottomColor: 'lightcoral' }} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={deathCert.deathc_lname} type="text" id="deathc_lname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="deathc_lname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">

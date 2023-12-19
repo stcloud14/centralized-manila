@@ -70,7 +70,12 @@ const BirthCertificateForm =()=>{
     const handleProceed = (e) => {
       e.preventDefault();
       // Please fill up the necessary forms
-    const requiredFields = ['birthc_lname']; //The input fields that is required
+      const requiredFields = ['birthc_hospital', 'birthc_nocopies', 'birthc_print', 'birthc_purpose', 'birthc_validid',
+      'birthc_reqregion', 'birthc_reqprovince', 'birthc_reqmunicipal', 'birthc_reqbrgy', 'birthc_reqhnum', 'birthc_reqstreet', 'birthc_reqzip',
+      'birthc_reqlname', 'birthc_reqfname', 'birthc_reqmname', 'birthc_reqrelation', 'birthc_reqtin', 'birthc_reqtelnum', 'birthc_reqmobnum',
+      'birthc_motherlname', 'birthc_motherfname', 'birthc_mothermname',
+      'birthc_fatherlname', 'birthc_fatherfname', 'birthc_fathermname',
+      'birthc_ownerregion', 'birthc_ownerprovince', 'birthc_ownermunicipal', 'birthc_date', 'birthc_lname', 'birthc_fname', 'birthc_mname', 'birthc_sex']; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !birthCert[field]);
 
     if (isIncomplete) {
@@ -88,6 +93,7 @@ const BirthCertificateForm =()=>{
   
     const handleCloseModal = () => {
       setIsModalOpen(false);
+      setShowWarning(false);
     };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);

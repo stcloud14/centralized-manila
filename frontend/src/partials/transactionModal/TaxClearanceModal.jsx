@@ -50,53 +50,53 @@ const TaxClearanceModal = ({ selectedTransaction, onClose, onSubmit }) => {
     
                             <div className="mb-6">
                               {transaction_id ? (
-                                <div className="flex justify-between mb-1">
-                                  <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                                  <span className="whitespace-nowrap ml-4">{transaction_id}</span>
+                                <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Transaction ID</span>
+                                  <span className="whitespace-nowrap md:mb-0 mb-1">{transaction_id}</span>
                                 </div>
                               ) : null}
-                              <div className="flex justify-between mb-1">
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                                <span className="whitespace-nowrap ml-4">{taxClearanceTransaction.rp_tdn || taxClearanceTransaction.tc_rp_tdn || '-'}</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{taxClearanceTransaction.rp_tdn || taxClearanceTransaction.tc_rp_tdn || '-'}</span>
                               </div>
-                              <div className="flex justify-between mb-1">
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                                <span className="whitespace-nowrap ml-4">{taxClearanceTransaction.rp_pin || taxClearanceTransaction.tc_rp_pin || '-'}</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{taxClearanceTransaction.rp_pin || taxClearanceTransaction.tc_rp_pin || '-'}</span>
                               </div>
-                              {/* <div className="flex justify-between mb-1">
+                              {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Transaction Number</span>
-                                <span className="whitespace-nowrap ml-4">542312454</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">542312454</span>
                               </div> */}
-                              {/* <div className="flex justify-between mb-1">
+                              {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                                <span className="whitespace-nowrap ml-4">{taxClearanceTransaction.rp_tdn || taxClearanceTransaction.tp_rp_tdn || '-'}</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{taxClearanceTransaction.rp_tdn || taxClearanceTransaction.tp_rp_tdn || '-'}</span>
                               </div> */}
                               {transaction_id ? (
-                              <div className="flex justify-between mb-1">
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Date Processed</span>
-                                <span className="whitespace-nowrap ml-4">{date}</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
                               </div>
                               ) : null}
                               {transaction_id ? (
-                              <div className="flex justify-between mb-1">
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Time Processed</span>
-                                <span className="whitespace-nowrap ml-4">{time}</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{time}</span>
                               </div>
                               ) : null}
-                              {/* <div className="flex justify-between mb-1">
+                              {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Period</span>
-                                <span className="whitespace-nowrap ml-4">-</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
                               </div>
-                              <div className="flex justify-between mb-1">
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Remarks</span>
-                                <span className="whitespace-nowrap ml-4">WAITING FOR Clearance REFERENCE NUMBER</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">WAITING FOR Clearance REFERENCE NUMBER</span>
                               </div> */}
-                              {/* <div className="flex justify-between mb-1">
+                              {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Reference Number</span>
-                                <span className="whitespace-nowrap ml-4">-</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
                               </div> */}
                               {status_type ? (
-                              <div className="flex justify-between mb-1">
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Status</span>
                                 <StatusBadgeMobile statusType={status_type} />
                               </div>

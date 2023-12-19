@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import {Link} from "react-router-dom"
 
@@ -40,6 +40,8 @@ const MarriageCertificateForm =()=>{
 
   console.log(marriageCert)
 
+  const contentRef = useRef(null);
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       
@@ -49,6 +51,7 @@ const MarriageCertificateForm =()=>{
           if (response.status === 200) {
             setIsSuccess(true); // Set success state to true
             handleCloseModal(); // Close the modal
+            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
             console.log('Transaction successful');
 
             setTimeout(() => {
@@ -64,14 +67,36 @@ const MarriageCertificateForm =()=>{
     }; 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showWarning, setShowWarning] = useState(false);
 
     const handleProceed = (e) => {
       e.preventDefault();
-      setIsModalOpen(true);
+  
+      // Please fill up the necessary forms
+      const requiredFields = ['marriagec_hlname', 'marriagec_hfname', 'marriagec_hmname', 'marriagec_wlname', 'marriagec_wfname', 'marriagec_wmname',
+      'marriagec_region', 'marriagec_province', 'marriagec_municipal', 'marriagec_date',
+      'marriagec_reqlname', 'marriagec_reqfname', 'marriagec_reqmname', 'marriagec_reqrelation',
+      'marriagec_mobileno', 'marriagec_telno', 'marriagec_reqregion', 'marriagec_reqprovince',
+      'marriagec_reqmunicipal', 'marriagec_reqbrgy', 'marriagec_reqhnum', 'marriagec_reqstreet',
+      'marriagec_reqzip', 'marriagec_nocopies', 'marriagec_print', 'marriagec_purpose', 'marriagec_validid']; //The input fields that is required
+      const isIncomplete = requiredFields.some((field) => !marriageCert[field]);
+  
+      if (isIncomplete) {
+        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
+        setShowWarning(true); // Show warning message and prevent opening the modal
+       
+        setTimeout(() => {
+          setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
+        }, 4000);
+      } else {
+        
+        setIsModalOpen(true);// Proceed to open the modal
+      }
     };
   
     const handleCloseModal = () => {
       setIsModalOpen(false);
+      setShowWarning(false);
     };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -249,20 +274,25 @@ const MarriageCertificateForm =()=>{
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <main>
+        <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-5 py-5">
-                 
-           
+                  
             <form onSubmit={handleSubmit}>
-            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Local Civil Registry</h1>
-            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Marriage Certificate</h1>
+              <h1 className='font-medium text-center text-slate-700 dark:text-white'>Local Civil Registry</h1>
+              <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Marriage Certificate</h1>
 
-            {isSuccess && (
-                  <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
-                    Transaction success on Marriage Certificate!
-                  </div>
-                  )}  
+              {isSuccess && (
+              <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                Transaction success on Marriage Certificate!
+              </div>
+              )}
+
+              {showWarning && (
+              <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                Please fill in all required fields before proceeding.
+              </div>
+              )}
 
               {/* Group 1 - Husband's Personal Information*/}
               <div className='pt-0.5'>

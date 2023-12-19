@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import {Link} from "react-router-dom"
 
@@ -33,6 +33,8 @@ const BusinessPermitForm =()=>{
         fetchUserPersonal()
     },[])
 
+    const contentRef = useRef(null);
+
     const handleSubmit = async (e) => {
       e.preventDefault();
 
@@ -47,6 +49,7 @@ const BusinessPermitForm =()=>{
           .then((res) => {
             setIsSuccess(true); // Set success state to true
             handleCloseModal(); // Close the modal
+            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
             console.log('User credentials updated successfully');
 
             setTimeout(() => {
@@ -86,7 +89,7 @@ const BusinessPermitForm =()=>{
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <main>
+        <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-5 py-5">
                  

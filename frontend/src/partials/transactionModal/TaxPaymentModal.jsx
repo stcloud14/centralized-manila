@@ -51,67 +51,67 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
 
                       <div className="mb-6">
                         {transaction_id ? (
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap ml-4">{transaction_id}</span>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Transaction ID</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{transaction_id}</span>
                           </div>
                         ) : null}
-                          <div className="flex justify-between mb-1">
-                             <span className="font-medium whitespace-nowrap">Account Name</span>
-                             <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.acc_name || taxPaymentTransaction.tp_acc_name || '-'}</span>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Account Name</span>
+                             <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.acc_name || taxPaymentTransaction.tp_acc_name || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
-                             <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                             <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.rp_tdn || taxPaymentTransaction.tp_rp_tdn || '-'}</span>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
+                             <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.rp_tdn || taxPaymentTransaction.tp_rp_tdn || '-'}</span>
                            </div>
-                          <div className="flex justify-between mb-1">
-                             <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                             <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.rp_pin || taxPaymentTransaction.tp_rp_pin || '-'}</span>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
+                             <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.rp_pin || taxPaymentTransaction.tp_rp_pin || '-'}</span>
                           </div>
                           
-                          <div className="flex justify-between mb-1">
-                             <span className="font-medium whitespace-nowrap">From</span>
-                             <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.year_label? `${taxPaymentTransaction.year_label} - 1st Quarter`: taxPaymentTransaction.tp_year? `${taxPaymentTransaction.tp_year} - 1st Quarter`: '-'}
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">From</span>
+                             <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.year_label? `${taxPaymentTransaction.year_label} - 1st Quarter`: taxPaymentTransaction.tp_year? `${taxPaymentTransaction.tp_year} - 1st Quarter`: '-'}
                              </span>
                            </div>
 
-                          <div className="flex justify-between mb-1">
-                             <span className="font-medium whitespace-nowrap">To</span>
-                             <span className="whitespace-nowrap ml-4">{taxPaymentTransaction.year_label? `${taxPaymentTransaction.year_label} - ${taxPaymentTransaction.period}`: taxPaymentTransaction.tp_year? `${taxPaymentTransaction.tp_year} - ${taxPaymentTransaction.tp_period}`: '-'}
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">To</span>
+                             <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.year_label? `${taxPaymentTransaction.year_label} - ${taxPaymentTransaction.period}`: taxPaymentTransaction.tp_year? `${taxPaymentTransaction.tp_year} - ${taxPaymentTransaction.tp_period}`: '-'}
                              </span>
                            </div>
-                          {/* <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap ml-4">AUTHORIZATION LETTER</span>
+                          {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">AUTHORIZATION LETTER</span>
                           </div> */}
                           {transaction_id ? (
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap ml-4">{date}</span>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Date Processed</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
                           </div>
                           ) : null}
 
                           {transaction_id ? (
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap ml-4">{time}</span>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Time Processed</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{time}</span>
                           </div>
                           ) : null}
                           
-                          {/* <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Remarks</span>
-                            <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
+                          {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Remarks</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">WAITING FOR PAYMENT REFERENCE NUMBER</span>
                           </div> */}
                           {/* {taxPaymentTransaction.status_type ? (
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Reference Number</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Reference Number</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
                           </div>
                           ) : null} */}
 
                           {status_type ? (
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Status</span>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Status</span>
                             <StatusBadgeMobile statusType={status_type} />
                           </div>
                           ) : null}
