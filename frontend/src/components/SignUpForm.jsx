@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import {useState} from "react"
 import { useNavigate } from 'react-router-dom';
+import PasswordRuleIcon from '../partials/register/PasswordRuleIcon';
 
 const SignUpForm =()=>{
     const [userReg, setUserReg] = useState({
@@ -133,13 +134,29 @@ console.log(userReg)
                 </div> */}
 
                 <div>
-                  <h1 className='italic text-xs'>Password must be:</h1>
-                  <h1 className='italic text-xs'>- Minimum of 8 Characters</h1>
-                  <h1 className='italic text-xs'>- At Least one uppercase and lowercase letter</h1>
-                  <h1 className='italic text-xs'>- At least one symbol (-= . ,#@$!%*?&)</h1>
-                  <h1 className='italic text-xs'>- At least one number</h1>
+                  <h1 className="italic text-xs">Password must be:</h1>
+                  
+                  <div className="flex items-center">
+                    <PasswordRuleIcon />
+                    <h1 className="italic text-xs">Minimum of 8 Characters</h1>
+                  </div>
+
+                  <div className="flex items-center">
+                    <PasswordRuleIcon />
+                    <h1 className="italic text-xs">At Least one uppercase and lowercase letter</h1>
+                  </div>
+
+                  <div className="flex items-center">
+                    <PasswordRuleIcon />
+                    <h1 className="italic text-xs">At least one symbol (-= . ,#@$!%*?&)</h1>
+                  </div>
+
+                  <div className="flex items-center">
+                    <PasswordRuleIcon />
+                    <h1 className="italic text-xs">At least one number</h1>
+                  </div>
                 </div>
-                
+   
                 <div className="flex flex-col items-center">
                   <button onClick={handleClick} type="submit" className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Register</button>
                 </div>
