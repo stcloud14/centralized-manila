@@ -129,7 +129,7 @@ console.log(userTransaction)
         {/* Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <main>
+        <main className="overflow-y-auto">
           <div className="flex flex-col h-full justify-between mx-4 mt-4">
                  
             {isMobileView ? (           
