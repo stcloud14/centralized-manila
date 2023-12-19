@@ -50,7 +50,7 @@ const handleClick= async e=>{
     e.preventDefault()
 
     const { user_pass } = userReg;
-    const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,-=<>@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-= . ,#@$!%*?&])[A-Za-z\d-= . ,#@$!%*?&]]{8,}$/;
 
     if (user_pass && !passwordRule.test(user_pass)) {
       setPasswordError('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.');
@@ -75,11 +75,11 @@ const handleClick= async e=>{
           } else {
             // User does not exist, proceed with registration
             await axios.post("http://localhost:8800/register", userReg);
+            setIsSuccess(true);
             console.log('Successful Register');
             setTimeout(() => {
-              setIsSuccess(true);
+              setIsSuccess(false);
             }, 3000);
-            alert("Successful");
             navigate("/register");
           }
         } catch (err) {
@@ -97,15 +97,13 @@ console.log(userReg)
           <h1 className='font-normal mb-16 text-slate-500'>Centralized Manila</h1>
         </div>
       </div>
-
-                  {isSuccess && (
+   
+            <div className='form px-6 sm:px-6 md:px-12 lg:px-64'>
+            {isSuccess && (
                   <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
                     Successful Register!
                   </div>
                   )}
-
-                
-            <div className=' form px-6 sm:px-6 md:px-12 lg:px-64'>
             <div className="grid md:grid-cols-2 md:gap-6 sm:grid-cols-1">
                     <div className=" relative z-0 w-full mb-6 group">
                     <input onChange={handleChange} value={userReg.f_name} type="text" name="f_name" id="f_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -127,7 +125,7 @@ console.log(userReg)
                     <label htmlFor="user_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                 </div>
 
-                {passwordError && <h3 className="text-red-500">{passwordError}</h3>}
+                {passwordError && <h3 className="text-red-500 text-xs md:text-sm">{passwordError}</h3>}
 
                 {/* <div class="relative z-0 w-full mb-6 group">
                     <input type="password" name="user_pass1" id="user_pass1" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -138,7 +136,7 @@ console.log(userReg)
                   <h1 className='italic text-xs'>Password must be:</h1>
                   <h1 className='italic text-xs'>- Minimum of 8 Characters</h1>
                   <h1 className='italic text-xs'>- At Least one uppercase and lowercase letter</h1>
-                  <h1 className='italic text-xs'>- At least one symbol</h1>
+                  <h1 className='italic text-xs'>- At least one symbol (-= . ,#@$!%*?&)</h1>
                   <h1 className='italic text-xs'>- At least one number</h1>
                 </div>
                 
