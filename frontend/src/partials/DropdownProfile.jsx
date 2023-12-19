@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 // import UserAvatar from '../images/user-avatar-32.png';
 
-const DropdownProfile = ({ align, userName }) => {
+const DropdownProfile = ({ align }) => {
   
   const location = useLocation();
   const { pathname } = location;
@@ -17,27 +17,27 @@ const DropdownProfile = ({ align, userName }) => {
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
-  // const [userPersonal, setUserPersonal]=useState({})
+  const [userPersonal, setUserPersonal]=useState({})
 
-  // console.log(userPersonal)
+  console.log("State updated:", userPersonal);
 
-  //   useEffect(()=>{
-  //       const fetchUserPersonal= async()=>{
-  //           try{
-  //               const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
-  //               setUserPersonal((prevData) => {
-  //                 if (prevData.f_name !== res.data.user_personal[0].f_name) {
-  //                   return res.data.user_personal[0];
-  //                 }
-  //                 return prevData;
-  //               });
+    useEffect(()=>{
+        const fetchUserPersonal= async()=>{
+            try{
+                const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
+                setUserPersonal((prevData) => {
+                  if (prevData.f_name !== res.data.user_personal[0].f_name) {
+                    return res.data.user_personal[0];
+                  }
+                  return prevData;
+                });
 
-  //           }catch(err){
-  //               console.log(err)
-  //           }
-  //       }
-  //       fetchUserPersonal()
-  //   },[userPersonal])
+            }catch(err){
+                console.log(err)
+            }
+        }
+        fetchUserPersonal()
+    },[userPersonal])
 
   // close on click outside
   useEffect(() => {
@@ -74,7 +74,7 @@ const DropdownProfile = ({ align, userName }) => {
           <path className="fill-blue-600" fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" />
         </svg>
         <div className="flex items-center truncate">
-          <span className="truncate ml-2 mr-1 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{userName.f_name}</span>
+          <span className="truncate ml-2 mr-1 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{userPersonal.f_name}</span>
           <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
           </svg>
@@ -97,7 +97,7 @@ const DropdownProfile = ({ align, userName }) => {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-[#3d3d3d]">
-            <div className="font-medium text-slate-800 dark:text-slate-100">{userName.f_name} {userName.l_name}</div>
+            <div className="font-medium text-slate-800 dark:text-slate-100">{userPersonal.f_name} {userPersonal.l_name}</div>
             <div className="text-xs text-slate-500 dark:text-slate-400 italic">Administrator</div>
           </div>
           <ul>
