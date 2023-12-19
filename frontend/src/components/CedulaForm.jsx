@@ -107,9 +107,9 @@ const handleInputChange = (e) => {
       const salariesCedAmount = prevData.ctc_salariesca || 0;
 
       const totalAmountPartial = incomeCedAmount + grossCedAmount + salariesCedAmount; 
-      const totalAmount = totalAmountPartial.toFixed(2);
-
+      const totalAmount = Math.round(totalAmountPartial * 100) / 100; 
       const [totalInterest, totalAmountPaid] = totalingAmount({ totalAmount });
+
 
       return {
         ...prevData,
@@ -128,9 +128,9 @@ const handleInputChange = (e) => {
       const salariesCedAmount = prevData.ctc_salariesca || 0;
 
       const totalAmountPartial = incomeCedAmount + grossCedAmount + salariesCedAmount; 
-      const totalAmount = totalAmountPartial.toFixed(2);
-
+      const totalAmount = Math.round(totalAmountPartial * 100) / 100; 
       const [totalInterest, totalAmountPaid] = totalingAmount({ totalAmount });
+
 
 
       return {
@@ -150,9 +150,9 @@ const handleInputChange = (e) => {
       const grossCedAmount = prevData.ctc_grossca || 0;
 
       const totalAmountPartial = incomeCedAmount + grossCedAmount + salariesCedAmount; 
-      const totalAmount = totalAmountPartial.toFixed(2);
-
+      const totalAmount = Math.round(totalAmountPartial * 100) / 100; 
       const [totalInterest, totalAmountPaid] = totalingAmount({ totalAmount });
+
 
 
       return {
@@ -221,13 +221,12 @@ function equivalentAmount({ value }) {
 
 function totalingAmount({ totalAmount }) {
   if (totalAmount > 0) {
-    const totalInterest = Math.round(totalAmount * 0.2).toFixed(2);
-    const totalAmountPaid = Math.round(parseFloat(totalAmount) + parseFloat(totalInterest)).toFixed(2);
-  
+    const totalInterest = Math.round(totalAmount * 0.2);
+    const totalAmountPaid = Math.round(parseFloat(totalAmount) + parseFloat(totalInterest));
+
     return [totalInterest, totalAmountPaid];
 
   } else {
-
     return [0, 0];
   }
 }
