@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
 
         const query = "SELECT * FROM user_transaction";
         const query1 = "SELECT * FROM transaction_info";
-        const query2 = "SELECT * FROM marriage_details";
+        const query2 = "SELECT * FROM marriage_cert";
         const query3 = "SELECT * FROM consent_info";
         const query4 = "SELECT * FROM husband_info";
         const query5 = "SELECT * FROM wife_info";
@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
         const result4 = await queryDatabase(query4);
         const result5 = await queryDatabase(query5);
 
-    res.json({ user_transaction: result, transaction_info: result1, marriage_details: result2, consent_info: result3, husband_info: result4, wife_info: result5 });
+    res.json({ user_transaction: result, transaction_info: result1, marriage_cert: result2, consent_info: result3, husband_info: result4, wife_info: result5 });
     } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
@@ -49,8 +49,8 @@ router.get('/', async (req, res) => {
         marriagec_reqmname,
         marriagec_reqsuffix,
         marriagec_reqrelation,
-        marriagec_telnum,
-        marriagec_mobilenum,
+        marriagec_telno,
+        marriagec_mobileno,
         marriagec_reqregion,
         marriagec_reqprovince,
         marriagec_reqmunicipal,
@@ -79,11 +79,11 @@ router.get('/', async (req, res) => {
     const query1 = "INSERT INTO transaction_info (`transaction_id`, `amount`, `copies`, `print_type`, `valid_id`, `purpose_id`) VALUES (?, ?, ?, ?, ?, ?)";
     const values1 = [transID, marriagec_amount, marriagec_nocopies, marriagec_print, validID, purpose];
 
-    const query2 = "INSERT INTO marriage_details (`transaction_id`, `region_id`, `prov_id`, `city_id` , `marriage_date`) VALUES (?, ?, ?, ?, ?)";
+    const query2 = "INSERT INTO marriage_cert (`transaction_id`, `region_id`, `prov_id`, `city_id` , `marriage_date`) VALUES (?, ?, ?, ?, ?)";
     const values2 = [transID, marriagec_region, marriagec_province, marriagec_municipal, marriagec_date];
 
     const query3 = "INSERT INTO consent_info (`transaction_id`, `consent_lname`, `consent_fname`, `consent_mname`, `suffix_type`, `owner_rel`, `tel_no`, `mobile_no`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    const values3 = [transID, marriagec_reqlname, marriagec_reqfname, marriagec_reqmname, marriagec_reqsuffix, marriagec_reqrelation, marriagec_telnum, marriagec_mobilenum];
+    const values3 = [transID, marriagec_reqlname, marriagec_reqfname, marriagec_reqmname, marriagec_reqsuffix, marriagec_reqrelation, marriagec_telno, marriagec_mobileno];
 
     const query4 = "INSERT INTO husband_info (`transaction_id`, `husband_lname`, `husband_fname`, `husband_mname`, `suffix_type`) VALUES (?, ?, ?, ?, ?)";
     const values4 = [transID, marriagec_hlname, marriagec_hfname, marriagec_hmname, marriagec_hsuffix];
@@ -107,7 +107,7 @@ router.get('/', async (req, res) => {
             message: "Successfully executed",
             user_transaction_result: result,
             transaction_info_result: result1,
-            marriage_details_result: result2,
+            marriage_cert_result: result2,
             consent_info_result: result3,
             husband_info_result: result4,
             wife_info_result: result5,
