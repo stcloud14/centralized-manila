@@ -77,7 +77,7 @@ const DeathCertificateForm =()=>{
     'deathc_municipal', 'deathc_date', 'deathc_reqlname', 'deathc_reqfname', 'deathc_reqmname',
     'deathc_reqrelation', 'deathc_mobileno', 'deathc_telno', 'deathc_reqregion', 'deathc_reqprovince',
     'deathc_reqmunicipal', 'deathc_reqbrgy', 'deathc_reqhnum', 'deathc_reqstreet', 'deathc_reqzip',
-    'deathc_regnum', 'deathc_nocopies', 'deathc_print', 'deathc_purpose', 'deathc_validid']; //The input fields that is required
+    'deathc_nocopies', 'deathc_print', 'deathc_purpose', 'deathc_validid']; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !deathCert[field]);
 
     if (isIncomplete) {
