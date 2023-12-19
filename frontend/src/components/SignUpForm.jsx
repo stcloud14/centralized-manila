@@ -77,7 +77,7 @@ const handleClick= async e=>{
             await axios.post("http://localhost:8800/register", userReg);
             console.log('Successful Register');
             setTimeout(() => {
-              setIsSuccess(false);
+              setIsSuccess(true);
             }, 3000);
             alert("Successful");
             navigate("/register");
