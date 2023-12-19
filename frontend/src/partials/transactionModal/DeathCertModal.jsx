@@ -54,134 +54,134 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                       <div className="mx-auto">
                         <div className="mb-0">
                         {deathTransaction.transaction_id ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.transaction_id}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.transaction_id}</span>
                           </div>
                         ) : null}
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_lname || deathTransaction.l_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_lname || deathTransaction.l_name || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's First Name</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_fname || deathTransaction.f_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_fname || deathTransaction.f_name || '-'}</span>
                           </div>
                           {deathTransaction.deathc_mname ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_mname || deathTransaction.m_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_mname || deathTransaction.m_name || '-'}</span>
                           </div>
                           ) : null}
                           {deathTransaction.deathc_suffix ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_suffix || deathTransaction.suffix_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_suffix || deathTransaction.suffix_type || '-'}</span>
                           </div>
                           ) : null}
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Sex</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_sex || deathTransaction.sex_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_sex || deathTransaction.sex_type || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region of Death</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_regionLabel || deathTransaction.region || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_regionLabel || deathTransaction.region || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province of Death</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_provinceLabel || deathTransaction.province || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_provinceLabel || deathTransaction.province || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal of Death</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_municipalLabel || deathTransaction.city || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_municipalLabel || deathTransaction.city || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date of Death</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_date || deathTransaction.death_date || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_date || deathTransaction.death_date || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqlname || deathTransaction.reql_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqlname || deathTransaction.reql_name || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqfname || deathTransaction.reqf_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqfname || deathTransaction.reqf_name || '-'}</span>
                           </div>
                           {deathTransaction.deathc_reqmname ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqmname || deathTransaction.reqm_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqmname || deathTransaction.reqm_name || '-'}</span>
                           </div>
                           ) : null}
                           {deathTransaction.deathc_reqsuffix ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqsuffix || deathTransaction.reqsuffix || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqsuffix || deathTransaction.reqsuffix || '-'}</span>
                           </div>
                           ) : null}
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Relationship to the Owner</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqrelation || deathTransaction.owner_rel || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqrelation || deathTransaction.owner_rel || '-'}</span>
                           </div>
                           {deathTransaction.deathc_telno ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_telno || deathTransaction.tel_no || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_telno || deathTransaction.tel_no || '-'}</span>
                           </div>
                           ) : null}
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mobile No.</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_mobileno || deathTransaction.mobile_no || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_mobileno || deathTransaction.mobile_no || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqregionLabel || deathTransaction.reqregion || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqregionLabel || deathTransaction.reqregion || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqprovinceLabel || deathTransaction.reqprovince || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqprovinceLabel || deathTransaction.reqprovince || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqmunicipalLabel || deathTransaction.reqcity || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqmunicipalLabel || deathTransaction.reqcity || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Barangay</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqbrgy || deathTransaction.brgy_dist || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqbrgy || deathTransaction.brgy_dist || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">House No. / Unit Floor</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqhnum || deathTransaction.house_floor || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqhnum || deathTransaction.house_floor || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Street / Building Name</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqstreet || deathTransaction.bldg_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqstreet || deathTransaction.bldg_name || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_reqzip || deathTransaction.zip_code || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqzip || deathTransaction.zip_code || '-'}</span>
                           </div>
                           {deathTransaction.deathc_regnum ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Registry Number</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_regnum ? deathTransaction.regnum : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_regnum ? deathTransaction.regnum : '-'}</span>
                           </div>
                           ) : null}
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Copies</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_nocopies || deathTransaction.copies || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_nocopies || deathTransaction.copies || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">What to Print</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_print || deathTransaction.print_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_print || deathTransaction.print_type || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Purpose</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_purposeLabel || deathTransaction.purpose_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_purposeLabel || deathTransaction.purpose_type || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap ml-4">{deathTransaction.deathc_valididLabel || deathTransaction.valid_id_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_valididLabel || deathTransaction.valid_id_type || '-'}</span>
                           </div>
                         </div>
                       </div>
@@ -191,27 +191,27 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
 
               <div className="mx-auto pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10 ">
                           {transaction_id ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap ml-4">{date}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
                           </div>
                           ) : null}
                           {transaction_id ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap ml-4">{time}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{time}</span>
                           </div>
                           ) : null}
-                          {/* <div className="flex justify-between mb-1">
+                          {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Remarks</span>
-                            <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">WAITING FOR PAYMENT REFERENCE NUMBER</span>
                           </div> */}
-                          {/* <div className="flex justify-between mb-1">
+                          {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Reference Number</span>
-                            <span className="whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
                           </div> */}
                           {transaction_id ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
                             <StatusBadgeMobile statusType={status_type} />
                           </div>
