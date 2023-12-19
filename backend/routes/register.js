@@ -53,7 +53,7 @@ router.post('/check-existence', async (req, res) => {
 router.post('/', async (req, res) => {
     const mobile_no = req.body.mobile_no;
     const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
-    const transID = 1;
+    const transID = 'REGISTER';
 
     const primaryKey = generatePrimaryKey(req.body.f_name, req.body.l_name, plainMobileNo);
 
