@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react'
-import {useState} from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from 'react-router-dom';
 import PasswordRuleIcon from '../partials/register/PasswordRuleIcon';
 
@@ -15,6 +15,38 @@ const SignUpForm =()=>{
 const navigate = useNavigate()
 const [isSuccess, setIsSuccess] = useState(false);
 const [passwordError, setPasswordError] = useState('');
+const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.,-=])[A-Za-z\d!@#$%^&*.,-=]{8,}$/;
+
+
+const [passwordCriteria, setPasswordCriteria] = useState({
+  length: false,
+  uppercase: false,
+  lowercase: false,
+  symbol: false,
+  number: false,
+});
+
+
+useEffect(() => {
+  // if (user_pass && !passwordRule.test(user_pass)) {
+  //   setPasswordError(
+  //     'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.'
+  //   );
+  //   setTimeout(() => {
+  //     setPasswordError('');
+  //   }, 3000);
+  // }
+
+  // Check each requirement and update the state
+  setPasswordCriteria({
+    length: /^.{8,}$/.test(userReg.user_pass),
+    uppercase: /[A-Z]/.test(userReg.user_pass),
+    lowercase: /[a-z]/.test(userReg.user_pass),
+    symbol: /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(userReg.user_pass),
+    number: /\d/.test(userReg.user_pass),
+  });
+}, [userReg.user_pass]);
+
 
 const handleChange = (e) => {
   const { name, value } = e.target;
@@ -30,16 +62,8 @@ const handleChange = (e) => {
     const rawValue = value.replace('+63 - ', '');
 
     const formattedValue = rawValue.replace(/\D/g, '');
-
-    let formattedWithDashes = '';
-    for (let i = 0; i < formattedValue.length; i++) {
-    if (i === 3 || i === 6) {
-      formattedWithDashes += ' - ';
-    }
-    formattedWithDashes += formattedValue[i];
-  }
     
-    setUserReg((prev) => ({ ...prev, [name]: formattedWithDashes }));
+    setUserReg((prev) => ({ ...prev, [name]: formattedValue }));
 
   } else {
     setUserReg((prev) => ({ ...prev, [name]: [value] }));
@@ -137,22 +161,22 @@ console.log(userReg)
                   <h1 className="italic text-xs">Password must be:</h1>
                   
                   <div className="flex items-center">
-                    <PasswordRuleIcon />
+                    <PasswordRuleIcon isValid={passwordCriteria.length} />
                     <h1 className="italic text-xs">Minimum of 8 Characters</h1>
                   </div>
 
                   <div className="flex items-center">
-                    <PasswordRuleIcon />
+                    <PasswordRuleIcon isValid={passwordCriteria.uppercase && passwordCriteria.lowercase} />
                     <h1 className="italic text-xs">At Least one uppercase and lowercase letter</h1>
                   </div>
 
                   <div className="flex items-center">
-                    <PasswordRuleIcon />
-                    <h1 className="italic text-xs">At least one symbol (!@#$%^&*.,-=)</h1>
+                    <PasswordRuleIcon isValid={passwordCriteria.symbol} />
+                    <h1 className="italic text-xs">At least one symbol (ex. !@#$%^&*.,-=)</h1>
                   </div>
 
                   <div className="flex items-center">
-                    <PasswordRuleIcon />
+                    <PasswordRuleIcon isValid={passwordCriteria.number} />
                     <h1 className="italic text-xs">At least one number</h1>
                   </div>
                 </div>
