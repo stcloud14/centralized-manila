@@ -51,7 +51,7 @@ const handleClick= async e=>{
     e.preventDefault()
 
     const { user_pass } = userReg;
-    const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-= . ,#@$!%*?&])[A-Za-z\d-= . ,#@$!%*?&]]{8,}$/;
+    const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.,-=])[A-Za-z\d!@#$%^&*.,-=]{8,}$/;
 
     if (user_pass && !passwordRule.test(user_pass)) {
       setPasswordError('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.');
@@ -148,7 +148,7 @@ console.log(userReg)
 
                   <div className="flex items-center">
                     <PasswordRuleIcon />
-                    <h1 className="italic text-xs">At least one symbol (-= . ,#@$!%*?&)</h1>
+                    <h1 className="italic text-xs">At least one symbol (!@#$%^&*.,-=)</h1>
                   </div>
 
                   <div className="flex items-center">
