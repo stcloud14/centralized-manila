@@ -1,7 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
 const TaxClearanceModal = ({ selectedTransaction, onClose, onSubmit }) => {
+
+  const { transaction_id, status_type, date_processed } = selectedTransaction;
+
+  const date = moment(date_processed).format('MMMM D, YYYY');
+  const time = moment(date_processed).format('h:mm A');
+
+  const [taxClearanceTransaction, setTaxClearanceTransaction] = useState({});
+
+  console.log(taxClearanceTransaction)
+
+  useEffect(() => {
+    const fetchTaxClearanceTransaction = async () => {
+      if (transaction_id) {
+        try {
+          const res = await axios.get(`http://localhost:8800/transachistory/taxclearance/${transaction_id}`);
+          setTaxClearanceTransaction(res.data);
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        setTaxClearanceTransaction(selectedTransaction)
+      }
+    };
+    fetchTaxClearanceTransaction();
+  }, [transaction_id]);
  
     return (
         <div className="fixed z-50 inset-0 overflow-y-auto">
@@ -22,57 +49,63 @@ const TaxClearanceModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             </div>
     
                             <div className="mb-6">
+                              {transaction_id ? (
+                                <div className="flex justify-between mb-1">
+                                  <span className="font-medium whitespace-nowrap">Transaction ID</span>
+                                  <span className="whitespace-nowrap ml-4">{transaction_id}</span>
+                                </div>
+                              ) : null}
                               <div className="flex justify-between mb-1">
-                                <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                                <span className="whitespace-nowrap ml-4">{selectedTransaction.transaction_id}</span>
+                                <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
+                                <span className="whitespace-nowrap ml-4">{taxClearanceTransaction.rp_tdn || taxClearanceTransaction.tc_rp_tdn || '-'}</span>
                               </div>
-                              {/* <div className="flex justify-between mb-1">
-                                <span className="font-medium whitespace-nowrap">Tax Identification Number (TDN)</span>
-                                <span className="whitespace-nowrap ml-4">{selectedTransaction.rp_tdn}</span>
-                              </div> */}
-                              {/* <div className="flex justify-between mb-1">
+                              <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                                <span className="whitespace-nowrap ml-4">119-7-584-328-009</span>
+                                <span className="whitespace-nowrap ml-4">{taxClearanceTransaction.rp_pin || taxClearanceTransaction.tc_rp_pin || '-'}</span>
                               </div>
-                              <div className="flex justify-between mb-1">
+                              {/* <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Transaction Number</span>
                                 <span className="whitespace-nowrap ml-4">542312454</span>
                               </div> */}
-                              <div className="flex justify-between mb-1">
+                              {/* <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                                <span className="whitespace-nowrap ml-4">AUTHORIZATION LETTER</span>
-                              </div>
+                                <span className="whitespace-nowrap ml-4">{taxClearanceTransaction.rp_tdn || taxClearanceTransaction.tp_rp_tdn || '-'}</span>
+                              </div> */}
+                              {transaction_id ? (
                               <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Date Processed</span>
-                                <span className="whitespace-nowrap ml-4">{selectedTransaction.date}</span>
+                                <span className="whitespace-nowrap ml-4">{date}</span>
                               </div>
+                              ) : null}
+                              {transaction_id ? (
                               <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Time Processed</span>
-                                <span className="whitespace-nowrap ml-4">{selectedTransaction.time}</span>
+                                <span className="whitespace-nowrap ml-4">{time}</span>
                               </div>
+                              ) : null}
                               {/* <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Period</span>
                                 <span className="whitespace-nowrap ml-4">-</span>
                               </div>
                               <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Remarks</span>
-                                <span className="whitespace-nowrap ml-4">WAITING FOR PAYMENT REFERENCE NUMBER</span>
+                                <span className="whitespace-nowrap ml-4">WAITING FOR Clearance REFERENCE NUMBER</span>
                               </div> */}
                               {/* <div className="flex justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Reference Number</span>
                                 <span className="whitespace-nowrap ml-4">-</span>
                               </div> */}
-                              {selectedTransaction.transaction_id ? (
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Status</span>
-                            <StatusBadgeMobile statusType={selectedTransaction.status_type} />
-                          </div>
-                          ) : null}
+                              {status_type ? (
+                              <div className="flex justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Status</span>
+                                <StatusBadgeMobile statusType={status_type} />
+                              </div>
+                              ) : null}
     
                               <hr className='mt-7 mb-1'/>
                               <div className="flex justify-between">
                                 <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                                <span className="font-semibold whitespace-nowrap ml-4">{selectedTransaction.amount}</span>
+                                <span className="font-semibold whitespace-nowrap ml-4">P {taxClearanceTransaction.amount ? taxClearanceTransaction.amount : '-'}</span>
                               </div>
                             </div>
                           </div>
@@ -90,15 +123,15 @@ const TaxClearanceModal = ({ selectedTransaction, onClose, onSubmit }) => {
                               <p>Close</p>
                           </button>
                           
-                      {selectedTransaction.transaction_id ? null : (
-                      <button
-                          onClick={onSubmit}
-                          type="button"
-                          className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                      >
-                          <p>Submit</p>
-                    </button>
-                    )}
+                          {transaction_id ? null : (
+                          <button
+                              onClick={onSubmit}
+                              type="button"
+                              className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                          >
+                              <p>Submit</p>
+                        </button>
+                        )}
                       </div>
                   </div>
     

@@ -14,17 +14,16 @@ const RPTaxClearanceForm =()=>{
   console.log(pathname);
   const user_id = pathname.split("/")[2];
 
-  const date = new Date();
-  const currentDate = date.toISOString().split('T')[0];
+  const [rptaxClearance, setRptaxClearance]=useState((prevData) => ({
+    ...prevData,
+    amount: 100,
+  }));
 
-  const [rptaxClearance, setRptaxClearance]=useState({})
   console.log(rptaxClearance);
 
   const handleInputChange = (e) => {
 
     const { name, value } = e.target;
-
-    const updatedValue = isNaN(value) ? value.toUpperCase() : value;
 
     if (name === 'rp_tdn') {
       const { name: inputName, value } = e.target;
@@ -91,7 +90,7 @@ const RPTaxClearanceForm =()=>{
   } else {
     setRptaxClearance((prevData) => ({
       ...prevData,
-      [name]: updatedValue,
+      [name]: value,
     }));
   }
   

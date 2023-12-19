@@ -46,8 +46,6 @@ router.get('/:user_id', async (req, res) => {
     }
 });
 
-// INPUT BIRTH CERT HERE
-
 router.get('/birthcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
@@ -163,6 +161,32 @@ router.get('/taxpayment/:transaction_id', async (req, res) => {
     LEFT JOIN year y ON tp.year_id = y.year_id \
     \
     WHERE tp.transaction_id = ?";
+
+
+    try {
+        const result = await queryDatabase(query, [transaction_id]);
+    
+        if (result.length > 0) {
+            res.json(result[0]);
+        } else {
+            res.status(404).send('No records found for the specified transaction_id');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving data');
+    }    
+});
+
+router.get('/taxclearance/:transaction_id', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount \
+    \
+    FROM rptax_clearance tc \
+    \
+    LEFT JOIN transaction_info ti ON tc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    \
+    WHERE tc.transaction_id = ?";
 
 
     try {

@@ -243,14 +243,17 @@ router.get('/payment/', async (req, res) => {
 
     const query4 = "SELECT * FROM rptax_clearance";
     const query5 = "SELECT * FROM user_transaction";
+    const query6 = "SELECT * FROM transaction_info";
   
     try {
     const result4 = await queryDatabase(query4);
     const result5 = await queryDatabase(query5);
+    const result6 = await queryDatabase(query6);
+    
 
   
     
-    res.json({rptax_clearance: result4, user_transaction: result5});
+    res.json({rptax_clearance: result4, user_transaction: result5, transaction_info: result6 });
     } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
@@ -275,15 +278,20 @@ router.get('/payment/', async (req, res) => {
     const query5 = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
     const values5 = [transID, user_id, transType, statusType, formattedDate];
 
+    const query6 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";
+    const values6 = [transID, req.body.amount];
+
 
     try{
       const result4 = await queryDatabase(query4, values4);
       const result5 = await queryDatabase(query5, values5);
+      const result6 = await queryDatabase(query6, values6);
 
       res.json({
         message: "Successfully executed",
         rptax_clearance_result: result4,
         user_transaction_result: result5,
+        transaction_info_result: result6,
 
       });
     }catch (err){
