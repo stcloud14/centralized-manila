@@ -8,7 +8,7 @@ router.get('/:user_id', (req, res) => {
 
   // SQL query to fetch the user's profile data and contact data
   const sql = "SELECT * FROM user_personal WHERE user_id = ?";
-  const sql1 = "SELECT * FROM birth_info WHERE user_id = ?";
+  const sql1 = "SELECT * FROM user_birth WHERE user_id = ?";
 
   conn2.query(sql, [user_id], (err, result) => {
       if (err) {
@@ -99,7 +99,7 @@ router.get('/contact/:user_id', (req, res) => {
   // });
 
 
-  router.put('/:user_id', (req, res) => {
+  router.post('/:user_id', (req, res) => {
     const user_id = req.params.user_id;
   
     const {
@@ -118,7 +118,7 @@ router.get('/contact/:user_id', (req, res) => {
   
     // Update user_personal table
     conn2.query(
-      'UPDATE user_personal SET `f_name`=?, `m_name`=?, `l_name`=?, `suffix_type`=?, `sex_type`=?, `cvl_status`=?, `res_status`=?, `czn_status`=? WHERE user_id=?',
+      'UPDATE user_personal SET f_name=?, m_name=?, l_name=?, suffix_type=?, sex_type=?, cvl_status=?, res_status=?, czn_status=? WHERE user_id=?',
       [f_name, m_name, l_name, suffix_type, sex_type, cvl_status, res_status, czn_status, user_id],
       (error, results, fields) => {
         if (error) {
@@ -127,7 +127,7 @@ router.get('/contact/:user_id', (req, res) => {
         } else {
           // Update birth_info table
           conn2.query(
-            'UPDATE birth_info SET `birth_date`=?, `birth_place`=? WHERE user_id=?',
+            'UPDATE user_birth SET `birth_date`=?, `birth_place`=? WHERE user_id=?',
             [birth_date, birth_place, user_id],
             (errorBirth, resultsBirth, fieldsBirth) => {
               if (errorBirth) {
