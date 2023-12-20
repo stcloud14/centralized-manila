@@ -52,7 +52,7 @@ router.get('/:user_id', async (req, res) => {
 router.get('/cedula/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS municipality, cc.transaction_id, \
+    const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS municipality, cc.transaction_id, cc.cedula_date, \
     co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_type, \
     ci.cvl_id, ci.czn_id, ci.height, ci.weight, ci.acr_no, \
     ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
@@ -78,14 +78,14 @@ router.get('/cedula/:transaction_id', async (req, res) => {
         const result = await queryDatabase(query, [transaction_id]);
     
         if (result.length > 0) {
-            const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+            const formattedDate = moment(result[0].cedula_date).format('MMMM D, YYYY');
     
-            const birthTransaction = {
+            const cedulaTransaction = {
                 ...result[0],
-                birth_date: formattedDate,
+                cedula_date: formattedDate,
             };
     
-            res.json(birthTransaction);
+            res.json(cedulaTransaction);
         } else {
             res.status(404).send('No records found for the specified transaction_id');
         }

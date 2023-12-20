@@ -30,6 +30,7 @@ const CedulaForm =()=>{
     ctc_totalamount: 0,
     ctc_interest: 0,
     ctc_amountpayable: 0,
+    ctc_residencetaxdue: '',
   }));
   
   const [isSuccess, setIsSuccess] = useState(false);
@@ -416,7 +417,7 @@ function totalingAmount({ totalAmount }) {
                     <Flatpickr
                       name='ctc_residencetaxdue'
                       id='ctc_residencetaxdue'
-                      value={CtcCedula.birth_date}
+                      value={CtcCedula.ctc_residencetaxdue}
                       onChange={(date) => {
                         const formattedDate = date.length > 0 ? (() => {
                           const originalDate = new Date(date[0]);
@@ -424,9 +425,9 @@ function totalingAmount({ totalAmount }) {
                           return originalDate.toISOString().split('T')[0];
                         })() : '';
                         
-                        setUserBirth((prevData) => ({
+                        setCtcCedula((prevData) => ({
                           ...prevData,
-                          birth_date: formattedDate,
+                          ctc_residencetaxdue: formattedDate,
                         }))
                       }}
                       options={{
@@ -440,7 +441,7 @@ function totalingAmount({ totalAmount }) {
                     <label
                       htmlFor="ctc_residencetaxdue"
                       className={`peer-focus:font-medium absolute bg-transparent text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 ${
-                        CtcCedula.birth_date ? 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                        CtcCedula.ctc_residencetaxdue ? 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
                       }`}
                     >
                       Residence Tax Due
