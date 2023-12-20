@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
+import Req from '../partials/misc/RequiredFieldIndicator';
 
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 
@@ -184,8 +185,8 @@ const RPTaxClearanceForm =()=>{
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-5 py-5">
                 <form className="max-w-md mx-auto">
-                  <h1 className='font-medium text-center text-slate-700 dark:text-white'>Tax Clearance</h1>
-                  <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Payment</h1>
+                  <h1 className='font-medium text-center text-slate-700 dark:text-white'>Real Property Tax</h1>
+                  <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Clearance</h1>
 
                   {isSuccess && (
                   <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
@@ -198,7 +199,7 @@ const RPTaxClearanceForm =()=>{
                       Please fill in all required fields before proceeding.
                     </div>
                   )}
-
+                  <h1 className='text-xs text-slate-700 dark:text-white mt-8 mb-6'>All fields mark with <Req /> are required.</h1> 
                   <div className="grid gap-6">
                       <div className="relative z-0 w-full mb-2 group">
                         <input
@@ -210,7 +211,7 @@ const RPTaxClearanceForm =()=>{
                           htmlFor="rp_tdn"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >
-                          Tax Declaration Number (TDN)
+                          Tax Declaration Number (TDN)<Req />
                         </label>
                       </div>
 
@@ -224,7 +225,7 @@ const RPTaxClearanceForm =()=>{
                           htmlFor="rp_pin"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >
-                          Property Identification Number (PIN)
+                          Property Identification Number (PIN)<Req />
                         </label>
                         {/* checkboxxx */}
                         <div className="flex items-center mt-1.5 text-xs">

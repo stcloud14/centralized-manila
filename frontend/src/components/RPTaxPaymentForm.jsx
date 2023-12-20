@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import YearDropdown from '../partials/YearDropdown';
+import Req from '../partials/misc/RequiredFieldIndicator';
 
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 
@@ -244,8 +245,9 @@ const handleCheckboxChange = (e) => {
                       Please fill in all required fields before proceeding.
                     </div>
                   )}  
-
+                  <h1 className='text-xs text-slate-700 dark:text-white mt-8 mb-6'>All fields mark with <Req /> are required.</h1>  
                   <div className="grid gap-6">
+                  
                       <div className="relative z-0 w-full mb-2 group">
                         <input
                           type="text" name="acc_name" id="acc_name" placeholder=" " onChange={handleInputChange} value={rptaxPayment.acc_name}
@@ -256,7 +258,7 @@ const handleCheckboxChange = (e) => {
                           htmlFor="acc_name"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >
-                          Account Name
+                          Account Name<Req />
                         </label>
                       </div>
 
@@ -270,7 +272,7 @@ const handleCheckboxChange = (e) => {
                           htmlFor="rp_tdn"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >
-                          Tax Declaration Number (TDN)
+                          Tax Declaration Number (TDN)<Req />
                         </label>
                       </div>
 
@@ -284,7 +286,7 @@ const handleCheckboxChange = (e) => {
                           htmlFor="rp_pin"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >
-                          Property Identification Number (PIN)
+                          Property Identification Number (PIN)<Req />
                         </label>
                         {/* checkboxxx */}
                         <div className="flex items-center mt-1.5 text-xs">
@@ -303,7 +305,7 @@ const handleCheckboxChange = (e) => {
                           htmlFor="rp_year"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >
-                          Year
+                          Year<Req />
                         </label>
                       </div>
 
@@ -315,7 +317,7 @@ const handleCheckboxChange = (e) => {
                           <option value="3rd Quarter"className='dark:bg-[#3d3d3d]'>3rd Quarter</option>
                           <option value="4th Quarter"className='dark:bg-[#3d3d3d]'>4th Quarter</option>
                         </select>
-                        <label htmlFor="period" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Period</label>
+                        <label htmlFor="period" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Period<Req /></label>
                       </div>
 
                       <div className="relative z-0 w-full mb-2 group">
@@ -328,7 +330,7 @@ const handleCheckboxChange = (e) => {
                           htmlFor="amount"
                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >
-                          Amount
+                          Amount<Req />
                         </label>
                       </div>
 
