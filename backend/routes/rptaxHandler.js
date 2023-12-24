@@ -198,11 +198,7 @@ router.get('/payment/', async (req, res) => {
   
   router.post('/payment/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
-    const rptdn = req.body.rp_tdn;
-    const rppin = req.body.rp_pin;
     const amount = req.body.amount;
-    const plainRptdn = rptdn.replace(/-/g, '');
-    const plainRppin = rppin.replace(/-/g, '');
     const plainAmount = amount.replace(/,/g, '');
     const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
     const transType = '1';
@@ -214,7 +210,7 @@ router.get('/payment/', async (req, res) => {
     const values = [transID, user_id, transType, statusType, formattedDate];
   
     const query1 = "INSERT INTO rptax_payment (`transaction_id`, `acc_name`, `rp_tdn`, `rp_pin`, `year_id`, `period_id`) VALUES (?, ?, ?, ?, ?, ?)";
-    const values1 = [transID, req.body.acc_name, plainRptdn, plainRppin, req.body.rp_year, req.body.period];
+    const values1 = [transID, req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period];
   
     const query2 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";
     const values2 = [transID, plainAmount];
@@ -262,10 +258,6 @@ router.get('/payment/', async (req, res) => {
   
   router.post('/clearance/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
-    const rptdn = req.body.rp_tdn;
-    const rppin = req.body.rp_pin;
-    const plainRptdn = rptdn.replace(/-/g, '');
-    const plainRppin = rppin.replace(/-/g, '');
     const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
     const transType = '2';
     const statusType = 'Pending';
@@ -273,7 +265,7 @@ router.get('/payment/', async (req, res) => {
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
     const query4 = "INSERT INTO rptax_clearance (`rp_tdn`, `rp_pin`, `transaction_id`) VALUES (?, ?, ?)";
-    const values4 = [plainRptdn, plainRppin, transID];
+    const values4 = [req.body.rp_tdn, req.body.rp_pin, transID];
 
     const query5 = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
     const values5 = [transID, user_id, transType, statusType, formattedDate];
