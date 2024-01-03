@@ -3,6 +3,7 @@ import React from 'react';
   const CityDropdown = ({ selectedProvince }) => {
       const cityOptions = [
         
+        { value: '1A1', label: 'Adams', province: '1A1' },
         { value: '1A2', label: 'Bacarra', province: '1A1' },
         { value: '1A3', label: 'Badoc', province: '1A1' },
         { value: '1A4', label: 'Bangui', province: '1A1' },
@@ -1513,7 +1514,7 @@ import React from 'react';
         { value: '17A68', label: 'Loreto', province: '17A5' },
         { value: '17A69', label: 'San Jose', province: '17A5' },
         { value: '17A70', label: 'Tubajon', province: '17A5' },
-        
+
         
       ];
 

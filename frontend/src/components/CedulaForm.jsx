@@ -406,9 +406,9 @@ function totalingAmount({ totalAmount }) {
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={CtcCedula.ctc_employmentstatus} name="ctc_employmentstatus" id="ctc_employmentstatus" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Employment Status</option>
-                      <option value="COUNTRY A" className='dark:bg-[#3d3d3d]'>Country A</option>
-                    <option value="COUNTRY B" className='dark:bg-[#3d3d3d]'>Country B</option>
-                    <option value="COUNTRY C" className='dark:bg-[#3d3d3d]'>Country C</option>
+                      <option value="WORKER" className='dark:bg-[#3d3d3d]'>Worker</option>
+                    <option value="EMPLOYEE" className='dark:bg-[#3d3d3d]'>Employee</option>
+                    <option value="UNEMPLOYED" className='dark:bg-[#3d3d3d]'>Unemployed</option>
                     </select>
                     <label htmlFor="ctc_employmentstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Employment Status<Req /></label>
                   </div>
@@ -474,6 +474,9 @@ function totalingAmount({ totalAmount }) {
                       <option value="COUNTRY A" className='dark:bg-[#3d3d3d]'>Country A</option>
                     <option value="COUNTRY B" className='dark:bg-[#3d3d3d]'>Country B</option>
                     <option value="COUNTRY C" className='dark:bg-[#3d3d3d]'>Country C</option>
+                    <option value="" className='dark:bg-[#3d3d3d]'>Business ----</option>
+                      <option value="COUNTRY A" className='dark:bg-[#3d3d3d]'>Country A</option>
+                    <option value="COUNTRY B" className='dark:bg-[#3d3d3d]'>Country B</option>
                     </select>
                     <label htmlFor="ctc_profession" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession/Occupation/Business<Req /></label>
                   </div>
@@ -535,17 +538,17 @@ function totalingAmount({ totalAmount }) {
               </div>
               <div className="flex justify-between mt-2">
                 <span className="whitespace-nowrap">Total</span>
-                <span name="ctc_totalamount" id="ctc_totalamount" className="whitespace-nowrap">P {CtcCedula.ctc_totalamount}</span>
+                <span name="ctc_totalamount" id="ctc_totalamount" className="whitespace-nowrap">P {CtcCedula.ctc_totalamount} .00</span>
               </div>
               <div className="flex justify-between mt-2">
                     <span className="whitespace-nowrap">Interest (20%)</span>
-                    <span name="ctc_interest" id="ctc_interest" className="whitespace-nowrap">P {CtcCedula.ctc_interest}</span>
+                    <span name="ctc_interest" id="ctc_interest" className="whitespace-nowrap">P {CtcCedula.ctc_interest} .00</span>
                   </div>
 
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">
                   <span className="font-medium whitespace-nowrap">Total Amount To Pay</span>
-                  <span name="ctc_amount" id="ctc_amount" className="whitespace-nowrap">P {CtcCedula.ctc_amountpayable}</span>
+                  <span name="ctc_amount" id="ctc_amount" className="whitespace-nowrap">P {CtcCedula.ctc_amountpayable} .00</span>
                 </div>
                  </div>
               </div>
