@@ -670,7 +670,7 @@ const BirthCertificateForm =()=>{
                  </div>
               </div>
 
-              <div className="flex flex-col items-center md:flex-row md:justify-end mt-7">
+              <div className="flex justify-end items-end mt-10 mb-4">
                 <button
                   type="submit"
                   onClick={handleProceed}
