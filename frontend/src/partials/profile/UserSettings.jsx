@@ -5,25 +5,24 @@ import Sidebar from '../Sidebar';
 import Header from '../Header';
 import defaultImage from '../../images/default_img.png';
 
+
 const UserSettings =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user_id } = useParams();
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
-      // Display a confirmation dialog
-      const confirmDelete = window.confirm('Are you sure you want to delete your account?');
-      if (confirmDelete) {
-        // Make a DELETE request to the server endpoint
-        await axios.delete(`http://localhost:8800/profile/accdelete/${user_id}`);
-
-        // Redirect to the login or landing page after successful deletion
-        window.location.replace = '/';
-      }
+        const confirmDelete = window.confirm('Are you sure you want to delete your account?');
+        if (confirmDelete) {
+            await axios.delete(`http://localhost:8800/login/accdelete/${user_id}`);
+            // Set the new URL using window.location.href
+            window.location.href = '/';
+        }
+        console.log(confirmDelete);
     } catch (error) {
-      console.error('Error deleting account:', error.message);
+        console.error('Error deleting account:', error.message);
     }
-  };
+};
 
   const handleSubmit = async (event) => {
     event.preventDefault();
