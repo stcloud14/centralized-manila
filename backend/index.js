@@ -10,6 +10,7 @@ import birthCertHandler from './routes/birthCertHandler.js'
 import deathCertHandler from './routes/deathCertHandler.js'
 import marriageCertHandler from './routes/marriageCertHandler.js'
 import cedulaHandler from './routes/cedulaHandler.js'
+import busPermitHandler from './routes/busPermitHandler.js'
 
 const app = express();
 
@@ -20,11 +21,12 @@ app.use('/login', login);
 app.use('/register', register);
 app.use('/profile', profileHandler);
 app.use('/rptax', rptaxHandler);
-app.use('/transachistory', transactionHandler);
+app.use('/buspermit', busPermitHandler);
+app.use('/cedula', cedulaHandler);
 app.use('/birthcertificate', birthCertHandler);
 app.use('/deathcertificate', deathCertHandler);
 app.use('/marriagecertificate', marriageCertHandler)
-app.use('/cedula', cedulaHandler);
+app.use('/transachistory', transactionHandler);
 
 
 

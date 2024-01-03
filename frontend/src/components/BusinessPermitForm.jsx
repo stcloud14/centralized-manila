@@ -107,10 +107,11 @@ const BusinessPermitForm =()=>{
                   <div className="relative z-0 w-full mb-6 group">
                     <select name="bp_type" id="bp_type" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Business Type</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <option value="1" className='dark:bg-[#3d3d3d]'>Sole Proprietorship</option>
+                      <option value="2" className='dark:bg-[#3d3d3d]'>One Person Corporation</option>
+                      <option value="3" className='dark:bg-[#3d3d3d]'>Partnership</option>
+                      <option value="4" className='dark:bg-[#3d3d3d]'>Corporation</option>
+                      <option value="5" className='dark:bg-[#3d3d3d]'>Cooperative</option>
                     </select>
                     <label htmlFor="bp_type" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Business Type<Req /></label>
                   </div>
@@ -515,11 +516,16 @@ const BusinessPermitForm =()=>{
                 <div className="grid md:grid-cols-3 md:gap-6 mt-4">
                   <div className="relative z-0 w-full md:col-span-1 mb-6 group">
                     <select name="bp_validid" id="bp_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
-                      <option className='dark:bg-[#3d3d3d]'>Option</option>
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
+                      <option className='dark:bg-[#3d3d3d]'>SSS</option>
+                      <option className='dark:bg-[#3d3d3d]'>UMID</option>
+                      <option className='dark:bg-[#3d3d3d]'>PHILHEALTH</option>
+                      <option className='dark:bg-[#3d3d3d]'>DRIVER'S LICENSE</option>
+                      <option className='dark:bg-[#3d3d3d]'>VOTER'S ID</option>
+                      <option className='dark:bg-[#3d3d3d]'>SENIOR CITIZEN'S ID</option>
+                      <option className='dark:bg-[#3d3d3d]'>POSTAL ID</option>
+                      <option className='dark:bg-[#3d3d3d]'>BARANGAY ID</option>
+                      <option className='dark:bg-[#3d3d3d]'>AUTHORIZATION LETTER</option>
                     </select>
                     <label htmlFor="bp_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to present upon claiming license<Req /></label>
                   </div>
