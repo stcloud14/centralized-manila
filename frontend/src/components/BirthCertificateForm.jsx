@@ -75,7 +75,7 @@ const BirthCertificateForm =()=>{
       'birthc_reqregion', 'birthc_reqprovince', 'birthc_reqmunicipal', 'birthc_reqbrgy', 'birthc_reqhnum', 'birthc_reqstreet', 'birthc_reqzip',
       'birthc_reqlname', 'birthc_reqfname', 'birthc_reqrelation', 'birthc_reqmobnum',
       'birthc_motherlname', 'birthc_motherfname',
-      'birthc_ownerregion', 'birthc_ownerprovince', 'birthc_ownermunicipal', 'birthc_date', 'birthc_lname', 'birthc_fname', 'birthc_sex']; //The input fields that is required
+      'birthc_region', 'birthc_province', 'birthc_municipal', 'birthc_date', 'birthc_lname', 'birthc_fname', 'birthc_sex']; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !birthCert[field]);
 
     if (isIncomplete) {
