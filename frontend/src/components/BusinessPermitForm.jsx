@@ -1042,10 +1042,11 @@ const BusinessPermitForm =()=>{
                     </tbody>
                   </table>
                 </div>
+                </div>
 
-                {/* Group 12 - Computation*/}
+                {/* Group 12 - Transaction Information*/}
                 <div className='pt-6'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-8'>Transaction Information</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Transaction Information</h1>
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
@@ -1105,9 +1106,9 @@ const BusinessPermitForm =()=>{
                     <label htmlFor="bus_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>
                 </div> 
-              </div>
+              
 
-              {/* Group 6 - Computation */}
+              {/* Group 13 - Computation */}
               <div className="flex justify-center md:justify-end text-sm">
                  <div className="w-full md:w-1/2">
                      <div className="flex justify-between mt-2">
