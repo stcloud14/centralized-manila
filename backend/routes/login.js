@@ -23,7 +23,6 @@ router.get("/:mobile_no/:user_pass", (req, res) => {
   // Delete statement
   router.delete("/profile/accdelete/:user_id", (req, res) => {
     const user_id = req.params.user_id;
-  
     // SQL query to delete user account
     const sql = "DELETE FROM user_auth WHERE user_id = ?";
   
