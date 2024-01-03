@@ -1114,6 +1114,7 @@ const BusinessPermitForm =()=>{
                   </table>
                 </div>
 
+                {/* Group 12 - Computation*/}
                 <div className='pt-6'>
                 <h1 className='font-medium text-center text-slate-700 dark:text-white my-8'>Transaction Information</h1>
                 {/* Row 1 */}
