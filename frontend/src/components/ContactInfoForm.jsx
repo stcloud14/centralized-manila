@@ -16,6 +16,7 @@ const ContactInfoForm =()=>{
   const { pathname } = location;
   console.log(pathname);
   const user_id = pathname.split("/")[2];
+  const [editMode, setEditMode] = useState(false);
 
   const [userContact, setUserContact]=useState({})
 
@@ -86,8 +87,14 @@ const ContactInfoForm =()=>{
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
 
+  const handleEdit = () => {
+    setEditMode(!editMode);
+  };
+
+  
   const handleProceed = (e) => {
     e.preventDefault();
+    
     
     // Please fill up the necessary forms
     const requiredFields = ['user_email', 'mobile_no', 'tel_no', 'region_id', 'prov_id', 'city_id', 'house_floor', 'bldg_name', 'brgy_dist', 'zip_code']; //The input fields that is required
@@ -147,63 +154,149 @@ const ContactInfoForm =()=>{
             
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userContact.user_email} type="text" name="user_email" id="user_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
-                  <label htmlFor="user_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
+                  <input onChange={handleInputChange} value={userContact.user_email} type="text" name="user_email" id="user_email" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                    }`}
+                    placeholder=" "
+                    required
+                    disabled={!editMode}/>
+                  <label htmlFor="user_email" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
+                      !editMode && 'text-gray-500'
+                    }`}>Email</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userContact.mobile_no} type="text" name="mobile_no" id="mobile_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
-                  <label htmlFor="mobile_no" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile No.</label>
+                  <input onChange={handleInputChange} value={userContact.mobile_no} type="text" name="mobile_no" id="mobile_no" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                    }`}
+                    placeholder=" "
+                    required
+                    disabled={!editMode}/>
+                    <label htmlFor="mobile_no" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
+                      !editMode && 'text-gray-500'
+                    }`}>Mobile No.</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userContact.tel_no} type="text" name="tel_no" id="tel_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
-                  <label htmlFor="tel_no" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Telephone No.</label>
+                  <input onChange={handleInputChange} value={userContact.tel_no} type="text" name="tel_no" id="tel_no" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                    }`}
+                    placeholder=" "
+                    required
+                    disabled={!editMode}/>
+                    <label htmlFor="tel_no" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
+                      !editMode && 'text-gray-500'
+                    }`}>Telephone No.</label>
                 </div>
                
               </div>
             
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                <select onChange={handleInputChange} value={userContact.region_id} name="region_id" id="user_region" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
+                <select onChange={handleInputChange} value={userContact.region_id} name="region_id" id="user_region" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                    }`}
+                    placeholder=" "
+                    required
+                    disabled={!editMode}>
                     <RegionDropdown />
                 </select>
-                  <label htmlFor="user_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region</label>
+                  <label htmlFor="user_region" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
+                      !editMode && 'text-gray-500'
+                    }`}>Region</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                <select onChange={handleInputChange} value={userContact.prov_id} name="prov_id" id="user_prov" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
-                  <ProvinceDropdown selectedRegion={userContact.region_id} /> 
+                <select onChange={handleInputChange} value={userContact.prov_id} name="prov_id" id="user_prov" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                    }`}
+                    placeholder=" "
+                    required
+                    disabled={!editMode}>
+                    <ProvinceDropdown selectedRegion={userContact.region_id} /> 
                 </select>
-                  <label htmlFor="user_prov" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province</label>
+                  <label htmlFor="user_prov" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
+                      !editMode && 'text-gray-500'
+                    }`}>Province</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                <select onChange={handleInputChange} value={userContact.city_id} name="city_id" id="user_municipal" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                  <CityDropdown selectedProvince={userContact.prov_id} />
+                <select onChange={handleInputChange} value={userContact.city_id} name="city_id" id="user_municipal" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                    }`}
+                    placeholder=" "
+                    required
+                    disabled={!editMode}>
+                    <CityDropdown selectedProvince={userContact.prov_id} />
                  
                 </select>
-                  <label htmlFor="user_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal</label>
+                  <label htmlFor="user_municipal" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
+                      !editMode && 'text-gray-500'
+                    }`}>Municipal</label>
                 </div>
               </div>
 
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userContact.house_floor} type="text" name="house_floor" id="user_house" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
-                  <label htmlFor="user_house" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">House No. / Unit / Floor</label>
+                  <input onChange={handleInputChange} value={userContact.house_floor} type="text" name="house_floor" id="user_house" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                    }`}
+                    placeholder=" "
+                    required
+                    disabled={!editMode}/>
+                    <label htmlFor="user_house" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
+                      !editMode && 'text-gray-500'
+                    }`}>House No. / Unit / Floor</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userContact.bldg_name} type="text" name="bldg_name" id="user_street" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
-                  <label htmlFor="user_street" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Street / Building Name</label>
+                  <input onChange={handleInputChange} value={userContact.bldg_name} type="text" name="bldg_name" id="user_street" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                    }`}
+                    placeholder=" "
+                    required
+                    disabled={!editMode}/>
+                    <label htmlFor="user_street" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
+                      !editMode && 'text-gray-500'
+                    }`}>Street / Building Name</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userContact.brgy_dist}  type="text" name="brgy_dist" id="user_brgy" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
-                  <label htmlFor="user_brgy" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Barangay / Zone / District</label>
+                  <input onChange={handleInputChange} value={userContact.brgy_dist}  type="text" name="brgy_dist" id="user_brgy" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                    }`}
+                    placeholder=" "
+                    required
+                    disabled={!editMode}/>
+                    <label htmlFor="user_brgy" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
+                      !editMode && 'text-gray-500'
+                    }`}>Barangay / Zone / District</label>
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
-                  <input onChange={handleInputChange} value={userContact.zip_code}  type="text" name="zip_code" id="user_zip" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
-                  <label htmlFor="user_zip" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Zip Code</label>
+                  <input onChange={handleInputChange} value={userContact.zip_code}  type="text" name="zip_code" id="user_zip" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                    }`}
+                    placeholder=" "
+                    required
+                    disabled={!editMode}/>
+                    <label htmlFor="user_zip" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
+                      !editMode && 'text-gray-500'
+                    }`}>Zip Code</label>
                 </div>
               </div>
 
               <div className="flex flex-col items-center md:flex-row md:justify-end mt-7">
-                  <button type="submit" onClick={handleProceed} className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Save Changes</button>
+
+              <button
+                  type="button"
+                  onClick={handleEdit}
+                  className={`text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 ${
+                    !editMode
+                  }`}
+                >
+                  Edit Profile
+                </button>
+
+
+                  <button type="submit" onClick={handleProceed} className={`text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 ${
+                    !editMode && 'hidden'
+                  }`}
+                >
+                  Save Changes</button>
               </div>
             </form>
 
