@@ -14,7 +14,7 @@ const UserSettings =()=>{
     try {
         const confirmDelete = window.confirm('Are you sure you want to delete your account?');
         if (confirmDelete) {
-            await axios.delete(`http://localhost:8800/login/accdelete/${user_id}`);
+            await axios.delete(`http://localhost:8800/delete/accdelete/${user_id}`);
             // Set the new URL using window.location.href
             window.location.href = '/';
         }

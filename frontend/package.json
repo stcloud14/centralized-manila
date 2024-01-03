@@ -20,7 +20,8 @@
     "react-flatpickr": "^3.10.13",
     "react-router-dom": "^6.17.0",
     "react-select": "^5.8.0",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "^4.4.5",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.1.0",
