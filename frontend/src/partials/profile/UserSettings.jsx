@@ -7,7 +7,6 @@ import Header from '../Header';
 const UserSettings =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user_id } = useParams();
-
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
