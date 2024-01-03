@@ -105,7 +105,7 @@ const TaxClearanceModal = ({ selectedTransaction, onClose, onSubmit }) => {
                               <hr className='mt-7 mb-1'/>
                               <div className="flex justify-between">
                                 <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                                <span className="font-semibold whitespace-nowrap ml-4">P {taxClearanceTransaction.amount ? taxClearanceTransaction.amount : '-'}</span>
+                                <span className="font-semibold whitespace-nowrap ml-4">P {taxClearanceTransaction.amount ? taxClearanceTransaction.amount : '-'} .00</span>
                               </div>
                             </div>
                           </div>

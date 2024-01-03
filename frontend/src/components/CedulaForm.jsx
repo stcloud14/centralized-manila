@@ -538,17 +538,17 @@ function totalingAmount({ totalAmount }) {
               </div>
               <div className="flex justify-between mt-2">
                 <span className="whitespace-nowrap">Total</span>
-                <span name="ctc_totalamount" id="ctc_totalamount" className="whitespace-nowrap">P {CtcCedula.ctc_totalamount}</span>
+                <span name="ctc_totalamount" id="ctc_totalamount" className="whitespace-nowrap">P {CtcCedula.ctc_totalamount} .00</span>
               </div>
               <div className="flex justify-between mt-2">
                     <span className="whitespace-nowrap">Interest (20%)</span>
-                    <span name="ctc_interest" id="ctc_interest" className="whitespace-nowrap">P {CtcCedula.ctc_interest}</span>
+                    <span name="ctc_interest" id="ctc_interest" className="whitespace-nowrap">P {CtcCedula.ctc_interest} .00</span>
                   </div>
 
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">
                   <span className="font-medium whitespace-nowrap">Total Amount To Pay</span>
-                  <span name="ctc_amount" id="ctc_amount" className="whitespace-nowrap">P {CtcCedula.ctc_amountpayable}</span>
+                  <span name="ctc_amount" id="ctc_amount" className="whitespace-nowrap">P {CtcCedula.ctc_amountpayable} .00</span>
                 </div>
                  </div>
               </div>
