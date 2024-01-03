@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import {Link} from "react-router-dom"
+import Select from 'react-select';
 
 
 import { useLocation } from 'react-router-dom';
@@ -100,6 +101,7 @@ const handleInputChange = (e) => {
   const updatedValue = isNaN(value) ? value.toUpperCase() : value;
   const numericValue = value.replace(/\D/g, '');
   
+  
   setCtcCedula((prevData) => {
 
     if (name === 'ctc_incomeca') {
@@ -185,7 +187,12 @@ const handleInputChange = (e) => {
   }
 });
 };
-
+const handleSelectChange = (selectedOption, fieldName) => {
+  setCtcCedula((prevCtcCedula) => ({
+    ...prevCtcCedula,
+    [fieldName]: selectedOption.value,
+  }));
+};
 
 
 
@@ -232,7 +239,91 @@ function totalingAmount({ totalAmount }) {
     return [0, 0];
   }
 }
+const professionOptions = [
+  
+    { value: 'SOFTWARE_DEVELOPER', label: 'Software Developer' },
+    { value: 'SYSTEM_ADMINISTRATOR', label: 'System Administrator' },
+    { value: 'NETWORK_ENGINEER', label: 'Network Engineer' },
+    { value: 'DATA_ANALYST', label: 'Data Analyst' },
+    { value: 'CYBERSECURITY_ANALYST', label: 'Cybersecurity Analyst' },
+    { value: 'DOCTOR', label: 'Doctor' },
+    { value: 'NURSE', label: 'Nurse' },
+    { value: 'PHARMACIST', label: 'Pharmacist' },
+    { value: 'PHYSICAL_THERAPIST', label: 'Physical Therapist' },
+    { value: 'MEDICAL_TECHNOLOGIST', label: 'Medical Technologist' },
+    { value: 'ACCOUNTANT', label: 'Accountant' },
+    { value: 'FINANCIAL_ANALYST', label: 'Financial Analyst' },
+    { value: 'INVESTMENT_BANKER', label: 'Investment Banker' },
+    { value: 'ACTUARY', label: 'Actuary' },
+    { value: 'AUDITOR', label: 'Auditor' },
+    { value: 'TEACHER', label: 'Teacher' },
+    { value: 'PROFESSOR', label: 'Professor' },
+    { value: 'SCHOOL_ADMINISTRATOR', label: 'School Administrator' },
+    { value: 'EDUCATIONAL_CONSULTANT', label: 'Educational Consultant' },
+    { value: 'LIBRARIAN', label: 'Librarian' },
+    { value: 'CIVIL_ENGINEER', label: 'Civil Engineer' },
+    { value: 'MECHANICAL_ENGINEER', label: 'Mechanical Engineer' },
+    { value: 'ELECTRICAL_ENGINEER', label: 'Electrical Engineer' },
+    { value: 'AEROSPACE_ENGINEER', label: 'Aerospace Engineer' },
+    { value: 'SOFTWARE_ENGINEER', label: 'Software Engineer' },
+    { value: 'MARKETING_MANAGER', label: 'Marketing Manager' },
+    { value: 'DIGITAL_MARKETER', label: 'Digital Marketer' },
+    { value: 'PUBLIC_RELATIONS_SPECIALIST', label: 'Public Relations Specialist' },
+    { value: 'BRAND_MANAGER', label: 'Brand Manager' },
+    { value: 'MARKET_RESEARCH_ANALYST', label: 'Market Research Analyst' },
+    { value: 'SALES_REPRESENTATIVE', label: 'Sales Representative' },
+    { value: 'ACCOUNT_EXECUTIVE', label: 'Account Executive' },
+    { value: 'SALES_MANAGER', label: 'Sales Manager' },
+    { value: 'RETAIL_SALESPERSON', label: 'Retail Salesperson' },
+    { value: 'BUSINESS_DEVELOPMENT_MANAGER', label: 'Business Development Manager' },
+    { value: 'HR_MANAGER', label: 'HR Manager' },
+    { value: 'RECRUITER', label: 'Recruiter' },
+    { value: 'TRAINING_AND_DEVELOPMENT_SPECIALIST', label: 'Training and Development Specialist' },
+    { value: 'COMPENSATION_ANALYST', label: 'Compensation Analyst' },
+    { value: 'EMPLOYEE_RELATIONS_SPECIALIST', label: 'Employee Relations Specialist' },
+    { value: 'BIOLOGIST', label: 'Biologist' },
+    { value: 'CHEMIST', label: 'Chemist' },
+    { value: 'PHYSICIST', label: 'Physicist' },
+    { value: 'ENVIRONMENTAL_SCIENTIST', label: 'Environmental Scientist' },
+    { value: 'RESEARCH_SCIENTIST', label: 'Research Scientist' },
+    { value: 'GRAPHIC_DESIGNER', label: 'Graphic Designer' },
+    { value: 'ANIMATOR', label: 'Animator' },
+    { value: 'INTERIOR_DESIGNER', label: 'Interior Designer' },
+    { value: 'FASHION_DESIGNER', label: 'Fashion Designer' },
+    { value: 'ART_DIRECTOR', label: 'Art Director' },
+    { value: 'FACTORY_WORKER', label: 'Factory Worker' },
+    { value: 'PRODUCTION_SUPERVISOR', label: 'Production Supervisor' },
+    { value: 'QUALITY_CONTROL_INSPECTOR', label: 'Quality Control Inspector' },
+    { value: 'OPERATIONS_MANAGER', label: 'Operations Manager' },
+    { value: 'PROCESS_ENGINEER', label: 'Process Engineer' },
+    { value: 'CUSTOMER_SUPPORT_REPRESENTATIVE', label: 'Customer Support Representative' },
+    { value: 'CALL_CENTER_AGENT', label: 'Call Center Agent' },
+    { value: 'CUSTOMER_SUCCESS_MANAGER', label: 'Customer Success Manager' },
+    { value: 'TECHNICAL_SUPPORT_SPECIALIST', label: 'Technical Support Specialist' },
+    { value: 'CLIENT_SERVICES_COORDINATOR', label: 'Client Services Coordinator' },
+    { value: 'LAWYER', label: 'Lawyer' },
+    { value: 'PARALEGAL', label: 'Paralegal' },
+    { value: 'LEGAL_ASSISTANT', label: 'Legal Assistant' },
+    { value: 'JUDGE', label: 'Judge' },
+    { value: 'LEGAL_ANALYST', label: 'Legal Analyst' },
+    { value: 'SOCIAL_WORKER', label: 'Social Worker' },
+    { value: 'COUNSELOR', label: 'Counselor' },
+    { value: 'SUBSTANCE_ABUSE_COUNSELOR', label: 'Substance Abuse Counselor' },
+    { value: 'CHILD_WELFARE_CASE_WORKER', label: 'Child Welfare Case Worker' },
+    { value: 'NONPROFIT_PROGRAM_MANAGER', label: 'Nonprofit Program Manager' },
+    { value: 'GOVERNMENT_ANALYST', label: 'Government Analyst' },
+    { value: 'PUBLIC_POLICY_ANALYST', label: 'Public Policy Analyst' },
+    { value: 'CITY_PLANNER', label: 'City Planner' },
+    { value: 'PUBLIC_AFFAIRS_SPECIALIST', label: 'Public Affairs Specialist' },
+    { value: 'LEGISLATIVE_ASSISTANT', label: 'Legislative Assistant' },
+    { value: 'VENDOR', label: 'Vendor' },
+    { value: 'DRIVER', label: 'Driver' },
+    { value: 'STUDENT', label: 'Student' },
+    { value: 'UNEMPLOYED', label: 'Unemployed' },
 
+
+  // Add more options as needed
+];
 
 
   console.log(CtcCedula);
@@ -468,18 +559,15 @@ function totalingAmount({ totalAmount }) {
                     </select>
                     <label htmlFor="ctc_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>
-                  <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={CtcCedula.ctc_profession} name="ctc_profession" id="ctc_profession" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Profession/Occupation/Business</option>
-                      <option value="COUNTRY A" className='dark:bg-[#3d3d3d]'>Country A</option>
-                    <option value="COUNTRY B" className='dark:bg-[#3d3d3d]'>Country B</option>
-                    <option value="COUNTRY C" className='dark:bg-[#3d3d3d]'>Country C</option>
-                    <option value="" className='dark:bg-[#3d3d3d]'>Business ----</option>
-                      <option value="COUNTRY A" className='dark:bg-[#3d3d3d]'>Country A</option>
-                    <option value="COUNTRY B" className='dark:bg-[#3d3d3d]'>Country B</option>
-                    </select>
-                    <label htmlFor="ctc_profession" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession/Occupation/Business<Req /></label>
-                  </div>
+                  <div className="relative">
+  <Select
+    options={professionOptions}
+    onChange={(selectedOption) => handleSelectChange(selectedOption, 'ctc_profession')}
+    value={professionOptions.find((option) => option.value === CtcCedula.ctc_profession)}
+    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+  />
+  <label htmlFor="ctc_profession" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession/Occupation/Business<Req /></label>
+</div>
                 </div>
                 {/* Row 3 */}
                 <h1 className='text-sm text-slate-700 dark:text-white'>Additional Residence Tax on the following items owned or earned in the Philippines (Tax not exceeded P5,000)</h1>
