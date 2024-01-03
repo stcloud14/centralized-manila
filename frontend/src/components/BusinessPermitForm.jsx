@@ -12,6 +12,8 @@ import CityDropdown from '../partials/profile/CityDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 
+import UploadImageModal from '../partials/UploadModal';
+
 const BusinessPermitForm =()=>{
 
   const location = useLocation();
@@ -443,6 +445,17 @@ const BusinessPermitForm =()=>{
       return 0;
     }
   }
+
+
+
+  const [uploadModal, setUploadModal] = useState(false);
+
+  const openUploadModal = () => {
+    setUploadModal(true);
+  };
+  
+  // <UploadImageModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
   
   console.log(busPermit)
 
@@ -480,6 +493,9 @@ const BusinessPermitForm =()=>{
               Please fill in all required fields before proceeding.
             </div>
             )}  */}
+            
+
+            {uploadModal && <UploadImageModal onClose={() => setUploadModal(false)} />}
 
 
               {/* Group 1 - Business Information and Registration*/}
@@ -758,10 +774,9 @@ const BusinessPermitForm =()=>{
                 </div>
 
                 {busPermit.bus_incentive === '2' ? (
-                <div className="group md:ml-9">
+                <div onClick={openUploadModal}  className="group md:ml-9">
                   <a
                     className="flex justify-center pl-3 items-center text-center border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full"
-                    href=""
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
                       <path d="M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 00-1.09 0l-4.25 4.5a.75.75 0 101.09 1.03L9.25 4.636v8.614z" />
