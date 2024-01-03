@@ -10,7 +10,6 @@ const DropdownProfile = ({ align }) => {
   
   const location = useLocation();
   const { pathname } = location;
-  console.log(pathname);
   const user_id = pathname.split("/")[2];
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,8 +17,6 @@ const DropdownProfile = ({ align }) => {
   const dropdown = useRef(null);
 
   const [userPersonal, setUserPersonal]=useState({})
-
-  console.log("State updated:", userPersonal);
 
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
