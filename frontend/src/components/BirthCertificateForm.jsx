@@ -529,9 +529,9 @@ const BirthCertificateForm =()=>{
                 </div>
               </div>
 
-              {/* Group 6 - Mailing Address */}
+              {/* Group 6 - Requestor's Address */}
               <div className='pt-6'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Mailing Address</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Requestor's Address</h1>
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
