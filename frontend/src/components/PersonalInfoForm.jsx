@@ -406,7 +406,7 @@ const PersonalInfoForm =()=>{
                     !editMode
                   }`}
                 >
-                  Edit
+                  Edit Profile
                 </button>
               
                 <button

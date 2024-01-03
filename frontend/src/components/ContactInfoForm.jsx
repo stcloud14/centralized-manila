@@ -288,7 +288,7 @@ const ContactInfoForm =()=>{
                     !editMode
                   }`}
                 >
-                  Edit
+                  Edit Profile
                 </button>
 
 

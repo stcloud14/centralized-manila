@@ -227,7 +227,7 @@ return (
                     !editMode
                   }`}
                 >
-                  Edit
+                  Edit Profile
                 </button>
 
                   <button type="submit" 
