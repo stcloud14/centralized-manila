@@ -20,4 +20,24 @@ router.get("/:mobile_no/:user_pass", (req, res) => {
     });
   });
 
+  // Delete statement
+  router.delete("/profile/accdelete/:user_id", (req, res) => {
+    const user_id = req.params.user_id;
+    // SQL query to delete user account
+    const sql = "DELETE FROM user_auth WHERE user_id = ?";
+  
+    conn2.query(sql, [user_id], (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Error occurred while deleting the account." });
+      }
+      // Check if any rows were affected
+      if (results.affectedRows > 0) {
+        return res.status(200).json({ message: "Account deleted successfully." });
+      } else {
+        return res.status(401).json({ message: "Invalid credentials. Account not deleted." });
+      }
+    });
+  });
+  
   export default router;

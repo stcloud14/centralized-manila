@@ -75,7 +75,7 @@ const BirthCertificateForm =()=>{
       'birthc_reqregion', 'birthc_reqprovince', 'birthc_reqmunicipal', 'birthc_reqbrgy', 'birthc_reqhnum', 'birthc_reqstreet', 'birthc_reqzip',
       'birthc_reqlname', 'birthc_reqfname', 'birthc_reqrelation', 'birthc_reqmobnum',
       'birthc_motherlname', 'birthc_motherfname',
-      'birthc_ownerregion', 'birthc_ownerprovince', 'birthc_ownermunicipal', 'birthc_date', 'birthc_lname', 'birthc_fname', 'birthc_sex']; //The input fields that is required
+      'birthc_region', 'birthc_province', 'birthc_municipal', 'birthc_date', 'birthc_lname', 'birthc_fname', 'birthc_sex']; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !birthCert[field]);
 
     if (isIncomplete) {
@@ -529,9 +529,9 @@ const BirthCertificateForm =()=>{
                 </div>
               </div>
 
-              {/* Group 6 - Mailing Address */}
+              {/* Group 6 - Requestor's Address */}
               <div className='pt-6'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Mailing Address</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Requestor's Address</h1>
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
@@ -670,7 +670,7 @@ const BirthCertificateForm =()=>{
                  </div>
               </div>
 
-              <div className="flex flex-col items-center md:flex-row md:justify-end mt-7">
+              <div className="flex justify-end items-end mt-10 mb-4">
                 <button
                   type="submit"
                   onClick={handleProceed}

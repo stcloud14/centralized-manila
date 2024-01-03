@@ -1,10 +1,32 @@
 import React, { useState} from 'react';
-
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import Sidebar from '../Sidebar';
 import Header from '../Header';
 
 const UserSettings =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user_id } = useParams();
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+      // Display a confirmation dialog
+      const confirmDelete = window.confirm('Are you sure you want to delete your account?');
+      if (confirmDelete) {
+        // Make a DELETE request to the server endpoint
+        await axios.delete(`http://localhost:8800/profile/accdelete/${user_id}`);
+
+        // Redirect to the login or landing page after successful deletion
+        window.location.replace = '/';
+      }
+    } catch (error) {
+      console.error('Error deleting account:', error.message);
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  };
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -36,19 +58,19 @@ const UserSettings =()=>{
 
                   <div className="grid gap-6">
                       <div className="relative z-0 w-full mb-2 group">
-                        <input type="text" name="current_pass" id="current_pass" placeholder=" "className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required/>
+                        <input type="text" name="current_pass" id="current_pass" placeholder=" "className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                         <label htmlFor="current_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Current Password
                         </label>
                       </div>
                       <div className="relative z-0 w-full mb-2 group">
-                        <input type="text" name="new_pass" id="new_pass" placeholder=" "className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required/>
+                        <input type="text" name="new_pass" id="new_pass" placeholder=" "className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                         <label htmlFor="new_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           New Password
                         </label>
                       </div>
                       <div className="relative z-0 w-full mb-2 group">
-                        <input type="text" name="confirm_pass" id="confirm_pass" placeholder=" "className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required/>
+                        <input type="text" name="confirm_pass" id="confirm_pass" placeholder=" "className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                         <label htmlFor="confirm_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                           Confirm New Password
                         </label>
@@ -56,15 +78,18 @@ const UserSettings =()=>{
                   </div>
 
                     {/* Submit Button */}
-                    <div className="flex justify-between items-end mt-10 mb-4">
-                      <button 
-                          type="submit" 
-                          className="text-red-500 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
-                            Delete Account
+                    <div className="flex flex-col sm:flex-row justify-center items-end mt-10 mb-4 md:space-x-10">
+                      <button
+                        type="submit"
+                        onClick={handleDelete}
+                        className="w-full sm:w-auto text-red-500 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full text-sm px-10 py-2.5 text-center md:mb-2 mb-3.5 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800"
+                      >
+                        Delete Account
                       </button>
                       <button 
                           type="submit" 
-                          className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                          onClick={handleSubmit}
+                          className="w-full sm:w-auto text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
                             Save Changes
                       </button>
                     </div>
