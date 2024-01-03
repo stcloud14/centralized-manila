@@ -115,6 +115,7 @@ const PersonalInfoForm =()=>{
 
             setTimeout(() => {
               setIsSuccess(false);
+              setEditMode(false);
             }, 3000);
           })
           .catch((err) => {
@@ -209,7 +210,7 @@ const PersonalInfoForm =()=>{
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleChangePersonal} value={userPersonal.f_name} type="text" name="f_name" id="f_name" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -222,7 +223,7 @@ const PersonalInfoForm =()=>{
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleChangePersonal} value={userPersonal.m_name} type="text" name="m_name" id="m_name" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -233,7 +234,7 @@ const PersonalInfoForm =()=>{
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleChangePersonal} value={userPersonal.l_name} type="text" name="l_name" id="l_name" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -248,7 +249,7 @@ const PersonalInfoForm =()=>{
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                 <select onChange={handleChangePersonal} value={userPersonal.suffix_type} defaultValue={0} name="suffix_type" id="suffix_type" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -273,7 +274,7 @@ const PersonalInfoForm =()=>{
 
                 <div className="relative z-0 w-full mb-6 group" >
                   <select onChange={handleChangePersonal} value={userPersonal.sex_type} defaultValue={0} name="sex_type" id="sex_type" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -287,7 +288,7 @@ const PersonalInfoForm =()=>{
                 
                 <div
                   className={`relative z-0 w-full mb-6 group ${
-                    !editMode ? 'border-gray-200 dark:border-gray-700 cursor-not-allowed' : '' // Apply cursor-not-allowed class when not in edit mode
+                    !editMode ? 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400' : '' // Apply cursor-not-allowed class when not in edit mode
                   }`}
                 >
                   {editMode ? (
@@ -339,7 +340,7 @@ const PersonalInfoForm =()=>{
 
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleChangeBirth} value={userBirth.birth_place} type="text" name="birth_place" id="birth_place" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -353,7 +354,7 @@ const PersonalInfoForm =()=>{
 
                 <div className="relative z-0 w-full mb-6 group">
                   <select onChange={handleChangePersonal} value={userPersonal.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -369,7 +370,7 @@ const PersonalInfoForm =()=>{
 
                 <div className="relative z-0 w-full mb-6 group">
                   <select onChange={handleChangePersonal} value={userPersonal.czn_status} defaultValue={0} name="czn_status" id="czn_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -384,7 +385,7 @@ const PersonalInfoForm =()=>{
 
                 <div className="relative z-0 w-full mb-6 group">
                   <select onChange={handleChangePersonal} value={userPersonal.res_status} defaultValue={0} name="res_status" id="res_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required

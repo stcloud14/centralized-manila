@@ -74,6 +74,7 @@ const ContactInfoForm =()=>{
 
           setTimeout(() => {
             setIsSuccess(false);
+            setEditMode(false);
           }, 3000);
         })
         .catch((err) => {
@@ -155,7 +156,7 @@ const ContactInfoForm =()=>{
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userContact.user_email} type="text" name="user_email" id="user_email" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -166,7 +167,7 @@ const ContactInfoForm =()=>{
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userContact.mobile_no} type="text" name="mobile_no" id="mobile_no" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -177,7 +178,7 @@ const ContactInfoForm =()=>{
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userContact.tel_no} type="text" name="tel_no" id="tel_no" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -192,7 +193,7 @@ const ContactInfoForm =()=>{
               <div className="grid md:grid-cols-3 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                 <select onChange={handleInputChange} value={userContact.region_id} name="region_id" id="user_region" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -205,7 +206,7 @@ const ContactInfoForm =()=>{
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                 <select onChange={handleInputChange} value={userContact.prov_id} name="prov_id" id="user_prov" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -218,7 +219,7 @@ const ContactInfoForm =()=>{
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                 <select onChange={handleInputChange} value={userContact.city_id} name="city_id" id="user_municipal" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -235,7 +236,7 @@ const ContactInfoForm =()=>{
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userContact.house_floor} type="text" name="house_floor" id="user_house" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -246,7 +247,7 @@ const ContactInfoForm =()=>{
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userContact.bldg_name} type="text" name="bldg_name" id="user_street" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -257,7 +258,7 @@ const ContactInfoForm =()=>{
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userContact.brgy_dist}  type="text" name="brgy_dist" id="user_brgy" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -268,7 +269,7 @@ const ContactInfoForm =()=>{
                 </div>
                 <div className="col-span-1 relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userContact.zip_code}  type="text" name="zip_code" id="user_zip" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required

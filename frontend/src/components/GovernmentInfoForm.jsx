@@ -147,7 +147,7 @@ return (
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_tin_id} type="text" name="user_tin_id" id="user_tin_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -158,7 +158,7 @@ return (
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_pgb_id} type="text" name="user_pgb_id" id="user_pgb_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -172,7 +172,7 @@ return (
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_philh_id} type="text" name="user_philh_id" id="user_philh_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -183,7 +183,7 @@ return (
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_sss_id} type="text" name="user_sss_id" id="user_sss_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -197,7 +197,7 @@ return (
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_gsis_id} type="text" name="user_gsis_id" id="user_gsis_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -208,7 +208,7 @@ return (
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_natl_id} type="text" name="user_natl_id" id="user_natl_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
