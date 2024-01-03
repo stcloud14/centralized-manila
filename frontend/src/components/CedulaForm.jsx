@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import {Link} from "react-router-dom"
-import Select from 'react-select';
 
 
 import { useLocation } from 'react-router-dom';
@@ -239,91 +238,6 @@ function totalingAmount({ totalAmount }) {
     return [0, 0];
   }
 }
-const professionOptions = [
-  
-    { value: 'SOFTWARE_DEVELOPER', label: 'Software Developer' },
-    { value: 'SYSTEM_ADMINISTRATOR', label: 'System Administrator' },
-    { value: 'NETWORK_ENGINEER', label: 'Network Engineer' },
-    { value: 'DATA_ANALYST', label: 'Data Analyst' },
-    { value: 'CYBERSECURITY_ANALYST', label: 'Cybersecurity Analyst' },
-    { value: 'DOCTOR', label: 'Doctor' },
-    { value: 'NURSE', label: 'Nurse' },
-    { value: 'PHARMACIST', label: 'Pharmacist' },
-    { value: 'PHYSICAL_THERAPIST', label: 'Physical Therapist' },
-    { value: 'MEDICAL_TECHNOLOGIST', label: 'Medical Technologist' },
-    { value: 'ACCOUNTANT', label: 'Accountant' },
-    { value: 'FINANCIAL_ANALYST', label: 'Financial Analyst' },
-    { value: 'INVESTMENT_BANKER', label: 'Investment Banker' },
-    { value: 'ACTUARY', label: 'Actuary' },
-    { value: 'AUDITOR', label: 'Auditor' },
-    { value: 'TEACHER', label: 'Teacher' },
-    { value: 'PROFESSOR', label: 'Professor' },
-    { value: 'SCHOOL_ADMINISTRATOR', label: 'School Administrator' },
-    { value: 'EDUCATIONAL_CONSULTANT', label: 'Educational Consultant' },
-    { value: 'LIBRARIAN', label: 'Librarian' },
-    { value: 'CIVIL_ENGINEER', label: 'Civil Engineer' },
-    { value: 'MECHANICAL_ENGINEER', label: 'Mechanical Engineer' },
-    { value: 'ELECTRICAL_ENGINEER', label: 'Electrical Engineer' },
-    { value: 'AEROSPACE_ENGINEER', label: 'Aerospace Engineer' },
-    { value: 'SOFTWARE_ENGINEER', label: 'Software Engineer' },
-    { value: 'MARKETING_MANAGER', label: 'Marketing Manager' },
-    { value: 'DIGITAL_MARKETER', label: 'Digital Marketer' },
-    { value: 'PUBLIC_RELATIONS_SPECIALIST', label: 'Public Relations Specialist' },
-    { value: 'BRAND_MANAGER', label: 'Brand Manager' },
-    { value: 'MARKET_RESEARCH_ANALYST', label: 'Market Research Analyst' },
-    { value: 'SALES_REPRESENTATIVE', label: 'Sales Representative' },
-    { value: 'ACCOUNT_EXECUTIVE', label: 'Account Executive' },
-    { value: 'SALES_MANAGER', label: 'Sales Manager' },
-    { value: 'RETAIL_SALESPERSON', label: 'Retail Salesperson' },
-    { value: 'BUSINESS_DEVELOPMENT_MANAGER', label: 'Business Development Manager' },
-    { value: 'HR_MANAGER', label: 'HR Manager' },
-    { value: 'RECRUITER', label: 'Recruiter' },
-    { value: 'TRAINING_AND_DEVELOPMENT_SPECIALIST', label: 'Training and Development Specialist' },
-    { value: 'COMPENSATION_ANALYST', label: 'Compensation Analyst' },
-    { value: 'EMPLOYEE_RELATIONS_SPECIALIST', label: 'Employee Relations Specialist' },
-    { value: 'BIOLOGIST', label: 'Biologist' },
-    { value: 'CHEMIST', label: 'Chemist' },
-    { value: 'PHYSICIST', label: 'Physicist' },
-    { value: 'ENVIRONMENTAL_SCIENTIST', label: 'Environmental Scientist' },
-    { value: 'RESEARCH_SCIENTIST', label: 'Research Scientist' },
-    { value: 'GRAPHIC_DESIGNER', label: 'Graphic Designer' },
-    { value: 'ANIMATOR', label: 'Animator' },
-    { value: 'INTERIOR_DESIGNER', label: 'Interior Designer' },
-    { value: 'FASHION_DESIGNER', label: 'Fashion Designer' },
-    { value: 'ART_DIRECTOR', label: 'Art Director' },
-    { value: 'FACTORY_WORKER', label: 'Factory Worker' },
-    { value: 'PRODUCTION_SUPERVISOR', label: 'Production Supervisor' },
-    { value: 'QUALITY_CONTROL_INSPECTOR', label: 'Quality Control Inspector' },
-    { value: 'OPERATIONS_MANAGER', label: 'Operations Manager' },
-    { value: 'PROCESS_ENGINEER', label: 'Process Engineer' },
-    { value: 'CUSTOMER_SUPPORT_REPRESENTATIVE', label: 'Customer Support Representative' },
-    { value: 'CALL_CENTER_AGENT', label: 'Call Center Agent' },
-    { value: 'CUSTOMER_SUCCESS_MANAGER', label: 'Customer Success Manager' },
-    { value: 'TECHNICAL_SUPPORT_SPECIALIST', label: 'Technical Support Specialist' },
-    { value: 'CLIENT_SERVICES_COORDINATOR', label: 'Client Services Coordinator' },
-    { value: 'LAWYER', label: 'Lawyer' },
-    { value: 'PARALEGAL', label: 'Paralegal' },
-    { value: 'LEGAL_ASSISTANT', label: 'Legal Assistant' },
-    { value: 'JUDGE', label: 'Judge' },
-    { value: 'LEGAL_ANALYST', label: 'Legal Analyst' },
-    { value: 'SOCIAL_WORKER', label: 'Social Worker' },
-    { value: 'COUNSELOR', label: 'Counselor' },
-    { value: 'SUBSTANCE_ABUSE_COUNSELOR', label: 'Substance Abuse Counselor' },
-    { value: 'CHILD_WELFARE_CASE_WORKER', label: 'Child Welfare Case Worker' },
-    { value: 'NONPROFIT_PROGRAM_MANAGER', label: 'Nonprofit Program Manager' },
-    { value: 'GOVERNMENT_ANALYST', label: 'Government Analyst' },
-    { value: 'PUBLIC_POLICY_ANALYST', label: 'Public Policy Analyst' },
-    { value: 'CITY_PLANNER', label: 'City Planner' },
-    { value: 'PUBLIC_AFFAIRS_SPECIALIST', label: 'Public Affairs Specialist' },
-    { value: 'LEGISLATIVE_ASSISTANT', label: 'Legislative Assistant' },
-    { value: 'VENDOR', label: 'Vendor' },
-    { value: 'DRIVER', label: 'Driver' },
-    { value: 'STUDENT', label: 'Student' },
-    { value: 'UNEMPLOYED', label: 'Unemployed' },
-
-
-  // Add more options as needed
-];
 
 
   console.log(CtcCedula);
@@ -497,9 +411,11 @@ const professionOptions = [
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={CtcCedula.ctc_employmentstatus} name="ctc_employmentstatus" id="ctc_employmentstatus" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Employment Status</option>
-                      <option value="WORKER" className='dark:bg-[#3d3d3d]'>Worker</option>
-                    <option value="EMPLOYEE" className='dark:bg-[#3d3d3d]'>Employee</option>
+                    <option value="EMPLOYEE_FULLTIME" className='dark:bg-[#3d3d3d]'>Employed - Full Time</option>
+                    <option value="EMPLOYEE_PARTTIME" className='dark:bg-[#3d3d3d]'>Employed - Part Time</option>
                     <option value="UNEMPLOYED" className='dark:bg-[#3d3d3d]'>Unemployed</option>
+                    <option value="WORKER" className='dark:bg-[#3d3d3d]'>Worker</option>
+
                     </select>
                     <label htmlFor="ctc_employmentstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Employment Status<Req /></label>
                   </div>
@@ -559,15 +475,91 @@ const professionOptions = [
                     </select>
                     <label htmlFor="ctc_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>
-                  <div className="relative">
-                      <Select
-                        options={professionOptions}
-                        onChange={(selectedOption) => handleSelectChange(selectedOption, 'ctc_profession')}
-                        value={professionOptions.find((option) => option.value === CtcCedula.ctc_profession)}
-                        className="block py-0.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      />
+                  <div className="relative z-0 w-full mb-6 group">
+                    <select onChange={handleInputChange} value={CtcCedula.ctc_profession} name="ctc_profession" id="ctc_profession" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Profession/Occupation/Business</option>
+                      <option value="ACCOUNT_EXECUTIVE" className='dark:bg-[#3d3d3d]'>Account Executive</option>
+                      <option value="ACCOUNTANT" className='dark:bg-[#3d3d3d]'>Accountant</option>
+                      <option value="ACTUARY" className='dark:bg-[#3d3d3d]'>Actuary</option>
+                      <option value="AEROSPACE_ENGINEER" className='dark:bg-[#3d3d3d]'>Aerospace Engineer</option>
+                      <option value="ANIMATOR" className='dark:bg-[#3d3d3d]'>Animator</option>
+                      <option value="ART_DIRECTOR" className='dark:bg-[#3d3d3d]'>Art Director</option>
+                      <option value="AUDITOR" className='dark:bg-[#3d3d3d]'>Auditor</option>
+                      <option value="BILOGIST" className='dark:bg-[#3d3d3d]'>Biologist</option>
+                      <option value="BRAND_MANAGER" className='dark:bg-[#3d3d3d]'>Brand Manager</option>
+                      <option value="BUSINESS_DEVELOPMENT_MANAGER" className='dark:bg-[#3d3d3d]'>Business Development Manager</option>
+                      <option value="CALL_CENTER_AGENT" className='dark:bg-[#3d3d3d]'>Call Center Agent</option>
+                      <option value="CHEMIST" className='dark:bg-[#3d3d3d]'>Chemist</option>
+                      <option value="CITY_PLANNER" className='dark:bg-[#3d3d3d]'>City Planner</option>
+                      <option value="CIVIL_ENGINEER" className='dark:bg-[#3d3d3d]'>Civil Engineer</option>
+                      <option value="CLIENT_SERVICES_COORDINATOR" className='dark:bg-[#3d3d3d]'>Client Services Coordinator</option>
+                      <option value="COMPENSATION_ANALYST" className='dark:bg-[#3d3d3d]'>Compensation Analyst</option>
+                      <option value="COUNSELOR" className='dark:bg-[#3d3d3d]'>Counselor</option>
+                      <option value="CUSTOMER_SUPPORT_REPRESENTATIVE" className='dark:bg-[#3d3d3d]'>Customer Support Representative</option>
+                      <option value="CUSTOMER_SUCCESS_MANAGER" className='dark:bg-[#3d3d3d]'>Customer Success Manager</option>
+                      <option value="DATA_ANALYST" className='dark:bg-[#3d3d3d]'>Data Analyst</option>
+                      <option value="DIGITAL_MARKETER" className='dark:bg-[#3d3d3d]'>Digital Marketer</option>
+                      <option value="DOCTOR" className='dark:bg-[#3d3d3d]'>Doctor</option>
+                      <option value="DRIVER" className='dark:bg-[#3d3d3d]'>Driver</option>
+                      <option value="EDUCATIONAL_CONSULTANT" className='dark:bg-[#3d3d3d]'>Educational Consultant</option>
+                      <option value="ELECTRICAL_ENGINEER" className='dark:bg-[#3d3d3d]'>Electrical Engineer</option>
+                      <option value="EMPLOYEE_RELATIONS_SPECIALIST" className='dark:bg-[#3d3d3d]'>Employee Relations Specialist</option>
+                      <option value="ENVIRONMENTAL_SCIENTIST" className='dark:bg-[#3d3d3d]'>Environmental Scientist</option>
+                      <option value="FACTORY_WORKER" className='dark:bg-[#3d3d3d]'>Factory Worker</option>
+                      <option value="FINANCIAL_ANALYST" className='dark:bg-[#3d3d3d]'>Financial Analyst</option>
+                      <option value="FASHION_DESIGNER" className='dark:bg-[#3d3d3d]'>Fashion Designer</option>
+                      <option value="GRAPHIC_DESIGNER" className='dark:bg-[#3d3d3d]'>Graphic Designer</option>
+                      <option value="GOVERNMENT_ANALYST" className='dark:bg-[#3d3d3d]'>Government Analyst</option>
+                      <option value="HR_MANAGER" className='dark:bg-[#3d3d3d]'>HR Manager</option>
+                      <option value="INVESTMENT_BANKER" className='dark:bg-[#3d3d3d]'>Investment Banker</option>
+                      <option value="JUDGE" className='dark:bg-[#3d3d3d]'>Judge</option>
+                      <option value="LAWYER" className='dark:bg-[#3d3d3d]'>Lawyer</option>
+                      <option value="LEGAL_ANALYST" className='dark:bg-[#3d3d3d]'>Legal Analyst</option>
+                      <option value="LEGAL_ASSISTANT" className='dark:bg-[#3d3d3d]'>Legal Assistant</option>
+                      <option value="LIBRARIAN" className='dark:bg-[#3d3d3d]'>Librarian</option>
+                      <option value="MARKET_RESEARCH_ANALYST" className='dark:bg-[#3d3d3d]'>Market Research Analyst</option>
+                      <option value="MARKETING_MANAGER" className='dark:bg-[#3d3d3d]'>Marketing Manager</option>
+                      <option value="MARRIED" className='dark:bg-[#3d3d3d]'>Married</option>
+                      <option value="MECHANICAL_ENGINEER" className='dark:bg-[#3d3d3d]'>Mechanical Engineer</option>
+                      <option value="MEDICAL_TECHNOLOGIST" className='dark:bg-[#3d3d3d]'>Medical Technologist</option>
+                      <option value="NETWORK_ENGINEER" className='dark:bg-[#3d3d3d]'>Network Engineer</option>
+                      <option value="NONPROFIT_PROGRAM_MANAGER" className='dark:bg-[#3d3d3d]'>Nonprofit Program Manager</option>
+                      <option value="NURSE" className='dark:bg-[#3d3d3d]'>Nurse</option>
+                      <option value="OPERATIONS_MANAGER" className='dark:bg-[#3d3d3d]'>Operations Manager</option>
+                      <option value="PARALEGAL" className='dark:bg-[#3d3d3d]'>Paralegal</option>
+                      <option value="PHARMACIST" className='dark:bg-[#3d3d3d]'>Pharmacist</option>
+                      <option value="PHYSICAL_THERAPIST" className='dark:bg-[#3d3d3d]'>Physical Therapist</option>
+                      <option value="PHYSICIST" className='dark:bg-[#3d3d3d]'>Physicist</option>
+                      <option value="PRODUCTION_SUPERVISOR" className='dark:bg-[#3d3d3d]'>Production Supervisor</option>
+                      <option value="PROFESSOR" className='dark:bg-[#3d3d3d]'>Professor</option>
+                      <option value="PUBLIC_AFFAIRS_SPECIALIST" className='dark:bg-[#3d3d3d]'>Public Affairs Specialist</option>
+                      <option value="PUBLIC_POLICY_ANALYST" className='dark:bg-[#3d3d3d]'>Public Policy Analyst</option>
+                      <option value="PUBLIC_RELATIONS_SPECIALIST" className='dark:bg-[#3d3d3d]'>Public Relations Specialist</option>
+                      <option value="QUALITY_CONTROL_INSPECTOR" className='dark:bg-[#3d3d3d]'>Quality Control Inspector</option>
+                      <option value="RECRUITER" className='dark:bg-[#3d3d3d]'>Recruiter</option>
+                      <option value="RESEARCH_SCIENTIST" className='dark:bg-[#3d3d3d]'>Research Scientist</option>
+                      <option value="RETAIL_SALESPERSON" className='dark:bg-[#3d3d3d]'>Retail Salesperson</option>
+                      <option value="SALES_MANAGER" className='dark:bg-[#3d3d3d]'>Sales Manager</option>
+                      <option value="SALES_REPRESENTATIVE" className='dark:bg-[#3d3d3d]'>Sales Representative</option>
+                      <option value="SCHOOL_ADMINISTRATOR" className='dark:bg-[#3d3d3d]'>School Administrator</option>
+                      <option value="SEPARATED" className='dark:bg-[#3d3d3d]'>Separated</option>
+                      <option value="SINGLE" className='dark:bg-[#3d3d3d]'>Single</option>
+                      <option value="SOCIAL_WORKER" className='dark:bg-[#3d3d3d]'>Social Worker</option>
+                      <option value="SOFTWARE_ENGINEER" className='dark:bg-[#3d3d3d]'>Software Engineer</option>
+                      <option value="SOFTWARE_DEVELOPER" className='dark:bg-[#3d3d3d]'>Software Developer</option>
+                      <option value="STUDENT" className='dark:bg-[#3d3d3d]'>Student</option>
+                      <option value="SUBSTANCE_ABUSE_COUNSELOR" className='dark:bg-[#3d3d3d]'>Substance Abuse Counselor</option>
+                      <option value="SYSTEM_ADMINISTRATOR" className='dark:bg-[#3d3d3d]'>System Administrator</option>
+                      <option value="TEACHER" className='dark:bg-[#3d3d3d]'>Teacher</option>
+                      <option value="TECHNICAL_SUPPORT_SPECIALIST" className='dark:bg-[#3d3d3d]'>Technical Support Specialist</option>
+                      <option value="TRAINING_AND_DEVELOPMENT_SPECIALIST" className='dark:bg-[#3d3d3d]'>Training and Development Specialist</option>
+                      <option value="UNEMPLOYED" className='dark:bg-[#3d3d3d]'>Unemployed</option>
+                      <option value="VENDOR" className='dark:bg-[#3d3d3d]'>Vendor</option>
+  
+                      </select>
+
                       <label htmlFor="ctc_profession" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession/Occupation/Business<Req /></label>
-                  </div>
+                    </div>
                 </div>
                 {/* Row 3 */}
                 <h1 className='text-sm text-slate-700 dark:text-white'>Additional Residence Tax on the following items owned or earned in the Philippines (Tax not exceeded P5,000)</h1>
