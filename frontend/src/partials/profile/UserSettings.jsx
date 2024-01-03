@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../Sidebar';
 import Header from '../Header';
+import defaultImage from '../../images/default_img.png';
 
 const UserSettings =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,7 +29,7 @@ const UserSettings =()=>{
     event.preventDefault();
   };
 
-  const [file, setFile] = useState('https://docs.material-tailwind.com/img/face-3.jpg');
+  const [file, setFile] = useState(defaultImage);
   const handleChange = (e) => {
       console.log(e.target.files);
       setFile(URL.createObjectURL(e.target.files[0]));
@@ -36,7 +37,12 @@ const UserSettings =()=>{
 
   const handleRemovePicture = () => {
     // Set the file state back to the default image path when the remove button is clicked
-    setFile('https://docs.material-tailwind.com/img/face-3.jpg');
+    setFile(defaultImage);
+     // Clear the selected file in the input
+    const fileInput = document.getElementById('user_img');
+    if (fileInput) {
+      fileInput.value = ''; // Reset the input value
+    }
   }
 
   return (

@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import Transition from '../utils/Transition';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-
-// import UserAvatar from '../images/user-avatar-32.png';
+import defaultImage from '../images/default_img.png';
 
 const DropdownProfile = ({ align }) => {
   
@@ -67,7 +66,7 @@ const DropdownProfile = ({ align }) => {
         aria-expanded={dropdownOpen}
       >
         
-        <img className="w-8 h-8 rounded-full" src='https://docs.material-tailwind.com/img/face-3.jpg' width="32" height="32" alt="User" />
+        <img className="w-8 h-8 rounded-full" src={defaultImage} width="32" height="32" alt="User" />
         <div className="flex items-center truncate">
           <span className="truncate ml-2 mr-1 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{userPersonal.f_name}</span>
           <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
