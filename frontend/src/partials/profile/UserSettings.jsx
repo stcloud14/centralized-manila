@@ -56,11 +56,16 @@ const UserSettings =()=>{
                   </div>
 
                     {/* Submit Button */}
-                    <div className="flex justify-end items-end mt-10 mb-4">
+                    <div className="flex justify-between items-end mt-10 mb-4">
+                      <button 
+                          type="submit" 
+                          className="text-red-500 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
+                            Delete Account
+                      </button>
                       <button 
                           type="submit" 
                           className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
-                            Confirm
+                            Save Changes
                       </button>
                     </div>
                 </form>
