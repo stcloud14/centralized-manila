@@ -84,6 +84,12 @@ const UserSettings =()=>{
                           onClick={handleDelete}
                           className="text-red-500 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
                             Delete Account
+                    <div className="flex flex-col sm:flex-row justify-center items-end mt-10 mb-4 md:space-x-10">
+                      <button
+                        type="submit"
+                        className="w-full sm:w-auto text-red-500 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full text-sm px-10 py-2.5 text-center md:mb-2 mb-3.5 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800"
+                      >
+                        Delete Account
                       </button>
                       <button 
                           type="submit" 
