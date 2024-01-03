@@ -57,6 +57,7 @@ const GovernmentInfoForm =()=>{
 
           setTimeout(() => {
             setIsSuccess(false);
+            setEditMode(false);
           }, 3000);
         })
         .catch((err) => {
@@ -146,7 +147,7 @@ return (
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_tin_id} type="text" name="user_tin_id" id="user_tin_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -157,7 +158,7 @@ return (
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_pgb_id} type="text" name="user_pgb_id" id="user_pgb_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -171,7 +172,7 @@ return (
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_philh_id} type="text" name="user_philh_id" id="user_philh_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -182,7 +183,7 @@ return (
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_sss_id} type="text" name="user_sss_id" id="user_sss_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -196,7 +197,7 @@ return (
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_gsis_id} type="text" name="user_gsis_id" id="user_gsis_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -207,7 +208,7 @@ return (
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
                   <input onChange={handleInputChange} value={userPersonal.user_natl_id} type="text" name="user_natl_id" id="user_natl_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                      !editMode && 'bg-gray-200 cursor-not-allowed'
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
@@ -218,26 +219,32 @@ return (
                 </div>
               </div>
            
-              <div className="flex flex-col items-center md:flex-row md:justify-end mt-7">
-
-              <button
+              <div className="flex flex-col sm:flex-row justify-center items-center md:justify-end mt-7">
+                <button
                   type="button"
                   onClick={handleEdit}
-                  className={`text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 ${
+                  className={`flex items-center w-full sm:w-auto justify-center text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-8 py-2.5 text-center md:mb-2 mb-3.5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 ${
                     !editMode
                   }`}
                 >
-                  Edit Profile
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                  </svg>
+                  <span>Edit Profile</span>
                 </button>
 
-                  <button type="submit" 
-                  onClick={handleProceed} 
-                  className={`text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 ${
+                <button
+                  type="submit"
+                  onClick={handleProceed}
+                  className={`flex items-center w-full sm:w-auto justify-center text-emerald-500 hover:text-white border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full text-sm px-8 py-2.5 text-center  mb-2 md:ml-3 dark:border-emerald-500 dark:text-emerald-500 dark:hover:text-white dark:hover:bg-emerald-500 dark:focus:ring-emerald-800 ${
                     !editMode && 'hidden'
                   }`}
-                  >
-                    Save Changes
-                    </button>
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 mr-1">
+                    <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
+                  </svg>
+                  <span>Save Changes</span>
+                </button>
               </div>
             </form>
 
