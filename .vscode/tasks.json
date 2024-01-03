@@ -2,6 +2,15 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Run All",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Run Backend", "Run Frontend", "Git Pull"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "Run Backend",
             "type": "shell",
             "command": "npm",
