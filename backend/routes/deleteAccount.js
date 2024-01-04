@@ -8,13 +8,31 @@ const router = Router();
     const user_id = req.params.user_id;
     // SQL query to delete user account
     const sql1 = "DELETE FROM user_auth WHERE user_id = ?";
+    const sql2 = "DELETE FROM user_reg WHERE user_id = ?";
+    const sql3 = "DELETE FROM user_personal WHERE user_id = ?";
+    const sql4 = "DELETE FROM user_contact WHERE user_id = ?";
+    const sql5 = "DELETE FROM user_gov_id WHERE user_id = ?";
+    const sql6 = "DELETE FROM birth_info WHERE user_id = ?";
+    
+    
+    
 
     try {
         // Pass user_id as a parameter to the queryDatabase function
-        const result = await queryDatabase(sql1, [user_id]);
+        const result1 = await queryDatabase(sql1, [user_id]);
+        const result2 = await queryDatabase(sql2, [user_id]);
+        const result3 = await queryDatabase(sql3, [user_id]);
+        const result4 = await queryDatabase(sql4, [user_id]);
+        const result5 = await queryDatabase(sql5, [user_id]);
+        const result6 = await queryDatabase(sql6, [user_id]);
         res.json({
             message: "Successfully executed",
-            user_auth_result: result,
+            user_auth_result: result1,
+            user_reg_result: result2,
+            user_personal_result: result3,
+            user_contact_result: result4,
+            user_gov_id_result: result5,
+            birth_info_result: result6,
         });
     } catch (err) {
         console.error(err);
