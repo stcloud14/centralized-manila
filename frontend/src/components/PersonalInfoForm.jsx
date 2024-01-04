@@ -9,6 +9,11 @@ import Header from '../partials/Header';
 import Flatpickr from 'react-flatpickr';
 
 import 'flatpickr/dist/themes/airbnb.css';
+import SexDropdown from '../partials/profile/SexDropdown';
+import SuffixDropdown from '../partials/profile/SuffixDropdown';
+import CitizenshipDropdown from '../partials/profile/CitizenshipDropdown';
+import CivilStatusDropdown from '../partials/profile/CivilStatusDropdown';
+import ResidencyDropdown from '../partials/profile/ResidencyDropdown';
 
 const PersonalInfoForm =()=>{
 
@@ -254,18 +259,7 @@ const PersonalInfoForm =()=>{
                     placeholder=" "
                     required
                     disabled={!editMode}>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                    <option value="Sr."className='dark:bg-[#3d3d3d]'>Sr.</option>
-                    <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                    <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                    <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                    <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                    <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                    <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                    <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                    <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                    <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                    <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                   <SuffixDropdown/>
                   </select>
                   <label htmlFor="suffix_type" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
                       !editMode && 'text-gray-500'
@@ -279,9 +273,7 @@ const PersonalInfoForm =()=>{
                     placeholder=" "
                     required
                     disabled={!editMode}>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
-                    <option value="Male" className='dark:bg-[#3d3d3d]'>Male</option>
-                    <option value="Female"className='dark:bg-[#3d3d3d]'>Female</option>
+                   <SexDropdown/>
                   </select>
                   <label htmlFor="sex_type" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
                 </div>
@@ -359,11 +351,7 @@ const PersonalInfoForm =()=>{
                     placeholder=" "
                     required
                     disabled={!editMode}>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Civil Status</option>
-                    <option value="Single" className='dark:bg-[#3d3d3d]'>Single</option>
-                    <option value="Married" className='dark:bg-[#3d3d3d]'>Married</option>
-                    <option value="Separated" className='dark:bg-[#3d3d3d]'>Separated</option>
-                    <option value="Widowed" className='dark:bg-[#3d3d3d]'>Widowed</option>
+                  <CivilStatusDropdown/>
                   </select>
                   <label htmlFor="cvl_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                 </div>
@@ -375,10 +363,7 @@ const PersonalInfoForm =()=>{
                     placeholder=" "
                     required
                     disabled={!editMode}>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Citizenship</option>
-                    <option value="Citizen" className='dark:bg-[#3d3d3d]'>Citizen</option>
-                    <option value="Permanent Resident" className='dark:bg-[#3d3d3d]'>Permanent Resident</option>
-                    <option value="Temporary Resident" className='dark:bg-[#3d3d3d]'>Temporary Resident</option>
+                   <CitizenshipDropdown/>
                   </select>
                   <label htmlFor="czn_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                 </div>
@@ -390,9 +375,7 @@ const PersonalInfoForm =()=>{
                     placeholder=" "
                     required
                     disabled={!editMode}>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Residency Status</option>
-                    <option value="Resident" className='dark:bg-[#3d3d3d]'>Resident</option>
-                    <option value="Non-Resident" className='dark:bg-[#3d3d3d]'>Non-Resident</option>
+                  <ResidencyDropdown/>
                   </select>
                   <label htmlFor="res_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
                 </div>

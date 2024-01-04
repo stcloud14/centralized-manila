@@ -14,6 +14,14 @@ import CityDropdown from '../partials/profile/CityDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 import CountryDropdwon from '../partials/profile/CountryDropdown';
+import SuffixDropdown from '../partials/profile/SuffixDropdown';
+import SexDropdown from '../partials/profile/SexDropdown';
+import CivilStatusDropdown from '../partials/profile/CivilStatusDropdown';
+import EmploymentStatusDropdown from '../partials/profile/EmploymentStatusDropdown';
+import ValidIdDropdown from '../partials/profile/ValidIdDropdown';
+import OccupationDropdown from '../partials/profile/OccupationDropdown';
+
+
 
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 
@@ -293,26 +301,13 @@ function totalingAmount({ totalAmount }) {
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={CtcCedula.ctc_suffix} name="ctc_suffix" id="ctc_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                        <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                        <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
-                        <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                        <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                        <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                        <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                        <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                        <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                        <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                        <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                        <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                        <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                      <SuffixDropdown/>
                       </select>
                     <label htmlFor="ctc_suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={CtcCedula.ctc_sex} name="ctc_sex" id="ctc_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
-                      <option value="MALE" className='dark:bg-[#3d3d3d]'>Male</option>
-                      <option value="FEMALE"className='dark:bg-[#3d3d3d]'>Female</option>
+                     <SexDropdown/>
                       </select>
                     <label htmlFor="ctc_sex" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex<Req /></label>
                   </div>
@@ -371,11 +366,7 @@ function totalingAmount({ totalAmount }) {
                 <div className="grid md:grid-cols-6 md:gap-6">
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
                   <select onChange={handleInputChange} value={CtcCedula.ctc_civilstatus} defaultValue={0} name="ctc_civilstatus" id="ctc_civilstatus" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Civil Status</option>
-                      <option value="SINGLE" className='dark:bg-[#3d3d3d]'>Single</option>
-                      <option value="MARRIED" className='dark:bg-[#3d3d3d]'>Married</option>
-                      <option value="SEPARATED" className='dark:bg-[#3d3d3d]'>Separated</option>
-                      <option value="WIDOWED" className='dark:bg-[#3d3d3d]'>Widowed</option>
+                    <CivilStatusDropdown/>
                     </select>
                     <label htmlFor="ctc_civilstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status<Req /></label>
                   </div>
@@ -410,12 +401,7 @@ function totalingAmount({ totalAmount }) {
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={CtcCedula.ctc_employmentstatus} name="ctc_employmentstatus" id="ctc_employmentstatus" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Employment Status</option>
-                    <option value="EMPLOYEE_FULLTIME" className='dark:bg-[#3d3d3d]'>Employed - Full Time</option>
-                    <option value="EMPLOYEE_PARTTIME" className='dark:bg-[#3d3d3d]'>Employed - Part Time</option>
-                    <option value="UNEMPLOYED" className='dark:bg-[#3d3d3d]'>Unemployed</option>
-                    <option value="WORKER" className='dark:bg-[#3d3d3d]'>Worker</option>
-
+                      <EmploymentStatusDropdown/>
                     </select>
                     <label htmlFor="ctc_employmentstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Employment Status<Req /></label>
                   </div>
@@ -462,100 +448,13 @@ function totalingAmount({ totalAmount }) {
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={CtcCedula.ctc_validid} name="ctc_validid" id="ctc_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
-                      <option className='dark:bg-[#3d3d3d]'>SSS</option>
-                      <option className='dark:bg-[#3d3d3d]'>UMID</option>
-                      <option className='dark:bg-[#3d3d3d]'>PHILHEALTH</option>
-                      <option className='dark:bg-[#3d3d3d]'>DRIVER'S LICENSE</option>
-                      <option className='dark:bg-[#3d3d3d]'>VOTER'S ID</option>
-                      <option className='dark:bg-[#3d3d3d]'>SENIOR CITIZEN'S ID</option>
-                      <option className='dark:bg-[#3d3d3d]'>POSTAL ID</option>
-                      <option className='dark:bg-[#3d3d3d]'>BARANGAY ID</option>
-                      <option className='dark:bg-[#3d3d3d]'>AUTHORIZATION LETTER</option>
+                      <ValidIdDropdown/>
                     </select>
                     <label htmlFor="ctc_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={CtcCedula.ctc_profession} name="ctc_profession" id="ctc_profession" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Profession/Occupation/Business</option>
-                      <option value="ACCOUNT_EXECUTIVE" className='dark:bg-[#3d3d3d]'>Account Executive</option>
-                      <option value="ACCOUNTANT" className='dark:bg-[#3d3d3d]'>Accountant</option>
-                      <option value="ACTUARY" className='dark:bg-[#3d3d3d]'>Actuary</option>
-                      <option value="AEROSPACE_ENGINEER" className='dark:bg-[#3d3d3d]'>Aerospace Engineer</option>
-                      <option value="ANIMATOR" className='dark:bg-[#3d3d3d]'>Animator</option>
-                      <option value="ART_DIRECTOR" className='dark:bg-[#3d3d3d]'>Art Director</option>
-                      <option value="AUDITOR" className='dark:bg-[#3d3d3d]'>Auditor</option>
-                      <option value="BILOGIST" className='dark:bg-[#3d3d3d]'>Biologist</option>
-                      <option value="BRAND_MANAGER" className='dark:bg-[#3d3d3d]'>Brand Manager</option>
-                      <option value="BUSINESS_DEVELOPMENT_MANAGER" className='dark:bg-[#3d3d3d]'>Business Development Manager</option>
-                      <option value="CALL_CENTER_AGENT" className='dark:bg-[#3d3d3d]'>Call Center Agent</option>
-                      <option value="CHEMIST" className='dark:bg-[#3d3d3d]'>Chemist</option>
-                      <option value="CITY_PLANNER" className='dark:bg-[#3d3d3d]'>City Planner</option>
-                      <option value="CIVIL_ENGINEER" className='dark:bg-[#3d3d3d]'>Civil Engineer</option>
-                      <option value="CLIENT_SERVICES_COORDINATOR" className='dark:bg-[#3d3d3d]'>Client Services Coordinator</option>
-                      <option value="COMPENSATION_ANALYST" className='dark:bg-[#3d3d3d]'>Compensation Analyst</option>
-                      <option value="COUNSELOR" className='dark:bg-[#3d3d3d]'>Counselor</option>
-                      <option value="CUSTOMER_SUPPORT_REPRESENTATIVE" className='dark:bg-[#3d3d3d]'>Customer Support Representative</option>
-                      <option value="CUSTOMER_SUCCESS_MANAGER" className='dark:bg-[#3d3d3d]'>Customer Success Manager</option>
-                      <option value="DATA_ANALYST" className='dark:bg-[#3d3d3d]'>Data Analyst</option>
-                      <option value="DIGITAL_MARKETER" className='dark:bg-[#3d3d3d]'>Digital Marketer</option>
-                      <option value="DOCTOR" className='dark:bg-[#3d3d3d]'>Doctor</option>
-                      <option value="DRIVER" className='dark:bg-[#3d3d3d]'>Driver</option>
-                      <option value="EDUCATIONAL_CONSULTANT" className='dark:bg-[#3d3d3d]'>Educational Consultant</option>
-                      <option value="ELECTRICAL_ENGINEER" className='dark:bg-[#3d3d3d]'>Electrical Engineer</option>
-                      <option value="EMPLOYEE_RELATIONS_SPECIALIST" className='dark:bg-[#3d3d3d]'>Employee Relations Specialist</option>
-                      <option value="ENVIRONMENTAL_SCIENTIST" className='dark:bg-[#3d3d3d]'>Environmental Scientist</option>
-                      <option value="FACTORY_WORKER" className='dark:bg-[#3d3d3d]'>Factory Worker</option>
-                      <option value="FINANCIAL_ANALYST" className='dark:bg-[#3d3d3d]'>Financial Analyst</option>
-                      <option value="FASHION_DESIGNER" className='dark:bg-[#3d3d3d]'>Fashion Designer</option>
-                      <option value="GRAPHIC_DESIGNER" className='dark:bg-[#3d3d3d]'>Graphic Designer</option>
-                      <option value="GOVERNMENT_ANALYST" className='dark:bg-[#3d3d3d]'>Government Analyst</option>
-                      <option value="HR_MANAGER" className='dark:bg-[#3d3d3d]'>HR Manager</option>
-                      <option value="INVESTMENT_BANKER" className='dark:bg-[#3d3d3d]'>Investment Banker</option>
-                      <option value="JUDGE" className='dark:bg-[#3d3d3d]'>Judge</option>
-                      <option value="LAWYER" className='dark:bg-[#3d3d3d]'>Lawyer</option>
-                      <option value="LEGAL_ANALYST" className='dark:bg-[#3d3d3d]'>Legal Analyst</option>
-                      <option value="LEGAL_ASSISTANT" className='dark:bg-[#3d3d3d]'>Legal Assistant</option>
-                      <option value="LIBRARIAN" className='dark:bg-[#3d3d3d]'>Librarian</option>
-                      <option value="MARKET_RESEARCH_ANALYST" className='dark:bg-[#3d3d3d]'>Market Research Analyst</option>
-                      <option value="MARKETING_MANAGER" className='dark:bg-[#3d3d3d]'>Marketing Manager</option>
-                      <option value="MARRIED" className='dark:bg-[#3d3d3d]'>Married</option>
-                      <option value="MECHANICAL_ENGINEER" className='dark:bg-[#3d3d3d]'>Mechanical Engineer</option>
-                      <option value="MEDICAL_TECHNOLOGIST" className='dark:bg-[#3d3d3d]'>Medical Technologist</option>
-                      <option value="NETWORK_ENGINEER" className='dark:bg-[#3d3d3d]'>Network Engineer</option>
-                      <option value="NONPROFIT_PROGRAM_MANAGER" className='dark:bg-[#3d3d3d]'>Nonprofit Program Manager</option>
-                      <option value="NURSE" className='dark:bg-[#3d3d3d]'>Nurse</option>
-                      <option value="OPERATIONS_MANAGER" className='dark:bg-[#3d3d3d]'>Operations Manager</option>
-                      <option value="PARALEGAL" className='dark:bg-[#3d3d3d]'>Paralegal</option>
-                      <option value="PHARMACIST" className='dark:bg-[#3d3d3d]'>Pharmacist</option>
-                      <option value="PHYSICAL_THERAPIST" className='dark:bg-[#3d3d3d]'>Physical Therapist</option>
-                      <option value="PHYSICIST" className='dark:bg-[#3d3d3d]'>Physicist</option>
-                      <option value="PRODUCTION_SUPERVISOR" className='dark:bg-[#3d3d3d]'>Production Supervisor</option>
-                      <option value="PROFESSOR" className='dark:bg-[#3d3d3d]'>Professor</option>
-                      <option value="PUBLIC_AFFAIRS_SPECIALIST" className='dark:bg-[#3d3d3d]'>Public Affairs Specialist</option>
-                      <option value="PUBLIC_POLICY_ANALYST" className='dark:bg-[#3d3d3d]'>Public Policy Analyst</option>
-                      <option value="PUBLIC_RELATIONS_SPECIALIST" className='dark:bg-[#3d3d3d]'>Public Relations Specialist</option>
-                      <option value="QUALITY_CONTROL_INSPECTOR" className='dark:bg-[#3d3d3d]'>Quality Control Inspector</option>
-                      <option value="RECRUITER" className='dark:bg-[#3d3d3d]'>Recruiter</option>
-                      <option value="RESEARCH_SCIENTIST" className='dark:bg-[#3d3d3d]'>Research Scientist</option>
-                      <option value="RETAIL_SALESPERSON" className='dark:bg-[#3d3d3d]'>Retail Salesperson</option>
-                      <option value="SALES_MANAGER" className='dark:bg-[#3d3d3d]'>Sales Manager</option>
-                      <option value="SALES_REPRESENTATIVE" className='dark:bg-[#3d3d3d]'>Sales Representative</option>
-                      <option value="SCHOOL_ADMINISTRATOR" className='dark:bg-[#3d3d3d]'>School Administrator</option>
-                      <option value="SEPARATED" className='dark:bg-[#3d3d3d]'>Separated</option>
-                      <option value="SINGLE" className='dark:bg-[#3d3d3d]'>Single</option>
-                      <option value="SOCIAL_WORKER" className='dark:bg-[#3d3d3d]'>Social Worker</option>
-                      <option value="SOFTWARE_ENGINEER" className='dark:bg-[#3d3d3d]'>Software Engineer</option>
-                      <option value="SOFTWARE_DEVELOPER" className='dark:bg-[#3d3d3d]'>Software Developer</option>
-                      <option value="STUDENT" className='dark:bg-[#3d3d3d]'>Student</option>
-                      <option value="SUBSTANCE_ABUSE_COUNSELOR" className='dark:bg-[#3d3d3d]'>Substance Abuse Counselor</option>
-                      <option value="SYSTEM_ADMINISTRATOR" className='dark:bg-[#3d3d3d]'>System Administrator</option>
-                      <option value="TEACHER" className='dark:bg-[#3d3d3d]'>Teacher</option>
-                      <option value="TECHNICAL_SUPPORT_SPECIALIST" className='dark:bg-[#3d3d3d]'>Technical Support Specialist</option>
-                      <option value="TRAINING_AND_DEVELOPMENT_SPECIALIST" className='dark:bg-[#3d3d3d]'>Training and Development Specialist</option>
-                      <option value="UNEMPLOYED" className='dark:bg-[#3d3d3d]'>Unemployed</option>
-                      <option value="VENDOR" className='dark:bg-[#3d3d3d]'>Vendor</option>
-  
+                      <OccupationDropdown/>
                       </select>
 
                       <label htmlFor="ctc_profession" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession/Occupation/Business<Req /></label>
