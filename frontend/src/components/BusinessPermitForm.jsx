@@ -555,7 +555,7 @@ const BusinessPermitForm =()=>{
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <BPTermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} />
+        <BPTermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
 
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
