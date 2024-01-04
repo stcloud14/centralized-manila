@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import conn2 from './connection.js';
+import { v4 as uuidv4 } from 'uuid';
 
 const router = Router();
 
@@ -53,7 +54,7 @@ router.post('/check-existence', async (req, res) => {
 router.post('/', async (req, res) => {
     const mobile_no = req.body.mobile_no;
     const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
-    const transID = 'REGISTER';
+    const transID = generateTransactionID();
 
     const primaryKey = generatePrimaryKey(req.body.f_name, req.body.l_name, plainMobileNo);
 
@@ -74,6 +75,7 @@ router.post('/', async (req, res) => {
 
     const query5 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
     const values5 = [transID, primaryKey];
+
 
     try {
     const result = await queryDatabase(query, values);
@@ -109,6 +111,14 @@ function queryDatabase(query, values) {
         }
     });
     });
+}
+
+function generateTransactionID() {
+  const timestamp = new Date().getTime().toString().slice(0, 8);
+  const uniqueID = uuidv4().split('-').join('').substring(0, 9); // Use a portion of UUID
+  const transactionID = `${timestamp}-${uniqueID}`;
+
+  return transactionID.toUpperCase();
 }
 
     

@@ -572,8 +572,8 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Business Information and Registration</h1>
                 <div className="grid md:grid-cols-3 md:gap-6">
-                  <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_type} name="bus_type" id="bus_type" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                  <div className="relative z-0 w-full mb-6 group ">
+                    <select onChange={handleInputChange} value={busPermit.bus_type} name="bus_type" id="bus_type" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Business Type</option>
                       <option value="1" className='dark:bg-[#3d3d3d]'>Sole Proprietorship</option>
                       <option value="2" className='dark:bg-[#3d3d3d]'>One Person Corporation</option>
@@ -623,7 +623,7 @@ const BusinessPermitForm =()=>{
                     <label htmlFor="bus_mname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_suffix} name="bus_suffix" id="bus_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_suffix} name="bus_suffix" id="bus_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                         <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
                         <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
                         <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
@@ -640,7 +640,7 @@ const BusinessPermitForm =()=>{
                     <label htmlFor="bus_suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_sex} name="bus_sex" id="bus_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_sex} name="bus_sex" id="bus_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
                       <option value="MALE" className='dark:bg-[#3d3d3d]'>Male</option>
                       <option value="FEMALE"className='dark:bg-[#3d3d3d]'>Female</option>
@@ -675,19 +675,19 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_bregion} name="bus_bregion" id="bus_bregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_bregion} name="bus_bregion" id="bus_bregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <RegionDropdown />
                     </select>
                     <label htmlFor="bus_bregion" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_bprovince} name="bus_bprovince" id="bus_bprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_bprovince} name="bus_bprovince" id="bus_bprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <ProvinceDropdown selectedRegion={busPermit.bus_bregion} /> 
                     </select>
                     <label htmlFor="bus_bprovince" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_bcity} name="bus_bcity" id="bus_bcity" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_bcity} name="bus_bcity" id="bus_bcity" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <CityDropdown selectedProvince={busPermit.bus_bprovince} />
                     </select>
                     <label htmlFor="bus_bcity" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">City<Req /></label>
@@ -764,19 +764,19 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_region} name="bus_region" id="bus_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_region} name="bus_region" id="bus_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <RegionDropdown />
                     </select>
                     <label htmlFor="bus_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_province} name="bus_province" id="bus_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_province} name="bus_province" id="bus_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <ProvinceDropdown selectedRegion={busPermit.bus_region} />
                     </select>
                     <label htmlFor="bus_province" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_city} name="bus_city" id="bus_city" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_city} name="bus_city" id="bus_city" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <CityDropdown selectedProvince={busPermit.bus_province} />
                     </select>
                     <label htmlFor="bus_city" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">City<Req /></label>
@@ -806,10 +806,10 @@ const BusinessPermitForm =()=>{
               {/* Group 7 - Owned Radio Button */}
               <div onChange={handleInputChange} name="owned" className="mt-6 flex items-center text-sm">
                 <span className="text-gray-700 dark:text-white mr-9">Is this owned?</span>
-                <input value='1' type="radio" name="owned" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"/>
+                <input value='1' type="radio" name="owned" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer"/>
                 <label htmlFor="owned_no" className="text-gray-700 dark:text-white mr-6">No</label>
 
-                <input value='2' defaultChecked type="radio" name="owned"className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"/>
+                <input value='2' defaultChecked type="radio" name="owned"className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer"/>
                 <label htmlFor="owned_yes" className="text-gray-700 dark:text-white">Yes</label>
               </div>
 
@@ -833,11 +833,11 @@ const BusinessPermitForm =()=>{
 
                 <div onChange={handleInputChange} name="bus_incentive" className="flex mb-2 md:mb-0">
                   <label className="mr-2">
-                    <input value='1' type="radio" name="bus_incentive" defaultChecked className="border border-gray-500 md:ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value='1' type="radio" name="bus_incentive" defaultChecked className="border border-gray-500 md:ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     <span className="ml-1.5">No</span>
                   </label>
                   <label>
-                    <input value='2' type="radio" name="bus_incentive" className="border border-gray-500 ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value='2' type="radio" name="bus_incentive" className="border border-gray-500 ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     <span className="ml-1.5">Yes</span>
                   </label>
                 </div>
@@ -855,27 +855,27 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <div onChange={handleInputChange} name="bus_activity" className="flex flex-col md:flex-row md:items-center text-sm items-start">
                   <label htmlFor="bus_mainoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="1" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value="1" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Main Office
                   </label>
 
                   <label htmlFor="bus_branchoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="2" type="radio" name="bus_activity" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value="2" type="radio" name="bus_activity" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Branch Office
                   </label>
 
                   <label htmlFor="bus_adminoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="3" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value="3" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Admin Office Only
                   </label>
 
                   <label htmlFor="bus_warehouse" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="4" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value="4" type="radio" name="bus_activity" className="border  border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Warehouse
                   </label>
 
                   <div className="flex items-center md:mr-6">
-                    <input value="5" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value="5" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Others:
                     <input onChange={handleInputChange} value={busPermit.bus_office_partial} disabled={busPermit.bus_activity !== '5'} type="text" name="bus_office_partial" id="bus_office_partial" className="block px-0 ml-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Specify" required/>
                   </div>
@@ -903,7 +903,7 @@ const BusinessPermitForm =()=>{
                     <label htmlFor="bus_total_cap" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Total Capitalization (PH)<Req /></label>
                   </div>
                   <div onClick={handleAddRow} className="relative z-0 w-full md:col-span-1 mb-6 group">
-                    <a className="flex justify-center mt-3 px-3 py-1 text-sm text-center border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full">
+                    <a className="flex justify-center mt-3 px-3 py-1 text-sm text-center border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full cursor-pointer">
                       + Add
                     </a>
                   </div>
@@ -943,6 +943,7 @@ const BusinessPermitForm =()=>{
                               name="bus_line"
                               value={editData.bus_line}
                               onChange={handleEditChange}
+                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
                             />
                           ) : (
                             row.bus_line
@@ -955,6 +956,7 @@ const BusinessPermitForm =()=>{
                                 name="bus_psic"
                                 value={editData.bus_psic}
                                 onChange={handleEditChange}
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
                               />
                             ) : (
                               row.bus_psic
@@ -967,6 +969,7 @@ const BusinessPermitForm =()=>{
                                 name="bus_products"
                                 value={editData.bus_products}
                                 onChange={handleEditChange}
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
                               />
                             ) : (
                               row.bus_products
@@ -979,6 +982,7 @@ const BusinessPermitForm =()=>{
                                 name="bus_units_no"
                                 value={editData.bus_units_no}
                                 onChange={handleEditChange}
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
                               />
                             ) : (
                               row.bus_units_no
@@ -991,6 +995,7 @@ const BusinessPermitForm =()=>{
                                 name="bus_total_cap"
                                 value={editData.bus_total_cap}
                                 onChange={handleEditChange}
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
                               />
                             ) : (
                               row.bus_total_cap
@@ -1161,7 +1166,7 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_nocopies} name="bus_nocopies" id="bus_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={busPermit.bus_nocopies} name="bus_nocopies" id="bus_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                         <option value="0" className='dark:bg-[#3d3d3d]'>Select No. of Copies</option>
                         <option value="1" className='dark:bg-[#3d3d3d]'>1</option>
                         <option value="2" className='dark:bg-[#3d3d3d]'>2</option>
@@ -1177,7 +1182,7 @@ const BusinessPermitForm =()=>{
                     <label htmlFor="bus_nocopies" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No. of Copies<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_print} name="bus_print" id="bus_print" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={busPermit.bus_print} name="bus_print" id="bus_print" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select What to Print</option>
                       <option value="Front" className='dark:bg-[#3d3d3d]'>Front (P50)</option>
                       <option value="Back" className='dark:bg-[#3d3d3d]'>Back (P50)</option>
@@ -1189,7 +1194,7 @@ const BusinessPermitForm =()=>{
                 {/* Row 2 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_purpose} name="bus_purpose" id="bus_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={busPermit.bus_purpose} name="bus_purpose" id="bus_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Purpose</option>
                       <option value="1" className='dark:bg-[#3d3d3d]'>Claim Benefits / Loan</option>
                       <option value="2" className='dark:bg-[#3d3d3d]'>Passport / Travel</option>
@@ -1197,10 +1202,10 @@ const BusinessPermitForm =()=>{
                       <option value="4" className='dark:bg-[#3d3d3d]'>Employment Local</option>
                       <option value="5" className='dark:bg-[#3d3d3d]'>Employment Abroad</option>
                     </select>
-                    <label htmlFor="bus_purpose" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Purpose<Req /></label>
+                    <label htmlFor="bus_purpose" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ">Purpose<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_validid} name="bus_validid" id="bus_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={busPermit.bus_validid} name="bus_validid" id="bus_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
                       <option value="1" className='dark:bg-[#3d3d3d]'>PASSPORT</option>
                       <option value="2" className='dark:bg-[#3d3d3d]'>SSS</option>
