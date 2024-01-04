@@ -11,10 +11,19 @@ import Req from '../partials/misc/RequiredFieldIndicator';
 import CityDropdown from '../partials/profile/CityDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
+import BusinessTypeDropdown from '../partials/profile/BusinessTypeDropdown';
+
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 
 import UploadImageModal from '../partials/UploadModal';
 import UploadButton from '../partials/business/uploadButton';
+import SuffixDropdown from '../partials/profile/SuffixDropdown';
+import SexDropdown from '../partials/profile/SexDropdown';
+import CopiesDropdown from '../partials/profile/CopiesDropdown';
+import PrintDropdown from '../partials/profile/PrintDropdown';
+import PurposeDropdown from '../partials/profile/PurposeDropdown';
+import ValidIdDropdown from '../partials/profile/ValidIdDropdown';
+
 
 const BusinessPermitForm =()=>{
 
@@ -572,12 +581,7 @@ const BusinessPermitForm =()=>{
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group ">
                     <select onChange={handleInputChange} value={busPermit.bus_type} name="bus_type" id="bus_type" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Business Type</option>
-                      <option value="1" className='dark:bg-[#3d3d3d]'>Sole Proprietorship</option>
-                      <option value="2" className='dark:bg-[#3d3d3d]'>One Person Corporation</option>
-                      <option value="3" className='dark:bg-[#3d3d3d]'>Partnership</option>
-                      <option value="4" className='dark:bg-[#3d3d3d]'>Corporation</option>
-                      <option value="5" className='dark:bg-[#3d3d3d]'>Cooperative</option>
+                      <BusinessTypeDropdown/>
                     </select>
                     <label htmlFor="bus_type" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Business Type<Req /></label>
                   </div>
@@ -622,26 +626,13 @@ const BusinessPermitForm =()=>{
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_suffix} name="bus_suffix" id="bus_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
-                        <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                        <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
-                        <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                        <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                        <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                        <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                        <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                        <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                        <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                        <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                        <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                        <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                      <SuffixDropdown/>
                     </select>
                     <label htmlFor="bus_suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_sex} name="bus_sex" id="bus_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
-                      <option value="MALE" className='dark:bg-[#3d3d3d]'>Male</option>
-                      <option value="FEMALE"className='dark:bg-[#3d3d3d]'>Female</option>
+                      <SexDropdown/>
                     </select>
                     <label htmlFor="bus_sex" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex<Req /></label>
                   </div>
@@ -1165,26 +1156,13 @@ const BusinessPermitForm =()=>{
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_nocopies} name="bus_nocopies" id="bus_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
-                        <option value="0" className='dark:bg-[#3d3d3d]'>Select No. of Copies</option>
-                        <option value="1" className='dark:bg-[#3d3d3d]'>1</option>
-                        <option value="2" className='dark:bg-[#3d3d3d]'>2</option>
-                        <option value="3" className='dark:bg-[#3d3d3d]'>3</option>
-                        <option value="4" className='dark:bg-[#3d3d3d]'>4</option>
-                        <option value="5" className='dark:bg-[#3d3d3d]'>5</option>
-                        <option value="6" className='dark:bg-[#3d3d3d]'>6</option>
-                        <option value="7" className='dark:bg-[#3d3d3d]'>7</option>
-                        <option value="8" className='dark:bg-[#3d3d3d]'>8</option>
-                        <option value="9" className='dark:bg-[#3d3d3d]'>9</option>
-                        <option value="10" className='dark:bg-[#3d3d3d]'>10</option>
+                       <CopiesDropdown/>
                       </select>
                     <label htmlFor="bus_nocopies" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No. of Copies<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_print} name="bus_print" id="bus_print" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select What to Print</option>
-                      <option value="Front" className='dark:bg-[#3d3d3d]'>Front (P50)</option>
-                      <option value="Back" className='dark:bg-[#3d3d3d]'>Back (P50)</option>
-                      <option value="Front and Back" className='dark:bg-[#3d3d3d]'>Front and Back (P100)</option>
+                     <PrintDropdown/>
                     </select>
                     <label htmlFor="bus_print" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">What to Print<Req /></label>
                   </div>
@@ -1193,29 +1171,13 @@ const BusinessPermitForm =()=>{
                 <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_purpose} name="bus_purpose" id="bus_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Purpose</option>
-                      <option value="1" className='dark:bg-[#3d3d3d]'>Claim Benefits / Loan</option>
-                      <option value="2" className='dark:bg-[#3d3d3d]'>Passport / Travel</option>
-                      <option value="3" className='dark:bg-[#3d3d3d]'>School Requirements</option>
-                      <option value="4" className='dark:bg-[#3d3d3d]'>Employment Local</option>
-                      <option value="5" className='dark:bg-[#3d3d3d]'>Employment Abroad</option>
+                     <PurposeDropdown/>
                     </select>
                     <label htmlFor="bus_purpose" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ">Purpose<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_validid} name="bus_validid" id="bus_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
-                      <option value="1" className='dark:bg-[#3d3d3d]'>PASSPORT</option>
-                      <option value="2" className='dark:bg-[#3d3d3d]'>SSS</option>
-                      <option value="3" className='dark:bg-[#3d3d3d]'>UMID</option>
-                      <option value="4" className='dark:bg-[#3d3d3d]'>PHILHEALTH</option>
-                      <option value="5" className='dark:bg-[#3d3d3d]'>DRIVER'S LICENSE</option>
-                      <option value="6" className='dark:bg-[#3d3d3d]'>VOTER'S ID</option>
-                      <option value="7" className='dark:bg-[#3d3d3d]'>SENIOR CITIZEN'S ID</option>
-                      <option value="8" className='dark:bg-[#3d3d3d]'>POSTAL ID</option>
-                      <option value="9" className='dark:bg-[#3d3d3d]'>BARANGAY ID</option>
-                      <option value="10" className='dark:bg-[#3d3d3d]'>NATIONAL ID</option>
-                      <option value="11" className='dark:bg-[#3d3d3d]'>AUTHORIZATION LETTER</option>
+                     <ValidIdDropdown/>
                     </select>
                     <label htmlFor="bus_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>
