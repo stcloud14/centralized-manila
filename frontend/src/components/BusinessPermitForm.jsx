@@ -902,6 +902,9 @@ const BusinessPermitForm =()=>{
                   <table className="w-full text-left text-xs md:text-sm rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-gray-700 uppercase bg-slate-200 dark:bg-[#212121] dark:text-slate-400">
                       <tr>
+                      <th scope="col" className="pl-3 pr-0 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                          Business Activity
+                        </th>
                         <th scope="col" className="pl-6 pr-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           Line of Business
                         </th>
