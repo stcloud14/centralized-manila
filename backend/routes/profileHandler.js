@@ -8,7 +8,7 @@ router.get('/:user_id', (req, res) => {
 
   // SQL query to fetch the user's profile data and contact data
   const sql = "SELECT * FROM user_personal WHERE user_id = ?";
-  const sql1 = "SELECT * FROM user_birth WHERE user_id = ?";
+  const sql1 = "SELECT * FROM birth_info WHERE user_id = ?";
 
   conn2.query(sql, [user_id], (err, result) => {
       if (err) {
@@ -141,7 +141,7 @@ FROM
           birth_date,
           birth_place
           } = req.body;
-    
+
   
     // Update user_personal table
     conn2.query(
