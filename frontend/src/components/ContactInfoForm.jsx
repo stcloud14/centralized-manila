@@ -30,8 +30,10 @@ const ContactInfoForm =()=>{
                 console.log(err)  
             }
         }
+
         fetchUserContact()
-  }, [user_id])
+        console.log(userContact);
+  }, [])
 
 
 
