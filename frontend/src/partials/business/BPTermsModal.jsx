@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const OtherModuleTermsModal = ({ onClose }) => {
+const BPTermsModal = ({ isVisible, onProceed, userID }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -9,13 +9,14 @@ const OtherModuleTermsModal = ({ onClose }) => {
 
   const handleProceedClick = () => {
     if (isChecked) {
-      onClose();
+      onProceed();
     } else {
       alert('Please accept the terms and conditions before proceeding.');
     }
   };
 
-  return (
+
+  return isVisible ? (
     <div className="fixed z-50 inset-0">
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -40,7 +41,7 @@ const OtherModuleTermsModal = ({ onClose }) => {
                   onChange={handleCheckboxChange}
                 />
                 <p className="text-xs sm:text-sm text-slate-700 dark:text-white text-justify pointer-events-none">
-                  <span className="font-medium">I DECLARE UNDER PENALTY OF PERJURY</span> that all information in this application is true and correct based on my personal knowledge. Any false or misleading information supplied shall be grounds for appropriate legal action against me and AUTOMATICALLY REVOKES THE PERMIT. I hereby agree that all personal data (as defined under the Data Privacy Law of 2012 and its Implementing Rules and Regulations) and account transaction information or records with the City/Municipal Government may be processed, profiled or shared to requesting parties or for the purpose of any court, legal process, examination, inquiry and audit or investigation of any authority.
+                  <span className="font-medium">I DECLARE UNDER PENALTY OF PERJURY</span> that all information in this application is true and correct based on my personal knowledge and submitted authentic documents online to the BUREAU OF PERMITS. Any false or misleading information supplied, or production of fake/falsified documents shall be grounds for appropriate legal action against me and AUTOMATICALLY REVOKES THE PERMIT. I hereby agree that all personal data (as defined under the Data Privacy Law of 2012 and its Implementing Rules and Regulations) and account transaction information or records with the City/Municipal Government may be processed, profiled or shared to requesting parties or for the purpose of any court, legal process, examination, inquiry and audit or investigation of any authority.
                 </p>
               </p>
             </div>
@@ -48,6 +49,16 @@ const OtherModuleTermsModal = ({ onClose }) => {
 
           <div className="mr-0 md:mr-2 px-3 pt-3 pb-5 gap-3 sm:px-4 flex justify-end">
             <div className="flex items-center space-x-2 mt-auto">
+              <button
+                  onClick={() => {
+                    window.location.href = `/home/${userID}`;
+                  }}                  
+                  type="button"
+                  className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                  >
+                  <p>Cancel</p>
+              </button>
+
               <button
                 onClick={handleProceedClick}
                 type="button"
@@ -62,7 +73,7 @@ const OtherModuleTermsModal = ({ onClose }) => {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
-export default OtherModuleTermsModal;
+export default BPTermsModal;

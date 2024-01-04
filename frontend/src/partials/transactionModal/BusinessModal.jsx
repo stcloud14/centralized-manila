@@ -169,10 +169,6 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_zip ? selectedTransaction.bus_zip : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Owned</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.owned ? selectedTransaction.owned : '-'}</span>
-                          </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Lessor Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_lessor ? selectedTransaction.bus_lessor : '-'}</span>
                           </div>
@@ -181,9 +177,38 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_rent ? selectedTransaction.bus_rent : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap"> Incentives from any Government Entity</span>
+                            <span className="font-medium whitespace-nowrap">Incentives from any Government Entity</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tax_incentives ? selectedTransaction.tax_incentives : '-'}</span>
                           </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Business Office</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tax_incentives ? selectedTransaction.tax_incentives : '-'}</span>
+                          </div>
+
+
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Line of Business</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tax_incentives ? selectedTransaction.tax_incentives : '-'}</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">PSIC</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tax_incentives ? selectedTransaction.tax_incentives : '-'}</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Products/Services</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tax_incentives ? selectedTransaction.tax_incentives : '-'}</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">No. of units</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tax_incentives ? selectedTransaction.tax_incentives : '-'}</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Total Capitalization</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tax_incentives ? selectedTransaction.tax_incentives : '-'}</span>
+                          </div>
+
+
+
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">DTI Registration</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1"></span>

@@ -23,6 +23,7 @@ import CopiesDropdown from '../partials/profile/CopiesDropdown';
 import PrintDropdown from '../partials/profile/PrintDropdown';
 import PurposeDropdown from '../partials/profile/PurposeDropdown';
 import ValidIdDropdown from '../partials/profile/ValidIdDropdown';
+import BPTermsModal from '../partials/business/BPTermsModal';
 
 
 const BusinessPermitForm =()=>{
@@ -534,6 +535,12 @@ const BusinessPermitForm =()=>{
   const openUploadModal = () => {
     setUploadModal(true);
   };
+
+  const [isModalVisible, setIsModalVisible] = useState(true);
+
+  const toggleModalVisibility = () => {
+    setIsModalVisible(!isModalVisible);
+  };
   
 
   return (
@@ -548,12 +555,15 @@ const BusinessPermitForm =()=>{
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
+        <BPTermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
+
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-5 py-5">
                  
+            
            
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={`overflow-y-auto ${isModalVisible ? 'blur' : ''}`}>
             <h1 className='font-medium text-center text-slate-700 dark:text-white'>Business</h1>
             <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Business Permit</h1>
             <h1 className='text-xs text-slate-700 dark:text-white mt-8'>All fields mark with <Req /> are required.</h1>
@@ -1150,7 +1160,7 @@ const BusinessPermitForm =()=>{
                 </div>
 
                 {/* Group 12 - Transaction Information*/}
-                <div className='pt-6'>
+                <div className='pt-10'>
                 <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Transaction Information</h1>
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
