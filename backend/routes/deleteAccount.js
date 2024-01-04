@@ -14,8 +14,6 @@ const router = Router();
     const sql5 = "DELETE FROM user_gov_id WHERE user_id = ?";
     const sql6 = "DELETE FROM birth_info WHERE user_id = ?";
     
-    
-    
 
     try {
         // Pass user_id as a parameter to the queryDatabase function
