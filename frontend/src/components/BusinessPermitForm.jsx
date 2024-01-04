@@ -139,12 +139,10 @@ const BusinessPermitForm =()=>{
     }
   };
 
-  console.log(editingIndex)
-
 
   const handleEditRow = (index) => {
     setEditingIndex(index);
-    setEditData(data[index]);
+    setEditData(dataRow[index]);
   };
 
 
@@ -428,7 +426,6 @@ const BusinessPermitForm =()=>{
         console.error('Transaction error:', err);
     }
 };
-
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
@@ -943,7 +940,7 @@ const BusinessPermitForm =()=>{
                               name="bus_line"
                               value={editData.bus_line}
                               onChange={handleEditChange}
-                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             />
                           ) : (
                             row.bus_line
@@ -956,7 +953,7 @@ const BusinessPermitForm =()=>{
                                 name="bus_psic"
                                 value={editData.bus_psic}
                                 onChange={handleEditChange}
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                               />
                             ) : (
                               row.bus_psic
@@ -969,7 +966,7 @@ const BusinessPermitForm =()=>{
                                 name="bus_products"
                                 value={editData.bus_products}
                                 onChange={handleEditChange}
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                               />
                             ) : (
                               row.bus_products
@@ -982,7 +979,7 @@ const BusinessPermitForm =()=>{
                                 name="bus_units_no"
                                 value={editData.bus_units_no}
                                 onChange={handleEditChange}
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                               />
                             ) : (
                               row.bus_units_no
@@ -995,10 +992,10 @@ const BusinessPermitForm =()=>{
                                 name="bus_total_cap"
                                 value={editData.bus_total_cap}
                                 onChange={handleEditChange}
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                               />
                             ) : (
-                              row.bus_total_cap
+                              `P ${row.bus_total_cap}`
                             )}
                         </td>
                         <td className="md:px-0 px-4 py-2 whitespace-nowrap text-xs md:text-sm font-medium">

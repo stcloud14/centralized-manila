@@ -27,7 +27,7 @@ const UploadModal = ({ onClose }) => {
                       </svg>
                       <p className="mb-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                         <span className="font-semibold text-xs sm:text-sm">Click to upload</span> or drag and drop</p>
-                      <p className="text-[10px] sm:text-[12px] text-gray-500 dark:text-gray-400">PNG, JPEG, DOCX, or PDF (MAX. 20MB)</p>
+                      <p className="text-[10px] sm:text-[12px] text-gray-500 dark:text-gray-400">PNG, JPEG, DOCX, or PDF (MAX. 5MB)</p>
                   </div>
                   <input id="dropzone-file" type="file" className="hidden"/>
                 </label>
