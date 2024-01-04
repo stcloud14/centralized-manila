@@ -19,6 +19,7 @@ import CopiesDropdown from '../partials/profile/CopiesDropdown';
 import PurposeDropdown from '../partials/profile/PurposeDropdown';
 import PrintDropdown from '../partials/profile/PrintDropdown';
 import ValidIdDropdown from '../partials/profile/ValidIdDropdown'
+import DCTermsModal from '../partials/business/DCTermsModal';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 
 
@@ -267,6 +268,12 @@ const DeathCertificateForm =()=>{
     }
   }
   
+  const [isModalVisible, setIsModalVisible] = useState(true);
+
+  const toggleModalVisibility = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
   console.log(deathCert)
 
   return (
@@ -281,11 +288,13 @@ const DeathCertificateForm =()=>{
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
+        <DCTermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
+
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-5 py-5">
                  
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={`overflow-y-auto ${isModalVisible ? 'blur' : ''}`}>
               <h1 className='font-medium text-center text-slate-700 dark:text-white'>Local Civil Registry</h1>
               <h1 className='mb-6 text-sm italic text-center text-slate-700 dark:text-gray-300'>Death Certificate</h1>
 
