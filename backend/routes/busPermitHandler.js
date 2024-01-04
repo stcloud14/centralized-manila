@@ -5,50 +5,53 @@ import { v4 as uuidv4 } from 'uuid';
 const router = Router();
 
 
-router.get('/', async (req, res) => {
+// router.get('/', async (req, res) => {
 
-    const query = "SELECT * FROM user_transaction";
-    const query1 = "SELECT * FROM transaction_info";
-    const query2 = "SELECT * FROM address_info";
-    const query3 = "SELECT * FROM bus_permit";
-    const query4 = "SELECT * FROM bus_owner";
-    const query5 = "SELECT * FROM bus_address";
-    const query6 = "SELECT * FROM bus_operation";
-    const query7 = "SELECT * FROM bus_activity";
-    const query8 = "SELECT * FROM bus_images";
+//     const query = "SELECT * FROM user_transaction";
+//     const query1 = "SELECT * FROM transaction_info";
+//     const query2 = "SELECT * FROM address_info";
+//     const query3 = "SELECT * FROM bus_permit";
+//     const query4 = "SELECT * FROM bus_owner";
+//     const query5 = "SELECT * FROM bus_address";
+//     const query6 = "SELECT * FROM bus_operation";
+//     const query7 = "SELECT * FROM bus_activity";
+//     const query8 = "SELECT * FROM bus_images";
   
-    try {
-    const result = await queryDatabase(query);
-    const result1 = await queryDatabase(query1);
-    const result2 = await queryDatabase(query2);
-    const result3 = await queryDatabase(query3);
-    const result4 = await queryDatabase(query4);
-    const result5 = await queryDatabase(query5);
-    const result6 = await queryDatabase(query6);
-    const result7 = await queryDatabase(query7);
-    const result8 = await queryDatabase(query8);
+//     try {
+//     const result = await queryDatabase(query);
+//     const result1 = await queryDatabase(query1);
+//     const result2 = await queryDatabase(query2);
+//     const result3 = await queryDatabase(query3);
+//     const result4 = await queryDatabase(query4);
+//     const result5 = await queryDatabase(query5);
+//     const result6 = await queryDatabase(query6);
+//     const result7 = await queryDatabase(query7);
+//     const result8 = await queryDatabase(query8);
   
     
-    res.json({
-        user_transaction: result, 
-        transaction_info: result1, 
-        address_info: result2, 
-        bus_permit: result3, 
-        bus_owner: result4, 
-        bus_address: result5, 
-        bus_operation: result6, 
-        bus_activity: result7, 
-        bus_images: result8  
-    });
+//     res.json({
+//         user_transaction: result, 
+//         transaction_info: result1, 
+//         address_info: result2, 
+//         bus_permit: result3, 
+//         bus_owner: result4, 
+//         bus_address: result5, 
+//         bus_operation: result6, 
+//         bus_activity: result7, 
+//         bus_images: result8  
+//     });
 
-    } catch (err) {
-    console.error(err);
-    res.status(500).send('Error retrieving data');
-    }
-  });
+//     } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Error retrieving data');
+//     }
+//   });
   
+let transID = null;
+let busOffice = null;
+
   
-  router.post('/:user_id', async (req, res) => {
+  router.post('/bus/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
 
     const {
@@ -89,11 +92,6 @@ router.get('/', async (req, res) => {
         bus_lessor,
         bus_rent,
         bus_office,
-        bus_line,
-        bus_psic,
-        bus_products,
-        bus_units_no,
-        bus_total_cap,
         bus_validid,
         bus_tax_incentives,
         bus_dti_reg,
@@ -115,7 +113,10 @@ router.get('/', async (req, res) => {
         bus_amount,
     } = req.body;
 
-    const transID = generateTransactionID();
+    transID = generateTransactionID();
+    busOffice = bus_office;
+    
+    
     const transType = '3';
     const statusType = 'Pending';
     const date = new Date();
@@ -128,8 +129,8 @@ router.get('/', async (req, res) => {
     const query1 = "INSERT INTO transaction_info (`transaction_id`, `amount`, `copies`, `print_type`, `valid_id`, `purpose_id`) VALUES (?, ?, ?, ?, ?, ?)";
     const values1 = [transID, bus_amount, bus_nocopies, bus_print, bus_validid, bus_purpose];
 
-    const query2 = "INSERT INTO address_info (`transaction_id`, `email`, `mobile_no`, `tel_no`, `region_id`, `prov_id`, `city_id`, `brgy_dist`, `house_floor`, `bldg_name`, `zip_code`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    const values2 = [transID, bus_email, bus_mobile_no, bus_tel_no, bus_brgy, bus_region, bus_province, bus_city, bus_brgy, bus_hnum, bus_street, bus_zip];
+    const query2 = "INSERT INTO address_info (`transaction_id`, `email`, `mobile_no`, `tel_no`, `region_id`, `prov_id`, `city_id`, `brgy_dist`, `house_floor`, `bldg_name`, `zip_code`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const values2 = [transID, bus_email, bus_mobile_no, bus_tel_no, bus_region, bus_province, bus_city, bus_brgy, bus_hnum, bus_street, bus_zip];
 
     const query3 = "INSERT INTO bus_permit (`transaction_id`, `bus_type`, `bus_name`, `bus_franchise`, `bus_reg_no`, `bus_tin`, `bus_lessor`, `bus_rent`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     const values3 = [transID, bus_type, bus_name, bus_franchise, bus_reg_no, bus_tin, bus_lessor, bus_rent];
@@ -143,11 +144,13 @@ router.get('/', async (req, res) => {
     const query6 = "INSERT INTO bus_operation (`transaction_id`, `bus_floor`, `bus_emp`, `bus_male_emp`, `bus_female_emp`, `bus_van_no`, `bus_truck_no`, `bus_motor_no`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     const values6 = [transID, bus_floor, bus_emp, bus_male_emp, bus_female_emp, bus_van_no, bus_truck_no, bus_motor_no];
 
-    const query7 = "INSERT INTO bus_activity (`transaction_id`, `bus_office`, `bus_line`, `bus_psic`, `bus_products`, `bus_units_no`, `bus_total_cap`) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    const values7 = [transID, bus_office, bus_line, bus_psic, bus_products, bus_units_no, bus_total_cap];
 
-    const query8 = "INSERT INTO bus_images (`transaction_id`, `bus_tax_incentives`, `bus_dti_reg`, `bus_rptax_decbldg`, `bus_sec_paid`, `bus_sec_articles`, `bus_nga`, `bus_sec_front`, `bus_rptax_decland`, `bus_fire`, `bus_page2`, `bus_page3`, `bus_page4`, `bus_page5`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    const values8 = [transID, bus_tax_incentives, bus_dti_reg, bus_rptax_decbldg, bus_sec_paid, bus_sec_articles, bus_nga, bus_sec_front, bus_rptax_decland, bus_fire, bus_page2, bus_page3, bus_page4, bus_page5];
+
+
+
+
+    // const query8 = "INSERT INTO bus_images (`transaction_id`, `bus_tax_incentives`, `bus_dti_reg`, `bus_rptax_decbldg`, `bus_sec_paid`, `bus_sec_articles`, `bus_nga`, `bus_sec_front`, `bus_rptax_decland`, `bus_fire`, `bus_page2`, `bus_page3`, `bus_page4`, `bus_page5`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // const values8 = [transID, bus_tax_incentives, bus_dti_reg, bus_rptax_decbldg, bus_sec_paid, bus_sec_articles, bus_nga, bus_sec_front, bus_rptax_decland, bus_fire, bus_page2, bus_page3, bus_page4, bus_page5];
 
     try {
     const result = await queryDatabase(query, values);
@@ -157,8 +160,7 @@ router.get('/', async (req, res) => {
     const result4 = await queryDatabase(query4, values4);
     const result5 = await queryDatabase(query5, values5);
     const result6 = await queryDatabase(query6, values6);
-    const result7 = await queryDatabase(query7, values7);
-    const result8 = await queryDatabase(query8, values8);
+    // const result8 = await queryDatabase(query8, values8);
   
   
     res.json({
@@ -169,13 +171,32 @@ router.get('/', async (req, res) => {
         bus_owner: result4, 
         bus_address: result5, 
         bus_operation: result6, 
-        bus_activity: result7, 
-        bus_images: result8  
+        // bus_images: result8  
     });
-    
+
     } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Error executing queries" });
+    }
+  });
+
+
+  router.post('/busact', async (req, res) => {
+    const dataArray = req.body.dataRow;
+  
+    try {
+      
+        const query = "INSERT INTO bus_activity (`bus_office`, `bus_line`, `bus_psic`, `bus_products`, `bus_units_no`, `bus_total_cap`, `transaction_id`) VALUES ?";
+        const values = [dataArray.map(data => [busOffice, data.bus_line, data.bus_psic, data.bus_products, data.bus_units_no, data.bus_total_cap, transID])];
+
+        
+        // const values = [bus_line, bus_psic, bus_products, bus_units_no, bus_total_cap];
+        await queryDatabase(query, values);
+  
+        res.json({ success: true });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Error executing queries" });
     }
   });
 

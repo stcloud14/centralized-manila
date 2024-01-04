@@ -43,26 +43,25 @@ const BusinessPermitForm =()=>{
   console.log(busPermit)
 
 
-  const [data, setData] = useState([]);
+  const [dataRow, setDataRow] = useState([]);
   const [editingIndex, setEditingIndex] = useState(-1);
   const [rowData, setRowData] = useState({
     bus_line: '',
     bus_psic: '',
     bus_products: '',
     bus_units_no: '',
-    bus_total_cap: '',
+    bus_total_cap: ''
   });
   const [editData, setEditData] = useState({
     bus_line: '',
     bus_psic: '',
     bus_products: '',
     bus_units_no: '',
-    bus_total_cap: '',
+    bus_total_cap: ''
   });
 
 
-  console.log(rowData)
-  console.log(data)
+  console.log(dataRow)
 
 
   const handleActivityChange = (e) => {
@@ -119,16 +118,16 @@ const BusinessPermitForm =()=>{
   const handleAddRow = () => {
     if (editingIndex !== -1) {
 
-      const newData = [...data];
+      const newData = [...dataRow];
       newData[editingIndex] = { ...editData };
-      setData(newData);
+      setDataRow(newData);
 
       setEditingIndex(-1);
 
     } else {
 
       const newRow = { ...rowData };
-      setData([...data, newRow]);
+      setDataRow([...dataRow, newRow]);
 
       setRowData({
         bus_line: '',
@@ -150,9 +149,9 @@ const BusinessPermitForm =()=>{
 
 
   const handleDeleteRow = (index) => {
-    const newData = [...data];
+    const newData = [...dataRow];
     newData.splice(index, 1);
-    setData(newData);
+    setDataRow(newData);
     setEditingIndex(-1);
   };
 
@@ -392,27 +391,44 @@ const BusinessPermitForm =()=>{
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const response = await axios.post(`http://localhost:8800/buspermit/${user_id}`, busPermit);
-  
-      // Check the response status before proceeding
-      if (response.status === 200) {
-        setIsSuccess(true); // Set success state to true
-        handleCloseModal(); // Close the modal
-        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-        console.log('Transaction successful');
-  
-        setTimeout(() => {
-          setIsSuccess(false);
-        }, 3000);
-      } else {
-        console.error('Transaction error:', response.statusText);
-      }
+        const response = await axios.post(`http://localhost:8800/buspermit/bus/${user_id}`, busPermit);
+
+        if (response.status === 200) {
+            setIsSuccess(true);
+            handleCloseModal();
+            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            console.log('Transaction successful');
+
+            setTimeout(() => {
+                setIsSuccess(false);
+            }, 3000);
+        } else {
+            console.error('Transaction error:', response.statusText);
+        }
+
+        // Second POST request to http://localhost:8800/buspermit/busact
+        const response1 = await axios.post(`http://localhost:8800/buspermit/busact`, { dataRow });
+
+        if (response1.status === 200) {
+            setIsSuccess(true);
+            handleCloseModal();
+            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            console.log('Transaction successful');
+
+            setTimeout(() => {
+                setIsSuccess(false);
+            }, 3000);
+        } else {
+            console.error('Transaction error:', response1.statusText);
+        }
+
     } catch (err) {
-      console.error('Transaction error:', err);
+        console.error('Transaction error:', err);
     }
-  };
+};
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
@@ -420,7 +436,6 @@ const BusinessPermitForm =()=>{
   const handleProceed = (e) => {
     e.preventDefault();
     
-    // Please fill up the necessary forms
   const requiredFields = [
     'bus_type',
     'bus_name',
@@ -483,7 +498,8 @@ const BusinessPermitForm =()=>{
     // 'bus_print',
     // 'bus_purpose',
     // 'bus_amount',
-  ]; //The input fields that is required
+  ];
+
   const isIncomplete = requiredFields.some((field) => !busPermit[field]);
 
   if (isIncomplete) {
@@ -918,7 +934,7 @@ const BusinessPermitForm =()=>{
                       </tr>
                     </thead>
                     <tbody>
-                    {data.map((row, index) => (
+                    {dataRow.map((row, index) => (
                       <tr key={index} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="pl-6 pr-3 py-2 whitespace-nowrap">
                           {editingIndex === index ? (
