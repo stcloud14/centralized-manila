@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const BusinessPermitTermsModal = ({ onClose }) => {
+const TermsModal = ({ onClose }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -40,7 +40,7 @@ const BusinessPermitTermsModal = ({ onClose }) => {
                   onChange={handleCheckboxChange}
                 />
                 <p className="text-xs sm:text-sm text-slate-700 dark:text-white text-justify pointer-events-none">
-                  <span className="font-medium">I DECLARE UNDER PENALTY OF PERJURY</span> that all information in this application is true and correct based on my personal knowledge and submitted authentic documents online to the BUREAU OF PERMITS. Any false or misleading information supplied, or production of fake/falsified documents shall be grounds for appropriate legal action against me and AUTOMATICALLY REVOKES THE PERMIT. I hereby agree that all personal data (as defined under the Data Privacy Law of 2012 and its Implementing Rules and Regulations) and account transaction information or records with the City/Municipal Government may be processed, profiled or shared to requesting parties or for the purpose of any court, legal process, examination, inquiry and audit or investigation of any authority.
+                  <span className="font-medium">I DECLARE UNDER PENALTY OF PERJURY</span> that all information in this application is true and correct based on my personal knowledge. Any false or misleading information supplied shall be grounds for appropriate legal action against me and AUTOMATICALLY REVOKES THE PERMIT. I hereby agree that all personal data (as defined under the Data Privacy Law of 2012 and its Implementing Rules and Regulations) and account transaction information or records with the City/Municipal Government may be processed, profiled or shared to requesting parties or for the purpose of any court, legal process, examination, inquiry and audit or investigation of any authority.
                 </p>
               </p>
             </div>
@@ -65,4 +65,4 @@ const BusinessPermitTermsModal = ({ onClose }) => {
   );
 };
 
-export default BusinessPermitTermsModal;
+export default TermsModal;
