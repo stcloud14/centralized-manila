@@ -52,6 +52,13 @@ const BusinessPermitForm =()=>{
     bus_units_no: '',
     bus_total_cap: '',
   });
+  const [editData, setEditData] = useState({
+    bus_line: '',
+    bus_psic: '',
+    bus_products: '',
+    bus_units_no: '',
+    bus_total_cap: '',
+  });
 
 
   console.log(rowData)
@@ -83,22 +90,40 @@ const BusinessPermitForm =()=>{
     });
   }
 
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+
+    setEditData((prevData) => {
+
+      if (name === 'bus_line' || name === 'bus_products') {
+
+        const updatedValue = isNaN(value) ? value.toUpperCase() : value;
+
+        return {
+          ...prevData,
+          [name]: updatedValue,
+        };
+      } 
+      
+      else {
+        const formattedValue = value.replace(/\D/g, '');
+        return {
+          ...prevData,
+          [name]: formattedValue,
+        };
+      }
+    });
+  }
+
 
   const handleAddRow = () => {
     if (editingIndex !== -1) {
 
       const newData = [...data];
-      newData[editingIndex] = { ...rowData };
+      newData[editingIndex] = { ...editData };
       setData(newData);
 
       setEditingIndex(-1);
-      setRowData({
-        bus_line: '',
-        bus_psic: '',
-        bus_products: '',
-        bus_units_no: '',
-        bus_total_cap: '',
-      });
 
     } else {
 
@@ -120,7 +145,7 @@ const BusinessPermitForm =()=>{
 
   const handleEditRow = (index) => {
     setEditingIndex(index);
-    setRowData(data[index]);
+    setEditData(data[index]);
   };
 
 
@@ -900,8 +925,8 @@ const BusinessPermitForm =()=>{
                             <input
                               type="text"
                               name="bus_line"
-                              value={rowData.bus_line}
-                              onChange={handleActivityChange}
+                              value={editData.bus_line}
+                              onChange={handleEditChange}
                             />
                           ) : (
                             row.bus_line
@@ -912,8 +937,8 @@ const BusinessPermitForm =()=>{
                               <input
                                 type="text"
                                 name="bus_psic"
-                                value={rowData.bus_psic}
-                                onChange={handleActivityChange}
+                                value={editData.bus_psic}
+                                onChange={handleEditChange}
                               />
                             ) : (
                               row.bus_psic
@@ -924,8 +949,8 @@ const BusinessPermitForm =()=>{
                               <input
                                 type="text"
                                 name="bus_products"
-                                value={rowData.bus_products}
-                                onChange={handleActivityChange}
+                                value={editData.bus_products}
+                                onChange={handleEditChange}
                               />
                             ) : (
                               row.bus_products
@@ -936,8 +961,8 @@ const BusinessPermitForm =()=>{
                               <input
                                 type="text"
                                 name="bus_units_no"
-                                value={rowData.bus_units_no}
-                                onChange={handleActivityChange}
+                                value={editData.bus_units_no}
+                                onChange={handleEditChange}
                               />
                             ) : (
                               row.bus_units_no
@@ -948,8 +973,8 @@ const BusinessPermitForm =()=>{
                               <input
                                 type="text"
                                 name="bus_total_cap"
-                                value={rowData.bus_total_cap}
-                                onChange={handleActivityChange}
+                                value={editData.bus_total_cap}
+                                onChange={handleEditChange}
                               />
                             ) : (
                               row.bus_total_cap
