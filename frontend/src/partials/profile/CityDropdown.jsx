@@ -1276,6 +1276,7 @@ import React from 'react';
         { value: '14A28', label: 'City of Paranaque', province: '14A4' },
         { value: '14A29', label: 'Pasay City', province: '14A4' },
         { value: '14A30', label: 'Pateros', province: '14A4' },
+        { value: '14A31', label: 'Taguig', province: '14A4' },
         { value: '15A1', label: 'Bangued ', province: '15A1' },
         { value: '15A2', label: 'Boliney', province: '15A1' },
         { value: '15A3', label: 'Bucay', province: '15A1' },

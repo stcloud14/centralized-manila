@@ -10,10 +10,15 @@ import Req from '../partials/misc/RequiredFieldIndicator';
 import Flatpickr from 'react-flatpickr';
 
 import 'flatpickr/dist/themes/airbnb.css';
+import SuffixDropdown from '../partials/profile/SuffixDropdown';
+import SexDropdown from '../partials/profile/SexDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 import CityDropdown from '../partials/profile/CityDropdown';
-
+import CopiesDropdown from '../partials/profile/CopiesDropdown';
+import PurposeDropdown from '../partials/profile/PurposeDropdown';
+import PrintDropdown from '../partials/profile/PrintDropdown';
+import ValidIdDropdown from '../partials/profile/ValidIdDropdown'
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 
 
@@ -314,27 +319,14 @@ const DeathCertificateForm =()=>{
                     <label htmlFor="deathc_mname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_suffix} name="deathc_suffix" id="deathc_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                      <option value="SR." className='dark:bg-[#3d3d3d]'>Sr.</option>
-                      <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                      <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                      <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                      <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                      <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                      <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                      <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                      <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                      <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                      <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                    <select onChange={handleInputChange} value={deathCert.deathc_suffix} name="deathc_suffix" id="deathc_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
+                      <SuffixDropdown/>
                     </select>
                     <label htmlFor="deathc_suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_sex} name="deathc_sex" id="deathc_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
-                    <option value="MALE" className='dark:bg-[#3d3d3d]'>Male</option>
-                    <option value="FEMALE"className='dark:bg-[#3d3d3d]'>Female</option>
+                    <select onChange={handleInputChange} value={deathCert.deathc_sex} name="deathc_sex" id="deathc_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
+                      <SexDropdown/>
                     </select>
                     <label htmlFor="deathc_sex" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex<Req /></label>
                   </div>
@@ -346,19 +338,19 @@ const DeathCertificateForm =()=>{
                 <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Place of Death Information</h1>
                 <div className="grid md:grid-cols-4 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_region} name="deathc_region" id="deathc_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={deathCert.deathc_region} name="deathc_region" id="deathc_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                     <RegionDropdown />
                     </select>
                     <label htmlFor="deathc_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_province} name="deathc_province" id="deathc_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={deathCert.deathc_province} name="deathc_province" id="deathc_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                     <ProvinceDropdown selectedRegion={deathCert.deathc_region} /> 
                     </select>
                     <label htmlFor="deathc_province" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_municipal} name="deathc_municipal" id="deathc_municipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={deathCert.deathc_municipal} name="deathc_municipal" id="deathc_municipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                     <CityDropdown selectedProvince={deathCert.deathc_province} />
                     </select>
                     <label htmlFor="deathc_municipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal<Req /></label>
@@ -419,19 +411,8 @@ const DeathCertificateForm =()=>{
                     <label htmlFor="deathc_reqmname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_reqsuffix} name="deathc_reqsuffix" id="deathc_reqsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                      <option value="SR." className='dark:bg-[#3d3d3d]'>Sr.</option>
-                      <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                      <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                      <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                      <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                      <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                      <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                      <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                      <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                      <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                      <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                    <select onChange={handleInputChange} value={deathCert.deathc_reqsuffix} name="deathc_reqsuffix" id="deathc_reqsuffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
+                      <SuffixDropdown/>
                     </select>
                     <label htmlFor="deathc_reqsuffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
@@ -458,19 +439,19 @@ const DeathCertificateForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_reqregion} name="deathc_reqregion" id="deathc_reqregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={deathCert.deathc_reqregion} name="deathc_reqregion" id="deathc_reqregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                     <RegionDropdown />
                     </select>
                     <label htmlFor="deathc_reqregion" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_reqprovince} name="deathc_reqprovince" id="deathc_reqprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={deathCert.deathc_reqprovince} name="deathc_reqprovince" id="deathc_reqprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                     <ProvinceDropdown selectedRegion={deathCert.deathc_reqregion} /> 
                     </select>
                     <label htmlFor="deathc_reqprovince" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_reqmunicipal} name="deathc_reqmunicipal" id="deathc_reqmunicipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={deathCert.deathc_reqmunicipal} name="deathc_reqmunicipal" id="deathc_reqmunicipal" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                     <CityDropdown selectedProvince={deathCert.deathc_reqprovince} />
                     </select>
                     <label htmlFor="deathc_reqmunicipal" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Municipal<Req /></label>
@@ -507,27 +488,14 @@ const DeathCertificateForm =()=>{
                     <label htmlFor="deathc_regnum" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Registry Number (if known)</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_nocopies} name="deathc_nocopies" id="deathc_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select No. of Copies</option>
-                      <option value="1" className='dark:bg-[#3d3d3d]'>1</option>
-                      <option value="2" className='dark:bg-[#3d3d3d]'>2</option>
-                      <option value="3" className='dark:bg-[#3d3d3d]'>3</option>
-                      <option value="4" className='dark:bg-[#3d3d3d]'>4</option>
-                      <option value="5" className='dark:bg-[#3d3d3d]'>5</option>
-                      <option value="6" className='dark:bg-[#3d3d3d]'>6</option>
-                      <option value="7" className='dark:bg-[#3d3d3d]'>7</option>
-                      <option value="8" className='dark:bg-[#3d3d3d]'>8</option>
-                      <option value="9" className='dark:bg-[#3d3d3d]'>9</option>
-                      <option value="10" className='dark:bg-[#3d3d3d]'>10</option>
+                    <select onChange={handleInputChange} value={deathCert.deathc_nocopies} name="deathc_nocopies" id="deathc_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
+                      <CopiesDropdown/>
                     </select>
                     <label htmlFor="deathc_nocopies" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Copies<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_print} name="deathc_print" id="deathc_print" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select What to Print</option>
-                      <option value="Front" className='dark:bg-[#3d3d3d]'>Front (P50)</option>
-                      <option value="Back" className='dark:bg-[#3d3d3d]'>Back (P50)</option>
-                      <option value="Front and Back" className='dark:bg-[#3d3d3d]'>Front and Back (P100)</option>
+                    <select onChange={handleInputChange} value={deathCert.deathc_print} name="deathc_print" id="deathc_print" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
+                      <PrintDropdown/>
                     </select>
                     <label htmlFor="deathc_print" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">What to Print<Req /></label>
                   </div>
@@ -535,30 +503,14 @@ const DeathCertificateForm =()=>{
                 {/* Row 2 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_purpose} name="deathc_purpose" id="deathc_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Purpose</option>
-                      <option value="1" className='dark:bg-[#3d3d3d]'>Claim Benefits / Loan</option>
-                      <option value="2" className='dark:bg-[#3d3d3d]'>Passport / Travel</option>
-                      <option value="3" className='dark:bg-[#3d3d3d]'>School Requirements</option>
-                      <option value="4" className='dark:bg-[#3d3d3d]'>Employment Local</option>
-                      <option value="5" className='dark:bg-[#3d3d3d]'>Employment Abroad</option>
+                    <select onChange={handleInputChange} value={deathCert.deathc_purpose} name="deathc_purpose" id="deathc_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
+                      <PurposeDropdown/>
                     </select>
                     <label htmlFor="deathc_purpose" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Purpose<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={deathCert.deathc_validid} name="deathc_validid" id="deathc_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
-                      <option value="1" className='dark:bg-[#3d3d3d]'>PASSPORT</option>
-                      <option value="2" className='dark:bg-[#3d3d3d]'>SSS</option>
-                      <option value="3" className='dark:bg-[#3d3d3d]'>UMID</option>
-                      <option value="4" className='dark:bg-[#3d3d3d]'>PHILHEALTH</option>
-                      <option value="5" className='dark:bg-[#3d3d3d]'>DRIVER'S LICENSE</option>
-                      <option value="6" className='dark:bg-[#3d3d3d]'>VOTER'S ID</option>
-                      <option value="7" className='dark:bg-[#3d3d3d]'>SENIOR CITIZEN'S ID</option>
-                      <option value="8" className='dark:bg-[#3d3d3d]'>POSTAL ID</option>
-                      <option value="9" className='dark:bg-[#3d3d3d]'>BARANGAY ID</option>
-                      <option value="10" className='dark:bg-[#3d3d3d]'>NATIONAL ID</option>
-                      <option value="11" className='dark:bg-[#3d3d3d]'>AUTHORIZATION LETTER</option>
+                    <select onChange={handleInputChange} value={deathCert.deathc_validid} name="deathc_validid" id="deathc_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
+                      <ValidIdDropdown/>
                     </select>
                     <label htmlFor="deathc_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>

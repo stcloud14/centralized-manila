@@ -9,6 +9,11 @@ import Header from '../partials/Header';
 import Flatpickr from 'react-flatpickr';
 
 import 'flatpickr/dist/themes/airbnb.css';
+import SexDropdown from '../partials/profile/SexDropdown';
+import SuffixDropdown from '../partials/profile/SuffixDropdown';
+import CitizenshipDropdown from '../partials/profile/CitizenshipDropdown';
+import CivilStatusDropdown from '../partials/profile/CivilStatusDropdown';
+import ResidencyDropdown from '../partials/profile/ResidencyDropdown';
 
 const PersonalInfoForm =()=>{
 
@@ -248,24 +253,21 @@ const PersonalInfoForm =()=>{
               {/* Row 2 */}
               <div className="grid md:grid-cols-4 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                <select onChange={handleChangePersonal} value={userPersonal.suffix_type} defaultValue={0} name="suffix_type" id="suffix_type" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                {/* <select onChange={handleChangePersonal} value={userPersonal.suffix_type} defaultValue={0} name="suffix_type" id="suffix_type" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
                       !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
                     disabled={!editMode}>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-                    <option value="Sr."className='dark:bg-[#3d3d3d]'>Sr.</option>
-                    <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
-                    <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
-                    <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
-                    <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
-                    <option value="V"className='dark:bg-[#3d3d3d]'>V</option>
-                    <option value="VI"className='dark:bg-[#3d3d3d]'>VI</option>
-                    <option value="VII"className='dark:bg-[#3d3d3d]'>VII</option>
-                    <option value="VIII"className='dark:bg-[#3d3d3d]'>VIII</option>
-                    <option value="IX"className='dark:bg-[#3d3d3d]'>IX</option>
-                    <option value="X"className='dark:bg-[#3d3d3d]'>X</option>
+                   <SuffixDropdown/>
+                  </select> */}
+                  <select onChange={handleChangePersonal} value={userPersonal.suffix_type} defaultValue={0} name="suffix_type" id="suffix_type" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed'} ${
+                   !editMode ? 'border-slate-200 dark:border-gray-700 text-slate-500 dark:text-zinc-400': ''
+                      }`}
+                      placeholder=" "
+                      required
+                      disabled={!editMode}>
+                      <SuffixDropdown />
                   </select>
                   <label htmlFor="suffix_type" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
                       !editMode && 'text-gray-500'
@@ -273,15 +275,21 @@ const PersonalInfoForm =()=>{
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group" >
-                  <select onChange={handleChangePersonal} value={userPersonal.sex_type} defaultValue={0} name="sex_type" id="sex_type" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                  {/* <select onChange={handleChangePersonal} value={userPersonal.sex_type} defaultValue={0} name="sex_type" id="sex_type" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
                       !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
                     disabled={!editMode}>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
-                    <option value="Male" className='dark:bg-[#3d3d3d]'>Male</option>
-                    <option value="Female"className='dark:bg-[#3d3d3d]'>Female</option>
+                   <SexDropdown/>
+                  </select> */}
+                  <select onChange={handleChangePersonal} value={userPersonal.sex_type} defaultValue={0} name="sex_type" id="sex_type" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed' } ${
+                    !editMode ? 'border-slate-200 dark:border-gray-700 text-slate-500 dark:text-zinc-400': ''
+                      }`}
+                      placeholder=" "
+                      required
+                      disabled={!editMode}>
+                      <SexDropdown />
                   </select>
                   <label htmlFor="sex_type" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
                 </div>
@@ -318,9 +326,12 @@ const PersonalInfoForm =()=>{
                         placeholder: ' ', // Set an empty space as the initial placeholder
                       }}
                       className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    
                     />
                   ) : (
-                    <div className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                    <div className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                      !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
+                    }`}>
                       {userBirth.birth_date}
                     </div>
                   )}
@@ -353,47 +364,64 @@ const PersonalInfoForm =()=>{
               <div className="grid md:grid-cols-3 md:gap-6">
 
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                  {/* <select onChange={handleChangePersonal} value={userPersonal.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
                       !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
                     disabled={!editMode}>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Civil Status</option>
-                    <option value="Single" className='dark:bg-[#3d3d3d]'>Single</option>
-                    <option value="Married" className='dark:bg-[#3d3d3d]'>Married</option>
-                    <option value="Separated" className='dark:bg-[#3d3d3d]'>Separated</option>
-                    <option value="Widowed" className='dark:bg-[#3d3d3d]'>Widowed</option>
+                  <CivilStatusDropdown/>
+                  </select> */}
+                  <select onChange={handleChangePersonal} value={userPersonal.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed' } ${
+                    !editMode ? 'border-slate-200 dark:border-gray-700 text-slate-500 dark:text-zinc-400': ''
+                      }`}
+                      placeholder=" "
+                      required
+                      disabled={!editMode}>
+                      <CivilStatusDropdown />
                   </select>
                   <label htmlFor="cvl_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.czn_status} defaultValue={0} name="czn_status" id="czn_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                  {/* <select onChange={handleChangePersonal} value={userPersonal.czn_status} defaultValue={0} name="czn_status" id="czn_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
                       !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
                     disabled={!editMode}>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Citizenship</option>
-                    <option value="Citizen" className='dark:bg-[#3d3d3d]'>Citizen</option>
-                    <option value="Permanent Resident" className='dark:bg-[#3d3d3d]'>Permanent Resident</option>
-                    <option value="Temporary Resident" className='dark:bg-[#3d3d3d]'>Temporary Resident</option>
-                  </select>
+                   <CitizenshipDropdown/>
+                  </select> */}
+                  <select onChange={handleChangePersonal} value={userPersonal.czn_status} defaultValue={0} name="czn_status" id="czn_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed' } ${
+                    !editMode ? 'border-slate-200 dark:border-gray-700 text-slate-500 dark:text-zinc-400': ''
+                  }`}
+                  placeholder=" "
+                  required
+                  disabled={!editMode}
+                >
+                  <CitizenshipDropdown />
+                </select>
+
                   <label htmlFor="czn_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChangePersonal} value={userPersonal.res_status} defaultValue={0} name="res_status" id="res_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                  {/* <select onChange={handleChangePersonal} value={userPersonal.res_status} defaultValue={0} name="res_status" id="res_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
                       !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
                     required
                     disabled={!editMode}>
-                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Residency Status</option>
-                    <option value="Resident" className='dark:bg-[#3d3d3d]'>Resident</option>
-                    <option value="Non-Resident" className='dark:bg-[#3d3d3d]'>Non-Resident</option>
-                  </select>
+                  <ResidencyDropdown/>
+                  </select> */}
+                  <select onChange={handleChangePersonal} value={userPersonal.res_status} defaultValue={0} name="res_status" id="res_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed'  } ${
+                    !editMode ? 'border-slate-200 dark:border-gray-700 text-slate-500 dark:text-zinc-400' : ''
+                  }`}
+                  placeholder=" "
+                  required
+                  disabled={!editMode}>
+                  <ResidencyDropdown />
+                </select>
                   <label htmlFor="res_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
                 </div>
               </div>

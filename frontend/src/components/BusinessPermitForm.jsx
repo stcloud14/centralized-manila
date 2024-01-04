@@ -40,180 +40,121 @@ const BusinessPermitForm =()=>{
     owned: '2',
   }));
 
+  console.log(busPermit)
 
-  const [renderRows, setRenderRows] = useState(false);
-  const [busRowData, setBusRowData] = useState([]);
-  console.log(busRowData)
 
- 
-  const handleAddButtonClick = () => {
-    setRenderRows(true);
-    addBusRow();
-    setBusRowData(prevData => {
-      return prevData.map(row => ({
+  const [data, setData] = useState([]);
+  const [editingIndex, setEditingIndex] = useState(-1);
+  const [rowData, setRowData] = useState({
+    bus_line: '',
+    bus_psic: '',
+    bus_products: '',
+    bus_units_no: '',
+    bus_total_cap: '',
+  });
+  const [editData, setEditData] = useState({
+    bus_line: '',
+    bus_psic: '',
+    bus_products: '',
+    bus_units_no: '',
+    bus_total_cap: '',
+  });
+
+
+  console.log(rowData)
+  console.log(data)
+
+
+  const handleActivityChange = (e) => {
+    const { name, value } = e.target;
+
+    setRowData((prevData) => {
+
+      if (name === 'bus_line' || name === 'bus_products') {
+
+        const updatedValue = isNaN(value) ? value.toUpperCase() : value;
+
+        return {
+          ...prevData,
+          [name]: updatedValue,
+        };
+      } 
+      
+      else {
+        const formattedValue = value.replace(/\D/g, '');
+        return {
+          ...prevData,
+          [name]: formattedValue,
+        };
+      }
+    });
+  }
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+
+    setEditData((prevData) => {
+
+      if (name === 'bus_line' || name === 'bus_products') {
+
+        const updatedValue = isNaN(value) ? value.toUpperCase() : value;
+
+        return {
+          ...prevData,
+          [name]: updatedValue,
+        };
+      } 
+      
+      else {
+        const formattedValue = value.replace(/\D/g, '');
+        return {
+          ...prevData,
+          [name]: formattedValue,
+        };
+      }
+    });
+  }
+
+
+  const handleAddRow = () => {
+    if (editingIndex !== -1) {
+
+      const newData = [...data];
+      newData[editingIndex] = { ...editData };
+      setData(newData);
+
+      setEditingIndex(-1);
+
+    } else {
+
+      const newRow = { ...rowData };
+      setData([...data, newRow]);
+
+      setRowData({
         bus_line: '',
         bus_psic: '',
         bus_products: '',
         bus_units_no: '',
         bus_total_cap: '',
-      }));
-    });
-  };
-
-  const addBusRow = () => {
-    const newBusRow = {
-      bus_line: '',
-      bus_psic: '',
-      bus_products: '',
-      bus_units_no: '',
-      bus_total_cap: '',
-    };
-    
-    if (Object.values(newBusRow).some(value => value !== '')) {
-      setBusRowData(prevData => [...prevData, newBusRow]);
+      });
     }
   };
 
-  const updateCellValue = (rowIndex, columnName, value) => {
-    setBusRowData(prevData => {
-      const updatedData = [...prevData];
-      updatedData[rowIndex] = {
-        ...updatedData[rowIndex],
-        [columnName]: value,
-      };
-      return updatedData;
-    });
+  console.log(editingIndex)
+
+
+  const handleEditRow = (index) => {
+    setEditingIndex(index);
+    setEditData(data[index]);
   };
 
-  const handleRowChange = (event, rowIndex, columnName) => {
-    const { value } = event.target;
-    updateCellValue(rowIndex, columnName, value);
+
+  const handleDeleteRow = (index) => {
+    const newData = [...data];
+    newData.splice(index, 1);
+    setData(newData);
+    setEditingIndex(-1);
   };
-
-  
-
-  
-
-  
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const contentRef = useRef(null);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      const response = await axios.post(`http://localhost:8800/buspermit/${user_id}`, busPermit);
-  
-      // Check the response status before proceeding
-      if (response.status === 200) {
-        setIsSuccess(true); // Set success state to true
-        handleCloseModal(); // Close the modal
-        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-        console.log('Transaction successful');
-  
-        setTimeout(() => {
-          setIsSuccess(false);
-        }, 3000);
-      } else {
-        console.error('Transaction error:', response.statusText);
-      }
-    } catch (err) {
-      console.error('Transaction error:', err);
-    }
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showWarning, setShowWarning] = useState(false);
-
-  const handleProceed = (e) => {
-    e.preventDefault();
-    
-    // Please fill up the necessary forms
-  const requiredFields = [
-    'bus_type',
-    'bus_name',
-    // 'bus_franchise',
-    // 'bus_reg_no',
-    // 'bus_tin',
-    // 'bus_lname',
-    // 'bus_fname',
-    // 'bus_mname',
-    // 'bus_suffix',
-    // 'bus_sex',
-    // 'bus_email',
-    // 'bus_tel_no',
-    // 'bus_mobile_no',
-    // 'bus_bregion',
-    // 'bus_bprovince',
-    // 'bus_bcity',
-    // 'bus_bbrgy',
-    // 'bus_bhnum',
-    // 'bus_bstreet',
-    // 'bus_bzip',
-    // 'bus_floor',
-    // 'bus_emp',
-    // 'bus_male_emp',
-    // 'bus_female_emp',
-    // 'bus_van_no',
-    // 'bus_truck_no',
-    // 'bus_motor_no',
-    // 'bus_region',
-    // 'bus_province',
-    // 'bus_city',
-    // 'bus_brgy',
-    // 'bus_hnum',
-    // 'bus_street',
-    // 'bus_zip',
-    // 'bus_lessor',
-    // 'bus_rent',
-    // 'bus_office',
-    // 'bus_line',
-    // 'bus_psic',
-    // 'bus_products',
-    // 'bus_units_no',
-    // 'bus_total_cap',
-    // 'bus_validid',
-    // 'bus_tax_incentives',
-    // 'bus_dti_reg',
-    // 'bus_rptax_decbldg',
-    // 'bus_sec_paid',
-    // 'bus_sec_articles',
-    // 'bus_nga',
-    // 'bus_sec_front',
-    // 'bus_rptax_decland',
-    // 'bus_fire',
-    // 'bus_page2',
-    // 'bus_page3',
-    // 'bus_page4',
-    // 'bus_page5',
-
-    // 'bus_nocopies',
-    // 'bus_print',
-    // 'bus_purpose',
-    // 'bus_amount',
-  ]; //The input fields that is required
-  const isIncomplete = requiredFields.some((field) => !busPermit[field]);
-
-  if (isIncomplete) {
-    contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
-    setShowWarning(true); // Show warning message and prevent opening the modal
-    
-    setTimeout(() => {
-      setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
-    }, 4000);
-  } else {
-    
-    setIsModalOpen(true);// Proceed to open the modal
-  }
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setShowWarning(false);
-  };
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
 
   const handleInputChange = (e) => {
@@ -235,10 +176,7 @@ const BusinessPermitForm =()=>{
       || id === 'bus_truck_no'
       || id === 'bus_motor_no'
       || id === 'bus_bzip'
-      || id === 'bus_rent'
-      || id === 'bus_psic'
-      || id === 'bus_units_no'
-      || id === 'bus_total_cap') {
+      || id === 'bus_rent') {
         const formattedValue = value.replace(/\D/g, '');
 
         return {
@@ -447,7 +385,126 @@ const BusinessPermitForm =()=>{
     }
   }
 
+  
+  const [isSuccess, setIsSuccess] = useState(false);
 
+  const contentRef = useRef(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await axios.post(`http://localhost:8800/buspermit/${user_id}`, busPermit);
+  
+      // Check the response status before proceeding
+      if (response.status === 200) {
+        setIsSuccess(true); // Set success state to true
+        handleCloseModal(); // Close the modal
+        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+        console.log('Transaction successful');
+  
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 3000);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+
+  const handleProceed = (e) => {
+    e.preventDefault();
+    
+    // Please fill up the necessary forms
+  const requiredFields = [
+    'bus_type',
+    'bus_name',
+    // 'bus_franchise',
+    // 'bus_reg_no',
+    // 'bus_tin',
+    // 'bus_lname',
+    // 'bus_fname',
+    // 'bus_mname',
+    // 'bus_suffix',
+    // 'bus_sex',
+    // 'bus_email',
+    // 'bus_tel_no',
+    // 'bus_mobile_no',
+    // 'bus_bregion',
+    // 'bus_bprovince',
+    // 'bus_bcity',
+    // 'bus_bbrgy',
+    // 'bus_bhnum',
+    // 'bus_bstreet',
+    // 'bus_bzip',
+    // 'bus_floor',
+    // 'bus_emp',
+    // 'bus_male_emp',
+    // 'bus_female_emp',
+    // 'bus_van_no',
+    // 'bus_truck_no',
+    // 'bus_motor_no',
+    // 'bus_region',
+    // 'bus_province',
+    // 'bus_city',
+    // 'bus_brgy',
+    // 'bus_hnum',
+    // 'bus_street',
+    // 'bus_zip',
+    // 'bus_lessor',
+    // 'bus_rent',
+    // 'bus_office',
+    // 'bus_line',
+    // 'bus_psic',
+    // 'bus_products',
+    // 'bus_units_no',
+    // 'bus_total_cap',
+    // 'bus_validid',
+    // 'bus_tax_incentives',
+    // 'bus_dti_reg',
+    // 'bus_rptax_decbldg',
+    // 'bus_sec_paid',
+    // 'bus_sec_articles',
+    // 'bus_nga',
+    // 'bus_sec_front',
+    // 'bus_rptax_decland',
+    // 'bus_fire',
+    // 'bus_page2',
+    // 'bus_page3',
+    // 'bus_page4',
+    // 'bus_page5',
+
+    // 'bus_nocopies',
+    // 'bus_print',
+    // 'bus_purpose',
+    // 'bus_amount',
+  ]; //The input fields that is required
+  const isIncomplete = requiredFields.some((field) => !busPermit[field]);
+
+  if (isIncomplete) {
+    contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
+    setShowWarning(true); // Show warning message and prevent opening the modal
+    
+    setTimeout(() => {
+      setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
+    }, 4000);
+  } else {
+    
+    setIsModalOpen(true);// Proceed to open the modal
+  }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setShowWarning(false);
+  };
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [uploadModal, setUploadModal] = useState(false);
 
@@ -455,11 +512,6 @@ const BusinessPermitForm =()=>{
     setUploadModal(true);
   };
   
-  // <UploadImageModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-
-  
-  console.log(busPermit)
-
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -504,8 +556,8 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Business Information and Registration</h1>
                 <div className="grid md:grid-cols-3 md:gap-6">
-                  <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_type} name="bus_type" id="bus_type" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                  <div className="relative z-0 w-full mb-6 group ">
+                    <select onChange={handleInputChange} value={busPermit.bus_type} name="bus_type" id="bus_type" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Business Type</option>
                       <option value="1" className='dark:bg-[#3d3d3d]'>Sole Proprietorship</option>
                       <option value="2" className='dark:bg-[#3d3d3d]'>One Person Corporation</option>
@@ -540,7 +592,7 @@ const BusinessPermitForm =()=>{
 
               {/* Group 2 - Owner’s Information */}
               <div className='pt-6'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Owner’s Information</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Owner's Information</h1>
                 <div className="grid md:grid-cols-8 md:gap-6">
                   <div className="relative z-0 w-full mb-6 md:col-span-2 group">
                     <input onChange={handleInputChange} value={busPermit.bus_lname} type="text" name="bus_lname" id="bus_lname" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
@@ -555,7 +607,7 @@ const BusinessPermitForm =()=>{
                     <label htmlFor="bus_mname" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_suffix} name="bus_suffix" id="bus_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_suffix} name="bus_suffix" id="bus_suffix" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                         <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
                         <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
                         <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
@@ -572,7 +624,7 @@ const BusinessPermitForm =()=>{
                     <label htmlFor="bus_suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_sex} name="bus_sex" id="bus_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_sex} name="bus_sex" id="bus_sex" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Sex</option>
                       <option value="MALE" className='dark:bg-[#3d3d3d]'>Male</option>
                       <option value="FEMALE"className='dark:bg-[#3d3d3d]'>Female</option>
@@ -607,19 +659,19 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_bregion} name="bus_bregion" id="bus_bregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_bregion} name="bus_bregion" id="bus_bregion" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <RegionDropdown />
                     </select>
                     <label htmlFor="bus_bregion" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_bprovince} name="bus_bprovince" id="bus_bprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_bprovince} name="bus_bprovince" id="bus_bprovince" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <ProvinceDropdown selectedRegion={busPermit.bus_bregion} /> 
                     </select>
                     <label htmlFor="bus_bprovince" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_bcity} name="bus_bcity" id="bus_bcity" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_bcity} name="bus_bcity" id="bus_bcity" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <CityDropdown selectedProvince={busPermit.bus_bprovince} />
                     </select>
                     <label htmlFor="bus_bcity" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">City<Req /></label>
@@ -696,19 +748,19 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_region} name="bus_region" id="bus_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_region} name="bus_region" id="bus_region" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <RegionDropdown />
                     </select>
                     <label htmlFor="bus_region" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Region<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_province} name="bus_province" id="bus_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_province} name="bus_province" id="bus_province" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <ProvinceDropdown selectedRegion={busPermit.bus_region} />
                     </select>
                     <label htmlFor="bus_province" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Province<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_city} name="bus_city" id="bus_city" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                    <select onChange={handleInputChange} value={busPermit.bus_city} name="bus_city" id="bus_city" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                       <CityDropdown selectedProvince={busPermit.bus_province} />
                     </select>
                     <label htmlFor="bus_city" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">City<Req /></label>
@@ -738,10 +790,10 @@ const BusinessPermitForm =()=>{
               {/* Group 7 - Owned Radio Button */}
               <div onChange={handleInputChange} name="owned" className="mt-6 flex items-center text-sm">
                 <span className="text-gray-700 dark:text-white mr-9">Is this owned?</span>
-                <input value='1' type="radio" name="owned" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"/>
+                <input value='1' type="radio" name="owned" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer"/>
                 <label htmlFor="owned_no" className="text-gray-700 dark:text-white mr-6">No</label>
 
-                <input value='2' defaultChecked type="radio" name="owned"className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"/>
+                <input value='2' defaultChecked type="radio" name="owned"className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer"/>
                 <label htmlFor="owned_yes" className="text-gray-700 dark:text-white">Yes</label>
               </div>
 
@@ -765,26 +817,18 @@ const BusinessPermitForm =()=>{
 
                 <div onChange={handleInputChange} name="bus_incentive" className="flex mb-2 md:mb-0">
                   <label className="mr-2">
-                    <input value='1' type="radio" name="bus_incentive" defaultChecked className="border border-gray-500 md:ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value='1' type="radio" name="bus_incentive" defaultChecked className="border border-gray-500 md:ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     <span className="ml-1.5">No</span>
                   </label>
                   <label>
-                    <input value='2' type="radio" name="bus_incentive" className="border border-gray-500 ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value='2' type="radio" name="bus_incentive" className="border border-gray-500 ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     <span className="ml-1.5">Yes</span>
                   </label>
                 </div>
 
                 {busPermit.bus_incentive === '2' ? (
-                <div onClick={openUploadModal}  className="group md:ml-9">
-                  <a
-                    className="flex justify-center pl-3 items-center text-center border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                      <path d="M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 00-1.09 0l-4.25 4.5a.75.75 0 101.09 1.03L9.25 4.636v8.614z" />
-                      <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
-                    </svg>
-                    <span className="md:text-sm text-xs font-normal pl-1 pr-3 py-0.5">Upload</span>
-                  </a>
+                <div className="group md:ml-9">
+                  <UploadButton openUploadModal={openUploadModal} />
                 </div>
                 ) : null}
               </div>
@@ -795,27 +839,27 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <div onChange={handleInputChange} name="bus_activity" className="flex flex-col md:flex-row md:items-center text-sm items-start">
                   <label htmlFor="bus_mainoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="1" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value="1" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Main Office
                   </label>
 
                   <label htmlFor="bus_branchoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="2" type="radio" name="bus_activity" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value="2" type="radio" name="bus_activity" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Branch Office
                   </label>
 
                   <label htmlFor="bus_adminoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="3" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value="3" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Admin Office Only
                   </label>
 
                   <label htmlFor="bus_warehouse" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="4" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value="4" type="radio" name="bus_activity" className="border  border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Warehouse
                   </label>
 
                   <div className="flex items-center md:mr-6">
-                    <input value="5" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                    <input value="5" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Others:
                     <input onChange={handleInputChange} value={busPermit.bus_office_partial} disabled={busPermit.bus_activity !== '5'} type="text" name="bus_office_partial" id="bus_office_partial" className="block px-0 ml-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Specify" required/>
                   </div>
@@ -823,27 +867,27 @@ const BusinessPermitForm =()=>{
                 {/* Row 2 */} 
                 <div className="grid md:grid-cols-11 md:gap-6 mt-6">
                   <div className="relative z-0 w-full md:col-span-2 mb-6 group">
-                    <input value={busRowData.bus_line} onChange={(e) => handleRowChange(e, 0, 'bus_line')} type="text" name="bus_line" id="bus_line" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input value={rowData.bus_line} onChange={handleActivityChange} type="text" name="bus_line" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="bus_line" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Line of Business <Req /></label>
                   </div>
                   <div className="relative z-0 w-full md:col-span-2 mb-6 group">
-                    <input value={busRowData.bus_psic} onChange={(e) => handleRowChange(e, 0, 'bus_psic')} type="text" name="bus_psic" id="bus_psic" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input value={rowData.bus_psic} onChange={handleActivityChange} type="text" name="bus_psic" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="bus_psic" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">PSIC</label>
                   </div>
                   <div className="relative z-0 w-full md:col-span-2 mb-6 group">
-                    <input value={busRowData.bus_products} onChange={(e) => handleRowChange(e, 0, 'bus_products')} type="text" name="bus_products" id="bus_products" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input value={rowData.bus_products} onChange={handleActivityChange} type="text" name="bus_products" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="bus_products" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Products / Services</label>
                   </div>
                   <div className="relative z-0 w-full md:col-span-2 mb-6 group">
-                    <input value={busRowData.bus_units_no} onChange={(e) => handleRowChange(e, 0, 'bus_units_no')} type="text" name="bus_units_no" id="bus_units_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input value={rowData.bus_units_no} onChange={handleActivityChange} type="text" name="bus_units_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="bus_units_no" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No. of Units</label>
                   </div>
                   <div className="relative z-0 w-full md:col-span-2 mb-6 group">
-                    <input value={busRowData.bus_total_cap} onChange={(e) => handleRowChange(e, 0, 'bus_total_cap')} type="text" name="bus_total_cap" id="bus_total_cap" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input value={rowData.bus_total_cap} onChange={handleActivityChange} type="text" name="bus_total_cap" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="bus_total_cap" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Total Capitalization (PH)<Req /></label>
                   </div>
-                  <div onClick={handleAddButtonClick} className="relative z-0 w-full md:col-span-1 mb-6 group">
-                    <a className="flex justify-center mt-3 px-3 py-1 text-sm text-center border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full">
+                  <div onClick={handleAddRow} className="relative z-0 w-full md:col-span-1 mb-6 group">
+                    <a className="flex justify-center mt-3 px-3 py-1 text-sm text-center border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full cursor-pointer">
                       + Add
                     </a>
                   </div>
@@ -873,33 +917,90 @@ const BusinessPermitForm =()=>{
                         </th>
                       </tr>
                     </thead>
-                    {renderRows && busRowData.length > 0 && (
                     <tbody>
-                    {busRowData.map((rowData, rowIndex) => (
-                      <tr key={rowIndex} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+                    {data.map((row, index) => (
+                      <tr key={index} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="pl-6 pr-3 py-2 whitespace-nowrap">
-                          {rowData.bus_line}
+                          {editingIndex === index ? (
+                            <input
+                              type="text"
+                              name="bus_line"
+                              value={editData.bus_line}
+                              onChange={handleEditChange}
+                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                            />
+                          ) : (
+                            row.bus_line
+                          )}
                         </td>
                         <td className="pl-3 pr-0 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                          {rowData.bus_psic}
+                          {editingIndex === index ? (
+                              <input
+                                type="text"
+                                name="bus_psic"
+                                value={editData.bus_psic}
+                                onChange={handleEditChange}
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                              />
+                            ) : (
+                              row.bus_psic
+                            )}
                         </td>
                         <td className="pl-3 pr-0 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                          {rowData.bus_products}
+                          {editingIndex === index ? (
+                              <input
+                                type="text"
+                                name="bus_products"
+                                value={editData.bus_products}
+                                onChange={handleEditChange}
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                              />
+                            ) : (
+                              row.bus_products
+                            )}
                         </td>
                         <td className="pl-3 pr-0 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                          {rowData.bus_units_no}
+                          {editingIndex === index ? (
+                              <input
+                                type="text"
+                                name="bus_units_no"
+                                value={editData.bus_units_no}
+                                onChange={handleEditChange}
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                              />
+                            ) : (
+                              row.bus_units_no
+                            )}
                         </td>
                         <td className="pl-3 pr-0 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                          {rowData.bus_total_cap}
+                          {editingIndex === index ? (
+                              <input
+                                type="text"
+                                name="bus_total_cap"
+                                value={editData.bus_total_cap}
+                                onChange={handleEditChange}
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                              />
+                            ) : (
+                              row.bus_total_cap
+                            )}
                         </td>
                         <td className="md:px-0 px-4 py-2 whitespace-nowrap text-xs md:text-sm font-medium">
                           <div className="flex space-x-3">
-                            <a className="group flex justify-center items-center text-center p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-full cursor-pointer" >
+                          {editingIndex === index ? (
+                            <a onClick={() => handleAddRow()} className="group flex justify-center items-center text-center p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-full cursor-pointer" >
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="coral" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path className="stroke-blue" strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                              </svg>
+                            </a>
+                          ) : (
+                            <a onClick={() => handleEditRow(index)} className="group flex justify-center items-center text-center p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-full cursor-pointer" >
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                 <path className="stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                               </svg>
                             </a>
-                            <a className="group flex justify-center items-center text-center p-2 bg-red-500 hover:bg-red-600 text-white rounded-full cursor-pointer" >
+                          )}
+                            <a onClick={() => handleDeleteRow(index)} className="group flex justify-center items-center text-center p-2 bg-red-500 hover:bg-red-600 text-white rounded-full cursor-pointer" >
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                               </svg>
@@ -909,7 +1010,6 @@ const BusinessPermitForm =()=>{
                       </tr>
                     ))}
                     </tbody>
-                    )}
                   </table>
                 </div>
               </div>
@@ -948,7 +1048,7 @@ const BusinessPermitForm =()=>{
                           DTI Registration
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -956,7 +1056,7 @@ const BusinessPermitForm =()=>{
                           R.P. Tax Declaration for Land (Upload if copy is available. If not, indicate TDN or PIN on the UAF to include fee on eSOA)
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -964,7 +1064,7 @@ const BusinessPermitForm =()=>{
                           SEC Registration - Paid-up and Subscribed Page
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -972,7 +1072,7 @@ const BusinessPermitForm =()=>{
                             SEC Registration - Articles of Primary and Secondary Purpose
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -980,7 +1080,7 @@ const BusinessPermitForm =()=>{
                             NGA-Contract of Lease - Page Indicating Names and Floor Area - sqrm
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -988,7 +1088,7 @@ const BusinessPermitForm =()=>{
                             SEC Registration - Front Page
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -996,7 +1096,7 @@ const BusinessPermitForm =()=>{
                             R.P. Tax Declaration for Building (Upload if copy is available. If not, indicate TDN or PIN on the UAF to include fee on eSOA)
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1004,7 +1104,7 @@ const BusinessPermitForm =()=>{
                             Fire Safety Inspection Certificate for Occupancy, valid in the last 9 months / Affidavit of Undertaking
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1012,7 +1112,7 @@ const BusinessPermitForm =()=>{
                             Page 2 Document
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1020,7 +1120,7 @@ const BusinessPermitForm =()=>{
                             Page 3 Document
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1028,7 +1128,7 @@ const BusinessPermitForm =()=>{
                             Page 4 Document
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1036,7 +1136,7 @@ const BusinessPermitForm =()=>{
                             Page 5 Document
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton />
+                          <UploadButton openUploadModal={openUploadModal} />
                         </td>
                       </tr>
                     </tbody>
@@ -1050,7 +1150,7 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_nocopies} name="bus_nocopies" id="bus_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={busPermit.bus_nocopies} name="bus_nocopies" id="bus_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                         <option value="0" className='dark:bg-[#3d3d3d]'>Select No. of Copies</option>
                         <option value="1" className='dark:bg-[#3d3d3d]'>1</option>
                         <option value="2" className='dark:bg-[#3d3d3d]'>2</option>
@@ -1066,7 +1166,7 @@ const BusinessPermitForm =()=>{
                     <label htmlFor="bus_nocopies" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No. of Copies<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_print} name="bus_print" id="bus_print" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={busPermit.bus_print} name="bus_print" id="bus_print" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select What to Print</option>
                       <option value="Front" className='dark:bg-[#3d3d3d]'>Front (P50)</option>
                       <option value="Back" className='dark:bg-[#3d3d3d]'>Back (P50)</option>
@@ -1078,7 +1178,7 @@ const BusinessPermitForm =()=>{
                 {/* Row 2 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_purpose} name="bus_purpose" id="bus_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={busPermit.bus_purpose} name="bus_purpose" id="bus_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Purpose</option>
                       <option value="1" className='dark:bg-[#3d3d3d]'>Claim Benefits / Loan</option>
                       <option value="2" className='dark:bg-[#3d3d3d]'>Passport / Travel</option>
@@ -1086,10 +1186,10 @@ const BusinessPermitForm =()=>{
                       <option value="4" className='dark:bg-[#3d3d3d]'>Employment Local</option>
                       <option value="5" className='dark:bg-[#3d3d3d]'>Employment Abroad</option>
                     </select>
-                    <label htmlFor="bus_purpose" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Purpose<Req /></label>
+                    <label htmlFor="bus_purpose" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ">Purpose<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleInputChange} value={busPermit.bus_validid} name="bus_validid" id="bus_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                    <select onChange={handleInputChange} value={busPermit.bus_validid} name="bus_validid" id="bus_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
                       <option value="1" className='dark:bg-[#3d3d3d]'>PASSPORT</option>
                       <option value="2" className='dark:bg-[#3d3d3d]'>SSS</option>
