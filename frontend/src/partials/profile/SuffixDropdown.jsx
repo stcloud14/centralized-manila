@@ -4,8 +4,8 @@ import React from 'react';
         return (
             <>
              <option value="0" className='dark:bg-[#3d3d3d]'>Select Suffix</option>
-             <option value="Sr."className='dark:bg-[#3d3d3d]'>Sr.</option>
-             <option value="Jr."className='dark:bg-[#3d3d3d]'>Jr.</option>
+             <option value="SR."className='dark:bg-[#3d3d3d]'>Sr.</option>
+             <option value="JR."className='dark:bg-[#3d3d3d]'>Jr.</option>
              <option value="II"className='dark:bg-[#3d3d3d]'>II</option>
              <option value="III"className='dark:bg-[#3d3d3d]'>III</option>
              <option value="IV"className='dark:bg-[#3d3d3d]'>IV</option>
