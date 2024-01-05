@@ -6,6 +6,7 @@ import {Link} from "react-router-dom"
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
+import Footer from '../partials/Footer';
 import Req from '../partials/misc/RequiredFieldIndicator';
 import Flatpickr from 'react-flatpickr';
  
@@ -253,6 +254,9 @@ const toggleModalVisibility = () => {
 };
 
   console.log(CtcCedula);
+
+  const logoSrc = '../src/images/mnl_footer.svg';
+  
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
 
@@ -549,6 +553,7 @@ const toggleModalVisibility = () => {
             </form>
             </div>
           </div>
+          <Footer logo={logoSrc} />
         </main>
 
         {isModalOpen && (

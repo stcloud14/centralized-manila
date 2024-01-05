@@ -6,6 +6,7 @@ import {Link} from "react-router-dom"
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
+import Footer from '../partials/Footer';
 import Req from '../partials/misc/RequiredFieldIndicator';
 
 import CityDropdown from '../partials/profile/CityDropdown';
@@ -632,6 +633,7 @@ const BusinessPermitForm =()=>{
     setIsModalVisible(!isModalVisible);
   };
   
+  const logoSrc = '../src/images/mnl_footer.svg';
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -648,7 +650,7 @@ const BusinessPermitForm =()=>{
         <BPTermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
 
         <main ref={contentRef} className="overflow-y-auto">
-          <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
+          <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 mt-4 mb-2">
             <div className="px-5 py-5">
                  
             
@@ -1414,6 +1416,7 @@ const BusinessPermitForm =()=>{
             </form>
             </div>
           </div>
+          <Footer logo={logoSrc} />
         </main>
 
         {isModalOpen && (

@@ -59,6 +59,9 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.transaction_id}</span>
                           </div>
                         ) : null}
+                        <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Document Owner's Personal Information</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Last Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_lname || deathTransaction.l_name || '-'}</span>
@@ -83,6 +86,12 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Owner's Sex</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_sex || deathTransaction.sex_type || '-'}</span>
                           </div>
+                          
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Place of Death Information</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region of Death</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_regionLabel || deathTransaction.region || '-'}</span>
@@ -98,6 +107,12 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date of Death</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_date || deathTransaction.death_date || '-'}</span>
+                          </div>
+                                                    
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Requestor's Personal Information</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Last Name</span>
@@ -133,6 +148,12 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Mobile No.</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_mobileno || deathTransaction.mobile_no || '-'}</span>
                           </div>
+                                                                              
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Requestor's Address</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqregionLabel || deathTransaction.reqregion || '-'}</span>
@@ -161,6 +182,9 @@ const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqzip || deathTransaction.zip_code || '-'}</span>
                           </div>
+
+                          <br/>
+
                           {deathTransaction.deathc_regnum ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Registry Number</span>

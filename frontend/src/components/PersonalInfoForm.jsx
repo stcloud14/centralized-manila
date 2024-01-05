@@ -6,6 +6,7 @@ import {Link} from "react-router-dom"
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
+import Footer from '../partials/Footer';
 import Flatpickr from 'react-flatpickr';
 
 import 'flatpickr/dist/themes/airbnb.css';
@@ -176,6 +177,8 @@ const PersonalInfoForm =()=>{
     };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const logoSrc = '../src/images/mnl_footer.svg';
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -456,6 +459,7 @@ const PersonalInfoForm =()=>{
             </form>
             </div>
           </div>
+          <Footer logo={logoSrc} />
         </main>
 
         {isModalOpen && (

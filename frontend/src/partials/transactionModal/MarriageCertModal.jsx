@@ -52,140 +52,170 @@ const MarriageModal = ({ selectedTransaction, onClose, onSubmit }) => {
                       <div className="mx-auto">
                         <div className="mb-0">
                           {marriageTransaction.transaction_id ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.transaction_id}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.transaction_id}</span>
                           </div>
                         ) : null}
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Husband's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_hlname || marriageTransaction.husband_lname || '-'}</span>
+                        <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Husband's Personal Information</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Husband's Last Name</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_hlname || marriageTransaction.husband_lname || '-'}</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Husband's First Name</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_hfname || marriageTransaction.husband_fname || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_hfname || marriageTransaction.husband_fname || '-'}</span>
                           </div>
                           {marriageTransaction.marriagec_hmname ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Husband's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_hmname || marriageTransaction.husband_mname || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_hmname || marriageTransaction.husband_mname || '-'}</span>
                           </div>
                           ) : null}
                           {marriageTransaction.marriagec_hsuffix ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Husband's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_hsuffix || marriageTransaction.husband_suffix|| '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_hsuffix || marriageTransaction.husband_suffix|| '-'}</span>
                           </div>
                           ) : null}
-                          <div className="flex justify-between mb-1">
+                          
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Wife's Personal Information</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Wife's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_wlname || marriageTransaction.wife_lname || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_wlname || marriageTransaction.wife_lname || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Wife's First Name</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_wfname || marriageTransaction.wife_fname || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_wfname || marriageTransaction.wife_fname || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Wife's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_wmname || marriageTransaction.wife_mname || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_wmname || marriageTransaction.wife_mname || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Wife's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_wsuffix || marriageTransaction.wife_suffix || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_wsuffix || marriageTransaction.wife_suffix || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                                                    
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Place of Marriage Information</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region of Marriage</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_regionLabel || marriageTransaction.region || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_regionLabel || marriageTransaction.region || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province of Marriage</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_provinceLabel || marriageTransaction.province || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_provinceLabel || marriageTransaction.province || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal of Marriage</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_municipalLabel || marriageTransaction.city || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_municipalLabel || marriageTransaction.city || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date of Marriage</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_date || marriageTransaction.marriage_date || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_date || marriageTransaction.marriage_date || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                                                                              
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Requestor's Personal Information</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Last Name</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqlname || marriageTransaction.reql_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqlname || marriageTransaction.reql_name || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqfname || marriageTransaction.reqf_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqfname || marriageTransaction.reqf_name || '-'}</span>
                           </div>
                           {marriageTransaction.marriagec_reqmname ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqmname || marriageTransaction.reqm_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqmname || marriageTransaction.reqm_name || '-'}</span>
                           </div>
                           ) : null}
                           {marriageTransaction.marriagec_reqsuffix ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqsuffix || marriageTransaction.reqsuffix || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqsuffix || marriageTransaction.reqsuffix || '-'}</span>
                           </div>
                           ) : null}
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Relationship to the Owner</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqrelation || marriageTransaction.owner_rel || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqrelation || marriageTransaction.owner_rel || '-'}</span>
                           </div>
                           {marriageTransaction.marriagec_telno ? (
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_telno || marriageTransaction.tel_no || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_telno || marriageTransaction.tel_no || '-'}</span>
                           </div>
                           ) : null}
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mobile No.</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_mobileno || marriageTransaction.mobile_no || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_mobileno || marriageTransaction.mobile_no || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                                                                                                        
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Requestor's Address</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqregionLabel || marriageTransaction.reqregion || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqregionLabel || marriageTransaction.reqregion || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqprovinceLabel || marriageTransaction.reqprovince || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqprovinceLabel || marriageTransaction.reqprovince || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqmunicipalLabel || marriageTransaction.reqcity || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqmunicipalLabel || marriageTransaction.reqcity || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Barangay</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqbrgy || marriageTransaction.brgy_dist || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqbrgy || marriageTransaction.brgy_dist || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">House No. / Unit Floor</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqhnum || marriageTransaction.house_floor || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqhnum || marriageTransaction.house_floor || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Street / Building Name</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqstreet || marriageTransaction.bldg_name || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqstreet || marriageTransaction.bldg_name || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_reqzip || marriageTransaction.zip_code || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqzip || marriageTransaction.zip_code || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Copies</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_nocopies || marriageTransaction.copies || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_nocopies || marriageTransaction.copies || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">What to Print</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_print || marriageTransaction.print_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_print || marriageTransaction.print_type || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Purpose</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_purposeLabel || marriageTransaction.purpose_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_purposeLabel || marriageTransaction.purpose_type || '-'}</span>
                           </div>
-                          <div className="flex justify-between mb-1">
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap ml-4">{marriageTransaction.marriagec_valididLabel || marriageTransaction.valid_id_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_valididLabel || marriageTransaction.valid_id_type || '-'}</span>
                           </div>
                         </div>
                         

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
+import Paymongo from 'paymongo';
+
+console.log("API Key:", process.env.SECRET_KEY);
+const paymongo = new Paymongo(process.env.SECRET_KEY);
 
 const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
-
   const { transaction_id, status_type, date_processed } = selectedTransaction;
-
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
 
@@ -14,6 +16,77 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
 
   console.log(taxPaymentTransaction)
 
+  const makePayment = async () => {
+    try {
+        if (!transaction_id) {
+            console.error("Transaction ID is not defined.");
+            alert("Error creating checkout session. Please try again later.");
+            return;
+        }
+
+        const body = {
+            taxPaymentTransaction: taxPaymentTransaction,
+        };
+
+        const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
+
+        if (response.data && response.data.checkoutSessionUrl) {
+            const checkoutSessionUrl = response.data.checkoutSessionUrl;
+
+            if (checkoutSessionUrl) {
+                console.log('Checkout Session URL:', checkoutSessionUrl);
+
+                // Open a new window or tab with the checkout session URL
+                const newWindow = window.open(checkoutSessionUrl, '_blank');
+                
+            }
+        } else {
+            console.error("Invalid checkout session - Response structure is unexpected:", response);
+            alert("Error creating checkout session. Please try again later.");
+        }
+    } catch (error) {
+        console.error("Error creating checkout session:", error);
+        alert("Error creating checkout session. Please try again later.");
+    }
+};
+
+
+//NO NEW WINDOW OPEN
+// const makePayment = async () => {
+//   try {
+//       if (!transaction_id) {
+//           console.error("Transaction ID is not defined.");
+//           alert("Error creating checkout session. Please try again later.");
+//           return;
+//       }
+
+//       const body = {
+//           taxPaymentTransaction: taxPaymentTransaction,
+//       };
+
+//       const response = await axios.post(`http://localhost:8800/transachistory/create-checkout-session/${transaction_id}`, body);
+
+//       if (response.data && response.data.checkoutSessionUrl) {
+//           const checkoutSessionUrl = response.data.checkoutSessionUrl;
+      
+//           if (checkoutSessionUrl) {
+//               console.log('Checkout Session URL:', checkoutSessionUrl);
+//               window.location.href = checkoutSessionUrl;
+//           } else {
+//               console.error("Invalid checkout session - No checkout session URL:", response);
+//               alert("Error creating checkout session. Please try again later.");
+//           }
+//       } else {
+//           console.error("Invalid checkout session - Response structure is unexpected:", response);
+//           alert("Error creating checkout session. Please try again later.");
+//       }
+//   } catch (error) {
+//       console.error("Error creating checkout session:", error);
+//       alert("Error creating checkout session. Please try again later.");
+//   }
+// };
+
+ 
   useEffect(() => {
     const fetchTaxPaymentTransaction = async () => {
       if (transaction_id) {
@@ -127,7 +200,16 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
                   </div>
                 </div>
                 <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
+                  {/* <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/> */}
+
+                  <button
+                          onClick={makePayment}
+                          type="button"
+                          className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                      >
+                          <span className="font-semibold whitespace-nowrap ml-2"> PAY: {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00': '-'} </span>
+                      </button>
+                  
                   <div className="flex items-center space-x-2 mt-auto">
                       <button
                           onClick={onClose}

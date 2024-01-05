@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-
+import Footer from '../partials/Footer';
 
 const GovernmentInfoForm =()=>{
 
@@ -111,6 +111,8 @@ const GovernmentInfoForm =()=>{
     // }
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const logoSrc = '../src/images/mnl_footer.svg';
 
 return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -247,10 +249,9 @@ return (
                 </button>
               </div>
             </form>
-
-
             </div>
           </div>
+          <Footer logo={logoSrc} />
         </main>
 
         {isModalOpen && (
