@@ -1,8 +1,48 @@
-import { Router } from 'express';
+import { Router, response } from 'express';
 import moment from 'moment/moment.js';
 import conn2 from './connection.js';
 
+import sdk from 'api';
+
+
 const router = Router();
+
+router.post("/create-checkout-session/:transaction_id", async (req, res) => {
+    try {
+        const { transaction_id } = req.params;
+
+        // Replace the line item details with the correct information
+        const lineItem = {
+            currency: 'PHP',
+            amount: 2000,
+            description: 'transaction_id',
+            name: 'RPTAX',
+            quantity: 1
+        };
+
+        // Use `createACheckout` instead of `createCheckout`
+        const response = await sdk('@paymongo/v2#1nbm6y23lozcngod').createACheckout({
+            data: {
+                attributes: {
+                    send_email_receipt: false,
+                    show_description: true,
+                    show_line_items: true,
+                    payment_method_types: ['paymaya', 'gcash'],
+                    description: 'RPTAX',
+                    line_items: [lineItem]
+                }
+            }
+        });
+
+        const checkoutSessionUrl = response.data.data.attributes.checkout_url;
+        res.json({ checkoutSessionUrl });
+    } catch (error) {
+        console.error('Error creating checkout session:', error);
+        res.status(500).json({ error: 'Error creating checkout session' });
+    }
+});
+
+
 
 
 router.get('/:user_id', async (req, res) => {

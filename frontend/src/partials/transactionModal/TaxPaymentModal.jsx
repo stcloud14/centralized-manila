@@ -2,17 +2,99 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
+import Paymongo from 'paymongo';
+
+console.log("API Key:", process.env.SECRET_KEY);
+const paymongo = new Paymongo(process.env.SECRET_KEY);
 
 const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
-
   const { transaction_id, status_type, date_processed } = selectedTransaction;
-
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
 
   const [taxPaymentTransaction, setTaxPaymentTransaction] = useState({});
 
   console.log(taxPaymentTransaction)
+
+const makePayment = async () => {
+    try {
+        const body = {
+            taxPaymentTransaction: taxPaymentTransaction,  // Assuming taxPaymentTransaction is defined and is a single object
+        };
+
+        const response = await axios.post(`http://localhost:8800/transachistory/create-checkout-session/${transaction_id}`, body);
+
+        if (response.data && response.data.checkoutSession) {
+            const redirectUrl = response.data.checkoutSession.data.attributes.redirect.url;
+
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            } else {
+                console.error("Invalid checkout session - No redirect URL:", response);
+                alert("Error creating checkout session. Please try again later.");
+            }
+        } else {
+            console.error("Invalid checkout session - Response structure is unexpected:", response);
+            alert("Error creating checkout session. Please try again later.");
+        }
+    } catch (error) {
+        console.error("Error creating checkout session:", error);
+        alert("Error creating checkout session. Please try again later.");
+    }
+};
+ 
+
+  // const makePayment = async () => {
+  //   try {
+  //     // Initialize Paymongo outside the function
+  //     const paymongo = new Paymongo(process.env.SECRET_KEY);
+  
+  //     const body = {
+  //       tp_rp_tdn: taxPaymentTransaction,
+  //     };
+  
+  //     // Create a checkout session
+  //     const response = await fetch(`${apiURL}http://localhost:8800/payment/create-checkout-session/${transaction_id}`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(body),
+  //     });
+  
+  //     // Check if the request was successful (status code 2xx)
+  //     if (response.ok) {
+  //       const checkoutSession = await response.json();
+  
+  //       // Debugging: Log the checkout session information
+  //       console.log("Checkout Session:", checkoutSession);
+  
+  //       // Check if checkoutSession has the necessary attributes
+  //       if (
+  //         checkoutSession &&
+  //         checkoutSession.data &&
+  //         checkoutSession.data.attributes &&
+  //         checkoutSession.data.attributes.redirect
+  //       ) {
+  //         // Redirect the user to the checkout URL
+  //         console.log(
+  //           "Redirecting to checkout URL:",
+  //           checkoutSession.data.attributes.redirect.url
+  //         );
+  //         window.location.href = checkoutSession.data.attributes.redirect.url;
+  //       } else {
+  //         console.error("Invalid checkout session:", checkoutSession);
+  //       }
+  //     } else {
+  //       // Handle the case when the request was not successful
+  //       console.error("Error creating checkout session:", response.statusText);
+  //       alert("Error creating checkout session. Please try again later.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating checkout session:", error);
+  //     alert("Error creating checkout session. Please try again later.");
+  //   }
+  // };
 
   useEffect(() => {
     const fetchTaxPaymentTransaction = async () => {
@@ -127,7 +209,16 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
                   </div>
                 </div>
                 <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
+                  {/* <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/> */}
+
+                  <button
+                          onClick={makePayment}
+                          type="button"
+                          className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                      >
+                          <span className="font-semibold whitespace-nowrap ml-2"> PAY: {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00': '-'} </span>
+                      </button>
+                  
                   <div className="flex items-center space-x-2 mt-auto">
                       <button
                           onClick={onClose}
