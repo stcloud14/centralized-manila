@@ -71,8 +71,39 @@ const BusinessPermitForm =()=>{
     bus_total_cap: ''
   });
 
+  const [selectedFiles, setSelectedFiles] = useState([
+    { name: 'bus_tax_incentives', value: null },
+    { name: 'bus_dti_reg', value: null },
+    { name: 'bus_rptax_decbldg', value: null },
+    { name: 'bus_sec_paid', value: null },
+    { name: 'bus_sec_articles', value: null },
+    { name: 'bus_nga', value: null },
+    { name: 'bus_sec_front', value: null },
+    { name: 'bus_rptax_decland', value: null },
+    { name: 'bus_fire', value: null },
+    { name: 'bus_page2', value: null },
+    { name: 'bus_page3', value: null },
+    { name: 'bus_page4', value: null },
+    { name: 'bus_page5', value: null },
+  ]);
+  
+
+  const handleFileSelect = (file, target) => {
+    setSelectedFiles((prevFiles) => {
+      const updatedFiles = prevFiles.map((fileArray) => {
+        if (fileArray.name === target) {
+          return { ...fileArray, value: file };
+        }
+        return fileArray;
+      });
+  
+      return updatedFiles;
+    });
+  };
+  
 
   console.log(dataRow)
+  console.log(selectedFiles)
 
 
   const handleActivityChange = (e) => {
@@ -531,8 +562,10 @@ const BusinessPermitForm =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [uploadModal, setUploadModal] = useState(false);
+  const [targetIMG, setTargetIMG] = useState(null);
 
-  const openUploadModal = () => {
+  const openUploadModal = (targetIMG) => {
+    setTargetIMG(targetIMG);
     setUploadModal(true);
   };
 
@@ -581,7 +614,10 @@ const BusinessPermitForm =()=>{
             )}  */}
             
 
-            {uploadModal && <UploadImageModal onClose={() => setUploadModal(false)} />}
+            {uploadModal && <UploadImageModal onClose={() => setUploadModal(false)}  onFileSelect={handleFileSelect} targetIMG={targetIMG} />}
+
+            
+            
 
 
               {/* Group 1 - Business Information and Registration*/}
@@ -843,7 +879,7 @@ const BusinessPermitForm =()=>{
 
                 {busPermit.bus_incentive === '2' ? (
                 <div className="group md:ml-9">
-                  <UploadButton openUploadModal={openUploadModal} />
+                  <UploadButton openUploadModal={openUploadModal} taxIMG={'bus_tax_incentives'} />
                 </div>
                 ) : null}
               </div>
@@ -1044,8 +1080,20 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                           DTI Registration
                         </td>
+
+
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_dti_reg') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
+
+
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_dti_reg'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1053,7 +1101,7 @@ const BusinessPermitForm =()=>{
                           R.P. Tax Declaration for Land (Upload if copy is available. If not, indicate TDN or PIN on the UAF to include fee on eSOA)
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decbldg'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1061,7 +1109,7 @@ const BusinessPermitForm =()=>{
                           SEC Registration - Paid-up and Subscribed Page
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_paid'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1069,7 +1117,7 @@ const BusinessPermitForm =()=>{
                             SEC Registration - Articles of Primary and Secondary Purpose
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_articles'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1077,7 +1125,7 @@ const BusinessPermitForm =()=>{
                             NGA-Contract of Lease - Page Indicating Names and Floor Area - sqrm
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_nga'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1085,7 +1133,7 @@ const BusinessPermitForm =()=>{
                             SEC Registration - Front Page
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_front'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1093,7 +1141,7 @@ const BusinessPermitForm =()=>{
                             R.P. Tax Declaration for Building (Upload if copy is available. If not, indicate TDN or PIN on the UAF to include fee on eSOA)
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decland'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1101,7 +1149,7 @@ const BusinessPermitForm =()=>{
                             Fire Safety Inspection Certificate for Occupancy, valid in the last 9 months / Affidavit of Undertaking
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_fire'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1109,7 +1157,7 @@ const BusinessPermitForm =()=>{
                             Page 2 Document
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page2'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1117,7 +1165,7 @@ const BusinessPermitForm =()=>{
                             Page 3 Document
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page3'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1125,7 +1173,7 @@ const BusinessPermitForm =()=>{
                             Page 4 Document
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page4'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1133,11 +1181,18 @@ const BusinessPermitForm =()=>{
                             Page 5 Document
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page5'} />
                         </td>
                       </tr>
                     </tbody>
                   </table>
+
+                  {/* {selectedFiles.map((selectedFile, index) => (
+              <div key={index}>
+                <p>Selected file: {selectedFile.file}</p>
+              </div>
+            ))} */}
+
                 </div>
                 </div>
 

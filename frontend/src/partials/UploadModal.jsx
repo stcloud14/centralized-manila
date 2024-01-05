@@ -1,6 +1,46 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 
-const UploadModal = ({ onClose }) => {
+const UploadModal = ({ onClose, onFileSelect, targetIMG }) => {
+  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFileName, setSelectedFileName] = useState(null);
+
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setSelectedFileName(file.name);
+    } else {
+      setSelectedFile(null);
+      setSelectedFileName(null);
+    }
+    fileInputRef.current.value = '';
+  };
+
+  console.log(targetIMG)
+
+  const preventDefault = (event) => {
+    event.preventDefault();
+  };
+
+  const handleFileChangeClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleUploadClick = () => {
+    if (selectedFile) {
+      onFileSelect(selectedFile, targetIMG);
+      setSelectedFile(null);
+      setSelectedFileName(null);
+      onClose();
+
+      fileInputRef.current.value = '';
+
+    } else {
+ 
+      console.error('Please select a file before uploading.');
+    }
+  };
  
   return (
       <div className="fixed z-50 inset-0 ">
@@ -19,20 +59,68 @@ const UploadModal = ({ onClose }) => {
           </div>
 
           <div className="pb-1 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
-            <div className="mx-auto">
-              <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 bg-white dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d] border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:border-gray-500">
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6 mx-3 ">
-                      <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                      </svg>
-                      <p className="mb-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                        <span className="font-semibold text-xs sm:text-sm">Click to upload</span> or drag and drop</p>
-                      <p className="text-[10px] sm:text-[12px] text-gray-500 dark:text-gray-400">PNG, JPEG, DOCX, or PDF (MAX. 5MB)</p>
-                  </div>
-                  <input id="dropzone-file" type="file" className="hidden"/>
-                </label>
+          <div className="mx-auto">
+          <label 
+              onDragOver={preventDefault}
+              onDrop={(event) => {
+                preventDefault(event); // Prevent the default behavior for file drops
+                setSelectedFile(event.dataTransfer.files[0]);
+                setSelectedFileName(event.dataTransfer.files[0].name);
+              }}
+              htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 bg-white dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d] border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:border-gray-500">
+              <div className="flex flex-col items-center justify-center pt-5 pb-6 mx-3">
+              {!!selectedFileName ? (
+                <div onClick={handleFileChangeClick}>
+                <p className="mb-2 text-xs sm:text-sm text-green-600 dark:text-green-300">
+                  {selectedFileName}
+                </p>
+                <p
+                  className="text-[10px] sm:text-[12px] text-gray-500 dark:text-gray-400 cursor-pointer"
+                >
+                  Change File
+                </p>
               </div>
-            </div>
+            ) : (
+              <>
+                <svg
+                  className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 16"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                  />
+                </svg>
+                <p className="mb-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-semibold text-xs sm:text-sm">
+                    Click to upload
+                  </span>{' '}
+                  or drag and drop
+                </p>
+                <p className="text-[10px] sm:text-[12px] text-gray-500 dark:text-gray-400">
+                  PNG, JPEG, DOCX, or PDF (MAX. 5MB)
+                </p>
+              </>
+            )}
+          </div>
+
+            <input
+              onChange={(event) => handleFileInputChange(event)}
+              ref={fileInputRef}
+              id="dropzone-file"
+              type="file"
+              className="hidden"
+            />
+          </label>
+
+          </div>
+          </div>
 
             <div className="mr-0 md:mr-2 px-3 pt-3 pb-5 gap-3 sm:px-4 flex justify-end">
               <div className="flex items-center space-x-2 mt-auto">
@@ -45,7 +133,7 @@ const UploadModal = ({ onClose }) => {
                 </button>
 
                 <button
-                  // onClick={onSubmit}
+                  onClick={handleUploadClick}
                   type="button"
                   className="text-white text-xs text-center px-5 py-2 md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >

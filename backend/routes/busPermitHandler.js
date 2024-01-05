@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import multer from "multer";
+import path from "path";
 import conn2 from './connection.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -219,5 +221,45 @@ let busOffice = null;
 
     return transactionID.toUpperCase();
   }
+
+
+  const uploadDestination = path.join(__dirname, 'frontend', 'src', 'uploads');
+
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, uploadDestination);
+    },
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+      const fileExtension = path.extname(file.originalname);
+      cb(null, 'file-' + uniqueSuffix + fileExtension);
+    },
+  });
+
+  const upload = multer({ storage: storage });
+
+  router.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+
+  router.post('/api/upload/:transaction_id', upload.single('file'), async (req, res) => {
+    try {
+      const transID = req.params.transaction_id;
+      const filePath = req.file.path;
+  
+      const query = "INSERT INTO bus_images (`transaction_id`, `bus_dti_reg`) VALUES (?, ?)";
+      const values = [transID, filePath];
+      
+      const result = await queryDatabase(query, values);
+  
+      res.json({
+        success: true,
+        message: "File uploaded successfully",
+        file_uploaded: result,
+      });
+    } catch (error) {
+      console.error('Error during file upload:', error);
+      res.status(500).json({ success: false, message: 'File upload failed' });
+    }
+  });
+
 
   export default router;

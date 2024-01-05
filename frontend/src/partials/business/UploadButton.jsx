@@ -1,70 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 
-const UploadButton = ({ openUploadModal }) => {
-
-    const fileInputRef = useRef(null);
-    const [selectedFileName, setSelectedFileName] = useState(null);
-
-    const updateSelectedFileName = (file) => {
-        setSelectedFileName(file ? file.name : null);
-    };
-
-    const handleFileUpload = async (file) => {
-        try {
-            const formData = new FormData();
-            formData.append('image', file);
-
-            const response = await fetch('/api/upload', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (response.ok) {
-
-                console.log('Image uploaded successfully');
-                updateSelectedFileName(file);
-            } else {
-                
-                console.error('Image upload failed');
-            }
-        } catch (error) {
-            console.error('Error during image upload:', error);
-        }
-    };
-
-    const handleFileInputChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            handleFileUpload(file);
-        }
-    };
-
-    const handleDrop = (event) => {
-        event.preventDefault();
-        const file = event.dataTransfer.files[0];
-        if (file) {
-            handleFileUpload(file);
-        }
-    };
-
-    const preventDefault = (event) => {
-        event.preventDefault();
-    };
-
+const UploadButton = ({ openUploadModal, targetIMG }) => {
 
     return (
         <div>
             <button
                 onClick={() => {
-                    openUploadModal();
-                    updateSelectedFileName(null);
+                    openUploadModal(targetIMG);
                 }}
                 className="flex justify-center pl-3 items-center text-center border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full cursor-pointer"
-                onDragOver={preventDefault}
-                onDrop={(event) => {
-                    handleDrop(event);
-                    updateSelectedFileName(event.dataTransfer.files[0]);
-                }}
                 aria-label="Upload"
             >
             <svg
@@ -79,22 +23,6 @@ const UploadButton = ({ openUploadModal }) => {
       
             <span className="md:text-sm text-xs font-normal pl-1 pr-3 py-0.5">Upload</span>
           </button>
-      
-          <input
-            type="file"
-            style={{ display: 'none' }}
-            onChange={(event) => {
-                handleFileInputChange(event);
-                updateSelectedFileName(event.target.files[0]);
-            }}
-            ref={fileInputRef}
-          />
-
-          {selectedFileName && (
-            <div className="modal">
-                <p>Selected file: {selectedFileName}</p>
-            </div>
-          )}
 
         </div>
       );
