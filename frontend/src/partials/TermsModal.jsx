@@ -32,48 +32,48 @@ const TermsModal = ({ isVisible, onProceed, userID }) => {
           <div className="max-h-[19.5rem] pb-1 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
               <div className="text-slate-700 dark:text-white text-xs sm:text-sm text-justify">
                   <span>By using our online form application processor, you agree to the following terms and conditions regarding the accuracy of the information you provide:</span>
-                    <br/><br/>
+                      <br/><br/>
                     <span className="font-medium">1. Accurate Information:</span>
                   <div className="ml-3.5">
-                    <span className="">You are solely responsible for ensuring the accuracy, completeness, and truthfulness of all the information you submit through our online forms.</span>
+                    <span>You are solely responsible for ensuring the accuracy, completeness, and truthfulness of all the information you submit through our online forms.</span>
                   </div>
                       <br/>
                     <span className="font-medium">2. Verification:</span>
                       <br/>
                   <div className="ml-3.5">
-                    <span className="">We reserve the right to verify the information provided by you through any means necessary. This may include, but is not limited to, requesting additional documentation or contacting third parties.</span>
+                    <span>We reserve the right to verify the information provided by you through any means necessary. This may include, but is not limited to, requesting additional documentation or contacting third parties.</span>
                   </div>
                       <br/>
                     <span className="font-medium">3. Consequences of Innacurate Information:</span>
                       <br/>
                   <div className="ml-3.5">
-                    <span className="">Providing false, misleading, or inaccurate information may result in the rejection of your application or request. It may also lead to the termination of any services or agreements established based on the inaccurate information.</span>
+                    <span>Providing false, misleading, or inaccurate information may result in the rejection of your application or request. It may also lead to the termination of any services or agreements established based on the inaccurate information.</span>
                   </div>
                       <br/>
                     <span className="font-medium">4. Legal Consequences:</span>
                       <br/>
                   <div className="ml-3.5">
-                    <span className="">Knowingly providing false information may have legal consequences. We may take appropriate legal action if it is determined that information provided by you is intentionally false or misleading.</span>
+                    <span>Knowingly providing false information may have legal consequences. We may take appropriate legal action if it is determined that information provided by you is intentionally false or misleading.</span>
                   </div>
                       <br/>
                     <span className="font-medium">5. Data Accuracy Responsibility:</span>
                       <br/>
                   <div className="ml-3.5">
-                    <span className="">While we take reasonable measures to ensure the security and integrity of the data you submit, we do not guarantee the accuracy of the information provided by you. You are encouraged to review and verify all information before submission.</span>
+                    <span>While we take reasonable measures to ensure the security and integrity of the data you submit, we do not guarantee the accuracy of the information provided by you. You are encouraged to review and verify all information before submission.</span>
                   </div>
                       <br/>                  
                     <span className="font-medium">6. Updates and Corrections:</span>
                       <br/>
                   <div className="ml-3.5">    
-                    <span className="">It is your responsibility to promptly inform us of any changes or inaccuracies in the information you have previously submitted. You may contact us through the provided channels for updates or corrections.</span>
+                    <span>It is your responsibility to promptly inform us of any changes or inaccuracies in the information you have previously submitted. You may contact us through the provided channels for updates or corrections.</span>
                   </div>
                     <br/>
                   <span className="font-medium">7. User Liability:</span>
                   <div className="ml-3.5">    
-                    <span className="">You agree to hold us harmless and indemnify us against any claims, losses, or damages resulting from the inaccuracy of the information you provide.</span>
+                    <span>You agree to hold us harmless and indemnify us against any claims, losses, or damages resulting from the inaccuracy of the information you provide.</span>
                   </div>
                       <br/>
-                  <span>By using our online form application processor, you acknowledge that you have read, understood, and agreed to these terms and conditions regarding the accuracy of information.</span>
+                    <span>By using our online form application processor, you acknowledge that you have read, understood, and agreed to these terms and conditions regarding the accuracy of information.</span>
               </div>
 
            
