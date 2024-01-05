@@ -9,6 +9,7 @@ import Req from '../partials/misc/RequiredFieldIndicator';
 import TPTermsModal from '../partials/business/TPTermsModal';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 import QuarterDropdown from '../partials/profile/QuarterDropdown';
+import TermsModal from '../partials/business/TermsModal';
 
 const RPTaxPaymentForm =()=>{
 
@@ -232,7 +233,7 @@ const handleCheckboxChange = (e) => {
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <TPTermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
+        <TermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
 
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col h-full justify-between mx-4 my-4">
