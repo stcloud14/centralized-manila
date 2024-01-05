@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
+import Footer from '../partials/Footer';
 import WelcomeBanner from '../partials/home/WelcomeBanner'
 import EmbeddedPage from '../partials/home/EmbeddedPage'
 
 const HomeForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const logoSrc = '../src/images/mnl_footer.svg';
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -29,6 +32,7 @@ const HomeForm =()=>{
           
 
           </div>
+          <Footer logo={logoSrc} />
         </main>
 
       

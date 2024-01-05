@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
+import Footer from '../partials/Footer';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 import TransMobile from '../partials/transactionHistory/transMobile';
 import TransDesktop from '../partials/transactionHistory/transDesktop';
@@ -118,6 +119,7 @@ const SortIcon = ({ order }) => (
 
 console.log(userTransaction)
 
+const logoSrc = '../src/images/mnl_footer.svg';
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -156,6 +158,7 @@ console.log(userTransaction)
               sortedTransactions={sortedTransactions} />
             )}
           </div>
+          <Footer logo={logoSrc} />
         </main>
 
         {isModalOpen && selectedTransaction && (

@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-
+import Footer from '../partials/Footer';
 import CityDropdown from '../partials/profile/CityDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
@@ -122,6 +122,8 @@ const ContactInfoForm =()=>{
   };
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const logoSrc = '../src/images/mnl_footer.svg';
  
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -333,11 +335,9 @@ const ContactInfoForm =()=>{
                 </button>
               </div>
             </form>
-
-
-
             </div>
           </div>
+          <Footer logo={logoSrc} />
         </main>
         {isModalOpen && (
           <div className="fixed z-50 inset-0 overflow-y-auto">
