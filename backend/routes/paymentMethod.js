@@ -3,34 +3,44 @@ import conn2 from './connection.js';
 const router = express.Router();
 
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
-    const { tp_rp_td } = req.body;
-
-    const lineItem = {
-        currency: 'PHP',
-        amount: 2000,
-        name: 'RPTAX',
-        quantity: 1,
-        description: 'rptax'
-    };
-
     try {
-        const sdk = require('@paymongo/v2');
-        sdk.auth('sk_test_uV3UsLWAKSxPCm1899ta3meP');
+        const { transaction_id } = req.params;
 
-        const response = await sdk.createACheckout({
-            data: {
-                attributes: {
-                    send_email_receipt: false,
-                    show_description: true,
-                    show_line_items: true,
-                    payment_method_types: ['gcash'],
-                    description: 'RPTAX',
-                    line_items: [lineItem]
+        const options = {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': 'Basic c2tfdGVzdF91VjNVc0xXQUtTeFBDbTE4OTl0YTNtZVA6'
+            },
+            body: JSON.stringify({
+                data: {
+                    attributes: {
+                        send_email_receipt: true,
+                        show_description: true,
+                        show_line_items: true,
+                        description: 'RPTAX',
+                        line_items: [
+                            {
+                                currency: 'PHP',
+                                amount: 2000,
+                                description: transaction_id,
+                                name: 'RPTAX',
+                                quantity: 1
+                            }
+                        ],
+                        payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease']
+
+                    }
                 }
-            }
-        });
+            })
+        };
 
-        res.json({ checkoutSession: response.data });
+        const response = await fetch('https://api.paymongo.com/v1/checkout_sessions', options);
+        const responseData = await response.json();
+
+        const checkoutSessionUrl = responseData.data.attributes.checkout_url;
+        res.json({ checkoutSessionUrl });
     } catch (error) {
         console.error('Error creating checkout session:', error);
         res.status(500).json({ error: 'Error creating checkout session' });
