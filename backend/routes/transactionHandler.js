@@ -30,10 +30,11 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                                 amount: 2000,
                                 description: transaction_id,
                                 name: 'RPTAX',
-                                quantity: 1
+                                quantity: 1,
                             }
                         ],
                         payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease']
+
                     }
                 }
             })
