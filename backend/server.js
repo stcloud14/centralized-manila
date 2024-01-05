@@ -14,7 +14,8 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    const fileExtension = path.extname(file.originalname);
+    cb(null, 'file-' + uniqueSuffix + fileExtension);
   },
 });
 
@@ -22,14 +23,14 @@ const upload = multer({ storage: storage });
 
 app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
 
-app.post('/api/upload', upload.single('image'), async (req, res) => {
+app.post('/api/upload/:transaction_id', upload.single('file'), async (req, res) => {
   try {
     const transID = req.params.transaction_id;
     const filePath = req.file.path;
 
     const query = "INSERT INTO bus_images (`transaction_id`, `bus_dti_reg`) VALUES (?, ?)";
     const values = [transID, filePath];
-
+    
     const result = await queryDatabase(query, values);
 
     res.json({

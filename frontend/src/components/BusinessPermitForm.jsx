@@ -71,8 +71,38 @@ const BusinessPermitForm =()=>{
     bus_total_cap: ''
   });
 
+  const [selectedFiles, setSelectedFiles] = useState([
+    { name: 'bus_tax_incentives', value: null },
+    { name: 'bus_dti_reg', value: null },
+    { name: 'bus_rptax_decbldg', value: null },
+    { name: 'bus_sec_paid', value: null },
+    { name: 'bus_sec_articles', value: null },
+    { name: 'bus_nga', value: null },
+    { name: 'bus_sec_front', value: null },
+    { name: 'bus_rptax_decland', value: null },
+    { name: 'bus_fire', value: null },
+    { name: 'bus_page2', value: null },
+    { name: 'bus_page3', value: null },
+    { name: 'bus_page4', value: null },
+    { name: 'bus_page5', value: null },
+  ]);
+  
 
-  console.log(dataRow)
+  const handleFileSelect = (file, target) => {
+    setSelectedFiles((prevFiles) => {
+      const updatedFiles = prevFiles.map((fileArray) => {
+        if (fileArray.name === target) {
+          return { ...fileArray, value: file };
+        }
+        return fileArray;
+      });
+  
+      return updatedFiles;
+    });
+  };
+  
+
+  console.log(selectedFiles)
 
 
   const handleActivityChange = (e) => {
@@ -401,10 +431,61 @@ const BusinessPermitForm =()=>{
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
+
+    selectedFiles.forEach((file, index) => {
+      if (file.value) {
+        formData.append(`files[${index}]`, file.value, file.value.name);
+      } else {
+        console.log(`Skipping null file at index ${index}`);
+      }
+    });
+
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+
+
     try {
-        const response = await axios.post(`http://localhost:8800/buspermit/bus/${user_id}`, busPermit);
+        // const response = await axios.post(`http://localhost:8800/buspermit/bus/${user_id}`, busPermit);
 
-        if (response.status === 200) {
+        // if (response.status === 200) {
+        //     setIsSuccess(true);
+        //     handleCloseModal();
+        //     contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+        //     console.log('Transaction successful');
+
+        //     setTimeout(() => {
+        //         setIsSuccess(false);
+        //     }, 3000);
+        // } else {
+        //     console.error('Transaction error:', response.statusText);
+        // }
+
+        // const response1 = await axios.post(`http://localhost:8800/buspermit/busact`, { dataRow });
+
+        // if (response1.status === 200) {
+        //     setIsSuccess(true);
+        //     handleCloseModal();
+        //     contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+        //     console.log('Transaction successful');
+
+        //     setTimeout(() => {
+        //         setIsSuccess(false);
+        //     }, 3000);
+        // } else {
+        //     console.error('Transaction error:', response1.statusText);
+        // }
+
+        const response2 = await axios.post('http://localhost:8800/buspermit/busimg', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        
+
+        if (response2.status === 200) {
             setIsSuccess(true);
             handleCloseModal();
             contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
@@ -414,26 +495,12 @@ const BusinessPermitForm =()=>{
                 setIsSuccess(false);
             }, 3000);
         } else {
-            console.error('Transaction error:', response.statusText);
-        }
-
-        // Second POST request to http://localhost:8800/buspermit/busact
-        const response1 = await axios.post(`http://localhost:8800/buspermit/busact`, { dataRow });
-
-        if (response1.status === 200) {
-            setIsSuccess(true);
-            handleCloseModal();
-            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-            console.log('Transaction successful');
-
-            setTimeout(() => {
-                setIsSuccess(false);
-            }, 3000);
-        } else {
-            console.error('Transaction error:', response1.statusText);
+            console.log('THIS IS THE ERROR IN API')
+            console.error('Transaction error:', response2.statusText);
         }
 
     } catch (err) {
+        console.log('THIS IS THE ERROR IN FRONTEND')
         console.error('Transaction error:', err);
     }
 };
@@ -446,7 +513,7 @@ const BusinessPermitForm =()=>{
     
   const requiredFields = [
     'bus_type',
-    'bus_name',
+    // 'bus_name',
     // 'bus_franchise',
     // 'bus_reg_no',
     // 'bus_tin',
@@ -531,8 +598,10 @@ const BusinessPermitForm =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [uploadModal, setUploadModal] = useState(false);
+  const [targetIMG, setTargetIMG] = useState(null);
 
-  const openUploadModal = () => {
+  const openUploadModal = (targetIMG) => {
+    setTargetIMG(targetIMG);
     setUploadModal(true);
   };
 
@@ -581,7 +650,10 @@ const BusinessPermitForm =()=>{
             )}  */}
             
 
-            {uploadModal && <UploadImageModal onClose={() => setUploadModal(false)} />}
+            {uploadModal && <UploadImageModal onClose={() => setUploadModal(false)}  onFileSelect={handleFileSelect} targetIMG={targetIMG} />}
+
+            
+            
 
 
               {/* Group 1 - Business Information and Registration*/}
@@ -843,7 +915,7 @@ const BusinessPermitForm =()=>{
 
                 {busPermit.bus_incentive === '2' ? (
                 <div className="group md:ml-9">
-                  <UploadButton openUploadModal={openUploadModal} />
+                  <UploadButton openUploadModal={openUploadModal} taxIMG={'bus_tax_incentives'} />
                 </div>
                 ) : null}
               </div>
@@ -912,22 +984,22 @@ const BusinessPermitForm =()=>{
                   <table className="w-full text-left text-xs md:text-sm rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-gray-700 uppercase bg-slate-200 dark:bg-[#212121] dark:text-slate-400">
                       <tr>
-                        <th scope="col" className="pl-6 pr-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <th scope="col" className="pl-5 pr-0 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           Line of Business
                         </th>
-                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <th scope="col" className="pl-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           Philippine Standard Industrial Code
                         </th>
-                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <th scope="col" className="pl-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           Products/Services
                         </th>
-                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <th scope="col" className="pl-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           No. of Units
                         </th>
                         <th scope="col" className="pl-3 pr-0 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           Total Capitalization (PH)
                         </th>
-                        <th scope="col" className="px-3pr-0 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <th scope="col" className="px-l pr-0 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           {/* View Details*/}
                         </th>
                       </tr>
@@ -935,7 +1007,7 @@ const BusinessPermitForm =()=>{
                     <tbody>
                     {dataRow.map((row, index) => (
                       <tr key={index} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
-                        <td className="pl-6 pr-3 py-2 whitespace-nowrap">
+                        <td className="pl-5 pr-0 py-2 whitespace-nowrap">
                           {editingIndex === index ? (
                             <input
                               type="text"
@@ -1000,12 +1072,12 @@ const BusinessPermitForm =()=>{
                               `P ${row.bus_total_cap}`
                             )}
                         </td>
-                        <td className="md:px-0 px-4 py-2 whitespace-nowrap text-xs md:text-sm font-medium">
+                        <td className="md:pl-3 pl-5 py-2 whitespace-nowrap text-xs md:text-sm font-medium">
                           <div className="flex space-x-3">
                           {editingIndex === index ? (
-                            <a onClick={() => handleAddRow()} className="group flex justify-center items-center text-center p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-full cursor-pointer" >
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="coral" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                <path className="stroke-blue" strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            <a onClick={() => handleAddRow()} className="group flex justify-center items-center text-center p-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full cursor-pointer" >
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                               </svg>
                             </a>
                           ) : (
@@ -1044,100 +1116,203 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                           DTI Registration
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_dti_reg') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_dti_reg'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2">
                           R.P. Tax Declaration for Land (Upload if copy is available. If not, indicate TDN or PIN on the UAF to include fee on eSOA)
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_rptax_decbldg') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decbldg'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                           SEC Registration - Paid-up and Subscribed Page
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_sec_paid') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_paid'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2">
                             SEC Registration - Articles of Primary and Secondary Purpose
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_sec_articles') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_articles'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             NGA-Contract of Lease - Page Indicating Names and Floor Area - sqrm
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_nga') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_nga'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             SEC Registration - Front Page
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_sec_front') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_front'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             R.P. Tax Declaration for Building (Upload if copy is available. If not, indicate TDN or PIN on the UAF to include fee on eSOA)
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_rptax_decland') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decland'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Fire Safety Inspection Certificate for Occupancy, valid in the last 9 months / Affidavit of Undertaking
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_fire') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_fire'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 2 Document
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_page2') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page2'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 3 Document
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_page3') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page3'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 4 Document
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_page4') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page4'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 5 Document
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_page5') {
+                              return fileArray.value ? fileArray.value.name : null;
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page5'} />
                         </td>
                       </tr>
                     </tbody>
                   </table>
+
+                  {/* {selectedFiles.map((selectedFile, index) => (
+              <div key={index}>
+                <p>Selected file: {selectedFile.file}</p>
+              </div>
+            ))} */}
+
                 </div>
                 </div>
 

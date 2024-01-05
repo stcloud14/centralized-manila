@@ -22,6 +22,7 @@ import ValidIdDropdown from '../partials/profile/ValidIdDropdown';
 import OccupationDropdown from '../partials/profile/OccupationDropdown';
 import CDCTermsModal from '../partials/business/CDCTermsModal';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
+import TermsModal from '../partials/business/TermsModal';
 
 const CedulaForm =()=>{
 
@@ -264,7 +265,7 @@ const toggleModalVisibility = () => {
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <CDCTermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
+        <TermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
 
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">

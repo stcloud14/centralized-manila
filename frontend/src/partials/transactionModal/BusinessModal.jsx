@@ -83,6 +83,9 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.transaction_id}</span>
                           </div>
                           ) : null}
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Business Information and Registration</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Type</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{busType ? busType : '-'}</span>
@@ -105,7 +108,10 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                           </div>
 
                           <br />
-
+                          
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Owner's Information</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap"> Last Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_lname ? selectedTransaction.bus_lname : '-'}</span>
@@ -128,7 +134,10 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                           </div>
 
                           <br />
-
+                          
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Contact Information</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Email Address</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_email ? selectedTransaction.bus_email : '-'}</span>
@@ -143,7 +152,10 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                           </div>
 
                           <br />
-
+                          
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Business Address</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Region</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bregionLabel ? selectedTransaction.bus_bregionLabel : '-'}</span>
@@ -174,7 +186,10 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                           </div>
 
                           <br />
-
+                          
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Business Operation</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Area / Total Floor Area (sq.m)</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_floor ? selectedTransaction.bus_floor : '-'}</span>
@@ -204,8 +219,11 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_motor_no ? selectedTransaction.bus_motor_no : '-'}</span>
                           </div>
 
-                          <br />
-
+                          <br />  
+                          
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Taxpayer's Address</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Payer's Region</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_regionLabel ? selectedTransaction.bus_regionLabel : '-'}</span>
@@ -236,7 +254,7 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                           </div>
 
                           <br />
-
+                          
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Ownership</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{ownership ? ownership : '-'}</span>
@@ -265,41 +283,47 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
 
                           <br />
 
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Business Activity</span>
+                          </div>
+
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Office</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{office ? office : '-'}</span>
                           </div>
 
-
+                          <div className='border-t dark:border-gray-500'></div>
                           {businessData.map((business, index) => (
                             <div key={index}>
-                            <br />
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Line of Business</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_line ? business.bus_line : '-'}</span>
-                          </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">PSIC</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_psic ? business.bus_psic : '-'}</span>
-                          </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Products/Services</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_products ? business.bus_products : '-'}</span>
-                          </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">No. of units</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_units_no ? business.bus_units_no : '-'}</span>
-                          </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Total Capitalization</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_total_cap ? business.bus_total_cap : '-'}</span>
-                          </div>
-                          </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between my-1">
+                                <span className="font-medium whitespace-nowrap">Line of Business</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_line ? business.bus_line : '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">PSIC</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_psic ? business.bus_psic : '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Products/Services</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_products ? business.bus_products : '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">No. of units</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_units_no ? business.bus_units_no : '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Total Capitalization</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_total_cap ? business.bus_total_cap : '-'}</span>
+                              </div>
+                              <div className='border-t dark:border-gray-500'></div>
+                            </div>
                           ))}
-
+                          
                           <br />
 
-
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Business Requirements</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">DTI Registration</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1"></span>

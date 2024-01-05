@@ -7,6 +7,7 @@ import Header from '../partials/Header';
 import Req from '../partials/misc/RequiredFieldIndicator';
 import TCTermsModal from '../partials/business/TCTermsModal';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
+import TermsModal from '../partials/business/TermsModal';
 
 const RPTaxClearanceForm =()=>{
 
@@ -187,7 +188,7 @@ const RPTaxClearanceForm =()=>{
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <TCTermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
+        <TermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
 
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
