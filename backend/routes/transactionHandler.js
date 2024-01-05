@@ -2,7 +2,6 @@ import { Router, response } from 'express';
 import moment from 'moment/moment.js';
 import conn2 from './connection.js';
 
-import sdk from 'api';
 
 
 const router = Router();
@@ -11,36 +10,80 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
         const { transaction_id } = req.params;
 
-        // Replace the line item details with the correct information
-        const lineItem = {
-            currency: 'PHP',
-            amount: 2000,
-            description: 'transaction_id',
-            name: 'RPTAX',
-            quantity: 1
+        const options = {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': 'Basic c2tfdGVzdF91VjNVc0xXQUtTeFBDbTE4OTl0YTNtZVA6'
+            },
+            body: JSON.stringify({
+                data: {
+                    attributes: {
+                        send_email_receipt: false,
+                        show_description: true,
+                        show_line_items: true,
+                        description: 'RPTAX',
+                        line_items: [
+                            {
+                                currency: 'PHP',
+                                amount: 2000,
+                                description: transaction_id,
+                                name: 'RPTAX',
+                                quantity: 1
+                            }
+                        ],
+                        payment_method_types: ['gcash']
+                    }
+                }
+            })
         };
 
-        // Use `createACheckout` instead of `createCheckout`
-        const response = await sdk('@paymongo/v2#1nbm6y23lozcngod').createACheckout({
-            data: {
-                attributes: {
-                    send_email_receipt: false,
-                    show_description: true,
-                    show_line_items: true,
-                    payment_method_types: ['paymaya', 'gcash'],
-                    description: 'RPTAX',
-                    line_items: [lineItem]
-                }
-            }
-        });
+        const response = await fetch('https://api.paymongo.com/v1/checkout_sessions', options);
+        const responseData = await response.json();
 
-        const checkoutSessionUrl = response.data.data.attributes.checkout_url;
+        const checkoutSessionUrl = responseData.data.attributes.checkout_url;
         res.json({ checkoutSessionUrl });
     } catch (error) {
         console.error('Error creating checkout session:', error);
         res.status(500).json({ error: 'Error creating checkout session' });
     }
 });
+
+// router.post("/create-checkout-session/:transaction_id", async (req, res) => {
+//     try {
+//         const { transaction_id } = req.params;
+
+//         // Replace the line item details with the correct information
+//         const lineItem = {
+//             currency: 'PHP',
+//             amount: 2000,
+//             description: 'transaction_id',
+//             name: 'RPTAX',
+//             quantity: 1
+//         };
+
+//         // Use `createACheckout` instead of `createCheckout`
+//         const response = await sdk('@paymongo/v2#1nbm6y23lozcngod').createACheckout({
+//             data: {
+//                 attributes: {
+//                     send_email_receipt: false,
+//                     show_description: true,
+//                     show_line_items: true,
+//                     payment_method_types: ['paymaya', 'gcash'],
+//                     description: 'RPTAX',
+//                     line_items: [lineItem]
+//                 }
+//             }
+//         });
+
+//         const checkoutSessionUrl = response.data.data.attributes.checkout_url;
+//         res.json({ checkoutSessionUrl });
+//     } catch (error) {
+//         console.error('Error creating checkout session:', error);
+//         res.status(500).json({ error: 'Error creating checkout session' });
+//     }
+// });
 
 
 

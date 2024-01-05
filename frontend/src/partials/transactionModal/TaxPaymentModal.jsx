@@ -16,21 +16,28 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
 
   console.log(taxPaymentTransaction)
 
-const makePayment = async () => {
+  const makePayment = async () => {
     try {
+        if (!transaction_id) {
+            console.error("Transaction ID is not defined.");
+            alert("Error creating checkout session. Please try again later.");
+            return;
+        }
+
         const body = {
-            taxPaymentTransaction: taxPaymentTransaction,  // Assuming taxPaymentTransaction is defined and is a single object
+            taxPaymentTransaction: taxPaymentTransaction,
         };
 
         const response = await axios.post(`http://localhost:8800/transachistory/create-checkout-session/${transaction_id}`, body);
 
-        if (response.data && response.data.checkoutSession) {
-            const redirectUrl = response.data.checkoutSession.data.attributes.redirect.url;
-
-            if (redirectUrl) {
-                window.location.href = redirectUrl;
+        if (response.data && response.data.checkoutSessionUrl) {
+            const checkoutSessionUrl = response.data.checkoutSessionUrl;
+        
+            if (checkoutSessionUrl) {
+                console.log('Checkout Session URL:', checkoutSessionUrl);
+                window.location.href = checkoutSessionUrl;
             } else {
-                console.error("Invalid checkout session - No redirect URL:", response);
+                console.error("Invalid checkout session - No checkout session URL:", response);
                 alert("Error creating checkout session. Please try again later.");
             }
         } else {
@@ -42,6 +49,8 @@ const makePayment = async () => {
         alert("Error creating checkout session. Please try again later.");
     }
 };
+
+
  
 
   // const makePayment = async () => {
