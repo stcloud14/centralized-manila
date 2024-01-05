@@ -76,6 +76,9 @@ router.post('/', async (req, res) => {
     const query5 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
     const values5 = [transID, primaryKey];
 
+    const query6 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
+    const values6 = [transID, primaryKey];
+
 
     try {
     const result = await queryDatabase(query, values);
@@ -84,6 +87,7 @@ router.post('/', async (req, res) => {
     const result3 = await queryDatabase(query3, values3);
     const result4 = await queryDatabase(query4, values4);
     const result5 = await queryDatabase(query5, values5);
+
 
     res.json({
         message: "Successfully executed",
