@@ -1080,8 +1080,6 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                           DTI Registration
                         </td>
-
-
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.name === 'bus_dti_reg') {
@@ -1090,8 +1088,6 @@ const BusinessPermitForm =()=>{
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
                         </td>
-
-
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_dti_reg'} />
                         </td>
@@ -1099,6 +1095,14 @@ const BusinessPermitForm =()=>{
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2">
                           R.P. Tax Declaration for Land (Upload if copy is available. If not, indicate TDN or PIN on the UAF to include fee on eSOA)
+                        </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_rptax_decbldg') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decbldg'} />
@@ -1108,6 +1112,14 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                           SEC Registration - Paid-up and Subscribed Page
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_sec_paid') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_paid'} />
                         </td>
@@ -1115,6 +1127,14 @@ const BusinessPermitForm =()=>{
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2">
                             SEC Registration - Articles of Primary and Secondary Purpose
+                        </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_sec_articles') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_articles'} />
@@ -1124,6 +1144,14 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             NGA-Contract of Lease - Page Indicating Names and Floor Area - sqrm
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_nga') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_nga'} />
                         </td>
@@ -1131,6 +1159,14 @@ const BusinessPermitForm =()=>{
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             SEC Registration - Front Page
+                        </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_sec_front') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_front'} />
@@ -1140,6 +1176,14 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             R.P. Tax Declaration for Building (Upload if copy is available. If not, indicate TDN or PIN on the UAF to include fee on eSOA)
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_rptax_decland') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decland'} />
                         </td>
@@ -1147,6 +1191,14 @@ const BusinessPermitForm =()=>{
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Fire Safety Inspection Certificate for Occupancy, valid in the last 9 months / Affidavit of Undertaking
+                        </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_fire') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_fire'} />
@@ -1156,6 +1208,14 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 2 Document
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_page2') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page2'} />
                         </td>
@@ -1163,6 +1223,14 @@ const BusinessPermitForm =()=>{
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 3 Document
+                        </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_page3') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page3'} />
@@ -1172,6 +1240,14 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 4 Document
                         </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_page4') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page4'} />
                         </td>
@@ -1179,6 +1255,14 @@ const BusinessPermitForm =()=>{
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 5 Document
+                        </td>
+                        <td className="md:pl-10 pl-3 pr-2 py-2 ">
+                        {selectedFiles.map((fileArray) => {
+                            if (fileArray.name === 'bus_page5') {
+                              return fileArray.value ? fileArray.value.name : 'No file selected';
+                            }
+                            return null; // If the name doesn't match, return null or handle as needed
+                          })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page5'} />
