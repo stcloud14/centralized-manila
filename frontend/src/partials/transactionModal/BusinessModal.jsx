@@ -292,32 +292,33 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                             <span className="whitespace-nowrap md:mb-0 mb-1">{office ? office : '-'}</span>
                           </div>
 
-
+                          <div className='border-t dark:border-gray-500'></div>
                           {businessData.map((business, index) => (
                             <div key={index}>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Line of Business</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_line ? business.bus_line : '-'}</span>
-                          </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">PSIC</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_psic ? business.bus_psic : '-'}</span>
-                          </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Products/Services</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_products ? business.bus_products : '-'}</span>
-                          </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">No. of units</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_units_no ? business.bus_units_no : '-'}</span>
-                          </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Total Capitalization</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_total_cap ? business.bus_total_cap : '-'}</span>
-                          </div>
-                          </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between my-1">
+                                <span className="font-medium whitespace-nowrap">Line of Business</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_line ? business.bus_line : '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">PSIC</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_psic ? business.bus_psic : '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Products/Services</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_products ? business.bus_products : '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">No. of units</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_units_no ? business.bus_units_no : '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Total Capitalization</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_total_cap ? business.bus_total_cap : '-'}</span>
+                              </div>
+                              <div className='border-t dark:border-gray-500'></div>
+                            </div>
                           ))}
-
+                          
                           <br />
 
                           <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
