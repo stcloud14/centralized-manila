@@ -18,6 +18,7 @@ const UploadModal = ({ onClose, onFileSelect, targetIMG }) => {
   };
 
   console.log(targetIMG)
+  console.log(selectedFile)
 
   const preventDefault = (event) => {
     event.preventDefault();

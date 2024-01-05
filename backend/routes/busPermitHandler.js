@@ -181,6 +181,8 @@ let busOffice = null;
   });
 
 
+  const uniqueKey = generateUniqueFileID();
+
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
 
@@ -190,7 +192,9 @@ let busOffice = null;
       // cb(null, path.join(__dirname, '../uploads')); //backend directory
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname);
+      const originalName = path.parse(file.originalname);
+      const uniqueFileName = `${originalName.name}_${uniqueKey}${originalName.ext}`;
+      cb(null, uniqueFileName);
     },
   });
 
@@ -218,7 +222,13 @@ let busOffice = null;
 
         const query = "INSERT INTO bus_images (`transaction_id`, `bus_tax_incentives`, `bus_dti_reg`, `bus_rptax_decbldg`, `bus_sec_paid`, `bus_sec_articles`, `bus_nga`, `bus_sec_front`, `bus_rptax_decland`, `bus_fire`, `bus_page2`, `bus_page3`, `bus_page4`, `bus_page5`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
-        const getFileName = (field) => files[field] ? files[field][0].filename : null;
+        const getFileName = (field) => {
+          if (files[field]) {
+              const originalName = path.parse(files[field][0].originalname);
+              return `${originalName.name}_${uniqueKey}${originalName.ext}`;
+          }
+          return null;
+        };
 
         const values = [
           transID,
@@ -266,10 +276,16 @@ let busOffice = null;
 
   function generateTransactionID() {
     const timestamp = new Date().getTime().toString().slice(0, 8);
-    const uniqueID = uuidv4().split('-').join('').substring(0, 9); // Use a portion of UUID
+    const uniqueID = uuidv4().split('-').join('').substring(0, 9);
     const transactionID = `${timestamp}-${uniqueID}`;
 
     return transactionID.toUpperCase();
+  }
+
+  function generateUniqueFileID() {
+    const uniqueFileID = uuidv4().split('-').join('').substring(0, 5); 
+
+    return uniqueFileID.toUpperCase();
   }
 
   export default router;

@@ -47,7 +47,7 @@ const BusinessPermitForm =()=>{
     bus_valididLabel: '',
     bus_office_partial: '',
     bus_office: '1',
-    bus_incentive: '1',
+    bus_tax_incentives: '1',
     owned: '2',
   }));
 
@@ -86,17 +86,46 @@ const BusinessPermitForm =()=>{
     { fieldName: 'bus_page4', value: null },
     { fieldName: 'bus_page5', value: null },
   ]);
+
+  const [fileNames, setFileNames] = useState({
+    bus_tax_incentives: '',
+    bus_dti_reg: '',
+    bus_rptax_decbldg: '',
+    bus_sec_paid: '',
+    bus_sec_articles: '',
+    bus_nga: '',
+    bus_sec_front: '',
+    bus_rptax_decland: '',
+    bus_fire: '',
+    bus_page2: '',
+    bus_page3: '',
+    bus_page4: '',
+    bus_page5: '',
+  });
   
 
   const handleFileSelect = (file, target) => {
     setSelectedFiles((prevFiles) => {
+      const fileNameExists = prevFiles.some(
+        (fileArray) => fileArray.value && fileArray.value.name && fileArray.value.name === file.name
+      );
+  
+      if (fileNameExists) {
+        window.alert('Please select a different file');
+        return prevFiles;
+      }
+
       const updatedFiles = prevFiles.map((fileArray) => {
         if (fileArray.fieldName === target) {
+          setFileNames((prevFileNames) => ({
+            ...prevFileNames,
+            [target]: file.name,
+          }));
           return { ...fileArray, value: file };
         }
         return fileArray;
       });
-  
+
       return updatedFiles;
     });
   };
@@ -259,7 +288,7 @@ const BusinessPermitForm =()=>{
         };
       } 
 
-      if (name === 'bus_incentive') {
+      if (name === 'bus_tax_incentives') {
         
         return {
           ...prevData,
@@ -438,8 +467,6 @@ const BusinessPermitForm =()=>{
         formData.append(fileObject.fieldName, fileObject.value, fileObject.value.name);
       }
     });
-    
-    // console.log(`Field Name: ${fileObject.fieldName}, Value: ${fileObject.value.name}`);
 
     try {
         const response = await axios.post(`http://localhost:8800/buspermit/bus/${user_id}`, busPermit);
@@ -896,21 +923,31 @@ const BusinessPermitForm =()=>{
               <div className="flex flex-col mt-11 md:flex-row text-sm text-gray-700 dark:text-white md:items-center items-start">
                 <span className="mb-2 md:mb-0">Tax Incentives from any Government Entity</span>
 
-                <div onChange={handleInputChange} name="bus_incentive" className="flex mb-2 md:mb-0">
+                <div onChange={handleInputChange} name="bus_tax_incentives" className="flex mb-2 md:mb-0">
                   <label className="mr-2">
-                    <input value='1' type="radio" name="bus_incentive" defaultChecked className="border border-gray-500 md:ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value='1' type="radio" name="bus_tax_incentives" defaultChecked className="border border-gray-500 md:ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     <span className="ml-1.5">No</span>
                   </label>
                   <label>
-                    <input value='2' type="radio" name="bus_incentive" className="border border-gray-500 ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value='2' type="radio" name="bus_tax_incentives" className="border border-gray-500 ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     <span className="ml-1.5">Yes</span>
                   </label>
                 </div>
 
-                {busPermit.bus_incentive === '2' ? (
-                <div className="group md:ml-9">
-                  <UploadButton openUploadModal={openUploadModal} taxIMG={'bus_tax_incentives'} />
-                </div>
+                {busPermit.bus_tax_incentives === '2' ? (
+                  <>
+                  <div className="group md:ml-9">
+                  <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_tax_incentives'} />
+                  </div>
+                  <p>
+                    {selectedFiles.map((fileArray) => {
+                      if (fileArray.fieldName === 'bus_tax_incentives') {
+                        return fileArray.value ? fileArray.value.name : null;
+                      }
+                      return null; 
+                    })}
+                  </p>
+                  </>
                 ) : null}
               </div>
 
@@ -1380,7 +1417,7 @@ const BusinessPermitForm =()=>{
         </main>
 
         {isModalOpen && (
-          <ModalTransaction selectedTransaction={busPermit} businessData={dataRow} modalType={'Business Permit'} onClose={handleCloseModal} onSubmit={handleSubmit} />
+          <ModalTransaction selectedTransaction={busPermit} businessData={dataRow} businessImages={fileNames} modalType={'Business Permit'} onClose={handleCloseModal} onSubmit={handleSubmit} />
         )}
 
       </div>
