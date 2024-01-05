@@ -28,17 +28,17 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
             taxPaymentTransaction: taxPaymentTransaction,
         };
 
-        const response = await axios.post(`http://localhost:8800/transachistory/create-checkout-session/${transaction_id}`, body);
+        const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
 
         if (response.data && response.data.checkoutSessionUrl) {
             const checkoutSessionUrl = response.data.checkoutSessionUrl;
-        
+
             if (checkoutSessionUrl) {
                 console.log('Checkout Session URL:', checkoutSessionUrl);
-                window.location.href = checkoutSessionUrl;
-            } else {
-                console.error("Invalid checkout session - No checkout session URL:", response);
-                alert("Error creating checkout session. Please try again later.");
+
+                // Open a new window or tab with the checkout session URL
+                const newWindow = window.open(checkoutSessionUrl, '_blank');
+                
             }
         } else {
             console.error("Invalid checkout session - Response structure is unexpected:", response);
@@ -51,60 +51,42 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
 };
 
 
+//NO NEW WINDOW OPEN
+// const makePayment = async () => {
+//   try {
+//       if (!transaction_id) {
+//           console.error("Transaction ID is not defined.");
+//           alert("Error creating checkout session. Please try again later.");
+//           return;
+//       }
+
+//       const body = {
+//           taxPaymentTransaction: taxPaymentTransaction,
+//       };
+
+//       const response = await axios.post(`http://localhost:8800/transachistory/create-checkout-session/${transaction_id}`, body);
+
+//       if (response.data && response.data.checkoutSessionUrl) {
+//           const checkoutSessionUrl = response.data.checkoutSessionUrl;
+      
+//           if (checkoutSessionUrl) {
+//               console.log('Checkout Session URL:', checkoutSessionUrl);
+//               window.location.href = checkoutSessionUrl;
+//           } else {
+//               console.error("Invalid checkout session - No checkout session URL:", response);
+//               alert("Error creating checkout session. Please try again later.");
+//           }
+//       } else {
+//           console.error("Invalid checkout session - Response structure is unexpected:", response);
+//           alert("Error creating checkout session. Please try again later.");
+//       }
+//   } catch (error) {
+//       console.error("Error creating checkout session:", error);
+//       alert("Error creating checkout session. Please try again later.");
+//   }
+// };
+
  
-
-  // const makePayment = async () => {
-  //   try {
-  //     // Initialize Paymongo outside the function
-  //     const paymongo = new Paymongo(process.env.SECRET_KEY);
-  
-  //     const body = {
-  //       tp_rp_tdn: taxPaymentTransaction,
-  //     };
-  
-  //     // Create a checkout session
-  //     const response = await fetch(`${apiURL}http://localhost:8800/payment/create-checkout-session/${transaction_id}`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(body),
-  //     });
-  
-  //     // Check if the request was successful (status code 2xx)
-  //     if (response.ok) {
-  //       const checkoutSession = await response.json();
-  
-  //       // Debugging: Log the checkout session information
-  //       console.log("Checkout Session:", checkoutSession);
-  
-  //       // Check if checkoutSession has the necessary attributes
-  //       if (
-  //         checkoutSession &&
-  //         checkoutSession.data &&
-  //         checkoutSession.data.attributes &&
-  //         checkoutSession.data.attributes.redirect
-  //       ) {
-  //         // Redirect the user to the checkout URL
-  //         console.log(
-  //           "Redirecting to checkout URL:",
-  //           checkoutSession.data.attributes.redirect.url
-  //         );
-  //         window.location.href = checkoutSession.data.attributes.redirect.url;
-  //       } else {
-  //         console.error("Invalid checkout session:", checkoutSession);
-  //       }
-  //     } else {
-  //       // Handle the case when the request was not successful
-  //       console.error("Error creating checkout session:", response.statusText);
-  //       alert("Error creating checkout session. Please try again later.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error creating checkout session:", error);
-  //     alert("Error creating checkout session. Please try again later.");
-  //   }
-  // };
-
   useEffect(() => {
     const fetchTaxPaymentTransaction = async () => {
       if (transaction_id) {
