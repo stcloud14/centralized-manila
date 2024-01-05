@@ -57,6 +57,9 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.transaction_id}</span>
                           </div>
                         ) : null}
+                        <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Document Owner's Personal Information</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Last Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_lname || birthTransaction.l_name || '-'}</span>
@@ -81,6 +84,12 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Owner's Sex</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_sex || birthTransaction.sex_type || '-'}</span>
                           </div>
+
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Document Owner's Place of Birth</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Region</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_regionLabel || birthTransaction.region || '-'}</span>
@@ -96,6 +105,12 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Date of Birth</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_date || birthTransaction.birth_date || '-'}</span>
+                          </div>
+                          
+                          <br/>
+                          
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Father's Name of Document Owner</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Father's Last Name</span>
@@ -113,6 +128,12 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Father's Suffix</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_fathersuffix || birthTransaction.fathersuffix || '-'}</span>
                           </div>
+
+                          <br/>
+                          
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Mother's Name of Document Owner</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mother's Last Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_motherlname || birthTransaction.mother_lname || '-'}</span>
@@ -128,6 +149,12 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mother's Suffix</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_mothersuffix || birthTransaction.mothersuffix || '-'}</span>
+                          </div>
+                          
+                          <br/>
+                          
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Requestor's Personal Information</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Last Name</span>
@@ -167,6 +194,12 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Mobile No.</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqmobnum || birthTransaction.mobile_no || '-'}</span>
                           </div>
+                                                    
+                          <br/>
+                          
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Requestor's Address</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqregionLabel || birthTransaction.reqregion || '-'}</span>
@@ -195,6 +228,9 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqzip || birthTransaction.zip_code || '-'}</span>
                           </div>
+
+                          <br/>
+
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Country</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_country || birthTransaction.country || '-'}</span>

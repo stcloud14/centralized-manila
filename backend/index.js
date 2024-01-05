@@ -6,12 +6,13 @@ import register from './routes/register.js'
 import profileHandler from './routes/profileHandler.js';
 import rptaxHandler from './routes/rptaxHandler.js';
 import transactionHandler from './routes/transactionHandler.js';
-import birthCertHandler from './routes/birthCertHandler.js'
-import deathCertHandler from './routes/deathCertHandler.js'
-import marriageCertHandler from './routes/marriageCertHandler.js'
-import cedulaHandler from './routes/cedulaHandler.js'
-import busPermitHandler from './routes/busPermitHandler.js'
-import deleteAccount from './routes/deleteAccount.js'
+import birthCertHandler from './routes/birthCertHandler.js';
+import deathCertHandler from './routes/deathCertHandler.js';
+import marriageCertHandler from './routes/marriageCertHandler.js';
+import cedulaHandler from './routes/cedulaHandler.js';
+import busPermitHandler from './routes/busPermitHandler.js';
+import deleteAccount from './routes/deleteAccount.js';
+import paymentMethod from './routes/paymentMethod.js';
 
 const app = express();
 
@@ -28,7 +29,8 @@ app.use('/birthcertificate', birthCertHandler);
 app.use('/deathcertificate', deathCertHandler);
 app.use('/marriagecertificate', marriageCertHandler)
 app.use('/transachistory', transactionHandler);
-app.use('/delete', deleteAccount)
+app.use('/delete', deleteAccount);
+app.use('/payment', paymentMethod);
 
 
 

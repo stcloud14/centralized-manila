@@ -61,6 +61,9 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.transaction_id}</span>
                           </div>
                         ) : null}
+                        <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Owner's Information</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Last Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_lname || cedulaTransaction.l_name || '-'}</span>
@@ -80,6 +83,12 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Sex</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_sex || cedulaTransaction.sex_type || '-'}</span>
+                          </div>
+
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Address</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
@@ -109,6 +118,12 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_reqzip || cedulaTransaction.zip_code || '-'}</span>
                           </div>
+
+                          <br/>
+
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <span className="font-semibold whitespace-nowrap">Other Information</span>
+                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Civil Status</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_civilstatus || cedulaTransaction.cvl_id || '-'}</span>
@@ -128,6 +143,9 @@ const CedulaModal = ({ selectedTransaction, onClose, onSubmit }) => {
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Alien Certificate of Registration No.</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_aliencor || cedulaTransaction.acr_no || '-'}</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
+                            <br/>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Employment Status</span>
