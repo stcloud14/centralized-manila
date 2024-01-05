@@ -448,7 +448,6 @@ const BusinessPermitForm =()=>{
             console.error('Transaction error:', response.statusText);
         }
 
-        // Second POST request to http://localhost:8800/buspermit/busact
         const response1 = await axios.post(`http://localhost:8800/buspermit/busact`, { dataRow });
 
         if (response1.status === 200) {
@@ -462,6 +461,21 @@ const BusinessPermitForm =()=>{
             }, 3000);
         } else {
             console.error('Transaction error:', response1.statusText);
+        }
+
+        const response2 = await axios.post(`http://localhost:8800/buspermit/busimg`, { selectedFiles });
+
+        if (response2.status === 200) {
+            setIsSuccess(true);
+            handleCloseModal();
+            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            console.log('Transaction successful');
+
+            setTimeout(() => {
+                setIsSuccess(false);
+            }, 3000);
+        } else {
+            console.error('Transaction error:', response2.statusText);
         }
 
     } catch (err) {

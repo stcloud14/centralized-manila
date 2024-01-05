@@ -202,6 +202,24 @@ let busOffice = null;
     }
   });
 
+  router.post('/busimg/:fieldName', upload.single(req.params.fieldName), async (req, res) => {
+    const dataArray = req.body.selectedFiles;
+  
+    try {
+
+      const query = "INSERT INTO bus_images (`transaction_id`, `bus_tax_incentives`, `bus_dti_reg`, `bus_rptax_decbldg`, `bus_sec_paid`, `bus_sec_articles`, `bus_nga`, `bus_sec_front`, `bus_rptax_decland`, `bus_fire`, `bus_page2`, `bus_page3`, `bus_page4`, `bus_page5`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      const values = dataArray.map(data => [transID, bus_tax_incentives, bus_dti_reg, bus_rptax_decbldg, bus_sec_paid, bus_sec_articles, bus_nga, bus_sec_front, bus_rptax_decland, bus_fire, bus_page2, bus_page3, bus_page4, bus_page5]);
+  
+      await queryDatabase(query, values);
+  
+      res.json({ success: true });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Error executing queries" });
+    }
+  });
+  
+
   function queryDatabase(query, values) {
     return new Promise((resolve, reject) => {
     conn2.query(query, values, (err, data) => {
@@ -240,16 +258,16 @@ let busOffice = null;
 
   router.use(express.static(path.join(__dirname, 'frontend', 'dist')));
 
-  router.post('/api/upload/:transaction_id', upload.single('file'), async (req, res) => {
+  router.post('/busimg', upload.single('file'), async (req, res) => {
     try {
       const transID = req.params.transaction_id;
       const filePath = req.file.path;
   
-      const query = "INSERT INTO bus_images (`transaction_id`, `bus_dti_reg`) VALUES (?, ?)";
-      const values = [transID, filePath];
+      const query = "INSERT INTO bus_images (`transaction_id`, `bus_tax_incentives`, `bus_dti_reg`, `bus_rptax_decbldg`, `bus_sec_paid`, `bus_sec_articles`, `bus_nga`, `bus_sec_front`, `bus_rptax_decland`, `bus_fire`, `bus_page2`, `bus_page3`, `bus_page4`, `bus_page5`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      const values = [transID, filePath, filePath, filePath, filePath, filePath, filePath, filePath, filePath, filePath, filePath, filePath, filePath, filePath];
       
       const result = await queryDatabase(query, values);
-  
+      
       res.json({
         success: true,
         message: "File uploaded successfully",
@@ -260,6 +278,7 @@ let busOffice = null;
       res.status(500).json({ success: false, message: 'File upload failed' });
     }
   });
-
+  
+  // const query = "INSERT INTO bus_images (`transaction_id`, `bus_dti_reg`) VALUES (?, ?)";
 
   export default router;
