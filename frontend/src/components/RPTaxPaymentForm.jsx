@@ -6,7 +6,7 @@ import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import YearDropdown from '../partials/YearDropdown';
 import Req from '../partials/misc/RequiredFieldIndicator';
-
+import TPTermsModal from '../partials/business/TPTermsModal';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 import QuarterDropdown from '../partials/profile/QuarterDropdown';
 
@@ -214,6 +214,11 @@ const handleCheckboxChange = (e) => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [isModalVisible, setIsModalVisible] = useState(true);
+
+  const toggleModalVisibility = () => {
+    setIsModalVisible(!isModalVisible);
+  };
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -227,11 +232,14 @@ const handleCheckboxChange = (e) => {
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
+        <TPTermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
+
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col h-full justify-between mx-4 my-4">
             <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
               <div className="px-5 py-5">
-                <form className="max-w-md mx-auto">
+
+                <form className={`max-w-md mx-auto ${isModalVisible ? 'blur' : ''}`}>
                   <h1 className='font-medium text-center text-slate-700 dark:text-white'>Real Property Tax</h1>
                   <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Payment</h1>
 
