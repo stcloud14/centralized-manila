@@ -948,22 +948,22 @@ const BusinessPermitForm =()=>{
                   <table className="w-full text-left text-xs md:text-sm rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-gray-700 uppercase bg-slate-200 dark:bg-[#212121] dark:text-slate-400">
                       <tr>
-                        <th scope="col" className="pl-6 pr-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <th scope="col" className="pl-5 pr-0 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           Line of Business
                         </th>
-                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <th scope="col" className="pl-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           Philippine Standard Industrial Code
                         </th>
-                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <th scope="col" className="pl-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           Products/Services
                         </th>
-                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <th scope="col" className="pl-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           No. of Units
                         </th>
                         <th scope="col" className="pl-3 pr-0 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           Total Capitalization (PH)
                         </th>
-                        <th scope="col" className="px-3pr-0 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <th scope="col" className="px-l pr-0 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                           {/* View Details*/}
                         </th>
                       </tr>
@@ -971,7 +971,7 @@ const BusinessPermitForm =()=>{
                     <tbody>
                     {dataRow.map((row, index) => (
                       <tr key={index} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
-                        <td className="pl-6 pr-3 py-2 whitespace-nowrap">
+                        <td className="pl-5 pr-0 py-2 whitespace-nowrap">
                           {editingIndex === index ? (
                             <input
                               type="text"
@@ -1036,12 +1036,12 @@ const BusinessPermitForm =()=>{
                               `P ${row.bus_total_cap}`
                             )}
                         </td>
-                        <td className="md:px-0 px-4 py-2 whitespace-nowrap text-xs md:text-sm font-medium">
+                        <td className="md:pl-3 pl-5 py-2 whitespace-nowrap text-xs md:text-sm font-medium">
                           <div className="flex space-x-3">
                           {editingIndex === index ? (
-                            <a onClick={() => handleAddRow()} className="group flex justify-center items-center text-center p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-full cursor-pointer" >
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="coral" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                <path className="stroke-blue" strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            <a onClick={() => handleAddRow()} className="group flex justify-center items-center text-center p-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full cursor-pointer" >
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                               </svg>
                             </a>
                           ) : (
