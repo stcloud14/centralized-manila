@@ -404,7 +404,7 @@ const BusinessModal = ({ selectedTransaction, businessData, onClose, onSubmit })
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4"> P {selectedTransaction.bus_amount}</span>
+                            <span className="font-semibold whitespace-nowrap ml-4"> P {selectedTransaction.bus_amount + '.00'}</span>
                           </div>
                         </div>
 
