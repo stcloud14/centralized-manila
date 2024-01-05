@@ -102,7 +102,6 @@ const BusinessPermitForm =()=>{
   };
   
 
-  console.log(dataRow)
   console.log(selectedFiles)
 
 
@@ -432,10 +431,61 @@ const BusinessPermitForm =()=>{
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
+
+    selectedFiles.forEach((file, index) => {
+      if (file.value) {
+        formData.append(`files[${index}]`, file.value, file.value.name);
+      } else {
+        console.log(`Skipping null file at index ${index}`);
+      }
+    });
+
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+
+
     try {
-        const response = await axios.post(`http://localhost:8800/buspermit/bus/${user_id}`, busPermit);
+        // const response = await axios.post(`http://localhost:8800/buspermit/bus/${user_id}`, busPermit);
 
-        if (response.status === 200) {
+        // if (response.status === 200) {
+        //     setIsSuccess(true);
+        //     handleCloseModal();
+        //     contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+        //     console.log('Transaction successful');
+
+        //     setTimeout(() => {
+        //         setIsSuccess(false);
+        //     }, 3000);
+        // } else {
+        //     console.error('Transaction error:', response.statusText);
+        // }
+
+        // const response1 = await axios.post(`http://localhost:8800/buspermit/busact`, { dataRow });
+
+        // if (response1.status === 200) {
+        //     setIsSuccess(true);
+        //     handleCloseModal();
+        //     contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+        //     console.log('Transaction successful');
+
+        //     setTimeout(() => {
+        //         setIsSuccess(false);
+        //     }, 3000);
+        // } else {
+        //     console.error('Transaction error:', response1.statusText);
+        // }
+
+        const response2 = await axios.post('http://localhost:8800/buspermit/busimg', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        
+
+        if (response2.status === 200) {
             setIsSuccess(true);
             handleCloseModal();
             contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
@@ -445,26 +495,12 @@ const BusinessPermitForm =()=>{
                 setIsSuccess(false);
             }, 3000);
         } else {
-            console.error('Transaction error:', response.statusText);
-        }
-
-        // Second POST request to http://localhost:8800/buspermit/busact
-        const response1 = await axios.post(`http://localhost:8800/buspermit/busact`, { dataRow });
-
-        if (response1.status === 200) {
-            setIsSuccess(true);
-            handleCloseModal();
-            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-            console.log('Transaction successful');
-
-            setTimeout(() => {
-                setIsSuccess(false);
-            }, 3000);
-        } else {
-            console.error('Transaction error:', response1.statusText);
+            console.log('THIS IS THE ERROR IN API')
+            console.error('Transaction error:', response2.statusText);
         }
 
     } catch (err) {
+        console.log('THIS IS THE ERROR IN FRONTEND')
         console.error('Transaction error:', err);
     }
 };
@@ -477,7 +513,7 @@ const BusinessPermitForm =()=>{
     
   const requiredFields = [
     'bus_type',
-    'bus_name',
+    // 'bus_name',
     // 'bus_franchise',
     // 'bus_reg_no',
     // 'bus_tin',
