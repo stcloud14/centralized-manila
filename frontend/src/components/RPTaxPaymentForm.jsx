@@ -236,125 +236,123 @@ const handleCheckboxChange = (e) => {
         <TermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
 
         <main ref={contentRef} className="overflow-y-auto">
-          <div className="flex flex-col h-full justify-between mx-4 my-4">
-            <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
-              <div className="px-5 py-5">
+          <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
+          <div className="px-5 py-5">
 
-                <form className={`max-w-md mx-auto ${isModalVisible ? 'blur' : ''}`}>
-                  <h1 className='font-medium text-center text-slate-700 dark:text-white'>Real Property Tax</h1>
-                  <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Payment</h1>
+              <form className={`max-w-md mx-auto ${isModalVisible ? 'blur' : ''}`}>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white'>Real Property Tax</h1>
+                <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 mb-6'>Tax Payment</h1>
 
-                  {isSuccess && (
-                  <div className="text-emerald-700 text-sm bg-emerald-200 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
-                    Transaction success on Real Property Tax Payment!
+                {isSuccess && (
+                <div className="text-emerald-700 text-sm bg-emerald-200 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                  Transaction success on Real Property Tax Payment!
+                </div>
+                )}
+
+                {showWarning && (
+                  <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                    Please fill in all required fields before proceeding.
                   </div>
-                  )}
-
-                  {showWarning && (
-                    <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
-                      Please fill in all required fields before proceeding.
+                )}  
+                <h1 className='text-xs text-slate-700 dark:text-white mt-8 mb-6'>All fields mark with <Req /> are required.</h1>  
+                <div className="grid gap-6">
+                
+                    <div className="relative z-0 w-full mb-2 group">
+                      <input
+                        type="text" name="acc_name" id="acc_name" placeholder=" " onChange={handleInputChange} value={rptaxPayment.acc_name}
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        required
+                      />
+                      <label
+                        htmlFor="acc_name"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
+                        Account Name<Req />
+                      </label>
                     </div>
-                  )}  
-                  <h1 className='text-xs text-slate-700 dark:text-white mt-8 mb-6'>All fields mark with <Req /> are required.</h1>  
-                  <div className="grid gap-6">
-                  
-                      <div className="relative z-0 w-full mb-2 group">
-                        <input
-                          type="text" name="acc_name" id="acc_name" placeholder=" " onChange={handleInputChange} value={rptaxPayment.acc_name}
-                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          required
-                        />
-                        <label
-                          htmlFor="acc_name"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
-                          Account Name<Req />
-                        </label>
-                      </div>
 
-                      <div className="relative z-0 w-full mb-2 group">
-                        <input
-                          type="text" name="rp_tdn" id="rp_tdn" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_tdn} maxLength={14}
-                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          required
-                        />
-                        <label
-                          htmlFor="rp_tdn"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
-                          Tax Declaration Number (TDN)<Req />
-                        </label>
-                      </div>
+                    <div className="relative z-0 w-full mb-2 group">
+                      <input
+                        type="text" name="rp_tdn" id="rp_tdn" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_tdn} maxLength={14}
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        required
+                      />
+                      <label
+                        htmlFor="rp_tdn"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
+                        Tax Declaration Number (TDN)<Req />
+                      </label>
+                    </div>
 
-                      <div className="relative z-0 w-full group">
-                        <input
-                          type="text" name="rp_pin" id="rp_pin" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_pin} maxLength={isChecked ? 24 : 18}
-                          className="block pyt-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          required
-                        />
-                        <label
-                          htmlFor="rp_pin"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
-                          Property Identification Number (PIN)<Req />
+                    <div className="relative z-0 w-full group">
+                      <input
+                        type="text" name="rp_pin" id="rp_pin" placeholder=" " onChange={handleInputChange} value={rptaxPayment.rp_pin} maxLength={isChecked ? 24 : 18}
+                        className="block pyt-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        required
+                      />
+                      <label
+                        htmlFor="rp_pin"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
+                        Property Identification Number (PIN)<Req />
+                      </label>
+                      {/* checkboxxx */}
+                      <div className="flex items-center mt-1.5 text-xs">
+                        <label htmlFor="19digitpin" className="flex text-slate-500 dark:text-gray-400 hover:text-slate-600 cursor-pointer">
+                            <input id="19digitpin" className="mr-1.5 mt-0.5 w-3.5 h-3.5 border-2 border-gray-400 rounded bg-transparent text-emerald-500 pointer-events-none focus:ring-emerald-500" type="checkbox" onChange={handleCheckboxChange} checked={isChecked} />
+                            <span>19-digit PIN</span>
                         </label>
-                        {/* checkboxxx */}
-                        <div className="flex items-center mt-1.5 text-xs">
-                          <label htmlFor="19digitpin" className="flex text-slate-500 dark:text-gray-400 hover:text-slate-600 cursor-pointer">
-                              <input id="19digitpin" className="mr-1.5 mt-0.5 w-3.5 h-3.5 border-2 border-gray-400 rounded bg-transparent text-emerald-500 pointer-events-none focus:ring-emerald-500" type="checkbox" onChange={handleCheckboxChange} checked={isChecked} />
-                              <span>19-digit PIN</span>
-                          </label>
-                        </div>
                       </div>
-                      
-                      <div className="relative z-0 w-full mb-2 group">
-                      <select onChange={handleInputChange} value={rptaxPayment.rp_year} defaultValue={0} name="rp_year" id="rp_year" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
-                      <YearDropdown />
+                    </div>
+                    
+                    <div className="relative z-0 w-full mb-2 group">
+                    <select onChange={handleInputChange} value={rptaxPayment.rp_year} defaultValue={0} name="rp_year" id="rp_year" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
+                    <YearDropdown />
+                    </select>
+                      <label
+                        htmlFor="rp_year"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
+                        Year<Req />
+                      </label>
+                    </div>
+
+                    <div className="relative z-0 w-full mb-2 group">
+                      <select onChange={handleInputChange} value={rptaxPayment.period} defaultValue={0} name="period" id="period" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
+                      <QuarterDropdown/>
                       </select>
-                        <label
-                          htmlFor="rp_year"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
-                          Year<Req />
-                        </label>
-                      </div>
-
-                      <div className="relative z-0 w-full mb-2 group">
-                        <select onChange={handleInputChange} value={rptaxPayment.period} defaultValue={0} name="period" id="period" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
-                        <QuarterDropdown/>
-                        </select>
-                        <label htmlFor="period" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Period<Req /></label>
-                      </div>
-
-                      <div className="relative z-0 w-full mb-2 group">
-                      
-                        <input
-                          type="text" name="amount" id="amount" placeholder=" " onChange={handleInputChange} value={rptaxPayment.amount}
-                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                          required 
-                        />
-                       
-                        <label
-                          htmlFor="amount"
-                          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >
-                          Amount<Req />
-                        </label>
-                      </div>
-
-                  </div>
-
-                    {/* Submit Button */}
-                    <div className="flex justify-end items-end mt-10 mb-4">
-                      <button 
-                          onClick={handleProceed} 
-                          type="submit" 
-                          className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
-                            Proceed
-                      </button>
+                      <label htmlFor="period" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Period<Req /></label>
                     </div>
-                </form>
-              </div>
+
+                    <div className="relative z-0 w-full mb-2 group">
+                    
+                      <input
+                        type="text" name="amount" id="amount" placeholder=" " onChange={handleInputChange} value={rptaxPayment.amount}
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        required 
+                      />
+                      
+                      <label
+                        htmlFor="amount"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
+                        Amount<Req />
+                      </label>
+                    </div>
+
+                </div>
+
+                  {/* Submit Button */}
+                  <div className="flex justify-end items-end mt-10 mb-4">
+                    <button 
+                        onClick={handleProceed} 
+                        type="submit" 
+                        className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                          Proceed
+                    </button>
+                  </div>
+              </form>
             </div>
           </div>
         </main>
