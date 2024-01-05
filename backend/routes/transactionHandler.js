@@ -20,7 +20,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
             body: JSON.stringify({
                 data: {
                     attributes: {
-                        send_email_receipt: false,
+                        send_email_receipt: true,
                         show_description: true,
                         show_line_items: true,
                         description: 'RPTAX',
@@ -33,7 +33,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                                 quantity: 1
                             }
                         ],
-                        payment_method_types: ['gcash']
+                        payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease']
                     }
                 }
             })
