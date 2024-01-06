@@ -48,7 +48,8 @@ const UserSettings =()=>{
   };
 
 
-  console.log(selectedFile)
+  console.log(preSelectedFile)
+  console.log(userImage)
 
 
   useEffect(()=>{
@@ -65,57 +66,75 @@ const UserSettings =()=>{
   },[])
 
 
-  useEffect(() => {
-    const checkUserImage = async () => {
-      try {
-        const imagePath = '../uploads/profileImage/';
-        const imageName = storedImage.user_image;
-        
-        const isFileExists = await checkFileExists(imagePath, imageName);
-
+  const checkUserImage = async () => {
+    try {
+      const imagePath = '../uploads/profileImage/';
+      const imageName = storedImage.user_image;
+  
+      if (imageName === undefined || imageName === null) {
+        console.log('User image name is undefined or null.');
+        return;
+      }
+  
+      const isFileExists = await checkFileExists(imagePath, imageName);
+  
+      if (isFileExists !== null && isFileExists !== undefined) {
         if (isFileExists) {
           const fileData = await fetchFileData(`${imagePath}${imageName}`);
-          setUserImage(fileData);
-          console.log(`File ${imageName} exists.`);
+          if (fileData) {
+            setUserImage(fileData);
+            console.log(`File ${imageName} exists.`);
+          } else {
+            console.log(`File data for ${imageName} is empty or undefined.`);
+          }
         } else {
-        
           console.log(`File: ${imageName} does not exist.`);
         }
-      } catch (error) {
-
-        console.error('Error checking and setting user image path:', error);
       }
-      };
-
-      checkUserImage();
-    }, [storedImage]);
-
-    const checkFileExists = async (folderPath, fileName) => {
-      try {
-        const filePath = `${folderPath}/${fileName}`;
-        const response = await fetch(filePath);
-
-        return response.ok;
-      } catch (error) {
-      
-        console.error('Error checking file existence:', error);
-        return false;
-      }
-    };
-
-    const fetchFileData = async (filePath) => {
-      try {
-        const response = await fetch(filePath);
-
-        const fileData = await response.blob();
-        const dataUrl = URL.createObjectURL(fileData);
-
-        return dataUrl;
-      } catch (error) {
-        console.error('Error fetching file data:', error);
-        return '';
-      }
+    } catch (error) {
+      console.error('Error checking and setting user image path:', error);
+    }
   };
+
+  useEffect(() => {
+    checkUserImage();
+  }, [storedImage]);
+
+  const checkFileExists = async (folderPath, fileName) => {
+    try {
+      const filePath = `${folderPath}/${fileName}`;
+      const response = await fetch(filePath);
+
+      return response.ok;
+    } catch (error) {
+      console.error('Error checking file existence:', error);
+      return false;
+    }
+  };
+
+  const fetchFileData = async (filePath) => {
+    try {
+      const response = await fetch(filePath);
+  
+      if (!response.ok) {
+        throw new Error(`Failed to fetch file from ${filePath}`);
+      }
+  
+      const fileData = await response.blob();
+  
+      if (!fileData || fileData.size === 0) {
+        throw new Error('File data is empty or undefined.');
+      }
+  
+      const dataUrl = URL.createObjectURL(fileData);
+  
+      return dataUrl;
+    } catch (error) {
+      console.error('Error fetching file data:', error);
+      return null; // Return null instead of an empty string if there's an error or no data
+    }
+  };
+  
 
  
   const handleDelete = async (e) => {
