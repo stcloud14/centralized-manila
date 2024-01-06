@@ -164,7 +164,7 @@ const DropdownProfile = ({ align }) => {
         
         <img
           name='userImage' 
-          className="inline-block h-12 w-12 rounded-full p-1"
+          className="inline-block h-10 w-10 rounded-full"
           src={userImage ? userImage : defaultImg}
           onError={(e) => console.error('Error loading image:', e)}
         />
