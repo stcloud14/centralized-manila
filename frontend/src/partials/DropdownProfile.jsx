@@ -17,6 +17,11 @@ const DropdownProfile = ({ align }) => {
 
   const [userPersonal, setUserPersonal]=useState({})
 
+  const [defaultImg, setDefaultImg] = useState(defaultImage);
+
+  const [storedImage, setStoredImage] = useState('');
+  const [userImage, setUserImage] = useState('');
+
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
             try{
@@ -34,6 +39,97 @@ const DropdownProfile = ({ align }) => {
         }
         fetchUserPersonal()
     },[userPersonal])
+
+
+    useEffect(()=>{
+      const fetchUserImage= async()=>{
+          try{
+              const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
+              setStoredImage(res.data[0])
+  
+          }catch(err){
+              console.log(err)
+          }
+      }
+      fetchUserImage()
+    },[])
+  
+  
+    const checkUserImage = async () => {
+      try {
+        const imagePath = '../uploads/profileImage/';
+        const imageName = storedImage.user_image;
+    
+        if (imageName === undefined || imageName === null) {
+          console.log('User image name is undefined or null.');
+          return;
+        }
+    
+        const isFileExists = await checkFileExists(imagePath, imageName);
+    
+        if (isFileExists !== null && isFileExists !== undefined) {
+          if (isFileExists) {
+            const fileData = await fetchFileData(`${imagePath}${imageName}`);
+            if (fileData) {
+              setUserImage(fileData);
+              console.log(`File ${imageName} exists.`);
+            } else {
+              console.log(`File data for ${imageName} is empty or undefined.`);
+            }
+          } else {
+            console.log(`File: ${imageName} does not exist.`);
+          }
+        }
+      } catch (error) {
+        console.error('Error checking user image path:', error);
+      }
+    };
+  
+    useEffect(() => {
+      checkUserImage();
+    }, [storedImage]);
+  
+    const checkFileExists = async (folderPath, fileName) => {
+      try {
+        const filePath = `${folderPath}/${fileName}`;
+        const response = await fetch(filePath);
+  
+        return response.ok;
+      } catch (error) {
+        console.error('Error checking file existence:', error);
+        return false;
+      }
+    };
+  
+    const fetchFileData = async (filePath) => {
+      try {
+        const response = await fetch(filePath);
+    
+        if (!response.ok) {
+          if (response.status === 404) {
+            console.log('File not found.');
+          } else {
+            throw new Error(`Failed to fetch file from ${filePath}`);
+          }
+          return null;
+        }
+    
+        const fileData = await response.blob();
+    
+        if (!fileData || fileData.size === 0) {
+          console.log('File data is empty or undefined.');
+          return null;
+        }
+    
+        const dataUrl = URL.createObjectURL(fileData);
+    
+        return dataUrl;
+      } catch (error) {
+        console.error('Error fetching file data:', error);
+        return null;
+      }
+    };
+
 
   // close on click outside
   useEffect(() => {
@@ -66,7 +162,12 @@ const DropdownProfile = ({ align }) => {
         aria-expanded={dropdownOpen}
       >
         
-        <img className="w-8 h-8 rounded-full" src={defaultImage} width="32" height="32" alt="User" />
+        <img
+          name='userImage' 
+          className="inline-block h-12 w-12 rounded-full p-1"
+          src={userImage ? userImage : defaultImg}
+          onError={(e) => console.error('Error loading image:', e)}
+        />
         <div className="flex items-center truncate">
           <span className="truncate ml-2 mr-1 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{userPersonal.f_name}</span>
           <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
