@@ -188,7 +188,7 @@ let busOffice = null;
 
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, path.join(__dirname, '../../frontend/uploads')); //frontend directory
+      cb(null, path.join(__dirname, '../../frontend/uploads/business')); //frontend directory
       // cb(null, path.join(__dirname, '../uploads')); //backend directory
     },
     filename: function (req, file, cb) {

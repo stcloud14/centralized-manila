@@ -41,7 +41,7 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
                 console.log('Checkout Session URL:', checkoutSessionUrl);
 
                 // Open a new window or tab with the checkout session URL
-                const newWindow = window.open(checkoutSessionUrl, '_blank');
+                const newWindow = window.open(checkoutSessionUrl, '_self');
                 
             }
         } else {
