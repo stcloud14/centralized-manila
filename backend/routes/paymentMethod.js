@@ -6,12 +6,9 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
         const taxPaymentTransaction = req.body.taxPaymentTransaction;
         const { transaction_id } = req.params
-        const { trans_type } = req.params
-        console.log(trans_type)
         console.log(taxPaymentTransaction);
         console.log(transaction_id);
 
-       
         if (typeof taxPaymentTransaction !== 'object' || !taxPaymentTransaction.amount) {
             console.error('Invalid taxPaymentTransaction');
             return res.status(400).json({ error: 'Invalid taxPaymentTransaction' });
@@ -23,6 +20,13 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
             console.error('Invalid amount - should be an integer');
             return res.status(400).json({ error: 'Invalid amount' });
         }
+
+        const user_id = taxPaymentTransaction.user_id; // Replace this with your actual logic
+
+        const success_url = `http://localhost:5173/transachistory/${user_id}`;
+
+
+        console.log(user_id)
 
         const options = {
             method: 'POST',
@@ -47,7 +51,9 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                                 quantity: 1
                             }
                         ],
-                        payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease']
+                        payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease'],
+                        success_url: success_url
+   
                     }
                 }
             })
@@ -68,5 +74,27 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         res.status(500).json({ error: 'Error creating checkout session' });
     }
 });
+
+// const webhookOptions = {
+//     method: 'POST',
+//     headers: {
+//         accept: 'application/json',
+//         'content-type': 'application/json',
+//         authorization: 'Basic c2tfdGVzdF91VjNVc0xXQUtTeFBDbTE4OTl0YTNtZVA6'
+//     },
+//     body: JSON.stringify({
+//         data: {
+//             attributes: {
+//                 events: ['checkout_session.payment.paid'],
+//                 url: 'http://localhost:5173/transachistory/'
+//             }
+//         }
+//     })
+// };
+
+// fetch('https://api.paymongo.com/v1/webhooks', webhookOptions)
+//     .then(response => response.json())
+//     .then(response => console.log(response))
+//     .catch(err => console.error(err));
 
 export default router;
