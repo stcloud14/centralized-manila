@@ -41,9 +41,9 @@ const AboutForm =()=>{
                     <br/>
                 </div>
                   
-                  <span className="text-md">Offering convenience during the current Covid-19 lockdown period now, and beyond. Observe proper social distancing and access essential City of Manila services online!</span>
+                  <span className="">Offering convenience during the current Covid-19 lockdown period now, and beyond. Observe proper social distancing and access essential City of Manila services online!</span>
                       <br/><br/>
-                  <span className="text-md">Provided to you by BSIT-4B</span>
+                  <span className="">Provided to you by BSIT-4B</span>
                       <br/><br/>
                   <div>
                       <h1 className="text-md lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
@@ -56,51 +56,26 @@ const AboutForm =()=>{
                         <span className='text-red-500'>a</span> Online Services:
                       </h1>
                   </div>
-                    <div className="ml-6">
-                      <span className="font-medium">1. Real Property Tax Payment</span>
-                    </div>
-                    <div className="ml-10 pb-2.5">
-                      <span>Accurately assess and appraise your real properties</span>
+
+                  <div className="ml-6">
+                      <p className="font-medium">1. Real Property Tax Payment</p>
+                        <p className="ml-3">Accurately assess and appraise your real properties</p>
+                        <p className="ml-3 pb-2.5">Easily pay your real property taxes with precision and on time</p>
+                      <p className="font-medium">2. Real Property Tax Clearance</p>
+                        <p className="ml-3 pb-2.5">Obtain a Real Property Tax Clearance for your property-related matters</p>
+                      <p className="font-medium">3. Business Permit</p>
+                        <p className="ml-3 pb-2.5">Apply and obtain all necessary permits and licenses for your business efficiently</p>
+                      <p className="font-medium">4. Community Tax Certificate (Cedula)</p>
+                        <p className="ml-3 pb-2.5">Individuals and businesses can conveniently apply and obtain valid Cedulas</p>
+                      <p className="font-medium">5. Birth Certificate</p>
+                        <p className="ml-3 pb-2.5">Obtain the LGU copy of your Birth Certificate seamlessly</p>
+                      <p className="font-medium">6. Death Certificate</p>
+                        <p className="ml-3 pb-2.5">Obtain the LGU copy of the Death Certificate for your loved ones efficiently</p>
+                      <p className="font-medium">7. Marriage Certificate</p>
+                        <p className="ml-3 pb-2.5">Obtain the LGU copy of your Marriage Certificate with ease for couples</p>
                       <br/>
-                      <span>Easily pay your real property taxes with precision and on time</span>
-                    </div>
-                    <div className="ml-6">
-                      <span className="font-medium">2. Real Property Tax Clearance</span>
-                    </div>
-                    <div className="ml-10 pb-2.5">
-                      <span>Obtain a Real Property Tax Clearance for your property-related matters</span>
-                    </div>
-                    <div className="ml-6">
-                      <span className="font-medium">3. Business Permit</span>
-                    </div>
-                    <div className="ml-10 pb-2.5">
-                      <span>Apply and obtain all necessary permits and licenses for your business efficiently</span>
-                    </div>
-                    <div className="ml-6">
-                      <span className="font-medium">4. Community Tax Certificate (Cedula)</span>
-                    </div>
-                    <div className="ml-10 pb-2.5">
-                      <span>Individuals and businesses can conveniently apply and obtain valid Cedulas</span>
-                    </div>
-                    <div className="ml-6">
-                      <span className="font-medium">5. Birth Certificate</span>
-                    </div>
-                    <div className="ml-10 pb-2.5">
-                      <span>Obtain the LGU copy of your Birth Certificate seamlessly</span>
-                    </div>
-                    <div className="ml-6">
-                      <span className="font-medium">6. Death Certificate</span>
-                    </div>
-                    <div className="ml-10 pb-2.5">
-                      <span>Obtain the LGU copy of the Death Certificate for your loved ones efficiently</span>
-                    </div>
-                    <div className="ml-6">
-                      <span className="font-medium">7. Marriage Certificate</span>
-                    </div>
-                    <div className="ml-10">
-                      <span>Obtain the LGU copy of your Marriage Certificate with ease for couples</span>
-                      <br/><br/>
-                    </div>
+                  </div>
+                  
 
                   <div>
                       <h1 className="text-md lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
@@ -114,7 +89,7 @@ const AboutForm =()=>{
                       </h1>
                   </div>
 
-                  <p>Welcome to
+                  <p className="">Welcome to
                   <span className="ml-1 text-slate-800 dark:text-slate-100 font-medium">
                         Centralized
                         <span className='text-blue-600'> M</span>
