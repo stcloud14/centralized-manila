@@ -193,7 +193,7 @@ const DropdownProfile = ({ align }) => {
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-[#3d3d3d]">
             <div className="font-medium text-slate-800 dark:text-slate-100">{userPersonal.f_name} {userPersonal.l_name}</div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 italic">Administrator</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400 italic">User</div>
           </div>
           <ul>
             <li>
