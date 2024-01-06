@@ -33,7 +33,7 @@ const AboutForm =()=>{
                     </div>
                     <div className="relative z-0 w-full mb-6 md:col-span-5 group">
                       <h1 className="text-base lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1 mt-3">
-                        Welcome to Centralized
+                        Welcome to Centralized UNDER CONSTRUCTION
                         <span className='text-blue-600'> M</span>
                         <span className='text-red-500'>a</span>
                         <span className='text-yellow-500'>n</span>
