@@ -28,6 +28,10 @@ import MarriageCertificate from './pages/MarriageCertificate';
 import DeathCertificate from './pages/DeathCertificate';
 import JobHiring from './pages/JobHiring';
 import UserSettings from './partials/profile/UserSettings';
+import FAQs from './pages/FAQs';
+import About from './pages/About';
+import Contacts from './pages/Contacts';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
 
@@ -60,6 +64,10 @@ function App() {
         <Route exact path="/deathcertificate/:user_id" element={<DeathCertificate/>} />
         <Route exact path="/jobhiring/:user_id" element={<JobHiring/>} />
         <Route exact path="/usersettings/:user_id" element={<UserSettings/>} />
+        <Route exact path="/faqs/:user_id" element={<FAQs/>} />
+        <Route exact path="/about/:user_id" element={<About/>} />
+        <Route exact path="/contacts/:user_id" element={<Contacts/>} />
+        <Route exact path="/privacypolicy/:user_id" element={<PrivacyPolicy/>} />
       </Routes>
     </>
   );
