@@ -298,7 +298,8 @@ const UserSettings =()=>{
                       </div>
                       <div className="flex flex-col items-center w-full mb-4">
 
-                      {isButtonVisible && (
+                      
+                      {isButtonVisible ? (
                       <button
                         type="button"
                         className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm py-1.5 text-center my-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
@@ -308,9 +309,10 @@ const UserSettings =()=>{
                           <path d="M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 00-1.09 0l-4.25 4.5a.75.75 0 101.09 1.03L9.25 4.636v8.614z" />
                           <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
                         </svg>
-                        Change Profile Photo
+                        { (preSelectedFile || userImage || defaultImg) === defaultImg ? 'Upload Profile Photo' : 'Change Profile Photo' }
                       </button>
-                      )}
+                      ) : null}
+
 
                       {isInputVisible ? (
                         <input
