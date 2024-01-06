@@ -86,6 +86,28 @@ const router = Router();
   
 
 
+  router.delete('/removeimage/:user_id', async (req, res) => {
+    const user_id = req.params.user_id;
+
+    try {
+      const query = "DELETE FROM user_image WHERE user_id = ?";
+      const values = [user_id];
+      
+      const result = await queryDatabase(query, values);
+      
+      res.json({
+        success: true,
+        message: "File deleted successfully",
+      });
+
+    } catch (error) {
+      console.error('Error during file deletion:', error);
+      res.status(500).json({ success: false, message: 'File deletion failed' });
+    }
+  });
+
+
+
 
 
   router.delete('/accdelete/:user_id', async (req, res) => {

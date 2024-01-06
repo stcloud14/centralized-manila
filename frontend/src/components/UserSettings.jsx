@@ -12,6 +12,7 @@ const UserSettings =()=>{
   const { user_id } = useParams();
 
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isRemove, setIsRemove] = useState(false);
 
   const contentRef = useRef(null);
 
@@ -24,9 +25,11 @@ const UserSettings =()=>{
   const [preSelectedFile, setPreSelectedFile] = useState();
 
   const [isInputVisible, setIsInputVisible] = useState(false);
+  const [isButtonVisible, setIsButtonVisible] = useState(true);
 
   const handleButtonClick = () => {
     setIsInputVisible(true);
+    setIsButtonVisible(false);
   };
 
   const handleFileChange = (e) => {
@@ -163,6 +166,8 @@ const UserSettings =()=>{
       if (response.status === 200) {
           setIsSuccess(true);
           setSelectedFile(null);
+          setIsButtonVisible(true);
+          setIsInputVisible(false);
           contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
           console.log('Upload successful');
 
@@ -179,15 +184,40 @@ const UserSettings =()=>{
   };
 
 
-  const handleRemoveImage = () => {
+  const handleRemoveImage = async (e) => {
+    e.preventDefault();
 
-    setSelectedFile(null)
-    setPreSelectedFile(null);
+    try {
 
-    const fileInput = document.getElementById('user_img');
-    if (fileInput) {
-      fileInput.value = ''; // Reset the value to an empty string
+      const response = await axios.delete(`http://localhost:8800/usersettings/removeimage/${user_id}`);
+
+      if (response.status === 200) {
+          const fileInput = document.getElementById('user_img');
+          if (fileInput) {
+            fileInput.value = '';
+          }
+          
+          setSelectedFile(null);
+          setPreSelectedFile(null);
+          setStoredImage(null);
+
+          setIsRemove(true);
+          setIsButtonVisible(true);
+          setIsInputVisible(false);
+          contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+          console.log('Remove successful');
+
+          setTimeout(() => {
+              setIsRemove(false);
+          }, 3000);
+      } else {
+          console.error('Transaction error:', response.statusText);
+      }
+        
+    } catch (error) {
+        console.error('Error Removing Image:', error.message);
     }
+
   }
 
   
@@ -236,6 +266,12 @@ const UserSettings =()=>{
                     </div>
                   )}  
 
+                  {isRemove && (
+                    <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                      Remove Successful!
+                    </div>
+                  )}  
+
                   {/* {isSuccess && (
                   <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
                     Password changed successfully!
@@ -254,6 +290,7 @@ const UserSettings =()=>{
                     <div className="flex flex-col items-center justify-center">
                       <div className="mb-6">
                         <img
+                          name='userImage' 
                           className="inline-block h-72 w-72 rounded-full border-2 border-black dark:border-white p-1"
                           src={preSelectedFile || userImage || defaultImg}
                           onError={(e) => console.error('Error loading image:', e)}
@@ -261,6 +298,7 @@ const UserSettings =()=>{
                       </div>
                       <div className="flex flex-col items-center w-full mb-4">
 
+                      {isButtonVisible && (
                       <button
                         type="button"
                         className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm py-1.5 text-center my-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
@@ -270,10 +308,11 @@ const UserSettings =()=>{
                           <path d="M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 00-1.09 0l-4.25 4.5a.75.75 0 101.09 1.03L9.25 4.636v8.614z" />
                           <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
                         </svg>
-                        Upload Photo
+                        Change Profile Photo
                       </button>
+                      )}
 
-                      {isInputVisible && (
+                      {isInputVisible ? (
                         <input
                           className="w-full border-gray-500 border rounded-full text-sm file:px-4 file:py-1.5 text-black dark:text-white file:cursor-pointer file:border-none file:text-white file:bg-[#212121] file:hover:bg-zinc-700 file:dark:bg-white file:dark:text-black file:dark:hover:bg-slate-400"
                           id="user_img"
@@ -281,7 +320,7 @@ const UserSettings =()=>{
                           accept=".jpg, .jpeg, .png"
                           onChange={handleFileChange}
                         />
-                      )}
+                      ) : null}
             
                           
                           {selectedFile ? (
@@ -297,7 +336,7 @@ const UserSettings =()=>{
                             </button>
                           ) : null}
 
-                          {selectedFile ? (
+                          { (preSelectedFile || userImage || defaultImg) !== defaultImg && isButtonVisible ? (
                             <button
                               type="button"
                               onClick={handleRemoveImage}
@@ -306,7 +345,7 @@ const UserSettings =()=>{
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 inline-block mr-0.5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                               </svg>
-                              Remove Profile Picture
+                              Remove Profile Photo
                             </button>
                           ) : null}
 
