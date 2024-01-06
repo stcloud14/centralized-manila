@@ -92,7 +92,7 @@ const UserSettings =()=>{
         }
       }
     } catch (error) {
-      console.error('Error checking and setting user image path:', error);
+      console.error('Error checking user image path:', error);
     }
   };
 
@@ -117,13 +117,19 @@ const UserSettings =()=>{
       const response = await fetch(filePath);
   
       if (!response.ok) {
-        throw new Error(`Failed to fetch file from ${filePath}`);
+        if (response.status === 404) {
+          console.log('File not found.');
+        } else {
+          throw new Error(`Failed to fetch file from ${filePath}`);
+        }
+        return null;
       }
   
       const fileData = await response.blob();
   
       if (!fileData || fileData.size === 0) {
-        throw new Error('File data is empty or undefined.');
+        console.log('File data is empty or undefined.');
+        return null;
       }
   
       const dataUrl = URL.createObjectURL(fileData);
@@ -131,9 +137,12 @@ const UserSettings =()=>{
       return dataUrl;
     } catch (error) {
       console.error('Error fetching file data:', error);
-      return null; // Return null instead of an empty string if there's an error or no data
+      return null;
     }
   };
+  
+  
+  
   
 
  
