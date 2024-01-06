@@ -10,6 +10,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         console.log(taxPaymentTransaction);
         console.log(transaction_id);
 
+
         if (typeof taxPaymentTransaction !== 'object' || !taxPaymentTransaction.amount) {
             console.error('Invalid taxPaymentTransaction');
             return res.status(400).json({ error: 'Invalid taxPaymentTransaction' });
@@ -24,9 +25,10 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         }
 
         const user_id = taxPaymentTransaction.user_id; // Replace this with your actual logic
+        const trans_type = taxPaymentTransaction.trans_type;
 
         const success_url = `http://localhost:5173/transachistory/${user_id}`;
-
+        console.log(trans_type);
         console.log(user_id);
 
         const options = {
@@ -42,13 +44,13 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         send_email_receipt: true,
                         show_description: true,
                         show_line_items: true,
-                        description: transaction_id,
+                        description: 'PAYMENT CENTRALIZATION',
                         line_items: [
                             {
                                 currency: 'PHP',
                                 amount: adjustedAmount,
                                 description: 'PAYMENT CENTRALIZATION',
-                                name: 'TEST',
+                                name: trans_type,
                                 quantity: 1
                             }
                         ],
@@ -70,9 +72,8 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                 const updateQuery = `
                     UPDATE user_transaction
                     SET status_type = 'Paid'
-                    WHERE transaction_id = ;
+                    WHERE transaction_id = ?;
                 `;
-
                 await queryDatabase(updateQuery, [transaction_id]);
                 
                 res.json({ checkoutSessionUrl });
