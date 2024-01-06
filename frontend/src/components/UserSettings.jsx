@@ -172,7 +172,6 @@ const UserSettings =()=>{
 
       if (response.status === 200) {
           setIsSuccess(true);
-          setEditTrigger(true);
           setSelectedFile(null);
           contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
           console.log('Upload successful');
