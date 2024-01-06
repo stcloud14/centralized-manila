@@ -1,6 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Footer = ({ logo }) => {
+
+  const location = useLocation();
+  const { pathname } = location;
+  const user_id = pathname.split("/")[2];
+
   return (
     <footer className="text-gray-500 text-xs mx-10">
       <div className="flex flex-col items-center sm:flex-row sm:items-center mx-10">
@@ -9,11 +16,11 @@ const Footer = ({ logo }) => {
         </div>
 
         <div className="flex flex-col items-center sm:flex-row sm:ml-auto">
-          <a href="#" className="sm:ml-0 sm:mr-8">News</a>
-          <a href="#" className="sm:ml-0 sm:mr-8">About</a>
-          <a href="#" className="sm:ml-0 sm:mr-8">Contact</a>
-          <a href="#" className="sm:ml-0 sm:mr-8">FAQs</a>
-          <a href="#" className="mb-2 sm:mb-0 sm:ml-0 sm:mr-8">Privacy Policy</a>
+          <Link to={`/home/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">News</Link>
+          <Link to={`/about/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">About</Link>
+          <Link to={`/contacts/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">Contact</Link>
+          <Link to={`/faqs/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">FAQs</Link>
+          <Link to={`/privacypolicy/${user_id}`} className="mb-2 sm:mb-0 sm:ml-0 sm:mr-8">Privacy Policy</Link>
         </div>
       </div>
 
