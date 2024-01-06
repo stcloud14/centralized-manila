@@ -295,14 +295,15 @@ router.get('/marriagecert/:transaction_id', async (req, res) => {
 router.get('/taxpayment/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT ut.user_id, tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
+    const query = "SELECT ut.user_id, tt.trans_type, tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
     y.year_period AS tp_year, tp.period_id AS tp_period, ti.amount \
     \
     FROM rptax_payment tp \
     \
     LEFT JOIN transaction_info ti ON tp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
-    LEFT JOIN year y ON tp.year_id = y.year_id \
     LEFT JOIN user_transaction ut ON tp.transaction_id = ut.transaction_id \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
+    LEFT JOIN year y ON tp.year_id = y.year_id \
     \
     WHERE tp.transaction_id = ?";
 
