@@ -69,7 +69,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                 const updateQuery = `
                     UPDATE user_transaction
                     SET status_type = 'Paid'
-                    WHERE transaction_id = ?;
+                    WHERE transaction_id = ;
                 `;
 
                 await queryDatabase(updateQuery, [transaction_id]);
