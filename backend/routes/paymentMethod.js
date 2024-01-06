@@ -16,8 +16,9 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         }
 
         const amount = parseInt(taxPaymentTransaction.amount); // Convert amount to an integer
+        const adjustedAmount = amount * 100;
 
-        if (isNaN(amount)) {
+        if (isNaN(adjustedAmount)) {
             console.error('Invalid amount - should be an integer');
             return res.status(400).json({ error: 'Invalid amount' });
         }
@@ -45,7 +46,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         line_items: [
                             {
                                 currency: 'PHP',
-                                amount: amount,
+                                amount: adjustedAmount,
                                 description: 'PAYMENT CENTRALIZATION',
                                 name: 'TEST',
                                 quantity: 1
