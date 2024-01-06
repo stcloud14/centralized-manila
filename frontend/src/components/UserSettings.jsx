@@ -11,6 +11,10 @@ const UserSettings =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user_id } = useParams();
 
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const contentRef = useRef(null);
+
   const [defaultImg, setDefaultImg] = useState(defaultImage);
 
   const [storedImage, setStoredImage] = useState('');
@@ -140,26 +144,7 @@ const UserSettings =()=>{
       return null;
     }
   };
-  
-  
-  
-  
 
- 
-  const handleDelete = async (e) => {
-    e.preventDefault();
-    try {
-        const confirmDelete = window.confirm('Are you sure you want to delete your account?');
-        if (confirmDelete) {
-            await axios.delete(`http://localhost:8800/usersettings/accdelete/${user_id}`);
-            // Set the new URL using window.location.href
-            window.location.href = '/';
-        }
-        console.log(confirmDelete);
-    } catch (error) {
-        console.error('Error deleting account:', error.message);
-    }
-  };
 
   const handleUploadImage = async (e) => {
     e.preventDefault();
@@ -189,7 +174,6 @@ const UserSettings =()=>{
   };
 
 
-
   const handleRemoveImage = () => {
 
     setSelectedFile(null)
@@ -201,9 +185,29 @@ const UserSettings =()=>{
     }
   }
 
-  const [isSuccess, setIsSuccess] = useState(false);
+  
 
-  const contentRef = useRef(null);
+
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+        const confirmDelete = window.confirm('Are you sure you want to delete your account?');
+        if (confirmDelete) {
+            await axios.delete(`http://localhost:8800/usersettings/accdelete/${user_id}`);
+            // Set the new URL using window.location.href
+            window.location.href = '/';
+        }
+        console.log(confirmDelete);
+    } catch (error) {
+        console.error('Error deleting account:', error.message);
+    }
+  };
+
+
+
+
+
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
