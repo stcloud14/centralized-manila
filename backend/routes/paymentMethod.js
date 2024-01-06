@@ -1,10 +1,19 @@
 import express from 'express';
 import conn2 from './connection.js';
-const router = express.Router();
 
+const router = express.Router();
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
-        const { transaction_id } = req.params;
+        const taxPaymentTransaction = req.body.taxPaymentTransaction;
+
+        console.log(taxPaymentTransaction);
+
+        if (typeof taxPaymentTransaction !== 'object' || !taxPaymentTransaction.amount) {
+            console.error('Invalid taxPaymentTransaction');
+            return res.status(400).json({ error: 'Invalid taxPaymentTransaction' });
+        }
+
+        const amount = Math.round(taxPaymentTransaction.amount); // Ensure amount is an integer
 
         const options = {
             method: 'POST',
@@ -23,14 +32,13 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         line_items: [
                             {
                                 currency: 'PHP',
-                                amount: 2000,
-                                description: transaction_id,
+                                amount: amount,
+                                description: 'RPTAX',
                                 name: 'RPTAX',
                                 quantity: 1
                             }
                         ],
                         payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease']
-
                     }
                 }
             })
@@ -39,8 +47,13 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         const response = await fetch('https://api.paymongo.com/v1/checkout_sessions', options);
         const responseData = await response.json();
 
-        const checkoutSessionUrl = responseData.data.attributes.checkout_url;
-        res.json({ checkoutSessionUrl });
+        if (responseData.data && responseData.data.attributes && responseData.data.attributes.checkout_url) {
+            const checkoutSessionUrl = responseData.data.attributes.checkout_url;
+            res.json({ checkoutSessionUrl });
+        } else {
+            console.error('Invalid checkout session - Response structure is unexpected:', responseData);
+            res.status(500).json({ error: 'Error creating checkout session' });
+        }
     } catch (error) {
         console.error('Error creating checkout session:', error);
         res.status(500).json({ error: 'Error creating checkout session' });

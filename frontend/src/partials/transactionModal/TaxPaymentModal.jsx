@@ -15,6 +15,7 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
   const [taxPaymentTransaction, setTaxPaymentTransaction] = useState({});
 
   console.log(taxPaymentTransaction)
+  console.log(transaction_id)
 
   const makePayment = async () => {
     try {
