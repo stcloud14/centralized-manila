@@ -41,10 +41,10 @@ const AboutForm =()=>{
                     <br/>
                 </div>
                   
-                  <span className="">Offering convenience during the current Covid-19 lockdown period now, and beyond. Observe proper social distancing and access essential City of Manila services online!</span>
+                  <p className="text-sm md:text-base">Offering convenience during the current Covid-19 lockdown period now, and beyond. Observe proper social distancing and access essential City of Manila services online!
                       <br/><br/>
-                  <span className="">Provided to you by BSIT-4B</span>
-                      <br/><br/>
+                  Provided to you by BSIT-4B</p>
+                      <br/>
                   <div>
                       <h1 className="text-md lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
                         Centralized
@@ -57,7 +57,7 @@ const AboutForm =()=>{
                       </h1>
                   </div>
 
-                  <div className="ml-6">
+                  <div className="ml-6 text-sm md:text-base">
                       <p className="font-medium">1. Real Property Tax Payment</p>
                         <p className="ml-3">Accurately assess and appraise your real properties</p>
                         <p className="ml-3 pb-2.5">Easily pay your real property taxes with precision and on time</p>
@@ -89,7 +89,7 @@ const AboutForm =()=>{
                       </h1>
                   </div>
 
-                  <p className="">Welcome to
+                  <p className="text-sm md:text-base">Welcome to
                   <span className="ml-1 text-slate-800 dark:text-slate-100 font-medium">
                         Centralized
                         <span className='text-blue-600'> M</span>
