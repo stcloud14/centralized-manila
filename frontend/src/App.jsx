@@ -27,7 +27,7 @@ import BirthCertificate from './pages/BirthCertificate';
 import MarriageCertificate from './pages/MarriageCertificate';
 import DeathCertificate from './pages/DeathCertificate';
 import JobHiring from './pages/JobHiring';
-import UserSettings from './partials/profile/UserSettings';
+import UserSettings from './components/UserSettings';
 import FAQs from './pages/FAQs';
 import About from './pages/About';
 import Contacts from './pages/Contacts';
