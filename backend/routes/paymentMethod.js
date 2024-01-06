@@ -5,8 +5,11 @@ const router = express.Router();
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
         const taxPaymentTransaction = req.body.taxPaymentTransaction;
-
+        const { transaction_id } = req.params
+        const { trans_type } = req.params
+        console.log(trans_type)
         console.log(taxPaymentTransaction);
+        console.log(transaction_id);
 
        
         if (typeof taxPaymentTransaction !== 'object' || !taxPaymentTransaction.amount) {
@@ -34,13 +37,13 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         send_email_receipt: true,
                         show_description: true,
                         show_line_items: true,
-                        description: 'RPTAX',
+                        description: transaction_id,
                         line_items: [
                             {
                                 currency: 'PHP',
                                 amount: amount,
-                                description: 'RPTAX',
-                                name: 'RPTAX',
+                                description: 'PAYMENT CENTRALIZATION',
+                                name: 'TEST',
                                 quantity: 1
                             }
                         ],
