@@ -22,6 +22,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         }
 
         const user_id = taxPaymentTransaction.user_id; // Replace this with your actual logic
+        const trans_type = taxPaymentTransaction.trans_type;
 
         const success_url = `http://localhost:5173/transachistory/${user_id}`;
 
@@ -40,13 +41,13 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         send_email_receipt: true,
                         show_description: true,
                         show_line_items: true,
-                        description: transaction_id,
+                        description: 'PAYMENT CENTRALIZATION',
                         line_items: [
                             {
                                 currency: 'PHP',
                                 amount: adjustedAmount,
                                 description: 'PAYMENT CENTRALIZATION',
-                                name: 'TEST',
+                                name: trans_type,
                                 quantity: 1
                             }
                         ],
