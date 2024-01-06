@@ -8,12 +8,18 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
 
         console.log(taxPaymentTransaction);
 
+       
         if (typeof taxPaymentTransaction !== 'object' || !taxPaymentTransaction.amount) {
             console.error('Invalid taxPaymentTransaction');
             return res.status(400).json({ error: 'Invalid taxPaymentTransaction' });
         }
 
-        const amount = Math.round(taxPaymentTransaction.amount); // Ensure amount is an integer
+        const amount = parseInt(taxPaymentTransaction.amount); // Convert amount to an integer
+
+        if (isNaN(amount)) {
+            console.error('Invalid amount - should be an integer');
+            return res.status(400).json({ error: 'Invalid amount' });
+        }
 
         const options = {
             method: 'POST',
