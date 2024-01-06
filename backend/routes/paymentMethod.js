@@ -7,8 +7,6 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
         const taxPaymentTransaction = req.body.taxPaymentTransaction;
         const { transaction_id } = req.params;
-        console.log(taxPaymentTransaction);
-        console.log(transaction_id);
 
         if (typeof taxPaymentTransaction !== 'object' || !taxPaymentTransaction.amount) {
             console.error('Invalid taxPaymentTransaction');
@@ -27,7 +25,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
 
         const success_url = `http://localhost:5173/transachistory/${user_id}`;
 
-        console.log(user_id);
+        
 
         const options = {
             method: 'POST',
@@ -53,7 +51,9 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                             }
                         ],
                         payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease'],
-                        success_url: success_url
+                        success_url: success_url,
+                        paid_signal: 'Paid',
+                        
                     }
                 }
             })
@@ -64,17 +64,20 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
 
         if (responseData.data && responseData.data.attributes && responseData.data.attributes.checkout_url) {
             const checkoutSessionUrl = responseData.data.attributes.checkout_url;
-
+        
             try {
-                // Update the status_type in the database to 'Paid'
-                const updateQuery = `
-                    UPDATE user_transaction
-                    SET status_type = 'Paid'
-                    WHERE transaction_id = ?;
-                `;
-
-                await queryDatabase(updateQuery, [transaction_id]);
-                
+        
+                if (success_url && JSON.parse(options.body).data.attributes.paid_signal === 'Paid') {
+    
+                    const updateQuery = `
+                        UPDATE user_transaction
+                        SET status_type = 'Paid'
+                        WHERE transaction_id = ?;
+                    `;
+        
+                    await queryDatabase(updateQuery, [transaction_id]);
+                }
+        
                 res.json({ checkoutSessionUrl });
             } catch (error) {
                 console.error('Error updating status_type in the database:', error);
