@@ -3,6 +3,5 @@ node_modules
 dist
 dist-ssr
 *.local
-frontend/uploads/
-frontend/node_modules/
+uploads/
 
