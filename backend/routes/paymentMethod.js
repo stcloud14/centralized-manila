@@ -5,15 +5,24 @@ const router = express.Router();
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
         const taxPaymentTransaction = req.body.taxPaymentTransaction;
-
+        const { transaction_id } = req.params
+        const { trans_type } = req.params
+        console.log(trans_type)
         console.log(taxPaymentTransaction);
+        console.log(transaction_id);
 
+       
         if (typeof taxPaymentTransaction !== 'object' || !taxPaymentTransaction.amount) {
             console.error('Invalid taxPaymentTransaction');
             return res.status(400).json({ error: 'Invalid taxPaymentTransaction' });
         }
 
-        const amount = Math.round(taxPaymentTransaction.amount); // Ensure amount is an integer
+        const amount = parseInt(taxPaymentTransaction.amount); // Convert amount to an integer
+
+        if (isNaN(amount)) {
+            console.error('Invalid amount - should be an integer');
+            return res.status(400).json({ error: 'Invalid amount' });
+        }
 
         const options = {
             method: 'POST',
@@ -28,13 +37,13 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         send_email_receipt: true,
                         show_description: true,
                         show_line_items: true,
-                        description: 'RPTAX',
+                        description: transaction_id,
                         line_items: [
                             {
                                 currency: 'PHP',
                                 amount: amount,
-                                description: 'RPTAX',
-                                name: 'RPTAX',
+                                description: 'PAYMENT CENTRALIZATION',
+                                name: 'TEST',
                                 quantity: 1
                             }
                         ],
