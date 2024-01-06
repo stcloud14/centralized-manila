@@ -28,7 +28,7 @@ const AboutForm =()=>{
                
               <div className="text-slate-700 dark:text-white text-justify">
                <div className="relative">
-                  <h1 className="text-md lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
+                  <h1 className="text-base lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
                     Welcome to Centralized
                     <span className='text-blue-600'> M</span>
                     <span className='text-red-500'>a</span>
@@ -46,7 +46,7 @@ const AboutForm =()=>{
                   Provided to you by BSIT-4B</p>
                       <br/>
                   <div>
-                      <h1 className="text-md lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
+                      <h1 className="text-base lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
                         Centralized
                         <span className='text-blue-600'> M</span>
                         <span className='text-red-500'>a</span>
@@ -78,7 +78,7 @@ const AboutForm =()=>{
                   
 
                   <div>
-                      <h1 className="text-md lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
+                      <h1 className="text-base lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
                         About Centralized
                         <span className='text-blue-600'> M</span>
                         <span className='text-red-500'>a</span>
