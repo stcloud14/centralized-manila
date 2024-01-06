@@ -132,7 +132,7 @@ const logoSrc = '../src/images/mnl_footer.svg';
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
         <main className="overflow-y-auto">
-          <div className="flex flex-col h-full justify-between mx-4 mt-4">
+          <div className="flex flex-col justify-between mx-4 mt-4">
                  
             {isMobileView ? (           
               // For Mobile View
