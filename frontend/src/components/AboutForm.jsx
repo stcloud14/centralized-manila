@@ -2,11 +2,14 @@ import React, { useState, useRef } from 'react';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
+import Footer from '../partials/Footer';
 
 const AboutForm =()=>{
 
   const contentRef = useRef(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+  const logoSrc = '../src/images/mnl_footer.svg';
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -20,10 +23,137 @@ const AboutForm =()=>{
         {/*  Content Area of 3rd Button */}
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
-            <div className="px-5 py-5">
-              <h1 className='font-medium text-center text-slate-700 dark:text-white'>About</h1>
+            <div className="px-10 py-5">
+               <h1 className='mb-7 font-medium text-center text-slate-700 dark:text-white'>About</h1>
+               
+              <div className="text-slate-700 dark:text-white text-justify">
+               <div className="relative">
+                  <h1 className="text-md lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
+                    Welcome to Centralized
+                    <span className='text-blue-600'> M</span>
+                    <span className='text-red-500'>a</span>
+                    <span className='text-yellow-500'>n</span>
+                    <span className='text-green-500'>i</span>
+                    <span className='text-blue-600'>l</span>
+                    <span className='text-red-500'>a</span>!
+                  </h1>
+                    <p className="lg:text-sm dark:text-slate-400 font-thin text-xs">Your portal to a new world of efficient digital services</p>
+                    <br/>
+                </div>
+                  
+                  <span className="text-md">Offering convenience during the current Covid-19 lockdown period now, and beyond. Observe proper social distancing and access essential City of Manila services online!</span>
+                      <br/><br/>
+                  <span className="text-md">Provided to you by BSIT-4B</span>
+                      <br/><br/>
+                  <div>
+                      <h1 className="text-md lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
+                        Centralized
+                        <span className='text-blue-600'> M</span>
+                        <span className='text-red-500'>a</span>
+                        <span className='text-yellow-500'>n</span>
+                        <span className='text-green-500'>i</span>
+                        <span className='text-blue-600'>l</span>
+                        <span className='text-red-500'>a</span> Online Services:
+                      </h1>
+                  </div>
+                    <div className="ml-6">
+                      <span className="font-medium">1. Real Property Tax Payment</span>
+                    </div>
+                    <div className="ml-10 pb-2.5">
+                      <span>Accurately assess and appraise your real properties</span>
+                      <br/>
+                      <span>Easily pay your real property taxes with precision and on time</span>
+                    </div>
+                    <div className="ml-6">
+                      <span className="font-medium">2. Real Property Tax Clearance</span>
+                    </div>
+                    <div className="ml-10 pb-2.5">
+                      <span>Obtain a Real Property Tax Clearance for your property-related matters</span>
+                    </div>
+                    <div className="ml-6">
+                      <span className="font-medium">3. Business Permit</span>
+                    </div>
+                    <div className="ml-10 pb-2.5">
+                      <span>Apply and obtain all necessary permits and licenses for your business efficiently</span>
+                    </div>
+                    <div className="ml-6">
+                      <span className="font-medium">4. Community Tax Certificate (Cedula)</span>
+                    </div>
+                    <div className="ml-10 pb-2.5">
+                      <span>Individuals and businesses can conveniently apply and obtain valid Cedulas</span>
+                    </div>
+                    <div className="ml-6">
+                      <span className="font-medium">5. Birth Certificate</span>
+                    </div>
+                    <div className="ml-10 pb-2.5">
+                      <span>Obtain the LGU copy of your Birth Certificate seamlessly</span>
+                    </div>
+                    <div className="ml-6">
+                      <span className="font-medium">6. Death Certificate</span>
+                    </div>
+                    <div className="ml-10 pb-2.5">
+                      <span>Obtain the LGU copy of the Death Certificate for your loved ones efficiently</span>
+                    </div>
+                    <div className="ml-6">
+                      <span className="font-medium">7. Marriage Certificate</span>
+                    </div>
+                    <div className="ml-10">
+                      <span>Obtain the LGU copy of your Marriage Certificate with ease for couples</span>
+                      <br/><br/>
+                    </div>
+
+                  <div>
+                      <h1 className="text-md lg:text-xl md:text-lg text-slate-800 dark:text-slate-100 font-medium mb-1">
+                        About Centralized
+                        <span className='text-blue-600'> M</span>
+                        <span className='text-red-500'>a</span>
+                        <span className='text-yellow-500'>n</span>
+                        <span className='text-green-500'>i</span>
+                        <span className='text-blue-600'>l</span>
+                        <span className='text-red-500'>a</span>
+                      </h1>
+                  </div>
+
+                  <p>Welcome to
+                  <span className="ml-1 text-slate-800 dark:text-slate-100 font-medium">
+                        Centralized
+                        <span className='text-blue-600'> M</span>
+                        <span className='text-red-500'>a</span>
+                        <span className='text-yellow-500'>n</span>
+                        <span className='text-green-500'>i</span>
+                        <span className='text-blue-600'>l</span>
+                        <span className='text-red-500'>a</span>
+                      </span>, your trusted partner in streamlining administrative processes and simplifying the way you interact with local government services. We understand the challenges of navigating bureaucratic procedures, and our mission is to make essential tasks efficient, accessible, and user-friendly.
+                        <br/><br/>
+                      At <span className="text-slate-800 dark:text-slate-100 font-medium">
+                        Centralized
+                        <span className='text-blue-600'> M</span>
+                        <span className='text-red-500'>a</span>
+                        <span className='text-yellow-500'>n</span>
+                        <span className='text-green-500'>i</span>
+                        <span className='text-blue-600'>l</span>
+                        <span className='text-red-500'>a</span>
+                      </span>, we offer a comprehensive suite of online services designed to empower individuals and businesses in managing their obligations seamlessly. From property-related transactions to business permits and vital records, our platform provides a one-stop solution for a range of municipal services.
+                        <br/><br/>
+                        We sincerely thank you for choosing <span className="text-slate-800 dark:text-slate-100 font-medium">
+                        Centralized
+                        <span className='text-blue-600'> M</span>
+                        <span className='text-red-500'>a</span>
+                        <span className='text-yellow-500'>n</span>
+                        <span className='text-green-500'>i</span>
+                        <span className='text-blue-600'>l</span>
+                        <span className='text-red-500'>a</span>
+                      </span>. Your trust and engagement with our platform are greatly appreciated, and we look forward to continually serving you with efficiency and innovation.
+                    </p>
+
+                    
+
+              </div>
+            
             </div>
+            
           </div>
+          <Footer logo={logoSrc} />
         </main>
 
 
