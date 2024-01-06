@@ -13,9 +13,12 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
   const time = moment(date_processed).format('h:mm A');
 
   const [taxPaymentTransaction, setTaxPaymentTransaction] = useState({});
+  
+  const [trans_type, setTrans_type] = useState({});
 
   console.log(taxPaymentTransaction)
   console.log(transaction_id)
+  console.log(trans_type)
 
   const makePayment = async () => {
     try {
