@@ -2,6 +2,7 @@ import express from 'express';
 import conn2 from './connection.js';
 
 const router = express.Router();
+
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
         const taxPaymentTransaction = req.body.taxPaymentTransaction;
