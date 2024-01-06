@@ -6,7 +6,7 @@ const router = express.Router();
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
         const taxPaymentTransaction = req.body.taxPaymentTransaction;
-        const { transaction_id } = req.params
+        const { transaction_id } = req.params;
         console.log(taxPaymentTransaction);
         console.log(transaction_id);
 
@@ -26,8 +26,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
 
         const success_url = `http://localhost:5173/transachistory/${user_id}`;
 
-
-        console.log(user_id)
+        console.log(user_id);
 
         const options = {
             method: 'POST',
@@ -54,7 +53,6 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         ],
                         payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease'],
                         success_url: success_url
-   
                     }
                 }
             })
@@ -65,7 +63,22 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
 
         if (responseData.data && responseData.data.attributes && responseData.data.attributes.checkout_url) {
             const checkoutSessionUrl = responseData.data.attributes.checkout_url;
-            res.json({ checkoutSessionUrl });
+
+            try {
+                // Update the status_type in the database to 'Paid'
+                const updateQuery = `
+                    UPDATE user_transaction
+                    SET status_type = 'Paid'
+                    WHERE transaction_id = ?;
+                `;
+
+                await queryDatabase(updateQuery, [transaction_id]);
+                
+                res.json({ checkoutSessionUrl });
+            } catch (error) {
+                console.error('Error updating status_type in the database:', error);
+                res.status(500).json({ error: 'Error updating status_type in the database' });
+            }
         } else {
             console.error('Invalid checkout session - Response structure is unexpected:', responseData);
             res.status(500).json({ error: 'Error creating checkout session' });
@@ -75,6 +88,19 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         res.status(500).json({ error: 'Error creating checkout session' });
     }
 });
+
+function queryDatabase(query, values) {
+    return new Promise((resolve, reject) => {
+        conn2.query(query, values, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
 
 // const webhookOptions = {
 //     method: 'POST',
