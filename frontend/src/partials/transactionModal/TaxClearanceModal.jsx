@@ -12,7 +12,41 @@ const TaxClearanceModal = ({ selectedTransaction, onClose, onSubmit }) => {
 
   const [taxClearanceTransaction, setTaxClearanceTransaction] = useState({});
 
-  console.log(taxClearanceTransaction)
+
+  const makePayment = async () => {
+    try {
+        if (!transaction_id) {
+            console.error("Transaction ID is not defined.");
+            alert("Error creating checkout session. Please try again later.");
+            return;
+        }
+
+        const body = {
+          data: taxClearanceTransaction,
+          user_id: user_id,
+      };
+
+        const response = await axios.post(`http://localhost:8800/payment/create-checkout-birthcert/${transaction_id}`, body);
+
+        if (response.data && response.data.checkoutSessionUrl) {
+            const checkoutSessionUrl = response.data.checkoutSessionUrl;
+
+            if (checkoutSessionUrl) {
+                console.log('Checkout Session URL:', checkoutSessionUrl);
+
+                // Open a new window or tab with the checkout session URL
+                const newWindow = window.open(checkoutSessionUrl, '_self');
+                
+            }
+        } else {
+            console.error("Invalid checkout session - Response structure is unexpected:", response);
+            alert("Error creating checkout session. Please try again later.");
+        }
+    } catch (error) {
+        console.error("Error creating checkout session:", error);
+        alert("Error creating checkout session. Please try again later.");
+    }
+};
 
   useEffect(() => {
     const fetchTaxClearanceTransaction = async () => {
@@ -114,6 +148,18 @@ const TaxClearanceModal = ({ selectedTransaction, onClose, onSubmit }) => {
                     </div>
                     <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
                       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
+                      
+                      {status_type !== 'Paid' && (
+                        <button
+                          onClick={makePayment}
+                          type="button"
+                          className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                        >
+                          <span className="font-semibold whitespace-nowrap ml-2"> PAY: {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00' : '-'}</span>
+                        </button>
+                      )}
+                      
+                      
                       <div className="flex items-center space-x-2 mt-auto">
                           <button
                               onClick={onClose}
