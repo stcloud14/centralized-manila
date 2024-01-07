@@ -32,6 +32,7 @@ import FAQs from './pages/FAQs';
 import About from './pages/About';
 import Contacts from './pages/Contacts';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 // Import Admin Pages
 import AdminHome from './admin_pages/AdminHome';
@@ -78,6 +79,7 @@ function App() {
         <Route exact path="/admin_home" element={<AdminHome />} />
         <Route exact path="/admin_rptax" element={<AdminRPTax />} />
 
+        <Route exact path="/paymentsuccess/:user_id" element={<PaymentSuccess/>} />
       </Routes>
     </>
   );
