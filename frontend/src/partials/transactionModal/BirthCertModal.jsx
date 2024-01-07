@@ -26,7 +26,7 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
           user_id: user_id,
       };
 
-        const response = await axios.post(`http://localhost:8800/payment/create-checkout-birthcert/${transaction_id}`, body);
+        const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
 
         if (response.data && response.data.checkoutSessionUrl) {
             const checkoutSessionUrl = response.data.checkoutSessionUrl;
