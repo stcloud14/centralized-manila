@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
-const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
+const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
@@ -22,8 +22,9 @@ const BirthModal = ({ selectedTransaction, onClose, onSubmit }) => {
         }
 
         const body = {
-          birthTransaction: birthTransaction,
-        };
+          data: birthTransaction,
+          user_id: user_id,
+      };
 
         const response = await axios.post(`http://localhost:8800/payment/create-checkout-birthcert/${transaction_id}`, body);
 

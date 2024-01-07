@@ -5,16 +5,17 @@ const router = express.Router();
 
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
-        const taxPaymentTransaction = req.body.taxPaymentTransaction;
+        const data = req.body.data;
+        const user_id = req.body.user_id;
 
-        // Validate taxPaymentTransaction
-        if (typeof taxPaymentTransaction !== 'object' || !taxPaymentTransaction.amount) {
-            console.error('Invalid taxPaymentTransaction');
-            return res.status(400).json({ error: 'Invalid taxPaymentTransaction' });
+        // Validate data
+        if (typeof data !== 'object' || !data.amount) {
+            console.error('Invalid data');
+            return res.status(400).json({ error: 'Invalid data' });
         }
 
         // Convert amount to an integer
-        const amount = parseInt(taxPaymentTransaction.amount);
+        const amount = parseInt(data.amount);
 
         // Validate amount
         if (isNaN(amount)) {
@@ -23,8 +24,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         }
 
         // Replace this with your actual logic to get user_id and trans_type
-        const user_id = taxPaymentTransaction.user_id;
-        const trans_type = taxPaymentTransaction.trans_type;
+        const trans_type = data.trans_type;
 
         
         const { transaction_id } = req.params;
