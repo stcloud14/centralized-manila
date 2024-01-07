@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from '../../images/resources/welcome_022.png';
+import Image from '../../images/resources/welcome_023.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 AOS.init();
