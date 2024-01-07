@@ -297,13 +297,14 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
 
     const query = "SELECT  r.region_name AS bus_bregion, p.prov_name AS bus_bprovince, c.city_name AS bus_bcity, \
     ba.brgy_dist AS bus_bbgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
-    bp.bus_type, bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin,\
+    bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin, bp.bus_lessor, bp.bus_rent, bp.owned, \
     bo.bus_fname, bo.bus_mname, bo.bus_lname, bo.suffix_type AS bus_suffix, bo.sex_type AS bus_sex,\
     ai.email AS bus_email, ai.tel_no AS bus_tel_no, ai.mobile_no AS bus_mobile_no, \
     bot.bus_floor, bot.bus_emp, bot.bus_male_emp, bot.bus_female_emp, bot.bus_van_no, bot.bus_truck_no, bot.bus_motor_no,\
     bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
-    bt.bus_office, bt.bus_line, bt.bus_psic, bt.bus_products, bt.bus_units_no, bt.bus_total_cap,\
+    bt.bus_office,\
     bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
+    bbt.bus_type_label AS bus_type, \
     ti.amount as bus_amount, ti.copies, ti.print_type, ti.valid_id, pt.purpose_type, \
     r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
     ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip  \
@@ -328,16 +329,24 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     LEFT JOIN bus_type bbt ON bp.bus_type = bbt.bus_type \
     \
     WHERE  bp.transaction_id = ?"
+
+    const query1 = "SELECT bus_line, bus_psic, bus_products, bus_units_no, bus_total_cap\
+    \
+    FROM bus_activity \
+    \
+    WHERE transaction_id = ?"
     
 
     try {
         const result = await queryDatabase(query, [transaction_id]);
+        const result1 = await queryDatabase(query1, [transaction_id]);
     
-        if (result.length > 0) {
+        if (result.length > 0 && result1.length > 0) {
             const formattedDate = moment(result[0].business_date).format('MMMM D, YYYY');
     
             const businessTransaction = {
                 ...result[0],
+                bus_activity: result1,
                 business_date: formattedDate,
             };
     
@@ -428,3 +437,13 @@ function queryDatabase(query, values) {
 
 
 export default router;
+
+
+const query = "SELECT bp.bus_type, bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin,\
+    bt.bus_office, bt.bus_line, bt.bus_psic, bt.bus_products, bt.bus_units_no, bt.bus_total_cap\
+    \
+    FROM bus_permit bp \
+    \
+    LEFT JOIN bus_activity bt ON bp.transaction_id = bt.transaction_id AND bt.transaction_id IS NOT NULL \
+    \
+    WHERE  bp.transaction_id = ?"
