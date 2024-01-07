@@ -219,7 +219,7 @@ router.post("/create-checkout-session1/:transaction_id", async (req, res) => {
     }
 });
 
-router.post("/create-checkout-session2/:transaction_id", async (req, res) => {
+router.post("/create-checkout-birthcert/:transaction_id", async (req, res) => {
     try {
         const birthTransaction = req.body.birthTransaction;
         const { transaction_id } = req.params;
