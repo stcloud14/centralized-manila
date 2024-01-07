@@ -9,12 +9,13 @@ const paymongo = new Paymongo(process.env.SECRET_KEY);
 
 const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
   const { transaction_id, status_type, date_processed } = selectedTransaction;
+
+  const trans_type = 'Real Property Tax Payment';
+
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
 
   const [taxPaymentTransaction, setTaxPaymentTransaction] = useState({});
-  
-  const [trans_type, setTrans_type] = useState({});
 
   console.log(taxPaymentTransaction)
   console.log(transaction_id)
@@ -30,6 +31,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) =>
 
         const body = {
             data: taxPaymentTransaction,
+            trans_type: trans_type,
             user_id: user_id,
         };
 

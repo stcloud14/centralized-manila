@@ -6,6 +6,7 @@ const router = express.Router();
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
         const data = req.body.data;
+        const trans_type = req.body.trans_type;
         const user_id = req.body.user_id;
 
         // Validate data
@@ -24,7 +25,6 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         }
 
         // Replace this with your actual logic to get user_id and trans_type
-        const trans_type = data.trans_type;
 
         
         const { transaction_id } = req.params;
@@ -50,7 +50,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                                 currency: 'PHP',
                                 amount: amount * 100, // Adjusted amount here
                                 description: 'MANILA CENTRALIZATION',
-                                name: 'TRANS_TYPE PUT HERE',
+                                name: trans_type,
                                 quantity: 1
                             }
                         ],
