@@ -99,14 +99,8 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                       }`}
                     >
                       Date of Death
-                    </label> */}</div>
-
-
-
-
-
-
-
+                    </label> */}
+                    </div>
 
                 {/* <div className="flex text-xs mb-5">
                   <button className="group flex justify-center w-full items-center text-center p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full mt-2">

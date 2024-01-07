@@ -31,20 +31,6 @@ const AuditDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                 </svg>
                 <span>&nbsp;Clear</span>
               </button>
-              
-              
-             
-                  
-
-
-
-
-
-
-
-
-
-
               {/* <button className="group border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white px-4 py-1 rounded-full inline-flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path className="stroke-emerald-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
