@@ -11,6 +11,7 @@ function randomInRange(min, max) {
   return Math.random() * (max - min) + min;
 }
 
+
 const PaymentSuccessForm = () => {
   const currentUrl = window.location.href;
   const startIndex = currentUrl.indexOf("/paymentsuccess/") + "/paymentsuccess/".length;
@@ -24,10 +25,7 @@ const PaymentSuccessForm = () => {
 
   const transactionId = getTransId();
 
-  console.log(transactionId);
 
-  const [showLoading, setShowLoading] = useState(true);
-  const [showContent, setShowContent] = useState(false);
 
   const handleReturn = async () => {
     try {
@@ -38,37 +36,49 @@ const PaymentSuccessForm = () => {
     }
   };
 
-  useEffect(() => {
-    // Show loading for 3 seconds
-    const loadingTimeout = setTimeout(() => {
-      setShowLoading(false);
 
-      // Start confetti animation
-      let interval = setInterval(function () {
-        let timeLeft = animationEnd - Date.now();
+    const [isVisible, setIsVisible] = useState(true);
+  
+    useEffect(() => {
+      // Hide the component after 3 seconds
+      const timeoutId = setTimeout(() => {
+        setIsVisible(false);
+      }, 2000);
+  
+      // Clear the timeout to avoid hiding if the component unmounts before 3 seconds
+      return () => clearTimeout(timeoutId);
+    }, []);
 
-        let particleCount = 50 * (timeLeft / duration);
-        // since particles fall down, start a bit higher than random
-        confetti(
-          Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } })
-        );
-        confetti(
-          Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } })
-        );
 
-        if (timeLeft <= 0) {
-          clearInterval(interval);
-          setShowContent(true);
-        }
-      }, 250);
+    useEffect(() => {
+      if (!isVisible) {
+        const animationEnd = Date.now() + 3000; // Replace 3000 with your desired duration
+        let interval = setInterval(function () {
+          let timeLeft = animationEnd - Date.now();
+  
+          let particleCount = 50 * (timeLeft / 3000); // Adjust particleCount and duration as needed
+          // since particles fall down, start a bit higher than random
+          confetti(
+            Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } })
+          );
+          confetti(
+            Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } })
+          );
+  
+          if (timeLeft <= 0) {
+            clearInterval(interval);
+            // Additional logic after the animation ends, e.g., showing other content
+            // You may want to handle this logic in a separate useEffect or callback function
+            // setShowContent(true);
+          }
+        }, 250);
+  
+        // Cleanup function to clear the interval if the component unmounts or isVisible changes
+        return () => clearInterval(interval);
+      }
+    }, [isVisible]);
 
-      // Clear interval and timeouts when component unmounts
-      return () => {
-        clearInterval(interval);
-        clearTimeout(loadingTimeout);
-      };
-    }, 3000); // Show loading for 3 seconds
-  }, []); // Empty dependency array ensures it runs only once after mounting
+
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -76,9 +86,9 @@ const PaymentSuccessForm = () => {
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         {/* Content Area of 3rd Button */}
         <main className="overflow-y-auto flex items-center justify-center min-h-screen bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-xl rounded-sm border border-slate-200">
-          {(showLoading || showContent) && (
             <div className={`bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] text-slate-700 dark:text-white shadow-xl rounded-lg flex flex-col items-center justify-center mx-2 px-[50px] py-[70px] sm:px-[70px] sm:py-[80px] md:px-[80px] md:py-[90px]`}>
-              {!showContent && (
+    
+              {isVisible && (
                 <>
                   <svg
                     aria-hidden="true"
@@ -98,10 +108,11 @@ const PaymentSuccessForm = () => {
                   </svg>
                   <p className="pt-5 sm:pt-10 font-bold text-lg md:text-xl">Processing Payment</p>
                   <span className="text-xs md:text-sm">Please wait for a moment.</span>
-                </>
+                </> 
               )}
 
-              {showContent && (
+
+              {isVisible ? null : (
                 <>
                   <svg viewBox="0 0 24 24" className="text-green-600 w-10 h-10 sm:w-16 sm:h-16 mb-2">
                     <path fill="currentColor" d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z"></path>
@@ -128,13 +139,14 @@ const PaymentSuccessForm = () => {
                       type="button"
                       className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-12 py-2 text-center dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
-                      Go Back
+                      Back to Centralized Manila
                     </button>
                   </div>
                 </>
               )}
+              
             </div>
-          )}
+         
         </main>
       </div>
     </div>
