@@ -7,7 +7,7 @@ import Paymongo from 'paymongo';
 console.log("API Key:", process.env.SECRET_KEY);
 const paymongo = new Paymongo(process.env.SECRET_KEY);
 
-const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
+const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
   const { transaction_id, status_type, date_processed } = selectedTransaction;
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
@@ -29,7 +29,8 @@ const TaxPaymentModal = ({ selectedTransaction, onClose, onSubmit }) => {
         }
 
         const body = {
-            taxPaymentTransaction: taxPaymentTransaction,
+            data: taxPaymentTransaction,
+            user_id: user_id,
         };
 
         const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);

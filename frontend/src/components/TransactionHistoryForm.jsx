@@ -162,7 +162,7 @@ const logoSrc = '../src/images/mnl_footer.svg';
         </main>
 
         {isModalOpen && selectedTransaction && (
-          <ModalTransaction selectedTransaction={selectedTransaction} modalType={selectedTransaction.trans_type} onClose={handleCloseModal} />
+          <ModalTransaction user_id={user_id} selectedTransaction={selectedTransaction} modalType={selectedTransaction.trans_type} onClose={handleCloseModal} />
         )}
       </div>
     </div>
