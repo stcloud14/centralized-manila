@@ -5,20 +5,14 @@ import Header from '../partials/Header';
 
 const PaymentSuccessForm =()=>{
 
-  const contentRef = useRef(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+   
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        {/*  Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
         {/*  Content Area of 3rd Button */}
-        <main ref={contentRef} className="overflow-y-auto flex items-center justify-center h-screen bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
+        <main className="overflow-y-auto flex items-center justify-center h-screen bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
           <div class="w-1/2">
             <div class="bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] text-slate-700 dark:text-white shadow-xl rounded-lg px-4 pt-5 pb-1 sm:px-6">
                   <svg viewBox="0 0 24 24" class="text-green-600 w-10 h-10 sm:w-16 sm:h-16 mx-auto mt-6 mb-2">
