@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
 const BusinessModal = ({ selectedTransaction, businessData, businessImages, onClose, onSubmit }) => {
+  
 
   const getBusinessType = () => {
     switch (selectedTransaction.bus_type) {
@@ -53,6 +56,31 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
   };
 
   const office = getOffice();
+
+  const { transaction_id, status_type, date_processed } = selectedTransaction;
+
+  const date = moment(date_processed).format('MMMM D, YYYY');
+  const time = moment(date_processed).format('h:mm A');
+
+  const [businessTransaction, setBusinessTransaction] = useState({});
+
+  useEffect(() => {
+    const fetchBusinessTransaction = async () => {
+      if (transaction_id) {
+      try {
+        const res = await axios.get(`http://localhost:8800/transachistory/buspermit/${transaction_id}`);
+        setBusinessTransaction(res.data);
+        console.log(res.data);
+      } catch (err) {
+        console.error(err);
+        console.error('Error message:', err.message);
+      }} else {
+        setBusinessTransaction(selectedTransaction);
+      }
+    };
+    fetchBusinessTransaction();
+  }, [transaction_id]);
+
  
   return (
     <div className="fixed z-50 inset-0 ">
@@ -77,10 +105,10 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
                         <div className="mb-0">
-                          {selectedTransaction.transaction_id ? (
+                          {businessTransaction.transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.transaction_id}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.transaction_id}</span>
                           </div>
                           ) : null}
                           <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
@@ -88,23 +116,23 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Type</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{busType ? busType : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_type ? businessTransaction.bus_type : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_name ? selectedTransaction.bus_name : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_name ? businessTransaction.bus_name : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Trade Name / Franchise</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_franchise ? selectedTransaction.bus_franchise : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_franchise ? businessTransaction.bus_franchise : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">DTI / SEC / CDA Registration No.</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_reg_no ? selectedTransaction.bus_reg_no : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_reg_no ? businessTransaction.bus_reg_no : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Identification Number</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_tin ? selectedTransaction.bus_tin : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_tin ? businessTransaction.bus_tin : '-'}</span>
                           </div>
 
                           <br />
@@ -114,23 +142,23 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap"> Last Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_lname ? selectedTransaction.bus_lname : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_lname ? businessTransaction.bus_lname : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">First Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_fname ? selectedTransaction.bus_fname : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_fname ? businessTransaction.bus_fname : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Middle Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_mname ? selectedTransaction.bus_mname : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_mname ? businessTransaction.bus_mname : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Suffix</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_suffix ? selectedTransaction.bus_suffix : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_suffix ? businessTransaction.bus_suffix : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Sex</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_sex ? selectedTransaction.bus_sex : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_sex ? businessTransaction.bus_sex : '-'}</span>
                           </div>
 
                           <br />
@@ -140,15 +168,15 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Email Address</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_email ? selectedTransaction.bus_email : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_email || businessTransaction.bus_email || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Telephone Number</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_tel_no ? selectedTransaction.bus_tel_no : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_tel_no || businessTransaction.bus_tel_no || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mobile Number</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_mobile_no ? selectedTransaction.bus_mobile_no : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_mobile_no || businessTransaction.bus_mobile_no || '-'}</span>
                           </div>
 
                           <br />
@@ -158,31 +186,31 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Region</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bregionLabel ? selectedTransaction.bus_bregionLabel : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_bregionLabel || businessTransaction.bus_bregion || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Province</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bprovinceLabel ? selectedTransaction.bus_bprovinceLabel : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_bprovinceLabel || businessTransaction.bus_bprovince || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business city</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bcityLabel ? selectedTransaction.bus_bcityLabel : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_bcityLabel || businessTransaction.bus_bcity || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Barangay</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bbrgy ? selectedTransaction.bus_bbrgy : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_bbrgy || businessTransaction.bus_bbrgy || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business House No. / Unit Floor</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bhnum ? selectedTransaction.bus_bhnum : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_bhnum || businessTransaction.bus_bhnum || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Street / Building Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bstreet ? selectedTransaction.bus_bstreet : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_bstreet || businessTransaction.bus_bstreet || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Zip Code</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bzip ? selectedTransaction.bus_bzip : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_bzip || businessTransaction.bus_bzip || '-'}</span>
                           </div>
 
                           <br />
@@ -192,31 +220,31 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Area / Total Floor Area (sq.m)</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_floor ? selectedTransaction.bus_floor : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_floor || businessTransaction.bus_floor || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Employees Residing Within Manila</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_emp ? selectedTransaction.bus_emp : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_emp || businessTransaction.bus_emp || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Total No. of Male Employees</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_male_emp ? selectedTransaction.bus_male_emp : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_male_emp || businessTransaction.bus_male_emp || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Total No. of Female Employees</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_female_emp ? selectedTransaction.bus_female_emp : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_female_emp || businessTransaction.bus_female_emp || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Van Delivery Vehicles</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_van_no ? selectedTransaction.bus_van_no : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_van_no || businessTransaction.bus_van_no || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Truck Delivery Vehicles</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_truck_no ? selectedTransaction.bus_truck_no : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_truck_no || businessTransaction.bus_truck_no || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Motorcycle Delivery Vehicles</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_motor_no ? selectedTransaction.bus_motor_no : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_motor_no || businessTransaction.bus_motor_no || '-'}</span>
                           </div>
 
                           <br />  
@@ -226,31 +254,31 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Payer's Region</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_regionLabel ? selectedTransaction.bus_regionLabel : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_regionLabel || businessTransaction.bus_region || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Payer's Province</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_provinceLabel ? selectedTransaction.bus_provinceLabel : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_provinceLabel || businessTransaction.bus_province || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Payer's City</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_cityLabel ? selectedTransaction.bus_cityLabel : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_cityLabel || businessTransaction.bus_city || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Payer's Barangay</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_brgy ? selectedTransaction.bus_brgy : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_brgy || businessTransaction.bus_brgy || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Payer's House No. / Unit Floor</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_hnum ? selectedTransaction.bus_hnum : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_hnum || businessTransaction.bus_hnum || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Payer's Street / Building Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_street ? selectedTransaction.bus_street : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_street || businessTransaction.bus_street || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Payer's Zip Code</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_zip ? selectedTransaction.bus_zip : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_zip_code || businessTransaction.bus_zip || '-'}</span>
                           </div>
 
                           <br />
@@ -263,14 +291,14 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           {ownership === 'Rental' ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Lessor Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_lessor ? selectedTransaction.bus_lessor : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_lessor || businessTransaction.bus_lessor || '-'}</span>
                           </div>
                           ) : null}
 
                           {ownership === 'Rental' ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Monthly Rental</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_rent ? selectedTransaction.bus_rent : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_rent || businessTransaction.bus_rent || '-'}</span>
                           </div>
                           ) : null}
 
@@ -278,7 +306,7 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Incentives from any Government Entity</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_tax_incentives || businessImages.bus_tax_incentives || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_tax_incentives ? businessImages.bus_tax_incentives : '-'}</span>
                           </div>
 
                           <br />
@@ -293,27 +321,27 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           </div>
 
                           <div className='border-t dark:border-gray-500'></div>
-                          {businessData.map((business, index) => (
+                          {businessData && businessData.map((business, index) => (
                             <div key={index}>
                               <div className="flex flex-col sm:flex-row items-start justify-between my-1">
                                 <span className="font-medium whitespace-nowrap">Line of Business</span>
-                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_line ? business.bus_line : '-'}</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_line || businessTransaction.bus_line || '-'}</span>
                               </div>
                               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">PSIC</span>
-                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_psic ? business.bus_psic : '-'}</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_psic || businessTransaction.bus_psic || '-'}</span>
                               </div>
                               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Products/Services</span>
-                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_products ? business.bus_products : '-'}</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_products || businessTransaction.bus_products || '-'}</span>
                               </div>
                               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">No. of units</span>
-                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_units_no ? business.bus_units_no : '-'}</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_units_no || businessTransaction.bus_units_no || '-'}</span>
                               </div>
                               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Total Capitalization</span>
-                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_total_cap ? business.bus_total_cap : '-'}</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_total_cap || businessTransaction.bus_total_cap || '-'}</span>
                               </div>
                               <div className='border-t dark:border-gray-500'></div>
                             </div>
@@ -326,70 +354,70 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">DTI Registration</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_dti_reg || businessImages.bus_dti_reg || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_dti_reg ? businessImages.bus_dti_reg : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Land</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_rptax_decbldg || businessImages.bus_rptax_decbldg || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_rptax_decbldg ? businessImages.bus_rptax_decbldg : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Paid-up and Subscribed Page</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_sec_paid || businessImages.bus_sec_paid || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_sec_paid ? businessImages.bus_sec_paid : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Articles of Primary and Secondary Purpose</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_sec_articles || businessImages.bus_sec_articles || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_sec_articles ? businessImages.bus_sec_articles : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">NGA-Contract of Lease</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_nga || businessImages.bus_nga || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_nga ? businessImages.bus_nga : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">SEC Registration</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_sec_front || businessImages.bus_sec_front || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_sec_front ? businessImages.bus_sec_front : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Building</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_rptax_decland || businessImages.bus_rptax_decland || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_rptax_decland ? businessImages.bus_rptax_decland : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Fire Safety Inspection Certificate</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_fire || businessImages.bus_fire || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_fire ? businessImages.bus_fire : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Page 2 Document</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_page2 || businessImages.bus_page2 || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_page2 ? businessImages.bus_page2 : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Page 3 Document</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_page3 || businessImages.bus_page3 || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_page3 ? businessImages.bus_page3 : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Page 4 Document</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_page4 || businessImages.bus_page4 || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_page4 ? businessImages.bus_page4 : '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Page 5 Document</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages.bus_page5 || businessImages.bus_page5 || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_page5 ? businessImages.bus_page5 : '-'}</span>
                           </div>
 
                           <br />
 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Copies</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_nocopies || selectedTransaction.copies || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_nocopies || businessTransaction.copies || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">What to Print</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_print || selectedTransaction.print_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_print || businessTransaction.print_type || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Purpose</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_purposeLabel || selectedTransaction.purpose_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_purposeLabel || businessTransaction.purpose_type || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_valididLabel || selectedTransaction.valid_id_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_valididLabel || businessTransaction.valid_id || '-'}</span>
                           </div>
                         </div>
                         
@@ -399,40 +427,43 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                 </div>
 
               <div className="mx-auto bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10 ">
-                          {selectedTransaction.date ? (
+                          {transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.date}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
                           </div>
                           ) : null}
 
-                          {selectedTransaction.time ? (
+                          {transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.time}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{time}</span>
                           </div>
                           ) : null}
                           {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Remarks</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">WAITING FOR PAYMENT REFERENCE NUMBER</span>
                           </div> */}
-                          {/* {selectedTransaction.time ? (
+                          {/* {businessTransaction.time ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Reference Number</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
                           </div>
                           ) : null} */}
-                          {selectedTransaction.status_type ? (
+                          {transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <StatusBadgeMobile statusType={selectedTransaction.status_type} />
+                            <StatusBadgeMobile statusType={status_type} />
                           </div>
                           ) : null}
 
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4"> P {selectedTransaction.bus_amount + '.00'}</span>
+                            <span className="font-semibold whitespace-nowrap ml-4"> {businessTransaction && (
+                              `P ${businessTransaction.bus_amount !== undefined ? businessTransaction.bus_amount + '.00' : 
+                            businessTransaction.amount !== undefined ? businessTransaction.amount + '.00' : '-'}`
+                            )}</span>
                           </div>
                         </div>
 
@@ -447,7 +478,7 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                           <p>Close</p>
                       </button>
 
-                      {selectedTransaction.transaction_id ? null : (
+                      {businessTransaction.transaction_id ? null : (
                       <button
                           onClick={onSubmit}
                           type="button"

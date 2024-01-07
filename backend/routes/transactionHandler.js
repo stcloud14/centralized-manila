@@ -292,6 +292,65 @@ router.get('/marriagecert/:transaction_id', async (req, res) => {
     }    
 });
 
+router.get('/buspermit/:transaction_id', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT  r.region_name AS bus_bregion, p.prov_name AS bus_bprovince, c.city_name AS bus_bcity, \
+    ba.brgy_dist AS bus_bbgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
+    bp.bus_type, bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin,\
+    bo.bus_fname, bo.bus_mname, bo.bus_lname, bo.suffix_type AS bus_suffix, bo.sex_type AS bus_sex,\
+    ai.email AS bus_email, ai.tel_no AS bus_tel_no, ai.mobile_no AS bus_mobile_no, \
+    bot.bus_floor, bot.bus_emp, bot.bus_male_emp, bot.bus_female_emp, bot.bus_van_no, bot.bus_truck_no, bot.bus_motor_no,\
+    bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
+    bt.bus_office, bt.bus_line, bt.bus_psic, bt.bus_products, bt.bus_units_no, bt.bus_total_cap,\
+    bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
+    ti.amount as bus_amount, ti.copies, ti.print_type, ti.valid_id, pt.purpose_type, \
+    r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
+    ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip  \
+    \
+    FROM bus_permit bp \
+    \
+    LEFT JOIN transaction_info ti ON bp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN address_info ai ON bp.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
+    LEFT JOIN bus_address ba ON bp.transaction_id = ba.transaction_id AND ba.transaction_id IS NOT NULL \
+    LEFT JOIN bus_owner bo ON bp.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \
+    LEFT JOIN bus_activity bt ON bp.transaction_id = bt.transaction_id AND bt.transaction_id IS NOT NULL \
+    LEFT JOIN bus_images bi ON bp.transaction_id = bi.transaction_id AND bi.transaction_id IS NOT NULL \
+    LEFT JOIN bus_operation bot ON bp.transaction_id = bot.transaction_id AND bot.transaction_id IS NOT NULL \
+    LEFT JOIN region r ON ba.region_id = r.region_id \
+    LEFT JOIN region r1 ON ai.region_id = r1.region_id \
+    LEFT JOIN province p ON ba.prov_id = p.prov_id \
+    LEFT JOIN province p1 ON ai.prov_id = p1.prov_id \
+    LEFT JOIN cities c ON ba.city_id = c.city_id \
+    LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
+    LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
+    LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    LEFT JOIN bus_type bbt ON bp.bus_type = bbt.bus_type \
+    \
+    WHERE  bp.transaction_id = ?"
+    
+
+    try {
+        const result = await queryDatabase(query, [transaction_id]);
+    
+        if (result.length > 0) {
+            const formattedDate = moment(result[0].business_date).format('MMMM D, YYYY');
+    
+            const businessTransaction = {
+                ...result[0],
+                business_date: formattedDate,
+            };
+    
+            res.json(businessTransaction);
+        } else {
+            res.status(404).send('No records found for the specified transaction_id');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving data');
+    }    
+});
+
 router.get('/taxpayment/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
