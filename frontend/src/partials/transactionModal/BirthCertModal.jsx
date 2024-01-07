@@ -7,6 +7,8 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
+  const trans_type = 'Birth Certificate';
+
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
   
@@ -23,10 +25,11 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
 
         const body = {
           data: birthTransaction,
+          trans_type: trans_type,
           user_id: user_id,
       };
 
-        const response = await axios.post(`http://localhost:8800/payment/create-checkout-birthcert/${transaction_id}`, body);
+        const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
 
         if (response.data && response.data.checkoutSessionUrl) {
             const checkoutSessionUrl = response.data.checkoutSessionUrl;

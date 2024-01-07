@@ -10,26 +10,42 @@ function Card01() {
         labels: ['Reasons'],
         datasets: [
           {
-            label: 'Label 1',
+            label: 'Pending',
             data: [131],
-            backgroundColor: tailwindConfig().theme.colors.indigo[500],
-            hoverBackgroundColor: tailwindConfig().theme.colors.indigo[600],
+            backgroundColor: tailwindConfig().theme.colors.yellow[400],
+            hoverBackgroundColor: tailwindConfig().theme.colors.yellow[500],
             barPercentage: 1,
             categoryPercentage: 1,
           },
           {
-            label: 'Label 2',
+            label: 'Paid',
             data: [100],
-            backgroundColor: tailwindConfig().theme.colors.indigo[800],
-            hoverBackgroundColor: tailwindConfig().theme.colors.indigo[900],
+            backgroundColor: tailwindConfig().theme.colors.emerald[400],
+            hoverBackgroundColor: tailwindConfig().theme.colors.emerald[500],
             barPercentage: 1,
             categoryPercentage: 1,
           },
           {
-            label: 'Label 3',
-            data: [81],
-            backgroundColor: tailwindConfig().theme.colors.slate[200],
+            label: 'Canceled',
+            data: [72],
+            backgroundColor: tailwindConfig().theme.colors.slate[400],
             hoverBackgroundColor: tailwindConfig().theme.colors.slate[500],
+            barPercentage: 1,
+            categoryPercentage: 1,
+          },
+          {
+            label: 'Rejected',
+            data: [81],
+            backgroundColor: tailwindConfig().theme.colors.red[500],
+            hoverBackgroundColor: tailwindConfig().theme.colors.red[600],
+            barPercentage: 1,
+            categoryPercentage: 1,
+          },
+          {
+            label: 'Expired',
+            data: [21],
+            backgroundColor: tailwindConfig().theme.colors.blue[500],
+            hoverBackgroundColor: tailwindConfig().theme.colors.blue[600],
             barPercentage: 1,
             categoryPercentage: 1,
           },
@@ -61,11 +77,11 @@ function Card01() {
                     </li>
                 </EditMenu>
                 </header> */}
-                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Text 1</h2>
-                <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">Sales</div>
+                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Real Property Tax</h2>
+                <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">Total Transactions</div>
                 <div className="flex items-start">
-                <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">$24,780</div>
-                <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full">+49%</div>
+                <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">24,780</div>
+                {/* <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full">+49%</div> */}
                 </div>
             </div>
             

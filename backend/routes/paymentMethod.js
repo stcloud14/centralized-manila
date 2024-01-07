@@ -6,6 +6,7 @@ const router = express.Router();
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
         const data = req.body.data;
+        const trans_type = req.body.trans_type;
         const user_id = req.body.user_id;
 
         // Validate data
@@ -24,11 +25,11 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         }
 
         // Replace this with your actual logic to get user_id and trans_type
-        const trans_type = data.trans_type;
 
         
         const { transaction_id } = req.params;
         const success_url = `http://localhost:5173/paymentsuccess/${user_id}?transaction_id=${transaction_id}`;
+        const cancel_url = `http://localhost:5173/transachistory/${user_id}`;
 
         const options = {
             method: 'POST',
@@ -55,8 +56,8 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         ],
                         payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease'],
                         success_url: success_url,
+                        cancel_url: cancel_url,
                         transaction_id: transaction_id,
-                        
                     }
                 }
             })
