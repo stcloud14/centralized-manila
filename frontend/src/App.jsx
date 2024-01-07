@@ -33,6 +33,10 @@ import About from './pages/About';
 import Contacts from './pages/Contacts';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 
+// Import Admin Pages
+import AdminHome from './admin_pages/AdminHome';
+import AdminRPTax from './admin_pages/AdminRPTax';
+
 function App() {
 
   const location = useLocation();
@@ -46,8 +50,8 @@ function App() {
   return (
     <>
       <Routes>
+        {/* Client Pages */}
         <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/indexadmin" element={<LoginAdmin />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/home/:user_id" element={<Home />} />
         <Route exact path="/personalinfo/:user_id" element={<PersonalInfo />} />
@@ -68,6 +72,12 @@ function App() {
         <Route exact path="/about/:user_id" element={<About/>} />
         <Route exact path="/contacts/:user_id" element={<Contacts/>} />
         <Route exact path="/privacypolicy/:user_id" element={<PrivacyPolicy/>} />
+
+        {/* Admin Pages */}
+        <Route exact path="/indexadmin" element={<LoginAdmin />} />
+        <Route exact path="/admin_home" element={<AdminHome />} />
+        <Route exact path="/admin_rptax" element={<AdminRPTax />} />
+
       </Routes>
     </>
   );

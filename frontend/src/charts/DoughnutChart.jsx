@@ -74,7 +74,7 @@ function DoughnutChart({
               li.style.margin = tailwindConfig().theme.margin[1];
               // Button element
               const button = document.createElement('button');
-              button.classList.add('btn-xs', 'bg-white', 'dark:bg-slate-800', 'text-slate-500', 'dark:text-slate-400', 'border', 'border-slate-200', 'dark:border-slate-700', 'shadow-md');
+              button.classList.add('btn-xs', 'bg-white', 'dark:bg-[#2b2b2b]', 'text-slate-500', 'dark:text-slate-400', 'border', 'border-slate-200', 'dark:border-[#3d3d3d]', 'shadow-md');
               button.style.opacity = item.hidden ? '.3' : '';
               button.onclick = () => {
                 c.toggleDataVisibility(item.index);

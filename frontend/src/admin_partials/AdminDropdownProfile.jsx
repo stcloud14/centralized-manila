@@ -5,11 +5,11 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import defaultImage from '../images/default_img.png';
 
-const DropdownProfile = ({ align }) => {
+const AdminDropdownProfile = ({align}) => {
   
-  const location = useLocation();
-  const { pathname } = location;
-  const user_id = pathname.split("/")[2];
+  // const location = useLocation();
+  // const { pathname } = location;
+  // const user_id = pathname.split("/")[2];
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef(null);
@@ -19,116 +19,116 @@ const DropdownProfile = ({ align }) => {
 
   const [defaultImg, setDefaultImg] = useState(defaultImage);
 
-  const [storedImage, setStoredImage] = useState('');
-  const [userImage, setUserImage] = useState('');
+  // const [storedImage, setStoredImage] = useState('');
+  // const [userImage, setUserImage] = useState('');
 
-    useEffect(()=>{
-        const fetchUserPersonal= async()=>{
-            try{
-                const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
-                setUserPersonal((prevData) => {
-                  if (prevData.f_name !== res.data.user_personal[0].f_name) {
-                    return res.data.user_personal[0];
-                  }
-                  return prevData;
-                });
+  //   useEffect(()=>{
+  //       const fetchUserPersonal= async()=>{
+  //           try{
+  //               const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
+  //               setUserPersonal((prevData) => {
+  //                 if (prevData.f_name !== res.data.user_personal[0].f_name) {
+  //                   return res.data.user_personal[0];
+  //                 }
+  //                 return prevData;
+  //               });
 
-            }catch(err){
-                console.log(err)
-            }
-        }
-        fetchUserPersonal()
-    },[userPersonal])
+  //           }catch(err){
+  //               console.log(err)
+  //           }
+  //       }
+  //       fetchUserPersonal()
+  //   },[userPersonal])
 
 
-    useEffect(()=>{
-      const fetchUserImage= async()=>{
-          try{
-              const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
-              setStoredImage(res.data[0])
+  //   useEffect(()=>{
+  //     const fetchUserImage= async()=>{
+  //         try{
+  //             const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
+  //             setStoredImage(res.data[0])
   
-          }catch(err){
-              console.log(err)
-          }
-      }
-      fetchUserImage()
-    },[])
+  //         }catch(err){
+  //             console.log(err)
+  //         }
+  //     }
+  //     fetchUserImage()
+  //   },[])
   
   
-    const checkUserImage = async () => {
-      try {
-        const imagePath = '../uploads/profileImage/';
-        const imageName = storedImage.user_image;
+  //   const checkUserImage = async () => {
+  //     try {
+  //       const imagePath = '../uploads/profileImage/';
+  //       const imageName = storedImage.user_image;
     
-        if (imageName === undefined || imageName === null) {
-          console.log('User image name is undefined or null.');
-          return;
-        }
+  //       if (imageName === undefined || imageName === null) {
+  //         console.log('User image name is undefined or null.');
+  //         return;
+  //       }
     
-        const isFileExists = await checkFileExists(imagePath, imageName);
+  //       const isFileExists = await checkFileExists(imagePath, imageName);
     
-        if (isFileExists !== null && isFileExists !== undefined) {
-          if (isFileExists) {
-            const fileData = await fetchFileData(`${imagePath}${imageName}`);
-            if (fileData) {
-              setUserImage(fileData);
-              console.log(`File ${imageName} exists.`);
-            } else {
-              console.log(`File data for ${imageName} is empty or undefined.`);
-            }
-          } else {
-            console.log(`File: ${imageName} does not exist.`);
-          }
-        }
-      } catch (error) {
-        console.error('Error checking user image path:', error);
-      }
-    };
+  //       if (isFileExists !== null && isFileExists !== undefined) {
+  //         if (isFileExists) {
+  //           const fileData = await fetchFileData(`${imagePath}${imageName}`);
+  //           if (fileData) {
+  //             setUserImage(fileData);
+  //             console.log(`File ${imageName} exists.`);
+  //           } else {
+  //             console.log(`File data for ${imageName} is empty or undefined.`);
+  //           }
+  //         } else {
+  //           console.log(`File: ${imageName} does not exist.`);
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error('Error checking user image path:', error);
+  //     }
+  //   };
   
-    useEffect(() => {
-      checkUserImage();
-    }, [storedImage]);
+  //   useEffect(() => {
+  //     checkUserImage();
+  //   }, [storedImage]);
   
-    const checkFileExists = async (folderPath, fileName) => {
-      try {
-        const filePath = `${folderPath}/${fileName}`;
-        const response = await fetch(filePath);
+  //   const checkFileExists = async (folderPath, fileName) => {
+  //     try {
+  //       const filePath = `${folderPath}/${fileName}`;
+  //       const response = await fetch(filePath);
   
-        return response.ok;
-      } catch (error) {
-        console.error('Error checking file existence:', error);
-        return false;
-      }
-    };
+  //       return response.ok;
+  //     } catch (error) {
+  //       console.error('Error checking file existence:', error);
+  //       return false;
+  //     }
+  //   };
   
-    const fetchFileData = async (filePath) => {
-      try {
-        const response = await fetch(filePath);
+  //   const fetchFileData = async (filePath) => {
+  //     try {
+  //       const response = await fetch(filePath);
     
-        if (!response.ok) {
-          if (response.status === 404) {
-            console.log('File not found.');
-          } else {
-            throw new Error(`Failed to fetch file from ${filePath}`);
-          }
-          return null;
-        }
+  //       if (!response.ok) {
+  //         if (response.status === 404) {
+  //           console.log('File not found.');
+  //         } else {
+  //           throw new Error(`Failed to fetch file from ${filePath}`);
+  //         }
+  //         return null;
+  //       }
     
-        const fileData = await response.blob();
+  //       const fileData = await response.blob();
     
-        if (!fileData || fileData.size === 0) {
-          console.log('File data is empty or undefined.');
-          return null;
-        }
+  //       if (!fileData || fileData.size === 0) {
+  //         console.log('File data is empty or undefined.');
+  //         return null;
+  //       }
     
-        const dataUrl = URL.createObjectURL(fileData);
+  //       const dataUrl = URL.createObjectURL(fileData);
     
-        return dataUrl;
-      } catch (error) {
-        console.error('Error fetching file data:', error);
-        return null;
-      }
-    };
+  //       return dataUrl;
+  //     } catch (error) {
+  //       console.error('Error fetching file data:', error);
+  //       return null;
+  //     }
+  //   };
 
 
   // close on click outside
@@ -165,8 +165,8 @@ const DropdownProfile = ({ align }) => {
         <img
           name='userImage' 
           className="inline-block h-10 w-10 rounded-full object-cover object-center"
-          src={userImage ? userImage : defaultImg}
-          onError={(e) => console.error('Error loading image:', e)}
+          // src={userImage ? userImage : defaultImg}
+          // onError={(e) => console.error('Error loading image:', e)}
         />
         <div className="flex items-center truncate">
           <span className="truncate ml-2 mr-1 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{userPersonal.f_name}</span>
@@ -193,13 +193,13 @@ const DropdownProfile = ({ align }) => {
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-[#3d3d3d]">
             <div className="font-medium text-slate-800 dark:text-slate-100">{userPersonal.f_name} {userPersonal.l_name}</div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 italic">User</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400 italic">Administrator</div>
           </div>
           <ul>
             <li>
               <Link
                 className="font-medium text-sm text-slate-400 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
-                to={`/usersettings/${user_id}`}
+                to="/"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 Settings
@@ -221,4 +221,4 @@ const DropdownProfile = ({ align }) => {
   )
 }
 
-export default DropdownProfile;
+export default AdminDropdownProfile;

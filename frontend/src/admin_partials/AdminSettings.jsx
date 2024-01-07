@@ -1,13 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Sidebar from '../partials/Sidebar';
-import Header from '../partials/Header';
+import Sidebar from '../admin_partials/AdminSidebar';
+import Header from '../admin_partials/AdminHeader';
 import defaultImage from '../images/default_img.png';
 
-
-
-const UserSettings =()=>{
+const AdminSettings =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user_id } = useParams();
 
@@ -408,4 +406,4 @@ const UserSettings =()=>{
   );
 }
 
-export default UserSettings;
+export default AdminSettings;
