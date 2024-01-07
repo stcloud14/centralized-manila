@@ -1,35 +1,39 @@
-import React, { useState, useRef } from 'react';
-
+import React, { useState } from 'react';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
+import Footer from '../partials/Footer';
+import EmbeddedPage from '../partials/news/EmbeddedPage'
 
-const JobHiringForm =()=>{
+const NewsForm =()=>{
 
-  const contentRef = useRef(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const logoSrc = '../src/images/mnl_footer.svg';
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
+
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        {/*  Content Area of 3rd Button */}
-        <main ref={contentRef} className="overflow-y-auto">
-          <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
-            <div className="px-5 py-5">
-              <h1 className='font-medium text-center text-slate-700 dark:text-white'>Job Hiring</h1>
-            </div>
+        <main className="overflow-y-auto">
+          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+            <EmbeddedPage />
           </div>
+          <Footer logo={logoSrc} />
         </main>
 
+      
 
       </div>
     </div>
   );
 }
 
-export default JobHiringForm;
+export default NewsForm;

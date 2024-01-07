@@ -263,35 +263,31 @@ router.get('/payment/', async (req, res) => {
     const statusType = 'Pending';
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-
-    const query4 = "INSERT INTO rptax_clearance (`rp_tdn`, `rp_pin`, `transaction_id`) VALUES (?, ?, ?)";
-    const values4 = [req.body.rp_tdn, req.body.rp_pin, transID];
-
+  
     const query5 = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
     const values5 = [transID, user_id, transType, statusType, formattedDate];
-
+  
     const query6 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";
     const values6 = [transID, req.body.amount];
-
-
-    try{
-      const result4 = await queryDatabase(query4, values4);
+  
+    const query4 = "INSERT INTO rptax_clearance (`rp_tdn`, `rp_pin`, `transaction_id`) VALUES (?, ?, ?)";
+    const values4 = [req.body.rp_tdn, req.body.rp_pin, transID];
+  
+    try {
       const result5 = await queryDatabase(query5, values5);
       const result6 = await queryDatabase(query6, values6);
-
+      const result4 = await queryDatabase(query4, values4);
+  
       res.json({
         message: "Successfully executed",
-        rptax_clearance_result: result4,
         user_transaction_result: result5,
         transaction_info_result: result6,
-
+        rptax_clearance_result: result4,
       });
-    }catch (err){
+    } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Error executing queries" });
     }
-
-
   });
 
   

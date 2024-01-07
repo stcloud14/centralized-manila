@@ -26,12 +26,17 @@ import Cedula from './pages/Cedula';
 import BirthCertificate from './pages/BirthCertificate';
 import MarriageCertificate from './pages/MarriageCertificate';
 import DeathCertificate from './pages/DeathCertificate';
-import JobHiring from './pages/JobHiring';
+import News from './pages/News';
 import UserSettings from './components/UserSettings';
 import FAQs from './pages/FAQs';
 import About from './pages/About';
 import Contacts from './pages/Contacts';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import PaymentSuccess from './pages/PaymentSuccess';
+
+// Import Admin Pages
+import AdminHome from './admin_pages/AdminHome';
+import AdminRPTax from './admin_pages/AdminRPTax';
 
 function App() {
 
@@ -46,8 +51,8 @@ function App() {
   return (
     <>
       <Routes>
+        {/* Client Pages */}
         <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/indexadmin" element={<LoginAdmin />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/home/:user_id" element={<Home />} />
         <Route exact path="/personalinfo/:user_id" element={<PersonalInfo />} />
@@ -62,12 +67,20 @@ function App() {
         <Route exact path="/birthcertificate/:user_id" element={<BirthCertificate/>} />
         <Route exact path="/marriagecertificate/:user_id" element={<MarriageCertificate/>} />
         <Route exact path="/deathcertificate/:user_id" element={<DeathCertificate/>} />
-        <Route exact path="/jobhiring/:user_id" element={<JobHiring/>} />
+        <Route exact path="/news/:user_id" element={<News/>} />
         <Route exact path="/usersettings/:user_id" element={<UserSettings/>} />
         <Route exact path="/faqs/:user_id" element={<FAQs/>} />
         <Route exact path="/about/:user_id" element={<About/>} />
         <Route exact path="/contacts/:user_id" element={<Contacts/>} />
         <Route exact path="/privacypolicy/:user_id" element={<PrivacyPolicy/>} />
+        <Route exact path="/paymentsuccess/:user_id" element={<PaymentSuccess/>} />
+
+        {/* Admin Pages */}
+        <Route exact path="/indexadmin" element={<LoginAdmin />} />
+        <Route exact path="/admin_home" element={<AdminHome />} />
+        <Route exact path="/admin_rptax" element={<AdminRPTax />} />
+
+        
       </Routes>
     </>
   );

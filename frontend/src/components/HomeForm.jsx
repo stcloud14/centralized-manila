@@ -3,7 +3,6 @@ import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
 import WelcomeBanner from '../partials/home/WelcomeBanner'
-import EmbeddedPage from '../partials/home/EmbeddedPage'
 
 const HomeForm =()=>{
 
@@ -27,8 +26,6 @@ const HomeForm =()=>{
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {/* Welcome banner */}
             <WelcomeBanner />
-
-            <EmbeddedPage />
           
 
           </div>

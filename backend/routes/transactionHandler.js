@@ -142,7 +142,7 @@ router.get('/cedula/:transaction_id', async (req, res) => {
 router.get('/birthcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS municipal, bc.transaction_id, bi.birth_date, \
+    const query = "SELECT bi.user_id, r.region_name AS region, p.prov_name AS province, c.city_name AS municipal, bc.transaction_id, bi.birth_date, \
     bo.l_name, bo.f_name, bo.m_name, bo.suffix_type, bo.sex_type, bo.hospital_name, bo.country, bo.birth_reg_no, \
     br.l_name AS reql_name,br.f_name AS reqf_name, br.m_name AS reqm_name, br.suffix_type AS reqsuffix, br.owner_relation, br.requestor_tin, br.tel_no, br.mobile_no, \
     fi.father_fname, fi.father_mname, fi.father_lname, fi.suffix_type AS fathersuffix, \
@@ -381,14 +381,18 @@ router.get('/taxpayment/:transaction_id', async (req, res) => {
     }    
 });
 
+
+////done to paymongo issue new db
 router.get('/taxclearance/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
  
-    const query = "SELECT tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount \
+    const query = "SELECT ut.user_id, tt.trans_type, tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount \
     \
     FROM rptax_clearance tc \
     \
     LEFT JOIN transaction_info ti ON tc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN user_transaction ut ON tc.transaction_id = ut.transaction_id \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     \
     WHERE tc.transaction_id = ?";
 
