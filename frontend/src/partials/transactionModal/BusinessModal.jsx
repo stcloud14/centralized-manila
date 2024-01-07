@@ -3,14 +3,54 @@ import axios from 'axios';
 import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
-const BusinessModal = ({ selectedTransaction, businessData, businessImages, onClose, onSubmit }) => {
+const BusinessModal = ({ user_id, selectedTransaction, businessData, businessImages, onClose, onSubmit }) => {
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
+
+  const trans_type = 'Business Permit';
 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
 
   const [businessTransaction, setBusinessTransaction] = useState({});
+
+  console.log(businessTransaction)
+  
+  const makePayment = async () => {
+    try {
+        if (!transaction_id) {
+            console.error("Transaction ID is not defined.");
+            alert("Error creating checkout session. Please try again later.");
+            return;
+        }
+
+        const body = {
+          data: selectedTransaction,
+          trans_type: trans_type,
+          user_id: user_id,
+      };
+
+        const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
+
+        if (response.data && response.data.checkoutSessionUrl) {
+            const checkoutSessionUrl = response.data.checkoutSessionUrl;
+
+            if (checkoutSessionUrl) {
+                console.log('Checkout Session URL:', checkoutSessionUrl);
+
+                // Open a new window or tab with the checkout session URL
+                const newWindow = window.open(checkoutSessionUrl, '_self');
+                
+            }
+        } else {
+            console.error("Invalid checkout session - Response structure is unexpected:", response);
+            alert("Error creating checkout session. Please try again later.");
+        }
+    } catch (error) {
+        console.error("Error creating checkout session:", error);
+        alert("Error creating checkout session. Please try again later.");
+    }
+};
 
   useEffect(() => {
     const fetchBusinessTransaction = async () => {
@@ -532,7 +572,7 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                 <div className="bg-white dark:bg-[#212121] mr-0 md:mr-2 px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
                   {/* <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/> */}
 
-                  {/* {status_type !== 'Paid' && (
+                  {status_type !== 'Paid' && (
                     <button
                       onClick={makePayment}
                       type="button"
@@ -540,7 +580,7 @@ const BusinessModal = ({ selectedTransaction, businessData, businessImages, onCl
                     >
                       <span className="font-semibold whitespace-nowrap ml-2"> PAY: {selectedTransaction.amount ? selectedTransaction.amount + '.00' : '-'}</span>
                     </button>
-                  )} */}
+                  )}
                   <div className="flex items-center space-x-2 mt-auto">
                       <button
                           onClick={onClose}
