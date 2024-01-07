@@ -112,28 +112,4 @@ function queryDatabase(query, values) {
 
 
 
-
-
-// const webhookOptions = {
-//     method: 'POST',
-//     headers: {
-//         accept: 'application/json',
-//         'content-type': 'application/json',
-//         authorization: 'Basic c2tfdGVzdF91VjNVc0xXQUtTeFBDbTE4OTl0YTNtZVA6'
-//     },
-//     body: JSON.stringify({
-//         data: {
-//             attributes: {
-//                 events: ['checkout_session.payment.paid'],
-//                 url: 'http://localhost:5173/transachistory/'
-//             }
-//         }
-//     })
-// };
-
-// fetch('https://api.paymongo.com/v1/webhooks', webhookOptions)
-//     .then(response => response.json())
-//     .then(response => console.log(response))
-//     .catch(err => console.error(err));
-
 export default router;
