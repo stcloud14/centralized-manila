@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
-const DeathModal = ({ selectedTransaction, onClose, onSubmit }) => {
+const DeathModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
