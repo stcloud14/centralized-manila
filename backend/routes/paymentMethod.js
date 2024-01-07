@@ -50,7 +50,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                                 currency: 'PHP',
                                 amount: amount * 100, // Adjusted amount here
                                 description: 'MANILA CENTRALIZATION',
-                                name: trans_type,
+                                name: 'TRANS_TYPE PUT HERE',
                                 quantity: 1
                             }
                         ],
