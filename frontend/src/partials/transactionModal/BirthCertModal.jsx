@@ -7,6 +7,8 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
+  const trans_type = 'Birth Certificate';
+
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
   
@@ -23,6 +25,7 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
 
         const body = {
           data: birthTransaction,
+          trans_type: trans_type,
           user_id: user_id,
       };
 
