@@ -29,6 +29,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         
         const { transaction_id } = req.params;
         const success_url = `http://localhost:5173/paymentsuccess/${user_id}?transaction_id=${transaction_id}`;
+        const cancel_url = `http://localhost:5173/transachistory/${user_id}`;
 
         const options = {
             method: 'POST',
@@ -55,8 +56,8 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         ],
                         payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease'],
                         success_url: success_url,
+                        cancel_url: cancel_url,
                         transaction_id: transaction_id,
-                        
                     }
                 }
             })
