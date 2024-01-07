@@ -5,17 +5,17 @@ const router = express.Router();
 
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
-        const taxPaymentTransaction = req.body.taxPaymentTransaction;
-        const { transaction_id } = req.params;
+        const data = req.body.data;
+        const user_id = req.body.user_id;
 
-        // Validate taxPaymentTransaction
-        if (typeof taxPaymentTransaction !== 'object' || !taxPaymentTransaction.amount) {
-            console.error('Invalid taxPaymentTransaction');
-            return res.status(400).json({ error: 'Invalid taxPaymentTransaction' });
+        // Validate data
+        if (typeof data !== 'object' || !data.amount) {
+            console.error('Invalid data');
+            return res.status(400).json({ error: 'Invalid data' });
         }
 
         // Convert amount to an integer
-        const amount = parseInt(taxPaymentTransaction.amount);
+        const amount = parseInt(data.amount);
 
         // Validate amount
         if (isNaN(amount)) {
@@ -24,10 +24,11 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         }
 
         // Replace this with your actual logic to get user_id and trans_type
-        const user_id = taxPaymentTransaction.user_id;
-        const trans_type = taxPaymentTransaction.trans_type;
+        const trans_type = data.trans_type;
 
-        const success_url = `http://localhost:5173/transachistory/${user_id}`;
+        
+        const { transaction_id } = req.params;
+        const success_url = `http://localhost:5173/paymentsuccess/${user_id}?transaction_id=${transaction_id}`;
         const cancel_url = `http://localhost:5173/transachistory/${user_id}`;
 
         const options = {
@@ -43,13 +44,12 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         send_email_receipt: true,
                         show_description: true,
                         show_line_items: true,
-                        paid_signal: 'Pending',
                         description: 'PAYMENT CENTRALIZATION',
                         line_items: [
                             {
                                 currency: 'PHP',
                                 amount: amount * 100, // Adjusted amount here
-                                description: 'PAYMENT CENTRALIZATION',
+                                description: 'MANILA CENTRALIZATION',
                                 name: trans_type,
                                 quantity: 1
                             }
@@ -57,7 +57,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         payment_method_types: ['gcash', 'grab_pay', 'paymaya', 'dob_ubp', 'dob', 'card', 'billease'],
                         success_url: success_url,
                         cancel_url: cancel_url,
-                        
+                        transaction_id: transaction_id,
                     }
                 }
             })
@@ -67,29 +67,6 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         const responseData = await response.json();
         if (responseData.data && responseData.data.attributes && responseData.data.attributes.checkout_url) {
             const checkoutSessionUrl = responseData.data.attributes.checkout_url;
-        
-            // Assuming checkout_session.payment.paid is an event from Paymongo
-            if (success_url && JSON.parse(options.body).data.attributes.paid_signal === 'Paid') {
-                // Update the status in the database to 'Paid'
-                const updateQuery = `
-                    UPDATE user_transaction
-                    SET status_type = 'Paid'
-                    WHERE transaction_id = ?;
-                `;
-                
-                console.log(`Transaction ${transaction_id} marked as Paid.`);
-                await queryDatabase(updateQuery, [transaction_id]);
-            } else {
-                // Update the status in the database to 'Pending' or any other status as needed
-                const updateQuery = `
-                    UPDATE user_transaction
-                    SET status_type = 'Pending'
-                    WHERE transaction_id = ?;
-                `;
-                
-                console.log(`Transaction ${transaction_id} marked as Pending.`);
-                await queryDatabase(updateQuery, [transaction_id]);
-            }
         
             res.json({ checkoutSessionUrl });
         } else {
@@ -102,54 +79,24 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     }
 });
 
-// router.post("/paymongo-webhook", async (req, res) => {
-//     try {
-//         const payload = req.body;
-//         console.log(payload);
+router.post('/success/:transactionId', async (req, res) => {
+    const transID = req.params.transactionId;
+   
+    const updateQuery = `UPDATE user_transaction SET status_type = 'Paid' WHERE transaction_id = ?;`;
 
-//         const options = {
-//             method: 'POST',
-//             headers: {
-//                 accept: 'application/json',
-//                 'content-type': 'application/json',
-//                 authorization: 'Basic c2tfdGVzdF91VjNVc0xXQUtTeFBDbTE4OTl0YTNtZVA6'
-//             },
-//             body: JSON.stringify({
-//                 data: {
-//                     attributes: {
-//                         url: 'http://localhost:5173/transachistory/',
-//                         events: ['checkout_session.payment.paid']
-//                     }
-//                 }
-//             })
-//         };
+    try{
+      const result = await queryDatabase(updateQuery, [transID]);
 
-//         const webhookResponse = await fetch('https://api.paymongo.com/v1/webhooks', options);
-//         const responseJson = await webhookResponse.json();
-//         console.log(responseJson);
+      res.json({
+        message: "Successful transaction!",
+        success: result,
+      });
+    }catch (err){
+      console.error(err);
+      res.status(500).json({ error: "Error executing queries" });
+    }
+  });
 
-//         // Validate the payload, verify it's from Paymongo if necessary
-//         if (payload && payload.data && payload.data.attributes && payload.data.attributes.event == 'checkout_session.payment.paid') {
-//             const transactionId = payload.data.attributes.reference;
-
-//             // Update the status in the database to 'Paid'
-//             const updateQuery = `
-//                 UPDATE user_transaction
-//                 SET status_type = 'Paid'
-//                 WHERE transaction_id = ?;
-//             `;
-
-//             await queryDatabase(updateQuery, [transactionId]);
-
-//             console.log(`Transaction ${transactionId} marked as Paid.`);
-//         }
-
-//         res.status(200).send("Webhook received successfully.");
-//     } catch (error) {
-//         console.error('Error processing webhook:', error);
-//         res.status(500).json({ error: 'Error processing webhook' });
-//     }
-// });
 
 function queryDatabase(query, values) {
     return new Promise((resolve, reject) => {
