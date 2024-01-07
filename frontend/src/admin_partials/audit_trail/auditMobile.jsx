@@ -5,6 +5,7 @@ import Flatpickr from 'react-flatpickr';
 
 const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortedTransactions }) => {
   const [selectedDate, setSelectedDate] = React.useState('');
+  const [selectedDatee, setSelectedDatee] = React.useState('');
 
     return (
         <>
@@ -74,14 +75,14 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                     <Flatpickr
                               id=""
                               name=""
-                              value={selectedDate}
+                              value={selectedDatee}
                               onChange={(date) => {
                                 const formattedDate = date.length > 0 ? (() => {
                                   const originalDate = new Date(date[0]);
                                   originalDate.setDate(originalDate.getDate() + 1);
                                   return originalDate.toISOString().split('T')[0];
                                 })() : '';
-                                setSelectedDate(formattedDate);
+                                setSelectedDatee(formattedDate);
                               }}
                               options={{
                                 dateFormat: 'Y-m-d',
