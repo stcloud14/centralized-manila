@@ -48,7 +48,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                             {
                                 currency: 'PHP',
                                 amount: amount * 100, // Adjusted amount here
-                                description: 'PAYMENT CENTRALIZATION',
+                                description: 'MANILA CENTRALIZATION',
                                 name: trans_type,
                                 quantity: 1
                             }
@@ -98,54 +98,6 @@ router.post('/success/:transactionId', async (req, res) => {
     }
   });
 
-// router.post("/paymongo-webhook", async (req, res) => {
-//     try {
-//         const payload = req.body;
-//         console.log(payload);
-
-//         const options = {
-//             method: 'POST',
-//             headers: {
-//                 accept: 'application/json',
-//                 'content-type': 'application/json',
-//                 authorization: 'Basic c2tfdGVzdF91VjNVc0xXQUtTeFBDbTE4OTl0YTNtZVA6'
-//             },
-//             body: JSON.stringify({
-//                 data: {
-//                     attributes: {
-//                         url: 'http://localhost:5173/transachistory/',
-//                         events: ['checkout_session.payment.paid']
-//                     }
-//                 }
-//             })
-//         };
-
-//         const webhookResponse = await fetch('https://api.paymongo.com/v1/webhooks', options);
-//         const responseJson = await webhookResponse.json();
-//         console.log(responseJson);
-
-//         // Validate the payload, verify it's from Paymongo if necessary
-//         if (payload && payload.data && payload.data.attributes && payload.data.attributes.event == 'checkout_session.payment.paid') {
-//             const transactionId = payload.data.attributes.reference;
-
-//             // Update the status in the database to 'Paid'
-//             const updateQuery = `
-//                 UPDATE user_transaction
-//                 SET status_type = 'Paid'
-//                 WHERE transaction_id = ?;
-//             `;
-
-//             await queryDatabase(updateQuery, [transactionId]);
-
-//             console.log(`Transaction ${transactionId} marked as Paid.`);
-//         }
-
-//         res.status(200).send("Webhook received successfully.");
-//     } catch (error) {
-//         console.error('Error processing webhook:', error);
-//         res.status(500).json({ error: 'Error processing webhook' });
-//     }
-// });
 
 function queryDatabase(query, values) {
     return new Promise((resolve, reject) => {
