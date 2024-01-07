@@ -73,13 +73,14 @@ function App() {
         <Route exact path="/about/:user_id" element={<About/>} />
         <Route exact path="/contacts/:user_id" element={<Contacts/>} />
         <Route exact path="/privacypolicy/:user_id" element={<PrivacyPolicy/>} />
+        <Route exact path="/paymentsuccess/:user_id" element={<PaymentSuccess/>} />
 
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
         <Route exact path="/admin_home" element={<AdminHome />} />
         <Route exact path="/admin_rptax" element={<AdminRPTax />} />
 
-        <Route exact path="/paymentsuccess/:user_id" element={<PaymentSuccess/>} />
+        
       </Routes>
     </>
   );
