@@ -32,6 +32,7 @@ import FAQs from './pages/FAQs';
 import About from './pages/About';
 import Contacts from './pages/Contacts';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
         <Route exact path="/about/:user_id" element={<About/>} />
         <Route exact path="/contacts/:user_id" element={<Contacts/>} />
         <Route exact path="/privacypolicy/:user_id" element={<PrivacyPolicy/>} />
+        <Route exact path="/paymentsuccess/:user_id" element={<PaymentSuccess/>} />
       </Routes>
     </>
   );
