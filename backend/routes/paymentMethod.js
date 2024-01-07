@@ -80,8 +80,6 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
 
 router.post('/success/:transactionId', async (req, res) => {
     const transID = req.params.transactionId;
-
-    console.log(transID)
    
     const updateQuery = `UPDATE user_transaction SET status_type = 'Paid' WHERE transaction_id = ?;`;
 
