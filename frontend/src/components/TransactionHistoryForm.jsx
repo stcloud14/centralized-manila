@@ -23,7 +23,19 @@ const TransactionHistoryForm = () => {
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [sortOrder, setSortOrder] = useState('desc');
   const [sortOption, setSortOption] = useState('date_processed');
+  const [userPersonal, setUserPersonal]=useState({})
 
+  useEffect(() => {
+    const fetchUserPersonal = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/profile/${user_id}`);
+        setUserPersonal(res.data.user_personal[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserPersonal();
+  }, [user_id]);
 
   useEffect(() => {
     const fetchUserTransaction = async () => {
@@ -133,7 +145,7 @@ const logoSrc = '../src/images/mnl_footer.svg';
 
         <main className="overflow-y-auto">
           <div className="flex flex-col justify-between mx-4 mt-4">
-                 
+            
             {isMobileView ? (           
               // For Mobile View
               <TransMobile searchInput={searchInput} 
@@ -143,7 +155,8 @@ const logoSrc = '../src/images/mnl_footer.svg';
               handleClearFilter={handleClearFilter} 
               handleSortChange={handleSortChange}
               sortOption={sortOption}
-              sortedTransactions={sortedTransactions} />
+              sortedTransactions={sortedTransactions} 
+              userPersonal={userPersonal} />
             ) : (
               // For Desktop View
               <TransDesktop searchInput={searchInput} 
@@ -155,7 +168,8 @@ const logoSrc = '../src/images/mnl_footer.svg';
               sortOption={sortOption}
               sortOrder={sortOrder}
               SortIcon={SortIcon}
-              sortedTransactions={sortedTransactions} />
+              sortedTransactions={sortedTransactions} 
+              userPersonal={userPersonal} />
             )}
           </div>
           <Footer logo={logoSrc} />
