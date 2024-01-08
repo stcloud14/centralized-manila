@@ -43,16 +43,16 @@ const AdminHomeForm =()=>{
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
               
-              {/* <ServicePerf />
+              {/* <ServicePerf /> */}
+              <Card07 />
               <RPstats/>
               <RCstats />
               <BPstats />
               <CTCstats />
               <BCstats />
               <DCstats />
-              <MCstats /> */}
+              <MCstats />
 
-              <Card07 />
 
             </div>
 
