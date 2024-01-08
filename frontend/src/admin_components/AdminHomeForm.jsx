@@ -10,6 +10,8 @@ import Card03 from '../admin_partials/misc/Card03';
 import Card04 from '../admin_partials/misc/Card04';
 import Card05 from '../admin_partials/misc/Card05';
 
+import Card07 from '../admin_partials/misc/Card07';
+
 const AdminHomeForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -43,6 +45,8 @@ const AdminHomeForm =()=>{
               <Card03 />
               <Card04 />
               <Card05 />
+              
+              <Card07 />
 
             </div>
 
