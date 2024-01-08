@@ -36,7 +36,11 @@ import PaymentSuccess from './pages/PaymentSuccess';
 // Import Admin Pages
 import AdminHome from './admin_pages/AdminHome';
 import AdminRPTax from './admin_pages/AdminRPTax';
+import AdminBusiness from './admin_pages/AdminBusiness';
+import AdminCedula from './admin_pages/AdminCedula';
+import AdminLocalCivilRegistry from './admin_pages/AdminLocalCivilRegistry';
 import AdminAuditTrail from './admin_pages/AdminAuditTrail';
+
 
 function App() {
 
@@ -78,6 +82,9 @@ function App() {
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
         <Route exact path="/admin_home" element={<AdminHome />} />
         <Route exact path="/admin_rptax" element={<AdminRPTax />} />
+        <Route exact path="/admin_business" element={<AdminBusiness />} />
+        <Route exact path="/admin_cedula" element={<AdminCedula />} />
+        <Route exact path="/admin_lcr" element={<AdminLocalCivilRegistry />} />
         <Route exact path="/admin_audittrail" element={<AdminAuditTrail />} />
 
         

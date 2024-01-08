@@ -76,7 +76,7 @@ function CTCstats() {
 
 
     return (
-        <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
+        <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
             <div className="px-5 pt-5">
                 {/* <header className="flex justify-between items-start mb-2">
                 
@@ -100,7 +100,7 @@ function CTCstats() {
                     </li>
                 </EditMenu>
                 </header> */}
-                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Community Tax Certificate</h2>
+                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Community Tax Certificate (CTC) or Cedula</h2>
                 <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">Total Transactions</div>
                 <div className="flex items-start">
                 {cedulaCert && <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">{cedulaCert.Total}</div>}
