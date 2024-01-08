@@ -30,11 +30,11 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
     // Add the autoTable with adjusted startY and headerStyles
     pdf.autoTable({
       startY: tableStartY,
-      head: [['Transaction ID', 'Date', 'Time', 'Type', 'Status', 'Amount']],
+      head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Status', 'Amount']],
       body: sortedTransactions.map((transaction) => [
-        transaction.transaction_id,
         transaction.date,
         transaction.time,
+        transaction.transaction_id,
         transaction.trans_type,
         transaction.status_type,
         transaction.amount !== null ? `P ${transaction.amount}` : ''
