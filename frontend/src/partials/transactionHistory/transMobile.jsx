@@ -1,8 +1,54 @@
 import React from 'react';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 import TransDropdownFilter from './transDropdownFilter';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
-const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortedTransactions }) => {
+const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortedTransactions, userPersonal }) => {
+
+  const generatePDF = () => {
+    // Create a new instance of jsPDF with autoTable plugin
+    const pdf = new jsPDF();
+  
+    // Set the line width for the underline
+    pdf.setLineWidth(0.5);
+  
+    // Add content to the PDF with underline
+    pdf.text('Statement of Accounts', 138, 15);
+    pdf.line(138, 20, 200, 20); 
+  
+    pdf.text(`To: ${userPersonal.f_name} ${userPersonal.l_name} ${userPersonal.m_name}`, 15, 50);
+  
+    // Adjust the starting y-coordinate for the table
+    const tableStartY = 60;
+  
+    // Define styles for the table header
+    const headerStyles = {
+      fillColor: [0, 0, 0],
+      textColor: 255,
+    };
+  
+    // Add the autoTable with adjusted startY and headerStyles
+    pdf.autoTable({
+      startY: tableStartY,
+      head: [['Transaction ID', 'Date', 'Time', 'Type', 'Status', 'Amount']],
+      body: sortedTransactions.map((transaction) => [
+        transaction.transaction_id,
+        transaction.date,
+        transaction.time,
+        transaction.trans_type,
+        transaction.status_type,
+        `P ${transaction.amount}`,
+      ]),
+      headStyles: headerStyles, // Apply styles to the header row
+    });
+  
+    // Add footer content
+    pdf.text('© 2024 Centralized Manila. All rights reserved.', 15, pdf.internal.pageSize.height - 10);
+  
+    // Save the PDF
+    pdf.save('user_transaction_history.pdf');
+  };
 
     return (
         <>
@@ -38,12 +84,15 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                   
                 </div>
                 <div className="flex text-xs mb-5">
-                  <button className="group flex justify-center w-full items-center text-center p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full mt-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path className="stroke-emerald-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                    </svg>
-                    <span className="text-xs font-normal px-0.5">&nbsp;Download SOA</span>
-                  </button>
+                <button
+                  className="group flex justify-center w-full items-center text-center p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full mt-2"
+                  onClick={generatePDF}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <path className="stroke-emerald-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                  </svg>
+                  <span className="text-xs font-normal px-0.5">&nbsp;Download SOA</span>
+                </button>
                 </div>
 
                 {/* <div className="flex justify center items-center text-[0.60rem] mb-5 space-px-2 space-x-2">

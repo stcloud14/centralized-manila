@@ -16,6 +16,8 @@
     "chartjs-adapter-moment": "^1.0.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.1",
     "moment": "^2.29.4",
     "mysql": "^2.18.1",
     "paymongo": "^1.3.2",
