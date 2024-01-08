@@ -109,8 +109,8 @@ function Card07() {
   } ;
 
     return (
-      <div className="flex flex-col col-span-full bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-      <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+      <div className="flex flex-col col-span-full bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
+      <header className="px-5 py-4 border-b border-slate-100 dark:border-[#3d3d3d]">
         <h2 className="font-semibold text-slate-800 dark:text-slate-100">Service Statistics  
         <span className="font-thin text-slate-500 dark:text-slate-400 pl-2">(Total Transactions Per Month)</span>
         </h2>
