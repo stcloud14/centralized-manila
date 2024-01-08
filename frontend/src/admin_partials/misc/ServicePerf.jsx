@@ -5,7 +5,7 @@ import DoughnutChart from '../../charts/DoughnutChart';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function TopModule() {
+function ServicePerf() {
 
   const [servicePerf, setServicePerf] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -85,4 +85,4 @@ function TopModule() {
 
 }
 
-export default TopModule
+export default ServicePerf
