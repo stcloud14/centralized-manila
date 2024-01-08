@@ -14,7 +14,7 @@ import busPermitHandler from './routes/busPermitHandler.js';
 import paymentMethod from './routes/paymentMethod.js';
 import userSettings from './routes/userSettings.js'
 
-import adminHandler from './routes/adminHandler.js'
+import adminDashboard from './routes/adminDashboard.js'
 
 const app = express();
 
@@ -35,7 +35,7 @@ app.use('/usersettings', userSettings);
 app.use('/payment', paymentMethod);
 
 
-app.use('/admin', adminHandler);
+app.use('/admin', adminDashboard);
 
 
 

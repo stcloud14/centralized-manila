@@ -10,6 +10,8 @@ function RPstats() {
   const [taxPayment, setTaxPayment] = useState({});
   const [dataLoaded, setDataLoaded] = useState(false);
 
+  console.log(taxPayment)
+
 
   useEffect(() => {
     const fetchTaxPayment = async () => {

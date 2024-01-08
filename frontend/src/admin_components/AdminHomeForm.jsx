@@ -4,8 +4,7 @@ import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
 
-import Card04 from '../admin_partials/misc/Card04';
-import Card05 from '../admin_partials/misc/Card05';
+import TopModule from '../admin_partials/misc/TopModule';
 import Card06 from '../admin_partials/misc/Card06';
 
 import RPstats from '../admin_partials/misc/RPstats';
@@ -52,8 +51,7 @@ const AdminHomeForm =()=>{
               <DCstats />
               <MCstats />
 
-              <Card04 />
-              <Card05 />
+              <TopModule />
               <Card06 />
 
             </div>
