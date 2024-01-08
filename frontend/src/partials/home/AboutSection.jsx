@@ -9,8 +9,8 @@ function AboutSection() {
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-6 bg-white dark:bg-[#181818] shadow-md rounded-sm mb-6"  data-aos="fade-up" data-aos-duration="1500">
       <div className="md:flex-1 px-5 py-4 md:flex items-center">
         <img src={Image} alt="Banner Image" className='w-96 h-96 object-contain my-2 mx-auto md:ml-5 md:mr-8'/>
-        <div className='py-5'>
-            <h2 className="font-semibold text-slate-800 dark:text-slate-100 mb-1">Business Permit</h2>
+        <div className='py-5 md:pr-6'>
+            <h2 className="font-semibold text-slate-800 dark:text-slate-100 mb-1">About Us</h2>
             <span className='text-sm md:text-base dark:text-slate-400'> 
                 <span>Welcome! We are your trusted partner in streamlining administrative processes and simplifying the way you interact with local government services. We understand the challenges of navigating bureaucratic procedures, and our mission is to make essential tasks efficient, accessible, and user-friendly.</span>
                 <br/><br/>
