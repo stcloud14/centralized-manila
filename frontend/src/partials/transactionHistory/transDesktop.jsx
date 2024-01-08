@@ -16,7 +16,7 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
     pdf.text('Statement of Accounts', 138, 15);
     pdf.line(138, 20, 200, 20); 
   
-    pdf.text(`To: ${userPersonal.f_name} ${userPersonal.l_name} ${userPersonal.m_name}`, 15, 50);
+    pdf.text(`To: ${userPersonal.f_name} ${userPersonal.m_name} ${userPersonal.l_name}`, 15, 50);
   
     // Adjust the starting y-coordinate for the table
     const tableStartY = 60;
@@ -37,7 +37,7 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
         transaction.time,
         transaction.trans_type,
         transaction.status_type,
-        `P ${transaction.amount}`,
+        transaction.amount !== null ? `P ${transaction.amount}` : ''
       ]),
       headStyles: headerStyles, // Apply styles to the header row
     });
@@ -46,7 +46,7 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
     pdf.text('© 2024 Centralized Manila. All rights reserved.', 15, pdf.internal.pageSize.height - 10);
   
     // Save the PDF
-    pdf.save('user_transaction_history.pdf');
+    pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
   };  
   
     return (
