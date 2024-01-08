@@ -44,7 +44,7 @@ const toNameCase = (str) => {
           <span className='text-green-500'>i</span>
           <span className='text-blue-600'>l</span>
           <span className='text-red-500'>a</span>
-          {userName && <span className='pl-2'>{toNameCase(userName[0]?.f_name)}!</span>}
+          {userName && <span className='pl-1'>, {toNameCase(userName[0]?.f_name)}!</span>}
         </h1>
         <p className="lg:text-sm dark:text-slate-400 font-thin text-xs">Your portal to an amazing new world filled with efficient digital services.</p>
       </div>
