@@ -2,7 +2,7 @@ import React from 'react';
 import BarChart from '../../charts/BarChart01';
 import { tailwindConfig } from '../../utils/Utils';
 
-function Card07() {
+function MainCard() {
 
   // const [servicePerf, setServicePerf] = useState([]);
   // const [dataLoaded, setDataLoaded] = useState(false);
@@ -122,4 +122,4 @@ function Card07() {
 
 }
 
-export default Card07
+export default MainCard

@@ -5,7 +5,7 @@ import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
 
 import ServicePerf from '../admin_partials/misc/ServicePerf';
-import Card07 from '../admin_partials/misc/Card07';
+import MainCard from '../admin_partials/misc/MainCard';
 
 import RPstats from '../admin_partials/misc/RPstats';
 import RCstats from '../admin_partials/misc/RCstats';
@@ -14,6 +14,9 @@ import BPstats from '../admin_partials/misc/BPstats';
 import BCstats from '../admin_partials/misc/BCstats';
 import DCstats from '../admin_partials/misc/DCstats';
 import MCstats from '../admin_partials/misc/MCstats';
+import TopRegions from '../admin_partials/misc/TopRegions';
+import TopProvinces from '../admin_partials/misc/TopProvinces';
+import TopCities from '../admin_partials/misc/TopCities';
 
 const AdminHomeForm =()=>{
 
@@ -44,7 +47,7 @@ const AdminHomeForm =()=>{
             <div className="grid grid-cols-12 gap-6">
               
               {/* <ServicePerf /> */}
-              <Card07 />
+              <MainCard />
               <RPstats/>
               <RCstats />
               <BPstats />
@@ -52,6 +55,9 @@ const AdminHomeForm =()=>{
               <BCstats />
               <DCstats />
               <MCstats />
+              <TopRegions />
+              <TopProvinces />
+              <TopCities />
 
 
             </div>
