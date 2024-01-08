@@ -4,13 +4,14 @@ import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
 
-import Card01 from '../admin_partials/misc/Card01';
+import RPstats from '../admin_partials/misc/RPstats';
 import Card02 from '../admin_partials/misc/Card02';
 import Card03 from '../admin_partials/misc/Card03';
 import Card04 from '../admin_partials/misc/Card04';
 import Card05 from '../admin_partials/misc/Card05';
 
 import Card07 from '../admin_partials/misc/Card07';
+import CTCstats from '../admin_partials/misc/CTCstats';
 
 const AdminHomeForm =()=>{
 
@@ -40,13 +41,14 @@ const AdminHomeForm =()=>{
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
 
-              <Card01 />
+              <RPstats />
               <Card02 />
               <Card03 />
               <Card04 />
               <Card05 />
               
               <Card07 />
+              <CTCstats/>
 
             </div>
 

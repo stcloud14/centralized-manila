@@ -9,7 +9,7 @@ function CTCstats() {
 
   const [taxClearance, setTaxClearance] = useState({});
   const [dataLoaded, setDataLoaded] = useState(false);
-
+  
 
   useEffect(() => {
     const fetchTaxClearance = async () => {

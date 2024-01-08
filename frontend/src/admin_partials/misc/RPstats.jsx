@@ -5,7 +5,7 @@ import BarChart from '../../charts/BarChart03';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function Card01() {
+function RPstats() {
 
   const [taxPayment, setTaxPayment] = useState({});
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -118,4 +118,4 @@ function Card01() {
 
 }
 
-export default Card01
+export default RPstats
