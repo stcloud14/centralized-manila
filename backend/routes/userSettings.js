@@ -110,6 +110,7 @@ const router = Router();
 
 
 
+  // router.delete('/accdelete/:user_id:/transaction_id', async (req, res) => {
   router.delete('/accdelete/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
     // SQL query to delete user account
@@ -119,7 +120,7 @@ const router = Router();
     const sql4 = "DELETE FROM user_contact WHERE user_id = ?";
     const sql5 = "DELETE FROM user_gov_id WHERE user_id = ?";
     const sql6 = "DELETE FROM birth_info WHERE user_id = ?";
-    const sql7 = "DELETE FROM address_info WHERE user_id = ?";
+    // const sql7 = "DELETE FROM address_info WHERE user_id = ?";
     
 
     try {
@@ -130,7 +131,7 @@ const router = Router();
         const result4 = await queryDatabase(sql4, [user_id]);
         const result5 = await queryDatabase(sql5, [user_id]);
         const result6 = await queryDatabase(sql6, [user_id]);
-        const result7 = await queryDatabase(sql7, [user_id]);
+        // const result7 = await queryDatabase(sql7, [user_id]);
         res.json({
             message: "Successfully executed",
             user_auth_result: result1,
@@ -139,7 +140,7 @@ const router = Router();
             user_contact_result: result4,
             user_gov_id_result: result5,
             birth_info_result: result6,
-            address_info_result: result7,
+            // address_info_result: result7,
         });
     } catch (err) {
         console.error(err);
