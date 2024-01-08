@@ -100,7 +100,7 @@ function DCstats() {
                     </li>
                 </EditMenu>
                 </header> */}
-                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Real Property Tax Payment</h2>
+                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Death Certificate</h2>
                 <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">Total Transactions</div>
                 <div className="flex items-start">
                 {taxPayment && <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">{taxPayment.Total}</div>}
