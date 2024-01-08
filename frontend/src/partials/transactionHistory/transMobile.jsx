@@ -9,46 +9,71 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
   const generatePDF = () => {
     // Create a new instance of jsPDF with autoTable plugin
     const pdf = new jsPDF();
-  
+
     // Set the line width for the underline
     pdf.setLineWidth(0.5);
-  
+
     // Add content to the PDF with underline
     pdf.text('Statement of Accounts', 138, 15);
-    pdf.line(138, 20, 200, 20); 
-  
+    pdf.line(138, 20, 200, 20);
+
     pdf.text(`To: ${userPersonal.f_name} ${userPersonal.l_name} ${userPersonal.m_name}`, 15, 50);
-  
+
     // Adjust the starting y-coordinate for the table
     const tableStartY = 60;
-  
+
     // Define styles for the table header
     const headerStyles = {
-      fillColor: [0, 0, 0],
-      textColor: 255,
+        fillColor: [0, 0, 0],
+        textColor: 255,
     };
-  
-    // Add the autoTable with adjusted startY and headerStyles
+
     pdf.autoTable({
-      startY: tableStartY,
-      head: [['Transaction ID', 'Date', 'Time', 'Type', 'Status', 'Amount']],
-      body: sortedTransactions.map((transaction) => [
-        transaction.transaction_id,
-        transaction.date,
-        transaction.time,
-        transaction.trans_type,
-        transaction.status_type,
-        `P ${transaction.amount}`,
-      ]),
-      headStyles: headerStyles, // Apply styles to the header row
+        startY: tableStartY,
+        head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
+        body: sortedTransactions.map((transaction) => {
+            const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
+            const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.amount) : 0;
+
+            // Calculate balance for each row independently
+            let rowBalance = 0;
+
+            // Ensure that amount and payment are valid numbers
+            if (!isNaN(amount) && !isNaN(payment)) {
+                rowBalance = amount - payment;
+                rowBalance = Math.max(rowBalance, 0);
+            }
+
+            return [
+                new Date(transaction.date_processed).toLocaleDateString('en-GB'),
+                transaction.time,
+                transaction.transaction_id,
+                transaction.trans_type,
+                transaction.status_type === 'Pending' && transaction.amount ? `P ${transaction.amount}` : '',
+                transaction.status_type === 'Paid' && transaction.amount ? `P ${transaction.amount}` : '',
+                transaction.amount ? `P ${rowBalance.toFixed(2)}` : 'P 0'
+            ];
+        }),
+        headStyles: headerStyles,
+        didDrawPage: function (data) {
+            const totalAmount = sortedTransactions.reduce((total, transaction) => {
+                const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
+                const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.amount) : 0;
+
+                if (!isNaN(amount) && !isNaN(payment)) {
+                    total += amount - payment;
+                    total = Math.max(total, 0);
+                }
+
+                return total;
+            }, 0);
+
+            pdf.text(`Total Amount: P ${totalAmount.toFixed(2)}`, 5, pdf.internal.pageSize.height - 15);
+        },
     });
-  
-    // Add footer content
-    pdf.text('© 2024 Centralized Manila. All rights reserved.', 15, pdf.internal.pageSize.height - 10);
-  
-    // Save the PDF
-    pdf.save('user_transaction_history.pdf');
-  };
+
+    pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
+};
 
     return (
         <>
