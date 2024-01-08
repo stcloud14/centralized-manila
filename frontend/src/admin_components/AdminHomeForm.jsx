@@ -4,7 +4,7 @@ import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
 
-import RPstats from '../admin_partials/misc/RPstats';
+import Card01 from '../admin_partials/misc/Card01';
 import Card02 from '../admin_partials/misc/Card02';
 import Card03 from '../admin_partials/misc/Card03';
 import Card04 from '../admin_partials/misc/Card04';
@@ -41,7 +41,7 @@ const AdminHomeForm =()=>{
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
 
-              <RPstats />
+              <Card01 />
               <Card02 />
               <Card03 />
               <Card04 />
