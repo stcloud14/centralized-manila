@@ -2,6 +2,7 @@ import React from 'react';
 import StatusBadgeDesktop from '../StatusBadgeDesktop';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import logoImage from '../../images/mnl_header_pdf.png';
 
 const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, userPersonal }) => {
 
@@ -9,21 +10,66 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
     // Create a new instance of jsPDF with autoTable plugin
     const pdf = new jsPDF();
 
-    // Set the line width for the underline
+    const logo = new Image();
+    logo.src = logoImage;
+
+    // Add the image to the PDF
+    pdf.addImage(logo, 'PNG', 128, 5, 70, 35);
+
     pdf.setLineWidth(0.5);
+    pdf.line(130, 40, 195, 40);
+    pdf.line(130, 47, 195, 47);
+    pdf.line(130, 64, 195, 64);
 
-    // Add content to the PDF with underline
-    pdf.text('Statement of Accounts', 138, 15);
-    pdf.line(138, 20, 200, 20);
+    // Account Summary table
+    const totalAmount = sortedTransactions.reduce((total, transaction) => {
+      const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
+      const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.amount) : 0;
 
-    pdf.text(`To: ${userPersonal.f_name} ${userPersonal.l_name} ${userPersonal.m_name}`, 15, 50);
+      if (!isNaN(amount) && !isNaN(payment)) {
+          total += amount - payment;
+          total = Math.max(total, 0);
+      }
+
+      return total;
+  }, 0);
+    pdf.autoTable({
+      startY: 40,
+      head: [['Account Summary','']],
+      body: [
+          ['',''], 
+          ['Total Amount',`${totalAmount.toFixed(2)}`], 
+      ],
+      headStyles: {
+          fillColor: false,  // Remove background color
+          lineColor: 0,
+          textColor: 0,
+          fontSize: 10,
+          fontStyle: 'bold',
+          lineWidthTop: 1,    // Thickness of the top border
+          lineWidthBottom: 1, // Thickness of the bottom border
+      },
+      bodyStyles: {
+          fillColor: false,  // Remove background color
+          textColor: 0,
+          fontSize: 10,
+      },
+      alternateRowStyles: {
+          fillColor: false,  // Remove background color
+          textColor: 0,  
+          fontSize: 10,
+      },
+      margin: { top: 60, left: 130 },
+      tableWidth: 65,
+  });
+  
 
     // Adjust the starting y-coordinate for the table
-    const tableStartY = 60;
+    const tableStartY = 74;
 
     // Define styles for the table header
     const headerStyles = {
-        fillColor: [0, 0, 0],
+        fillColor: [50, 50, 50],
         textColor: 255,
     };
 
@@ -54,21 +100,22 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
             ];
         }),
         headStyles: headerStyles,
-        didDrawPage: function (data) {
-            const totalAmount = sortedTransactions.reduce((total, transaction) => {
-                const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
-                const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.amount) : 0;
+        // TINANGGAL KO NA TO DI KO ALAM KUNG TAMA, NILIPAT KO KASI SIYA SA TABLE, SO FAR TAMA NAMAN SAME OUTPUT PA DIN
+        // didDrawPage: function (data) {
+        //     const totalAmount = sortedTransactions.reduce((total, transaction) => {
+        //         const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
+        //         const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.amount) : 0;
 
-                if (!isNaN(amount) && !isNaN(payment)) {
-                    total += amount - payment;
-                    total = Math.max(total, 0);
-                }
+        //         if (!isNaN(amount) && !isNaN(payment)) {
+        //             total += amount - payment;
+        //             total = Math.max(total, 0);
+        //         }
 
-                return total;
-            }, 0);
+        //         return total;
+        //     }, 0);
 
-            pdf.text(`Total Amount: P ${totalAmount.toFixed(2)}`, 5, pdf.internal.pageSize.height - 15);
-        },
+        //     pdf.text(`Total Amount: P ${totalAmount.toFixed(2)}`, 5, pdf.internal.pageSize.height - 15);
+        // }, 
     });
 
     pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
