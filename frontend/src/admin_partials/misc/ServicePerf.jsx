@@ -31,8 +31,8 @@ function ServicePerf() {
   const chartData = dataLoaded
   ? {
     labels: [
-      'Real Property Tax Payment', 
-      'Real Property Tax Clearance', 
+      'RP Tax Payment', 
+      'RP Tax Clearance', 
       'Business Permit', 
       'Community Tax Certificate', 
       'Birth Certificate', 

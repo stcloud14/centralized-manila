@@ -5,7 +5,6 @@ import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
 
 import ServicePerf from '../admin_partials/misc/ServicePerf';
-import Card06 from '../admin_partials/misc/Card06';
 import Card07 from '../admin_partials/misc/Card07';
 
 import RPstats from '../admin_partials/misc/RPstats';
@@ -44,16 +43,15 @@ const AdminHomeForm =()=>{
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
               
-              <ServicePerf />
+              {/* <ServicePerf />
               <RPstats/>
               <RCstats />
               <BPstats />
               <CTCstats />
               <BCstats />
               <DCstats />
-              <MCstats />
+              <MCstats /> */}
 
-              <Card06 />
               <Card07 />
 
             </div>
