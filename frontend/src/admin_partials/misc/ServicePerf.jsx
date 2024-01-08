@@ -71,7 +71,7 @@ function ServicePerf() {
   } : null;
 
     return (
-        <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
+        <div className="flex flex-col col-span-full bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
             <header className="px-5 py-4 border-b border-slate-100 dark:border-[#3d3d3d]">
               <h2 className="font-semibold text-slate-800 dark:text-slate-100">Service Performance</h2>
             </header>
