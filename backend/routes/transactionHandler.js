@@ -437,13 +437,3 @@ function queryDatabase(query, values) {
 
 
 export default router;
-
-
-const query = "SELECT bp.bus_type, bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin,\
-    bt.bus_office, bt.bus_line, bt.bus_psic, bt.bus_products, bt.bus_units_no, bt.bus_total_cap\
-    \
-    FROM bus_permit bp \
-    \
-    LEFT JOIN bus_activity bt ON bp.transaction_id = bt.transaction_id AND bt.transaction_id IS NOT NULL \
-    \
-    WHERE  bp.transaction_id = ?"
