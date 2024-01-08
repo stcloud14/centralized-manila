@@ -5,7 +5,7 @@ import BarChart from '../../charts/BarChart03';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function CTCstats() {
+function BPstats() {
 
   const [taxPayment, setTaxPayment] = useState({});
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -100,7 +100,7 @@ function CTCstats() {
                     </li>
                 </EditMenu>
                 </header> */}
-                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Community Tax Certificate</h2>
+                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Real Property Tax Payment</h2>
                 <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">Total Transactions</div>
                 <div className="flex items-start">
                 {taxPayment && <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">{taxPayment.Total}</div>}
@@ -118,4 +118,4 @@ function CTCstats() {
 
 }
 
-export default CTCstats
+export default BPstats

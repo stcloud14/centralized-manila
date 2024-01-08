@@ -10,8 +10,13 @@ import Card03 from '../admin_partials/misc/Card03';
 import Card04 from '../admin_partials/misc/Card04';
 import Card05 from '../admin_partials/misc/Card05';
 
-import Card07 from '../admin_partials/misc/Card07';
+import RPstats from '../admin_partials/misc/RPstats';
+import RCstats from '../admin_partials/misc/RCstats';
 import CTCstats from '../admin_partials/misc/CTCstats';
+import BPstats from '../admin_partials/misc/BPstats';
+import BCstats from '../admin_partials/misc/BCstats';
+import DCstats from '../admin_partials/misc/DCstats';
+import MCstats from '../admin_partials/misc/MCstats';
 
 const AdminHomeForm =()=>{
 
@@ -47,8 +52,13 @@ const AdminHomeForm =()=>{
               <Card04 />
               <Card05 />
               
-              <Card07 />
-              <CTCstats/>
+              <RPstats/>
+              <RCstats />
+              <BPstats />
+              <CTCstats />
+              <BCstats />
+              <DCstats />
+              <MCstats />
 
             </div>
 
