@@ -40,7 +40,7 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
       body: [
           ['',''], 
           // Update this line in the "Account Summary" table
-          ['Total Balance', `${totalAllBalances.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`],
+          ['Total Balance', `P ${Math.floor(totalAllBalances)}`],
       ],
       headStyles: {
           fillColor: false,  // Remove background color
@@ -76,33 +76,33 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
     };
 
     pdf.autoTable({
-        startY: tableStartY,
-        head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
-        body: sortedTransactions.map((transaction) => {
-            const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
-            const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.payment) : 0;
-
-            // Calculate balance for each row independently
-            let rowBalance = 0;
-
-            // Ensure that amount and payment are valid numbers
-            if (!isNaN(amount) && !isNaN(payment)) {
-                rowBalance = amount - payment;
-                rowBalance = Math.max(rowBalance, 0);
-            }
-
-            return [
-                new Date(transaction.date_processed).toLocaleDateString('en-GB'),
-                transaction.time,
-                transaction.transaction_id,
-                transaction.trans_type,
-                transaction.status_type === 'Pending' && transaction.amount ? `P ${transaction.amount}` : '',
-                transaction.status_type === 'Paid' && transaction.amount ? `P ${transaction.amount}` : '',
-                transaction.amount ? `P ${rowBalance.toFixed(2)}` : 'P 0'
-            ];
-        }),
-        headStyles: headerStyles,
-    });
+      startY: tableStartY,
+      head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
+      body: sortedTransactions.map((transaction) => {
+          const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
+          const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.payment) : 0;
+  
+          // Calculate balance for each row independently
+          let rowBalance = 0;
+  
+          // Ensure that amount and payment are valid numbers
+          if (!isNaN(amount) && !isNaN(payment)) {
+              rowBalance = amount - payment;
+              rowBalance = Math.max(rowBalance, 0);
+          }
+  
+          return [
+              new Date(transaction.date_processed).toLocaleDateString('en-GB'),
+              transaction.time,
+              transaction.transaction_id,
+              transaction.trans_type,
+              transaction.status_type === 'Pending' && transaction.amount ? `P ${Math.floor(amount)}` : '',
+              transaction.status_type === 'Paid' && transaction.amount ? `P ${Math.floor(amount)}` : '',
+              transaction.amount ? `P ${Math.floor(rowBalance)}` : 'P 0'
+          ];
+      }),
+      headStyles: headerStyles,
+  });
 
     pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
 };
