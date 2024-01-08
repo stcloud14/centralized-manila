@@ -7,22 +7,22 @@ import { tailwindConfig } from '../../utils/Utils';
 
 function CTCstats() {
 
-  const [taxPayment, setTaxPayment] = useState({});
+  const [cedulaCert, setCedulaCert] = useState({});
   const [dataLoaded, setDataLoaded] = useState(false);
 
 
   useEffect(() => {
-    const fetchTaxPayment = async () => {
+    const fetchCedulaCert = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/admin/taxpayment/`);
-        setTaxPayment(res.data);
+        const res = await axios.get(`http://localhost:8800/admin/cedulacert/`);
+        setCedulaCert(res.data);
         setDataLoaded(true);
       } catch (err) {
         console.log(err);
       }
     };
 
-    fetchTaxPayment();
+    fetchCedulaCert();
   }, []);
 
 
@@ -32,7 +32,7 @@ function CTCstats() {
         datasets: [
           {
             label: 'Pending',
-            data: [taxPayment.Pending],
+            data: [cedulaCert.Pending],
             backgroundColor: tailwindConfig().theme.colors.yellow[400],
             hoverBackgroundColor: tailwindConfig().theme.colors.yellow[500],
             barPercentage: 1,
@@ -40,7 +40,7 @@ function CTCstats() {
           },
           {
             label: 'Paid',
-            data: [taxPayment.Paid],
+            data: [cedulaCert.Paid],
             backgroundColor: tailwindConfig().theme.colors.emerald[400],
             hoverBackgroundColor: tailwindConfig().theme.colors.emerald[500],
             barPercentage: 1,
@@ -48,7 +48,7 @@ function CTCstats() {
           },
           {
             label: 'Canceled',
-            data: [taxPayment.Canceled],
+            data: [cedulaCert.Canceled],
             backgroundColor: tailwindConfig().theme.colors.slate[400],
             hoverBackgroundColor: tailwindConfig().theme.colors.slate[500],
             barPercentage: 1,
@@ -56,7 +56,7 @@ function CTCstats() {
           },
           {
             label: 'Rejected',
-            data: [taxPayment.Rejected],
+            data: [cedulaCert.Rejected],
             backgroundColor: tailwindConfig().theme.colors.red[500],
             hoverBackgroundColor: tailwindConfig().theme.colors.red[600],
             barPercentage: 1,
@@ -64,7 +64,7 @@ function CTCstats() {
           },
           {
             label: 'Expired',
-            data: [taxPayment.Expired],
+            data: [cedulaCert.Expired],
             backgroundColor: tailwindConfig().theme.colors.blue[500],
             hoverBackgroundColor: tailwindConfig().theme.colors.blue[600],
             barPercentage: 1,
@@ -103,7 +103,7 @@ function CTCstats() {
                 <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Community Tax Certificate</h2>
                 <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">Total Transactions</div>
                 <div className="flex items-start">
-                {taxPayment && <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">{taxPayment.Total}</div>}
+                {cedulaCert && <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">{cedulaCert.Total}</div>}
                 {/* <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full">+49%</div> */}
                 </div>
             </div>
