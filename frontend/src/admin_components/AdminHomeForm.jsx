@@ -6,6 +6,7 @@ import AdminBanner from '../admin_partials/AdminBanner';
 
 import ServicePerf from '../admin_partials/misc/ServicePerf';
 import Card06 from '../admin_partials/misc/Card06';
+import Card07 from '../admin_partials/misc/Card07';
 
 import RPstats from '../admin_partials/misc/RPstats';
 import RCstats from '../admin_partials/misc/RCstats';
@@ -53,6 +54,7 @@ const AdminHomeForm =()=>{
               <MCstats />
 
               <Card06 />
+              <Card07 />
 
             </div>
 
