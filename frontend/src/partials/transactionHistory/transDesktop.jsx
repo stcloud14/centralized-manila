@@ -17,7 +17,8 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
     pdf.line(138, 20, 200, 20); 
   
     pdf.text(`To: ${userPersonal.f_name} ${userPersonal.m_name} ${userPersonal.l_name}`, 15, 50);
-  
+
+
     // Adjust the starting y-coordinate for the table
     const tableStartY = 60;
   
@@ -26,24 +27,49 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
       fillColor: [0, 0, 0],
       textColor: 255,
     };
-  
+    
+    let balance = 0;
+
     // Add the autoTable with adjusted startY and headerStyles
     pdf.autoTable({
       startY: tableStartY,
-      head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Status', 'Amount']],
-      body: sortedTransactions.map((transaction) => [
-        transaction.date,
-        transaction.time,
-        transaction.transaction_id,
-        transaction.trans_type,
-        transaction.status_type,
-        transaction.amount !== null ? `P ${transaction.amount}` : ''
-      ]),
+      head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
+      body: sortedTransactions.map((transaction) => {
+        let amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
+        let payment = transaction.status_type === 'Paid' ? parseFloat(transaction.amount) : 0;
+
+        balance = balance + amount - payment;
+        balance = Math.max(balance, 0);
+
+        return [
+          new Date(transaction.date_processed).toLocaleDateString('en-GB'),
+          transaction.time,
+          transaction.transaction_id,
+          transaction.trans_type,
+          transaction.status_type === 'Pending' && transaction.amount ? `P ${transaction.amount}` : '',
+          transaction.status_type === 'Paid' && transaction.amount ? `P ${transaction.amount}` : '',
+          balance ? `P ${balance}` : ''
+        ];
+      }),
       headStyles: headerStyles, // Apply styles to the header row
+      // didDrawCell: function (data) {
+      //   // Check if this is the last cell of the table body
+      //   if (data.section === 'body' && data.row.index === data.table.body.length - 1 && data.cell.index === data.row.cells.length - 1) {
+        
+      //     // Calculate total balance due
+      //     let totalBalanceDue = balance;
+    
+      //     // Add footer content
+      //     pdf.text(`Balance Due: P ${totalBalanceDue}`, 5, pdf.internal.pageSize.height - 15);
+      //   }
+      // }
+      
     });
-  
-    // Add footer content
-    pdf.text('© 2024 Centralized Manila. All rights reserved.', 15, pdf.internal.pageSize.height - 10);
+
+
+    // // Add footer content
+    // pdf.text('© 2024 Centralized Manila. All rights reserved.', 5, pdf.internal.pageSize.height - 10);
+
   
     // Save the PDF
     pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
