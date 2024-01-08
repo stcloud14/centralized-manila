@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import StatusBadgeDesktop from 'frontend/src/partials/StatusBadgeDesktop.jsx';
 import Flatpickr from 'react-flatpickr';
 
@@ -6,8 +6,8 @@ import Flatpickr from 'react-flatpickr';
   
 
 const AuditDesktop = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions }) => {
-  const [selectedDate, setSelectedDate] = React.useState('');
-  const [selectedDatee, setSelectedDatee] = React.useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDatee, setSelectedDatee] = useState('');
   
     return (
         <>
