@@ -1,0 +1,80 @@
+import React, { useState, useEffect, useRef } from 'react';
+
+const AuditDropdownFilter = ({ handleSortChange, sortOption }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeDropdown = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', closeDropdown);
+
+    return () => {
+      document.removeEventListener('click', closeDropdown);
+    };
+  }, []); // Empty dependency array means this effect runs once when the component mounts
+
+  return (
+    <div ref={dropdownRef} className="relative inline-block text-left">
+      <button id="dropdownDefaultButton" onClick={toggleDropdown} className="bg-blue-500 hover:bg-blue-600 text-white px-1 py-1 rounded-md inline-flex items-center"
+        aria-haspopup="true" aria-expanded={isOpen ? 'true' : 'false'}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+            <path className="stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+        </svg>
+      </button>
+      {/* Dropdown Contents */}
+      <div className={`z-10 ${isOpen ? 'block' : 'hidden'} bg-white divide-y rounded shadow w-28 dark:bg-[#212121] absolute mt-1 right-0`}>
+        <ul className="text-xs text-center text-gray-700 dark:text-gray-200 space-y-2" aria-labelledby="dropdownDefaultButton">
+            <li>
+                <span className="flex items-center justify-center px-4 py-2 font-medium border-b border-slate-200 dark:border-[#3d3d3d]">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+                    </svg>
+                    Filter By
+                </span>
+            </li>
+            <li>
+                <a onClick={() => handleSortChange('date_processed')} className="block px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Modified {sortOption === 'date_processed'}
+                </a>
+            </li>
+            <li>
+                <a onClick={() => handleSortChange('trans_type')} className="block px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Activity {sortOption === 'trans_type'}
+                </a>
+            </li>
+            <li>
+                <a onClick={() => handleSortChange('status_type')} className="block px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Admin Name {sortOption === 'status_type'}
+                </a>
+            </li>
+            <li>
+                <a onClick={() => handleSortChange('amount')} className="block px-4 pb-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Date {sortOption === 'amount'}
+                </a>
+            </li>
+            <li>
+                <a onClick={() => handleSortChange('amount')} className="block px-4 pb-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Table Changed {sortOption === 'amount'}
+                </a>
+            </li>
+            <li>
+                <a onClick={() => handleSortChange('amount')} className="block px-4 pb-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Changes {sortOption === 'amount'}
+                </a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default AuditDropdownFilter;

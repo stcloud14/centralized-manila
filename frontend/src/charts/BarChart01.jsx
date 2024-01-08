@@ -47,7 +47,7 @@ function BarChart01({
             },
             ticks: {
               maxTicksLimit: 5,
-              callback: (value) => formatValue(value),
+              // callback: (value) => formatValue(value),
               color: darkMode ? textColor.dark : textColor.light,
             },
             grid: {
@@ -76,12 +76,12 @@ function BarChart01({
         },
         plugins: {
           legend: {
-            display: false,
+            display: true,
           },
           tooltip: {
             callbacks: {
               title: () => false, // Disable tooltip title
-              label: (context) => formatValue(context.parsed.y),
+              // label: (context) => formatValue(context.parsed.y),
             },
             bodyColor: darkMode ? tooltipBodyColor.dark : tooltipBodyColor.light,
             backgroundColor: darkMode ? tooltipBgColor.dark : tooltipBgColor.light,
@@ -148,7 +148,7 @@ function BarChart01({
               label.style.fontSize = tailwindConfig().theme.fontSize.sm[0];
               label.style.lineHeight = tailwindConfig().theme.fontSize.sm[1].lineHeight;
               const theValue = c.data.datasets[item.datasetIndex].data.reduce((a, b) => a + b, 0);
-              const valueText = document.createTextNode(formatValue(theValue));
+              const valueText = document.createTextNode(formatValue(theValue).replace(/^\$/, ''));
               const labelText = document.createTextNode(item.text);
               value.appendChild(valueText);
               label.appendChild(labelText);

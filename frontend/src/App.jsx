@@ -17,7 +17,6 @@ import Home from './pages/Home';
 import PersonalInfo from './pages/PersonalInfo';
 import ContactInfo from './pages/ContactInfo';
 import GovernmentInfo from './pages/GovernmentInfo';
-import Blank from './pages/Blank';
 import RPTaxPayment from './pages/RPTaxPayment';
 import RPTaxClearance from './pages/RPTaxClearance';
 import TransactionHistory from './pages/TransactionHistory';
@@ -26,7 +25,7 @@ import Cedula from './pages/Cedula';
 import BirthCertificate from './pages/BirthCertificate';
 import MarriageCertificate from './pages/MarriageCertificate';
 import DeathCertificate from './pages/DeathCertificate';
-import JobHiring from './pages/JobHiring';
+import News from './pages/News';
 import UserSettings from './components/UserSettings';
 import FAQs from './pages/FAQs';
 import About from './pages/About';
@@ -37,6 +36,7 @@ import PaymentSuccess from './pages/PaymentSuccess';
 // Import Admin Pages
 import AdminHome from './admin_pages/AdminHome';
 import AdminRPTax from './admin_pages/AdminRPTax';
+import AdminAuditTrail from './admin_pages/AdminAuditTrail';
 
 function App() {
 
@@ -58,7 +58,6 @@ function App() {
         <Route exact path="/personalinfo/:user_id" element={<PersonalInfo />} />
         <Route exact path="/contact/:user_id" element={<ContactInfo />} />
         <Route exact path="/govinfo/:user_id" element={<GovernmentInfo />} />
-        <Route exact path="/blank" element={<Blank />} />
         <Route exact path="/rptaxpayment/:user_id" element={<RPTaxPayment/>} />
         <Route exact path="/rptaxclearance/:user_id" element={<RPTaxClearance/>} />
         <Route exact path="/transachistory/:user_id" element={<TransactionHistory/>} />
@@ -67,7 +66,7 @@ function App() {
         <Route exact path="/birthcertificate/:user_id" element={<BirthCertificate/>} />
         <Route exact path="/marriagecertificate/:user_id" element={<MarriageCertificate/>} />
         <Route exact path="/deathcertificate/:user_id" element={<DeathCertificate/>} />
-        <Route exact path="/jobhiring/:user_id" element={<JobHiring/>} />
+        <Route exact path="/news/:user_id" element={<News/>} />
         <Route exact path="/usersettings/:user_id" element={<UserSettings/>} />
         <Route exact path="/faqs/:user_id" element={<FAQs/>} />
         <Route exact path="/about/:user_id" element={<About/>} />
@@ -79,6 +78,7 @@ function App() {
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
         <Route exact path="/admin_home" element={<AdminHome />} />
         <Route exact path="/admin_rptax" element={<AdminRPTax />} />
+        <Route exact path="/admin_audittrail" element={<AdminAuditTrail />} />
 
         
       </Routes>

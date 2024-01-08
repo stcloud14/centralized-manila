@@ -4,11 +4,16 @@ import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
 
-import Card01 from '../admin_partials/misc/Card01';
-import Card02 from '../admin_partials/misc/Card02';
-import Card03 from '../admin_partials/misc/Card03';
-import Card04 from '../admin_partials/misc/Card04';
-import Card05 from '../admin_partials/misc/Card05';
+import ServicePerf from '../admin_partials/misc/ServicePerf';
+import Card07 from '../admin_partials/misc/Card07';
+
+import RPstats from '../admin_partials/misc/RPstats';
+import RCstats from '../admin_partials/misc/RCstats';
+import CTCstats from '../admin_partials/misc/CTCstats';
+import BPstats from '../admin_partials/misc/BPstats';
+import BCstats from '../admin_partials/misc/BCstats';
+import DCstats from '../admin_partials/misc/DCstats';
+import MCstats from '../admin_partials/misc/MCstats';
 
 const AdminHomeForm =()=>{
 
@@ -37,12 +42,17 @@ const AdminHomeForm =()=>{
 
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
+              
+              {/* <ServicePerf /> */}
+              <Card07 />
+              <RPstats/>
+              <RCstats />
+              <BPstats />
+              <CTCstats />
+              <BCstats />
+              <DCstats />
+              <MCstats />
 
-              <Card01 />
-              <Card02 />
-              <Card03 />
-              <Card04 />
-              <Card05 />
 
             </div>
 

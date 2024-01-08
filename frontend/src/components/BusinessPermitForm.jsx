@@ -33,11 +33,14 @@ const BusinessPermitForm =()=>{
   const { pathname } = location;
   const user_id = pathname.split("/")[2];
 
+  
+
   const [busPermit, setBusPermit] = useState((prevData) => ({
     ...prevData,
     bus_amount: 0,
     initialPrint: 0,
     printDisplay: 0,
+    bus_typeLabel: '',
     bus_regionLabel: '',
     bus_provinceLabel: '',
     bus_cityLabel: '',
@@ -47,9 +50,10 @@ const BusinessPermitForm =()=>{
     bus_purposeLabel: '',
     bus_valididLabel: '',
     bus_office_partial: '',
-    bus_office: '1',
-    bus_tax_incentives: '1',
-    owned: '2',
+    bus_office: 'MAIN OFFICE',
+    bus_tax_incentives: 'NO',
+    owned: 'OWNED',
+
   }));
 
   console.log(busPermit)
@@ -255,10 +259,12 @@ const BusinessPermitForm =()=>{
 
       if (id === 'bus_type') {
         const Value = parseInt(value, 10) || 0;
+        const label = e.target.options[e.target.selectedIndex].text;
 
         return {
           ...prevData,
           [id]: Value,
+          bus_typeLabel: label,
         };
       } 
 
@@ -271,6 +277,7 @@ const BusinessPermitForm =()=>{
           bus_office_partial: '',
         };
       } 
+
       
       if (name === 'bus_office_partial') {
         
@@ -281,7 +288,15 @@ const BusinessPermitForm =()=>{
         };
       } 
 
-      if (name === 'owned' || name === 'bus_email') {
+      if (name === 'bus_email') {
+        
+        return {
+          ...prevData,
+          [name]: value,
+        };
+      } 
+
+      if (name === 'owned') {
         
         return {
           ...prevData,
@@ -898,12 +913,12 @@ const BusinessPermitForm =()=>{
               </div>
 
               {/* Group 7 - Owned Radio Button */}
-              <div onChange={handleInputChange} name="owned" className="mt-6 flex items-center text-sm">
+              <div onChange={handleInputChange} name="owned" id="owned" className="mt-6 flex items-center text-sm">
                 <span className="text-gray-700 dark:text-white mr-9">Is this owned?</span>
-                <input value='1' type="radio" name="owned" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer"/>
+                <input value="RENTAL" type="radio" name="owned" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer"/>
                 <label htmlFor="owned_no" className="text-gray-700 dark:text-white mr-6">No</label>
 
-                <input value='2' defaultChecked type="radio" name="owned"className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer"/>
+                <input value="OWNED" defaultChecked type="radio" name="owned" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer"/>
                 <label htmlFor="owned_yes" className="text-gray-700 dark:text-white">Yes</label>
               </div>
 
@@ -911,11 +926,11 @@ const BusinessPermitForm =()=>{
               <div className='pt-3'>
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={busPermit.bus_lessor} disabled={busPermit.owned !== '1'} type="text" name="bus_lessor" id="bus_lessor" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={busPermit.bus_lessor} disabled={busPermit.owned !== "RENTAL"} type="text" name="bus_lessor" id="bus_lessor" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="bus_lessor" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lessor Name</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={busPermit.bus_rent} disabled={busPermit.owned !== '1'} type="text" name="bus_rent" id="bus_rent" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={busPermit.bus_rent} disabled={busPermit.owned !== "RENTAL"} type="text" name="bus_rent" id="bus_rent" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="bus_rent" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Monthly Rental</label>
                   </div>
                 </div>
@@ -927,16 +942,16 @@ const BusinessPermitForm =()=>{
 
                 <div onChange={handleInputChange} name="bus_tax_incentives" className="flex mb-2 md:mb-0">
                   <label className="mr-2">
-                    <input value='1' type="radio" name="bus_tax_incentives" defaultChecked className="border border-gray-500 md:ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value="NO" type="radio" name="bus_tax_incentives" defaultChecked className="border border-gray-500 md:ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     <span className="ml-1.5">No</span>
                   </label>
                   <label>
-                    <input value='2' type="radio" name="bus_tax_incentives" className="border border-gray-500 ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value="YES" type="radio" name="bus_tax_incentives" className="border border-gray-500 ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     <span className="ml-1.5">Yes</span>
                   </label>
                 </div>
 
-                {busPermit.bus_tax_incentives === '2' ? (
+                {busPermit.bus_tax_incentives === "YES" ? (
                   <>
                   <div className="group md:ml-9">
                   <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_tax_incentives'} />
@@ -959,29 +974,29 @@ const BusinessPermitForm =()=>{
                 {/* Row 1 */}
                 <div onChange={handleInputChange} name="bus_activity" className="flex flex-col md:flex-row md:items-center text-sm items-start">
                   <label htmlFor="bus_mainoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="1" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value="MAIN OFFICE" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Main Office
                   </label>
 
                   <label htmlFor="bus_branchoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="2" type="radio" name="bus_activity" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value="BRANCH OFFICE" type="radio" name="bus_activity" className="border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Branch Office
                   </label>
 
                   <label htmlFor="bus_adminoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="3" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value="ADMIN OFFICE ONLY" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Admin Office Only
                   </label>
 
                   <label htmlFor="bus_warehouse" className="flex items-center mb-2 md:mb-0 md:mx-auto">
-                    <input value="4" type="radio" name="bus_activity" className="border  border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value="WAREHOUSE" type="radio" name="bus_activity" className="border  border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Warehouse
                   </label>
 
                   <div className="flex items-center md:mr-6">
-                    <input value="5" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value="1" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Others:
-                    <input onChange={handleInputChange} value={busPermit.bus_office_partial} disabled={busPermit.bus_activity !== '5'} type="text" name="bus_office_partial" id="bus_office_partial" className="block px-0 ml-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Specify" required/>
+                    <input onChange={handleInputChange} value={busPermit.bus_office_partial} disabled={busPermit.bus_activity !== '1'} type="text" name="bus_office_partial" id="bus_office_partial" className="block px-0 ml-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Specify" required/>
                   </div>
                 </div>
                 {/* Row 2 */} 

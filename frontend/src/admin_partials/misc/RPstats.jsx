@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import BarChart from '../../charts/BarChart03';
 
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function Card01() {
+function RPstats() {
 
-    const chartData = {
+  const [taxPayment, setTaxPayment] = useState({});
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  console.log(taxPayment)
+
+
+  useEffect(() => {
+    const fetchTaxPayment = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/admin/taxpayment/`);
+        setTaxPayment(res.data);
+        setDataLoaded(true);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchTaxPayment();
+  }, []);
+
+
+  const chartData = dataLoaded
+    ? {
         labels: ['Reasons'],
         datasets: [
           {
             label: 'Pending',
-            data: [131],
+            data: [taxPayment.Pending],
             backgroundColor: tailwindConfig().theme.colors.yellow[400],
             hoverBackgroundColor: tailwindConfig().theme.colors.yellow[500],
             barPercentage: 1,
@@ -19,7 +42,7 @@ function Card01() {
           },
           {
             label: 'Paid',
-            data: [100],
+            data: [taxPayment.Paid],
             backgroundColor: tailwindConfig().theme.colors.emerald[400],
             hoverBackgroundColor: tailwindConfig().theme.colors.emerald[500],
             barPercentage: 1,
@@ -27,7 +50,7 @@ function Card01() {
           },
           {
             label: 'Canceled',
-            data: [72],
+            data: [taxPayment.Canceled],
             backgroundColor: tailwindConfig().theme.colors.slate[400],
             hoverBackgroundColor: tailwindConfig().theme.colors.slate[500],
             barPercentage: 1,
@@ -35,7 +58,7 @@ function Card01() {
           },
           {
             label: 'Rejected',
-            data: [81],
+            data: [taxPayment.Rejected],
             backgroundColor: tailwindConfig().theme.colors.red[500],
             hoverBackgroundColor: tailwindConfig().theme.colors.red[600],
             barPercentage: 1,
@@ -43,14 +66,16 @@ function Card01() {
           },
           {
             label: 'Expired',
-            data: [21],
+            data: [taxPayment.Expired],
             backgroundColor: tailwindConfig().theme.colors.blue[500],
             hoverBackgroundColor: tailwindConfig().theme.colors.blue[600],
             barPercentage: 1,
             categoryPercentage: 1,
           },
         ],
-      };
+      }
+    : null;
+
 
     return (
         <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
@@ -77,10 +102,10 @@ function Card01() {
                     </li>
                 </EditMenu>
                 </header> */}
-                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Real Property Tax</h2>
+                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Real Property Tax Payment</h2>
                 <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">Total Transactions</div>
                 <div className="flex items-start">
-                <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">24,780</div>
+                {taxPayment && <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">{taxPayment.Total}</div>}
                 {/* <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full">+49%</div> */}
                 </div>
             </div>
@@ -88,11 +113,11 @@ function Card01() {
             {/* Chart built with Chart.js 3 */}
             <div className="grow">
                 {/* Change the height attribute to adjust the chart height */}
-                <BarChart data={chartData} width={595} height={48} />
+                {chartData && <BarChart data={chartData} width={595} height={48} />}
             </div>
         </div>
     )
 
 }
 
-export default Card01
+export default RPstats

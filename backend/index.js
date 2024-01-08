@@ -14,6 +14,8 @@ import busPermitHandler from './routes/busPermitHandler.js';
 import paymentMethod from './routes/paymentMethod.js';
 import userSettings from './routes/userSettings.js'
 
+import adminDashboard from './routes/adminDashboard.js'
+
 const app = express();
 
 app.use(express.json());
@@ -31,6 +33,9 @@ app.use('/marriagecertificate', marriageCertHandler)
 app.use('/transachistory', transactionHandler);
 app.use('/usersettings', userSettings);
 app.use('/payment', paymentMethod);
+
+
+app.use('/admin', adminDashboard);
 
 
 
