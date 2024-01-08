@@ -22,9 +22,9 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
     pdf.line(130, 64, 195, 64);
 
     // Account Summary table
-    const totalAmount = sortedTransactions.reduce((total, transaction) => {
+    const totalAllBalances = sortedTransactions.reduce((total, transaction) => {
       const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
-      const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.amount) : 0;
+      const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.payment) : 0;
 
       if (!isNaN(amount) && !isNaN(payment)) {
           total += amount - payment;
@@ -33,12 +33,14 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
 
       return total;
   }, 0);
+
     pdf.autoTable({
       startY: 40,
       head: [['Account Summary','']],
       body: [
           ['',''], 
-          ['Total Amount',`${totalAmount.toFixed(2)}`], 
+          // Update this line in the "Account Summary" table
+          ['Total Balance', `${totalAllBalances.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`],
       ],
       headStyles: {
           fillColor: false,  // Remove background color
@@ -78,7 +80,7 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
         head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
         body: sortedTransactions.map((transaction) => {
             const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
-            const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.amount) : 0;
+            const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.payment) : 0;
 
             // Calculate balance for each row independently
             let rowBalance = 0;
@@ -100,27 +102,10 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
             ];
         }),
         headStyles: headerStyles,
-        // TINANGGAL KO NA TO DI KO ALAM KUNG TAMA, NILIPAT KO KASI SIYA SA TABLE, SO FAR TAMA NAMAN SAME OUTPUT PA DIN
-        // didDrawPage: function (data) {
-        //     const totalAmount = sortedTransactions.reduce((total, transaction) => {
-        //         const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
-        //         const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.amount) : 0;
-
-        //         if (!isNaN(amount) && !isNaN(payment)) {
-        //             total += amount - payment;
-        //             total = Math.max(total, 0);
-        //         }
-
-        //         return total;
-        //     }, 0);
-
-        //     pdf.text(`Total Amount: P ${totalAmount.toFixed(2)}`, 5, pdf.internal.pageSize.height - 15);
-        // }, 
     });
 
     pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
 };
- 
   
     return (
         <>
