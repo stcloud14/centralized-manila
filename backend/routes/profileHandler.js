@@ -38,6 +38,20 @@ router.get('/:user_id', (req, res) => {
 });
 
 
+router.get('/username/:user_id', (req, res) => {
+  const user_id = req.params.user_id;
+  const sql = "SELECT f_name FROM user_personal WHERE user_id = ?";
+  conn2.query(sql, [user_id], (err, result) => {
+      if (err) {
+          console.error(err);
+          res.status(500).send('Error retrieving user image');
+      } else {
+          res.json(result);
+      }
+  });
+});
+
+
 router.get('/contact/:user_id', async (req, res) => {
   const user_id = req.params.user_id;
   

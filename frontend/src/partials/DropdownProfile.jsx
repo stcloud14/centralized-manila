@@ -61,7 +61,7 @@ const DropdownProfile = ({ align }) => {
         const imageName = storedImage.user_image;
     
         if (imageName === undefined || imageName === null) {
-          console.log('User image name is undefined or null.');
+          // console.log('User image name is undefined or null.');
           return;
         }
     
@@ -72,12 +72,12 @@ const DropdownProfile = ({ align }) => {
             const fileData = await fetchFileData(`${imagePath}${imageName}`);
             if (fileData) {
               setUserImage(fileData);
-              console.log(`File ${imageName} exists.`);
+              // console.log(`File ${imageName} exists.`);
             } else {
-              console.log(`File data for ${imageName} is empty or undefined.`);
+              // console.log(`File data for ${imageName} is empty or undefined.`);
             }
           } else {
-            console.log(`File: ${imageName} does not exist.`);
+            // console.log(`File: ${imageName} does not exist.`);
           }
         }
       } catch (error) {

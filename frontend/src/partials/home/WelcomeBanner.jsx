@@ -1,10 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Image01 from '../../images/resources/welcome_01.png';
 AOS.init();
 
 function WelcomeBanner() {
+
+  const { user_id } = useParams();
+
+  const [userName, setUserName]=useState();
+
+  console.log(userName)
+
+  useEffect(()=>{
+    const fetchUserName= async()=>{
+        try{
+            const res= await axios.get(`http://localhost:8800/profile/username/${user_id}`)
+            setUserName(res.data)            
+
+        }catch(err){
+            console.log(err)
+        }
+    }
+    fetchUserName()
+},[])
+
+const toNameCase = (str) => {
+  return str.replace(/\w\S*/g, (txt) => {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+};
+
   return (
     <div className="relative bg-white dark:bg-[#181818] p-6 mb-6 rounded-sm shadow-md flex items-center justify-between" data-aos="zoom-in" data-aos-duration="1500">
       <div className='md:ml-16'>
@@ -16,7 +44,7 @@ function WelcomeBanner() {
           <span className='text-green-500'>i</span>
           <span className='text-blue-600'>l</span>
           <span className='text-red-500'>a</span>
-          <span> [username]!</span>
+          {userName && <span className='pl-2'>{toNameCase(userName[0]?.f_name)}!</span>}
         </h1>
         <p className="lg:text-sm dark:text-slate-400 font-thin text-xs">Your portal to an amazing new world filled with efficient digital services.</p>
       </div>
