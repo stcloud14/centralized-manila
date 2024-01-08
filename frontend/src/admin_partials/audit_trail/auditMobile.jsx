@@ -41,7 +41,7 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                   
                 </div>
 
-                <div className="flex items-center justify-end mb-4 md:px-0 md:pr-0.5 px-0.5 text-xs"> 
+                <div className="flex items-center justify-end mb-4 md:px-0 md:pr-0.5 px-0.5 pt-2 text-xs"> 
                     <Flatpickr
                         id=""
                         name=""
@@ -71,7 +71,7 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                       Date of Death
                     </label> */}
 
-                    <p>&nbsp; - &nbsp;</p>
+                    <p className="px-1">-</p>
                     <Flatpickr
                               id=""
                               name=""
@@ -92,6 +92,16 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                               placeholder="To"
                               className="bg-transparent text-xs md:text-sm border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-full md:w-auto"
                           />
+                        <button id="dropdownDefaultButton"  onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white ml-2 px-2.5 py-1 rounded-full inline-flex items-center"
+                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                              <path className="stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+                          </svg>
+                          <span>&nbsp;Filter</span>
+                        </button>
+
+
+
                     {/* <label
                       htmlFor="deathc_date"
                       className={`peer-focus:font-medium absolute bg-transparent text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 
