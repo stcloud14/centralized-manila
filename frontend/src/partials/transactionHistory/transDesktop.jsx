@@ -48,7 +48,7 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
           transaction.trans_type,
           transaction.status_type === 'Pending' && transaction.amount ? `P ${transaction.amount}` : '',
           transaction.status_type === 'Paid' && transaction.amount ? `P ${transaction.amount}` : '',
-          balance ? `P ${balance}` : ''
+          balance ? `P ${balance}` : `P 0`
         ];
       }),
       headStyles: headerStyles, // Apply styles to the header row
