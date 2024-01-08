@@ -45,12 +45,12 @@ const AdminHomeForm =()=>{
             <div className="grid grid-cols-12 gap-6">
               
               <RPstats/>
-              {/* <RCstats />
+              <RCstats />
               <BPstats />
               <CTCstats />
               <BCstats />
               <DCstats />
-              <MCstats /> */}
+              <MCstats />
 
               <Card04 />
               <Card05 />
