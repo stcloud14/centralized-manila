@@ -36,8 +36,8 @@ const AdminHomeForm =()=>{
   const [birthCert, setBirthCert] = useState({});
   const [deathCert, setDeathCert] = useState({});
   const [marriageCert, setMarriageCert] = useState({});
+  const [topRegions, setTopRegions] = useState({});
   
-  console.log(taxPayment)
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -168,6 +168,20 @@ const AdminHomeForm =()=>{
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const topr = await axios.get(`http://localhost:8800/admin/topregions/`);
+        setTopRegions(topr.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        handleEffectCompletion();
+      }
+    };
+    fetchData();
+  }, []);
+
 
 
 
@@ -224,7 +238,7 @@ const AdminHomeForm =()=>{
                   <BCstats birthCert={birthCert}/>
                   <DCstats deathCert={deathCert}/>
                   <MCstats marriageCert={marriageCert}/>
-                  <TopRegions />
+                  <TopRegions topRegions={topRegions} />
                   <TopProvinces />
                   <TopCities />
                   <Revenue/>

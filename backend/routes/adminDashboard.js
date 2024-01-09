@@ -326,6 +326,35 @@ router.get('/transstats/', async (req, res) => {
 });
 
 
+router.get('/topregions/', async (req, res) => {
+
+    const query = "SELECT r.region_name AS Regions, COUNT(*) AS Result \
+    FROM user_contact uc \
+    JOIN region r ON uc.region_id = r.region_id \
+    WHERE uc.region_id IS NOT NULL AND uc.region_id <> '' \
+    GROUP BY uc.region_id \
+    ORDER BY result DESC \
+    LIMIT 3;";
+  
+  try {
+    const result = await queryDatabase(query);
+
+    const regions = result.map(row => row.Regions || 0);
+    const results = result.map(row => row.Result || 0);
+
+    const responseObj = {
+        Regions: regions,
+        Result: results
+    };
+
+    res.json(responseObj);
+} catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving data');
+}
+});
+
+
 
 
 

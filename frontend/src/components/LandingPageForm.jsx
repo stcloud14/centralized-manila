@@ -32,11 +32,13 @@ const LandingPageForm = () => {
     }
   };
 
+
   const handleVerificationSubmit = async () => {
     try {
       const codeConfirmation = await confirmationResult.confirm(verification_code);
       console.log("User signed in successfully:", codeConfirmation.user);
-      // Now you can update the state or perform any other actions as needed
+     
+      navigate(`/home/${userAuth.user_id}`);
     } catch (error) {
       console.error("Error verifying code:", error);
     }
@@ -67,13 +69,10 @@ const LandingPageForm = () => {
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
       window.confirmationResult = confirmationResult;
   
-
-  
       // After successful verification, navigate to the home page
-      const user = await confirmationResult.confirm(verificationCode);
-      const user_id = user_id; // Adjust this based on your actual user data structure
+      const user = await confirmationResult.confirm(verification_code);
+      // Adjust this based on your actual user data structure
 
-      navigate(`/home/${user_id}`);
     } catch (error) {
       console.error('Error signing in:', error);
     }

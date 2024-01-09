@@ -5,10 +5,6 @@ import { tailwindConfig } from '../../utils/Utils';
 function MainCard({ transStats }) {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  
-
-
-  console.log(transStats.taxpayment)
 
   useEffect(() => {
     if (transStats) {
