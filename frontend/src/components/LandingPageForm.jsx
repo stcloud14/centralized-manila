@@ -34,7 +34,8 @@ const LandingPageForm = () => {
 
     try {
       const code = userAuth.verification_code;
-      const result = await window.confirmationResult.confirm(code);
+      // Assuming you have the logic to verify the OTP
+      const result = await someFunctionToVerifyOTP(code);
 
       // OTP verification successful, update the UI or navigate to the next page
       setAuthenticated(true);
@@ -46,27 +47,27 @@ const LandingPageForm = () => {
 
   function onCaptchaVerify() {
     if (!window.recaptchaVerifier) {
-      // Check if auth and its settings property exist
-      const recaptchaOptions = auth && auth.settings && auth.settings.appVerificationDisabledForTesting
-        ? { size: 'invisible' }
-        : { size: 'invisible', callback: (response) => onSignup(), expiredCallback: () => console.log('Recaptcha expired') };
+      const recaptchaOptions = {
+        size: 'invisible',
+        callback: (response) => onSignup(response),
+        expiredCallback: () => console.log('Recaptcha expired'),
+      };
 
-      window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', recaptchaOptions);
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', recaptchaOptions);
     }
 
-    // Execute verify method on recaptchaVerifier
     window.recaptchaVerifier.verify().catch((error) => {
       console.error('Error verifying reCAPTCHA:', error);
     });
   }
 
-  const onSignup = async () => {
+  const onSignup = async (recaptchaToken) => {
     onCaptchaVerify();
     const appVerifier = window.recaptchaVerifier;
     const phoneNumber = `+63${userAuth.mobile_no}`;
 
     try {
-      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
       window.confirmationResult = confirmationResult;
       // OTP verification logic can be placed here if needed
     } catch (error) {
@@ -96,7 +97,6 @@ const LandingPageForm = () => {
       setLoginError("Authentication failed. Please check your credentials.");
     }
   };
-
     
   return (
     <div className="relative lg:h-screen md:h-screen min-h-screen bg-[url('./src/images/manila-hd.png')] dark:bg-[url('./src/images/manila-v2.jpg')] bg-cover bg-no-repeat bg-top">
