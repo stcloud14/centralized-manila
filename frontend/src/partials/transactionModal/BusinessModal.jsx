@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
-const BusinessModal = ({ user_id, selectedTransaction, businessData, businessImages, onClose, onSubmit }) => {
+const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, businessImages, onClose, onSubmit }) => {
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
@@ -322,7 +322,7 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Office</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_office ? businessTransaction.bus_office : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{busOffice.bus_office ? busOffice.bus_office : '-'}</span>
                           </div>
 
                           <div className='border-t dark:border-gray-500'></div>
