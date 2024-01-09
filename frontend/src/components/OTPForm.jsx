@@ -69,7 +69,7 @@ const OTPForm =()=>{
         <div className="md:w-1/2 flex items-center justify-center lg:mb-0 mb-5">
           <div className="text-center lg:pt-0 pt-20">
             <img
-              src="./src/images/mnl.svg"
+              src="../src/images/mnl.svg"
               alt="Centralized Manila Logo" className="lg:h-60 md:h-40 sm:h-28 h-28 mx-auto"
             />
             <span className="text-2xl text-white font-semibold tracking-wide">
@@ -89,8 +89,7 @@ const OTPForm =()=>{
         <div className="md:w-1/2 flex items-center justify-center lg:mx-auto mx-5">
           <div className="bg-white bg-opacity-95 lg:p-16 p-10 rounded-3xl shadow-lg">
           <h1 className='text-center mb-10 lg:text-lg text-md tracking-[.020em]'>
-            <span className='font-medium text-slate-600'>"Maligayang pagdating, </span>
-              <span className='font-bold text-blue-500'>Manileño!"</span>
+            <span className='font-medium text-slate-600'>Verification Code </span>
           </h1>
               <form onSubmit={handleSubmit}>
                     <div className="grid md:grid-cols-1 md:gap-6">
@@ -120,7 +119,7 @@ const OTPForm =()=>{
                         className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                         type="submit"
                       >
-                        Verify
+                        Verify OTP
                       </button>
                       {loginError && (
                             <p className="text-red-600 p-2 text-xs rounded-full mt-5">{loginError}</p>

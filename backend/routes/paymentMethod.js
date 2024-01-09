@@ -44,7 +44,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         send_email_receipt: true,
                         show_description: true,
                         show_line_items: true,
-                        description: 'PAYMENT CENTRALIZATION',
+                        description: trans_type,
                         line_items: [
                             {
                                 currency: 'PHP',
