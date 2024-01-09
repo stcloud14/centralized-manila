@@ -13,8 +13,6 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
   const time = moment(date_processed).format('h:mm A');
 
   const [businessTransaction, setBusinessTransaction] = useState({});
-
-  console.log(businessTransaction)
   
   const makePayment = async () => {
     try {
@@ -321,9 +319,16 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
                           </div>
 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Business Office</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{busOffice.bus_office ? busOffice.bus_office : '-'}</span>
+                              <span className="font-medium whitespace-nowrap">Business Office</span>
+                              <span className="whitespace-nowrap md:mb-0 mb-1">
+                                  {(busOffice && busOffice.bus_office) || 
+                                  ((businessTransaction && businessTransaction.bus_activity && businessTransaction.bus_activity[0] && businessTransaction.bus_activity[0].bus_office) || '-')}
+                              </span>
                           </div>
+
+                     
+
+
 
                           <div className='border-t dark:border-gray-500'></div>
                           {businessData && businessData.map((business, index) => (
