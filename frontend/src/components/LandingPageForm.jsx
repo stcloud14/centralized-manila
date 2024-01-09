@@ -67,7 +67,7 @@ const LandingPageForm = () => {
       window.confirmationResult = confirmationResult;
   
       // After successful verification, navigate to the home page
-      const user = await confirmationResult.confirm(verificationCode);
+      const user = await confirmationResult.confirm(verification_code);
       const user_id = user.user_id; // Adjust this based on your actual user data structure
   
       // Example: Navigating to home after successful verification
