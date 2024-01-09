@@ -122,7 +122,7 @@ const PersonalInfoForm =()=>{
             setTimeout(() => {
               setIsSuccess(false);
               setEditMode(false);
-            }, 3000);
+            }, 2000);
           })
           .catch((err) => {
             console.error(err);
@@ -164,7 +164,7 @@ const PersonalInfoForm =()=>{
         setShowWarning(true);
         setTimeout(() => {
           setShowWarning(false);
-        }, 4000);
+        }, 3000);
       } else {
         scrollToTop();
         setIsModalOpen(true);
