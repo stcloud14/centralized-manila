@@ -47,7 +47,7 @@ const AdminHomeForm =()=>{
   };
 
   useEffect(() => {
-    if (completedEffects > 20) {
+    if (completedEffects > 7) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
