@@ -13,8 +13,8 @@ const LandingPageForm =()=>{
   const navigate = useNavigate();
 
   const { mobile_no, user_pass } = userAuth;
-  console.log(mobile_no);
-  console.log(user_pass);
+  // console.log(mobile_no);
+  // console.log(user_pass);
   const [loginError, setLoginError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -25,14 +25,16 @@ const LandingPageForm =()=>{
         // Authentication successful, navigate to the dashboard
         const {user_id} = response.data[0];
         const {mobile_no} = response.data[0];
-        navigate(`/home/${user_id}`);
+        // navigate(`/`);
+        navigate(`/OTP/${user_id}`);
+        // navigate(`/home/${user_id}`);
         console.log(mobile_no)
       } else {
         // Authentication failed, show an error message
         setLoginError("Authentication failed");
       }
 
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       // Handle any network or server errors
       console.error(error);

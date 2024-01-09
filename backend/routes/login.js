@@ -22,6 +22,20 @@ router.get("/:mobile_no/:user_pass", (req, res) => {
     });
   });
 
+  // router.get("/:user_id", (req, res) => {
+    
+  //   console.log(user_id)
+  
+  
+  //   conn2.query(sql, [mobile_no, user_pass], (err, results) => {
+  //     if (err) {
+  //       console.error(err);
+  //       return res.status(500).json({ message: "Error occurred while authenticating." });
+  //     }
+  //     return res.status(200).json(results)
+  //   });
+  // });
+
 //   router.delete('/accdelete/:user_id', async (req, res) => {
 //     const user_id = req.params.user_id;
 //     // SQL query to delete user account
