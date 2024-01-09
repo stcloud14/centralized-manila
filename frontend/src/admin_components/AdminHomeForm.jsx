@@ -18,6 +18,7 @@ import MCstats from '../admin_partials/misc/MCstats';
 import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
+import Revenue from '../admin_partials/misc/Revenue';
 
 const AdminHomeForm =()=>{
 
@@ -211,6 +212,7 @@ const AdminHomeForm =()=>{
                   <TopRegions />
                   <TopProvinces />
                   <TopCities />
+                  <Revenue/>
                 </div>
               </>
             )}
