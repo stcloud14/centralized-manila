@@ -4,10 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ThemeToggle from '../partials/ThemeToggle';
 import auth from '../../firebase.config';  // Updated import statement
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
-
 const LandingPageForm = () => {
-
-
   const [userAuth, setUserAuth] = useState({
     mobile_no: "",
     user_pass: "",
@@ -70,9 +67,11 @@ const LandingPageForm = () => {
       window.confirmationResult = confirmationResult;
   
       // After successful verification, navigate to the home page
-      const user = await confirmationResult.confirm(verification_code);
-      // Adjust this based on your actual user data structure
-
+      const user = await confirmationResult.confirm(verificationCode);
+      const user_id = user.user_id; // Adjust this based on your actual user data structure
+  
+      // Example: Navigating to home after successful verification
+      navigate(`/home/${user_id}`);
     } catch (error) {
       console.error('Error signing in:', error);
     }
