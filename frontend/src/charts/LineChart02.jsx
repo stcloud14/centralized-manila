@@ -105,7 +105,7 @@ function LineChart02({
             }
             // Reuse the built-in legendItems generator
             const items = c.options.plugins.legend.labels.generateLabels(c);
-            items.slice(0, 2).forEach((item) => {
+            items.slice(0, 7).forEach((item) => {
               const li = document.createElement('li');
               li.style.marginLeft = tailwindConfig().theme.margin[3];
               // Button element
