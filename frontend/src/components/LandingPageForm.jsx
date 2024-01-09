@@ -6,14 +6,17 @@ import auth from '../../firebase.config';  // Updated import statement
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 const LandingPageForm = () => {
+
+
   const [userAuth, setUserAuth] = useState({
     mobile_no: "",
     user_pass: "",
-    verification_code: "",
   });
 
+
+  const [verification_code, setVerificationCode] = useState(""); // Added state for verification code
   const navigate = useNavigate();
-  const { mobile_no, user_pass, verification_code } = userAuth;
+  const { mobile_no, user_pass } = userAuth;
   const [loginError, setLoginError] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -29,19 +32,13 @@ const LandingPageForm = () => {
     }
   };
 
-  const handleVerificationSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleVerificationSubmit = async () => {
     try {
-      const code = userAuth.verification_code;
-      // Assuming you have the logic to verify the OTP
-      const result = await someFunctionToVerifyOTP(code);
-
-      // OTP verification successful, update the UI or navigate to the next page
-      setAuthenticated(true);
-      navigate(`/home/${result.user.uid}`);
+      const codeConfirmation = await confirmationResult.confirm(verification_code);
+      console.log("User signed in successfully:", codeConfirmation.user);
+      // Now you can update the state or perform any other actions as needed
     } catch (error) {
-      console.error('Error verifying OTP:', error);
+      console.error("Error verifying code:", error);
     }
   };
 
@@ -65,11 +62,18 @@ const LandingPageForm = () => {
     onCaptchaVerify();
     const appVerifier = window.recaptchaVerifier;
     const phoneNumber = `+63${userAuth.mobile_no}`;
-
+  
     try {
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
       window.confirmationResult = confirmationResult;
-      // OTP verification logic can be placed here if needed
+  
+
+  
+      // After successful verification, navigate to the home page
+      const user = await confirmationResult.confirm(verificationCode);
+      const user_id = user_id; // Adjust this based on your actual user data structure
+
+      navigate(`/home/${user_id}`);
     } catch (error) {
       console.error('Error signing in:', error);
     }
@@ -200,31 +204,30 @@ const LandingPageForm = () => {
           )}
           <div id="recaptcha-container"></div>
           {/* VERIFICATION PROCESS */}
-              {authenticated && (
-                <>
-                  <div className="grid md:grid-cols-2 md:gap-6">
-                    <div className="relative z-0 w-full group">
-                      <input
-                        type="password"
-                        id="verification_code"
-                        name="verification_code"
-                        placeholder=' '
-                        className="block py-2.5 px-0 w-full md:w-[147.5px] text-sm bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        value={verification_code}
-                        onChange={handleChange}
-                      />
-                      <label htmlFor="verification_code" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Verification Code</label>
-                    </div>
-                    <button
-                      className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
-                      onClick={handleVerificationSubmit}
-                    >
-                      VERIFY
-                    </button>
-
-                  </div>
-                </>
-              )}
+          {authenticated && (
+      <>
+        <div className="grid md:grid-cols-2 md:gap-6">
+          <div className="relative z-0 w-full group">
+            <input
+              value={verification_code}
+              type="text"
+              id="verification_code"
+              name="verification_code"
+              placeholder=' '
+              className="block py-2.5 px-0 w-full md:w-[147.5px] text-sm bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              onChange={(e) => setVerificationCode(e.target.value)}
+            />
+            <label htmlFor="verification_code" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Verification Code</label>
+          </div>
+          <button
+            className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+            onClick={handleVerificationSubmit}
+          >
+            VERIFY
+          </button>
+        </div>
+      </>
+    )}
 
             </form>
 
