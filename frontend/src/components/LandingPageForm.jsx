@@ -24,11 +24,14 @@ const LandingPageForm =()=>{
       if (response.status === 200) {
         // Authentication successful, navigate to the dashboard
         const {user_id} = response.data[0];
+        const {mobile_no} = response.data[0];
         navigate(`/home/${user_id}`);
+        console.log(mobile_no)
       } else {
         // Authentication failed, show an error message
         setLoginError("Authentication failed");
       }
+
       console.log(response);
     } catch (error) {
       // Handle any network or server errors
@@ -36,6 +39,8 @@ const LandingPageForm =()=>{
       setLoginError("Authentication failed. Please check your credentials.");
     }
   };
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
