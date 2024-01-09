@@ -33,9 +33,17 @@ const LandingPageForm = () => {
     try {
       const codeConfirmation = await confirmationResult.confirm(verification_code);
       console.log("User signed in successfully:", codeConfirmation.user);
+  
+      navigate(`/home/${userAuth.user_id}`);
       // Now you can update the state or perform any other actions as needed
     } catch (error) {
       console.error("Error verifying code:", error);
+  
+      if (error.code === "auth/invalid-verification-code") {
+        // Resend verification code or take appropriate action
+        console.log("Resending verification code...");
+        // Implement code resend logic here
+      }
     }
   };
 
@@ -54,32 +62,45 @@ const LandingPageForm = () => {
       console.error('Error verifying reCAPTCHA:', error);
     });
   }
-
   const onSignup = async (recaptchaToken) => {
     onCaptchaVerify();
     const appVerifier = window.recaptchaVerifier;
-    const phoneNumber = `+63${userAuth.mobile_no}`;
-  
+    const phoneNumber = `+63${userAuth.mobile_no}`; // Added backticks
+    
     try {
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
       window.confirmationResult = confirmationResult;
   
-      // You should now wait for the user to enter the verification code
-      // before proceeding with further authentication logic.
-  
-      // Example: Prompt the user for the verification code
-      const verificationCode = prompt('Enter the verification code sent to your phone:');
-  
       // After successful verification, navigate to the home page
-      const user = await confirmationResult.confirm(verificationCode);
-      const user_id = user.user_id; // Adjust this based on your actual user data structure
+      const user = await confirmationResult.confirm(verification_code);
+      if (user) {
+        try {
+          const response = await axios.get(`http://localhost:8800/login/${userAuth.mobile_no}/${user_pass}`); // Corrected the parameters
+          if (response.data.length > 0) {
+            // Authentication successful, set authenticated state to true
+            setAuthenticated(true);
+    
+            // Extract user_id from the response data
+            const { user_id } = response.data[0];
+            // Update the user_id in the state
+            setUserAuth((prev) => ({ ...prev, user_id }));
+          } else {
+            // Authentication failed, show an error message
+            setLoginError("Authentication failed. Please check your credentials.");
+          }
+        } catch (error) {
+          console.error(error);
+          setLoginError("Authentication failed. Please check your credentials.");
+        }
+      } // Adjust this based on your actual user data structure
   
-      // Example: Navigating to home after successful verification
-      navigate(`/home/${user_id}`);
+      console.log(userAuth);
+      navigate(`/home/${userAuth.user_id}`); // Added backticks and corrected the syntax
     } catch (error) {
       console.error('Error signing in:', error);
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
