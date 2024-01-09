@@ -171,6 +171,7 @@ const AdminHomeForm =()=>{
         <main className="overflow-y-auto">
   
           {isLoading && (
+            <div className="flex flex-col items-center justify-center h-screen">
             <>
               <svg
                 aria-hidden="true"
@@ -190,6 +191,7 @@ const AdminHomeForm =()=>{
               </svg>
               <p className="pt-5 sm:pt-10 font-bold text-lg md:text-xl">Please wait for a moment...</p>
             </>
+            </div>
           )}
   
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
