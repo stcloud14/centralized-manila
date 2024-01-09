@@ -28,6 +28,7 @@ const AdminHomeForm =()=>{
 
   const [isVisible, setIsVisible] = useState(false);
   
+  const [transStats, setTransStats] = useState({});
   const [taxPayment, setTaxPayment] = useState({});
   const [taxClearance, setTaxClearance] = useState({});
   const [businessPermit, setBusinessPermit] = useState({});
@@ -54,6 +55,20 @@ const AdminHomeForm =()=>{
       }, 2000);
     }
   }, [completedEffects]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const trans = await axios.get(`http://localhost:8800/admin/transstats/`);
+        setTransStats(trans.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        handleEffectCompletion();
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -201,7 +216,7 @@ const AdminHomeForm =()=>{
                 <AdminBanner />
   
                 <div className="grid grid-cols-12 gap-6">
-                  <MainCard />
+                  <MainCard transStats={transStats}/>
                   <RPstats taxPayment={taxPayment} />
                   <RCstats taxClearance={taxClearance} />
                   <BPstats businessPermit={businessPermit} />
