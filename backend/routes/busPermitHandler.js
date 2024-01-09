@@ -53,7 +53,6 @@ const router = Router();
 //   });
   
 let transID = null;
-let busOffice = null;
 
   
   router.post('/bus/:user_id', async (req, res) => {
@@ -96,7 +95,6 @@ let busOffice = null;
         bus_zip,
         bus_lessor,
         bus_rent,
-        bus_office,
         bus_validid,
       
         bus_nocopies,
@@ -106,7 +104,6 @@ let busOffice = null;
     } = req.body;
 
     transID = generateTransactionID();
-    busOffice = bus_office;
     
     
     const transType = '3';
@@ -165,11 +162,11 @@ let busOffice = null;
 
   router.post('/busact', async (req, res) => {
     const dataArray = req.body.dataRow;
+    const { bus_office } = req.body.busOffice; 
   
     try {
-      
         const query = "INSERT INTO bus_activity (`bus_office`, `bus_line`, `bus_psic`, `bus_products`, `bus_units_no`, `bus_total_cap`, `transaction_id`) VALUES ?";
-        const values = [dataArray.map(data => [busOffice, data.bus_line, data.bus_psic, data.bus_products, data.bus_units_no, data.bus_total_cap, transID])];
+        const values = [dataArray.map(data => [bus_office, data.bus_line, data.bus_psic, data.bus_products, data.bus_units_no, data.bus_total_cap, transID])];
 
         await queryDatabase(query, values);
   
@@ -178,7 +175,8 @@ let busOffice = null;
       console.error(err);
       res.status(500).json({ error: "Error executing queries" });
     }
-  });
+});
+
 
 
   const uniqueKey = generateUniqueFileID();

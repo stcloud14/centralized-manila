@@ -302,7 +302,6 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     ai.email AS bus_email, ai.tel_no AS bus_tel_no, ai.mobile_no AS bus_mobile_no, \
     bot.bus_floor, bot.bus_emp, bot.bus_male_emp, bot.bus_female_emp, bot.bus_van_no, bot.bus_truck_no, bot.bus_motor_no,\
     bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
-    bt.bus_office,\
     bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
     bbt.bus_type_label AS bus_type, \
     ti.amount as bus_amount, ti.copies, ti.print_type, ti.valid_id, pt.purpose_type, \
@@ -315,7 +314,6 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     LEFT JOIN address_info ai ON bp.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN bus_address ba ON bp.transaction_id = ba.transaction_id AND ba.transaction_id IS NOT NULL \
     LEFT JOIN bus_owner bo ON bp.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \
-    LEFT JOIN bus_activity bt ON bp.transaction_id = bt.transaction_id AND bt.transaction_id IS NOT NULL \
     LEFT JOIN bus_images bi ON bp.transaction_id = bi.transaction_id AND bi.transaction_id IS NOT NULL \
     LEFT JOIN bus_operation bot ON bp.transaction_id = bot.transaction_id AND bot.transaction_id IS NOT NULL \
     LEFT JOIN region r ON ba.region_id = r.region_id \
@@ -330,7 +328,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     \
     WHERE  bp.transaction_id = ?"
 
-    const query1 = "SELECT bus_line, bus_psic, bus_products, bus_units_no, bus_total_cap\
+    const query1 = "SELECT bus_office, bus_line, bus_psic, bus_products, bus_units_no, bus_total_cap\
     \
     FROM bus_activity \
     \

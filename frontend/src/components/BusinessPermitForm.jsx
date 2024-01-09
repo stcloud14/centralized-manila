@@ -56,7 +56,12 @@ const BusinessPermitForm =()=>{
 
   }));
 
-  console.log(busPermit)
+  const [busOffice, setBusOffice] = useState({
+    bus_office_partial: '',
+    bus_office: 'MAIN OFFICE'
+  });
+
+  console.log(busOffice)
 
 
   const [dataRow, setDataRow] = useState([]);
@@ -268,26 +273,6 @@ const BusinessPermitForm =()=>{
         };
       } 
 
-      if (name === 'bus_activity') {
-        
-        return {
-          ...prevData,
-          [name]: value,
-          bus_office: value,
-          bus_office_partial: '',
-        };
-      } 
-
-      
-      if (name === 'bus_office_partial') {
-        
-        return {
-          ...prevData,
-          [name]: updatedValue,
-          bus_office: updatedValue,
-        };
-      } 
-
       if (name === 'bus_email') {
         
         return {
@@ -444,6 +429,43 @@ const BusinessPermitForm =()=>{
   };
 
 
+  const handleBusActivity = (e) => {
+    const { id, name, value } = e.target;
+    const updatedValue = isNaN(value) ? value.toUpperCase() : value;
+  
+    setBusOffice((prevData) => {
+
+      if (name === 'bus_activity') {
+        
+        return {
+          ...prevData,
+          [name]: value,
+          bus_office: value,
+          bus_office_partial: '',
+        };
+      } 
+
+      
+      if (name === 'bus_office_partial') {
+        
+        return {
+          ...prevData,
+          [name]: updatedValue,
+          bus_office: updatedValue,
+        };
+      } 
+
+
+      else {
+        return {
+          ...prevData,
+          [id]: updatedValue,
+        };
+      }
+    });
+  };
+
+
   function updateAmount({ value }) {
 
     switch (value) {
@@ -500,7 +522,7 @@ const BusinessPermitForm =()=>{
             console.error('Transaction error:', response.statusText);
         }
 
-        const response1 = await axios.post(`http://localhost:8800/buspermit/busact`, { dataRow });
+        const response1 = await axios.post(`http://localhost:8800/buspermit/busact`, { dataRow, busOffice });
 
         if (response1.status === 200) {
             setIsSuccess(true);
@@ -649,6 +671,23 @@ const BusinessPermitForm =()=>{
   };
   
   const logoSrc = '../src/images/mnl_footer.svg';
+
+
+  function getShortName(longName, maxCharacters) {
+    if (!longName) {
+        return '-';
+    }
+
+    const fileNameWithoutExtension = longName.split('.').slice(0, -1).join('.');
+    const extension = longName.split('.').pop();
+
+    const truncatedName = fileNameWithoutExtension.length > maxCharacters - extension.length - 5
+        ? fileNameWithoutExtension.substring(0, maxCharacters - extension.length - 5) + '..'
+        : fileNameWithoutExtension;
+
+    return extension ? truncatedName + '.' + extension : truncatedName;
+}
+
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -972,7 +1011,7 @@ const BusinessPermitForm =()=>{
               <div className="pt-12 text-slate-700 dark:text-white">
                 <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Business Activity</h1>
                 {/* Row 1 */}
-                <div onChange={handleInputChange} name="bus_activity" className="flex flex-col md:flex-row md:items-center text-sm items-start">
+                <div onChange={handleBusActivity} name="bus_activity" className="flex flex-col md:flex-row md:items-center text-sm items-start">
                   <label htmlFor="bus_mainoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
                     <input value="MAIN OFFICE" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Main Office
@@ -996,7 +1035,7 @@ const BusinessPermitForm =()=>{
                   <div className="flex items-center md:mr-6">
                     <input value="1" type="radio" name="bus_activity" className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     Others:
-                    <input onChange={handleInputChange} value={busPermit.bus_office_partial} disabled={busPermit.bus_activity !== '1'} type="text" name="bus_office_partial" id="bus_office_partial" className="block px-0 ml-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Specify" required/>
+                    <input onChange={handleBusActivity} value={busOffice.bus_office_partial} disabled={busOffice.bus_activity !== '1'} type="text" name="bus_office_partial" id="bus_office_partial" className="block px-0 ml-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Specify" required/>
                   </div>
                 </div>
                 {/* Row 2 */} 
@@ -1167,9 +1206,10 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_dti_reg') {
-                              return fileArray.value ? fileArray.value.name : null;
-                            }
-                            return null; // If the name doesn't match, return null or handle as needed
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                            return null; 
                           })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1183,7 +1223,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_rptax_decbldg') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null; 
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1198,9 +1239,10 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_sec_paid') {
-                              return fileArray.value ? fileArray.value.name : null;
-                            }
+                           if (fileArray.fieldName === 'bus_sec_paid') {
+                            const fileName = fileArray.value ? fileArray.value.name : null;
+                            return fileName ? getShortName(fileName, 25) : null;
+                        }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
                         </td>
@@ -1214,9 +1256,10 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_sec_articles') {
-                              return fileArray.value ? fileArray.value.name : null;
-                            }
+                             if (fileArray.fieldName === 'bus_sec_articles') {
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
+                          }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
                         </td>
@@ -1230,9 +1273,10 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_nga') {
-                              return fileArray.value ? fileArray.value.name : null;
-                            }
+                           if (fileArray.fieldName === 'bus_sec_front') {
+                            const fileName = fileArray.value ? fileArray.value.name : null;
+                            return fileName ? getShortName(fileName, 25) : null;
+                        }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
                         </td>
@@ -1246,9 +1290,10 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_sec_front') {
-                              return fileArray.value ? fileArray.value.name : null;
-                            }
+                            if (fileArray.fieldName === 'bus_rptax_decland') {
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null; // Adjust the length as needed
+                          }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
                         </td>
@@ -1263,7 +1308,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_rptax_decland') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1279,7 +1325,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_fire') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1295,7 +1342,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_page2') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1311,7 +1359,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_page3') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1327,7 +1376,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_page4') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1343,7 +1393,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_page5') {
-                              return fileArray.value ? fileArray.value.name : null;
+                               const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1435,7 +1486,7 @@ const BusinessPermitForm =()=>{
         </main>
 
         {isModalOpen && (
-          <ModalTransaction selectedTransaction={busPermit} businessData={dataRow} businessImages={fileNames} modalType={'Business Permit'} onClose={handleCloseModal} onSubmit={handleSubmit} />
+          <ModalTransaction selectedTransaction={busPermit} busOffice={busOffice} businessData={dataRow} businessImages={fileNames} modalType={'Business Permit'} onClose={handleCloseModal} onSubmit={handleSubmit} />
         )}
 
       </div>

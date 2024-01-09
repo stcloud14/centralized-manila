@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment/moment.js';
 import StatusBadgeMobile from '../StatusBadgeMobile';
 
-const BusinessModal = ({ user_id, selectedTransaction, businessData, businessImages, onClose, onSubmit }) => {
+const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, businessImages, onClose, onSubmit }) => {
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
@@ -13,8 +13,6 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
   const time = moment(date_processed).format('h:mm A');
 
   const [businessTransaction, setBusinessTransaction] = useState({});
-
-  console.log(businessTransaction)
   
   const makePayment = async () => {
     try {
@@ -311,7 +309,14 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Incentives from any Government Entity</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_tax_incentives ? businessImages.bus_tax_incentives : 'NO'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">
+                              {businessImages && businessImages.bus_tax_incentives !== undefined
+                                      ? getShortName(businessImages.bus_tax_incentives, 20)
+                                      : businessTransaction && businessTransaction.bus_tax_incentives !== undefined
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_tax_incentives}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_tax_incentives, 20)}</a>
+                                      : ''
+                              }
+                          </span>
                           </div>
 
                           <br />
@@ -321,9 +326,16 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                           </div>
 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Business Office</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_office ? businessTransaction.bus_office : '-'}</span>
+                              <span className="font-medium whitespace-nowrap">Business Office</span>
+                              <span className="whitespace-nowrap md:mb-0 mb-1">
+                                  {(busOffice && busOffice.bus_office) || 
+                                  ((businessTransaction && businessTransaction.bus_activity && businessTransaction.bus_activity[0] && businessTransaction.bus_activity[0].bus_office) || '-')}
+                              </span>
                           </div>
+
+                     
+
+
 
                           <div className='border-t dark:border-gray-500'></div>
                           {businessData && businessData.map((business, index) => (

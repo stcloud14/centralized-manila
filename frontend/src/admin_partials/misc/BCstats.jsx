@@ -1,33 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import BarChart from '../../charts/BarChart03';
 
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function BCstats() {
+function BCstats({ birthCert }) {
 
-  const [birthCert, setBirthCert] = useState({});
-  const [dataLoaded, setDataLoaded] = useState(false);
-
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
-    const fetchBirthCert = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/admin/birthcert/`);
-        setBirthCert(res.data);
-        setDataLoaded(true);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchBirthCert();
+    if (birthCert) {
+      setIsDataLoaded(true);
+    } else {
+      setIsDataLoaded(false);
+    }
   }, []);
 
 
-  const chartData = dataLoaded
-    ? {
+  const chartData = isDataLoaded ? {
         labels: ['Reasons'],
         datasets: [
           {
