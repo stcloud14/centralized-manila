@@ -4,10 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ThemeToggle from '../partials/ThemeToggle';
 import auth from '../../firebase.config';  // Updated import statement
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
-
 const LandingPageForm = () => {
-
-
   const [userAuth, setUserAuth] = useState({
     mobile_no: "",
     user_pass: "",
@@ -67,12 +64,17 @@ const LandingPageForm = () => {
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
       window.confirmationResult = confirmationResult;
   
-
+      // You should now wait for the user to enter the verification code
+      // before proceeding with further authentication logic.
+  
+      // Example: Prompt the user for the verification code
+      const verificationCode = prompt('Enter the verification code sent to your phone:');
   
       // After successful verification, navigate to the home page
       const user = await confirmationResult.confirm(verificationCode);
-      const user_id = user_id; // Adjust this based on your actual user data structure
-
+      const user_id = user.user_id; // Adjust this based on your actual user data structure
+  
+      // Example: Navigating to home after successful verification
       navigate(`/home/${user_id}`);
     } catch (error) {
       console.error('Error signing in:', error);
