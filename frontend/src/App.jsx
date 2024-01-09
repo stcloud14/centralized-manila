@@ -78,7 +78,7 @@ function App() {
         <Route exact path="/contacts/:user_id" element={<Contacts/>} />
         <Route exact path="/privacypolicy/:user_id" element={<PrivacyPolicy/>} />
         <Route exact path="/paymentsuccess/:user_id" element={<PaymentSuccess/>} />
-        <Route exact path="/otp" element={<OTP />} />
+        <Route exact path="/otp/:user_id" element={<OTP />} />
 
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
