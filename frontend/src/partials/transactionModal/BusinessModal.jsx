@@ -309,7 +309,14 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Incentives from any Government Entity</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{getShortName(businessImages && businessImages.bus_tax_incentives ? businessImages.bus_tax_incentives : 'NO')}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">
+                              {businessImages && businessImages.bus_tax_incentives !== undefined
+                                      ? getShortName(businessImages.bus_tax_incentives, 20)
+                                      : businessTransaction && businessTransaction.bus_tax_incentives !== undefined
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_tax_incentives}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_tax_incentives, 20)}</a>
+                                      : ''
+                              }
+                          </span>
                           </div>
 
                           <br />
