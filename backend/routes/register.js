@@ -76,8 +76,8 @@ router.post('/', async (req, res) => {
     const query5 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
     const values5 = [transID, primaryKey];
 
-    const query6 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
-    const values6 = [transID, primaryKey];
+    // const query6 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
+    // const values6 = [transID, primaryKey];
 
 
     try {

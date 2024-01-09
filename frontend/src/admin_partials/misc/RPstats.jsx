@@ -1,35 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import BarChart from '../../charts/BarChart03';
 
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function RPstats() {
+function RPstats({ taxPayment }) {
 
-  const [taxPayment, setTaxPayment] = useState({});
-  const [dataLoaded, setDataLoaded] = useState(false);
-
-  console.log(taxPayment)
-
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
-    const fetchTaxPayment = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/admin/taxpayment/`);
-        setTaxPayment(res.data);
-        setDataLoaded(true);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchTaxPayment();
+    if (taxPayment) {
+      setIsDataLoaded(true);
+    } else {
+      setIsDataLoaded(false);
+    }
   }, []);
 
 
-  const chartData = dataLoaded
-    ? {
+  const chartData = isDataLoaded ? {
         labels: ['Reasons'],
         datasets: [
           {
@@ -73,8 +61,7 @@ function RPstats() {
             categoryPercentage: 1,
           },
         ],
-      }
-    : null;
+      } : null;
 
 
     return (
