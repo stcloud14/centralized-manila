@@ -650,6 +650,23 @@ const BusinessPermitForm =()=>{
   
   const logoSrc = '../src/images/mnl_footer.svg';
 
+
+  function getShortName(longName, maxCharacters) {
+    if (!longName) {
+        return '-';
+    }
+
+    const fileNameWithoutExtension = longName.split('.').slice(0, -1).join('.');
+    const extension = longName.split('.').pop();
+
+    const truncatedName = fileNameWithoutExtension.length > maxCharacters - extension.length - 5
+        ? fileNameWithoutExtension.substring(0, maxCharacters - extension.length - 5) + '..'
+        : fileNameWithoutExtension;
+
+    return extension ? truncatedName + '.' + extension : truncatedName;
+}
+
+
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
 
@@ -1167,9 +1184,10 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_dti_reg') {
-                              return fileArray.value ? fileArray.value.name : null;
-                            }
-                            return null; // If the name doesn't match, return null or handle as needed
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                            return null; 
                           })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1183,7 +1201,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_rptax_decbldg') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null; 
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1198,9 +1217,10 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_sec_paid') {
-                              return fileArray.value ? fileArray.value.name : null;
-                            }
+                           if (fileArray.fieldName === 'bus_sec_paid') {
+                            const fileName = fileArray.value ? fileArray.value.name : null;
+                            return fileName ? getShortName(fileName, 25) : null;
+                        }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
                         </td>
@@ -1214,9 +1234,10 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_sec_articles') {
-                              return fileArray.value ? fileArray.value.name : null;
-                            }
+                             if (fileArray.fieldName === 'bus_sec_articles') {
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
+                          }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
                         </td>
@@ -1230,9 +1251,10 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_nga') {
-                              return fileArray.value ? fileArray.value.name : null;
-                            }
+                           if (fileArray.fieldName === 'bus_sec_front') {
+                            const fileName = fileArray.value ? fileArray.value.name : null;
+                            return fileName ? getShortName(fileName, 25) : null;
+                        }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
                         </td>
@@ -1246,9 +1268,10 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_sec_front') {
-                              return fileArray.value ? fileArray.value.name : null;
-                            }
+                            if (fileArray.fieldName === 'bus_rptax_decland') {
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null; // Adjust the length as needed
+                          }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
                         </td>
@@ -1263,7 +1286,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_rptax_decland') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1279,7 +1303,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_fire') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1295,7 +1320,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_page2') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1311,7 +1337,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_page3') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1327,7 +1354,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_page4') {
-                              return fileArray.value ? fileArray.value.name : null;
+                              const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}
@@ -1343,7 +1371,8 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                             if (fileArray.fieldName === 'bus_page5') {
-                              return fileArray.value ? fileArray.value.name : null;
+                               const fileName = fileArray.value ? fileArray.value.name : null;
+                              return fileName ? getShortName(fileName, 25) : null;
                             }
                             return null; // If the name doesn't match, return null or handle as needed
                           })}

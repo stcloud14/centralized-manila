@@ -311,7 +311,7 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Incentives from any Government Entity</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{businessImages && businessImages.bus_tax_incentives ? businessImages.bus_tax_incentives : 'NO'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{getShortName(businessImages && businessImages.bus_tax_incentives ? businessImages.bus_tax_incentives : 'NO')}</span>
                           </div>
 
                           <br />
