@@ -69,12 +69,20 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
     fetchBusinessTransaction();
   }, [transaction_id]);
 
-  function getShortName(longName) {
-    // Logic to generate a shorter name, you can customize this based on your requirements
-    // Example: Take the first 10 characters of the file name
-    return longName.length > 9 ? longName.substring(0, 9) + '...' : longName;
-}
+  function getShortName(longName, maxCharacters) {
+    if (!longName) {
+        return '-';
+    }
 
+    const fileNameWithoutExtension = longName.split('.').slice(0, -1).join('.');
+    const extension = longName.split('.').pop();
+
+    const truncatedName = fileNameWithoutExtension.length > maxCharacters - extension.length - 5
+        ? fileNameWithoutExtension.substring(0, maxCharacters - extension.length - 5) + '..'
+        : fileNameWithoutExtension;
+
+    return extension ? truncatedName + '.' + extension : truncatedName;
+}
 
  
   return (
@@ -376,9 +384,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                             <span className="font-medium whitespace-nowrap">DTI Registration</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">
                                 {businessImages && businessImages.bus_dti_reg !== undefined
-                                    ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_dti_reg}</a>
-                                    : businessTransaction && businessTransaction.bus_dti_reg !== undefined
-                                        ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_dti_reg}</a>
+                                  ? getShortName(businessImages.bus_dti_reg, 20)
+                                     : businessTransaction && businessTransaction.bus_dti_reg !== undefined
+                                        ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_dti_reg, 20)}</a>
                                         : ''
                                 }
                             </span>
@@ -388,9 +396,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                           <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Building</span>
                           <span className="whitespace-nowrap md:mb-0 mb-1">
                               {businessImages && businessImages.bus_rptax_decbldg !== undefined
-                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(businessImages.bus_rptax_decbldg)}</a>
-                                  : businessTransaction && businessTransaction.bus_rptax_decbldg !== undefined
-                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_rptax_decbldg)}</a>
+                                      ? getShortName(businessImages.bus_rptax_decbldg, 20)
+                                      : businessTransaction && businessTransaction.bus_rptax_decbldg !== undefined
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_rptax_decbldg, 20)}</a>
                                       : ''
                               }
                           </span>
@@ -400,9 +408,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                           <span className="font-medium whitespace-nowrap">Paid-up and Subscribed Page</span>
                           <span className="whitespace-nowrap md:mb-0 mb-1">
                               {businessImages && businessImages.bus_sec_paid !== undefined
-                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(businessImages.bus_sec_paid)}</a>
+                                  ? getShortName(businessImages.bus_sec_paid, 20)
                                   : businessTransaction && businessTransaction.bus_sec_paid !== undefined
-                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_paid)}</a>
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_paid, 20)}</a>
                                       : ''
                               }
                           </span>
@@ -413,9 +421,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                           <span className="font-medium whitespace-nowrap">Articles of Primary and Secondary Purpose</span>
                           <span className="whitespace-nowrap md:mb-0 mb-1">
                               {businessImages && businessImages.bus_sec_articles !== undefined
-                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_sec_articles}</a>
+                                  ? getShortName(businessImages.bus_sec_articles,20 )
                                   : businessTransaction && businessTransaction.bus_sec_articles !== undefined
-                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_sec_articles}</a>
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_articles, 20)}</a>
                                       : ''
                               }
                           </span>
@@ -424,10 +432,10 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                       <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                           <span className="font-medium whitespace-nowrap">NGA-Contract of Lease</span>
                           <span className="whitespace-nowrap md:mb-0 mb-1">
-                              {businessImages && businessImages.bus_nga !== undefined
-                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_nga}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_nga}</a>
+                              {businessImages && businessImages.bus_nga !== undefined 
+                                  ? getShortName(businessImages.bus_nga, 20)
                                   : businessTransaction && businessTransaction.bus_nga !== undefined
-                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_nga}</a>
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_nga, 20)}</a>
                                       : ''
                               }
                           </span>
@@ -437,9 +445,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                           <span className="font-medium whitespace-nowrap">SEC Registration</span>
                           <span className="whitespace-nowrap md:mb-0 mb-1">
                               {businessImages && businessImages.bus_sec_front !== undefined
-                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_sec_front}</a>
+                                  ? getShortName(businessImages.bus_sec_front, 20)
                                   : businessTransaction && businessTransaction.bus_sec_front !== undefined
-                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_sec_front}</a>
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_front, 20)}</a>
                                       : ''
                               }
                           </span>
@@ -449,9 +457,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                           <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Land</span>
                           <span className="whitespace-nowrap md:mb-0 mb-1">
                               {businessImages && businessImages.bus_rptax_decland !== undefined
-                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_rptax_decland}</a>
+                                  ? getShortName(businessImages.bus_rptax_decland, 20)
                                   : businessTransaction && businessTransaction.bus_rptax_decland !== undefined
-                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_rptax_decland}</a>
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_rptax_decland, 20)}</a>
                                       : ''
                               }
                           </span>
@@ -461,9 +469,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                           <span className="font-medium whitespace-nowrap">Fire Safety Inspection Certificate</span>
                           <span className="whitespace-nowrap md:mb-0 mb-1">
                               {businessImages && businessImages.bus_fire !== undefined
-                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_fire}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_fire}</a>
+                                  ? getShortName(businessImages.bus_fire, 20 )
                                   : businessTransaction && businessTransaction.bus_fire !== undefined
-                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_fire}</a>
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_fire, 20)}</a>
                                       : ''
                               }
                           </span>
@@ -473,9 +481,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                         <span className="font-medium whitespace-nowrap">Page 2 Document</span>
                         <span className="whitespace-nowrap md:mb-0 mb-1">
                             {businessImages && businessImages.bus_page2 !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_page2}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_page2}</a>
+                                ? getShortName(businessImages.bus_page2, 20)
                                 : businessTransaction && businessTransaction.bus_page2 !== undefined
-                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_page2}</a>
+                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page2, 20)}</a>
                                     : ''
                             }
                         </span>
@@ -485,9 +493,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                         <span className="font-medium whitespace-nowrap">Page 3 Document</span>
                         <span className="whitespace-nowrap md:mb-0 mb-1">
                             {businessImages && businessImages.bus_page3 !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_page3}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_page3}</a>
+                                ? getShortName(businessImages.bus_page3, 20)
                                 : businessTransaction && businessTransaction.bus_page3 !== undefined
-                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_page3}</a>
+                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page3, 20)}</a>
                                     : ''
                             }
                         </span>
@@ -497,9 +505,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                         <span className="font-medium whitespace-nowrap">Page 4 Document</span>
                         <span className="whitespace-nowrap md:mb-0 mb-1">
                             {businessImages && businessImages.bus_page4 !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_page4}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_page4}</a>
+                                ? getShortName(businessImages.bus_page4, 20)
                                 : businessTransaction && businessTransaction.bus_page4 !== undefined
-                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_page4}</a>
+                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page4, 20)}</a>
                                     : ''
                             }
                         </span>
@@ -509,9 +517,9 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
                         <span className="font-medium whitespace-nowrap">Page 5 Document</span>
                         <span className="whitespace-nowrap md:mb-0 mb-1">
                             {businessImages && businessImages.bus_page5 !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_page5}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_page5}</a>
+                                ? getShortName(businessImages.bus_page5, 20)
                                 : businessTransaction && businessTransaction.bus_page5 !== undefined
-                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_page5}</a>
+                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page5, 20)}</a>
                                     : ''
                             }
                         </span>
