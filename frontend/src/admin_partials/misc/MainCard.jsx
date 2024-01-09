@@ -34,8 +34,8 @@ function MainCard() {
         data: [
           5, 10, 7, 8,
         ],
-        backgroundColor: tailwindConfig().theme.colors.blue[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.blue[700],
+        backgroundColor: '#0057e7',
+        hoverBackgroundColor: '#0741a3',
         barPercentage: 0.66,
         categoryPercentage: 0.66,
       },
@@ -45,8 +45,8 @@ function MainCard() {
         data: [
           3, 4, 2, 2,
         ],
-        backgroundColor: tailwindConfig().theme.colors.indigo[300],
-        hoverBackgroundColor: tailwindConfig().theme.colors.indigo[500],
+        backgroundColor: '#3078f0',
+        hoverBackgroundColor: '#2660bf',
         barPercentage: 0.66,
         categoryPercentage: 0.66,
       },
@@ -56,7 +56,7 @@ function MainCard() {
         data: [
           1, 4, 6, 3,
         ],
-        backgroundColor: tailwindConfig().theme.colors.red[500],
+        backgroundColor: '#d62d20',
         hoverBackgroundColor: tailwindConfig().theme.colors.red[700],
         barPercentage: 0.66,
         categoryPercentage: 0.66,
@@ -67,7 +67,7 @@ function MainCard() {
         data: [
           2, 5, 2, 4,
         ],
-        backgroundColor: tailwindConfig().theme.colors.yellow[500],
+        backgroundColor: '#ffa700',
         hoverBackgroundColor: tailwindConfig().theme.colors.yellow[700],
         barPercentage: 0.66,
         categoryPercentage: 0.66,
@@ -78,8 +78,8 @@ function MainCard() {
         data: [
           7, 1, 3, 4,
         ],
-        backgroundColor: tailwindConfig().theme.colors.pink[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.pink[700],
+        backgroundColor: '#008744',
+        hoverBackgroundColor: tailwindConfig().theme.colors.green[900],
         barPercentage: 0.66,
         categoryPercentage: 0.66,
       },
@@ -89,8 +89,8 @@ function MainCard() {
         data: [
           4, 8, 3, 4,
         ],
-        backgroundColor: tailwindConfig().theme.colors.violet[300],
-        hoverBackgroundColor: tailwindConfig().theme.colors.violet[500],
+        backgroundColor: '#17bf6c',
+        hoverBackgroundColor: '#0e7844',
         barPercentage: 0.66,
         categoryPercentage: 0.66,
       },
@@ -100,8 +100,8 @@ function MainCard() {
         data: [
           2, 3, 4, 5,
         ],
-        backgroundColor: tailwindConfig().theme.colors.orange[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.orange[700],
+        backgroundColor: '#78ffbc',
+        hoverBackgroundColor: '#428a66',
         barPercentage: 0.66,
         categoryPercentage: 0.66,
       },
