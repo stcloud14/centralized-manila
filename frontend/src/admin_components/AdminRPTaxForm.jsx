@@ -120,11 +120,11 @@ const AdminRPTaxForm =()=>{
                     </div>
 
                     <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                      <div onClick={handleOpenModal3} className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
+                      <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-sm mt-2 flex-grow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                         </svg>
-                        <span className="text-xs font-normal">&nbsp;Reject</span>
+                        <span className="text-xs font-normal">&nbsp;Expired</span>
                       </div>
                       <div onClick={handleOpenModal} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -156,13 +156,13 @@ const AdminRPTaxForm =()=>{
                     </div>
 
                     <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                      <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
+                      <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-sm mt-2 flex-grow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                         </svg>
-                        <span className="text-xs font-normal">&nbsp;Reject</span>
+                        <span className="text-xs font-normal">&nbsp;Expired</span>
                       </div>
-                      <div onClick={handleOpenModal2} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                      <div onClick={handleOpenModal} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                           <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
@@ -212,8 +212,8 @@ const AdminRPTaxForm =()=>{
                     </div>
 
                     <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                      <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-sm mt-2 flex-grow">
-                        <span className="text-xs font-normal">Expired</span>
+                      <div onClick={handleOpenModal3} className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
+                        <span className="text-xs font-normal">Reject</span>
                       </div>
                       <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                         <span className="text-xs font-normal">Done</span>
@@ -243,8 +243,8 @@ const AdminRPTaxForm =()=>{
                     </div>
 
                     <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                      <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-sm mt-2 flex-grow">
-                        <span className="text-xs font-normal">Expired</span>
+                      <div onClick={handleOpenModal3} className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
+                        <span className="text-xs font-normal">Reject</span>
                       </div>
                       <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                         <span className="text-xs font-normal">Done</span>
