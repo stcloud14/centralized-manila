@@ -69,6 +69,13 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
     fetchBusinessTransaction();
   }, [transaction_id]);
 
+  function getShortName(longName) {
+    // Logic to generate a shorter name, you can customize this based on your requirements
+    // Example: Take the first 10 characters of the file name
+    return longName.length > 9 ? longName.substring(0, 9) + '...' : longName;
+}
+
+
  
   return (
     <div className="fixed z-50 inset-0 ">
@@ -365,143 +372,150 @@ const BusinessModal = ({ user_id, selectedTransaction, businessData, businessIma
 
                           
                           <br />
-
-                          <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
-                            <span className="font-semibold whitespace-nowrap">Business Requirements</span>
-                          </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">DTI Registration</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">
-                              {businessImages && businessImages.bus_dti_reg !== undefined
-                                  ? businessImages.bus_dti_reg
-                                  : businessTransaction && businessTransaction.bus_dti_reg !== undefined
-                                  ? businessTransaction.bus_dti_reg
-                                  : ''
-                              }
-                            </span>
-                          </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Building</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.rptax_decbldg !== undefined
-                                    ? businessImages.rptax_decbldg
-                                    : businessTransaction && businessTransaction.rptax_decbldg !== undefined
-                                    ? businessTransaction.rptax_decbldg
-                                    : ''
-                                }
-                            </span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Paid-up and Subscribed Page</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.bus_sec_paid !== undefined
-                                    ? businessImages.bus_sec_paid
-                                    : businessTransaction && businessTransaction.bus_sec_paid !== undefined
-                                    ? businessTransaction.bus_sec_paid
-                                    : ''
-                                }
-                            </span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Articles of Primary and Secondary Purpose</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.bus_sec_articles !== undefined
-                                    ? businessImages.bus_sec_articles
-                                    : businessTransaction && businessTransaction.bus_sec_articles !== undefined
-                                    ? businessTransaction.bus_sec_articles
-                                    : ''
-                                }
-                            </span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">NGA-Contract of Lease</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.bus_nga !== undefined
-                                    ? businessImages.bus_nga
-                                    : businessTransaction && businessTransaction.bus_nga !== undefined
-                                    ? businessTransaction.bus_nga
-                                    : ''
-                                }
-                            </span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">SEC Registration</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.bus_sec_front !== undefined
-                                    ? businessImages.bus_sec_front
-                                    : businessTransaction && businessTransaction.bus_sec_front !== undefined
-                                    ? businessTransaction.bus_sec_front
-                                    : ''
-                                }
-                            </span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Land</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.bus_rptax_decland !== undefined
-                                    ? businessImages.bus_rptax_decland
-                                    : businessTransaction && businessTransaction.bus_rptax_decland !== undefined
-                                    ? businessTransaction.bus_rptax_decland
-                                    : ''
-                                }
-                            </span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Fire Safety Inspection Certificate</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.bus_fire !== undefined
-                                    ? businessImages.bus_fire
-                                    : businessTransaction && businessTransaction.bus_fire !== undefined
-                                    ? businessTransaction.bus_fire
-                                    : ''
-                                }
-                            </span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Page 2 Document</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.bus_page2 !== undefined
-                                    ? businessImages.bus_page2
-                                    : businessTransaction && businessTransaction.bus_page2 !== undefined
-                                    ? businessTransaction.bus_page2
-                                    : ''
-                                }
-                            </span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Page 3 Document</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.bus_page3 !== undefined
-                                    ? businessImages.bus_page3
-                                    : businessTransaction && businessTransaction.bus_page3 !== undefined
-                                    ? businessTransaction.bus_page3
-                                    : ''
-                                }
-                            </span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Page 4 Document</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.bus_page4 !== undefined
-                                    ? businessImages.bus_page4
-                                    : businessTransaction && businessTransaction.bus_page4 !== undefined
-                                    ? businessTransaction.bus_page4
-                                    : ''
-                                }
-                            </span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Page 5 Document</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">
-                                {businessImages && businessImages.bus_page5 !== undefined
-                                    ? businessImages.bus_page5
-                                    : businessTransaction && businessTransaction.bus_page5 !== undefined
-                                    ? businessTransaction.bus_page5
-                                    : ''
+                                {businessImages && businessImages.bus_dti_reg !== undefined
+                                    ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_dti_reg}</a>
+                                    : businessTransaction && businessTransaction.bus_dti_reg !== undefined
+                                        ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_dti_reg}</a>
+                                        : ''
                                 }
                             </span>
                         </div>
 
+                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                          <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Building</span>
+                          <span className="whitespace-nowrap md:mb-0 mb-1">
+                              {businessImages && businessImages.bus_rptax_decbldg !== undefined
+                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(businessImages.bus_rptax_decbldg)}</a>
+                                  : businessTransaction && businessTransaction.bus_rptax_decbldg !== undefined
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_rptax_decbldg)}</a>
+                                      : ''
+                              }
+                          </span>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                          <span className="font-medium whitespace-nowrap">Paid-up and Subscribed Page</span>
+                          <span className="whitespace-nowrap md:mb-0 mb-1">
+                              {businessImages && businessImages.bus_sec_paid !== undefined
+                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(businessImages.bus_sec_paid)}</a>
+                                  : businessTransaction && businessTransaction.bus_sec_paid !== undefined
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_paid)}</a>
+                                      : ''
+                              }
+                          </span>
+                      </div>
+
+
+                       <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                          <span className="font-medium whitespace-nowrap">Articles of Primary and Secondary Purpose</span>
+                          <span className="whitespace-nowrap md:mb-0 mb-1">
+                              {businessImages && businessImages.bus_sec_articles !== undefined
+                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_sec_articles}</a>
+                                  : businessTransaction && businessTransaction.bus_sec_articles !== undefined
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_sec_articles}</a>
+                                      : ''
+                              }
+                          </span>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                          <span className="font-medium whitespace-nowrap">NGA-Contract of Lease</span>
+                          <span className="whitespace-nowrap md:mb-0 mb-1">
+                              {businessImages && businessImages.bus_nga !== undefined
+                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_nga}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_nga}</a>
+                                  : businessTransaction && businessTransaction.bus_nga !== undefined
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_nga}</a>
+                                      : ''
+                              }
+                          </span>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                          <span className="font-medium whitespace-nowrap">SEC Registration</span>
+                          <span className="whitespace-nowrap md:mb-0 mb-1">
+                              {businessImages && businessImages.bus_sec_front !== undefined
+                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_sec_front}</a>
+                                  : businessTransaction && businessTransaction.bus_sec_front !== undefined
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_sec_front}</a>
+                                      : ''
+                              }
+                          </span>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                          <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Land</span>
+                          <span className="whitespace-nowrap md:mb-0 mb-1">
+                              {businessImages && businessImages.bus_rptax_decland !== undefined
+                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_rptax_decland}</a>
+                                  : businessTransaction && businessTransaction.bus_rptax_decland !== undefined
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_rptax_decland}</a>
+                                      : ''
+                              }
+                          </span>
+                      </div>
+
+                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                          <span className="font-medium whitespace-nowrap">Fire Safety Inspection Certificate</span>
+                          <span className="whitespace-nowrap md:mb-0 mb-1">
+                              {businessImages && businessImages.bus_fire !== undefined
+                                  ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_fire}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_fire}</a>
+                                  : businessTransaction && businessTransaction.bus_fire !== undefined
+                                      ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_fire}</a>
+                                      : ''
+                              }
+                          </span>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                        <span className="font-medium whitespace-nowrap">Page 2 Document</span>
+                        <span className="whitespace-nowrap md:mb-0 mb-1">
+                            {businessImages && businessImages.bus_page2 !== undefined
+                                ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_page2}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_page2}</a>
+                                : businessTransaction && businessTransaction.bus_page2 !== undefined
+                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_page2}</a>
+                                    : ''
+                            }
+                        </span>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                        <span className="font-medium whitespace-nowrap">Page 3 Document</span>
+                        <span className="whitespace-nowrap md:mb-0 mb-1">
+                            {businessImages && businessImages.bus_page3 !== undefined
+                                ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_page3}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_page3}</a>
+                                : businessTransaction && businessTransaction.bus_page3 !== undefined
+                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_page3}</a>
+                                    : ''
+                            }
+                        </span>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                        <span className="font-medium whitespace-nowrap">Page 4 Document</span>
+                        <span className="whitespace-nowrap md:mb-0 mb-1">
+                            {businessImages && businessImages.bus_page4 !== undefined
+                                ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_page4}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_page4}</a>
+                                : businessTransaction && businessTransaction.bus_page4 !== undefined
+                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_page4}</a>
+                                    : ''
+                            }
+                        </span>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                        <span className="font-medium whitespace-nowrap">Page 5 Document</span>
+                        <span className="whitespace-nowrap md:mb-0 mb-1">
+                            {businessImages && businessImages.bus_page5 !== undefined
+                                ? <a href={`http://localhost:5173/uploads/business/${businessImages.bus_page5}`} target="_blank" rel="noopener noreferrer">{businessImages.bus_page5}</a>
+                                : businessTransaction && businessTransaction.bus_page5 !== undefined
+                                    ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{businessTransaction.bus_page5}</a>
+                                    : ''
+                            }
+                        </span>
+                    </div>
 
                           <br />
 
