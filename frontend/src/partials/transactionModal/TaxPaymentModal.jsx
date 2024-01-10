@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment/moment.js';
-import StatusBadgeMobile from '../StatusBadgeMobile';
+import StatusBadgeMobile from '../StatusBadgeModal';
 import Paymongo from 'paymongo';
 
 console.log("API Key:", process.env.SECRET_KEY);
@@ -192,7 +192,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) =>
                           {status_type ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Status</span>
-                            <StatusBadgeMobile statusType={status_type} />
+                            <StatusBadgeModal statusType={status_type} />
                           </div>
                           ) : null}
 
