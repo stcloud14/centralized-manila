@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const getStatusColors = (statusType) => {
   switch (statusType) {
@@ -27,10 +27,25 @@ const getStatusColors = (statusType) => {
 const StatusBadgeMobile = ({ statusType }) => {
   const { bgColor, textColor, text } = getStatusColors(statusType);
   const [popoverVisible, setPopoverVisible] = useState(false);
+  const popoverRef = useRef(null);
 
   const togglePopover = () => {
     setPopoverVisible(!popoverVisible);
   };
+
+  const handleClickOutside = (event) => {
+    if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+      setPopoverVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   const getPopoverStyles = () => {
     if (!popoverVisible) {
@@ -50,14 +65,14 @@ const StatusBadgeMobile = ({ statusType }) => {
       popoverStyles.left = '85px'; // Adjust as needed for small screens
     } else {
       popoverStyles.top = '-20px'; // Adjust as needed for larger screens
-      popoverStyles.left = '-240px'; // Adjust as needed for larger screens
+      popoverStyles.left = '-230px'; // Adjust as needed for larger screens
     }
 
     return popoverStyles;
   };
 
   return (
-    <div className="flex relative">
+    <div className="flex relative" ref={popoverRef}>
       <span className={`text-[0.65rem] flex justify-center ml-1 py-0.5 rounded-full ${bgColor} ${textColor} w-24`}>
         <span className="font-semibold">{statusType}</span>
         <button onClick={togglePopover} type="button">
@@ -83,7 +98,7 @@ const StatusBadgeMobile = ({ statusType }) => {
           style={getPopoverStyles()}
           className={`inline-block transition-opacity duration-300  bg-white dark:bg-[#212121] text-slate-700 dark:text-white border-gray-200 dark:border-gray-800 rounded-lg shadow-xl`}
         >
-          <div className="p-3 text-[10px] sm:text-xs w-[200px] sm:w-[300px] space-y-2 text-left">
+          <div className="p-3 text-[10px] sm:text-xs w-[200px] sm:w-[300px] text-left">
             {text}
             </div>
             </div>
@@ -91,6 +106,5 @@ const StatusBadgeMobile = ({ statusType }) => {
     </div>
   );
 };
-  
 
 export default StatusBadgeMobile;
