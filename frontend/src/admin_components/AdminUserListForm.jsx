@@ -7,14 +7,14 @@ import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import UserListDesktop from '../admin_partials/admin_userregistry/userlistDesktop';
 import UserListMobile from '../admin_partials/admin_userregistry/userlistMobile';
+import AdminUserViewModal from '../admin_partials/admin_modals/AdminUserViewModal';
+import AdminUserEditModal from '../admin_partials/admin_modals/AdminUserEditModal';
+import AdminUserDeleteModal from '../admin_partials/admin_modals/AdminUserDeleteModal';
 
 
 const AdminUserListForm = () => {
 
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
 
@@ -30,6 +30,29 @@ const AdminUserListForm = () => {
     };
   }, []);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => {
+      setIsModalOpen(true);
+    }
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
+  const handleOpenModal2 = () => {
+      setIsModalOpen2(true);
+    }
+  const handleCloseModal2 = () => {
+    setIsModalOpen2(false);
+  };
+
+  const [isModalOpen3, setIsModalOpen3] = useState(false);
+  const handleOpenModal3 = () => {
+      setIsModalOpen3(true);
+    }
+  const handleCloseModal3 = () => {
+    setIsModalOpen3(false);
+  };
 
 const logoSrc = '../src/images/mnl_footer.svg';
 
@@ -48,14 +71,26 @@ const logoSrc = '../src/images/mnl_footer.svg';
             
             {isMobileView ? (           
               // For Mobile View
-              <UserListMobile />
+              <UserListMobile handleOpenModal={handleOpenModal} handleOpenModal2={handleOpenModal2} handleOpenModal3={handleOpenModal3}/>
             ) : (
               // For Desktop View
-              <UserListDesktop/>
+              <UserListDesktop handleOpenModal={handleOpenModal} handleOpenModal2={handleOpenModal2} handleOpenModal3={handleOpenModal3}/>
             )}
           </div>
           <AdminFooter logo={logoSrc} />
         </main>
+        <AdminUserViewModal
+          isOpen={isModalOpen}
+          handleClose={handleCloseModal}
+        />
+        <AdminUserEditModal
+          isOpen2={isModalOpen2}
+          handleClose2={handleCloseModal2}
+        />
+        <AdminUserDeleteModal
+          isOpen3={isModalOpen3}
+          handleClose3={handleCloseModal3}
+        />
       </div>
     </div>
   );
