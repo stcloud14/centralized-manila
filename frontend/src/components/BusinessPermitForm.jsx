@@ -998,7 +998,8 @@ const BusinessPermitForm =()=>{
                   <p>
                     {selectedFiles.map((fileArray) => {
                       if (fileArray.fieldName === 'bus_tax_incentives') {
-                        return fileArray.value ? fileArray.value.name : null;
+                        const fileName = fileArray.value ? fileArray.value.name : null;
+                        return fileName ? getShortName(fileName, 25) : null; 
                       }
                       return null; 
                     })}
