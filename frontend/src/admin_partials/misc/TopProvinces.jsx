@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import DoughnutChart from '../../charts/DoughnutChart';
 import { tailwindConfig } from '../../utils/Utils';
 
-function TopProvinces() {
+function TopProvinces({ topProvinces }) {
 
-  const chartData = {
-    labels: ['Ilocos Sur', '1st District', 'Palawan '],
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  useEffect(() => {
+    if (topProvinces) {
+      setIsDataLoaded(true);
+    } else {
+      setIsDataLoaded(false);
+    }
+  }, []);
+
+
+  const chartData = isDataLoaded ?
+    {
+    labels: topProvinces.Provinces,
     datasets: [
       {
-        label: 'Top Countries',
-        data: [
-          75, 15, 10,
-        ],
+        label: 'Top Provinces',
+        data: topProvinces.Result,
         backgroundColor: [
           tailwindConfig().theme.colors.yellow[300],
           tailwindConfig().theme.colors.yellow[600],
@@ -25,7 +35,7 @@ function TopProvinces() {
         borderWidth: 0,
       },
     ],
-  };
+  } : null;
 
     return (
         <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
@@ -38,7 +48,7 @@ function TopProvinces() {
             {/* Chart built with Chart.js 3 */}
             <div className="grow">
                 {/* Change the height attribute to adjust the chart height */}
-                <DoughnutChart data={chartData} width={389} height={260} />
+                {chartData && <DoughnutChart data={chartData} width={389} height={260} />}
             </div>
         </div>
     )

@@ -4,8 +4,6 @@ import { tailwindConfig } from '../../utils/Utils';
 
 function TopRegions({ topRegions }) {
 
-  console.log(topRegions)
-
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {

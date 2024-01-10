@@ -37,6 +37,8 @@ const AdminDashChiefForm =()=>{
   const [deathCert, setDeathCert] = useState({});
   const [marriageCert, setMarriageCert] = useState({});
   const [topRegions, setTopRegions] = useState({});
+  const [topProvinces, setTopProvinces] = useState({});
+  const [topCities, setTopCities] = useState({});
   
 
   const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +51,7 @@ const AdminDashChiefForm =()=>{
   };
 
   useEffect(() => {
-    if (completedEffects > 7) {
+    if (completedEffects > 11) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
@@ -182,6 +184,34 @@ const AdminDashChiefForm =()=>{
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const topp = await axios.get(`http://localhost:8800/admin/topprovinces/`);
+        setTopProvinces(topp.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        handleEffectCompletion();
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const topc = await axios.get(`http://localhost:8800/admin/topcities/`);
+        setTopCities(topc.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        handleEffectCompletion();
+      }
+    };
+    fetchData();
+  }, []);
+
 
 
 
@@ -239,8 +269,8 @@ const AdminDashChiefForm =()=>{
                   <DCstats deathCert={deathCert}/>
                   <MCstats marriageCert={marriageCert}/>
                   <TopRegions topRegions={topRegions} />
-                  <TopProvinces />
-                  <TopCities />
+                  <TopProvinces topProvinces={topProvinces} />
+                  <TopCities topCities={topCities} />
                   <Revenue/>
                 </div>
               </>
