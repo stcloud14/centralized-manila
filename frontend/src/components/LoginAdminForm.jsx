@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const LoginAdminForm = () => {
   const [adminCredentials, setAdminCredentials] = useState({
-    admin_id: "",
+    id: "",
+    admin_name: "",
     admin_pass: "",
+    role: "",
   });
 
   const [loginError, setLoginError] = useState(null);
@@ -15,17 +16,39 @@ const LoginAdminForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log('Admin Credentials:', adminCredentials);
+  
     try {
-      const response = await axios.post(`http://localhost:8800/login/${adminCredentials.admin_id}/${adminCredentials.admin_pass}`, {
+      const response = await axios.post(`http://localhost:8800/login/${adminCredentials.admin_name}/${adminCredentials.admin_pass}`, {
         params: {
-          admin_id: adminCredentials.admin_id,
+          admin_id: adminCredentials.admin_name,
           admin_pass: adminCredentials.admin_pass,
         },
-      });      
-
+      });
+  
       if (response.data && response.data.message === 'Login successful') {
-        // Redirect to the admin home page upon successful login
-        navigate('/admin_home');
+        const admin = response.data.admin;
+  
+        switch (admin.role) {
+          case 'chief_admin':
+            navigate('/admin_dash_chief');
+            break;
+          case 'rptax_admin':
+            navigate('/admin_dash_rp');
+            break;
+          case 'bp_admin':
+            navigate('/admin_dash_bp');
+            break;
+          case 'ctc_admin':
+            navigate('/admin_dash_ctc');
+            break;
+          case 'lcr_admin':
+            navigate('/admin_dash_lcr');
+            break;   
+
+          default:
+            // Handle unknown or unsupported roles
+            setLoginError("Unknown or unsupported role");
+        }
       } else {
         // Authentication failed, show an error message
         setLoginError(response.data && response.data.message ? response.data.message : "Authentication failed. Please check your credentials.");
@@ -34,7 +57,8 @@ const LoginAdminForm = () => {
       console.error('Login Error:', error);
       setLoginError("Authentication failed. Please check your credentials.");
     }
-  };  
+  };
+    
 
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-white justify-center items-center">
@@ -64,7 +88,7 @@ const LoginAdminForm = () => {
         <h1 className='text-center mb-10 text-black text-slate-600'>Welcome to <span className='font-medium text-blue-500'>Centralized</span><span className='font-medium text-red-500'> Manila</span></h1>
                 <div className="grid md:grid-cols-1 md:gap-6">
                   <div className="relative z-0 w-full lg:mb-0 mb-4 group">
-                    <input type="text" value={adminCredentials.admin_id} onChange={(e) => setAdminCredentials({ ...adminCredentials, admin_id: e.target.value })} id="admin_id" name="admin_id" placeholder=' ' className="block py-2.5 px-0 w-full lg:text-sm text-xs bg-transparent border-0 border-b-2 border-gray-300 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer" autoComplete='off'/>    
+                    <input type="text" value={adminCredentials.admin_name} onChange={(e) => setAdminCredentials({ ...adminCredentials, admin_name: e.target.value })} id="admin_id" name="admin_id" placeholder=' ' className="block py-2.5 px-0 w-full lg:text-sm text-xs bg-transparent border-0 border-b-2 border-gray-300 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer" autoComplete='off'/>    
                     <label htmlFor="admin_id" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Admin ID</label>
                   </div>
 
@@ -73,6 +97,13 @@ const LoginAdminForm = () => {
                     <label htmlFor="login_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>  
                   </div>
                 </div>
+
+                {/* Display error message if loginError is not null */}
+                  {loginError && (
+                    <div className="text-red-500 text-center mb-4">
+                      {loginError}
+                    </div>
+                  )}
 
                 <div className="mt-4 flex justify-between font-semibold text-sm">
                     <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
