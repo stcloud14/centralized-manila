@@ -387,6 +387,17 @@ const UserSettings =()=>{
                   </div>
 
                   <div className="flex flex-col justify-center mt-4 mb-4">
+                    <h1 className='font-medium text-center text-slate-700 dark:text-white mt-10 mb-4'>Account Verification</h1>
+                    <button
+                        type="submit"
+                        // onClick={handleSubmit}
+                        className="w-full sm:w-auto text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                      >
+                        Apply for Account Verification
+                      </button>
+                  </div>
+
+                  <div className="flex flex-col justify-center mt-4 mb-4">
                     <h1 className='font-medium text-center text-slate-700 dark:text-white mt-10 mb-4'>Account Deletion</h1>
                     <span className='text-sm mb-4'>Are you sure you want to permanently delete your account?</span>
                     <button

@@ -192,7 +192,19 @@ const DropdownProfile = ({ align }) => {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-[#3d3d3d]">
-            <div className="font-medium text-slate-800 dark:text-slate-100">{userPersonal.f_name} {userPersonal.l_name}</div>
+            <div className="flex font-medium text-slate-800 dark:text-slate-100">{userPersonal.f_name} {userPersonal.l_name} 
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-9 h-9 pb-3 text-blue-500" viewBox="0 0 841.89 595.28">
+  <path fill="currentColor" d="M351.54,516.77l-39.52-67.9l-78.54-16.17l8.83-76.77l-49.93-58.5l49.93-57.98l-8.83-76.75l78.54-16.21
+    l39.52-68.39l69.71,32.39l69.71-32.39l40.05,68.41l78.01,16.19l-8.8311,76.77l49.93,57.96l-49.93,58.5l8.83,76.77l-78.01,16.17
+    l-40.05,67.9l-69.71-32.39L351.54,516.77z M398.88,366.9l118.08-117.51l-23.4-21.42l-94.68,94.01l-49.4-51.69l-23.94,23.48
+    C325.55,293.77,398.88,366.9,398.88,366.9z"/>
+</svg>
+
+            
+            
+            
+            
+            </div>
             <div className="text-xs text-slate-500 dark:text-slate-400 italic">User</div>
           </div>
           <ul>
