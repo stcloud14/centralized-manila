@@ -32,12 +32,13 @@ import About from './pages/About';
 import Contacts from './pages/Contacts';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import PaymentSuccess from './pages/PaymentSuccess';
-import OTP from './pages/OTP';
 
 // Import Admin Dashboards
 import AdminDashChief from './admin_pages/AdminDashChief';
 import AdminDashRP from './admin_pages/AdminDashRP';
 import AdminDashBP from './admin_pages/AdminDashBP';
+import AdminDashCTC from './admin_pages/AdminDashCTC';
+import AdminDashLCR from './admin_pages/AdminDashLCR';
 
 // Import Admin Pages
 import AdminRPTax from './admin_pages/AdminRPTax';
@@ -83,7 +84,6 @@ function App() {
         <Route exact path="/contacts/:user_id" element={<Contacts/>} />
         <Route exact path="/privacypolicy/:user_id" element={<PrivacyPolicy/>} />
         <Route exact path="/paymentsuccess/:user_id" element={<PaymentSuccess/>} />
-        <Route exact path="/otp/:user_id" element={<OTP />} />
 
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
@@ -91,6 +91,8 @@ function App() {
         <Route exact path="/admin_dash_chief" element={<AdminDashChief />} />
         <Route exact path="/admin_dash_rp" element={<AdminDashRP />} />
         <Route exact path="/admin_dash_bp" element={<AdminDashBP />} />
+        <Route exact path="/admin_dash_ctc" element={<AdminDashCTC />} />
+        <Route exact path="/admin_dash_lcr" element={<AdminDashLCR />} />
 
         <Route exact path="/admin_rptax" element={<AdminRPTax />} />
         <Route exact path="/admin_business" element={<AdminBusiness />} />
@@ -98,10 +100,7 @@ function App() {
         <Route exact path="/admin_lcr" element={<AdminLocalCivilRegistry />} />
         <Route exact path="/admin_registry" element={<AdminUserRegistry />} />
         <Route exact path="/admin_audittrail" element={<AdminAuditTrail />} />
-
-        
-
-        
+  
       </Routes>
     </>
   );

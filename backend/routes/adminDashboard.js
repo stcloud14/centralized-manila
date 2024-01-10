@@ -333,7 +333,7 @@ router.get('/topregions/', async (req, res) => {
     JOIN region r ON uc.region_id = r.region_id \
     WHERE uc.region_id IS NOT NULL AND uc.region_id <> '' \
     GROUP BY uc.region_id \
-    ORDER BY result DESC \
+    ORDER BY Result DESC \
     LIMIT 3;";
   
   try {
@@ -344,6 +344,64 @@ router.get('/topregions/', async (req, res) => {
 
     const responseObj = {
         Regions: regions,
+        Result: results
+    };
+
+    res.json(responseObj);
+} catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving data');
+}
+});
+
+
+router.get('/topprovinces/', async (req, res) => {
+
+    const query = "SELECT p.prov_name AS Provinces, COUNT(*) AS Result \
+    FROM user_contact uc \
+    JOIN province p ON uc.prov_id = p.prov_id \
+    WHERE uc.prov_id IS NOT NULL AND uc.prov_id <> '' \
+    GROUP BY uc.prov_id \
+    ORDER BY Result DESC \
+    LIMIT 3;";
+  
+  try {
+    const result = await queryDatabase(query);
+
+    const provinces = result.map(row => row.Provinces || 0);
+    const results = result.map(row => row.Result || 0);
+
+    const responseObj = {
+        Provinces: provinces,
+        Result: results
+    };
+
+    res.json(responseObj);
+} catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving data');
+}
+});
+
+
+router.get('/topcities/', async (req, res) => {
+
+    const query = "SELECT c.city_name AS Cities, COUNT(*) AS Result \
+    FROM user_contact uc \
+    JOIN cities c ON uc.city_id = c.city_id \
+    WHERE uc.city_id IS NOT NULL AND uc.city_id <> '' \
+    GROUP BY uc.city_id \
+    ORDER BY Result DESC \
+    LIMIT 3;";
+  
+  try {
+    const result = await queryDatabase(query);
+
+    const cities = result.map(row => row.Cities || 0);
+    const results = result.map(row => row.Result || 0);
+
+    const responseObj = {
+        Cities: cities,
         Result: results
     };
 

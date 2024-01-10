@@ -186,7 +186,7 @@ const LandingPageForm = () => {
             <a className="text-yellow-500 hover:text-blue-700 hover:text-yellow-600" href="#">Forgot Password?</a>
           </div>
                       )}
-          <div className="text-center my-5">
+          <div className="text-center">
           {!authenticated && (
             <button
               className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
@@ -200,7 +200,7 @@ const LandingPageForm = () => {
           )}
           </div>
           {!authenticated && (
-          <div className="my-5 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
+          <div className="my-2 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
             <p className="mx-4 mb-0 text-center font-semibold text-slate-500">Or</p>
           </div>
                     )}
@@ -211,39 +211,47 @@ const LandingPageForm = () => {
           )}
           <div id="recaptcha-container"></div>
 
-
-
           {isSuccess && (
-        <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
-          Success! Your SMS has been sent.
-        </div>
-      )}
+            <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+              Success! Your SMS has been sent.
+            </div>
+          )}
 
           {/* VERIFICATION PROCESS */}
           {authenticated && (
-      <>
-        <div className="grid md:grid-cols-2 md:gap-6">
-          <div className="relative z-0 w-full group">
-            <input
-              value={verification_code}
-              type="text"
-              id="verification_code"
-              name="verification_code"
-              placeholder=' '
-              className="block py-2.5 px-0 w-full md:w-[147.5px] text-sm bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              onChange={(e) => setVerificationCode(e.target.value)}
-            />
-            <label htmlFor="verification_code" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Verification Code</label>
-          </div>
-          <button
-            className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
-            onClick={handleVerificationSubmit}
-          >
-            VERIFY
-          </button>
-        </div>
-      </>
-    )}
+            <>
+              <div className="grid grid-cols-1 items-center justify-items-center gap-4">
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10">
+                  <path className='fill-yellow-500' fillRule="evenodd" d="M11.484 2.17a.75.75 0 0 1 1.032 0 11.209 11.209 0 0 0 7.877 3.08.75.75 0 0 1 .722.515 12.74 12.74 0 0 1 .635 3.985c0 5.942-4.064 10.933-9.563 12.348a.749.749 0 0 1-.374 0C6.314 20.683 2.25 15.692 2.25 9.75c0-1.39.223-2.73.635-3.985a.75.75 0 0 1 .722-.516l.143.001c2.996 0 5.718-1.17 7.734-3.08ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75ZM12 15a.75.75 0 0 0-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 0 0 .75-.75v-.008a.75.75 0 0 0-.75-.75H12Z" clipRule="evenodd" />
+                </svg>
+
+                <div className="text-center text-sm font-medium text-slate-600">
+                  Enter the OTP sent to your number
+                </div>
+
+                {/* OTP Input Boxes */}
+                <div className="flex justify-center space-x-2">
+                  {[1, 2, 3, 4, 5, 6].map((index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      maxLength="1"
+                      className="w-10 h-10 text-center border border-gray-300 rounded-lg dark:border-slate-400 dark:text-slate-700 bg-transparent"
+                    />
+                  ))}
+                </div>
+
+                {/* Verify Button */}
+                <button
+                  className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 uppercase"
+                  onClick={handleVerificationSubmit}
+                >
+                  Verify
+                </button>
+              </div>
+            </>
+          )}
 
             </form>
 

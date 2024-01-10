@@ -3,38 +3,27 @@ import conn2 from './connection.js';
 
 const router = Router();
 
-router.get('/admin-login', async (req, res) => {
-const { admin_id, admin_pass } = req.query;
-  console.log(admin_id)
-  // SQL query to check user credentials
-  const sql = "SELECT * FROM chief_admin WHERE admin_id = ? AND admin_pass = ?";
-
-  try {
-    const result = await queryDatabase(sql, [admin_id, admin_pass]);
-
-    if (result.length > 0) {
-      // Send a success message or any specific data you want
-      res.status(200).json({ message: 'Login successful' });
-    } else {
-      res.status(401).json({ message: 'Invalid credentials' });
-    }
-  } catch (err) {
-    console.error('Database query error:', err);
-    res.status(500).json({ message: 'Database error' });
-  }
-});
-
-function queryDatabase(query, values) {
-  return new Promise((resolve, reject) => {
-    // Pass values as parameters to the query function
-    conn2.query(query, values, (err, data) => {
+router.post("/:admin_id/:admin_pass", (req, res) => {
+    const { admin_id, admin_pass } = req.params;
+  
+    // SQL query to check admin credentials
+    const sql = "SELECT * FROM chief_admin WHERE admin_id = ? AND admin_pass = ?";
+  
+    conn2.query(sql, [admin_id, admin_pass], (err, results) => {
       if (err) {
-        reject(err);
+        console.error(err);
+        return res.status(500).json({ message: "Error occurred while authenticating." });
+      }
+  
+      if (results.length > 0) {
+        // Authentication successful
+        return res.status(200).json({ message: 'Login successful', user: results[0] });
       } else {
-        resolve(data);
+        // Authentication failed
+        return res.status(401).json({ message: 'Invalid credentials' });
       }
     });
   });
-}
+  
 
 export default router;
