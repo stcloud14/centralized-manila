@@ -5,7 +5,7 @@ import AdminFooter from '../admin_partials/AdminFooter';
 import AdminRPTaxClearanceModal from '../admin_partials/admin_modals/AdminRPTaxClearanceModal';
 import AdminRPTaxRejectModal from '../admin_partials/admin_modals/AdminRPTaxRejectModal';
 
-const AdminUserRegistryForm =()=>{
+const AdminVerifyReqsForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -62,7 +62,7 @@ const AdminUserRegistryForm =()=>{
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-5 py-5">
               <h1 className='font-medium text-center text-slate-700 dark:text-white'>Registry</h1>
-              <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>User List and Verification</h1> 
+              <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>User Verification Requests</h1> 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:gap-6 gap-2">
                 {/* Tax Clearance Sample */}
                 <div className="bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm mb-4 flex flex-col">
@@ -155,4 +155,4 @@ const AdminUserRegistryForm =()=>{
   );
 }
 
-export default AdminUserRegistryForm;
+export default AdminVerifyReqsForm;
