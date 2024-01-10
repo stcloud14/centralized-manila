@@ -19,10 +19,22 @@ const LandingPageForm = () => {
 
 
   const [verification_code, setVerificationCode] = useState(""); // Added state for verification code
+  const [otpDigits, setOtpDigits] = useState(["", "", "", "", "", ""]);
   const navigate = useNavigate();
   const { mobile_no, user_pass } = userAuth;
   const [loginError, setLoginError] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
+
+  const handleOtpInputChange = (index, value) => {
+    const newOtpDigits = [...otpDigits];
+    newOtpDigits[index] = value;
+    setOtpDigits(newOtpDigits);
+
+    // Update the verification_code state as well (if you still need it)
+    const newVerificationCode = newOtpDigits.join("");
+    setVerificationCode(newVerificationCode);
+  };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -232,15 +244,17 @@ const LandingPageForm = () => {
 
                 {/* OTP Input Boxes */}
                 <div className="flex justify-center space-x-2">
-                  {[1, 2, 3, 4, 5, 6].map((index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      maxLength="1"
-                      className="w-10 h-10 text-center border border-gray-300 rounded-lg dark:border-slate-400 dark:text-slate-700 bg-transparent"
-                    />
-                  ))}
-                </div>
+                {otpDigits.map((digit, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    maxLength="1"
+                    value={digit}
+                    onChange={(e) => handleOtpInputChange(index, e.target.value)}
+                    className="w-10 h-10 text-center border border-gray-300 rounded-lg dark:border-slate-400 dark:text-slate-700 bg-transparent"
+                  />
+                ))}
+              </div>
 
                 {/* Verify Button */}
                 <button
