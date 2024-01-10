@@ -81,7 +81,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
           </button>
 
           {/* Logo */}
-          <NavLink end to="/" className="block">
+          <NavLink end to="/indexadmin" className="block">
               <img src={logo} width="32" height="32" viewBox="0 0 50 50"/>
           </NavLink>
           
@@ -89,8 +89,8 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
 
         {/* Links */}
         <div className="space-y-8">
+
           {/* Pages group */}
-          
           <div>
             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
               <span className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6" aria-hidden="true">
@@ -198,9 +198,62 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                 </NavLink>
               </li>
 
+              {/* Registry */}
+              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
+                <NavLink
+                    end to="/admin_registry"
+                    className={({ isActive }) =>
+                      'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
+                    }
+                  >
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                      <path className='fill-slate-500' d="M18.75 12.75h1.5a.75.75 0 0 0 0-1.5h-1.5a.75.75 0 0 0 0 1.5ZM12 6a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 12 6ZM12 18a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 12 18ZM3.75 6.75h1.5a.75.75 0 1 0 0-1.5h-1.5a.75.75 0 0 0 0 1.5ZM5.25 18.75h-1.5a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 0 1.5ZM3 12a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 3 12ZM9 3.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM12.75 12a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0ZM9 15.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z" />
+                    </svg>
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Registry
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
+
+            </ul>
+          </div>
+
+          {/* Maintenance group */}
+          <div>
+            <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
+              <span className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6" aria-hidden="true">
+                •••
+              </span>
+              <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Maintenance</span>
+            </h3>
+            <ul className="submenu mt-3 text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600">
+            
+              {/* Audit Trails */}
+              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
+                <NavLink end to="/admin_audittrail"
+                  className={({ isActive }) =>
+                  'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
+                }
+                >
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 w-6 h-6">
+                      <path className='fill-slate-400' d="M5.507 4.048A3 3 0 0 1 7.785 3h8.43a3 3 0 0 1 2.278 1.048l1.722 2.008A4.533 4.533 0 0 0 19.5 6h-15c-.243 0-.482.02-.715.056l1.722-2.008Z" />
+                      <path className='fill-slate-500' fillRule="evenodd" d="M1.5 10.5a3 3 0 0 1 3-3h15a3 3 0 1 1 0 6h-15a3 3 0 0 1-3-3Zm15 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm2.25.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM4.5 15a3 3 0 1 0 0 6h15a3 3 0 1 0 0-6h-15Zm11.25 3.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM19.5 18a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Audit Trail
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
+
             </ul>
           </div>
         </div>
+
+      
 
         {/* Expand / collapse button */}
         <div className="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">
