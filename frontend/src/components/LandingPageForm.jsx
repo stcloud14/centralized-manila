@@ -53,6 +53,7 @@ const LandingPageForm = () => {
       const codeConfirmation = await confirmationResult.confirm(verification_code);
       console.log("User signed in successfully:", codeConfirmation.user);
       navigate(`/home/${userAuth.user_id}`);
+      console.log(verification_code);
       // Now you can update the state or perform any other actions as needed
     } catch (error) {
       console.error("Error verifying code:", error);
