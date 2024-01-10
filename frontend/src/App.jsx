@@ -84,10 +84,11 @@ function App() {
         <Route exact path="/otp/:user_id" element={<OTP />} />
 
         {/* Admin Pages */}
+        <Route exact path="/indexadmin" element={<LoginAdmin />} />
+
         <Route exact path="/admin_dash_chief" element={<AdminDashChief />} />
         <Route exact path="/admin_dash_rp" element={<AdminDashRP />} />
 
-        <Route exact path="/indexadmin" element={<LoginAdmin />} />
         <Route exact path="/admin_rptax" element={<AdminRPTax />} />
         <Route exact path="/admin_business" element={<AdminBusiness />} />
         <Route exact path="/admin_cedula" element={<AdminCedula />} />
