@@ -20,7 +20,7 @@ import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 
-const AdminHomeForm =()=>{
+const AdminDashChiefForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -253,4 +253,4 @@ const AdminHomeForm =()=>{
   );  
 }
 
-export default AdminHomeForm;
+export default AdminDashChiefForm;
