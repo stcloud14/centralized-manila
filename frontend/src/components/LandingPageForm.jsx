@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from '../partials/ThemeToggle';
 import auth from '../../firebase.config';  // Updated import statement
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
+
+
+
+
 const LandingPageForm = () => {
   const [userAuth, setUserAuth] = useState({
     mobile_no: "",
     user_pass: "",
   });
+
+  const [isSuccess, setIsSuccess] = useState(false); 
+  const successTimeoutRef = useRef(null);
 
 
   const [verification_code, setVerificationCode] = useState(""); // Added state for verification code
@@ -33,12 +40,10 @@ const LandingPageForm = () => {
     try {
       const codeConfirmation = await confirmationResult.confirm(verification_code);
       console.log("User signed in successfully:", codeConfirmation.user);
-  
       navigate(`/home/${userAuth.user_id}`);
       // Now you can update the state or perform any other actions as needed
     } catch (error) {
       console.error("Error verifying code:", error);
-  
       if (error.code === "auth/invalid-verification-code") {
         // Resend verification code or take appropriate action
         console.log("Resending verification code...");
@@ -54,48 +59,25 @@ const LandingPageForm = () => {
         callback: (response) => onSignup(response),
         expiredCallback: () => console.log('Recaptcha expired'),
       };
-
       window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', recaptchaOptions);
     }
-
     window.recaptchaVerifier.verify().catch((error) => {
       console.error('Error verifying reCAPTCHA:', error);
     });
   }
+  
+  
   const onSignup = async (recaptchaToken) => {
     onCaptchaVerify();
     const appVerifier = window.recaptchaVerifier;
-    const phoneNumber = `+63${userAuth.mobile_no}`; // Added backticks
-    
+    const phoneNumber = `+63${userAuth.mobile_no}`;
     try {
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
       window.confirmationResult = confirmationResult;
-  
-      // After successful verification, navigate to the home page
-      const user = await confirmationResult.confirm(verification_code);
-      if (user) {
-        try {
-          const response = await axios.get(`http://localhost:8800/login/${userAuth.mobile_no}/${user_pass}`); // Corrected the parameters
-          if (response.data.length > 0) {
-            // Authentication successful, set authenticated state to true
-            setAuthenticated(true);
-    
-            // Extract user_id from the response data
-            const { user_id } = response.data[0];
-            // Update the user_id in the state
-            setUserAuth((prev) => ({ ...prev, user_id }));
-          } else {
-            // Authentication failed, show an error message
-            setLoginError("Authentication failed. Please check your credentials.");
-          }
-        } catch (error) {
-          console.error(error);
-          setLoginError("Authentication failed. Please check your credentials.");
-        }
-      } // Adjust this based on your actual user data structure
-  
-      console.log(userAuth);
-      navigate(`/home/${userAuth.user_id}`); // Added backticks and corrected the syntax
+      setIsSuccess(true);
+      successTimeoutRef.current = setTimeout(() => {
+        setIsSuccess(false);
+      }, 4000);
     } catch (error) {
       console.error('Error signing in:', error);
     }
@@ -104,17 +86,18 @@ const LandingPageForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await axios.get(`http://localhost:8800/login/${mobile_no}/${user_pass}`);
+      // Add your existing login logic here
+      const response = await axios.get(`http://localhost:8800/login/${userAuth.mobile_no}/${user_pass}`);
       if (response.data.length > 0) {
         // Authentication successful, set authenticated state to true
         setAuthenticated(true);
-
         // Extract user_id from the response data
         const { user_id } = response.data[0];
         // Update the user_id in the state
         setUserAuth((prev) => ({ ...prev, user_id }));
+        // Trigger the OTP verification process
+        // onSignup();
       } else {
         // Authentication failed, show an error message
         setLoginError("Authentication failed. Please check your credentials.");
@@ -226,6 +209,15 @@ const LandingPageForm = () => {
           </div>
           )}
           <div id="recaptcha-container"></div>
+
+
+
+          {isSuccess && (
+        <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+          Success! Your SMS has been sent.
+        </div>
+      )}
+
           {/* VERIFICATION PROCESS */}
           {authenticated && (
       <>
