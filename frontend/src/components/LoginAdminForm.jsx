@@ -16,12 +16,12 @@ const LoginAdminForm = () => {
     e.preventDefault();
     console.log('Admin Credentials:', adminCredentials);
     try {
-      const response = await axios.get('http://localhost:8800/admin-login', {
+      const response = await axios.post(`http://localhost:8800/login/${adminCredentials.admin_id}/${adminCredentials.admin_pass}`, {
         params: {
           admin_id: adminCredentials.admin_id,
           admin_pass: adminCredentials.admin_pass,
         },
-      });
+      });      
 
       if (response.data && response.data.message === 'Login successful') {
         // Redirect to the admin home page upon successful login

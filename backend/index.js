@@ -36,7 +36,7 @@ app.use('/payment', paymentMethod);
 
 
 app.use('/admin', adminDashboard);
-app.use('/admin-login', chiefAdmin);
+app.use('/login', chiefAdmin);
 
 
 
