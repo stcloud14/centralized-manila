@@ -82,22 +82,23 @@ const LandingPageForm = () => {
       console.error('Error signing in:', error);
     }
   };
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Add your existing login logic here
       const response = await axios.get(`http://localhost:8800/login/${userAuth.mobile_no}/${user_pass}`);
-      if (response.data.length > 0) {
+      if (response.data[0].mobile_no === userAuth.mobile_no && response.data[0].user_pass === userAuth.user_pass) {
         // Authentication successful, set authenticated state to true
         setAuthenticated(true);
         // Extract user_id from the response data
         const { user_id } = response.data[0];
         // Update the user_id in the state
         setUserAuth((prev) => ({ ...prev, user_id }));
-        // Trigger the OTP verification process
-        // onSignup();
+  
+        // Check if mobile number and password match before triggering the OTP verification process
+        if (!authenticated) {
+          // Trigger the OTP verification process only if the user is not authenticated
+          onSignup();
+        }
       } else {
         // Authentication failed, show an error message
         setLoginError("Authentication failed. Please check your credentials.");
@@ -189,7 +190,7 @@ const LandingPageForm = () => {
           {!authenticated && (
             <button
               className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
-              type="submit" onClick={onSignup}
+              type="submit" 
             >
               Login
             </button>
