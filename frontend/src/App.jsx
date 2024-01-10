@@ -37,12 +37,14 @@ import OTP from './pages/OTP';
 // Import Admin Dashboards
 import AdminDashChief from './admin_pages/AdminDashChief';
 import AdminDashRP from './admin_pages/AdminDashRP';
+import AdminDashBP from './admin_pages/AdminDashBP';
 
 // Import Admin Pages
 import AdminRPTax from './admin_pages/AdminRPTax';
 import AdminBusiness from './admin_pages/AdminBusiness';
 import AdminCedula from './admin_pages/AdminCedula';
 import AdminLocalCivilRegistry from './admin_pages/AdminLocalCivilRegistry';
+import AdminUserRegistry from './admin_pages/AdminUserRegistry';
 import AdminAuditTrail from './admin_pages/AdminAuditTrail';
 
 
@@ -88,11 +90,13 @@ function App() {
 
         <Route exact path="/admin_dash_chief" element={<AdminDashChief />} />
         <Route exact path="/admin_dash_rp" element={<AdminDashRP />} />
+        <Route exact path="/admin_dash_bp" element={<AdminDashBP />} />
 
         <Route exact path="/admin_rptax" element={<AdminRPTax />} />
         <Route exact path="/admin_business" element={<AdminBusiness />} />
         <Route exact path="/admin_cedula" element={<AdminCedula />} />
         <Route exact path="/admin_lcr" element={<AdminLocalCivilRegistry />} />
+        <Route exact path="/admin_registry" element={<AdminUserRegistry />} />
         <Route exact path="/admin_audittrail" element={<AdminAuditTrail />} />
 
         

@@ -201,7 +201,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               {/* Registry */}
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink
-                    end to="/admin_lcr"
+                    end to="/admin_registry"
                     className={({ isActive }) =>
                       'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                     }
