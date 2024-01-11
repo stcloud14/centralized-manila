@@ -49,6 +49,7 @@ import AdminLocalCivilRegistry from './admin_pages/AdminLocalCivilRegistry';
 import AdminUserList from './admin_pages/AdminUserList';
 import AdminVerifyReqs from './admin_pages/AdminVerifyReqs';
 import AdminAuditTrail from './admin_pages/AdminAuditTrail';
+import AdminSettings from './admin_components/AdminSettings';
 
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
 
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
+        <Route exact path="/admin_settings/:admin_type" element={<AdminSettings />} />
 
         <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
         <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />

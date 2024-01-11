@@ -7,9 +7,10 @@ import defaultImage from '../images/default_img.png';
 
 const AdminDropdownProfile = ({align}) => {
   
-  // const location = useLocation();
-  // const { pathname } = location;
-  // const user_id = pathname.split("/")[2];
+  const location = useLocation();
+  const { pathname, state } = location;
+  console.log("pathname", pathname);
+  const admin_type = pathname.split("/")[2];
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef(null);
@@ -199,16 +200,16 @@ const AdminDropdownProfile = ({align}) => {
             <li>
               <Link
                 className="font-medium text-sm text-slate-400 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
-                to="/"
+                to={`/admin_settings/${admin_type}`}
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 Settings
-              </Link>
+              </Link> 
             </li>
             <li>
               <Link
                 className="font-medium text-sm text-slate-400 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
-                to="/"
+                to="/indexadmin"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 Sign Out
