@@ -33,6 +33,9 @@ import Contacts from './pages/Contacts';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import PaymentSuccess from './pages/PaymentSuccess';
 
+//Import Dashboard Provider
+import { DashboardProvider } from './DashboardContext';
+
 // Import Admin Dashboards
 import AdminDashChief from './admin_pages/AdminDashChief';
 import AdminDashRP from './admin_pages/AdminDashRP';
@@ -89,14 +92,6 @@ function App() {
 
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
-
-        <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
-        <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />
-        <Route exact path="/admin_dash_bp/:admin_type" element={<AdminDashBP />} />
-        <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
-        <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
-        <Route exact path="/admin_dash_ur/:admin_type" element={<AdminDashUR />} />
-
         <Route exact path="/admin_rptax/:admin_type" element={<AdminRPTax />} />
         <Route exact path="/admin_business/:admin_type" element={<AdminBusiness />} />
         <Route exact path="/admin_cedula/:admin_type" element={<AdminCedula />} />
@@ -104,8 +99,18 @@ function App() {
         <Route exact path="/admin_userlist/:admin_type" element={<AdminUserList />} />
         <Route exact path="/admin_verifyreqs/:admin_type" element={<AdminVerifyReqs />} />
         <Route exact path="/admin_audittrail/:admin_type" element={<AdminAuditTrail />} />
-  
       </Routes>
+
+      <DashboardProvider>
+          <Routes>
+            <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
+            <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />
+            <Route exact path="/admin_dash_bp/:admin_type" element={<AdminDashBP />} />
+            <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
+            <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
+            <Route exact path="/admin_dash_ur/:admin_type" element={<AdminDashUR />} />
+          </Routes>
+        </DashboardProvider>
     </>
   );
 }

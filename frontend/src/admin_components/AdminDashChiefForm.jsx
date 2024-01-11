@@ -6,7 +6,6 @@ import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
 
-import ServicePerf from '../admin_partials/misc/ServicePerf';
 import MainCard from '../admin_partials/misc/MainCard';
 
 import RPstats from '../admin_partials/misc/RPstats';
@@ -22,7 +21,7 @@ import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 
-const AdminDashChiefForm =()=>{
+const AdminDashChiefForm =({ transStats, revenue, taxPayment, taxClearance, businessPermit, cedulaCert, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities})=>{
 
   const location = useLocation();
   const { pathname, state } = location;
@@ -34,206 +33,227 @@ const AdminDashChiefForm =()=>{
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
-  const [isVisible, setIsVisible] = useState(false);
-  
-  const [transStats, setTransStats] = useState({});
-  const [taxPayment, setTaxPayment] = useState({});
-  const [taxClearance, setTaxClearance] = useState({});
-  const [businessPermit, setBusinessPermit] = useState({});
-  const [cedulaCert, setCedulaCert] = useState({});
-  const [birthCert, setBirthCert] = useState({});
-  const [deathCert, setDeathCert] = useState({});
-  const [marriageCert, setMarriageCert] = useState({});
-  const [topRegions, setTopRegions] = useState({});
-  const [topProvinces, setTopProvinces] = useState({});
-  const [topCities, setTopCities] = useState({});
-  const [revenue, setRevenue] = useState({});
-  
-
   const [isLoading, setIsLoading] = useState(true);
 
-  const [completedEffects, setCompletedEffects] = useState(0);
-  
-  console.log(completedEffects)
-  const handleEffectCompletion = () => {
-    setCompletedEffects((prev) => prev + 1);
-  };
 
   useEffect(() => {
-    if (completedEffects > 12) {
+    if (
+      transStats &&
+      revenue &&
+      taxPayment &&
+      taxClearance &&
+      businessPermit &&
+      cedulaCert &&
+      birthCert &&
+      deathCert &&
+      marriageCert &&
+      topRegions &&
+      topProvinces &&
+      topCities
+      ) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
     }
-  }, [completedEffects]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const trans = await axios.get(`http://localhost:8800/admin/transstats/`);
-        setTransStats(trans.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
   }, []);
+  
+  // const [transStats, setTransStats] = useState({});
+  // const [taxPayment, setTaxPayment] = useState({});
+  // const [taxClearance, setTaxClearance] = useState({});
+  // const [businessPermit, setBusinessPermit] = useState({});
+  // const [cedulaCert, setCedulaCert] = useState({});
+  // const [birthCert, setBirthCert] = useState({});
+  // const [deathCert, setDeathCert] = useState({});
+  // const [marriageCert, setMarriageCert] = useState({});
+  // const [topRegions, setTopRegions] = useState({});
+  // const [topProvinces, setTopProvinces] = useState({});
+  // const [topCities, setTopCities] = useState({});
+  // const [revenue, setRevenue] = useState({});
+  
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const taxp = await axios.get(`http://localhost:8800/admin/taxpayment/`);
-        setTaxPayment(taxp.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const taxc = await axios.get(`http://localhost:8800/admin/taxclearance/`);
-        setTaxClearance(taxc.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // const [completedEffects, setCompletedEffects] = useState(0);
+  
+  // const handleEffectCompletion = () => {
+  //   setCompletedEffects((prev) => prev + 1);
+  // };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const busp = await axios.get(`http://localhost:8800/admin/businesspermit/`);
-        setBusinessPermit(busp.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   if (completedEffects > 12) {
+  //     setTimeout(() => {
+  //       setIsLoading(false);
+  //     }, 2000);
+  //   }
+  // }, [completedEffects]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const ced = await axios.get(`http://localhost:8800/admin/cedulacert/`);
-        setCedulaCert(ced.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const trans = await axios.get(`http://localhost:8800/admin/transstats/`);
+  //       setTransStats(trans.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const bth = await axios.get(`http://localhost:8800/admin/birthcert/`);
-        setBirthCert(bth.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // // useEffect(() => {
+  // //   const fetchData = async () => {
+  // //     try {
+  // //       const taxp = await axios.get(`http://localhost:8800/admin/taxpayment/`);
+  // //       setTaxPayment(taxp.data);
+  // //     } catch (err) {
+  // //       console.log(err);
+  // //     } finally {
+  // //       handleEffectCompletion();
+  // //     }
+  // //   };
+  // //   fetchData();
+  // // }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const dth = await axios.get(`http://localhost:8800/admin/deathcert/`);
-        setDeathCert(dth.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const taxc = await axios.get(`http://localhost:8800/admin/taxclearance/`);
+  //       setTaxClearance(taxc.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const mrg = await axios.get(`http://localhost:8800/admin/marriagecert/`);
-        setMarriageCert(mrg.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const busp = await axios.get(`http://localhost:8800/admin/businesspermit/`);
+  //       setBusinessPermit(busp.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const topr = await axios.get(`http://localhost:8800/admin/topregions/`);
-        setTopRegions(topr.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const ced = await axios.get(`http://localhost:8800/admin/cedulacert/`);
+  //       setCedulaCert(ced.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const topp = await axios.get(`http://localhost:8800/admin/topprovinces/`);
-        setTopProvinces(topp.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const bth = await axios.get(`http://localhost:8800/admin/birthcert/`);
+  //       setBirthCert(bth.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const topc = await axios.get(`http://localhost:8800/admin/topcities/`);
-        setTopCities(topc.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const dth = await axios.get(`http://localhost:8800/admin/deathcert/`);
+  //       setDeathCert(dth.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const rev = await axios.get(`http://localhost:8800/admin/revenue/`);
-        setRevenue(rev.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const mrg = await axios.get(`http://localhost:8800/admin/marriagecert/`);
+  //       setMarriageCert(mrg.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const topr = await axios.get(`http://localhost:8800/admin/topregions/`);
+  //       setTopRegions(topr.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const topp = await axios.get(`http://localhost:8800/admin/topprovinces/`);
+  //       setTopProvinces(topp.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const topc = await axios.get(`http://localhost:8800/admin/topcities/`);
+  //       setTopCities(topc.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const rev = await axios.get(`http://localhost:8800/admin/revenue/`);
+  //       setRevenue(rev.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       handleEffectCompletion();
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
 
 
