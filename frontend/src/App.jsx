@@ -89,19 +89,19 @@ function App() {
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
 
-        <Route exact path="/admin_dash_chief" element={<AdminDashChief />} />
-        <Route exact path="/admin_dash_rp" element={<AdminDashRP />} />
-        <Route exact path="/admin_dash_bp" element={<AdminDashBP />} />
-        <Route exact path="/admin_dash_ctc" element={<AdminDashCTC />} />
-        <Route exact path="/admin_dash_lcr" element={<AdminDashLCR />} />
+        <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
+        <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />
+        <Route exact path="/admin_dash_bp/:admin_type" element={<AdminDashBP />} />
+        <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
+        <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
 
-        <Route exact path="/admin_rptax" element={<AdminRPTax />} />
-        <Route exact path="/admin_business" element={<AdminBusiness />} />
-        <Route exact path="/admin_cedula" element={<AdminCedula />} />
-        <Route exact path="/admin_lcr" element={<AdminLocalCivilRegistry />} />
-        <Route exact path="/admin_userlist" element={<AdminUserList />} />
-        <Route exact path="/admin_verifyreqs" element={<AdminVerifyReqs />} />
-        <Route exact path="/admin_audittrail" element={<AdminAuditTrail />} />
+        <Route exact path="/admin_rptax/:admin_type" element={<AdminRPTax />} />
+        <Route exact path="/admin_business/:admin_type" element={<AdminBusiness />} />
+        <Route exact path="/admin_cedula/:admin_type" element={<AdminCedula />} />
+        <Route exact path="/admin_lcr/:admin_type" element={<AdminLocalCivilRegistry />} />
+        <Route exact path="/admin_userlist/:admin_type" element={<AdminUserList />} />
+        <Route exact path="/admin_verifyreqs/:admin_type" element={<AdminVerifyReqs />} />
+        <Route exact path="/admin_audittrail/:admin_type" element={<AdminAuditTrail />} />
   
       </Routes>
     </>

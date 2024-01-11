@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -8,6 +9,13 @@ import AdminRPTaxPaymentModal from '../admin_partials/admin_modals/AdminRPTaxPay
 import AdminRPTaxRejectModal from '../admin_partials/admin_modals/AdminRPTaxRejectModal';
 
 const AdminRPTaxForm =()=>{
+
+  const location = useLocation();
+  const { pathname, state } = location;
+  console.log("pathname", pathname);
+  const admin_type = pathname.split("/")[2];
+
+  console.log("userrole", admin_type)
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

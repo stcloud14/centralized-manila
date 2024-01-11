@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../admin_partials/AdminSidebar';
+import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
@@ -21,6 +22,12 @@ import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 
 const AdminDashChiefForm =()=>{
+
+  const location = useLocation();
+  const { pathname, state } = location;
+  console.log("pathname", pathname);
+  const admin_type = pathname.split("/")[2];
+  const adminRole = state && state.user_role;
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
