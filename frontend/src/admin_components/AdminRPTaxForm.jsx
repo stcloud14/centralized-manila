@@ -22,6 +22,8 @@ import AdminRPTaxProcessing from '../admin_partials/admin_cards/AdminRPTaxProces
 
 const AdminRPTaxForm =()=>{
 
+
+  
   const location = useLocation();
   const { pathname, state } = location;
   console.log("pathname", pathname);

@@ -3,20 +3,17 @@ import LineChart from '../../charts/LineChart02';
 import { tailwindConfig } from '../../utils/Utils';
 
 function Revenue({ revenue }) {
-
   const formatDateArray = (dateArray) => {
     return dateArray.map((date) => {
       const [year, month, day] = date.split('-');
       const formattedDate = `${month}-${day}-${year}`;
       return formattedDate;
     });
-  };  
+  };
 
-  const formattedDateArray = formatDateArray(revenue.latestmonths);
-
+  const formattedDateArray = revenue?.latestmonths ? formatDateArray(revenue.latestmonths) : [];
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-
   useEffect(() => {
     if (revenue) {
       setIsDataLoaded(true);
