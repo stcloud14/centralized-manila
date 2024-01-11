@@ -25,7 +25,6 @@ const AdminDashChiefForm =({ transStats, revenue, taxPayment, taxClearance, busi
 
   const location = useLocation();
   const { pathname, state } = location;
-  console.log("pathname", pathname);
   const admin_type = pathname.split("/")[2];
   const adminRole = state && state.user_role;
 

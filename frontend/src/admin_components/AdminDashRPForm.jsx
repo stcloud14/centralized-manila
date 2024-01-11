@@ -18,9 +18,6 @@ const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces,
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
-  const [isVisible, setIsVisible] = useState(false);
-
-
   const [isLoading, setIsLoading] = useState(true);
 
 
