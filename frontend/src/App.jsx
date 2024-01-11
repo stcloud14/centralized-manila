@@ -90,12 +90,12 @@ function App() {
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
 
-        <Route exact path="/admin_dash_chief" element={<AdminDashChief />} />
-        <Route exact path="/admin_dash_rp" element={<AdminDashRP />} />
-        <Route exact path="/admin_dash_bp" element={<AdminDashBP />} />
-        <Route exact path="/admin_dash_ctc" element={<AdminDashCTC />} />
-        <Route exact path="/admin_dash_lcr" element={<AdminDashLCR />} />
-        <Route exact path="/admin_dash_ur" element={<AdminDashUR />} />
+        <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
+        <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />
+        <Route exact path="/admin_dash_bp/:admin_type" element={<AdminDashBP />} />
+        <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
+        <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
+        <Route exact path="/admin_dash_ur/:admin_type" element={<AdminDashUR />} />
 
         <Route exact path="/admin_rptax/:admin_type" element={<AdminRPTax />} />
         <Route exact path="/admin_business/:admin_type" element={<AdminBusiness />} />
