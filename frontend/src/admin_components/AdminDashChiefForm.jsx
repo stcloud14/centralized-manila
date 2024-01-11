@@ -39,6 +39,7 @@ const AdminDashChiefForm =()=>{
   const [topRegions, setTopRegions] = useState({});
   const [topProvinces, setTopProvinces] = useState({});
   const [topCities, setTopCities] = useState({});
+  const [revenue, setRevenue] = useState({});
   
 
   const [isLoading, setIsLoading] = useState(true);
@@ -51,7 +52,7 @@ const AdminDashChiefForm =()=>{
   };
 
   useEffect(() => {
-    if (completedEffects > 11) {
+    if (completedEffects > 12) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
@@ -212,6 +213,20 @@ const AdminDashChiefForm =()=>{
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const rev = await axios.get(`http://localhost:8800/admin/revenue/`);
+        setRevenue(rev.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        handleEffectCompletion();
+      }
+    };
+    fetchData();
+  }, []);
+
 
 
 
@@ -272,7 +287,7 @@ const AdminDashChiefForm =()=>{
                   <TopRegions topRegions={topRegions} />
                   <TopProvinces topProvinces={topProvinces} />
                   <TopCities topCities={topCities} />
-                  <Revenue/>
+                  <Revenue revenue={revenue} />
                 </div>
               </>
             )}

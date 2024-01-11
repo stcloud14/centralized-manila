@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import LineChart from '../../charts/LineChart02';
 import { tailwindConfig } from '../../utils/Utils';
 
-function Revenue() {
+function Revenue({ revenue }) {
 
-    const chartData = {
-      labels: [
-        '10-01-2023',
-        '11-01-2023',
-        '12-01-2023',
-        '01-01-2024',
-      ],
+  const formatDateArray = (dateArray) => {
+    return dateArray.map((date) => {
+      const [year, month, day] = date.split('-');
+      const formattedDate = `${month}-${day}-${year}`;
+      return formattedDate;
+    });
+  };  
+
+  const formattedDateArray = formatDateArray(revenue.latestmonths);
+
+
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  useEffect(() => {
+    if (revenue) {
+      setIsDataLoaded(true);
+    } else {
+      setIsDataLoaded(false);
+    }
+  }, []);
+
+
+  const chartData = isDataLoaded ?
+    {
+      labels: formattedDateArray,
       datasets: [
         {
           label: 'RPTAX Payment',
-          data: [12, 15, 13, 5],
-          borderColor: tailwindConfig().theme.colors.blue[600],
+          data: revenue.taxpayment,
+          borderColor: '#0057e7',
           fill: false,
           borderWidth: 2,
           tension: 0,
@@ -29,8 +47,8 @@ function Revenue() {
         },
         {
           label: 'RPTAX Clearance',
-          data: [5, 9, 11, 3],
-          borderColor: tailwindConfig().theme.colors.red[500],
+          data: revenue.taxclearance,
+          borderColor: '#3078f0',
           fill: false,
           borderWidth: 2,
           tension: 0,
@@ -44,8 +62,8 @@ function Revenue() {
         },
         {
           label: 'Business Permit',
-          data: [1, 4, 13, 16],
-          borderColor: tailwindConfig().theme.colors.green[500],
+          data: revenue.buspermit,
+          borderColor: '#d62d20',
           fill: false,
           borderWidth: 2,
           tension: 0,
@@ -59,8 +77,8 @@ function Revenue() {
         },
         {
           label: 'CTC/Cedula',
-          data: [9, 13, 13, 3],
-          borderColor: tailwindConfig().theme.colors.yellow[500],
+          data: revenue.cedulacert,
+          borderColor: '#ffa700',
           fill: false,
           borderWidth: 2,
           tension: 0,
@@ -74,8 +92,8 @@ function Revenue() {
         },
         {
           label: 'Birth Certificate',
-          data: [15, 20, 19, 13],
-          borderColor: tailwindConfig().theme.colors.yellow[500],
+          data: revenue.birthcert,
+          borderColor: '#008744',
           fill: false,
           borderWidth: 2,
           tension: 0,
@@ -89,8 +107,8 @@ function Revenue() {
         },
         {
           label: 'Death Certificate',
-          data: [12, 0, 20, 4],
-          borderColor: tailwindConfig().theme.colors.yellow[500],
+          data: revenue.deathcert,
+          borderColor: '#17bf6c',
           fill: false,
           borderWidth: 2,
           tension: 0,
@@ -104,8 +122,8 @@ function Revenue() {
         },
         {
           label: 'Marriage Certificate',
-          data: [10, 10, 19, 12],
-          borderColor: tailwindConfig().theme.colors.yellow[500],
+          data: revenue.marriagecert,
+          borderColor: '#78ffbc',
           fill: false,
           borderWidth: 2,
           tension: 0,
@@ -119,15 +137,15 @@ function Revenue() {
         },
       
       ],
-    };
+    } : null;
 
     return (
       <div className="flex flex-col col-span-full bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-[#3d3d3d]">
-        <h2 className="font-semibold text-slate-800 dark:text-slate-100">Revenue</h2>
+        <h2 className="font-semibold text-slate-800 dark:text-slate-100">Gross Revenue</h2>
       </header>
       {/* {chartData && <BarChart data={chartData} width={595} height={248} />} */}
-      <LineChart data={chartData} width={595} height={248} />
+      {chartData && <LineChart data={chartData} width={595} height={248} totalPaid={revenue.totalPaid} />}
     </div>
     )
 
