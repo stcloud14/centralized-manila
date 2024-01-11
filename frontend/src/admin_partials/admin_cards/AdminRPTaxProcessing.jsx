@@ -1,4 +1,4 @@
-const AdminRPTaxProcessing = () => {
+const AdminRPTaxProcessing = ({handleOpenModal, handleOpenModal4, handleOpenModal5})  => {
     // Requests component logic
     return (
       <>
@@ -22,7 +22,7 @@ const AdminRPTaxProcessing = () => {
                 {/* Contents */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
                   {/* Tax Clearance Sample */}
-                  <div className="bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
+                  <div onClick={handleOpenModal} className="bg-white cursor-pointer dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                     <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                       Transaction ID:
                     </div>
@@ -40,10 +40,10 @@ const AdminRPTaxProcessing = () => {
                     </div>
 
                     <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                      <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
+                      <div onClick={handleOpenModal4} className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
                         <span className="text-xs font-normal">Reject</span>
                       </div>
-                      <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                      <div onClick={handleOpenModal5} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                         <span className="text-xs font-normal">Done</span>
                       </div>
                     </div>

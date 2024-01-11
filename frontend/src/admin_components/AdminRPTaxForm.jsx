@@ -7,11 +7,17 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
-import AdminRPTaxClearanceModal from '../admin_partials/admin_modals/AdminRPTaxClearanceModal';
-import AdminRPTaxPaymentModal from '../admin_partials/admin_modals/AdminRPTaxPaymentModal';
-import AdminRPTaxRejectModal from '../admin_partials/admin_modals/AdminRPTaxRejectModal';
+
+import AdminRPView from '../admin_partials/admin_modals/AdminRPView';
+import AdminRPExpired from '../admin_partials/admin_modals/AdminRPExpired';
+import AdminRPProcess from '../admin_partials/admin_modals/AdminRPProcess';
+import AdminRPReject from '../admin_partials/admin_modals/AdminRPReject';
+import AdminRPDone from '../admin_partials/admin_modals/AdminRPDone';
+
 import AdminRPTaxRequests from '../admin_partials/admin_cards/AdminRPTaxRequests';
 import AdminRPTaxProcessing from '../admin_partials/admin_cards/AdminRPTaxProcessing';
+
+
 
 const AdminRPTaxForm =()=>{
 
@@ -19,6 +25,7 @@ const AdminRPTaxForm =()=>{
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
+  // View Details Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenModal = () => {
       setIsModalOpen(true);
@@ -26,36 +33,51 @@ const AdminRPTaxForm =()=>{
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-  const handleProcessSubmit = () => {
-    setIsModalOpen(false);
-  };
+
+   // Expired Modal
+   const [isModalOpen2, setIsModalOpen2] = useState(false);
+   const handleOpenModal2 = () => {
+       setIsModalOpen2(true);
+     }
+   const handleCloseModal2 = () => {
+     setIsModalOpen2(false);
+   };
+
+   // Process Modal
+   const [isModalOpen3, setIsModalOpen3] = useState(false);
+   const handleOpenModal3 = () => {
+       setIsModalOpen3(true);
+     }
+   const handleCloseModal3 = () => {
+     setIsModalOpen3(false);
+   };
+
+   // Reject Modal
+   const [isModalOpen4, setIsModalOpen4] = useState(false);
+   const handleOpenModal4 = () => {
+       setIsModalOpen4(true);
+     }
+   const handleCloseModal4 = () => {
+     setIsModalOpen4(false);
+   };
+
+   // Done Modal
+   const [isModalOpen5, setIsModalOpen5] = useState(false);
+   const handleOpenModal5 = () => {
+       setIsModalOpen5(true);
+     }
+   const handleCloseModal5 = () => {
+     setIsModalOpen5(false);
+   }
+
+
+
 
   const handleProcessModal = (event) => {
     event.stopPropagation();
     console.log('Processing')
   };
 
-  const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const handleOpenModal2 = () => {
-      setIsModalOpen2(true);
-    }
-  const handleCloseModal2 = () => {
-    setIsModalOpen2(false);
-  };
-  const handleProcessSubmit2 = () => {
-    setIsModalOpen2(false);
-  };
-
-  const [isModalOpen3, setIsModalOpen3] = useState(false);
-  const handleOpenModal3 = () => {
-      setIsModalOpen3(true);
-    }
-  const handleCloseModal3 = () => {
-    setIsModalOpen3(false);
-  };
-  const handleReject = () => {
-    setIsModalOpen3(false);
-  };
   
 
   return (
@@ -94,32 +116,42 @@ const AdminRPTaxForm =()=>{
           {/*  Two Sections */}
           <div className="grid grid-cols-12 gap-4 mx-4 my-4">
             
-            <AdminRPTaxRequests />
-            <AdminRPTaxProcessing />
-
-            
+            <AdminRPTaxRequests
+            handleOpenModal={handleOpenModal}
+            handleOpenModal2={handleOpenModal2}
+            handleOpenModal3={handleOpenModal3}
+            />
+            <AdminRPTaxProcessing
+            handleOpenModal={handleOpenModal}
+            handleOpenModal4={handleOpenModal4}
+            handleOpenModal5={handleOpenModal5}
+            />
 
           </div>
 
           <AdminFooter logo={logoSrc} />
         </main>
 
-        <AdminRPTaxClearanceModal
+        <AdminRPView
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
-          handleProcess={handleProcessSubmit}
         />
-        <AdminRPTaxPaymentModal
+        <AdminRPExpired
           isOpen2={isModalOpen2}
           handleClose2={handleCloseModal2}
-          handleProcess2={handleProcessSubmit2}
         />
-        <AdminRPTaxRejectModal
+        <AdminRPProcess
           isOpen3={isModalOpen3}
           handleClose3={handleCloseModal3}
-          handleReject={handleReject}
         />
-
+        <AdminRPReject
+          isOpen4={isModalOpen4}
+          handleClose4={handleCloseModal4}
+        />
+        <AdminRPDone
+          isOpen5={isModalOpen5}
+          handleClose5={handleCloseModal5}
+        />
       </div>
     </div>
   );
