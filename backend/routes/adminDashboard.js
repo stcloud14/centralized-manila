@@ -231,42 +231,59 @@ router.get('/marriagecert/', async (req, res) => {
 router.get('/transstats/', async (req, res) => {
 
     const query = "SELECT \
-    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS tp_oct23, \
-    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS tp_nov23, \
-    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS tp_dec23, \
-    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS tp_jan24, \
+    subquery.earliest_month, \
+    subquery.second_last_month, \
+    subquery.previous_month, \
+    subquery.latest_month, \
     \
-    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS tc_oct23, \
-    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS tc_nov23, \
-    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS tc_dec23, \
-    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS tc_jan24, \
+    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS tp_last, \
+    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS tp_second_last, \
+    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS tp_previous, \
+    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS tp_current, \
     \
-    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS bp_oct23, \
-    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS bp_nov23, \
-    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS bp_dec23, \
-    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS bp_jan24, \
+    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS tc_last, \
+    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS tc_second_last, \
+    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS tc_previous, \
+    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS tc_current, \
     \
-    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS cc_oct23, \
-    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS cc_nov23, \
-    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS cc_dec23, \
-    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS cc_jan24, \
+    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS bp_last, \
+    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS bp_second_last, \
+    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS bp_previous, \
+    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS bp_current, \
     \
-    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS bc_oct23, \
-    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS bc_nov23, \
-    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS bc_dec23, \
-    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS bc_jan24, \
+    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS cc_last, \
+    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS cc_second_last, \
+    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS cc_previous, \
+    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS cc_current, \
     \
-    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS dc_oct23, \
-    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS dc_nov23, \
-    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS dc_dec23, \
-    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS dc_jan24, \
+    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS bc_last, \
+    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS bc_second_last, \
+    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS bc_previous, \
+    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS bc_current, \
     \
-    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS mc_oct23, \
-    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS mc_nov23, \
-    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS mc_dec23, \
-    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS mc_jan24 \
+    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS dc_last, \
+    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS dc_second_last, \
+    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS dc_previous, \
+    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS dc_current, \
     \
-    FROM user_transaction;";
+    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS mc_last, \
+    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS mc_second_last, \
+    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS mc_previous, \
+    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS mc_current\
+    \
+    FROM ( \
+        SELECT \
+            (SELECT DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 3 MONTH), '%Y-%m-01') FROM user_transaction) AS earliest_month, \
+            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
+            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
+            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction))) AS second_last_month, \
+            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
+            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction)) AS previous_month, \
+            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction) AS latest_month\
+    ) AS subquery \
+    \
+    JOIN user_transaction ON 1=1 \
+    GROUP BY subquery.earliest_month, subquery.second_last_month, subquery.previous_month, subquery.latest_month;";
 
 
   
@@ -274,47 +291,53 @@ router.get('/transstats/', async (req, res) => {
     const result = await queryDatabase(query);
 
     const responseObj = {
+        latestmonths: [
+            result[0].earliest_month || 0,
+            result[0].second_last_month || 0,
+            result[0].previous_month || 0,
+            result[0].latest_month || 0,
+        ],
         taxpayment: [
-            result[0].tp_oct23 || 0,
-            result[0].tp_nov23 || 0,
-            result[0].tp_dec23 || 0,
-            result[0].tp_jan24 || 0,
+            result[0].tp_last || 0,
+            result[0].tp_second_last || 0,
+            result[0].tp_previous || 0,
+            result[0].tp_current || 0,
         ],
         taxclearance: [
-            result[0].tc_oct23 || 0,
-            result[0].tc_nov23 || 0,
-            result[0].tc_dec23 || 0,
-            result[0].tc_jan24 || 0,
+            result[0].tc_last || 0,
+            result[0].tc_second_last || 0,
+            result[0].tc_previous || 0,
+            result[0].tc_current || 0,
         ],
         buspermit: [
-            result[0].bp_oct23 || 0,
-            result[0].bp_nov23 || 0,
-            result[0].bp_dec23 || 0,
-            result[0].bp_jan24 || 0,
+            result[0].bp_last || 0,
+            result[0].bp_second_last || 0,
+            result[0].bp_previous || 0,
+            result[0].bp_current || 0,
         ],
         cedulacert: [
-            result[0].cc_oct23 || 0,
-            result[0].cc_nov23 || 0,
-            result[0].cc_dec23 || 0,
-            result[0].cc_jan24 || 0,
+            result[0].cc_last || 0,
+            result[0].cc_second_last || 0,
+            result[0].cc_previous || 0,
+            result[0].cc_current || 0,
         ],
         birthcert: [
-            result[0].bc_oct23 || 0,
-            result[0].bc_nov23 || 0,
-            result[0].bc_dec23 || 0,
-            result[0].bc_jan24 || 0,
+            result[0].bc_last || 0,
+            result[0].bc_second_last || 0,
+            result[0].bc_previous || 0,
+            result[0].bc_current || 0,
         ],
         deathcert: [
-            result[0].dc_oct23 || 0,
-            result[0].dc_nov23 || 0,
-            result[0].dc_dec23 || 0,
-            result[0].dc_jan24 || 0,
+            result[0].dc_last || 0,
+            result[0].dc_second_last || 0,
+            result[0].dc_previous || 0,
+            result[0].dc_current || 0,
         ],
         marriagecert: [
-            result[0].mc_oct23 || 0,
-            result[0].mc_nov23 || 0,
-            result[0].mc_dec23 || 0,
-            result[0].mc_jan24 || 0,
+            result[0].mc_last || 0,
+            result[0].mc_second_last || 0,
+            result[0].mc_previous || 0,
+            result[0].mc_current || 0,
         ]
     };
 
@@ -439,39 +462,39 @@ export default router;
 //     COUNT(CASE WHEN trans_type_id = 6 THEN 1 END) AS deathcert, 
 //     COUNT(CASE WHEN trans_type_id = 7 THEN 1 END) AS marriagecert, 
 
-//     COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS taxpayment_oct23,
-//     COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS taxpayment_nov23,
-//     COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS taxpayment_dec23,
-//     COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS taxpayment_jan24,
+//     COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS taxpayment_last,
+//     COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS taxpayment_second_last,
+//     COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS taxpayment_previous,
+//     COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS taxpayment_current,
 
-//     COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS taxclearance_oct23,
-//     COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS taxclearance_nov23,
-//     COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS taxclearance_dec23,
-//     COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS taxclearance_jan24,
+//     COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS taxclearance_last,
+//     COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS taxclearance_second_last,
+//     COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS taxclearance_previous,
+//     COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS taxclearance_current,
     
-//     COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS buspermit_oct23,
-//     COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS buspermit_nov23,
-//     COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS buspermit_dec23,
-//     COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS buspermit_jan24,
+//     COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS buspermit_last,
+//     COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS buspermit_second_last,
+//     COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS buspermit_previous,
+//     COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS buspermit_current,
     
-//     COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS cedulacert_oct23,
-//     COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS cedulacert_nov23,
-//     COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS cedulacert_dec23,
-//     COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS cedulacert_jan24,
+//     COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS cedulacert_last,
+//     COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS cedulacert_second_last,
+//     COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS cedulacert_previous,
+//     COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS cedulacert_current,
     
-//     COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS birthcert_oct23,
-//     COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS birthcert_nov23,
-//     COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS birthcert_dec23,
-//     COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS birthcert_jan24,
+//     COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS birthcert_last,
+//     COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS birthcert_second_last,
+//     COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS birthcert_previous,
+//     COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS birthcert_current,
     
-//     COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS deathcert_oct23,
-//     COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS deathcert_nov23,
-//     COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS deathcert_dec23,
-//     COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS deathcert_jan24,
+//     COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS deathcert_last,
+//     COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS deathcert_second_last,
+//     COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS deathcert_previous,
+//     COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS deathcert_current,
     
-//     COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS marriagecert_oct23,
-//     COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS marriagecert_nov23,
-//     COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS marriagecert_dec23,
-//     COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS marriagecert_jan24
+//     COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2023-10-01' AND '2023-10-31' THEN 1 END) AS marriagecert_last,
+//     COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2023-11-01' AND '2023-11-30' THEN 1 END) AS marriagecert_second_last,
+//     COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2023-12-01' AND '2023-12-31' THEN 1 END) AS marriagecert_previous,
+//     COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN '2024-01-01' AND '2024-01-31' THEN 1 END) AS marriagecert_current
     
 // FROM user_transaction;
