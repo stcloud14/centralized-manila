@@ -279,6 +279,7 @@ const AdminDashChiefForm =()=>{
                 <div className="grid grid-cols-12 gap-6">
                   <MainCard transStats={transStats}/>
                   <URstats />
+                  <Revenue revenue={revenue} />
                   <RPstats taxPayment={taxPayment} />
                   <RCstats taxClearance={taxClearance} />
                   <BPstats businessPermit={businessPermit} />
@@ -289,7 +290,6 @@ const AdminDashChiefForm =()=>{
                   <TopRegions topRegions={topRegions} />
                   <TopProvinces topProvinces={topProvinces} />
                   <TopCities topCities={topCities} />
-                  <Revenue revenue={revenue} />
                 </div>
               </>
             )}
