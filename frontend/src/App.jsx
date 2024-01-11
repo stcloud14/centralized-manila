@@ -39,6 +39,7 @@ import AdminDashRP from './admin_pages/AdminDashRP';
 import AdminDashBP from './admin_pages/AdminDashBP';
 import AdminDashCTC from './admin_pages/AdminDashCTC';
 import AdminDashLCR from './admin_pages/AdminDashLCR';
+import AdminDashUR from './admin_pages/AdminDashUR';
 
 // Import Admin Pages
 import AdminRPTax from './admin_pages/AdminRPTax';
@@ -89,11 +90,20 @@ function App() {
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
 
+<<<<<<< HEAD
         <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
         <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />
         <Route exact path="/admin_dash_bp/:admin_type" element={<AdminDashBP />} />
         <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
         <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
+=======
+        <Route exact path="/admin_dash_chief" element={<AdminDashChief />} />
+        <Route exact path="/admin_dash_rp" element={<AdminDashRP />} />
+        <Route exact path="/admin_dash_bp" element={<AdminDashBP />} />
+        <Route exact path="/admin_dash_ctc" element={<AdminDashCTC />} />
+        <Route exact path="/admin_dash_lcr" element={<AdminDashLCR />} />
+        <Route exact path="/admin_dash_ur" element={<AdminDashUR />} />
+>>>>>>> 1e0ffca109597f059150c59b666024db43586669
 
         <Route exact path="/admin_rptax/:admin_type" element={<AdminRPTax />} />
         <Route exact path="/admin_business/:admin_type" element={<AdminBusiness />} />

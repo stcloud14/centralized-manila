@@ -1,34 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../admin_partials/AdminSidebar';
-import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
 
-import ServicePerf from '../admin_partials/misc/ServicePerf';
-import MainCard from '../admin_partials/misc/MainCard';
-
-import RPstats from '../admin_partials/misc/RPstats';
-import RCstats from '../admin_partials/misc/RCstats';
-import CTCstats from '../admin_partials/misc/CTCstats';
-import BPstats from '../admin_partials/misc/BPstats';
-import BCstats from '../admin_partials/misc/BCstats';
-import DCstats from '../admin_partials/misc/DCstats';
-import MCstats from '../admin_partials/misc/MCstats';
 import URstats from '../admin_partials/misc/URstats';
 import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 
-const AdminDashChiefForm =()=>{
-
-  const location = useLocation();
-  const { pathname, state } = location;
-  console.log("pathname", pathname);
-  const admin_type = pathname.split("/")[2];
-  const adminRole = state && state.user_role;
+const AdminDashURForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -36,18 +19,9 @@ const AdminDashChiefForm =()=>{
 
   const [isVisible, setIsVisible] = useState(false);
   
-  const [transStats, setTransStats] = useState({});
-  const [taxPayment, setTaxPayment] = useState({});
-  const [taxClearance, setTaxClearance] = useState({});
-  const [businessPermit, setBusinessPermit] = useState({});
-  const [cedulaCert, setCedulaCert] = useState({});
-  const [birthCert, setBirthCert] = useState({});
-  const [deathCert, setDeathCert] = useState({});
-  const [marriageCert, setMarriageCert] = useState({});
   const [topRegions, setTopRegions] = useState({});
   const [topProvinces, setTopProvinces] = useState({});
   const [topCities, setTopCities] = useState({});
-  const [revenue, setRevenue] = useState({});
   
 
   const [isLoading, setIsLoading] = useState(true);
@@ -60,124 +34,12 @@ const AdminDashChiefForm =()=>{
   };
 
   useEffect(() => {
-    if (completedEffects > 12) {
+    if (completedEffects > 3) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
     }
   }, [completedEffects]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const trans = await axios.get(`http://localhost:8800/admin/transstats/`);
-        setTransStats(trans.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const taxp = await axios.get(`http://localhost:8800/admin/taxpayment/`);
-        setTaxPayment(taxp.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const taxc = await axios.get(`http://localhost:8800/admin/taxclearance/`);
-        setTaxClearance(taxc.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const busp = await axios.get(`http://localhost:8800/admin/businesspermit/`);
-        setBusinessPermit(busp.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const ced = await axios.get(`http://localhost:8800/admin/cedulacert/`);
-        setCedulaCert(ced.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const bth = await axios.get(`http://localhost:8800/admin/birthcert/`);
-        setBirthCert(bth.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const dth = await axios.get(`http://localhost:8800/admin/deathcert/`);
-        setDeathCert(dth.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const mrg = await axios.get(`http://localhost:8800/admin/marriagecert/`);
-        setMarriageCert(mrg.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -220,21 +82,6 @@ const AdminDashChiefForm =()=>{
     };
     fetchData();
   }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const rev = await axios.get(`http://localhost:8800/admin/revenue/`);
-        setRevenue(rev.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
 
 
 
@@ -284,19 +131,11 @@ const AdminDashChiefForm =()=>{
                 <AdminBanner />
   
                 <div className="grid grid-cols-12 gap-6">
-                  <MainCard transStats={transStats}/>
                   <URstats />
-                  <Revenue revenue={revenue} />
-                  <RPstats taxPayment={taxPayment} />
-                  <RCstats taxClearance={taxClearance} />
-                  <BPstats businessPermit={businessPermit} />
-                  <CTCstats cedulaCert={cedulaCert} />
-                  <BCstats birthCert={birthCert}/>
-                  <DCstats deathCert={deathCert}/>
-                  <MCstats marriageCert={marriageCert}/>
                   <TopRegions topRegions={topRegions} />
                   <TopProvinces topProvinces={topProvinces} />
                   <TopCities topCities={topCities} />
+                  <Revenue/>
                 </div>
               </>
             )}
@@ -308,4 +147,4 @@ const AdminDashChiefForm =()=>{
   );  
 }
 
-export default AdminDashChiefForm;
+export default AdminDashURForm;
