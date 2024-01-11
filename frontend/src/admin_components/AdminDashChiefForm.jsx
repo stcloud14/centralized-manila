@@ -16,7 +16,6 @@ import BPstats from '../admin_partials/misc/BPstats';
 import BCstats from '../admin_partials/misc/BCstats';
 import DCstats from '../admin_partials/misc/DCstats';
 import MCstats from '../admin_partials/misc/MCstats';
-import URstats from '../admin_partials/misc/URstats';
 import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
@@ -47,7 +46,6 @@ const AdminDashChiefForm =()=>{
   const [topRegions, setTopRegions] = useState({});
   const [topProvinces, setTopProvinces] = useState({});
   const [topCities, setTopCities] = useState({});
-  const [revenue, setRevenue] = useState({});
   
 
   const [isLoading, setIsLoading] = useState(true);
@@ -60,7 +58,7 @@ const AdminDashChiefForm =()=>{
   };
 
   useEffect(() => {
-    if (completedEffects > 12) {
+    if (completedEffects > 11) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
@@ -221,21 +219,6 @@ const AdminDashChiefForm =()=>{
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const rev = await axios.get(`http://localhost:8800/admin/revenue/`);
-        setRevenue(rev.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-
 
 
 
@@ -285,8 +268,6 @@ const AdminDashChiefForm =()=>{
   
                 <div className="grid grid-cols-12 gap-6">
                   <MainCard transStats={transStats}/>
-                  <URstats />
-                  <Revenue revenue={revenue} />
                   <RPstats taxPayment={taxPayment} />
                   <RCstats taxClearance={taxClearance} />
                   <BPstats businessPermit={businessPermit} />
@@ -297,6 +278,7 @@ const AdminDashChiefForm =()=>{
                   <TopRegions topRegions={topRegions} />
                   <TopProvinces topProvinces={topProvinces} />
                   <TopCities topCities={topCities} />
+                  <Revenue/>
                 </div>
               </>
             )}
