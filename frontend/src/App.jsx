@@ -39,6 +39,7 @@ import AdminDashRP from './admin_pages/AdminDashRP';
 import AdminDashBP from './admin_pages/AdminDashBP';
 import AdminDashCTC from './admin_pages/AdminDashCTC';
 import AdminDashLCR from './admin_pages/AdminDashLCR';
+import AdminDashUR from './admin_pages/AdminDashUR';
 
 // Import Admin Pages
 import AdminRPTax from './admin_pages/AdminRPTax';
@@ -94,6 +95,7 @@ function App() {
         <Route exact path="/admin_dash_bp" element={<AdminDashBP />} />
         <Route exact path="/admin_dash_ctc" element={<AdminDashCTC />} />
         <Route exact path="/admin_dash_lcr" element={<AdminDashLCR />} />
+        <Route exact path="/admin_dash_ur" element={<AdminDashUR />} />
 
         <Route exact path="/admin_rptax" element={<AdminRPTax />} />
         <Route exact path="/admin_business" element={<AdminBusiness />} />
