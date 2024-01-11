@@ -45,7 +45,8 @@ import AdminRPTax from './admin_pages/AdminRPTax';
 import AdminBusiness from './admin_pages/AdminBusiness';
 import AdminCedula from './admin_pages/AdminCedula';
 import AdminLocalCivilRegistry from './admin_pages/AdminLocalCivilRegistry';
-import AdminUserRegistry from './admin_pages/AdminUserRegistry';
+import AdminUserList from './admin_pages/AdminUserList';
+import AdminVerifyReqs from './admin_pages/AdminVerifyReqs';
 import AdminAuditTrail from './admin_pages/AdminAuditTrail';
 
 
@@ -98,7 +99,8 @@ function App() {
         <Route exact path="/admin_business" element={<AdminBusiness />} />
         <Route exact path="/admin_cedula" element={<AdminCedula />} />
         <Route exact path="/admin_lcr" element={<AdminLocalCivilRegistry />} />
-        <Route exact path="/admin_registry" element={<AdminUserRegistry />} />
+        <Route exact path="/admin_userlist" element={<AdminUserList />} />
+        <Route exact path="/admin_verifyreqs" element={<AdminVerifyReqs />} />
         <Route exact path="/admin_audittrail" element={<AdminAuditTrail />} />
   
       </Routes>
