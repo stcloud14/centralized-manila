@@ -4,6 +4,17 @@ import { tailwindConfig } from '../../utils/Utils';
 
 function MainCard({ transStats }) {
 
+  const formatDateArray = (dateArray) => {
+    return dateArray.map((date) => {
+      const [year, month, day] = date.split('-');
+      const formattedDate = `${month}-${day}-${year}`;
+      return formattedDate;
+    });
+  };  
+
+  const formattedDateArray = formatDateArray(transStats.latestmonths);
+
+
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
@@ -15,12 +26,11 @@ function MainCard({ transStats }) {
   }, []);
 
 
+
+
   const chartData = isDataLoaded ?
     {
-      labels: [
-      '10-01-2023',
-      '11-01-2023', '12-01-2023', '01-01-2024',
-    ],
+    labels: formattedDateArray,
     datasets: [
       // Light blue bars
       {
