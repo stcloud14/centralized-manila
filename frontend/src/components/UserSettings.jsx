@@ -288,14 +288,29 @@ const UserSettings =()=>{
                   <div className="grid gap-6">
                     <h1 className='font-medium text-center text-slate-700 dark:text-white'>Profile Picture</h1>
                     <div className="flex flex-col items-center justify-center">
-                      <div className="mb-6">
-                        <img
-                          name='userImage' 
-                          className="inline-block h-72 w-72 rounded-full border-2 border-black dark:border-white p-1 object-cover object-center"
-                          src={preSelectedFile || userImage || defaultImg}
-                          onError={(e) => console.error('Error loading image:', e)}
-                        />
-                      </div>
+                    <div className="mb-6 relative">
+  <img
+    name='userImage' 
+    className="inline-block h-72 w-72 rounded-full border-2 border-black dark:border-white p-1 object-cover object-center relative z-1"
+    src={preSelectedFile || userImage || defaultImg}
+    onError={(e) => console.error('Error loading image:', e)}
+  />
+
+<svg xmlns="http://www.w3.org/2000/svg" className="w-[125px] h-[125px] pb-3 text-blue-400 absolute bottom-10 right-9 z-10 transform translate-x-1/2 translate-y-1/2" viewBox="0 0 841.89 595.28">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -6 23 38" fill="white">
+  <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+</svg>
+  <g fill="currentColor">
+    <path d="M351.54,516.77l-39.52-67.9l-78.54-16.17l8.83-76.77l-49.93-58.5l49.93-57.98l-8.83-76.75l78.54-16.21
+      l39.52-68.39l69.71,32.39l69.71-32.39l40.05,68.41l78.01,16.19l-8.8311,76.77l49.93,57.96l-49.93,58.5l8.83,76.77l-78.01,16.17
+      l-40.05,67.9l-69.71-32.39L351.54,516.77z M398.88,366.9l118.08-117.51l-23.4-21.42l-94.68,94.01l-49.4-51.69l-23.94,23.48
+      C325.55,293.77,398.88,366.9,398.88,366.9z"/>
+  </g>
+</svg>
+
+
+</div>
+
                       <div className="flex flex-col items-center w-full mb-4">
 
                       
