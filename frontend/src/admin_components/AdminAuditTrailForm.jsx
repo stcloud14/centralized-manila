@@ -11,6 +11,7 @@ import AuditDesktop from '../admin_partials/audit_trail/auditDesktop';
 
 
 const  AdminAuditTrailForm = () => {
+  
 
   const location = useLocation();
   const { pathname } = location;

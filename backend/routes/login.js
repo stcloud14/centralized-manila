@@ -22,6 +22,37 @@ router.get("/:mobile_no/:user_pass", (req, res) => {
     });
   });
 
+
+
+
+  router.post("/admin", (req, res) => {
+    const { admin_name, admin_pass } = req.body;
+  
+    const authSql = "SELECT * FROM admin_auth WHERE mobile_no = ? AND password = ?";
+  
+    // Authenticate Admin
+    conn2.query(authSql, [admin_name, admin_pass], (err, authResults) => {
+      if (err) {
+        console.error("Authentication Error:", err);
+        return res.status(500).json({ message: "Error occurred while authenticating." });
+      }
+  
+      if (authResults.length === 0) {
+        return res.status(401).json({ message: "Authentication failed. Please check your credentials." });
+      }
+  
+      const admin_type = authResults[0].admin_type;
+  
+      // Return the authenticated admin and role (directly using admin_type as role)
+      return res.status(200).json({
+        admin: {
+          admin_type,
+          role: admin_type, // Using admin_type as the role
+        },
+        message: "Login successful",
+      });
+    });
+  });
   // router.get("/:user_id", (req, res) => {
     
   //   console.log(user_id)

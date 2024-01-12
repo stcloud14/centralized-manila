@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import logo from "../images/mnl.svg"
+import logo from '../images/mnl.svg';
 import AdminSidebarLinkGroup from './AdminSidebarLinkGroup';
 
 function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
-  const { pathname } = location;
-  console.log(pathname);
+  const { pathname, state } = location;
+  console.log("pathname", pathname);
+  const admin_type = pathname.split("/")[2];
   const trigger = useRef(null);
   const sidebar = useRef(null);
 
@@ -22,7 +23,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
     };
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
-  });
+  }, [sidebarOpen]);
 
   useEffect(() => {
     const keyHandler = ({ keyCode }) => {
@@ -31,7 +32,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
     };
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
-  });
+  }, [sidebarOpen]);
 
   useEffect(() => {
     localStorage.setItem('sidebar-expanded', sidebarExpanded);
@@ -42,9 +43,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
     }
   }, [sidebarExpanded]);
 
-  
-
-
+console.log("user role admin dash:", admin_type);
 
   return (
     <div>
@@ -81,7 +80,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
           </button>
 
           {/* Logo */}
-          <NavLink end to="/indexadmin" className="block">
+          <NavLink end to={`/indexadmin/${admin_type}`} className="block">
               <img src={logo} width="32" height="32" viewBox="0 0 50 50"/>
           </NavLink>
           
@@ -101,8 +100,12 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
             <ul className="submenu mt-3 text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600">
             
               {/* Dashboard */}
+                            {/* Dashboard chief_admin */}
+              {admin_type === 'chief_admin'  ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
-                <NavLink end to="/admin_dash_chief"
+                <NavLink 
+                end 
+                to={`/admin_dash_chief/${admin_type}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
@@ -117,17 +120,134 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
+              ) : null}
+
+                            {/* Dashboard Real Property Tax */}
+              {admin_type === 'rptax_admin'  ? (
+              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
+                <NavLink 
+                end 
+                to={`/admin_dash_rp/${admin_type}`}
+                  className={({ isActive }) =>
+                  'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
+                }
+                >
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 w-6 h-6">
+                      <path className='fill-slate-500' fillRule="evenodd" d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm4.5 7.5a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Zm3.75-1.5a.75.75 0 0 0-1.5 0v4.5a.75.75 0 0 0 1.5 0V12Zm2.25-3a.75.75 0 0 1 .75.75v6.75a.75.75 0 0 1-1.5 0V9.75A.75.75 0 0 1 13.5 9Zm3.75-1.5a.75.75 0 0 0-1.5 0v9a.75.75 0 0 0 1.5 0v-9Z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Dashboard
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
+              ) : null}
+
+                            {/* Dashboard Business Permit */}
+              {admin_type === 'business_admin'  ? (
+              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
+                <NavLink 
+                end 
+                to={`/admin_dash_bp/${admin_type}`}
+                  className={({ isActive }) =>
+                  'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
+                }
+                >
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 w-6 h-6">
+                      <path className='fill-slate-500' fillRule="evenodd" d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm4.5 7.5a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Zm3.75-1.5a.75.75 0 0 0-1.5 0v4.5a.75.75 0 0 0 1.5 0V12Zm2.25-3a.75.75 0 0 1 .75.75v6.75a.75.75 0 0 1-1.5 0V9.75A.75.75 0 0 1 13.5 9Zm3.75-1.5a.75.75 0 0 0-1.5 0v9a.75.75 0 0 0 1.5 0v-9Z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Dashboard
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
+              ) : null} 
+
+                            {/* Dashboard CTC / Cedula */}
+              {admin_type === 'cedula_admin'  ? (
+              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
+                <NavLink 
+                end 
+                to={`/admin_dash_ctc/${admin_type}`}
+                  className={({ isActive }) =>
+                  'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
+                }
+                >
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 w-6 h-6">
+                      <path className='fill-slate-500' fillRule="evenodd" d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm4.5 7.5a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Zm3.75-1.5a.75.75 0 0 0-1.5 0v4.5a.75.75 0 0 0 1.5 0V12Zm2.25-3a.75.75 0 0 1 .75.75v6.75a.75.75 0 0 1-1.5 0V9.75A.75.75 0 0 1 13.5 9Zm3.75-1.5a.75.75 0 0 0-1.5 0v9a.75.75 0 0 0 1.5 0v-9Z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Dashboard
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
+              ) : null} 
+
+                
+              {/* Dashboard Local Civil Registry */}
+              {admin_type === 'lcr_admin'  ? (
+              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
+                <NavLink 
+                end 
+                to={`/admin_dash_lcr/${admin_type}`}
+                  className={({ isActive }) =>
+                  'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
+                }
+                >
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 w-6 h-6">
+                      <path className='fill-slate-500' fillRule="evenodd" d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm4.5 7.5a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Zm3.75-1.5a.75.75 0 0 0-1.5 0v4.5a.75.75 0 0 0 1.5 0V12Zm2.25-3a.75.75 0 0 1 .75.75v6.75a.75.75 0 0 1-1.5 0V9.75A.75.75 0 0 1 13.5 9Zm3.75-1.5a.75.75 0 0 0-1.5 0v9a.75.75 0 0 0 1.5 0v-9Z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Dashboard
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
+              ) : null} 
+
+            {admin_type === 'registry_admin'  ? (
+              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
+                <NavLink 
+                end 
+                to={`/admin_dash_ur/${admin_type}`}
+                  className={({ isActive }) =>
+                  'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
+                }
+                >
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 w-6 h-6">
+                      <path className='fill-slate-500' fillRule="evenodd" d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm4.5 7.5a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Zm3.75-1.5a.75.75 0 0 0-1.5 0v4.5a.75.75 0 0 0 1.5 0V12Zm2.25-3a.75.75 0 0 1 .75.75v6.75a.75.75 0 0 1-1.5 0V9.75A.75.75 0 0 1 13.5 9Zm3.75-1.5a.75.75 0 0 0-1.5 0v9a.75.75 0 0 0 1.5 0v-9Z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Dashboard
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
+              ) : null} 
+
+
+
+
+                  {/* END OF DASH BOARD  */}
 
               {/* Real Property Tax */}
+              {admin_type === 'chief_admin' || admin_type === 'rptax_admin' ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink
-                    end to="/admin_rptax"
-                    className={({ isActive }) =>
-                      'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
-                    }
-                  >
+                to={admin_type === 'chief_admin' ? `/admin_rptax/${admin_type}` : `/admin_rptax/${admin_type}`}
+                className={({ isActive }) =>
+                    'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
+                  }
+                >
                   <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="shrink-0 w-6 h-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="shrink-0 w-6 h-6">
                       <path className="fill-slate-400" d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875z" />
                       <path className="fill-slate-400" d="M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 001.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 001.897 1.384C6.809 12.164 9.315 12.75 12 12.75z" />
                       <path className="fill-slate-500" d="M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 15.914 9.315 16.5 12 16.5z" />
@@ -139,18 +259,32 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
+            ) : null}
 
               {/* Business Permit */}
+              {admin_type === 'chief_admin' || admin_type === 'business_admin' ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink
-                    end to="/admin_business"
-                    className={({ isActive }) =>
-                      'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
-                    }
-                  >
+                  end to={admin_type === 'chief_admin' ? `/admin_business/${admin_type}` : `/admin_business/${admin_type}`}
+                  className={({ isActive }) =>
+                    'block transition duration-150 truncate ' +
+                    (isActive
+                      ? 'text-emerald-500'
+                      : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
+                  }
+                >
                   <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 w-6 h-6">
-                      <path className="fill-slate-400" d="M4.125 3C3.089 3 2.25 3.84 2.25 4.875V18a3 3 0 003 3h15a3 3 0 01-3-3V4.875C17.25 3.839 16.41 3 15.375 3H4.125zM12 9.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5H12zm-.75-2.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H12a.75.75 0 01-.75-.75zM6 12.75a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5H6zm-.75 3.75a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5H6a.75.75 0 01-.75-.75zM6 6.75a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h3a.75.75 0 00.75-.75v-3A.75.75 0 009 6.75H6z" clipRule="evenodd" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="shrink-0 w-6 h-6"
+                    >
+                      <path
+                        className="fill-slate-400"
+                        d="M4.125 3C3.089 3 2.25 3.84 2.25 4.875V18a3 3 0 003 3h15a3 3 0 01-3-3V4.875C17.25 3.839 16.41 3 15.375 3H4.125zM12 9.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5H12zm-.75-2.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H12a.75.75 0 01-.75-.75zM6 12.75a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5H6zm-.75 3.75a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5H6a.75.75 0 01-.75-.75zM6 6.75a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h3a.75.75 0 00.75-.75v-3A.75.75 0 009 6.75H6z"
+                        clipRule="evenodd"
+                      />
                       <path className="fill-slate-500" d="M18.75 6.75h1.875c.621 0 1.125.504 1.125 1.125V18a1.5 1.5 0 01-3 0V6.75z" />
                     </svg>
                     <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
@@ -159,11 +293,13 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
+            ) : null}
 
               {/* CTC / Cedula */}
+              {admin_type === 'chief_admin' || admin_type === 'cedula_admin' ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink
-                    end to="/admin_cedula"
+                    end to={admin_type === 'chief_admin' ? `/admin_cedula/${admin_type}` : `/admin_cedula/${admin_type}`}
                     className={({ isActive }) =>
                       'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                     }
@@ -178,11 +314,14 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
+              ) : null}
+
 
               {/* Local Civil Registry */}
+              {admin_type === 'chief_admin' || admin_type === 'lcr_admin' ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink
-                    end to="/admin_lcr"
+                end to={admin_type === 'chief_admin' ? `/admin_lcr/${admin_type}` : `/admin_lcr/${admin_type}`}
                     className={({ isActive }) =>
                       'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                     }
@@ -197,8 +336,10 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
+              ) : null}
 
               {/* Registry */}
+              {admin_type === 'chief_admin' || admin_type === 'registry_admin' ? (
               <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
@@ -213,8 +354,9 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                              <path className='fill-slate-500' d="M18.75 12.75h1.5a.75.75 0 0 0 0-1.5h-1.5a.75.75 0 0 0 0 1.5ZM12 6a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 12 6ZM12 18a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 12 18ZM3.75 6.75h1.5a.75.75 0 1 0 0-1.5h-1.5a.75.75 0 0 0 0 1.5ZM5.25 18.75h-1.5a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 0 1.5ZM3 12a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 3 12ZM9 3.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM12.75 12a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0ZM9 15.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 w-6 h-6">
+                              <path className='fill-slate-400' fillRule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z" clipRule="evenodd" />
+                              <path className='fill-slate-500' d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
                             </svg>
                             <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                               Registry
@@ -232,8 +374,8 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              end
-                              to="/admin_userlist"
+                              end to={admin_type === 'chief_admin' ? `/admin_userlist/${admin_type}` : `/admin_userlist/${admin_type}`}
+
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -246,8 +388,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
 
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              end
-                              to='/admin_verifyreqs'
+                             end to={admin_type === 'chief_admin' ? `/admin_verifyreqs/${admin_type}` : `/admin_verifyreqs/${admin_type}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -263,23 +404,26 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   );
                 }}
               </AdminSidebarLinkGroup>
+                            ) : null}
 
             </ul>
           </div>
-
+          
           {/* Maintenance group */}
           <div>
+          {admin_type === 'chief_admin'  ? (
             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
               <span className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6" aria-hidden="true">
                 •••
               </span>
               <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Maintenance</span>
             </h3>
+                         ) : null}
+            {admin_type === 'chief_admin'  ? (
             <ul className="submenu mt-3 text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600">
-            
               {/* Audit Trails */}
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
-                <NavLink end to="/admin_audittrail"
+                <NavLink end to={`/admin_audittrail/${admin_type}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
@@ -295,8 +439,8 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
-
             </ul>
+             ) : null}
           </div>
         </div>
 

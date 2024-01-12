@@ -1,60 +1,89 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../admin_partials/AdminSidebar';
-import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
 
-import MainCard from '../admin_partials/misc/MainCard';
-
-import RPstats from '../admin_partials/misc/RPstats';
-import RCstats from '../admin_partials/misc/RCstats';
-import CTCstats from '../admin_partials/misc/CTCstats';
-import BPstats from '../admin_partials/misc/BPstats';
-import BCstats from '../admin_partials/misc/BCstats';
-import DCstats from '../admin_partials/misc/DCstats';
-import MCstats from '../admin_partials/misc/MCstats';
 import URstats from '../admin_partials/misc/URstats';
 import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 
-const AdminDashChiefForm =({ transStats, revenue, totalPaid, taxPayment, taxClearance, businessPermit, cedulaCert, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities})=>{
-
-  const location = useLocation();
-  const { pathname, state } = location;
-  const admin_type = pathname.split("/")[2];
-  const adminRole = state && state.user_role;
+const AdminDashURForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
+  const [isVisible, setIsVisible] = useState(false);
+  
+  const [topRegions, setTopRegions] = useState({});
+  const [topProvinces, setTopProvinces] = useState({});
+  const [topCities, setTopCities] = useState({});
+  
+
   const [isLoading, setIsLoading] = useState(true);
 
+  const [completedEffects, setCompletedEffects] = useState(0);
+  
+  console.log(completedEffects)
+  const handleEffectCompletion = () => {
+    setCompletedEffects((prev) => prev + 1);
+  };
 
   useEffect(() => {
-    if (
-      transStats &&
-      revenue &&
-      taxPayment &&
-      taxClearance &&
-      businessPermit &&
-      cedulaCert &&
-      birthCert &&
-      deathCert &&
-      marriageCert &&
-      topRegions &&
-      topProvinces &&
-      topCities
-      ) {
+    if (completedEffects > 3) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
     }
+  }, [completedEffects]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const topr = await axios.get(`http://localhost:8800/admin/topregions/`);
+        setTopRegions(topr.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        handleEffectCompletion();
+      }
+    };
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const topp = await axios.get(`http://localhost:8800/admin/topprovinces/`);
+        setTopProvinces(topp.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        handleEffectCompletion();
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const topc = await axios.get(`http://localhost:8800/admin/topcities/`);
+        setTopCities(topc.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        handleEffectCompletion();
+      }
+    };
+    fetchData();
+  }, []);
+
+
 
 
   return (
@@ -102,19 +131,11 @@ const AdminDashChiefForm =({ transStats, revenue, totalPaid, taxPayment, taxClea
                 <AdminBanner />
   
                 <div className="grid grid-cols-12 gap-6">
-                  <MainCard transStats={transStats}/>
-                  <Revenue revenue={revenue} totalAmount={totalPaid} adminType={'CHIEF'}/>
                   <URstats />
-                  <RPstats taxPayment={taxPayment} />
-                  <RCstats taxClearance={taxClearance} />
-                  <BPstats businessPermit={businessPermit} />
-                  <CTCstats cedulaCert={cedulaCert} />
-                  <BCstats birthCert={birthCert}/>
-                  <DCstats deathCert={deathCert}/>
-                  <MCstats marriageCert={marriageCert}/>
                   <TopRegions topRegions={topRegions} />
                   <TopProvinces topProvinces={topProvinces} />
                   <TopCities topCities={topCities} />
+                  <Revenue/>
                 </div>
               </>
             )}
@@ -126,4 +147,4 @@ const AdminDashChiefForm =({ transStats, revenue, totalPaid, taxPayment, taxClea
   );  
 }
 
-export default AdminDashChiefForm;
+export default AdminDashURForm;

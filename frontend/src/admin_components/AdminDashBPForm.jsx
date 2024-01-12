@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -11,64 +13,31 @@ import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 
-const AdminDashBPForm =()=>{
+const AdminDashBPForm =({ businessPermit, topRegions, topProvinces, topCities, revenue, totalBP })=>{
+
+  
+  const location = useLocation();
+  const { pathname, state } = location;
+  // console.log("pathname", pathname);
+  const admin_type = pathname.split("/")[2];
+  
+  // console.log("userrole", admin_type)
+
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
-  const [isVisible, setIsVisible] = useState(false);
-  
-  const [businessPermit, setBusinessPermit] = useState({});
-  const [topRegions, setTopRegions] = useState({});
-  
-
   const [isLoading, setIsLoading] = useState(true);
 
-  const [completedEffects, setCompletedEffects] = useState(0);
-  
-  console.log(completedEffects)
-  const handleEffectCompletion = () => {
-    setCompletedEffects((prev) => prev + 1);
-  };
 
   useEffect(() => {
-    if (completedEffects > 2) {
+    if (businessPermit && topRegions && topProvinces && topCities && revenue) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
     }
-  }, [completedEffects]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const busp = await axios.get(`http://localhost:8800/admin/businesspermit/`);
-        setBusinessPermit(busp.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
   }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const topr = await axios.get(`http://localhost:8800/admin/topregions/`);
-        setTopRegions(topr.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-
 
 
   return (
@@ -120,9 +89,9 @@ const AdminDashBPForm =()=>{
                     <BPstats businessPermit={businessPermit} />
                   </div>
                   <TopRegions topRegions={topRegions} />
-                  <TopProvinces />
-                  <TopCities />
-                  <Revenue/>
+                  <TopProvinces topProvinces={topProvinces}/>
+                  <TopCities topCities={topCities}/>
+                  <Revenue revenue={revenue} totalAmount={totalBP} adminType={'BUSINESS'} />
                 </div>
               </>
             )}

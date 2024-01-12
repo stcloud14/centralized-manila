@@ -11,63 +11,24 @@ import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 
-const AdminDashCTCForm =()=>{
+const AdminDashCTCForm =({ cedulaCert, topRegions, topProvinces, topCities, revenue, totalCC })=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
   const [isVisible, setIsVisible] = useState(false);
-  
-  const [cedulaCert, setCedulaCert] = useState({});
-  const [topRegions, setTopRegions] = useState({});
-  
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [completedEffects, setCompletedEffects] = useState(0);
-  
-  console.log(completedEffects)
-  const handleEffectCompletion = () => {
-    setCompletedEffects((prev) => prev + 1);
-  };
 
   useEffect(() => {
-    if (completedEffects > 2) {
+    if (cedulaCert && topRegions && topProvinces && topCities && revenue) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
     }
-  }, [completedEffects]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const ced = await axios.get(`http://localhost:8800/admin/cedulacert/`);
-        setCedulaCert(ced.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
   }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const topr = await axios.get(`http://localhost:8800/admin/topregions/`);
-        setTopRegions(topr.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
 
 
 
@@ -120,9 +81,9 @@ const AdminDashCTCForm =()=>{
                     <CTCstats cedulaCert={cedulaCert} />
                   </div>
                   <TopRegions topRegions={topRegions} />
-                  <TopProvinces />
-                  <TopCities />
-                  <Revenue/>
+                  <TopProvinces topProvinces={topProvinces}/>
+                  <TopCities topCities={topCities}/>
+                  <Revenue revenue={revenue} totalAmount={totalCC} adminType={'CEDULA'}/>
                 </div>
               </>
             )}
