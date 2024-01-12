@@ -20,7 +20,7 @@ const VerifyModal = ({ isVerifiedStatus, userID }) => {
               <div className="text-slate-700 dark:text-white text-xs sm:text-sm text-justify">
                   <span> 
                     You are currently 
-                  <span className="font-medium">  unverified. </span> <br/><br/>
+                  <span className="font-medium "> UNVERIFIED. </span> <br/><br/>
                     To access this service, please complete the verification process. Visit your account settings to submit the required information. If you have any questions or need assistance, feel free to contact our support team.</span>
                   <br/><br/>
               </div>
