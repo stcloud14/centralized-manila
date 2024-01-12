@@ -17,13 +17,15 @@ const VerifyModal = ({ isVerifiedStatus, userID }) => {
           </div>
 
           <div className="max-h-[19.5rem] pb-1 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
-              <div className="text-slate-700 dark:text-white text-xs sm:text-sm text-justify">
-                  <span> 
-                    You are currently 
-                  <span className="font-medium">  unverified. </span> <br/><br/>
-                    To access this service, please complete the verification process. Visit your account settings to submit the required information. If you have any questions or need assistance, feel free to contact our support team.</span>
-                  <br/><br/>
-              </div>
+          <div className="text-slate-700 dark:text-white text-xs sm:text-sm text-justify">
+          <span> 
+            You are currently 
+            <span className="font-medium text-red-600"> UNVERIFIED. </span> <br/><br/>
+            To access this service, please complete the verification process. Visit your account settings to submit the required information. If you have any questions or need assistance, feel free to 
+            <a className="text-blue-600" href={`/contacts/${userID}`}> contact our support team</a>.
+          </span>
+          <br/><br/>
+        </div>
 
            
           </div>

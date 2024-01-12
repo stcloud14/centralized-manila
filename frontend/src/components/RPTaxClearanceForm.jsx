@@ -9,6 +9,7 @@ import Req from '../partials/misc/RequiredFieldIndicator';
 import TCTermsModal from '../partials/business/TCTermsModal';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 import TermsModal from '../partials/business/TermsModal';
+import VerifyModal from '../partials/business/VerifyModal';
 
 const RPTaxClearanceForm =()=>{
 
@@ -172,6 +173,20 @@ const RPTaxClearanceForm =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isVerifiedStatus, setIsVerifiedStatus] = useState();
+
+  useEffect(()=>{
+    const fetchUserVerification= async()=>{
+        try{
+            const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
+            setIsVerifiedStatus(res.data[0].verification_status)
+            
+        }catch(err){
+            console.log(err)
+        }
+    }
+    fetchUserVerification()
+  },[])
 
   const toggleModalVisibility = () => {
     setIsModalVisible(!isModalVisible);
@@ -191,7 +206,14 @@ const RPTaxClearanceForm =()=>{
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
+        {isVerifiedStatus === 'Verified' ? null :
+        <VerifyModal isVerifiedStatus={isVerifiedStatus} userID={user_id} />
+        }
+
+        {isVerifiedStatus === 'Verified' ? (
         <TermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
+        ) : null
+        }
 
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 mt-4 mb-2">
