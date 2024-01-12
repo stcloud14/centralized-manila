@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../partials/Sidebar';
@@ -15,6 +15,7 @@ const UserSettings =()=>{
   const [isRemove, setIsRemove] = useState(false);
 
   const contentRef = useRef(null);
+  const contentRef1 = useRef(null);
 
   const [verifiedStatus, setIsVerifiedStatus] = useState();
 
@@ -80,13 +81,21 @@ const UserSettings =()=>{
 
 
   const location = useLocation();
+  const [highlightButton, setHighlightButton] = useState(false);
 
   useEffect(() => {
-
     const searchParams = new URLSearchParams(location.search);
-    
-    if (searchParams.has('unverified')) {
-      contentRef.current.scrollTo({ bottom: 0, behavior: 'smooth' });
+
+    if (searchParams.has('unverified') && contentRef1.current) {
+      setTimeout(() => {
+        contentRef1.current.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
+      setTimeout(() => {
+        setHighlightButton(true);
+      }, 1000);
+      setTimeout(() => {
+        setHighlightButton(false);
+      }, 1400);
     }
   }, [location.search]);
 
@@ -417,12 +426,12 @@ const UserSettings =()=>{
                     </div>
                   </div>
 
-                  <div className="flex flex-col justify-center mt-4 mb-4">
+                  <div ref={contentRef1} className="flex flex-col justify-center mt-4 mb-4">
                     <h1 className='font-medium text-center text-slate-700 dark:text-white mt-10 mb-4'>Account Verification</h1>
                     <button
                         type="submit"
                         // onClick={handleSubmit}
-                        className="w-full sm:w-auto text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                        className={`w-full sm:w-auto text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 ${highlightButton ? 'bg-blue-500 text-white dark:text-white dark:bg-blue-500' : ''}`}
                       >
                         Apply for Account Verification
                       </button>
@@ -442,7 +451,7 @@ const UserSettings =()=>{
                 </form>
               </div>
             </div>
-        </main>
+        </main >
 
 
       </div>
