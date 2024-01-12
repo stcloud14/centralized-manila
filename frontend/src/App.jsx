@@ -93,6 +93,7 @@ function App() {
 
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
+        <Route exact path="/admin_settings/:admin_type" element={<AdminSettings />} />
         <Route exact path="/admin_rptax/:admin_type" element={<AdminRPTax />} />
         <Route exact path="/admin_business/:admin_type" element={<AdminBusiness />} />
         <Route exact path="/admin_cedula/:admin_type" element={<AdminCedula />} />
