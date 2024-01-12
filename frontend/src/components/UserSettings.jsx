@@ -16,9 +16,13 @@ const UserSettings =()=>{
 
   const contentRef = useRef(null);
 
+  const [verifiedStatus, setIsVerifiedStatus] = useState();
+
+
   const [defaultImg, setDefaultImg] = useState(defaultImage);
 
   const [storedImage, setStoredImage] = useState('');
+
   const [userImage, setUserImage] = useState('');
 
   const [selectedFile, setSelectedFile] = useState();
@@ -60,15 +64,12 @@ const UserSettings =()=>{
   };
 
 
-  console.log(preSelectedFile)
-  console.log(userImage)
-
-
   useEffect(()=>{
     const fetchUserImage= async()=>{
         try{
             const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
-            setStoredImage(res.data[0])
+            setStoredImage(res.data[0].user_image)
+            setIsVerifiedStatus(res.data[0].verification_status)
 
         }catch(err){
             console.log(err)
@@ -78,10 +79,11 @@ const UserSettings =()=>{
   },[])
 
 
+
   const checkUserImage = async () => {
     try {
       const imagePath = '../uploads/profileImage/';
-      const imageName = storedImage.user_image;
+      const imageName = storedImage;
   
       if (imageName === undefined || imageName === null) {
         console.log('User image name is undefined or null.');
@@ -295,6 +297,9 @@ const UserSettings =()=>{
                         src={preSelectedFile || userImage || defaultImg}
                         onError={(e) => console.error('Error loading image:', e)}
                       />
+                    
+                    {/* Verified Check Mark */}
+                    {verifiedStatus === 'Verified' ? (
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-[125px] h-[125px] pb-3 text-blue-400 absolute bottom-10 right-9 z-10 transform translate-x-1/2 translate-y-1/2" viewBox="0 0 841.89 595.28">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -6 23 38" fill="white">
                       <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
@@ -306,6 +311,8 @@ const UserSettings =()=>{
                           C325.55,293.77,398.88,366.9,398.88,366.9z"/>
                       </g>
                     </svg>
+                    ) : null}
+                    
                     </div>
 
                       <div className="flex flex-col items-center w-full mb-4">
