@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from '../partials/ThemeToggle';
-import auth from '../../firebase.config';  // Updated import statement
+import auth from '../../../backend/routes/firebase.config';  // Updated import statement
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 
