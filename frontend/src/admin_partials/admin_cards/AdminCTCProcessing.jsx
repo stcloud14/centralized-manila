@@ -1,4 +1,4 @@
-const AdminBusinessProcessing = ({handleOpenModal, handleOpenModal4, handleOpenModal5})  => {
+const AdminCTCProcessing = ({handleOpenModal, handleOpenModal4, handleOpenModal5})  => {
     // Requests component logic
     return (
       <>
@@ -23,7 +23,7 @@ const AdminBusinessProcessing = ({handleOpenModal, handleOpenModal4, handleOpenM
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
                   {/* Tax Clearance Sample */}
                   <div onClick={handleOpenModal} className="bg-white cursor-pointer dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
-                    <div className="text-xs font-semibold border-t-4 border-[#d62d20] text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
+                    <div className="text-xs font-semibold border-t-4 border-[#ffa700] text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                       Transaction ID:
                     </div>
 
@@ -56,5 +56,5 @@ const AdminBusinessProcessing = ({handleOpenModal, handleOpenModal4, handleOpenM
     );
   };
   
-  export default AdminBusinessProcessing;
+  export default AdminCTCProcessing;
   
