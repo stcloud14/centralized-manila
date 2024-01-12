@@ -21,7 +21,8 @@ const VerifyModal = ({ isVerifiedStatus, userID }) => {
           <span> 
             You are currently 
             <span className="font-medium text-red-600"> UNVERIFIED. </span> <br/><br/>
-            To access this service, please complete the verification process. Visit your account settings to submit the required information. If you have any questions or need assistance, feel free to <a href={`/contacts/${userID}`}>contact our support team</a>.
+            To access this service, please complete the verification process. Visit your account settings to submit the required information. If you have any questions or need assistance, feel free to 
+            <a className="text-blue-600" href={`/contacts/${userID}`}> contact our support team</a>.
           </span>
           <br/><br/>
         </div>
