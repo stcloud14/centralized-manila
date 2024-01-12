@@ -15,7 +15,6 @@ import paymentMethod from './routes/paymentMethod.js';
 import userSettings from './routes/userSettings.js'
 
 import adminDashboard from './routes/adminDashboard.js'
-import Admin from './routes/admin.js'
 
 const app = express();
 
@@ -37,8 +36,6 @@ app.use('/payment', paymentMethod);
 
 
 app.use('/admin', adminDashboard);
-app.use('/login', Admin);
-
 
 
 
