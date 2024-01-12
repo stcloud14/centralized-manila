@@ -1,8 +1,8 @@
 import React from 'react';
 
-const VerifyModal = ({ isVisible, userID }) => {
+const VerifyModal = ({ isVerifiedStatus, userID }) => {
 
-  return isVisible ? (
+  return isVerifiedStatus ? (
     <div className="fixed z-50 inset-0 overflow-hidden">
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -41,7 +41,10 @@ const VerifyModal = ({ isVisible, userID }) => {
               </button>
 
               <button
-                onClick=""
+                onClick={() => {
+                  window.location.href = `/usersettings/${userID}?unverified=true`;
+                }}
+                
                 type="button"
                 className="text-white text-xs text-center px-5 py-2 md:text-sm bg-blue-500 border border-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >

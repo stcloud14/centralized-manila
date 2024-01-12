@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -77,6 +77,18 @@ const UserSettings =()=>{
     }
     fetchUserImage()
   },[])
+
+
+  const location = useLocation();
+
+  useEffect(() => {
+
+    const searchParams = new URLSearchParams(location.search);
+    
+    if (searchParams.has('unverified')) {
+      contentRef.current.scrollTo({ bottom: 0, behavior: 'smooth' });
+    }
+  }, [location.search]);
 
 
 
