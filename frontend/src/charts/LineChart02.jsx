@@ -16,9 +16,12 @@ function LineChart02({
   data,
   width,
   height,
-  totalPaid
+  totalPaid,
+  dataLength,
 }) {
 
+  console.log(dataLength)
+  
   const [chart, setChart] = useState(null)
   const canvas = useRef(null);
   const legend = useRef(null);
@@ -106,7 +109,7 @@ function LineChart02({
             }
             // Reuse the built-in legendItems generator
             const items = c.options.plugins.legend.labels.generateLabels(c);
-            items.slice(0, 7).forEach((item) => {
+            items.slice(0, dataLength).forEach((item) => {
               const li = document.createElement('li');
               li.style.marginLeft = tailwindConfig().theme.margin[3];
               // Button element

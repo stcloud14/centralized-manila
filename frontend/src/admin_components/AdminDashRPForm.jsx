@@ -12,13 +12,15 @@ import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 
-const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces, topCities, revenue })=>{
+const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces, topCities, revenue, totalRP })=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
   const [isLoading, setIsLoading] = useState(true);
+
+  console.log(totalRP)
 
 
   useEffect(() => {
@@ -81,7 +83,7 @@ const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces,
                   <TopRegions topRegions={topRegions} />
                   <TopProvinces topProvinces={topProvinces}/>
                   <TopCities topCities={topCities} />
-                  <Revenue revenue={revenue} />
+                  <Revenue revenue={revenue} totalAmount={totalRP} adminType={'RPTAX'} />
                 </div>
               </>
             )}

@@ -6,6 +6,7 @@ function AdminDashChief() {
   const { 
     transStats,
     revenue,
+    totalPaid,
     taxPayment,
     taxClearance,
     businessPermit,
@@ -22,6 +23,7 @@ function AdminDashChief() {
     <AdminDashChiefForm 
     transStats={transStats}
     revenue={revenue}
+    totalPaid={totalPaid}
     taxPayment={taxPayment}
     taxClearance={taxClearance}
     businessPermit={businessPermit}

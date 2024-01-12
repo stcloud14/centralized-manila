@@ -25,6 +25,15 @@ export const DashboardProvider = ({ children }) => {
     const [topProvinces, setTopProvinces] = useState({});
     const [topCities, setTopCities] = useState({});
     const [revenue, setRevenue] = useState({});
+  
+    const {
+      totalPaid: totalPaid,
+      totalRP: totalRP,
+      totalBP: totalBP,
+      totalCC: totalCC,
+      totalLCR: totalLCR,
+    } = revenue;
+
 
     const fetchData = async (url, setStateFunction) => {
         try {
@@ -73,6 +82,11 @@ export const DashboardProvider = ({ children }) => {
     value={{
         transStats,
         revenue,
+        totalPaid,
+        totalRP,
+        totalBP,
+        totalCC,
+        totalLCR,
         taxPayment,
         taxClearance,
         businessPermit,
