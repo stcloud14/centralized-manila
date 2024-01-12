@@ -103,8 +103,8 @@ const AdminDashChiefForm =({ transStats, revenue, totalPaid, taxPayment, taxClea
   
                 <div className="grid grid-cols-12 gap-6">
                   <MainCard transStats={transStats}/>
-                  <URstats />
                   <Revenue revenue={revenue} totalAmount={totalPaid} adminType={'CHIEF'}/>
+                  <URstats />
                   <RPstats taxPayment={taxPayment} />
                   <RCstats taxClearance={taxClearance} />
                   <BPstats businessPermit={businessPermit} />

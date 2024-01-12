@@ -11,7 +11,7 @@ const router = Router();
 
   router.get('/:user_id', (req, res) => {
     const user_id = req.params.user_id;
-    const sql = "SELECT user_image FROM user_image WHERE user_id = ?";
+    const sql = "SELECT ui.user_image, uv.verification_status FROM user_image ui JOIN user_verification uv ON ui.user_id = uv.user_id WHERE ui.user_id = ?";
     conn2.query(sql, [user_id], (err, result) => {
         if (err) {
             console.error(err);

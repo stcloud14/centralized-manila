@@ -11,6 +11,7 @@ import TPTermsModal from '../partials/business/TPTermsModal';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 import QuarterDropdown from '../partials/profile/QuarterDropdown';
 import TermsModal from '../partials/business/TermsModal';
+import VerifyModal from '../partials/business/VerifyModal';
 
 const RPTaxPaymentForm =()=>{
 
@@ -217,6 +218,20 @@ const handleCheckboxChange = (e) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isVerifiedStatus, setIsVerifiedStatus] = useState();
+
+  useEffect(()=>{
+    const fetchUserVerification= async()=>{
+        try{
+            const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
+            setIsVerifiedStatus(res.data[0].verification_status)
+            
+        }catch(err){
+            console.log(err)
+        }
+    }
+    fetchUserVerification()
+  },[])
 
   const toggleModalVisibility = () => {
     setIsModalVisible(!isModalVisible);
@@ -236,11 +251,19 @@ const handleCheckboxChange = (e) => {
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
+        {isVerifiedStatus === 'Verified' ? null :
+        <VerifyModal isVerifiedStatus={isVerifiedStatus} userID={user_id} />
+        }
+
+        {isVerifiedStatus === 'Verified' ? (
         <TermsModal isVisible={isModalVisible} onProceed={toggleModalVisibility} userID={user_id} />
+        ) : null
+        }
 
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 mt-4 mb-2">
           <div className="px-5 py-5">
+
 
               <form className={`max-w-md mx-auto ${isModalVisible ? 'blur' : ''}`}>
                 <h1 className='font-medium text-center text-slate-700 dark:text-white'>Real Property Tax</h1>

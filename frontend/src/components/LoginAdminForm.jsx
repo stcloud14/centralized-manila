@@ -49,7 +49,7 @@ const LoginAdminForm = () => {
               navigate(`/admin_dash_lcr/${admin_type}`);
               break;
           case 'registry_admin':
-              navigate(`/admin_userlist/${admin_type}`);
+              navigate(`/admin_dash_ur/${admin_type}`);
               break;
           default:
             setLoginError("Unknown or unsupported role");
