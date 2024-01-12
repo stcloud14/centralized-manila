@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from '../partials/ThemeToggle';
@@ -13,10 +13,14 @@ const LandingPageForm = () => {
     mobile_no: "",
     user_pass: "",
   });
+  const [loading, setLoading] = useState(false); // New state for loading indicator
 
   const [isSuccess, setIsSuccess] = useState(false); 
   const successTimeoutRef = useRef(null);
-
+  const FailedTimeoutRef = useRef(null);
+  const [Many_Request, setManyRequest] = useState(false);
+  const [wrong_otp, setWrongOtp] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [verification_code, setVerificationCode] = useState(""); // Added state for verification code
   const [otpDigits, setOtpDigits] = useState(["", "", "", "", "", ""]);
@@ -24,16 +28,50 @@ const LandingPageForm = () => {
   const { mobile_no, user_pass } = userAuth;
   const [loginError, setLoginError] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
+  const otpInputRefs = useRef(Array.from({ length: 6 }, () => React.createRef()));
+
+  useEffect(() => {
+    // Focus on the first input when the component mounts
+    if (otpInputRefs.current[0].current) {
+      otpInputRefs.current[0].current.focus();
+    }
+  }, []);
 
   const handleOtpInputChange = (index, value) => {
     const newOtpDigits = [...otpDigits];
+  
+    // If the input value is empty and Backspace is pressed, move focus to the previous input
+    if (value === '' && index > 0 && otpInputRefs.current[index - 1].current) {
+      otpInputRefs.current[index - 1].current.focus();
+    } else {
+      // Move focus to the next input if the current input is not empty
+      if (index < otpDigits.length - 1 && otpInputRefs.current[index + 1].current) {
+        otpInputRefs.current[index + 1].current.focus();
+      }
+    }
+  
     newOtpDigits[index] = value;
     setOtpDigits(newOtpDigits);
-
-    // Update the verification_code state as well (if you still need it)
-    const newVerificationCode = newOtpDigits.join("");
+  
+    // Update the verification_code state
+    const newVerificationCode = newOtpDigits.join('');
     setVerificationCode(newVerificationCode);
   };
+
+  const handleKeyDown = (index, e) => {
+    // Handle Backspace key to prevent browser navigation
+    if (e.key === 'Backspace' && index > 0 && otpInputRefs.current[index - 1].current) {
+      e.preventDefault();
+
+      // Clear the value of the current input and move focus to the previous input
+      const newOtpDigits = [...otpDigits];
+      newOtpDigits[index] = '';
+      setOtpDigits(newOtpDigits);
+
+      otpInputRefs.current[index - 1].current.focus();
+    }
+  };
+
 
 
   const handleChange = (e) => {
@@ -47,9 +85,11 @@ const LandingPageForm = () => {
       setUserAuth((prev) => ({ ...prev, [name]: value }));
     }
   };
-
   const handleVerificationSubmit = async () => {
     try {
+      setLoading(true);
+      console.log("Verification process started...");
+      // Assuming confirmationResult is declared and set elsewhere in your component
       const codeConfirmation = await confirmationResult.confirm(verification_code);
       console.log("User signed in successfully:", codeConfirmation.user);
       navigate(`/home/${userAuth.user_id}`);
@@ -60,12 +100,17 @@ const LandingPageForm = () => {
       if (error.code === "auth/invalid-verification-code") {
         // Resend verification code or take appropriate action
         console.log("Resending verification code...");
+        console.log(verification_code);
         // Implement code resend logic here
       }
+    }finally {
+      setLoading(false);
+      console.log("Verification process completed.");
+      setWrongOtp(true);
     }
   };
 
-  function onCaptchaVerify() {
+  const onCaptchaVerify = () => {
     if (!window.recaptchaVerifier) {
       const recaptchaOptions = {
         size: 'invisible',
@@ -77,14 +122,14 @@ const LandingPageForm = () => {
     window.recaptchaVerifier.verify().catch((error) => {
       console.error('Error verifying reCAPTCHA:', error);
     });
-  }
-  
-  
+  };
+
   const onSignup = async (recaptchaToken) => {
-    onCaptchaVerify();
     const appVerifier = window.recaptchaVerifier;
     const phoneNumber = `+63${userAuth.mobile_no}`;
+  
     try {
+      // Only proceed with SMS verification if reCAPTCHA verification is successful
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
       window.confirmationResult = confirmationResult;
       setIsSuccess(true);
@@ -93,32 +138,44 @@ const LandingPageForm = () => {
       }, 4000);
     } catch (error) {
       console.error('Error signing in:', error);
+      if (error.code === 'auth/too-many-requests') {
+        console.log('Too many requests');
+        setManyRequest(true);
+      }
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.get(`http://localhost:8800/login/${userAuth.mobile_no}/${user_pass}`);
       if (response.data[0].mobile_no === userAuth.mobile_no && response.data[0].user_pass === userAuth.user_pass) {
         // Authentication successful, set authenticated state to true
-        setAuthenticated(true);
-        // Extract user_id from the response data
-        const { user_id } = response.data[0];
-        // Update the user_id in the state
-        setUserAuth((prev) => ({ ...prev, user_id }));
-  
-        // Check if mobile number and password match before triggering the OTP verification process
-        if (!authenticated) {
-          // Trigger the OTP verification process only if the user is not authenticated
-          onSignup();
+        if (isSubmitting) {
+          return;
         }
-      } else {
-        // Authentication failed, show an error message
-        setLoginError("Authentication failed. Please check your credentials.");
+  
+        try {
+          setAuthenticated(true);
+          // Extract user_id from the response data
+          const { user_id } = response.data[0];
+          // Update the user_id in the state
+          setUserAuth((prev) => ({ ...prev, user_id }));
+  
+          // Check if mobile number and password match before triggering the OTP verification process
+         if (!authenticated) {
+            setIsSubmitting(true); // Set to true before calling onCaptchaVerify
+            onCaptchaVerify(); // Call onCaptchaVerify directly
+          }
+        } catch (error) {
+          // Handle errors specific to setting authenticated state and updating user_id
+        }
       }
     } catch (error) {
       console.error(error);
       setLoginError("Authentication failed. Please check your credentials.");
+    } finally {
+      setIsSubmitting(false); // Reset to false after handling submission
     }
   };
     
@@ -202,11 +259,12 @@ const LandingPageForm = () => {
           <div className="text-center">
           {!authenticated && (
             <button
-              className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
-              type="submit" 
-            >
-              Login
-            </button>
+            className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+          type="submit"
+          disabled={isSubmitting}  // Disable the button if submitting
+        >
+          Login
+        </button>
             )}
           {!authenticated && loginError && (
             <p className="text-red-600 p-2 text-xs rounded-full mt-5">{loginError}</p>
@@ -230,6 +288,18 @@ const LandingPageForm = () => {
             </div>
           )}
 
+          {Many_Request && (
+            <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
+                Too Many Request please try again Later.
+              </div>
+            )}  
+          
+          {wrong_otp && (
+            <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
+                Wrong OTP Re-Type Again.
+              </div>
+            )} 
+
           {/* VERIFICATION PROCESS */}
           {authenticated && (
             <>
@@ -252,18 +322,28 @@ const LandingPageForm = () => {
                     maxLength="1"
                     value={digit}
                     onChange={(e) => handleOtpInputChange(index, e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(index, e)}
                     className="w-10 h-10 text-center border border-gray-300 rounded-lg dark:border-slate-400 dark:text-slate-700 bg-transparent"
+                    ref={otpInputRefs.current[index]}
                   />
                 ))}
               </div>
 
                 {/* Verify Button */}
-                <button
-                  className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 uppercase"
-                  onClick={handleVerificationSubmit}
-                >
-                  Verify
-                </button>
+                <div className="text-center">
+                  {loading ? (
+                    <div className="spinner-border text-blue-500" role="status">
+                      <span className="visually-hidden">Verifying...</span>
+                    </div>
+                  ) : (
+                    <button
+                      className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 uppercase"
+                      onClick={handleVerificationSubmit}
+                    >
+                      Verify
+                    </button>
+                  )}
+                </div>
               </div>
             </>
           )}
