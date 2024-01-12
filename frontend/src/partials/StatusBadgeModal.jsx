@@ -111,7 +111,7 @@ const StatusBadgeModal = ({ statusType }) => {
           id="popover-description"
           role="tooltip"
           style={getPopoverStyles()}
-          className={`inline-block transition-opacity duration-300 bg-white dark:bg-[#333333] text-slate-700 dark:text-white border-gray-200 dark:border-gray-800 rounded-lg shadow-2xl`}
+          className={`inline-block transition-opacity duration-300 bg-[#fffffffc] dark:bg-[#333333] text-slate-700 dark:text-white border-gray-200 dark:border-gray-800 rounded-lg shadow-2xl`}
         >
           <div className="p-3 text-[10px] sm:text-xs w-[150px] sm:w-[300px] text-left ">
             {text}
