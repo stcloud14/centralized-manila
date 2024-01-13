@@ -25,6 +25,8 @@ const TransactionHistoryForm = () => {
   const [sortOption, setSortOption] = useState('date_processed');
   const [userPersonal, setUserPersonal]=useState({})
 
+  console.log(userTransaction)
+
   useEffect(() => {
     const fetchUserPersonal = async () => {
       try {

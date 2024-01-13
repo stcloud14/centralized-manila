@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminSidebar from '../admin_partials/AdminSidebar';
@@ -17,8 +18,6 @@ import AdminRPTaxProcessing from '../admin_partials/admin_cards/AdminRPTaxProces
 
 
 const AdminRPTaxForm =()=>{
-
-
   
   const location = useLocation();
   const { pathname, state } = location;
@@ -31,58 +30,28 @@ const AdminRPTaxForm =()=>{
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
-  // View Details Modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => {
-      setIsModalOpen(true);
-    }
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  
+  const [taxPayment, setTaxPayment] = useState([]);
+  const [taxClearance, setTaxClearance] = useState([]);
 
-   // Expired Modal
-   const [isModalOpen2, setIsModalOpen2] = useState(false);
-   const handleOpenModal2 = () => {
-       setIsModalOpen2(true);
-     }
-   const handleCloseModal2 = () => {
-     setIsModalOpen2(false);
-   };
-
-   // Process Modal
-   const [isModalOpen3, setIsModalOpen3] = useState(false);
-   const handleOpenModal3 = () => {
-       setIsModalOpen3(true);
-     }
-   const handleCloseModal3 = () => {
-     setIsModalOpen3(false);
-   };
-
-   // Reject Modal
-   const [isModalOpen4, setIsModalOpen4] = useState(false);
-   const handleOpenModal4 = () => {
-       setIsModalOpen4(true);
-     }
-   const handleCloseModal4 = () => {
-     setIsModalOpen4(false);
-   };
-
-   // Done Modal
-   const [isModalOpen5, setIsModalOpen5] = useState(false);
-   const handleOpenModal5 = () => {
-       setIsModalOpen5(true);
-     }
-   const handleCloseModal5 = () => {
-     setIsModalOpen5(false);
-   }
+  console.log(taxPayment)
+  console.log(taxClearance)
 
 
+  useEffect(() => {
+    const fetchUserTransaction = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/adminrptax/`);
+        setTaxPayment(res.data.taxpayment);
+        setTaxClearance(res.data.taxclearance);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserTransaction();
+  }, []);
 
-
-  const handleProcessModal = (event) => {
-    event.stopPropagation();
-    console.log('Processing')
-  };
+  
 
   
 
@@ -123,41 +92,18 @@ const AdminRPTaxForm =()=>{
           <div className="grid grid-cols-12 gap-4 mx-4 my-4">
             
             <AdminRPTaxRequests
-            handleOpenModal={handleOpenModal}
-            handleOpenModal2={handleOpenModal2}
-            handleOpenModal3={handleOpenModal3}
+            taxPayment={taxPayment}
+            taxClearance={taxClearance}
             />
             <AdminRPTaxProcessing
-            handleOpenModal={handleOpenModal}
-            handleOpenModal4={handleOpenModal4}
-            handleOpenModal5={handleOpenModal5}
+            // handleOpenModal={handleOpenModal}
             />
 
           </div>
 
           <AdminFooter logo={logoSrc} />
         </main>
-
-        <AdminRPView
-          isOpen={isModalOpen}
-          handleClose={handleCloseModal}
-        />
-        <AdminRPExpired
-          isOpen2={isModalOpen2}
-          handleClose2={handleCloseModal2}
-        />
-        <AdminRPProcess
-          isOpen3={isModalOpen3}
-          handleClose3={handleCloseModal3}
-        />
-        <AdminRPReject
-          isOpen4={isModalOpen4}
-          handleClose4={handleCloseModal4}
-        />
-        <AdminRPDone
-          isOpen5={isModalOpen5}
-          handleClose5={handleCloseModal5}
-        />
+        
       </div>
     </div>
   );

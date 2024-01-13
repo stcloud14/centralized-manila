@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import moment from 'moment/moment.js';
 
-const AdminRPView = ({ isOpen, handleClose }) => {
+const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) => {
+
+  const { transaction_id, status_type, date_processed } = selectedTransaction;
+
+  console.log(selectedTransaction)
+
+  const date = moment(date_processed).format('MMMM D, YYYY');
+  const time = moment(date_processed).format('h:mm A');
+
+
   return (
     isOpen && (
       <div className="fixed z-50 inset-0 overflow-y-auto">
@@ -22,35 +32,35 @@ const AdminRPView = ({ isOpen, handleClose }) => {
                         <div className="mb-6">
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">00123456</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{transaction_id}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Type</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">Tax Clearance</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{transType}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">00123456789</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.rp_tdn}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">0012345654321</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.rp_pin}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">January 02, 2024</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">07:31 PM</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{time}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-yellow-200 text-yellow-800 w-24">Pending</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-yellow-200 text-yellow-800 w-24">{selectedTransaction.status_type}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Amount Paid</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">P 200.00</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">P {selectedTransaction.amount}</span>
                           </div>
 
                         </div>
