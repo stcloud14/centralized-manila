@@ -174,7 +174,7 @@ const DropdownProfile = ({ align }) => {
 
         {/* Verified Check Mark */}
         {verifiedStatus === 'Verified' ? (
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-[30px] h-[30px] pb-3 text-blue-400 absolute bottom-[-0rem] right-[4.08rem] z-10 transform translate-x-1/2 translate-y-1/2" viewBox="0 0 841.89 595.28">
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-[30px] h-[30px] pb-3 text-blue-400 absolute bottom-[0rem] right-[6.74rem] z-10 transform translate-x-1/2 translate-y-1/2" viewBox="0 0 841.89 595.28">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -6 23 38" fill="white">
                       <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                     </svg>
@@ -211,8 +211,8 @@ const DropdownProfile = ({ align }) => {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-[#3d3d3d]">
-            <div className="flex font-medium text-slate-800 dark:text-slate-100">{userPersonal.f_name} {userPersonal.l_name} 
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-9 h-9 pb-3 text-blue-400 absolute bottom-[6.45rem] right-[2.25rem] z-10 transform translate-x-1/2 translate-y-1/2" viewBox="0 0 841.89 595.28">
+            {/* <div className="flex font-medium text-slate-800 dark:text-slate-100">{userPersonal.f_name} {userPersonal.l_name} 
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-9 h-9 pb-3 text-blue-400" viewBox="0 0 841.89 595.28">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -6 23 38" fill="white">
                       <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                     </svg>
@@ -223,7 +223,24 @@ const DropdownProfile = ({ align }) => {
                           C325.55,293.77,398.88,366.9,398.88,366.9z"/>
                       </g>
                     </svg>
-            </div>
+            </div> */}
+
+            <div className="flex sm:flex-row items-start justify-between mb-[-0.90rem] font-medium text-slate-800 dark:text-slate-100">
+                  <span className="font-medium whitespace-nowrap">{userPersonal.f_name} {userPersonal.l_name}</span>
+                  <span className="whitespace-nowrap">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-9 h-9 pb-3 text-blue-400" viewBox="0 0 841.89 595.28">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -6 23 38" fill="white">
+                        <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                      </svg>
+                      <g fill="currentColor">
+                        <path d="M351.54,516.77l-39.52-67.9l-78.54-16.17l8.83-76.77l-49.93-58.5l49.93-57.98l-8.83-76.75l78.54-16.21
+                          l39.52-68.39l69.71,32.39l69.71-32.39l40.05,68.41l78.01,16.19l-8.8311,76.77l49.93,57.96l-49.93,58.5l8.83,76.77l-78.01,16.17
+                          l-40.05,67.9l-69.71-32.39L351.54,516.77z M398.88,366.9l118.08-117.51l-23.4-21.42l-94.68,94.01l-49.4-51.69l-23.94,23.48
+                          C325.55,293.77,398.88,366.9,398.88,366.9z"/>
+                      </g>
+                      </svg>
+                  </span>
+              </div>
             <div className="text-xs text-slate-500 dark:text-slate-400 italic">User</div>
           </div>
           <ul>
