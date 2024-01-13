@@ -138,22 +138,6 @@ const AdminCedulaForm =()=>{
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
         />
-        <AdminRPExpired
-          isOpen2={isModalOpen2}
-          handleClose2={handleCloseModal2}
-        />
-        <AdminRPProcess
-          isOpen3={isModalOpen3}
-          handleClose3={handleCloseModal3}
-        />
-        <AdminRPReject
-          isOpen4={isModalOpen4}
-          handleClose4={handleCloseModal4}
-        />
-        <AdminRPDone
-          isOpen5={isModalOpen5}
-          handleClose5={handleCloseModal5}
-        />
       </div>
     </div>
   );

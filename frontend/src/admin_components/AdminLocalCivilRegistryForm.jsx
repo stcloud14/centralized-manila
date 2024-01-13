@@ -6,10 +6,6 @@ import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 
 import AdminRPView from '../admin_partials/admin_modals/AdminRPView';
-import AdminRPExpired from '../admin_partials/admin_modals/AdminRPExpired';
-import AdminRPProcess from '../admin_partials/admin_modals/AdminRPProcess';
-import AdminRPReject from '../admin_partials/admin_modals/AdminRPReject';
-import AdminRPDone from '../admin_partials/admin_modals/AdminRPDone';
 
 import AdminLCRRequests from '../admin_partials/admin_cards/AdminLCRRequests';
 import AdminLCRProcessing from '../admin_partials/admin_cards/AdminLCRProcessing';
@@ -145,22 +141,6 @@ const AdminLocalCivilRegistryForm =()=>{
         <AdminRPView
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
-        />
-        <AdminRPExpired
-          isOpen2={isModalOpen2}
-          handleClose2={handleCloseModal2}
-        />
-        <AdminRPProcess
-          isOpen3={isModalOpen3}
-          handleClose3={handleCloseModal3}
-        />
-        <AdminRPReject
-          isOpen4={isModalOpen4}
-          handleClose4={handleCloseModal4}
-        />
-        <AdminRPDone
-          isOpen5={isModalOpen5}
-          handleClose5={handleCloseModal5}
         />
       </div>
     </div>

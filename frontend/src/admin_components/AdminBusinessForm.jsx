@@ -5,8 +5,8 @@ import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 
-import AdminRPView from '../admin_partials/admin_modals/AdminRPView';
-import AdminRPExpired from '../admin_partials/admin_modals/AdminRPExpired';
+import AdminBPView from '../admin_partials/admin_modals/AdminBPView';
+import AdminBPExpired from '../admin_partials/admin_modals/AdminBPExpired';
 import AdminRPProcess from '../admin_partials/admin_modals/AdminRPProcess';
 import AdminRPReject from '../admin_partials/admin_modals/AdminRPReject';
 import AdminRPDone from '../admin_partials/admin_modals/AdminRPDone';
@@ -134,25 +134,9 @@ const AdminBusinessForm =()=>{
           <AdminFooter logo={logoSrc} />
         </main>
 
-        <AdminRPView
+        <AdminBPView
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
-        />
-        <AdminRPExpired
-          isOpen2={isModalOpen2}
-          handleClose2={handleCloseModal2}
-        />
-        <AdminRPProcess
-          isOpen3={isModalOpen3}
-          handleClose3={handleCloseModal3}
-        />
-        <AdminRPReject
-          isOpen4={isModalOpen4}
-          handleClose4={handleCloseModal4}
-        />
-        <AdminRPDone
-          isOpen5={isModalOpen5}
-          handleClose5={handleCloseModal5}
         />
       </div>
     </div>
