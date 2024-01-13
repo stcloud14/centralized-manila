@@ -5,7 +5,7 @@ const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) =>
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
-  console.log(selectedTransaction)
+  console.log(transType)
 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
@@ -38,6 +38,12 @@ const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) =>
                             <span className="font-medium whitespace-nowrap">Type</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{transType}</span>
                           </div>
+                          {transType === 'Tax Payment' ? 
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Account Name</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.acc_name}</span>
+                          </div>
+                          : null} 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.rp_tdn}</span>
@@ -46,6 +52,18 @@ const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) =>
                             <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.rp_pin}</span>
                           </div>
+                          {transType === 'Tax Payment' ? 
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">From</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">1st Quarter</span>
+                          </div>
+                          : null} 
+                          {transType === 'Tax Payment' ? 
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">To</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.period_id}</span>
+                          </div>
+                          : null} 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
