@@ -42,7 +42,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose }) => {
                   <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
                     Valid ID
                   </label>
-                  <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 dark:border-white px-6 py-10 md:w-3/4">
+                  <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 dark:border-white px-6 py-10">
                     <div className="text-center text-gray-600 dark:text-slate-400">
                       <div className="mt-4 flex text-sm leading-6">
                         <label
