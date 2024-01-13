@@ -34,16 +34,14 @@ const AdminRPTaxForm =()=>{
   const [taxPayment, setTaxPayment] = useState([]);
   const [taxClearance, setTaxClearance] = useState([]);
 
-  console.log(taxPayment)
-  console.log(taxClearance)
 
-
+  // DITO AKO NAG API REQUEST, AND KUNG MAKIKITA NIYO SA SERVER SIDE NG ADMINRPTAX, DALAWANG QUERY YUN AND INISTORE KO SA DALAWANG VARIABLE
   useEffect(() => {
     const fetchUserTransaction = async () => {
       try {
         const res = await axios.get(`http://localhost:8800/adminrptax/`);
-        setTaxPayment(res.data.taxpayment);
-        setTaxClearance(res.data.taxclearance);
+        setTaxPayment(res.data.taxpayment); // DITO KO NA SILA PINAGHIWALAY, ITO YUNG PANG PAYMENT
+        setTaxClearance(res.data.taxclearance); // ITO YUNG PANG CLEARANCE
       } catch (err) {
         console.log(err);
       }
@@ -91,6 +89,7 @@ const AdminRPTaxForm =()=>{
           {/*  Two Sections */}
           <div className="grid grid-cols-12 gap-4 mx-4 my-4">
             
+            {/* THEN ITO YUNG COMPONENT NG REQUEST SECTION, IPINASA KO DITO YUNG VALUES NA NAKUHA KO SA API REQUEST */}
             <AdminRPTaxRequests
             taxPayment={taxPayment}
             taxClearance={taxClearance}
