@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContactInfo = () => {
+const ContactInfo = ({ selectedTransaction }) => {
   return (
     <div className="my-10">
                   <span className='font-bold text-lg text-gray-700 dark:text-white'>Contact Information</span>
