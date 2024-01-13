@@ -3,43 +3,43 @@ import moment from 'moment/moment.js';
 
 import AdminRPView from '../admin_modals/AdminRPView';
 
+// IPASA MUNA DITO YUNG VALUES GALING FROM PARENT COMPONENT, NANDUN YUNG API REQUEST
 const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [transType, setTransType] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);   // PANG SET NG MODAL KUNG OPEN OR CLOSE
+  const [selectedTransaction, setSelectedTransaction] = useState(null); // DITO MASESET KUNG ANONG CARD ANG PININDOT, DITO BABASE YUNG LALABAS NA MODAL
+  const [transType, setTransType] = useState(''); // ITO NAMAN YUNG CONDITION KUNG ANO YUNG IPAPAKITA LANG SA MODAL, IF PANG PAYMENT BA OR CLEARANCE
 
-  const date1 = moment(taxPayment.date_processed).format('MMMM D, YYYY');
-  const time1 = moment(taxPayment.date_processed).format('h:mm A');
+  const date1 = moment(taxPayment.date_processed).format('MMMM D, YYYY'); // YUNG FORMAT NG DATE NATIN SA DB MAHABA DIBA, IREREFORMAT PARA DATE LANG LUMABAS AND NAKA (JAN. 01, 2024) YUNG ITSURA
+  const time1 = moment(taxPayment.date_processed).format('h:mm A'); // GANUN RIN DITO SA TIME
 
   const date2 = moment(taxClearance.date_processed).format('MMMM D, YYYY');
   const time2 = moment(taxClearance.date_processed).format('h:mm A');
     
-  const handleOpenModal = (transaction, type) => {
+  const handleOpenModal = (transaction, type) => { // ITO YUNG MAG EEXECUTE KAPAG CINLICK YUNG CARD, DALAWA PARAMETER, TRANSACTION (YUNG LAHAT NG DETAILS NG ISANG TRANS), AND TYPE (YUNG TRANS TYPE)
 
-    console.log(type)
-    setTransType(type);
-    setIsModalOpen(true);
-    setSelectedTransaction(transaction);
+    setTransType(type); // NGAYON ISESET NATIN YUNG TRANS TYPE NA GALING SA PARAMETER DOON SA USESTATE LINE 11
+    setIsModalOpen(true); // OOPEN NA YUNG MODAL
+    setSelectedTransaction(transaction); // ISESET SA USESTATE LAHAT NG DETAILS NG CARD NA PININDOT, LINE 10
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = () => { // ITO YUNG PAG CLOSE
     setIsModalOpen(false);
-    setSelectedTransaction(null);
+    setSelectedTransaction(null); // IRERESET YUNG LAMAN NG SELECTED TRANSACTION EVERY TIME MAGCOCLOSE PARA ISA LANG ANG NASESET NA TRANSACTION DETAILS
   };
 
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); // ITO YUNG USESTATE PARA SA SEARCH BAR, DITO MASESET YUNG INIINPUT DOON
 
-  const handleSearch = (transaction) => {
-    const transactionId = transaction.transaction_id.toUpperCase();
-    const query = searchQuery.toUpperCase();
-    return transactionId.includes(query);
+  const handleSearch = (transaction) => { // ITO YUNG FUNCTION PARA IDISPLAY LANG KUNG ANO YUNG SINESEARCH NA TRANSACTION ID SA SEARCH BAR
+    const transactionId = transaction.transaction_id.toUpperCase(); // ISESET SA VARIABLE YUNG TRANSACTION ID NG BAWAT CARD
+    const query = searchQuery.toUpperCase(); // PANG MAKE SURE NA UPPERCASE LAHAT NG INPUT SA SEARCH BAR, AND DITO SA VARIABLE IFEFETCH YUNG NILAGAY NA INPUT SA SEARCH QUERY, LINE 32
+    return transactionId.includes(query); // IRERETURN LANG NIYA YUNG NAG MATCH NA TRANSACTION BASE SA TRANSACTION ID NA NAGMATCH SA ININPUT SA SEARCH
   };
 
-  const filteredTaxClearance = taxClearance.filter(handleSearch);
+  const filteredTaxClearance = taxClearance.filter(handleSearch); // ANG INITIAL NITO IS LAHAT MATCH SA LINE 34 SINCE WALA PA NAMANG INIINPUT SA LINE 32, ITO YUNG IMAMAP PARA IDISPLAY YUNG MGA TRANSACTION
 
-  const filteredTaxPayment = taxPayment.filter(handleSearch);
+  const filteredTaxPayment = taxPayment.filter(handleSearch); // SAME SA LINE 40
 
     return (
       <>
@@ -56,6 +56,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
                     <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                   </svg>
                 </span>
+                {/* ITO YUNG SEARCH, ANG VALUE NITO MASSTORE SA LINE 32, AND EVERY CHANGES, NAG UUPDATE RIN ANG LINE 32 */}
                 <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
               </div>
             </div>
@@ -65,7 +66,10 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
             {/* Tax Clearance Sample */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
               
+              {/* ITO NAMAN YUNG MAPPING, LAHAT NG LAMAN NG LINE 40, IDIDISPLAY NITO, SINCE ANG INITIAL AY WALA PA NAMANG VALUE ANG SEARCH QUERY, LAHAT IDIDISPLAY DITO AND MAG FIFILTER LANG KAPAG MAY NILAGAY NA SA SEARCH, AND MADIDISPLAY LANG YUNG MATCHED TRANSACTION */}
               {filteredTaxClearance.map((transaction) => (
+
+              // ITO YUNG KAPAG PININDOT YUNG BUONG CARD, MAG OOPEN YUNG MODAL, IPAPASA YUNG DETAILS NG TRANSACTION NA PININDOT, AND ISESET SA PARAMETER NG LINE 19 NA ANG TYPE AY TAX CLEARANCE
               <div onClick={() => handleOpenModal(transaction, 'Tax Clearance')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                   Transaction ID: {transaction.transaction_id}
@@ -100,6 +104,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
               </div>
               ))} 
 
+              {/* SAME LANG TO SA TAAS */}
               {/* Tax Payment Sample */}
               {filteredTaxPayment.map((transaction) => (
               <div onClick={() => handleOpenModal(transaction, 'Tax Payment')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
@@ -139,6 +144,10 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
               </div>
               ))} 
 
+            {/* NGAYON ITO NAMAN YUNG COMPONENT NG MODAL, MAG OOPEN LANG TO KAPAG NAG TRUE ANG ISMODALOPEN OR KAPAG CINLICK YUNG CARD,
+            DALAWA YUNG CONDITION, DAPAT TRUE ANG ISMODALOPEN, AND DAPAT MAY LAMAN ANG SELECTEDTRANSACTION (WHICH IS INEXPLAIN KO SA LINE 23)
+            DAPAT RIN IPASA DITO YUNG MGA VALUES PARA MAACCESS SA MODAL, YUNG SELECTEDTRANSACTION, YUNG STATE NG MODAL KUNG OPEN OR CLOSE,
+            FUNCTION PARA MACLOSE ANG MODAL, AND YUNG TRANS TYPE NA VALUE NG TRANSTYPE */}
             {isModalOpen && selectedTransaction && (
               <AdminRPView selectedTransaction={selectedTransaction} isOpen={isModalOpen} handleClose={handleCloseModal} transType={transType} />
             )}

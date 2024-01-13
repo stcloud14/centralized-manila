@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
-const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) => {
+const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
 
-  const { transaction_id, status_type, date_processed } = selectedTransaction;
+  const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
 
-  console.log(transType)
-
-  const date = moment(date_processed).format('MMMM D, YYYY');
+  const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
   const time = moment(date_processed).format('h:mm A');
 
 
   return (
+    // MAY CONDITION NA MAGDIDISPLAY LANG KUNG ANG ISOPEN AY TRUE, ITO RIN YUNG ISMODALOPEN, IBA LANG NAME
     isOpen && (
       <div className="fixed z-50 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
@@ -30,14 +29,17 @@ const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) =>
                           <span className="font-bold md:text-lg text-sm">Transaction Details</span>
                         </div>
                         <div className="mb-6">
+                          {/* SO ITO NA DISPLAY DISPLAY NALANG */}
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
+                            {/* KAYA WALA TONG SELECTEDTRANSACTION KASI NGA GUMAWA TAYO COPY SA LINE 6 */}
                             <span className="whitespace-nowrap md:mb-0 mb-1">{transaction_id}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Type</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{transType}</span>
                           </div>
+                          {/* ITO NAMAN YUNG CONDITION NA MAGDIDISPLAY LANG KUNG ANG TRANSTYPE NA PINASA AY TAX PAYMENT, NULL IF HINDI */}
                           {transType === 'Tax Payment' ? 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Account Name</span>
