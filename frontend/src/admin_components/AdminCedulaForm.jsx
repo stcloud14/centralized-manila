@@ -5,11 +5,7 @@ import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 
-import AdminRPView from '../admin_partials/admin_modals/AdminRPView';
-import AdminRPExpired from '../admin_partials/admin_modals/AdminRPExpired';
-import AdminRPProcess from '../admin_partials/admin_modals/AdminRPProcess';
-import AdminRPReject from '../admin_partials/admin_modals/AdminRPReject';
-import AdminRPDone from '../admin_partials/admin_modals/AdminRPDone';
+import AdminCTCView from '../admin_partials/admin_modals/AdminCTCView';
 
 import AdminCTCRequests from '../admin_partials/admin_cards/AdminCTCRequests';
 import AdminCTCProcessing from '../admin_partials/admin_cards/AdminCTCProcessing';
@@ -134,7 +130,7 @@ const AdminCedulaForm =()=>{
           <AdminFooter logo={logoSrc} />
         </main>
 
-        <AdminRPView
+        <AdminCTCView
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
         />

@@ -5,7 +5,9 @@ import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 
-import AdminRPView from '../admin_partials/admin_modals/AdminRPView';
+import AdminLCRBirthView from '../admin_partials/admin_modals/AdminLCRBirthView';
+import AdminLCRMarriageView from '../admin_partials/admin_modals/AdminLCRMarriageView';
+import AdminLCRDeathView from '../admin_partials/admin_modals/AdminLCRDeathView';
 
 import AdminLCRRequests from '../admin_partials/admin_cards/AdminLCRRequests';
 import AdminLCRProcessing from '../admin_partials/admin_cards/AdminLCRProcessing';
@@ -138,10 +140,11 @@ const AdminLocalCivilRegistryForm =()=>{
           <AdminFooter logo={logoSrc} />
         </main>
 
-        <AdminRPView
+        <AdminLCRBirthView
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
         />
+        
       </div>
     </div>
   );
