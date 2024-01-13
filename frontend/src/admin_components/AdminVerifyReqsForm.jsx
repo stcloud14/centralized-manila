@@ -1,48 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios'
+
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminRPTaxClearanceModal from '../admin_partials/admin_modals/AdminRPTaxClearanceModal';
 import AdminRPTaxRejectModal from '../admin_partials/admin_modals/AdminRPTaxRejectModal';
+import AdminURApplications from '../admin_partials/admin_modals/AdminURApplications';
 
 const AdminVerifyReqsForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [userApplications, setUserApplications] = useState();
+
   const logoSrc = '../src/images/mnl_footer.svg';
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => {
-      setIsModalOpen(true);
-    }
+  const [isModalOpen, setIsModalOpen] = useState(false);  
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+
+
+  const handleOpenModal = (transaction) => {
+    setIsModalOpen(true);
+    setSelectedTransaction(transaction);
+  }
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
   const handleProcessSubmit = () => {
     setIsModalOpen(false);
+    setSelectedTransaction(null);
   };
 
-  const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const handleOpenModal2 = () => {
-      setIsModalOpen2(true);
-    }
-  const handleCloseModal2 = () => {
-    setIsModalOpen2(false);
-  };
-  const handleProcessSubmit2 = () => {
-    setIsModalOpen2(false);
-  };
 
-  const [isModalOpen3, setIsModalOpen3] = useState(false);
-  const handleOpenModal3 = () => {
-      setIsModalOpen3(true);
+
+  useEffect(()=>{
+    const fetchUserApplications= async()=>{
+        try{
+            const res= await axios.get(`http://localhost:8800/adminur/`)
+            setUserApplications(res.data)
+            
+        }catch(err){
+            console.log(err)
+        }
     }
-  const handleCloseModal3 = () => {
-    setIsModalOpen3(false);
-  };
-  const handleReject = () => {
-    setIsModalOpen3(false);
-  };
+    fetchUserApplications()
+  },[])
+
   
 
   return (
@@ -64,10 +70,12 @@ const AdminVerifyReqsForm =()=>{
               <h1 className='font-medium text-center text-slate-700 dark:text-white'>Registry</h1>
               <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>User Verification Requests</h1> 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:gap-6 gap-2">
+
                 {/* Card Sample */}
-                <div className="bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm mb-4 flex flex-col">
+                {userApplications?.map((transaction) => (
+                <div onClick={() => handleOpenModal(transaction)} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm mb-4 flex flex-col">
                   <div className="text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                    Name:
+                    Name: {transaction.l_name}, {transaction.f_name} {transaction.m_name} 
                   </div>
 
                   <div className="flex-grow px-4 pt-5 pb-4">
@@ -79,7 +87,7 @@ const AdminVerifyReqsForm =()=>{
                   </div>
                   
                   <div className="px-4 pb-2 space-x-4 flex justify-between items-center group">
-                    <div onClick={handleOpenModal3} className="flex justify-center items-center text-center cursor-pointer p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-sm mt-2 flex-grow">
+                    <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-sm mt-2 flex-grow">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -88,7 +96,7 @@ const AdminVerifyReqsForm =()=>{
                     </div>
                   </div>
                   <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                    <div onClick={handleOpenModal3} className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
+                    <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                       </svg>
@@ -102,22 +110,24 @@ const AdminVerifyReqsForm =()=>{
                     </div>
                   </div>
                 </div>
+                ))} 
+
+            {isModalOpen && selectedTransaction && (
+              <AdminURApplications selectedTransaction={selectedTransaction} isOpen={isModalOpen} handleClose={handleCloseModal} />
+            )}
 
               </div>
             </div>
           </div>
           <AdminFooter logo={logoSrc} />
         </main>
-        <AdminRPTaxClearanceModal
+        {/* <AdminRPTaxClearanceModal
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
           handleProcess={handleProcessSubmit}
         />
         <AdminRPTaxRejectModal
-          isOpen3={isModalOpen3}
-          handleClose3={handleCloseModal3}
-          handleReject={handleReject}
-        />
+        /> */}
       </div>
     </div>
   );
