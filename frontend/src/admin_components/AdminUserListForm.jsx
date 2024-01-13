@@ -5,11 +5,9 @@ import { useLocation } from 'react-router-dom';
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
-import UserListDesktop from '../admin_partials/admin_userregistry/userlistDesktop';
-import UserListMobile from '../admin_partials/admin_userregistry/userlistMobile';
+import UserListDesktop from '../admin_partials/admin_userregistry/UserListDesktop';
+import UserListMobile from '../admin_partials/admin_userregistry/UserListMobile';
 import AdminUserViewModal from '../admin_partials/admin_modals/AdminUserViewModal';
-import AdminUserDeleteModal from '../admin_partials/admin_modals/AdminUserDeleteModal';
-
 
 const AdminUserListForm = () => {
 
@@ -73,8 +71,6 @@ const logoSrc = '../src/images/mnl_footer.svg';
         <AdminUserViewModal
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
-        />
-        <AdminUserDeleteModal
           isOpen3={isModalOpen3}
           handleClose3={handleCloseModal3}
         />

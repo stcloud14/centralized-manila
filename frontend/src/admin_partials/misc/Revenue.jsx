@@ -288,7 +288,7 @@ function Revenue({ revenue, totalAmount, adminType }) {
     return (
       <div className="flex flex-col col-span-full bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-[#3d3d3d]">
-        <h2 className="font-semibold text-slate-800 dark:text-slate-100">Gross Revenue</h2>
+        <h2 className="font-semibold text-slate-800 dark:text-slate-100">Total Gross Revenue</h2>
       </header>
       {/* {chartData && <BarChart data={chartData} width={595} height={248} />} */}
       {chartData && <LineChart data={chartData} width={595} height={248} totalPaid={totalAmount} dataLength={dataLength} />}

@@ -212,42 +212,6 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                     </div>
                   </td>
                 </tr>
-              //   )) 
-              //   : userTransaction.map((transaction) => (
-
-              //   <tr key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
-              //     <td className="pl-6 pr-3 py-4 whitespace-nowrap">
-              //       <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white">
-              //         {transaction.transaction_id}
-              //       </div>
-              //     </td>
-              //     <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-              //       {transaction.date}
-              //     </td>
-              //     <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-              //       {transaction.time}
-              //     </td>
-              //     <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-              //       {transaction.trans_type}
-              //     </td>
-              //     <td className="px-3 py-4 whitespace-nowrap">
-              //       <StatusBadgeDesktop statusType={transaction.status_type} />
-              //     </td>
-              //     <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-              //       P {transaction.amount}
-              //     </td>
-              //     <td className="pl-3 pr-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
-              //       <div className="group">
-              //         <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center px-4 p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" >
-              //           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:stroke-white">
-              //             <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-              //             <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              //           </svg>   
-              //           <span className="text-xs font-normal">&nbsp;View Details</span>
-              //         </div>
-              //       </div>
-              //     </td>
-              //   </tr>
               ))} 
 
               </tbody>
