@@ -6,10 +6,6 @@ import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 
 import AdminBPView from '../admin_partials/admin_modals/AdminBPView';
-import AdminBPExpired from '../admin_partials/admin_modals/AdminBPExpired';
-import AdminRPProcess from '../admin_partials/admin_modals/AdminRPProcess';
-import AdminRPReject from '../admin_partials/admin_modals/AdminRPReject';
-import AdminRPDone from '../admin_partials/admin_modals/AdminRPDone';
 
 import AdminBusinessRequests from '../admin_partials/admin_cards/AdminBusinessRequests';
 import AdminBusinessProcessing from '../admin_partials/admin_cards/AdminBusinessProcessing';
