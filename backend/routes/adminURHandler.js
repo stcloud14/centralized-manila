@@ -59,7 +59,7 @@ router.get('/', async (req, res) => {
   JOIN \
     cities c ON uc.city_id = c.city_id AND uc.city_id \
   WHERE \
-    uv.verification_status = 'Verified' \
+    uv.application_status = 'Applying' \
   ORDER BY up.l_name;";
 
     try {
