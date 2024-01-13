@@ -17,7 +17,7 @@ import BusinessTypeDropdown from '../partials/profile/BusinessTypeDropdown';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 
 import UploadImageModal from '../partials/UploadModal';
-import UploadButton from '../partials/business/uploadButton';
+
 import SuffixDropdown from '../partials/profile/SuffixDropdown';
 import SexDropdown from '../partials/profile/SexDropdown';
 import CopiesDropdown from '../partials/profile/CopiesDropdown';
@@ -26,6 +26,7 @@ import PurposeDropdown from '../partials/profile/PurposeDropdown';
 import ValidIdDropdown from '../partials/profile/ValidIdDropdown';
 import BPTermsModal from '../partials/business/BPTermsModal';
 import VerifyModal from '../partials/business/VerifyModal';
+import UploadButton from '../partials/business/UploadButton';
 
 
 const BusinessPermitForm =()=>{
