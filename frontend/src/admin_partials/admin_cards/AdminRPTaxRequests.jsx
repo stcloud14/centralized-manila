@@ -28,6 +28,19 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
     setSelectedTransaction(null);
   };
 
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (transaction) => {
+    const transactionId = transaction.transaction_id.toUpperCase();
+    const query = searchQuery.toUpperCase();
+    return transactionId.includes(query);
+  };
+
+  const filteredTaxClearance = taxClearance.filter(handleSearch);
+
+  const filteredTaxPayment = taxPayment.filter(handleSearch);
+
     return (
       <>
         {/* Requests Area */}
@@ -43,7 +56,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
                     <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                   </svg>
                 </span>
-                <input id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
               </div>
             </div>
   
@@ -52,7 +65,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
             {/* Tax Clearance Sample */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
               
-              {taxClearance.map((transaction) => (
+              {filteredTaxClearance.map((transaction) => (
               <div onClick={() => handleOpenModal(transaction, 'Tax Clearance')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                   Transaction ID: {transaction.transaction_id}
@@ -88,7 +101,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
               ))} 
 
               {/* Tax Payment Sample */}
-              {taxPayment.map((transaction) => (
+              {filteredTaxPayment.map((transaction) => (
               <div onClick={() => handleOpenModal(transaction, 'Tax Payment')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                   Transaction ID: {transaction.transaction_id}
