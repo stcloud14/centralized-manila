@@ -4,8 +4,7 @@ import axios from 'axios';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import defaultImage from '../images/default_img.png';
-
-
+import ApplyVerificationModal from '../partials/business/ApplyVerificationModal';
 
 const UserSettings =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -62,6 +61,15 @@ const UserSettings =()=>{
     };
     reader.readAsDataURL(file);
    
+  };
+
+  // Apply for Verification Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleApplyModal = () => {
+      setIsModalOpen(true);
+    }
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
 
@@ -429,8 +437,8 @@ const UserSettings =()=>{
                   <div ref={contentRef1} className="flex flex-col justify-center mt-4 mb-4">
                     <h1 className='font-medium text-center text-slate-700 dark:text-white mt-10 mb-4'>Account Verification</h1>
                     <button
-                        type="submit"
-                        // onClick={handleSubmit}
+                        type="button"
+                        onClick={handleApplyModal}
                         className={`w-full sm:w-auto text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 ${highlightButton ? 'bg-blue-500 text-white dark:text-white dark:bg-blue-500' : ''}`}
                       >
                         Apply for Account Verification
@@ -452,7 +460,11 @@ const UserSettings =()=>{
               </div>
             </div>
         </main >
-
+        
+        <ApplyVerificationModal
+          isOpen={isModalOpen}
+          handleClose={handleCloseModal}
+        />
 
       </div>
     </div>
