@@ -55,7 +55,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
               {taxClearance.map((transaction) => (
               <div onClick={() => handleOpenModal(transaction, 'Tax Clearance')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                  Transaction ID:
+                  Transaction ID: {transaction.transaction_id}
                 </div>
   
                 <div className="flex-grow px-4 pt-5 pb-4">
@@ -91,7 +91,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
               {taxPayment.map((transaction) => (
               <div onClick={() => handleOpenModal(transaction, 'Tax Payment')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                  Transaction ID:
+                  Transaction ID: {transaction.transaction_id}
                 </div>
   
                 <div className="flex-grow px-4 pt-5 pb-4">
