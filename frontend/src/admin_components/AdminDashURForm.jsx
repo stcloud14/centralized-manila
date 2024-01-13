@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -9,81 +9,29 @@ import URstats from '../admin_partials/misc/URstats';
 import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
-import Revenue from '../admin_partials/misc/Revenue';
 
-const AdminDashURForm =()=>{
+
+const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
-  const [isVisible, setIsVisible] = useState(false);
-  
-  const [topRegions, setTopRegions] = useState({});
-  const [topProvinces, setTopProvinces] = useState({});
-  const [topCities, setTopCities] = useState({});
-  
-
   const [isLoading, setIsLoading] = useState(true);
 
-  const [completedEffects, setCompletedEffects] = useState(0);
-  
-  console.log(completedEffects)
-  const handleEffectCompletion = () => {
-    setCompletedEffects((prev) => prev + 1);
-  };
 
   useEffect(() => {
-    if (completedEffects > 3) {
+    if (
+      verifiedUsers &&
+      topRegions &&
+      topProvinces &&
+      topCities
+      ) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
     }
-  }, [completedEffects]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const topr = await axios.get(`http://localhost:8800/admin/topregions/`);
-        setTopRegions(topr.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
   }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const topp = await axios.get(`http://localhost:8800/admin/topprovinces/`);
-        setTopProvinces(topp.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const topc = await axios.get(`http://localhost:8800/admin/topcities/`);
-        setTopCities(topc.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        handleEffectCompletion();
-      }
-    };
-    fetchData();
-  }, []);
-
-
 
 
   return (
@@ -131,11 +79,10 @@ const AdminDashURForm =()=>{
                 <AdminBanner />
   
                 <div className="grid grid-cols-12 gap-6">
-                  <URstats />
+                  <URstats verifiedUsers={verifiedUsers}/>
                   <TopRegions topRegions={topRegions} />
                   <TopProvinces topProvinces={topProvinces} />
                   <TopCities topCities={topCities} />
-                  <Revenue/>
                 </div>
               </>
             )}

@@ -4,14 +4,18 @@ import BarChart from '../../charts/BarChart03';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function URstats() {
+function URstats({ verifiedUsers }) {
+
+  const totalUsers = verifiedUsers && verifiedUsers.length > 0 ? verifiedUsers[0].total_users : 0;
+  const totalUnverified = verifiedUsers && verifiedUsers.length > 0 ? verifiedUsers[0].total_unverified : 0;
+  const totalVerified = verifiedUsers && verifiedUsers.length > 0 ? verifiedUsers[0].total_verified : 0;
 
   const chartData = {
     labels: ['Reasons'],
     datasets: [
       {
         label: 'Verified Users',
-        data: [131],
+        data: [totalVerified],
         backgroundColor: '#3078f0',
         hoverBackgroundColor: '#2660bf',
         barPercentage: 1,
@@ -19,7 +23,7 @@ function URstats() {
       },
       {
         label: 'Unverified Users',
-        data: [100],
+        data: [totalUnverified],
         backgroundColor: '#d62d20',
         hoverBackgroundColor: tailwindConfig().theme.colors.red[700],
         barPercentage: 1,
@@ -35,14 +39,14 @@ function URstats() {
 
                 <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">User Registry</h2>
                 <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">Total Number of Users</div>
-                <div className="flex items-start"><div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">2,000</div>
+                <div className="flex items-start"><div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">{totalUsers}</div>
                 </div>
             </div>
             
             {/* Chart built with Chart.js 3 */}
             <div className="grow">
                 {/* Change the height attribute to adjust the chart height */}
-                <BarChart data={chartData} width={595} height={48}/>
+                {chartData && <BarChart data={chartData} width={595} height={48}/>}
             </div>
         </div>
     )

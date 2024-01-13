@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
     const query3 = "SELECT * FROM user_contact";
     const query4 = "SELECT * FROM user_gov_id";
     const query5 = "SELECT * FROM birth_info";
+    const query6 = "SELECT * FROM user_verification";
 
     try {
     const result = await queryDatabase(query);
@@ -20,8 +21,9 @@ router.get("/", async (req, res) => {
     const result3 = await queryDatabase(query3);
     const result4 = await queryDatabase(query4);
     const result5 = await queryDatabase(query5);
+    const result6 = await queryDatabase(query6);
     
-    res.json({ user_reg: result, user_auth: result1, user_personal: result2, user_contact: result3, user_gov_id: result4, birth_info: result5 });
+    res.json({ user_reg: result, user_auth: result1, user_personal: result2, user_contact: result3, user_gov_id: result4, birth_info: result5, user_verification: result6 });
     } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
@@ -56,6 +58,8 @@ router.post('/', async (req, res) => {
     const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
     const transID = generateTransactionID();
 
+    const verification_status = 'Unverified';
+
     const primaryKey = generatePrimaryKey(req.body.f_name, req.body.l_name, plainMobileNo);
 
     const query = "INSERT INTO user_reg (`f_name`, `l_name`, `mobile_no`, `user_id`) VALUES (?, ?, ?, ?)";
@@ -68,7 +72,7 @@ router.post('/', async (req, res) => {
     const values2 = [primaryKey, req.body.f_name, req.body.l_name];
 
     const query3 = "INSERT INTO user_contact (`user_id`, `mobile_no`) VALUES (?, ?)";
-    const values3 = [primaryKey, req.body.mobile_no ];
+    const values3 = [primaryKey, req.body.mobile_no];
 
     const query4 = "INSERT INTO user_gov_id (`user_id`) VALUES (?)";
     const values4 = [primaryKey];
@@ -76,8 +80,8 @@ router.post('/', async (req, res) => {
     const query5 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
     const values5 = [transID, primaryKey];
 
-    // const query6 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
-    // const values6 = [transID, primaryKey];
+    const query6 = "INSERT INTO user_verification (`user_id`, `verification_status`) VALUES (?, ?)";
+    const values6 = [primaryKey, verification_status];
 
 
     try {
@@ -87,6 +91,7 @@ router.post('/', async (req, res) => {
     const result3 = await queryDatabase(query3, values3);
     const result4 = await queryDatabase(query4, values4);
     const result5 = await queryDatabase(query5, values5);
+    const result6 = await queryDatabase(query6, values6);
 
 
     res.json({
@@ -97,6 +102,7 @@ router.post('/', async (req, res) => {
         user_contact_result: result3,
         user_gov_id_result: result4,
         birth_info_result: result5,
+        user_verification_result: result6,
     });
     } catch (err) {
     console.error(err);

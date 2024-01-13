@@ -688,6 +688,23 @@ router.get('/revenue/', async (req, res) => {
 });
 
 
+router.get('/verifiedusers/', async (req, res) => {
+
+    const query = "SELECT \
+    COUNT(*) AS total_users, \
+    SUM(CASE WHEN verification_status = 'Verified' THEN 1 ELSE 0 END) AS total_verified, \
+    SUM(CASE WHEN verification_status = 'Unverified' THEN 1 ELSE 0 END) AS total_unverified \
+    FROM user_verification;";
+  
+  try {
+    const result = await queryDatabase(query);
+
+    res.json(result);
+} catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving data');
+}
+});
 
 
 

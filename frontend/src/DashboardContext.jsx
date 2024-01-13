@@ -25,6 +25,7 @@ export const DashboardProvider = ({ children }) => {
     const [topProvinces, setTopProvinces] = useState({});
     const [topCities, setTopCities] = useState({});
     const [revenue, setRevenue] = useState({});
+    const [verifiedUsers, setVerifiedUsers] = useState({});
   
     const {
       totalPaid: totalPaid,
@@ -59,6 +60,7 @@ export const DashboardProvider = ({ children }) => {
         fetchData('topprovinces', setTopProvinces, handleEffectCompletion);
         fetchData('topcities', setTopCities, handleEffectCompletion);
         fetchData('revenue', setRevenue, handleEffectCompletion);
+        fetchData('verifiedusers', setVerifiedUsers, handleEffectCompletion);
       }, []);
     
       useEffect(() => {
@@ -82,6 +84,7 @@ export const DashboardProvider = ({ children }) => {
     value={{
         transStats,
         revenue,
+        verifiedUsers,
         totalPaid,
         totalRP,
         totalBP,

@@ -21,7 +21,7 @@ import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 
-const AdminDashChiefForm =({ transStats, revenue, totalPaid, taxPayment, taxClearance, businessPermit, cedulaCert, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities})=>{
+const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxPayment, taxClearance, businessPermit, cedulaCert, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities})=>{
 
   const location = useLocation();
   const { pathname, state } = location;
@@ -38,7 +38,8 @@ const AdminDashChiefForm =({ transStats, revenue, totalPaid, taxPayment, taxClea
   useEffect(() => {
     if (
       transStats &&
-      revenue &&
+      revenue && 
+      verifiedUsers &&
       taxPayment &&
       taxClearance &&
       businessPermit &&
@@ -104,7 +105,7 @@ const AdminDashChiefForm =({ transStats, revenue, totalPaid, taxPayment, taxClea
                 <div className="grid grid-cols-12 gap-6">
                   <MainCard transStats={transStats}/>
                   <Revenue revenue={revenue} totalAmount={totalPaid} adminType={'CHIEF'}/>
-                  <URstats />
+                  <URstats verifiedUsers={verifiedUsers} />
                   <RPstats taxPayment={taxPayment} />
                   <RCstats taxClearance={taxClearance} />
                   <BPstats businessPermit={businessPermit} />
