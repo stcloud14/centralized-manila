@@ -79,11 +79,11 @@ const AdminVerifyReqsForm =()=>{
                   </div>
 
                   <div className="flex-grow px-4 pt-5 pb-4">
-                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Sex: </div>
-                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Place of Birth: </div>
-                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date of Birth: </div>
-                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Mobile Number: </div>
-                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Email: </div>
+                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Sex: {transaction.sex_type}</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Place of Birth: {transaction.birth_place}</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date of Birth: {transaction.birth_date}</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Mobile Number: {transaction.mobile_no}</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Email: {transaction.user_email}</div>
                   </div>
                   
                   <div className="px-4 pb-2 space-x-4 flex justify-between items-center group">
