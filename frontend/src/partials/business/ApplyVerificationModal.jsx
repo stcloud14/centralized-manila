@@ -12,7 +12,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
     const file = event.target.files[0];
     if (file) {
     
-      if (file.size <= 5 * 1024 * 1024) { // SET FILE SIZE LIMIT TO 5MB
+      if (file.size <= 3 * 1024 * 1024) { // SET FILE SIZE LIMIT TO 3MB
         setSelectedFile(file);
         setSelectedFileName(file.name);
       } else {
@@ -34,7 +34,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
     const file = event.dataTransfer.files[0];
   
     if (file) {
-      if (file.size <= 5 * 1024 * 1024) {
+      if (file.size <= 3 * 1024 * 1024) {
         setSelectedFile(file);
         setSelectedFileName(file.name);
       } else {
@@ -178,7 +178,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
                 or drag and drop
               </p>
               <p className="text-[10px] sm:text-[12px] text-gray-500 dark:text-gray-400">
-                PNG, JPEG, SVG (MAX. 5MB)
+                PNG, JPEG, SVG (MAX. 3MB)
               </p>
             </>
           )}
