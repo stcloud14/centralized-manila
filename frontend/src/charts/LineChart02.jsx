@@ -19,8 +19,6 @@ function LineChart02({
   totalPaid,
   dataLength,
 }) {
-
-  console.log(dataLength)
   
   const [chart, setChart] = useState(null)
   const canvas = useRef(null);

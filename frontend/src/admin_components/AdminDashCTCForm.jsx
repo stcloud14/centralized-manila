@@ -74,7 +74,7 @@ const AdminDashCTCForm =({ cedulaCert, topRegions, topProvinces, topCities, reve
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner />
+                <AdminBanner adminType={'CEDULA'} />
   
                 <div className="grid grid-cols-12 gap-6">
                   <div className="flex flex-col col-span-full">

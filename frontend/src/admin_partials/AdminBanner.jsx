@@ -1,6 +1,24 @@
 import React from 'react';
 
-function AdminBanner() {
+function AdminBanner({ adminType }) {
+
+  const admin = (() => {
+    switch (adminType) {
+      case 'CHIEF':
+        return 'Chief Admin';
+      case 'RPTAX':
+        return 'Real Property Tax Admin';
+      case 'BUSINESS':
+        return 'Business Permit Admin';
+      case 'CEDULA':
+        return 'CTC / Cedula Admin';
+      case 'LCR':
+        return 'Local Civil Registry Admin';
+      default:
+        return 0;
+    }
+  })();
+
   return (
     <div className="relative px-2 sm:px-2 overflow-hidden mb-4">
       {/* Content */}
@@ -14,8 +32,7 @@ function AdminBanner() {
             <span className='text-green-500'>i</span>
             <span className='text-blue-600'>l</span>
             <span className='text-red-500'>a</span>,
-            <span> Admin</span>
-            <span> [admin_name]</span>!
+            <span> {admin}</span>!
           </h1>
           <p className="lg:text-sm dark:text-slate-400 font-thin text-xs">Discover what's happening today.</p>
         </div>
