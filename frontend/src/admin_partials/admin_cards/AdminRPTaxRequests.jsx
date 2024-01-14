@@ -22,7 +22,6 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
     setIsModalOpen(true); // OOPEN NA YUNG MODAL
     setSelectedTransaction(transaction); // ISESET SA USESTATE LAHAT NG DETAILS NG CARD NA PININDOT, LINE 10
 
-     // Remove this block if onMoveToProcessing is not needed
     if (onMoveToProcessing) {
       onMoveToProcessing(transaction);
     }
@@ -107,7 +106,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
                     </svg>
                     <span className="text-xs font-normal">&nbsp;Expired</span>
                   </div>
-                 <div onClick={() => handleOpenModal(transaction, 'Tax Clearance')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                 <div onClick={() => handleOpenModal(transaction, 'Real Property Tax Clearance')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                   </svg>
@@ -121,7 +120,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
               {/* SAME LANG TO SA TAAS */}
               {/* Tax Payment Sample */}
               {filteredTaxPayment.map((transaction) => (
-              <div onClick={() => handleOpenModal(transaction, 'Tax Payment')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
+              <div onClick={() => handleOpenModal(transaction, 'Real Property Tax Payment')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                   Transaction ID: {transaction.transaction_id}
                 </div>
