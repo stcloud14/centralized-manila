@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import 'flatpickr/dist/themes/airbnb.css';
 import defaultImage from '../../images/default_img.png';
 import PersonalInfo from '../admin_userregistry/PersonalInfo';
@@ -14,46 +16,93 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const [userInfo, setUserInfo] = useState('');
+  const [userInfo, setUserInfo] = useState(() => {
+    // Initialize userInfo with the values of selectedTransaction
+    return selectedTransaction || {};
+  });
 
-  // useEffect(() => {
-  //   const fetchImage = async () => {
-  //     setIsLoading(true);
+  console.log(userInfo)
+
+  const handleChangeData = (e) => {
+    const { name, value } = e.target;
+    const updatedValue = isNaN(value) ? value.toUpperCase() : value;
   
-  //     try {
-  //       const imagePath = '../uploads/profileImage/';
-  //       const imageName = selectedTransaction.user_image;
+    setUserInfo((prevData) => {
+      
+      if (
+        name === 'mobile_no',
+        name === 'tel_no',
+        name === 'zip_code',
+        name === 'user_tin_id',
+        name === 'user_pgb_id',
+        name === 'user_philh_id',
+        name === 'user_sss_id',
+        name === 'user_gsis_id',
+        name === 'user_natl_id'
+      ) {
+        const digitValue = value.replace(/\D/g, '');
+
+        return {
+          ...prevData,
+          [name]: digitValue,
+        };
+      } 
+
+      if (name === 'birth_date') {
+    
+        return {
+          ...prevData,
+          [name]: value,
+        };
+      } 
+
+      else {
+        return {
+          ...prevData,
+          [name]: updatedValue,
+        };
+      }
+    });
+  };
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      setIsLoading(true);
   
-  //       if (imageName === undefined || imageName === null) {
-  //         console.log('User image name is undefined or null.');
-  //         setIsLoading(false);
-  //         setUserImage(null);
-  //         return;
-  //       }
+      try {
+        const imagePath = '../uploads/profileImage/';
+        const imageName = selectedTransaction.user_image;
   
-  //       const isFileExists = await checkFileExists(imagePath, imageName);
+        if (imageName === undefined || imageName === null) {
+          console.log('User image name is undefined or null.');
+          setIsLoading(false);
+          setUserImage(null);
+          return;
+        }
   
-  //       if (isFileExists) {
-  //         const fileData = await fetchFileData(`${imagePath}${imageName}`);
-  //         if (fileData) {
-  //           setUserImage(fileData);
-  //         } else {
-  //           console.log(`File data for ${imageName} is empty or undefined.`);
-  //           setUserImage(null);
-  //         }
-  //       } else {
-  //         console.log(`File: ${imageName} does not exist.`);
-  //         setUserImage(null);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error checking user image path:', error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+        const isFileExists = await checkFileExists(imagePath, imageName);
   
-  //   fetchImage();
-  // }, [selectedTransaction]);
+        if (isFileExists) {
+          const fileData = await fetchFileData(`${imagePath}${imageName}`);
+          if (fileData) {
+            setUserImage(fileData);
+          } else {
+            console.log(`File data for ${imageName} is empty or undefined.`);
+            setUserImage(null);
+          }
+        } else {
+          console.log(`File: ${imageName} does not exist.`);
+          setUserImage(null);
+        }
+      } catch (error) {
+        console.error('Error checking user image path:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchImage();
+  }, [selectedTransaction]);
 
 
   const checkFileExists = async (folderPath, fileName) => {
@@ -104,7 +153,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
     e.preventDefault();
   
     try {
-      const response = await axios.post(`http://localhost:8800/adminur/update/${selectedTransaction.user_id}`);
+      const response = await axios.put(`http://localhost:8800/adminur/update/${selectedTransaction.user_id}`, userInfo);
   
       if (response.status === 200) {
         setIsSuccess(true);
@@ -201,7 +250,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                   )} 
 
                 {isLoading && (
-                  <div className="mb-5 inline-block md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center justify-center">
+                  <div className="mb-5 inline-flex items-center justify-center md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1">
                     <svg
                       aria-hidden="true"
                       className="w-10 h-10 md:w-15 md:h-15 lg:w-20 lg:h-20 pb-0 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -221,6 +270,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                   </div>
                 )}
 
+
                 {!isLoading && (
                 <div className="mb-5">
                   <img
@@ -231,9 +281,9 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                 </div>
                 )}
 
-                <PersonalInfo selectedTransaction={selectedTransaction} userInfo={userInfo} setUserInfo={setUserInfo} editMode={editMode}/>
-                <ContactInfo selectedTransaction={selectedTransaction} userInfo={userInfo} setUserInfo={setUserInfo} editMode={editMode}/>
-                <GovInfo selectedTransaction={selectedTransaction} userInfo={userInfo} setUserInfo={setUserInfo} editMode={editMode}/>
+                <PersonalInfo selectedTransaction={selectedTransaction} userInfo={userInfo} handleChangeData={handleChangeData} editMode={editMode}/>
+                <ContactInfo selectedTransaction={selectedTransaction} userInfo={userInfo} handleChangeData={handleChangeData} editMode={editMode}/>
+                <GovInfo selectedTransaction={selectedTransaction} userInfo={userInfo} handleChangeData={handleChangeData} editMode={editMode}/>
               </div>
             </div>
           </div>

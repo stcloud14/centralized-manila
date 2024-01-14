@@ -2,7 +2,7 @@ import React from 'react';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/airbnb.css';
 
-const PersonalInfo = ({ selectedTransaction, userInfo, setUserInfo, editMode }) => {
+const PersonalInfo = ({ selectedTransaction, userInfo, handleChangeData, editMode }) => {
 
   function formatBirthDate(dateString) {
     if (!dateString) return ''; // Handle case where dateString is undefined or null
@@ -69,40 +69,40 @@ const PersonalInfo = ({ selectedTransaction, userInfo, setUserInfo, editMode }) 
         <form>
                     <div className="mt-5 md:px-32 px-12">
                       <label htmlFor="f_name" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">First Name</label>
-                      <input value={selectedTransaction.f_name} type="text" name="f_name" id="f_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={userInfo.f_name} onChange={handleChangeData} type="text" name="f_name" id="f_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="m_name" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Middle Name</label>
-                      <input  value={selectedTransaction.m_name} type="text" name="m_name" id="m_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input  value={userInfo.m_name} onChange={handleChangeData} type="text" name="m_name" id="m_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="l_name" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Last Name</label>
-                      <input value={selectedTransaction.l_name} type="text" name="l_name" id="l_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={userInfo.l_name} onChange={handleChangeData} type="text" name="l_name" id="l_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="suffix_type" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Suffix</label>
-                      <input value={selectedTransaction.suffix_type} type="text" name="suffix_type" id="suffix_type" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={userInfo.suffix_type} onChange={handleChangeData} type="text" name="suffix_type" id="suffix_type" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="sex_type" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Sex</label>
-                      <input value={selectedTransaction.sex_type} type="text" name="sex_type" id="sex_type" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={userInfo.sex_type} onChange={handleChangeData} type="text" name="sex_type" id="sex_type" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12 relative">
                       <label htmlFor="birth_date" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Date of Birth</label>
                       <div className="relative flex items-center">
                         <Flatpickr
-                          value={selectedTransaction.birth_date}
+                          value={userInfo.birth_date}
                           id='birth_date'
                           name='birth_date'
                           onChange={(date) => {
-                            const formattedDate =
-                              date.length > 0
-                                ? (() => {
-                                  const originalDate = new Date(date[0]);
-                                  originalDate.setDate(originalDate.getDate() + 1);
-                                  return originalDate.toISOString().split('T')[0];
-                                })()
-                                : '';
+                            const formattedDate = date.length > 0
+                              ? (() => {
+                                const originalDate = new Date(date[0]);
+                                originalDate.setDate(originalDate.getDate() + 1);
+                                return originalDate.toISOString().split('T')[0];
+                              })()
+                              : '';
+                            handleChangeData(formattedDate);
                           }}
                             options={{
                             dateFormat: 'Y-m-d',
@@ -137,11 +137,11 @@ const PersonalInfo = ({ selectedTransaction, userInfo, setUserInfo, editMode }) 
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="birth_place" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Place of Birth</label>
-                      <input value={selectedTransaction.birth_place} type="text" name="birth_place" id="birth_place" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={userInfo.birth_place} onChange={handleChangeData} type="text" name="birth_place" id="birth_place" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="cvl_status" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Civil Status</label>
-                      <select value={selectedTransaction.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
+                      <select value={userInfo.cvl_status} onChange={handleChangeData} defaultValue={0} name="cvl_status" id="cvl_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
                         <option value="0">Select Civil Status</option>
                         <option value="">Option 1</option>
                         <option value="">Option 2</option>
@@ -150,7 +150,7 @@ const PersonalInfo = ({ selectedTransaction, userInfo, setUserInfo, editMode }) 
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="czn_status" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Citizenship</label>
-                      <select value={selectedTransaction.czn_status} defaultValue={0} name="czn_status" id="czn_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
+                      <select value={userInfo.czn_status} onChange={handleChangeData} defaultValue={0} name="czn_status" id="czn_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
                         <option value="0">Select Citizenship</option>
                         <option value="">Option 1</option>
                         <option value="">Option 2</option>
@@ -159,7 +159,7 @@ const PersonalInfo = ({ selectedTransaction, userInfo, setUserInfo, editMode }) 
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="res_status" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Residency Status</label>
-                      <select value={selectedTransaction.res_status} defaultValue={0} name="res_status" id="res_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
+                      <select value={userInfo.res_status} onChange={handleChangeData} defaultValue={0} name="res_status" id="res_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
                         <option value="0">Select Residency Status</option>
                         <option value="">Option 1</option>
                         <option value="">Option 2</option>
