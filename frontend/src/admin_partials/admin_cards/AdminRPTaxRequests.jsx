@@ -36,7 +36,6 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
       onProceed(transaction);
     }
   };
-  
 
   const handleCloseModal = () => { // ITO YUNG PAG CLOSE
     setIsModalOpen(false);
