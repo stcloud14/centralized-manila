@@ -105,7 +105,7 @@ const UploadModal = ({ onClose, onFileSelect, targetIMG }) => {
                   or drag and drop
                 </p>
                 <p className="text-[10px] sm:text-[12px] text-gray-500 dark:text-gray-400">
-                  PNG, JPEG, DOCX, or PDF (MAX. 5MB)
+                  PNG, JPEG, DOCX, or PDF (MAX. 3MB)
                 </p>
               </>
             )}
