@@ -127,6 +127,7 @@ const AdminRPTaxForm = () => {
             transType={transType}
             processingTransactions={processingTransactions}
             selectedTransactionId={selectedTransactionId}
+            setTransType={setTransType}
             />
 
           </div>

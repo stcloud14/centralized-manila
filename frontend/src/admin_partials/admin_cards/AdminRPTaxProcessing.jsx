@@ -1,19 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
+import AdminRPReject from '../admin_modals/AdminRPReject';
+import AdminRPDone from '../admin_modals/AdminRPDone';
+import AdminRPView from '../admin_modals/AdminRPView';
 
-const AdminRPTaxProcessing = ({ handleOpenModal4, handleOpenModal5, processingTransactions, setTransType }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
+  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+  const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleOpenModal = (transaction, type) => {
+  const handleOpenRejectModal = (transaction, type) => {
     setTransType(type);
     setSelectedTransaction(transaction);
-    setIsModalOpen(true);
+    setIsRejectModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleOpenDoneModal = (transaction, type) => {
+    setTransType(type);
+    setSelectedTransaction(transaction);
+    setIsDoneModalOpen(true);
+  };
+
+  const handleCloseModals = () => {
+    setIsRejectModalOpen(false);
+    setIsDoneModalOpen(false);
+    setSelectedTransaction(null);
+  };
+
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const handleOpenViewModal = (transaction, type) => {
+    setTransType(type);
+    setSelectedTransaction(transaction);
+    setIsViewModalOpen(true);
+  };
+  const handleViewModalClose = () => {
+    setIsViewModalOpen(false);
     setSelectedTransaction(null);
   };
 
@@ -57,7 +79,7 @@ const AdminRPTaxProcessing = ({ handleOpenModal4, handleOpenModal5, processingTr
                   {/* Tax Clearance Sample */}
                   {uniqueTransactions.map((transaction) => (
                      transaction.trans_type === 'Real Property Tax Clearance' && (
-                   <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenModal(transaction, 'Real Property Tax Clearance')} className="bg-white cursor-pointer dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
+                   <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Clearance')} className="bg-white cursor-pointer dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                   Transaction ID:{transaction.transaction_id}
                 </div>
@@ -83,13 +105,13 @@ const AdminRPTaxProcessing = ({ handleOpenModal4, handleOpenModal5, processingTr
                   </div>
                   <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
                     <div
-                      onClick={handleOpenModal4}
+                       onClick={() => handleOpenRejectModal(transaction, 'Real Property Tax Clearance')}
                       className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow"
                     >
                       <span className="text-xs font-normal">Reject</span>
                     </div>
                     <div
-                      onClick={handleOpenModal5}
+                    onClick={() => handleOpenDoneModal(transaction, 'Real Property Tax Clearance')}
                       className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow"
                     >
                       <span className="text-xs font-normal">Done</span>
@@ -101,7 +123,7 @@ const AdminRPTaxProcessing = ({ handleOpenModal4, handleOpenModal5, processingTr
                 {/* Tax Payment Sample */}
                 {uniqueTransactions.map((transaction) => (
                   transaction.trans_type === 'Real Property Tax Payment' && (
-               <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenModal(transaction, 'Real Property Tax Payment')}  className="bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
+               <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Payment')} className="bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                   Transaction ID: {transaction.transaction_id}
                 </div>
@@ -124,15 +146,43 @@ const AdminRPTaxProcessing = ({ handleOpenModal4, handleOpenModal5, processingTr
                   )}
                 </div>
                 <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                  <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
+                  <div  onClick={() => handleOpenRejectModal(transaction, 'Real Property Tax Payment')}  className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
                     <span className="text-xs font-normal">Reject</span>
                   </div>
-                  <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                  <div onClick={() => handleOpenDoneModal(transaction, 'Real Property Tax Payment')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                     <span className="text-xs font-normal">Done</span>
                   </div>
                 </div>
               </div>
            ) ))}
+
+           {isViewModalOpen && selectedTransaction && (
+  <AdminRPView
+    selectedTransaction={selectedTransaction}
+    isOpen={isViewModalOpen}
+    handleClose={handleViewModalClose}
+    setTransType={setTransType}
+  />
+)}
+           {isRejectModalOpen && selectedTransaction && (
+        <AdminRPReject
+          selectedTransaction={selectedTransaction}
+          isOpen={isRejectModalOpen}
+          handleClose={handleCloseModals}
+          setTransType={setTransType}
+          handleReject={handleOpenRejectModal}
+        />
+      )}
+
+      {isDoneModalOpen && selectedTransaction && (
+        <AdminRPDone
+          selectedTransaction={selectedTransaction}
+          isOpen5={isDoneModalOpen}
+          handleClose5={handleCloseModals}
+          setTransType={setTransType}
+          handleDone={handleOpenDoneModal}
+        />
+      )}
           </div>
         </div>
       </div>
