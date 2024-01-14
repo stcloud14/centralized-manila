@@ -78,21 +78,38 @@ const TransactionHistoryForm = () => {
   }, []);
 
 
-  const handleSearchInputChange = (e) => {
-    const input = e.target.value;
-    const inputUpperCase = input.toUpperCase();
-
-    setSearchInput(inputUpperCase);
-  };
-
-  const handleSearch = () => {
-
-    const filteredTransactions = userTransaction.filter(transaction => 
-    transaction.transaction_id.toString().includes(searchInput)
-    );
+  const handleSearch = (e) => {
+    const searchInput = e.toUpperCase();
+    setSearchInput(searchInput);
   
-    setFilteredTransactions(filteredTransactions);
+    const filteredTransactions = userTransaction.filter((transaction) => {
+      const transactionId = transaction.transaction_id.toString().toUpperCase();
+  
+      return transactionId.includes(searchInput) && isSubsequence(searchInput, transactionId);
+    });
+  
+    setFilteredTransactions(filteredTransactions.length > 0 ? filteredTransactions : 0);
   };
+  
+  // Make sure that the transaction searching is the same order in terms of characters
+  const isSubsequence = (search, str) => {
+    let i = 0;
+    let j = 0;
+  
+    while (j < str.length) {
+      if (search[i] === str[j]) {
+        i += 1;
+      }
+      if (i === search.length) {
+        return true;
+      }
+      j += 1;
+    }
+  
+    return false;
+  };
+  
+
 
   const handleClearFilter = () => {
     setSearchInput([]);
@@ -152,7 +169,7 @@ const logoSrc = '../src/images/mnl_footer.svg';
               // For Mobile View
               <TransMobile searchInput={searchInput} 
               handleSearch={handleSearch} 
-              handleSearchInputChange={handleSearchInputChange} 
+              // handleSearchInputChange={handleSearchInputChange} 
               handleOpenModal={handleOpenModal}  
               handleClearFilter={handleClearFilter} 
               handleSortChange={handleSortChange}
@@ -163,7 +180,7 @@ const logoSrc = '../src/images/mnl_footer.svg';
               // For Desktop View
               <TransDesktop searchInput={searchInput} 
               handleSearch={handleSearch} 
-              handleSearchInputChange={handleSearchInputChange} 
+              // handleSearchInputChange={handleSearchInputChange} 
               handleOpenModal={handleOpenModal} 
               handleClearFilter={handleClearFilter} 
               handleSortChange={handleSortChange}
