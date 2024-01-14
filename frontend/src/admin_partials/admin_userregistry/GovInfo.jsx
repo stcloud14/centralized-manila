@@ -1,8 +1,8 @@
 import React from 'react';
 
-const GovInfo = ({ selectedTransaction }) => {
+const GovInfo = ({ selectedTransaction, userInfo, setUserInfo, editMode }) => {
   return (  
-    selectedTransaction ? (
+    selectedTransaction && (editMode === undefined || editMode === false) ? (
     <div className="my-10">
                   <span className='font-bold text-lg text-gray-700 dark:text-white'>Government Information</span>
                   <form>

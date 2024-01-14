@@ -2,10 +2,18 @@ import React from 'react';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/airbnb.css';
 
-const PersonalInfo = ({ selectedTransaction }) => {
+const PersonalInfo = ({ selectedTransaction, userInfo, setUserInfo, editMode }) => {
+
+  function formatBirthDate(dateString) {
+    if (!dateString) return ''; // Handle case where dateString is undefined or null
+  
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  }
   
   return (
-    selectedTransaction ? (
+    selectedTransaction && (editMode === undefined || editMode === false) ? (
       <div className="my-10">
         <span className='font-bold text-lg text-gray-700 dark:text-white'>Personal Information</span>
         <form>
@@ -35,7 +43,7 @@ const PersonalInfo = ({ selectedTransaction }) => {
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="birth_date" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Date of Birth</label>
-                      <input value={selectedTransaction.birth_date} readOnly type="text" name="birth_date" id="birth_date" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={formatBirthDate(selectedTransaction.birth_date)} readOnly type="text" name="birth_date" id="birth_date" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="birth_place" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Place of Birth</label>
@@ -61,28 +69,29 @@ const PersonalInfo = ({ selectedTransaction }) => {
         <form>
                     <div className="mt-5 md:px-32 px-12">
                       <label htmlFor="f_name" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">First Name</label>
-                      <input type="text" name="f_name" id="f_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={selectedTransaction.f_name} type="text" name="f_name" id="f_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="m_name" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Middle Name</label>
-                      <input type="text" name="m_name" id="m_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input  value={selectedTransaction.m_name} type="text" name="m_name" id="m_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="l_name" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Last Name</label>
-                      <input type="text" name="l_name" id="l_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={selectedTransaction.l_name} type="text" name="l_name" id="l_name" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="suffix_type" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Suffix</label>
-                      <input type="text" name="suffix_type" id="suffix_type" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={selectedTransaction.suffix_type} type="text" name="suffix_type" id="suffix_type" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="sex_type" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Sex</label>
-                      <input type="text" name="sex_type" id="sex_type" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={selectedTransaction.sex_type} type="text" name="sex_type" id="sex_type" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12 relative">
                       <label htmlFor="birth_date" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Date of Birth</label>
                       <div className="relative flex items-center">
                         <Flatpickr
+                          value={selectedTransaction.birth_date}
                           id='birth_date'
                           name='birth_date'
                           onChange={(date) => {
@@ -94,11 +103,6 @@ const PersonalInfo = ({ selectedTransaction }) => {
                                   return originalDate.toISOString().split('T')[0];
                                 })()
                                 : '';
-
-                            setUserBirth((prevData) => ({
-                              ...prevData,
-                              birth_date: formattedDate,
-                            }));
                           }}
                             options={{
                             dateFormat: 'Y-m-d',
@@ -133,11 +137,11 @@ const PersonalInfo = ({ selectedTransaction }) => {
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="birth_place" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Place of Birth</label>
-                      <input type="text" name="birth_place" id="birth_place" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <input value={selectedTransaction.birth_place} type="text" name="birth_place" id="birth_place" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="cvl_status" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Civil Status</label>
-                      <select defaultValue={0} name="cvl_status" id="cvl_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
+                      <select value={selectedTransaction.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
                         <option value="0">Select Civil Status</option>
                         <option value="">Option 1</option>
                         <option value="">Option 2</option>
@@ -146,7 +150,7 @@ const PersonalInfo = ({ selectedTransaction }) => {
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="czn_status" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Citizenship</label>
-                      <select defaultValue={0} name="czn_status" id="czn_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
+                      <select value={selectedTransaction.czn_status} defaultValue={0} name="czn_status" id="czn_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
                         <option value="0">Select Citizenship</option>
                         <option value="">Option 1</option>
                         <option value="">Option 2</option>
@@ -155,7 +159,7 @@ const PersonalInfo = ({ selectedTransaction }) => {
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="res_status" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Residency Status</label>
-                      <select defaultValue={0} name="res_status" id="res_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
+                      <select value={selectedTransaction.res_status} defaultValue={0} name="res_status" id="res_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
                         <option value="0">Select Residency Status</option>
                         <option value="">Option 1</option>
                         <option value="">Option 2</option>
