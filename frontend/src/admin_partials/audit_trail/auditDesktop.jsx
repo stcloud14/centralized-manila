@@ -16,7 +16,7 @@ const AuditDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
             <h1 className='font-medium text-center text-slate-700 dark:text-white mb-7 md:mb-3'>Activity Log</h1>
            
             <div className="flex items-center justify-between mb-2 md:px-0 md:pr-0.5 px-0.5 text-xs">
-              <div className="flex items-center mr-2">
+              {/* <div className="flex items-center mr-2">
                 <div className="relative">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -39,8 +39,8 @@ const AuditDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                   </svg>
                   <span>&nbsp;Clear</span>
                 </button>
-              </div>
-              <div className="flex items-center space-x-2">
+              </div> */}
+              <div className="flex items-center ml-auto space-x-2">
               <p>Date:</p>
                 <Flatpickr
                   id=""

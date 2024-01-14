@@ -13,7 +13,7 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
               <div className="px-5 py-5">
                 <h1 className='font-medium text-center text-slate-700 dark:text-white mb-5'>Activity Log</h1>
                 <div className="flex justify-center items-center mb-0 md:px-0 md:pr-0.5 px-0.5 text-xs">
-                  <div className="relative mr-2 w-full">
+                  {/* <div className="relative mr-2 w-full">
                     <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                         <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -35,7 +35,7 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                       <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
                     <span>Clear</span>
-                  </button>
+                  </button> */}
 
                   {/* <AuditDropdownFilter handleSortChange={handleSortChange} sortOption={sortOption}/> */}
                   

@@ -615,7 +615,7 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
                       <span className="font-semibold whitespace-nowrap ml-2"> PAY: {selectedTransaction.amount ? selectedTransaction.amount + '.00' : '-'}</span>
                     </button>
                   )}
-                  <div className="flex items-center space-x-2 mt-auto">
+                  <div className="flex items-center space-x-2 ml-auto">
                       <button
                           onClick={onClose}
                           type="button"

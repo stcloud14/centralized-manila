@@ -315,7 +315,7 @@ const MarriageModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
                     </button>
                   )}
                   
-                  <div className="flex items-center space-x-2 mt-auto">
+                  <div className="flex items-center space-x-2 ml-auto">
                       <button
                           onClick={onClose}
                           type="button"
