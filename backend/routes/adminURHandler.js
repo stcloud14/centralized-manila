@@ -59,7 +59,7 @@ router.get('/', async (req, res) => {
   JOIN \
     cities c ON uc.city_id = c.city_id AND uc.city_id \
   WHERE \
-    uv.application_status = 'Applying' \
+    uv.application_status = 'Applying' AND uv.user_valid_id IS NOT NULL \
   ORDER BY up.l_name;";
 
     try {
@@ -70,6 +70,57 @@ router.get('/', async (req, res) => {
         console.error(err);
         res.status(500).send('Error retrieving data');
     }
+});
+
+
+
+router.post('/approve/:user_id', async (req, res) => {
+
+    const user_id = req.params.user_id;
+    const vStatus = 'Verified';
+    const aStatus = 'Complete';
+   
+    try {
+      const query = "UPDATE user_verification SET `verification_status` = ?, `application_status` = ? WHERE `user_id` = ?";
+      const values = [vStatus, aStatus, user_id];
+      
+      const result = await queryDatabase(query, values);
+      
+      res.json({
+        success: true,
+        message: "Verification approved!",
+        result: result,
+      });
+
+    } catch (error) {
+      console.error('Error during verification:', error);
+      res.status(500).json({ success: false, message: 'Verification failed' });
+    }
+});
+
+
+router.post('/decline/:user_id', async (req, res) => {
+
+  const user_id = req.params.user_id;
+  const vStatus = 'Unverified';
+  const aStatus = 'Declined';
+ 
+  try {
+    const query = "UPDATE user_verification SET `verification_status` = ?, `application_status` = ? WHERE `user_id` = ?";
+    const values = [vStatus, aStatus, user_id];
+    
+    const result = await queryDatabase(query, values);
+    
+    res.json({
+      success: true,
+      message: "Verification approved!",
+      result: result,
+    });
+
+  } catch (error) {
+    console.error('Error during verification:', error);
+    res.status(500).json({ success: false, message: 'Verification failed' });
+  }
 });
 
 

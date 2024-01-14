@@ -9,7 +9,6 @@ const AdminDropdownProfile = ({align}) => {
   
   const location = useLocation();
   const { pathname, state } = location;
-  console.log("pathname", pathname);
   const admin_type = pathname.split("/")[2];
 
   const [dropdownOpen, setDropdownOpen] = useState(false);

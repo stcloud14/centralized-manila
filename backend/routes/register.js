@@ -59,6 +59,7 @@ router.post('/', async (req, res) => {
     const transID = generateTransactionID();
 
     const verification_status = 'Unverified';
+    const application_status = 'New';
 
     const primaryKey = generatePrimaryKey(req.body.f_name, req.body.l_name, plainMobileNo);
 
@@ -80,8 +81,8 @@ router.post('/', async (req, res) => {
     const query5 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
     const values5 = [transID, primaryKey];
 
-    const query6 = "INSERT INTO user_verification (`user_id`, `verification_status`) VALUES (?, ?)";
-    const values6 = [primaryKey, verification_status];
+    const query6 = "INSERT INTO user_verification (`user_id`, `verification_status`, `application_status`) VALUES (?, ?)";
+    const values6 = [primaryKey, verification_status, application_status];
 
 
     try {

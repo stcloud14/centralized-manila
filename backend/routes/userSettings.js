@@ -37,10 +37,38 @@ const router = Router();
       cb(null, req.uniqueFileName);
     },
   });
+
+
+  const storage1 = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, path.join(__dirname, '../../frontend/uploads/verification')); //frontend directory
+      // cb(null, path.join(__dirname, '../uploads')); //backend directory
+    },
+    filename: function (req, file, cb) {
+      const originalName = path.parse(file.originalname);
+      req.uniqueFileName = `${originalName.name}_${req.user_id}${originalName.ext}`;
+      cb(null, req.uniqueFileName);
+    },
+  });
   
 
   const upload = multer({
     storage: storage,
+    fileFilter: function (req, file, cb) {
+      // Validate file type (allow only images)
+      const allowedFormats = ['.jpg', '.jpeg', '.png'];
+      const extname = path.extname(file.originalname).toLowerCase();
+      if (allowedFormats.includes(extname)) {
+        return cb(null, true);
+      } else {
+        return cb(new Error('Invalid file format. Please upload a JPEG or PNG image.'));
+      }
+    },
+  });
+
+
+  const upload1 = multer({
+    storage: storage1,
     fileFilter: function (req, file, cb) {
       // Validate file type (allow only images)
       const allowedFormats = ['.jpg', '.jpeg', '.png'];
@@ -83,8 +111,41 @@ const router = Router();
       res.status(500).json({ success: false, message: 'File upload failed' });
     }
   });
-  
 
+
+  router.post('/applyverify/:user_id', setUserMiddleware, upload1.single('user_valid_id'), async (req, res) => {
+    const user_id = req.params.user_id;
+    const uniqueFileName = req.uniqueFileName;
+
+    const status = 'Applying';
+  
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded.' });
+    }
+  
+    try {
+      const query = "UPDATE user_verification SET `user_valid_id` = ? WHERE `user_id` = ?";
+      const values = [uniqueFileName, user_id];
+
+      const query1 = "UPDATE user_verification SET `application_status` = ? WHERE `user_id` = ?";
+      const values1 = [status, user_id];
+      
+      const result = await queryDatabase(query, values);
+      const result1 = await queryDatabase(query1, values1);
+      
+      res.json({
+        success: true,
+        message: "File uploaded successfully",
+        file_uploaded: result,
+        status_updated: result1,
+      });
+
+    } catch (error) {
+      console.error('Error during file upload:', error);
+      res.status(500).json({ success: false, message: 'File upload failed' });
+    }
+  });
+  
 
   router.delete('/removeimage/:user_id', async (req, res) => {
     const user_id = req.params.user_id;

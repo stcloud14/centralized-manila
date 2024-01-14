@@ -1,12 +1,146 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import 'flatpickr/dist/themes/airbnb.css';
-import defaultImage from '../../images/default_img.png';
 import PersonalInfo from '../admin_userregistry/PersonalInfo';
 import ContactInfo from '../admin_userregistry/ContactInfo';
 import GovInfo from '../admin_userregistry/GovInfo';
 import AdminUserDeleteModal from '../admin_modals/AdminUserDeleteModal';
 
-const AdminURApplications = ({ selectedTransaction, isOpen, handleClose }) => { 
+const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isOpen, handleClose }) => { 
+
+  const [userImage, setUserImage] = useState('');
+  const [isApproved, setIsApproved] = useState(false);
+  const [isDeclined, setIsDeclined] = useState(false);
+  
+
+  const checkUserImage = async () => {
+    try {
+      const imagePath = '../uploads/verification/';
+      const imageName = selectedTransaction.user_valid_id;
+  
+      if (imageName === undefined || imageName === null) {
+        console.log('User image name is undefined or null.');
+        return;
+      }
+  
+      const isFileExists = await checkFileExists(imagePath, imageName);
+  
+      if (isFileExists !== null && isFileExists !== undefined) {
+        if (isFileExists) {
+          const fileData = await fetchFileData(`${imagePath}${imageName}`);
+          if (fileData) {
+            setUserImage(fileData);
+            console.log(`File ${imageName} exists.`);
+          } else {
+            console.log(`File data for ${imageName} is empty or undefined.`);
+          }
+        } else {
+          console.log(`File: ${imageName} does not exist.`);
+        }
+      }
+    } catch (error) {
+      console.error('Error checking user image path:', error);
+    }
+  };
+
+  useEffect(() => {
+    checkUserImage();
+  }, []);
+
+  const checkFileExists = async (folderPath, fileName) => {
+    try {
+      const filePath = `${folderPath}/${fileName}`;
+      const response = await fetch(filePath);
+
+      return response.ok;
+    } catch (error) {
+      console.error('Error checking file existence:', error);
+      return false;
+    }
+  };
+
+  const fetchFileData = async (filePath) => {
+    try {
+      const response = await fetch(filePath);
+  
+      if (!response.ok) {
+        if (response.status === 404) {
+          console.log('File not found.');
+        } else {
+          throw new Error(`Failed to fetch file from ${filePath}`);
+        }
+        return null;
+      }
+  
+      const fileData = await response.blob();
+  
+      if (!fileData || fileData.size === 0) {
+        console.log('File data is empty or undefined.');
+        return null;
+      }
+  
+      const dataUrl = URL.createObjectURL(fileData);
+  
+      return dataUrl;
+    } catch (error) {
+      console.error('Error fetching file data:', error);
+      return null;
+    }
+  };
+
+  const { user_id } = selectedTransaction;
+
+
+  const handleApprove = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await axios.post(`http://localhost:8800/adminur/approve/${user_id}`);
+  
+      if (response.status === 200) {
+        setIsApproved(true);
+
+        console.log('Verification successful');
+  
+        setTimeout(() => {
+          setIsApproved(false);
+          handleClose();
+          handleRemoveTransaction(selectedTransaction.transaction_id)
+        }, 1500);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
+
+
+  const handleDecline = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await axios.post(`http://localhost:8800/adminur/decline/${user_id}`);
+  
+      if (response.status === 200) {
+        setIsDeclined(true);
+
+        console.log('Verification Declined');
+  
+        setTimeout(() => {
+          setIsDeclined(false);
+          handleClose();
+          handleRemoveTransaction(selectedTransaction.transaction_id)
+        }, 1500);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
+
+
 
   return (
     isOpen && (
@@ -38,7 +172,7 @@ const AdminURApplications = ({ selectedTransaction, isOpen, handleClose }) => {
                   <div className="flex items-center text-xs">
                     <button
                       className="text-white font-medium dark:text-white dark:bg-red-500 dark:hover:bg-red-600 flex items-center bg-red-500 hover:bg-red-600 hover:border-red-600 rounded-sm px-2 py-1.5"
-                      // onClick={handleOpenModal3}
+                      onClick={handleDecline}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -50,7 +184,7 @@ const AdminURApplications = ({ selectedTransaction, isOpen, handleClose }) => {
                   <div className="flex items-center text-xs">
                       <button
                         className="text-white font-medium dark:text-white dark:bg-emerald-500 dark:hover:bg-emerald-600 flex items-center bg-emerald-500 hover:bg-emerald-600 hover:border-emerald-500 rounded-sm px-2 py-1.5 ml-2"
-                        // onClick={handleSaveChanges}
+                        onClick={handleApprove}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
                           <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
@@ -58,14 +192,26 @@ const AdminURApplications = ({ selectedTransaction, isOpen, handleClose }) => {
                         <span>Approve</span>
                       </button>
                   </div>
-
                 </div>
+
+                  {isApproved && (
+                    <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                      Verification Approved!
+                    </div>
+                  )} 
+
+                  {isDeclined && (
+                    <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                      Verification Declined!
+                    </div>
+                  )} 
 
                 <div className="mb-5">
                   <img
                     name="userImage"
                     className="inline-block md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center"
-                    src={defaultImage}
+                    src={userImage}
+                    onError={(e) => console.error('Error loading image:', e)}
                   />
                 </div>
                 <PersonalInfo selectedTransaction={selectedTransaction} />

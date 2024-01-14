@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
+import axios from 'axios';
 
-const ApplyVerificationModal = ({ isOpen, handleClose, onFileSelect, targetIMG }) => {
+const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userID }) => {
 
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState(null);
 
-  console.log(selectedFileName)
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
@@ -28,17 +28,43 @@ const ApplyVerificationModal = ({ isOpen, handleClose, onFileSelect, targetIMG }
     fileInputRef.current.click();
   };
 
-  const handleUploadClick = () => {
-    if (selectedFile) {
-      onFileSelect(selectedFile, targetIMG);
-      setSelectedFile(null);
-      setSelectedFileName(null);
-      handleClose();
-      fileInputRef.current.value = '';
-    } else {
-      console.error('Please select a file before uploading.');
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!selectedFile) {
+      window.alert('Please upload a valid ID before applying.');
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('user_valid_id', selectedFile);
+
+      const response = await axios.post(`http://localhost:8800/usersettings/applyverify/${userID}`, formData);
+
+      if (response.status === 200) {
+        setIsSuccessUpload(true);
+        handleClose();
+        setSelectedFile(null);
+        setSelectedFileName(null);
+        fileInputRef.current.value = '';
+
+        console.log('Application successful');
+
+        setTimeout(() => {
+            setIsSuccessUpload(false);
+        }, 3000);
+      } else {
+          console.error('Transaction error:', response.statusText);
+      }
+        
+    } catch (error) {
+        console.error('Error Uploading Image:', error.message);
     }
   };
+
 
 
   return (
@@ -133,11 +159,11 @@ const ApplyVerificationModal = ({ isOpen, handleClose, onFileSelect, targetIMG }
               </button>
 
               <button
-                onClick={handleUploadClick}
+                onClick={handleSubmit}
                 type="button"
                 className="text-white text-xs text-center px-5 py-2 md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                <p>Upload</p>
+                <p>Apply</p>
               </button>
             </div>
           </div>

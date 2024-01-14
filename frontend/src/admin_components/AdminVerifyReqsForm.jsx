@@ -19,7 +19,6 @@ const AdminVerifyReqsForm =()=>{
   const [isModalOpen, setIsModalOpen] = useState(false);  
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
-
   const handleOpenModal = (transaction) => {
     setIsModalOpen(true);
     setSelectedTransaction(transaction);
@@ -35,7 +34,6 @@ const AdminVerifyReqsForm =()=>{
   };
 
 
-
   useEffect(()=>{
     const fetchUserApplications= async()=>{
         try{
@@ -47,8 +45,17 @@ const AdminVerifyReqsForm =()=>{
         }
     }
     fetchUserApplications()
-  },[])
+  },[userApplications])
 
+
+  const handleRemoveTransaction = (transaction) => {
+
+    const updatedUserApplications = userApplications.filter(
+      (transaction) => transaction.transaction_id !== transaction
+    );
+  
+    setUserApplications(updatedUserApplications);
+  };
   
 
   return (
@@ -113,7 +120,7 @@ const AdminVerifyReqsForm =()=>{
                 ))} 
 
             {isModalOpen && selectedTransaction && (
-              <AdminURApplications selectedTransaction={selectedTransaction} isOpen={isModalOpen} handleClose={handleCloseModal} />
+              <AdminURApplications selectedTransaction={selectedTransaction} handleRemoveTransaction={handleRemoveTransaction} isOpen={isModalOpen} handleClose={handleCloseModal} />
             )}
 
               </div>

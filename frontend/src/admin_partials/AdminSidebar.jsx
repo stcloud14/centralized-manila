@@ -6,7 +6,6 @@ import AdminSidebarLinkGroup from './AdminSidebarLinkGroup';
 function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
   const { pathname, state } = location;
-  console.log("pathname", pathname);
   const admin_type = pathname.split("/")[2];
   const trigger = useRef(null);
   const sidebar = useRef(null);
@@ -43,7 +42,6 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
     }
   }, [sidebarExpanded]);
 
-console.log("user role admin dash:", admin_type);
 
   return (
     <div>

@@ -11,6 +11,7 @@ const UserSettings =()=>{
   const { user_id } = useParams();
 
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccessUpload, setIsSuccessUpload] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
 
   const contentRef = useRef(null);
@@ -443,6 +444,13 @@ const UserSettings =()=>{
                       >
                         Apply for Account Verification
                       </button>
+
+                      {isSuccessUpload && (
+                        <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                          Application for verification is successful!
+                        </div>
+                      )}
+
                   </div>
 
                   <div className="flex flex-col justify-center mt-4 mb-4">
@@ -464,6 +472,8 @@ const UserSettings =()=>{
         <ApplyVerificationModal
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
+          setIsSuccessUpload={setIsSuccessUpload}
+          userID={user_id}
         />
 
       </div>
