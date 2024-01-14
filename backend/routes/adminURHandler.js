@@ -182,6 +182,75 @@ router.post('/decline/:user_id', async (req, res) => {
 
 
 
+router.put('/update/:user_id', async (req, res) => {
+  const user_id = req.params.user_id;
+
+  const {
+    f_name, 
+    m_name, 
+    l_name, 
+    suffix_type, 
+    sex_type, 
+    cvl_status, 
+    res_status, 
+    czn_status, 
+    birth_date, 
+    birth_place, 
+    user_email, 
+    mobile_no, 
+    tel_no, 
+    region_id, 
+    prov_id, 
+    city_id, 
+    house_floor, 
+    bldg_name, 
+    brgy_dist, 
+    zip_code, 
+    user_tin_id, 
+    user_pgb_id, 
+    user_philh_id, 
+    user_sss_id, 
+    user_gsis_id, 
+    user_natl_id, 
+  } = req.body;
+
+    
+    const query = "UPDATE user_personal SET `f_name` = ?, `m_name` = ?, `l_name` = ?, `suffix_type` = ?, `sex_type` = ?, `cvl_status` = ?, `res_status` = ?, `czn_status` = ? WHERE `user_id` = ?";
+    const values = [f_name, m_name, l_name, suffix_type, sex_type, cvl_status, res_status, czn_status, user_id];
+
+    const query1 = "UPDATE user_birth SET `birth_date` = ?, `birth_place` = ? WHERE user_id = ?";
+    const values1 = [birth_date, birth_place, user_id];
+
+    const query2 = "UPDATE user_contact SET `user_email` = ?, `mobile_no` = ?, `tel_no` = ?, `house_floor` = ?, `bldg_name` = ?, `brgy_dist` = ?, `zip_code` = ?, `region_id` = ?, `prov_id` = ?, `city_id` = ? WHERE user_id = ?";
+    const values2 = [user_email, mobile_no, tel_no, house_floor, bldg_name, brgy_dist, zip_code, region_id, prov_id, city_id, user_id];
+
+    const query3 = "UPDATE user_gov_id SET `user_tin_id` = ?, `user_pgb_id` = ?, `user_philh_id` = ?, `user_sss_id` = ?, `user_gsis_id` = ?, `user_natl_id` = ?  WHERE user_id = ?";
+    const values3 = [user_tin_id, user_pgb_id, user_philh_id, user_sss_id, user_gsis_id, user_natl_id, user_id];
+  
+
+    try {
+    const result = await queryDatabase(query, values);
+    const result1 = await queryDatabase(query1, values1);
+    const result2 = await queryDatabase(query2, values2);
+    const result3 = await queryDatabase(query3, values3);
+  
+
+    res.json({
+        user_personal: result, 
+        user_birth: result1, 
+        user_contact: result2, 
+        user_gov_id: result3, 
+    });
+
+    } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error executing queries" });
+    }
+
+});
+
+
+
 
 function queryDatabase(query, values) {
     return new Promise((resolve, reject) => {

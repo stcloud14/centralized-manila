@@ -12,6 +12,9 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   const [editMode, setEditMode] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const [userInfo, setUserInfo] = useState('');
 
   // useEffect(() => {
   //   const fetchImage = async () => {
@@ -95,24 +98,20 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
     }
   };
 
-  // const { user_id } = selectedTransaction;
 
 
-  const handleApprove = async (e) => {
+  const handleSaveChanges = async (e) => {
     e.preventDefault();
   
     try {
-      const response = await axios.post(`http://localhost:8800/adminur/approve/${user_id}`);
+      const response = await axios.post(`http://localhost:8800/adminur/update/${selectedTransaction.user_id}`);
   
       if (response.status === 200) {
-        setIsApproved(true);
-
-        console.log('Verification successful');
+        setIsSuccess(true);
   
         setTimeout(() => {
-          setIsApproved(false);
+          setIsSuccess(false);
           handleClose();
-          handleRemoveTransaction(selectedTransaction.transaction_id)
         }, 1500);
       } else {
         console.error('Transaction error:', response.statusText);
@@ -122,45 +121,11 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
     }
   };
 
-
-  const handleDecline = async (e) => {
-    e.preventDefault();
-  
-    try {
-      const response = await axios.post(`http://localhost:8800/adminur/decline/${user_id}`);
-  
-      if (response.status === 200) {
-        setIsDeclined(true);
-
-        console.log('Verification Declined');
-  
-        setTimeout(() => {
-          setIsDeclined(false);
-          handleClose();
-          handleRemoveTransaction(selectedTransaction.transaction_id)
-        }, 1500);
-      } else {
-        console.error('Transaction error:', response.statusText);
-      }
-    } catch (err) {
-      console.error('Transaction error:', err);
-    }
-  };
 
   const handleEditClick = () => {
     setEditMode(!editMode);
   };
 
-  const handleSaveChanges = () => {
-    // Add code to save changes
-    setEditMode(false);
-  };
-
-  // useEffect(() => {
-  //   if (!isOpen) {
-  //     setEditMode(false);
-  //   }
-  // }, [isOpen]);
 
 
 
@@ -229,6 +194,12 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                   </div>
                 </div>
 
+                {isSuccess && (
+                    <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                      Changes saved successfully!
+                    </div>
+                  )} 
+
                 {isLoading && (
                   <div className="mb-5 inline-block md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center justify-center">
                     <svg
@@ -260,9 +231,9 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                 </div>
                 )}
 
-                <PersonalInfo selectedTransaction={selectedTransaction}/>
-                <ContactInfo selectedTransaction={selectedTransaction}/>
-                <GovInfo selectedTransaction={selectedTransaction}/>
+                <PersonalInfo selectedTransaction={selectedTransaction} userInfo={userInfo} setUserInfo={setUserInfo} editMode={editMode}/>
+                <ContactInfo selectedTransaction={selectedTransaction} userInfo={userInfo} setUserInfo={setUserInfo} editMode={editMode}/>
+                <GovInfo selectedTransaction={selectedTransaction} userInfo={userInfo} setUserInfo={setUserInfo} editMode={editMode}/>
               </div>
             </div>
           </div>
