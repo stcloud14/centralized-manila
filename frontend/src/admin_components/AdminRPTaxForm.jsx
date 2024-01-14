@@ -17,7 +17,8 @@ import AdminRPTaxProcessing from '../admin_partials/admin_cards/AdminRPTaxProces
 
 
 
-const AdminRPTaxForm =()=>{
+const AdminRPTaxForm = () => {
+
   
   const location = useLocation();
   const { pathname, state } = location;
@@ -30,18 +31,21 @@ const AdminRPTaxForm =()=>{
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
-  
   const [taxPayment, setTaxPayment] = useState([]);
   const [taxClearance, setTaxClearance] = useState([]);
 
+  console.log(taxPayment)
+  console.log(taxClearance)
+  const [transType, setTransType] = useState('');
 
-  // DITO AKO NAG API REQUEST, AND KUNG MAKIKITA NIYO SA SERVER SIDE NG ADMINRPTAX, DALAWANG QUERY YUN AND INISTORE KO SA DALAWANG VARIABLE
+  const [processingTransactions, setProcessingTransactions] = useState([]); // Initial state for processing transactions
+
   useEffect(() => {
     const fetchUserTransaction = async () => {
       try {
         const res = await axios.get(`http://localhost:8800/adminrptax/`);
-        setTaxPayment(res.data.taxpayment); // DITO KO NA SILA PINAGHIWALAY, ITO YUNG PANG PAYMENT
-        setTaxClearance(res.data.taxclearance); // ITO YUNG PANG CLEARANCE
+        setTaxPayment(res.data.taxpayment);
+        setTaxClearance(res.data.taxclearance);
       } catch (err) {
         console.log(err);
       }
@@ -49,8 +53,26 @@ const AdminRPTaxForm =()=>{
     fetchUserTransaction();
   }, []);
 
+  const [taxClearanceDetails, setTaxClearanceDetails] = useState(null);
+  const [taxPaymentDetails, setTaxPaymentDetails] = useState(null);
+
+  const handleProceedForTaxClearance = (taxClearanceDetails) => {
+    setTaxClearanceDetails(taxClearanceDetails);
+  };
+
+  const handleProceedForTaxPayment = (taxPaymentDetails) => {
+    setTaxPaymentDetails(taxPaymentDetails);
+  };
+
+  const handleMoveToProcessing = (transaction) => {
+    setTaxPayment((prevTaxPayment) => prevTaxPayment.filter((t) => t !== transaction));
+    setTaxClearance((prevTaxClearance) => prevTaxClearance.filter((t) => t !== transaction));
+    setProcessingTransactions((prevProcessing) => [...prevProcessing, transaction]);
+  };
   
 
+  
+ 
   
 
   return (
@@ -89,13 +111,19 @@ const AdminRPTaxForm =()=>{
           {/*  Two Sections */}
           <div className="grid grid-cols-12 gap-4 mx-4 my-4">
             
-            {/* THEN ITO YUNG COMPONENT NG REQUEST SECTION, IPINASA KO DITO YUNG VALUES NA NAKUHA KO SA API REQUEST */}
             <AdminRPTaxRequests
+            onProceed={[handleProceedForTaxClearance, handleProceedForTaxPayment]}
             taxPayment={taxPayment}
             taxClearance={taxClearance}
+            onMoveToProcessing={handleMoveToProcessing}
             />
             <AdminRPTaxProcessing
-            // handleOpenModal={handleOpenModal}
+            taxPayment={taxPayment}
+            taxClearance={taxClearance}
+            taxClearanceDetails={taxClearanceDetails}
+            taxPaymentDetails={taxPaymentDetails}
+            transType={transType}
+            processingTransactions={processingTransactions}
             />
 
           </div>

@@ -1,6 +1,38 @@
-const AdminRPTaxProcessing = ({handleOpenModal, handleOpenModal4, handleOpenModal5})  => {
-    // Requests component logic
-    return (
+import React, { useState, useEffect } from 'react';
+import moment from 'moment/moment.js';
+
+// import AdminRPView from '../admin_modals/AdminRPReject';
+
+const AdminRPTaxProcessing = ({ handleOpenModal4, handleOpenModal5, taxClearance, taxClearanceDetails, taxPaymentDetails, taxPayment, transType, processingTransactions }) => {
+ 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleOpenModal = (transaction, type) => {
+    // Use transType instead of setTransType
+    setTransType(type); // Assuming transType is a state variable
+    setSelectedTransaction(transaction);
+    setIsModalOpen(true);
+  };
+  
+
+  const handleCloseModal = () => { // ITO YUNG PAG CLOSE
+    setIsModalOpen(false);
+    setSelectedTransaction(null); // IRERESET YUNG LAMAN NG SELECTED TRANSACTION EVERY TIME MAGCOCLOSE PARA ISA LANG ANG NASESET NA TRANSACTION DETAILS
+  };
+
+  const handleSearch = (transaction) => { 
+    const transactionId = transaction.transaction_id.toUpperCase(); 
+    const query = searchQuery.toUpperCase(); 
+    return transactionId.includes(query); 
+  };
+
+  const filteredTaxClearance = taxClearance.filter(handleSearch); 
+  const filteredTaxPayment = taxPayment.filter(handleSearch); 
+
+      return (
+        
       <>
         {/*  Processing Area */}
         <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200">
@@ -15,61 +47,68 @@ const AdminRPTaxProcessing = ({handleOpenModal, handleOpenModal4, handleOpenModa
                         <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                     </span>
-                    <input id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                   </div>
                 </div>
 
                 {/* Contents */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
+             
                   {/* Tax Clearance Sample */}
-                  <div onClick={handleOpenModal} className="bg-white cursor-pointer dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
-                    <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                      Transaction ID:
-                    </div>
+                  {filteredTaxClearance.map((transaction) => (
+                  <div key={transaction.transaction_id} onClick={() => handleOpenModal(transaction, 'Tax Clearance')} className="bg-white cursor-pointer dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
+                <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
+                  Transaction ID: {taxClearanceDetails && taxClearanceDetails.transaction_id}
+                </div>
+               
 
-                    <div className="flex-grow px-4 pt-5 pb-4">
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: Tax Clearance</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">TDN: </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">PIN:   </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date Processed:   </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time Processed:   </div>
+                <div className="flex-grow px-4 pt-5 pb-4">
+                 
+                <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {taxClearanceDetails && taxClearanceDetails.trans_type}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">TDN: {taxClearanceDetails && taxClearanceDetails.rp_tdn}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">PIN: {taxClearanceDetails && taxClearanceDetails.rp_pin}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date Processed: {moment(taxClearanceDetails && taxClearanceDetails.date_processed).format('MMMM D, YYYY')}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time Processed: {moment(taxClearanceDetails && taxClearanceDetails.date_processed).format('h:mm A')}</div>
                       <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
-                        <span>Status:</span>
+                        <span>Status: {taxClearanceDetails && taxClearanceDetails.status_type}</span>
                       </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P</div>
-                    </div>
-
-                    <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                      <div onClick={handleOpenModal4} className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
-                        <span className="text-xs font-normal">Reject</span>
-                      </div>
-                      <div onClick={handleOpenModal5} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
-                        <span className="text-xs font-normal">Done</span>
-                      </div>
-                    </div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P {taxClearanceDetails && taxClearanceDetails?.amount}</div>
+                   
+                </div>
+         
+                <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
+                  <div onClick={handleOpenModal4} className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
+                    <span className="text-xs font-normal">Reject</span>
                   </div>
-                  
+                  <div onClick={handleOpenModal5} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                    <span className="text-xs font-normal">Done</span>
+                  </div>
+                </div>
+              </div>          
+                  ))}
+
                   {/* Tax Payment Sample */}  
+                  {filteredTaxPayment.map((transaction) => (
                   <div className="bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
-                    <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                      Transaction ID:
+                    <div onClick={() => handleOpenModal(transaction, 'Tax Payment')} className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
+                      Transaction ID:{taxPaymentDetails && taxPaymentDetails.transaction_id}
                     </div>
-
+                   
                     <div className="flex-grow px-4 pt-5 pb-4">
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: Tax Payment</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Account Name:   </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">TDN: </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">PIN:   </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">From:   </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">To:   </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date Processed:   </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time Processed:   </div>
-                      <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
-                        <span>Status:</span>
-                      </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P</div>
-                    </div>
-
+                    <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {taxPaymentDetails && taxPaymentDetails.trans_type}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Account Name: {taxPaymentDetails && taxPaymentDetails.acc_name} </div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">TDN: {taxPaymentDetails && taxPaymentDetails.rp_tdn}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">PIN: {taxPaymentDetails && taxPaymentDetails.rp_pin} </div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">From: 1st Quarter </div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">To: {taxPaymentDetails && taxPaymentDetails.period_id} </div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date Processed: {moment(taxPaymentDetails && taxPaymentDetails?.date_processed).format('MMMM D, YYYY')} </div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time Processed: {moment(taxPaymentDetails && taxPaymentDetails?.date_processed).format('h:mm A')}</div>
+                  <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
+                    <span>Status: {taxPaymentDetails && taxPaymentDetails.status_type}</span>
+                  </div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P {taxPaymentDetails && taxPaymentDetails.amount}</div>
+                </div>
+  
                     <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
                       <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
                         <span className="text-xs font-normal">Reject</span>
@@ -78,8 +117,9 @@ const AdminRPTaxProcessing = ({handleOpenModal, handleOpenModal4, handleOpenModa
                         <span className="text-xs font-normal">Done</span>
                       </div>
                     </div>
-
-                  </div>
+                  </div> 
+                  ))}
+                 
                 </div>
               </div>
             </div>

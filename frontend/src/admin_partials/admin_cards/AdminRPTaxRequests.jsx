@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
-import AdminRPView from '../admin_modals/AdminRPView';
+import AdminRPView from '../admin_modals/AdminRPProcess';
 
 // IPASA MUNA DITO YUNG VALUES GALING FROM PARENT COMPONENT, NANDUN YUNG API REQUEST
-const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
+const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProcessing }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);   // PANG SET NG MODAL KUNG OPEN OR CLOSE
   const [selectedTransaction, setSelectedTransaction] = useState(null); // DITO MASESET KUNG ANONG CARD ANG PININDOT, DITO BABASE YUNG LALABAS NA MODAL
@@ -21,6 +21,19 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
     setTransType(type); // NGAYON ISESET NATIN YUNG TRANS TYPE NA GALING SA PARAMETER DOON SA USESTATE LINE 11
     setIsModalOpen(true); // OOPEN NA YUNG MODAL
     setSelectedTransaction(transaction); // ISESET SA USESTATE LAHAT NG DETAILS NG CARD NA PININDOT, LINE 10
+
+     // Remove this block if onMoveToProcessing is not needed
+    if (onMoveToProcessing) {
+      onMoveToProcessing(transaction);
+    }
+
+    if (Array.isArray(onProceed)) {
+      onProceed.forEach((proceedFunction) => {
+        proceedFunction(transaction);
+      });
+    } else if (onProceed) {
+      onProceed(transaction);
+    }
   };
 
   const handleCloseModal = () => { // ITO YUNG PAG CLOSE
@@ -70,13 +83,13 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
               {filteredTaxClearance.map((transaction) => (
 
               // ITO YUNG KAPAG PININDOT YUNG BUONG CARD, MAG OOPEN YUNG MODAL, IPAPASA YUNG DETAILS NG TRANSACTION NA PININDOT, AND ISESET SA PARAMETER NG LINE 19 NA ANG TYPE AY TAX CLEARANCE
-              <div onClick={() => handleOpenModal(transaction, 'Tax Clearance')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
+              <div onClick={() => handleOpenModal(transaction, 'Real Property Tax Clearance')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                   Transaction ID: {transaction.transaction_id}
                 </div>
   
                 <div className="flex-grow px-4 pt-5 pb-4">
-                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: Tax Clearance</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
                   <div className="text-xs text-slate-600 dark:text-slate-300 my-1">TDN: {transaction.rp_tdn} </div>
                   <div className="text-xs text-slate-600 dark:text-slate-300 my-1">PIN: {transaction.rp_pin}  </div>
                   <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date Processed: {date2}  </div>
@@ -94,12 +107,13 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
                     </svg>
                     <span className="text-xs font-normal">&nbsp;Expired</span>
                   </div>
-                  <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                    </svg>
-                    <span className="text-xs font-normal">&nbsp;Process</span>
-                  </div>
+                 <div onClick={() => handleOpenModal(transaction, 'Tax Clearance')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                  </svg>
+                  <span className="text-xs font-normal">&nbsp;Process</span>
+                </div>
+
                 </div>
               </div>
               ))} 
@@ -113,7 +127,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
                 </div>
   
                 <div className="flex-grow px-4 pt-5 pb-4">
-                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: Tax Payment</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type:  {transaction.trans_type}</div>
                   <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Account Name: {transaction.acc_name} </div>
                   <div className="text-xs text-slate-600 dark:text-slate-300 my-1">TDN: {transaction.rp_tdn}</div>
                   <div className="text-xs text-slate-600 dark:text-slate-300 my-1">PIN: {transaction.rp_pin} </div>
@@ -134,7 +148,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
                     </svg>
                     <span className="text-xs font-normal">&nbsp;Expired</span>
                   </div>
-                  <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                  <div  onClick={() => handleOpenModal(transaction, 'Real Property Tax Payment')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                     </svg>
@@ -149,7 +163,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
             DAPAT RIN IPASA DITO YUNG MGA VALUES PARA MAACCESS SA MODAL, YUNG SELECTEDTRANSACTION, YUNG STATE NG MODAL KUNG OPEN OR CLOSE,
             FUNCTION PARA MACLOSE ANG MODAL, AND YUNG TRANS TYPE NA VALUE NG TRANSTYPE */}
             {isModalOpen && selectedTransaction && (
-              <AdminRPView selectedTransaction={selectedTransaction} isOpen={isModalOpen} handleClose={handleCloseModal} transType={transType} />
+              <AdminRPView selectedTransaction={selectedTransaction} isOpen={isModalOpen} handleClose={handleCloseModal} transType={transType} onProceed={onProceed} />
             )}
             </div>
           </div>
