@@ -63,15 +63,17 @@ const AdminRPTaxForm = () => {
   const handleProceedForTaxPayment = (taxPaymentDetails) => {
     setTaxPaymentDetails(taxPaymentDetails);
   };
+  const [selectedTransactionId, setSelectedTransactionId] = useState(null);
 
   const handleMoveToProcessing = (transaction) => {
     setTaxPayment((prevTaxPayment) => prevTaxPayment.filter((t) => t !== transaction));
     setTaxClearance((prevTaxClearance) => prevTaxClearance.filter((t) => t !== transaction));
     setProcessingTransactions((prevProcessing) => [...prevProcessing, transaction]);
+    setSelectedTransactionId(transaction.transactionId);  // Use transaction.transactionId instead of transactionId
   };
   
-
   
+
  
   
 
@@ -124,6 +126,7 @@ const AdminRPTaxForm = () => {
             taxPaymentDetails={taxPaymentDetails}
             transType={transType}
             processingTransactions={processingTransactions}
+            selectedTransactionId={selectedTransactionId}
             />
 
           </div>
