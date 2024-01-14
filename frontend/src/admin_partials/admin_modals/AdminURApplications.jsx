@@ -5,12 +5,22 @@ import PersonalInfo from '../admin_userregistry/PersonalInfo';
 import ContactInfo from '../admin_userregistry/ContactInfo';
 import GovInfo from '../admin_userregistry/GovInfo';
 import AdminUserDeleteModal from '../admin_modals/AdminUserDeleteModal';
+import AdminURViewImage from './AdminURViewImage';
 
 const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isOpen, handleClose }) => { 
 
   const [userImage, setUserImage] = useState('');
   const [isApproved, setIsApproved] = useState(false);
   const [isDeclined, setIsDeclined] = useState(false);
+
+  // View Image Modal
+  const [isImageModalOpen, setisImageModalOpen] = useState(false);
+  const handleOpenImage = () => {
+      setisImageModalOpen(true);
+    }
+  const handleCloseImageModal = () => {
+    setisImageModalOpen(false);
+  };
   
 
   const checkUserImage = async () => {
@@ -209,9 +219,10 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
                 <div className="mb-5">
                   <img
                     name="userImage"
-                    className="inline-block md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center"
+                    className="inline-block md:h-44 md:w-44 w-32 h-32 cursor-pointer rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center"
                     src={userImage}
                     onError={(e) => console.error('Error loading image:', e)}
+                    onClick={handleOpenImage}
                   />
                 </div>
                 <PersonalInfo selectedTransaction={selectedTransaction} />
@@ -221,6 +232,10 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
             </div>
           </div>
         </div>
+        <AdminURViewImage
+          isImageOpen={isImageModalOpen}
+          handleCloseImageModal={handleCloseImageModal}
+        />
         {/* <AdminUserDeleteModal
         /> */}
       </div>
