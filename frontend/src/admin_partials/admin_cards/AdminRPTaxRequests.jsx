@@ -15,6 +15,8 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
 
   const date2 = moment(taxClearance.date_processed).format('MMMM D, YYYY');
   const time2 = moment(taxClearance.date_processed).format('h:mm A');
+
+  
     
   const handleOpenModal = (transaction, type) => { // ITO YUNG MAG EEXECUTE KAPAG CINLICK YUNG CARD, DALAWA PARAMETER, TRANSACTION (YUNG LAHAT NG DETAILS NG ISANG TRANS), AND TYPE (YUNG TRANS TYPE)
 
@@ -34,6 +36,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
       onProceed(transaction);
     }
   };
+  
 
   const handleCloseModal = () => { // ITO YUNG PAG CLOSE
     setIsModalOpen(false);
