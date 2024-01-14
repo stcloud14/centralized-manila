@@ -1,7 +1,6 @@
 import React from 'react';
-import defaultImage from '../../images/manila-v3.jpg';
 
-const AdminURViewImage = ({ isImageOpen, handleCloseImageModal }) => {
+const AdminURViewImage = ({ userImage, isImageOpen, handleCloseImageModal }) => {
   return (
     isImageOpen && (
       <div className="fixed z-50 inset-0 overflow-y-auto">
@@ -20,11 +19,11 @@ const AdminURViewImage = ({ isImageOpen, handleCloseImageModal }) => {
             </button>
 
             {/* Image */}
-            <div className="max-h-screen mx-auto">
+            <div className="max-h-screen mx-auto overflow-y-auto">
               <img
                 name="defaultImage"
                 className="w-full h-auto object-cover object-center"
-                src={defaultImage}
+                src={userImage}
                 alt="Image"
               />
             </div>

@@ -11,6 +11,48 @@ import AdminUserViewModal from '../admin_partials/admin_modals/AdminUserViewModa
 
 const AdminUserListForm = () => {
 
+  const [userApplications, setUserApplications] = useState();
+
+  const logoSrc = '../src/images/mnl_footer.svg';
+
+  const [isModalOpen, setIsModalOpen] = useState(false);  
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+
+  const handleOpenModal = (transaction) => {
+    setIsModalOpen(true);
+    setSelectedTransaction(transaction);
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedTransaction(null);
+  };
+  
+  useEffect(()=>{
+    const fetchUserApplications= async()=>{
+        try{
+            const res= await axios.get(`http://localhost:8800/adminur/`)
+            const { userlist } = res.data;
+            setUserApplications(userlist);
+            
+        }catch(err){
+            console.log(err)
+        }
+    }
+    fetchUserApplications()
+  },[])
+
+
+  const handleRemoveTransaction = (transaction) => {
+
+    const updatedUserApplications = userApplications.filter(
+      (transaction) => transaction.transaction_id !== transaction
+    );
+  
+    setUserApplications(updatedUserApplications);
+  };
+
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
@@ -27,23 +69,6 @@ const AdminUserListForm = () => {
     };
   }, []);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => {
-      setIsModalOpen(true);
-    }
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const [isModalOpen3, setIsModalOpen3] = useState(false);
-  const handleOpenModal3 = () => {
-      setIsModalOpen3(true);
-    }
-  const handleCloseModal3 = () => {
-    setIsModalOpen3(false);
-  };
-
-const logoSrc = '../src/images/mnl_footer.svg';
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -60,10 +85,10 @@ const logoSrc = '../src/images/mnl_footer.svg';
             
             {isMobileView ? (           
               // For Mobile View
-              <UserListMobile handleOpenModal={handleOpenModal} handleOpenModal3={handleOpenModal3}/>
+              <UserListMobile handleOpenModal={handleOpenModal} userApplications={userApplications} />
             ) : (
               // For Desktop View
-              <UserListDesktop handleOpenModal={handleOpenModal} handleOpenModal3={handleOpenModal3}/>
+              <UserListDesktop handleOpenModal={handleOpenModal} userApplications={userApplications} />
             )}
           </div>
           <AdminFooter logo={logoSrc} />
@@ -71,8 +96,7 @@ const logoSrc = '../src/images/mnl_footer.svg';
         <AdminUserViewModal
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
-          isOpen3={isModalOpen3}
-          handleClose3={handleCloseModal3}
+          selectedTransaction={selectedTransaction}
         />
       </div>
     </div>

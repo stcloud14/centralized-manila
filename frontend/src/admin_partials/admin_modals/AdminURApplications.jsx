@@ -13,7 +13,6 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
   const [isApproved, setIsApproved] = useState(false);
   const [isDeclined, setIsDeclined] = useState(false);
 
-  // View Image Modal
   const [isImageModalOpen, setisImageModalOpen] = useState(false);
   const handleOpenImage = () => {
       setisImageModalOpen(true);
@@ -233,6 +232,7 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
           </div>
         </div>
         <AdminURViewImage
+          userImage={userImage}
           isImageOpen={isImageModalOpen}
           handleCloseImageModal={handleCloseImageModal}
         />

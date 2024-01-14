@@ -6,9 +6,146 @@ import ContactInfo from '../admin_userregistry/ContactInfo';
 import GovInfo from '../admin_userregistry/GovInfo';
 import AdminUserDeleteModal from '../admin_modals/AdminUserDeleteModal';
 
-const AdminUserViewModal = ({ isOpen, handleClose, isOpen3, handleClose3 }) => {
-  const [userBirth, setUserBirth] = useState({});
+const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
+  
+  const [userImage, setUserImage] = useState(null);
   const [editMode, setEditMode] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  // useEffect(() => {
+  //   const fetchImage = async () => {
+  //     setIsLoading(true);
+  
+  //     try {
+  //       const imagePath = '../uploads/profileImage/';
+  //       const imageName = selectedTransaction.user_image;
+  
+  //       if (imageName === undefined || imageName === null) {
+  //         console.log('User image name is undefined or null.');
+  //         setIsLoading(false);
+  //         setUserImage(null);
+  //         return;
+  //       }
+  
+  //       const isFileExists = await checkFileExists(imagePath, imageName);
+  
+  //       if (isFileExists) {
+  //         const fileData = await fetchFileData(`${imagePath}${imageName}`);
+  //         if (fileData) {
+  //           setUserImage(fileData);
+  //         } else {
+  //           console.log(`File data for ${imageName} is empty or undefined.`);
+  //           setUserImage(null);
+  //         }
+  //       } else {
+  //         console.log(`File: ${imageName} does not exist.`);
+  //         setUserImage(null);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error checking user image path:', error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  
+  //   fetchImage();
+  // }, [selectedTransaction]);
+
+
+  const checkFileExists = async (folderPath, fileName) => {
+    try {
+      const filePath = `${folderPath}/${fileName}`;
+      const response = await fetch(filePath);
+
+      return response.ok;
+    } catch (error) {
+      console.error('Error checking file existence:', error);
+      return false;
+    }
+  };
+
+
+  const fetchFileData = async (filePath) => {
+    try {
+      const response = await fetch(filePath);
+  
+      if (!response.ok) {
+        if (response.status === 404) {
+          console.log('File not found.');
+        } else {
+          throw new Error(`Failed to fetch file from ${filePath}`);
+        }
+        return null;
+      }
+  
+      const fileData = await response.blob();
+  
+      if (!fileData || fileData.size === 0) {
+        console.log('File data is empty or undefined.');
+        return null;
+      }
+  
+      const dataUrl = URL.createObjectURL(fileData);
+  
+      return dataUrl;
+    } catch (error) {
+      console.error('Error fetching file data:', error);
+      return null;
+    }
+  };
+
+  // const { user_id } = selectedTransaction;
+
+
+  const handleApprove = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await axios.post(`http://localhost:8800/adminur/approve/${user_id}`);
+  
+      if (response.status === 200) {
+        setIsApproved(true);
+
+        console.log('Verification successful');
+  
+        setTimeout(() => {
+          setIsApproved(false);
+          handleClose();
+          handleRemoveTransaction(selectedTransaction.transaction_id)
+        }, 1500);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
+
+
+  const handleDecline = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await axios.post(`http://localhost:8800/adminur/decline/${user_id}`);
+  
+      if (response.status === 200) {
+        setIsDeclined(true);
+
+        console.log('Verification Declined');
+  
+        setTimeout(() => {
+          setIsDeclined(false);
+          handleClose();
+          handleRemoveTransaction(selectedTransaction.transaction_id)
+        }, 1500);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
 
   const handleEditClick = () => {
     setEditMode(!editMode);
@@ -19,21 +156,13 @@ const AdminUserViewModal = ({ isOpen, handleClose, isOpen3, handleClose3 }) => {
     setEditMode(false);
   };
 
-  useEffect(() => {
-    if (!isOpen) {
-      // Reset editMode when the modal is closed
-      setEditMode(false);
-    }
-  }, [isOpen]);
+  // useEffect(() => {
+  //   if (!isOpen) {
+  //     setEditMode(false);
+  //   }
+  // }, [isOpen]);
 
 
-  const [isModalOpen3, setIsModalOpen3] = useState(false);
-  const handleOpenModal3 = () => {
-      setIsModalOpen3(true);
-    }
-  const handleCloseModal3 = () => {
-    setIsModalOpen3(false);
-  };
 
   return (
     isOpen && (
@@ -90,7 +219,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, isOpen3, handleClose3 }) => {
                   <div className="flex items-center text-xs">
                     <button
                       className="text-white font-medium dark:text-white dark:bg-red-500 dark:hover:bg-red-600 flex items-center bg-red-500 hover:bg-red-600 hover:border-red-600 rounded-sm px-2 py-1.5"
-                      onClick={handleOpenModal3}
+                      // onClick={handleOpenModal3}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -100,23 +229,46 @@ const AdminUserViewModal = ({ isOpen, handleClose, isOpen3, handleClose3 }) => {
                   </div>
                 </div>
 
+                {isLoading && (
+                  <div className="mb-5 inline-block md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center justify-center">
+                    <svg
+                      aria-hidden="true"
+                      className="w-10 h-10 md:w-15 md:h-15 lg:w-20 lg:h-20 pb-0 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                  </div>
+                )}
+
+                {!isLoading && (
                 <div className="mb-5">
                   <img
                     name="userImage"
                     className="inline-block md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center"
-                    src={defaultImage}
+                    src={userImage || defaultImage}
                   />
                 </div>
-                <PersonalInfo setUserBirth={setUserBirth} />
-                <ContactInfo />
-                <GovInfo />
+                )}
+
+                <PersonalInfo selectedTransaction={selectedTransaction}/>
+                <ContactInfo selectedTransaction={selectedTransaction}/>
+                <GovInfo selectedTransaction={selectedTransaction}/>
               </div>
             </div>
           </div>
         </div>
         <AdminUserDeleteModal
-          isOpen3={isModalOpen3}
-          handleClose3={handleCloseModal3}
+        
         />
       </div>
       

@@ -62,10 +62,67 @@ router.get('/', async (req, res) => {
     uv.application_status = 'Applying' AND uv.user_valid_id IS NOT NULL \
   ORDER BY up.l_name;";
 
+
+  const query1 = "SELECT \
+    up.user_id, \
+    up.f_name, \
+    up.m_name, \
+    up.l_name, \
+    up.suffix_type, \
+    up.sex_type, \
+    up.cvl_status, \
+    up.res_status, \
+    up.czn_status, \
+    ub.birth_date, \
+    ub.birth_place, \
+    uc.user_email, \
+    uc.mobile_no, \
+    uc.tel_no, \
+    r.region_name, \
+    p.prov_name, \
+    c.city_name, \
+    uc.house_floor, \
+    uc.bldg_name, \
+    uc.brgy_dist, \
+    uc.zip_code, \
+    ug.user_tin_id, \
+    ug.user_pgb_id, \
+    ug.user_philh_id, \
+    ug.user_sss_id, \
+    ug.user_gsis_id, \
+    ug.user_natl_id, \
+    ui.user_image, \
+    uv.verification_status, \
+    uv.application_status \
+  FROM \
+    user_personal up \
+  LEFT JOIN \
+    user_verification uv ON uv.user_id = up.user_id AND up.user_id IS NOT NULL \
+  LEFT JOIN \
+    user_birth ub ON ub.user_id = up.user_id AND ub.user_id IS NOT NULL \
+  LEFT JOIN \
+    user_contact uc ON uc.user_id = up.user_id AND uc.user_id IS NOT NULL \
+  LEFT JOIN \
+    user_gov_id ug ON ug.user_id = up.user_id AND ug.user_id IS NOT NULL \
+  LEFT JOIN \
+    user_image ui ON ui.user_id = up.user_id AND ui.user_id IS NOT NULL \
+  JOIN \
+    region r ON uc.region_id = r.region_id AND uc.region_id \
+  JOIN \
+    province p ON uc.prov_id = p.prov_id AND uc.prov_id \
+  JOIN \
+    cities c ON uc.city_id = c.city_id AND uc.city_id \
+  ORDER BY up.l_name;";
+
     try {
         const result = await queryDatabase(query);
+        const result1 = await queryDatabase(query1);
       
-        res.json(result);
+        res.json({
+          verify: result,
+          userlist: result1,
+        });
+
     } catch (err) {
         console.error(err);
         res.status(500).send('Error retrieving data');

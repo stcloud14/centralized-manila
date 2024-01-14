@@ -26,19 +26,15 @@ const AdminVerifyReqsForm =()=>{
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-  };
-
-  const handleProcessSubmit = () => {
-    setIsModalOpen(false);
     setSelectedTransaction(null);
   };
-
-
+  
   useEffect(()=>{
     const fetchUserApplications= async()=>{
         try{
             const res= await axios.get(`http://localhost:8800/adminur/`)
-            setUserApplications(res.data)
+            const { verify } = res.data;
+            setUserApplications(verify);
             
         }catch(err){
             console.log(err)
