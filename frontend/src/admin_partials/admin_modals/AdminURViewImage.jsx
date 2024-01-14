@@ -20,7 +20,7 @@ const AdminURViewImage = ({ isImageOpen, handleCloseImageModal }) => {
             </button>
 
             {/* Image */}
-            <div className="max-h-screen mx-auto">
+            <div className="max-h-screen mx-auto overflow-y-auto">
               <img
                 name="defaultImage"
                 className="w-full h-auto object-cover object-center"
