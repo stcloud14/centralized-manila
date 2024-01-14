@@ -6,7 +6,6 @@ import SidebarLinkGroup from './SidebarLinkGroup';
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
   const { pathname } = location;
-  console.log(pathname);
   const user_id = pathname.split("/")[2];
   const trigger = useRef(null);
   const sidebar = useRef(null);

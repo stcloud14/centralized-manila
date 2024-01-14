@@ -25,8 +25,6 @@ const TransactionHistoryForm = () => {
   const [sortOption, setSortOption] = useState('date_processed');
   const [userPersonal, setUserPersonal]=useState({})
 
-  console.log(userTransaction)
-
   useEffect(() => {
     const fetchUserPersonal = async () => {
       try {
@@ -147,8 +145,6 @@ const SortIcon = ({ order }) => (
     </svg>
   </button>
   );
-
-console.log(userTransaction)
 
 const logoSrc = '../src/images/mnl_footer.svg';
 

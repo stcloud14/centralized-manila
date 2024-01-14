@@ -169,7 +169,6 @@ const DropdownProfile = ({ align }) => {
           name='userImage' 
           className="inline-block h-10 w-10 rounded-full object-cover object-center"
           src={userImage ? userImage : defaultImg}
-          onError={(e) => console.error('Error loading image:', e)}
         />
 
         {/* Verified Check Mark */}

@@ -6,11 +6,7 @@ const DashboardContext = createContext();
 export const DashboardProvider = ({ children }) => {
 
     const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        console.log("DashboardProvider is mounted");
-    }, []);
-      
+    
     const [fetchCount, setFetchCount] = useState(0);
 
     const [transStats, setTransStats] = useState({});
@@ -75,9 +71,6 @@ export const DashboardProvider = ({ children }) => {
         setFetchCount((prevCount) => prevCount + 1);
     };
     
-      if (loading) {
-        console.log('Fetching all the data')
-      }
 
   return (
     <DashboardContext.Provider 
