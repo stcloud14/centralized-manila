@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AdminURViewImage = ({ userImage, isImageOpen, handleCloseImageModal }) => {
+const AdminURViewImage = ({ userImage, defaultImage, isImageOpen, handleCloseImageModal }) => {
   return (
     isImageOpen && (
       <div className="fixed z-50 inset-0 overflow-y-auto">
@@ -23,7 +23,7 @@ const AdminURViewImage = ({ userImage, isImageOpen, handleCloseImageModal }) => 
               <img
                 name="defaultImage"
                 className="w-full h-auto object-cover object-center"
-                src={userImage}
+                src={userImage || defaultImage}
                 alt="Image"
               />
             </div>

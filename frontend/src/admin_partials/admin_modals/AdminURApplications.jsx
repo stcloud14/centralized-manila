@@ -6,6 +6,7 @@ import ContactInfo from '../admin_userregistry/ContactInfo';
 import GovInfo from '../admin_userregistry/GovInfo';
 import AdminUserDeleteModal from '../admin_modals/AdminUserDeleteModal';
 import AdminURViewImage from './AdminURViewImage';
+import defaultImage from '../../images/default_img.png'
 
 const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isOpen, handleClose }) => { 
 
@@ -219,7 +220,7 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
                   <img
                     name="userImage"
                     className="inline-block md:h-auto md:w-96 w-44 h-auto cursor-pointer rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center"
-                    src={userImage}
+                    src={userImage || defaultImage}
                     onError={(e) => console.error('Error loading image:', e)}
                     onClick={handleOpenImage}
                     title="Click to see full"
@@ -234,6 +235,7 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
         </div>
         <AdminURViewImage
           userImage={userImage}
+          defaultImage={defaultImage}
           isImageOpen={isImageModalOpen}
           handleCloseImageModal={handleCloseImageModal}
         />

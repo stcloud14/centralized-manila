@@ -12,12 +12,15 @@ const AdminVerifyReqsForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const [userApplications, setUserApplications] = useState();
-
   const logoSrc = '../src/images/mnl_footer.svg';
+
+  const [userApplications, setUserApplications] = useState();
 
   const [isModalOpen, setIsModalOpen] = useState(false);  
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [isApproved, setIsApproved] = useState(false);
+  const [isDeclined, setIsDeclined] = useState(false);
+  const [isPlaceholder, setIsPlaceholder] = useState();
 
   const handleOpenModal = (transaction) => {
     setIsModalOpen(true);
@@ -52,6 +55,54 @@ const AdminVerifyReqsForm =()=>{
   
     setUserApplications(updatedUserApplications);
   };
+
+
+  const handleApprove = async (transaction) => {
+    try {
+      const response = await axios.post(`http://localhost:8800/adminur/approve/${transaction.user_id}`);
+  
+      if (response.status === 200) {
+        setIsApproved(true);
+        setIsPlaceholder(transaction.l_name)
+  
+        console.log('Verification successful');
+  
+        setTimeout(() => {
+          setIsApproved(false);
+          handleRemoveTransaction(transaction.transaction_id);
+        }, 1500);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
+  
+
+
+  const handleDecline = async (transaction) => {
+  
+    try {
+      const response = await axios.post(`http://localhost:8800/adminur/decline/${transaction.user_id}`);
+  
+      if (response.status === 200) {
+        setIsDeclined(true);
+        setIsPlaceholder(transaction.l_name)
+
+        console.log('Verification Declined');
+  
+        setTimeout(() => {
+          setIsDeclined(false);
+          handleRemoveTransaction(transaction.transaction_id)
+        }, 1500);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
   
 
   return (
@@ -72,6 +123,20 @@ const AdminVerifyReqsForm =()=>{
             <div className="px-5 py-5">
               <h1 className='font-medium text-center text-slate-700 dark:text-white'>Registry</h1>
               <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>User Verification Requests</h1> 
+
+                  {isApproved && (
+                    <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                      {isPlaceholder} Verification Approved!
+                    </div>
+                  )} 
+
+                  {isDeclined && (
+                    <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                      {isPlaceholder} Verification Declined!
+                    </div>
+                  )} 
+
+
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:gap-6 gap-2">
 
                 {/* Card Sample */}
@@ -99,13 +164,13 @@ const AdminVerifyReqsForm =()=>{
                     </div>
                   </div>
                   <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                    <div className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
+                    <div onClick={(e) => { e.stopPropagation(); handleDecline(transaction); }} className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                       </svg>
                       <span className="text-xs font-normal">&nbsp;Decline</span>
                     </div>
-                    <div onClick={handleOpenModal} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                    <div onClick={(e) => { e.stopPropagation(); handleApprove(transaction); }} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                       </svg>
