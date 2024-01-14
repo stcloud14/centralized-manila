@@ -117,6 +117,12 @@ const BusinessPermitForm =()=>{
   
 
   const handleFileSelect = (file, target) => {
+
+    if (file.size > 3 * 1024 * 1024) {
+      window.alert('File size exceeds the 3MB limit. Please select a smaller file.');
+      return;
+    }
+
     setSelectedFiles((prevFiles) => {
       const fileNameExists = prevFiles.some(
         (fileArray) => fileArray.value && fileArray.value.name && fileArray.value.name === file.name
@@ -1022,7 +1028,15 @@ const BusinessPermitForm =()=>{
                   <p>
                     {selectedFiles.map((fileArray) => {
                       if (fileArray.fieldName === 'bus_tax_incentives') {
-                        const fileName = fileArray.value ? fileArray.value.name : null;
+                        const file = fileArray.value;
+                        if (file && file.size > 3 * 1024 * 1024) {
+                          return (
+                            <div key={file.name}>
+                              File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                            </div>
+                          );
+                        }
+                        const fileName = file ? file.name : null;
                         return fileName ? getShortName(fileName, 25) : null; 
                       }
                       return null; 
@@ -1230,12 +1244,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_dti_reg') {
-                              const fileName = fileArray.value ? fileArray.value.name : null;
-                              return fileName ? getShortName(fileName, 25) : null; 
+                          if (fileArray.fieldName === 'bus_dti_reg') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
+                            }
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
                           }
-                            return null; 
-                          })}
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_dti_reg'} />
@@ -1247,12 +1269,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_rptax_decbldg') {
-                              const fileName = fileArray.value ? fileArray.value.name : null;
-                              return fileName ? getShortName(fileName, 25) : null; 
+                          if (fileArray.fieldName === 'bus_rptax_bldg') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
                             }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decbldg'} />
@@ -1264,12 +1294,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                           if (fileArray.fieldName === 'bus_sec_paid') {
-                            const fileName = fileArray.value ? fileArray.value.name : null;
-                            return fileName ? getShortName(fileName, 25) : null;
-                        }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                          if (fileArray.fieldName === 'bus_sec_paid') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
+                            }
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_paid'} />
@@ -1281,12 +1319,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                             if (fileArray.fieldName === 'bus_sec_articles') {
-                              const fileName = fileArray.value ? fileArray.value.name : null;
-                              return fileName ? getShortName(fileName, 25) : null;
+                          if (fileArray.fieldName === 'bus_sec_articles') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
+                            }
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
                           }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_articles'} />
@@ -1298,12 +1344,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                           if (fileArray.fieldName === 'bus_sec_front') {
-                            const fileName = fileArray.value ? fileArray.value.name : null;
-                            return fileName ? getShortName(fileName, 25) : null;
-                        }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                          if (fileArray.fieldName === 'bus_nga') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
+                            }
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_nga'} />
@@ -1315,12 +1369,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_rptax_decland') {
-                              const fileName = fileArray.value ? fileArray.value.name : null;
-                              return fileName ? getShortName(fileName, 25) : null; // Adjust the length as needed
+                          if (fileArray.fieldName === 'bus_sec_front') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
+                            }
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
                           }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_front'} />
@@ -1332,12 +1394,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_rptax_decland') {
-                              const fileName = fileArray.value ? fileArray.value.name : null;
-                              return fileName ? getShortName(fileName, 25) : null;
+                          if (fileArray.fieldName === 'bus_rptax_decland') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
                             }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decland'} />
@@ -1349,12 +1419,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_fire') {
-                              const fileName = fileArray.value ? fileArray.value.name : null;
-                              return fileName ? getShortName(fileName, 25) : null;
+                          if (fileArray.fieldName === 'bus_fire') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
                             }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_fire'} />
@@ -1366,12 +1444,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_page2') {
-                              const fileName = fileArray.value ? fileArray.value.name : null;
-                              return fileName ? getShortName(fileName, 25) : null;
+                          if (fileArray.fieldName === 'bus_page2') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
                             }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page2'} />
@@ -1383,12 +1469,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_page3') {
-                              const fileName = fileArray.value ? fileArray.value.name : null;
-                              return fileName ? getShortName(fileName, 25) : null;
+                          if (fileArray.fieldName === 'bus_page3') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
                             }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page3'} />
@@ -1400,12 +1494,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_page4') {
-                              const fileName = fileArray.value ? fileArray.value.name : null;
-                              return fileName ? getShortName(fileName, 25) : null;
+                          if (fileArray.fieldName === 'bus_page4') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
                             }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page4'} />
@@ -1417,12 +1519,20 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                            if (fileArray.fieldName === 'bus_page5') {
-                               const fileName = fileArray.value ? fileArray.value.name : null;
-                              return fileName ? getShortName(fileName, 25) : null;
+                          if (fileArray.fieldName === 'bus_page5') {
+                            const file = fileArray.value;
+                            if (file && file.size > 3 * 1024 * 1024) {
+                              return (
+                                <div key={file.name}>
+                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                </div>
+                              );
                             }
-                            return null; // If the name doesn't match, return null or handle as needed
-                          })}
+                            const fileName = file ? file.name : null;
+                            return fileName ? getShortName(fileName, 25) : null; 
+                          }
+                          return null; 
+                        })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page5'} />
@@ -1430,13 +1540,6 @@ const BusinessPermitForm =()=>{
                       </tr>
                     </tbody>
                   </table>
-
-                  {/* {selectedFiles.map((selectedFile, index) => (
-              <div key={index}>
-                <p>Selected file: {selectedFile.file}</p>
-              </div>
-            ))} */}
-
                 </div>
                 </div>
 

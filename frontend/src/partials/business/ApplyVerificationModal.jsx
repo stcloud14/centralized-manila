@@ -11,13 +11,39 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectedFile(file);
-      setSelectedFileName(file.name);
+    
+      if (file.size <= 5 * 1024 * 1024) { // SET FILE SIZE LIMIT TO 5MB
+        setSelectedFile(file);
+        setSelectedFileName(file.name);
+      } else {
+
+        window.alert("Selected file exceeds the 5MB limit");
+        fileInputRef.current.value = '';
+        setSelectedFile(null);
+        setSelectedFileName(null);
+      }
     } else {
       setSelectedFile(null);
       setSelectedFileName(null);
     }
     fileInputRef.current.value = '';
+  };
+
+  const handleDrop = (event) => {
+    preventDefault(event); 
+    const file = event.dataTransfer.files[0];
+  
+    if (file) {
+      if (file.size <= 5 * 1024 * 1024) {
+        setSelectedFile(file);
+        setSelectedFileName(file.name);
+      } else {
+        window.alert("Selected file exceeds the 5MB limit");
+      }
+    } else {
+      setSelectedFile(null);
+      setSelectedFileName(null);
+    }
   };
 
   const preventDefault = (event) => {
@@ -98,7 +124,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
                 </h1>
                 <div className="my-2">
                   <p className="text-sm text-gray-500 dark:text-slate-400">
-                    Please ensure that the information currently displayed in your profile is the most recent and up-to-date before proceeding with the verification process.
+                    Please ensure that the information currently displayed in your profile is the most recent and accurate before proceeding with the verification process.
                   </p>
                 </div>
               </div>
@@ -112,9 +138,8 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
         <label 
             onDragOver={preventDefault}
             onDrop={(event) => {
-              preventDefault(event); // Prevent the default behavior for file drops
-              setSelectedFile(event.dataTransfer.files[0]);
-              setSelectedFileName(event.dataTransfer.files[0].name);
+              preventDefault(event);
+              handleDrop(event);
             }}
             htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full md:h-[20rem] h-64 border-2 bg-white dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d] border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:border-gray-500">
             <div className="flex flex-col items-center justify-center pt-5 pb-6 mx-3">
@@ -153,7 +178,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
                 or drag and drop
               </p>
               <p className="text-[10px] sm:text-[12px] text-gray-500 dark:text-gray-400">
-                PNG, JPEG, DOCX, or PDF (MAX. 5MB)
+                PNG, JPEG, SVG (MAX. 5MB)
               </p>
             </>
           )}
@@ -186,7 +211,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
                 type="button"
                 className="text-white text-xs text-center px-5 py-2 md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                <p>Apply</p>
+                <p>Apply for Verification</p>
               </button>
             </div>
           </div>
