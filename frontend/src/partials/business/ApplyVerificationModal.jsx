@@ -77,15 +77,38 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
       <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
         &#8203;
       </span>
-      <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
-        <div className="px-4 pt-5 pb-3 sm:p-6 sm:pb-6 overflow-y-auto">
-          
-          <span className="font-bold md:text-lg text-sm">Upload File</span>
-          
-        </div>
+      <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-6xl">
+      <div className="sm:flex sm:items-start px-8 pt-8 pb-2">
+              <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-[12rem] h-[12rem] text-blue-400" viewBox="0 0 841.89 595.28">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -6 23 38" fill="white">
+                    <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                  </svg>
+                  <g fill="currentColor">
+                    <path d="M351.54,516.77l-39.52-67.9l-78.54-16.17l8.83-76.77l-49.93-58.5l49.93-57.98l-8.83-76.75l78.54-16.21
+                      l39.52-68.39l69.71,32.39l69.71-32.39l40.05,68.41l78.01,16.19l-8.8311,76.77l49.93,57.96l-49.93,58.5l8.83,76.77l-78.01,16.17
+                      l-40.05,67.9l-69.71-32.39L351.54,516.77z M398.88,366.9l118.08-117.51l-23.4-21.42l-94.68,94.01l-49.4-51.69l-23.94,23.48
+                      C325.55,293.77,398.88,366.9,398.88,366.9z"/>
+                  </g>
+                </svg>
+              </div>
+              <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                <h1 className="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                  Verify Account
+                </h1>
+                <div className="my-2">
+                  <p className="text-sm text-gray-500 dark:text-slate-400">
+                    Please ensure that the information currently displayed in your profile is the most recent and up-to-date before proceeding with the verification process.
+                  </p>
+                </div>
+              </div>
+            </div>
 
         <div className="pb-1 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
         <div className="mx-auto">
+        <h1 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white pb-1">
+          Upload Valid ID
+        </h1>
         <label 
             onDragOver={preventDefault}
             onDrop={(event) => {
@@ -93,7 +116,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
               setSelectedFile(event.dataTransfer.files[0]);
               setSelectedFileName(event.dataTransfer.files[0].name);
             }}
-            htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 bg-white dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d] border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:border-gray-500">
+            htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full md:h-[20rem] h-64 border-2 bg-white dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d] border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:border-gray-500">
             <div className="flex flex-col items-center justify-center pt-5 pb-6 mx-3">
             {!!selectedFileName ? (
               <div onClick={handleFileChangeClick}>

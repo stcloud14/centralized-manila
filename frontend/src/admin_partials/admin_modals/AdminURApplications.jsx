@@ -215,13 +215,14 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
                     </div>
                   )} 
 
-                <div className="mb-5">
+                <div className="mt-10 mb-5">
                   <img
                     name="userImage"
-                    className="inline-block md:h-44 md:w-44 w-32 h-32 cursor-pointer rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center"
+                    className="inline-block md:h-auto md:w-96 w-44 h-auto cursor-pointer rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center"
                     src={userImage}
                     onError={(e) => console.error('Error loading image:', e)}
                     onClick={handleOpenImage}
+                    title="Click to see full"
                   />
                 </div>
                 <PersonalInfo selectedTransaction={selectedTransaction} />
