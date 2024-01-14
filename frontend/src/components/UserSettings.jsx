@@ -39,30 +39,37 @@ const UserSettings =()=>{
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-
+  
     if (!file) {
       setSelectedFile(null);
-      setError('Please select a file.');
+      window.alert('Please select a file.');
       return;
     }
-
+  
+    // Check if the file size exceeds 3MB
+    if (file.size > 3 * 1024 * 1024) {
+      setSelectedFile(null);
+      window.alert('File size exceeds the 3MB limit. Please select a smaller file.');
+      return;
+    }
+  
     const allowedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
     if (!allowedFormats.includes(file.type)) {
       setSelectedFile(null);
-      setError('Please select a valid image file (JPEG or PNG).');
+      window.alert('Please select a valid image file (JPEG or PNG).');
       return;
     }
-
+  
     // setUserImage(null);
     setSelectedFile(file);
-
+  
     const reader = new FileReader();
     reader.onload = () => {
       setPreSelectedFile(reader.result);
     };
     reader.readAsDataURL(file);
-   
   };
+  
 
   // Apply for Verification Modal
   const [isModalOpen, setIsModalOpen] = useState(false);

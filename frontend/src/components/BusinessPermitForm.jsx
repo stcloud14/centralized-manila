@@ -118,8 +118,8 @@ const BusinessPermitForm =()=>{
 
   const handleFileSelect = (file, target) => {
 
-    if (file.size > 3 * 1024 * 1024) {
-      window.alert('File size exceeds the 3MB limit. Please select a smaller file.');
+    if (file.size > 2 * 1024 * 1024) {
+      window.alert('File size exceeds the 2MB limit. Please select a smaller file.');
       return;
     }
 
@@ -1029,10 +1029,10 @@ const BusinessPermitForm =()=>{
                     {selectedFiles.map((fileArray) => {
                       if (fileArray.fieldName === 'bus_tax_incentives') {
                         const file = fileArray.value;
-                        if (file && file.size > 3 * 1024 * 1024) {
+                        if (file && file.size > 2 * 1024 * 1024) {
                           return (
                             <div key={file.name}>
-                              File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                              File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                             </div>
                           );
                         }
@@ -1246,10 +1246,10 @@ const BusinessPermitForm =()=>{
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_dti_reg') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1269,12 +1269,12 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                          if (fileArray.fieldName === 'bus_rptax_bldg') {
+                          if (fileArray.fieldName === 'bus_rptax_decland') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1285,7 +1285,7 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decbldg'} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decland'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1296,10 +1296,10 @@ const BusinessPermitForm =()=>{
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_sec_paid') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1321,10 +1321,10 @@ const BusinessPermitForm =()=>{
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_sec_articles') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1346,10 +1346,10 @@ const BusinessPermitForm =()=>{
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_nga') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1371,10 +1371,10 @@ const BusinessPermitForm =()=>{
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_sec_front') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1394,12 +1394,12 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
-                          if (fileArray.fieldName === 'bus_rptax_decland') {
+                          if (fileArray.fieldName === 'bus_rptax_decbldg') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1410,7 +1410,7 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
-                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decland'} />
+                          <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decbldg'} />
                         </td>
                       </tr>
                       <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
@@ -1421,10 +1421,10 @@ const BusinessPermitForm =()=>{
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_fire') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1446,10 +1446,10 @@ const BusinessPermitForm =()=>{
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_page2') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1471,10 +1471,10 @@ const BusinessPermitForm =()=>{
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_page3') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1496,10 +1496,10 @@ const BusinessPermitForm =()=>{
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_page4') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
@@ -1521,10 +1521,10 @@ const BusinessPermitForm =()=>{
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_page5') {
                             const file = fileArray.value;
-                            if (file && file.size > 3 * 1024 * 1024) {
+                            if (file && file.size > 2 * 1024 * 1024) {
                               return (
                                 <div key={file.name}>
-                                  File "{getShortName(file.name, 25)}" exceeds the 3MB limit.
+                                  File "{getShortName(file.name, 25)}" exceeds the 2MB limit.
                                 </div>
                               );
                             }
