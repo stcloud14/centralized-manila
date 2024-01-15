@@ -12,9 +12,11 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   
   const [userImage, setUserImage] = useState(null);
   const [editMode, setEditMode] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const [userInfo, setUserInfo] = useState(() => {
     // Initialize userInfo with the values of selectedTransaction
@@ -53,6 +55,25 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
         return {
           ...prevData,
           [name]: value,
+        };
+      } 
+
+      if (name === 'region_id') {
+    
+        return {
+          ...prevData,
+          [name]: value,
+          prov_id: '',
+          city_id: '',
+        };
+      } 
+
+      if (name === 'prov_id') {
+    
+        return {
+          ...prevData,
+          [name]: value,
+          city_id: '',
         };
       } 
 
@@ -157,6 +178,8 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   
       if (response.status === 200) {
         setIsSuccess(true);
+        setEditMode(false);
+        setUserInfo('');
   
         setTimeout(() => {
           setIsSuccess(false);
@@ -171,8 +194,42 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   };
 
 
+  const handleDeleteUser = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await axios.delete(`http://localhost:8800/adminur/update/${selectedTransaction.user_id}`);
+  
+      if (response.status === 200) {
+        setIsDeleted(true);
+        setEditMode(false);
+        setUserInfo('');
+  
+        setTimeout(() => {
+          setIsDeleted(false);
+          handleClose();
+        }, 1500);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
+
+
   const handleEditClick = () => {
     setEditMode(!editMode);
+    setUserInfo('');
+  };
+
+  const handleCLoseClick = () => {
+    handleClose();
+    setEditMode(false);
+  };
+
+  const handleDeleteClick = () => {
+    setIsOpenDelete(!isOpenDelete);
   };
 
 
@@ -191,7 +248,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
           <div className="inline-block align-bottom bg-white dark:bg-[#333333] rounded-sm text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl max-h-screen relative">
             {/* Menu Bar */}
             <div className="bg-slate-200 dark:bg-[#212121] pt-1.5 pb-1 items-center">
-              <button onClick={handleClose} type="button" className="float-right text-slate-500 text-xs md:text-sm"
+              <button onClick={handleCLoseClick} type="button" className="float-right text-slate-500 text-xs md:text-sm"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="md:w-5 md:h-5 w-4 h-4 mr-1">
                   <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
@@ -233,7 +290,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                   <div className="flex items-center text-xs">
                     <button
                       className="text-white font-medium dark:text-white dark:bg-red-500 dark:hover:bg-red-600 flex items-center bg-red-500 hover:bg-red-600 hover:border-red-600 rounded-sm px-2 py-1.5"
-                      // onClick={handleOpenModal3}
+                      onClick={handleDeleteClick}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -243,9 +300,15 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                   </div>
                 </div>
 
-                {isSuccess && (
+                  {isSuccess && (
                     <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
                       Changes saved successfully!
+                    </div>
+                  )} 
+
+                  {isDeleted && (
+                    <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                      User deleted successfully!
                     </div>
                   )} 
 
@@ -289,7 +352,9 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
           </div>
         </div>
         <AdminUserDeleteModal
-        
+        isOpenDelete={isOpenDelete}
+        handleDeleteClick={handleDeleteClick}
+        handleDeleteUser={handleDeleteUser}
         />
       </div>
       
