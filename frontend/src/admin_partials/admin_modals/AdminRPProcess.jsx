@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
-const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
+const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType, onProceed, onMoveToProcessing }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
 
   const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
 
@@ -98,6 +98,13 @@ const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType })
                       >
                           <p>DDHDHDHDHD</p>
                       </button>
+                      <button
+                        onClick={handleExpiredClick}
+                        type="button"
+                        className="text-white text-xs md:text-sm bg-yellow-500 border border-yellow-500 hover:bg-yellow-600 hover:border-yellow-600 font-normal rounded-sm px-5 py-2 text-center dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:hover:border-emerald-700 flex items-center"
+                      >
+                        <p>&nbsp;Expired</p>
+                      </button>
                   </div>
               </div>
 
@@ -108,4 +115,4 @@ const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType })
   );
 };
 
-export default AdminRPView;
+export default AdminRPProcess;
