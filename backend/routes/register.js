@@ -6,18 +6,17 @@ import bcrypt from 'bcrypt';
 const router = Router();
 
 router.post('/check-existence', async (req, res) => {
-    const { f_name, l_name, mobile_no } = req.body;
+    const { mobile_no } = req.body;
   
     const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
-    const primaryKey = generatePrimaryKey(f_name, l_name, plainMobileNo);
   
-    const query = "SELECT * FROM user_reg WHERE user_id = ?";
-    const values = [primaryKey];
+    const query = "SELECT * FROM user_auth WHERE mobile_no = ?";
+    const values = [plainMobileNo];
   
     try {
       const result = await queryDatabase(query, values);
       if (result.length > 0) {
-        res.json({ exists: true, message: "User already exists. Proceed to login." });
+        res.json({ exists: true, message: "Mobile number already exists. Please use another or proceed to login." });
       } else {
         res.json({ exists: false, message: "User does not exist. Proceed to register." });
       }
