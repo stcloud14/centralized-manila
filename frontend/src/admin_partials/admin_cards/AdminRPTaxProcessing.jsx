@@ -211,13 +211,13 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
            ) ))}
 
            {isViewModalOpen && selectedTransaction && (
-  <AdminRPView
-    selectedTransaction={selectedTransaction}
-    isOpen={isViewModalOpen}
-    handleClose={handleViewModalClose}
-    setTransType={setTransType}
-  />
-)}
+          <AdminRPView
+            selectedTransaction={selectedTransaction}
+            isOpen={isViewModalOpen}
+            handleClose={handleViewModalClose}
+            setTransType={setTransType}
+          />
+        )}
          {isRejectModalOpen && selectedTransaction && (
         <AdminRPReject
           transactions={transactions}

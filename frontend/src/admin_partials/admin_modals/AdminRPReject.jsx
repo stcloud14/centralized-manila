@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment/moment.js';
 
 
@@ -6,14 +6,19 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
   const { transaction_id, status_type, date_processed } = selectedTransaction; 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
+
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+
   const handleRejectClick = async () => {
+    setIsConfirmOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsConfirmOpen(false);
+  };
+
+  const handleConfirmReject = async () => {
     try {
-      if (!selectedTransaction || !selectedTransaction.transaction_id) {
-        console.error("Transaction ID is not defined.");
-        alert("Error updating transaction status. Please try again later.");
-        return;
-      }
-  
       const body = {
         new_status: 'Rejected',
       };
@@ -35,7 +40,8 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
         );
   
         setTransactions(updatedTransactions);
-        handleClose4(); // Close the modal
+        handleClose4(); // Close the first modal
+        handleCloseModal(); // Close the confirmation modal
       } else {
         console.error('Failed to update transaction status');
       }
@@ -43,7 +49,6 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
       console.error('Error updating transaction status', error);
     }
   };
-
   return (
     isOpen4 && (
       <div className="fixed z-50 inset-0 overflow-y-auto">
@@ -144,8 +149,46 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
                 </div>
 
               </div>
+              {isConfirmOpen && (
+          <div className="fixed z-50 inset-0 overflow-y-auto">
+            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+              </div>
+              <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                &#8203;
+              </span>
+              <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="mx-auto mt-4">
+                    <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                    Are you sure to REJECT this card? This is IRREVERSIBLE.
+                    </span>
+                  </div>
+                </div>
+                <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                  <button
+                    onClick={handleCloseModal}
+                    type="button"
+                    className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                  >
+                    <p>Cancel</p>
+                  </button>
+                  <button
+                    onClick={handleConfirmReject}
+                    type="button"
+                    className="text-white text-xs md:text-sm bg-red-500 border border-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    <p>Reject</p>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+        )} 
+      </div>
+    </div>
+           
     )
   );
 };
