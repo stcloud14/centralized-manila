@@ -42,20 +42,14 @@ const router = Router();
 
         if (results.length > 0) {
           hashedUserPass = results[0].user_pass;
-
-          console.log(hashedUserPass)
   
           try {
             const passwordMatch = await bcrypt.compare(userEnteredPassword, hashedUserPass);
   
             if (passwordMatch) {
 
-              console.log('Matched')
-
               return res.status(200).json(results);
             } else {
-
-              console.log('Not matched')
 
               return res.status(401).json({ message: "Authentication failed" });
             }
