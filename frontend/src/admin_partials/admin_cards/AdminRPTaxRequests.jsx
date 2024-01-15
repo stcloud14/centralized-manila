@@ -241,6 +241,9 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
                 selectedTransaction={selectedTransaction}
                 isOpen={isProcessModalOpen}
                 handleClose={() => {
+                  handleCloseModal();
+                  handleExpiredClick(selectedTransaction.transaction_id);
+                  setIsExpiredModalOpen(false);
                   setIsProcessModalOpen(false);
                   // Perform any necessary actions after clicking "Process" on the modal
 
