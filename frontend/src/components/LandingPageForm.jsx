@@ -150,14 +150,6 @@ const LandingPageForm = () => {
         e.preventDefault();
       
         try {
-
-          // const response = await axios.get(`http://localhost:8800/login/${userAuth.mobile_no}/${user_pass}`);
-
-          // if (response.data[0].mobile_no === userAuth.mobile_no && response.data[0].user_pass === userAuth.user_pass) {
-          //   // Authentication successful, set authenticated state to true
-          //   if (isSubmitting) {
-          //     return;
-          //   }
     
           const response = await axios.post(`http://localhost:8800/login/compare-password/${userAuth.mobile_no}/${userAuth.user_pass}`);
       
