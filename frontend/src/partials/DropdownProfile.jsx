@@ -21,8 +21,11 @@ const DropdownProfile = ({ align }) => {
 
   const [defaultImg, setDefaultImg] = useState(defaultImage);
 
-  const [storedImage, setStoredImage] = useState('');
-  const [userImage, setUserImage] = useState('');
+  const [storedImage, setStoredImage] = useState(null);
+  const [userImage, setUserImage] = useState(null);
+
+  console.log(storedImage)
+
 
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
@@ -43,19 +46,26 @@ const DropdownProfile = ({ align }) => {
     },[userPersonal])
 
 
-    useEffect(()=>{
-      const fetchUserImage= async()=>{
-          try{
-              const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
-              setStoredImage(res.data[0].user_image)
-              setIsVerifiedStatus(res.data[0].verification_status)
-  
-          }catch(err){
-              console.log(err)
+    useEffect(() => {
+      const fetchUserImage = async () => {
+        try {
+          const res = await axios.get(`http://localhost:8800/usersettings/${user_id}`);
+          const fetchedUserImage = res.data[0].user_image;
+          const verificationStatus = res.data[0].verification_status;
+    
+          if (fetchedUserImage !== null && fetchedUserImage !== undefined && fetchedUserImage !== '') {
+            setStoredImage(fetchedUserImage);
           }
-      }
-      fetchUserImage()
-    },[])
+    
+          setIsVerifiedStatus(verificationStatus);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+    
+      fetchUserImage();
+    }, []);
+    
   
   
     const checkUserImage = async () => {

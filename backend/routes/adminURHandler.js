@@ -52,12 +52,12 @@ router.get('/', async (req, res) => {
     user_gov_id ug ON ug.user_id = uv.user_id AND ug.user_id IS NOT NULL \
   LEFT JOIN \
     user_image ui ON ui.user_id = uv.user_id AND ui.user_id IS NOT NULL \
-  JOIN \
-    region r ON uc.region_id = r.region_id AND uc.region_id \
-  JOIN \
-    province p ON uc.prov_id = p.prov_id AND uc.prov_id \
-  JOIN \
-    cities c ON uc.city_id = c.city_id AND uc.city_id \
+  LEFT JOIN \
+    region r ON uc.region_id = r.region_id AND uc.region_id IS NOT NULL \
+  LEFT JOIN \
+    province p ON uc.prov_id = p.prov_id AND uc.prov_id IS NOT NULL \
+  LEFT JOIN \
+    cities c ON uc.city_id = c.city_id AND uc.city_id IS NOT NULL \
   WHERE \
     uv.application_status = 'Applying' AND uv.user_valid_id IS NOT NULL \
   ORDER BY up.l_name;";
@@ -78,6 +78,9 @@ router.get('/', async (req, res) => {
     uc.user_email, \
     uc.mobile_no, \
     uc.tel_no, \
+    uc.region_id, \
+    uc.prov_id, \
+    uc.city_id, \
     r.region_name, \
     p.prov_name, \
     c.city_name, \
@@ -182,6 +185,75 @@ router.post('/decline/:user_id', async (req, res) => {
 
 
 
+// router.put('/update/:user_id', async (req, res) => {
+//   const user_id = req.params.user_id;
+
+//   const {
+//     f_name, 
+//     m_name, 
+//     l_name, 
+//     suffix_type, 
+//     sex_type, 
+//     cvl_status, 
+//     res_status, 
+//     czn_status, 
+//     birth_date, 
+//     birth_place, 
+//     user_email, 
+//     mobile_no, 
+//     tel_no, 
+//     region_id, 
+//     prov_id, 
+//     city_id, 
+//     house_floor, 
+//     bldg_name, 
+//     brgy_dist, 
+//     zip_code, 
+//     user_tin_id, 
+//     user_pgb_id, 
+//     user_philh_id, 
+//     user_sss_id, 
+//     user_gsis_id, 
+//     user_natl_id, 
+//   } = req.body;
+
+    
+//     const query = "UPDATE user_personal SET `f_name` = ?, `m_name` = ?, `l_name` = ?, `suffix_type` = ?, `sex_type` = ?, `cvl_status` = ?, `res_status` = ?, `czn_status` = ? WHERE `user_id` = ?";
+//     const values = [f_name, m_name, l_name, suffix_type, sex_type, cvl_status, res_status, czn_status, user_id];
+
+//     const query1 = "UPDATE user_birth SET `birth_date` = ?, `birth_place` = ? WHERE user_id = ?";
+//     const values1 = [birth_date, birth_place, user_id];
+
+//     const query2 = "UPDATE user_contact SET `user_email` = ?, `mobile_no` = ?, `tel_no` = ?, `house_floor` = ?, `bldg_name` = ?, `brgy_dist` = ?, `zip_code` = ?, `region_id` = ?, `prov_id` = ?, `city_id` = ? WHERE user_id = ?";
+//     const values2 = [user_email, mobile_no, tel_no, house_floor, bldg_name, brgy_dist, zip_code, region_id, prov_id, city_id, user_id];
+
+//     const query3 = "UPDATE user_gov_id SET `user_tin_id` = ?, `user_pgb_id` = ?, `user_philh_id` = ?, `user_sss_id` = ?, `user_gsis_id` = ?, `user_natl_id` = ?  WHERE user_id = ?";
+//     const values3 = [user_tin_id, user_pgb_id, user_philh_id, user_sss_id, user_gsis_id, user_natl_id, user_id];
+  
+
+//     try {
+//     const result = await queryDatabase(query, values);
+//     const result1 = await queryDatabase(query1, values1);
+//     const result2 = await queryDatabase(query2, values2);
+//     const result3 = await queryDatabase(query3, values3);
+  
+
+//     res.json({
+//         user_personal: result, 
+//         user_birth: result1, 
+//         user_contact: result2, 
+//         user_gov_id: result3, 
+//     });
+
+//     } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Error executing queries" });
+//     }
+
+// });
+
+
+
 router.put('/update/:user_id', async (req, res) => {
   const user_id = req.params.user_id;
 
@@ -214,40 +286,131 @@ router.put('/update/:user_id', async (req, res) => {
     user_natl_id, 
   } = req.body;
 
-    
-    const query = "UPDATE user_personal SET `f_name` = ?, `m_name` = ?, `l_name` = ?, `suffix_type` = ?, `sex_type` = ?, `cvl_status` = ?, `res_status` = ?, `czn_status` = ? WHERE `user_id` = ?";
-    const values = [f_name, m_name, l_name, suffix_type, sex_type, cvl_status, res_status, czn_status, user_id];
+  const updateQueries = [];
 
-    const query1 = "UPDATE user_birth SET `birth_date` = ?, `birth_place` = ? WHERE user_id = ?";
-    const values1 = [birth_date, birth_place, user_id];
-
-    const query2 = "UPDATE user_contact SET `user_email` = ?, `mobile_no` = ?, `tel_no` = ?, `house_floor` = ?, `bldg_name` = ?, `brgy_dist` = ?, `zip_code` = ?, `region_id` = ?, `prov_id` = ?, `city_id` = ? WHERE user_id = ?";
-    const values2 = [user_email, mobile_no, tel_no, house_floor, bldg_name, brgy_dist, zip_code, region_id, prov_id, city_id, user_id];
-
-    const query3 = "UPDATE user_gov_id SET `user_tin_id` = ?, `user_pgb_id` = ?, `user_philh_id` = ?, `user_sss_id` = ?, `user_gsis_id` = ?, `user_natl_id` = ?  WHERE user_id = ?";
-    const values3 = [user_tin_id, user_pgb_id, user_philh_id, user_sss_id, user_gsis_id, user_natl_id, user_id];
+  if (f_name !== undefined) {
+    updateQueries.push({ query: "UPDATE user_personal SET `f_name` = ? WHERE `user_id` = ?", values: [f_name, user_id] });
+  }
+  
+  if (m_name !== undefined) {
+    updateQueries.push({ query: "UPDATE user_personal SET `m_name` = ? WHERE `user_id` = ?", values: [m_name, user_id] });
+  }
+  
+  if (l_name !== undefined) {
+    updateQueries.push({ query: "UPDATE user_personal SET `l_name` = ? WHERE `user_id` = ?", values: [l_name, user_id] });
+  }
+  
+  if (suffix_type !== undefined) {
+    updateQueries.push({ query: "UPDATE user_personal SET `suffix_type` = ? WHERE `user_id` = ?", values: [suffix_type, user_id] });
+  }
+  
+  if (sex_type !== undefined) {
+    updateQueries.push({ query: "UPDATE user_personal SET `sex_type` = ? WHERE `user_id` = ?", values: [sex_type, user_id] });
+  }
+  
+  if (cvl_status !== undefined) {
+    updateQueries.push({ query: "UPDATE user_personal SET `cvl_status` = ? WHERE `user_id` = ?", values: [cvl_status, user_id] });
+  }
+  
+  if (res_status !== undefined) {
+    updateQueries.push({ query: "UPDATE user_personal SET `res_status` = ? WHERE `user_id` = ?", values: [res_status, user_id] });
+  }
+  
+  if (czn_status !== undefined) {
+    updateQueries.push({ query: "UPDATE user_personal SET `czn_status` = ? WHERE `user_id` = ?", values: [czn_status, user_id] });
+  }
+  
+  if (birth_date !== undefined) {
+    updateQueries.push({ query: "UPDATE user_birth SET `birth_date` = ? WHERE `user_id` = ?", values: [birth_date, user_id] });
+  }
+  
+  if (birth_place !== undefined) {
+    updateQueries.push({ query: "UPDATE user_birth SET `birth_place` = ? WHERE `user_id` = ?", values: [birth_place, user_id] });
+  }
+  
+  if (user_email !== undefined) {
+    updateQueries.push({ query: "UPDATE user_contact SET `user_email` = ? WHERE `user_id` = ?", values: [user_email, user_id] });
+  }
+  
+  if (mobile_no !== undefined) {
+    updateQueries.push({ query: "UPDATE user_contact SET `mobile_no` = ? WHERE `user_id` = ?", values: [mobile_no, user_id] });
+  }
+  
+  if (tel_no !== undefined) {
+    updateQueries.push({ query: "UPDATE user_contact SET `tel_no` = ? WHERE `user_id` = ?", values: [tel_no, user_id] });
+  }
+  
+  if (region_id !== undefined) {
+    updateQueries.push({ query: "UPDATE user_contact SET `region_id` = ? WHERE `user_id` = ?", values: [region_id, user_id] });
+  }
+  
+  if (prov_id !== undefined) {
+    updateQueries.push({ query: "UPDATE user_contact SET `prov_id` = ? WHERE `user_id` = ?", values: [prov_id, user_id] });
+  }
+  
+  if (city_id !== undefined) {
+    updateQueries.push({ query: "UPDATE user_contact SET `city_id` = ? WHERE `user_id` = ?", values: [city_id, user_id] });
+  }
+  
+  if (house_floor !== undefined) {
+    updateQueries.push({ query: "UPDATE user_contact SET `house_floor` = ? WHERE `user_id` = ?", values: [house_floor, user_id] });
+  }
+  
+  if (bldg_name !== undefined) {
+    updateQueries.push({ query: "UPDATE user_contact SET `bldg_name` = ? WHERE `user_id` = ?", values: [bldg_name, user_id] });
+  }
+  
+  if (brgy_dist !== undefined) {
+    updateQueries.push({ query: "UPDATE user_contact SET `brgy_dist` = ? WHERE `user_id` = ?", values: [brgy_dist, user_id] });
+  }
+  
+  if (zip_code !== undefined) {
+    updateQueries.push({ query: "UPDATE user_contact SET `zip_code` = ? WHERE `user_id` = ?", values: [zip_code, user_id] });
+  }
+  
+  if (user_tin_id !== undefined) {
+    updateQueries.push({ query: "UPDATE user_gov_id SET `user_tin_id` = ? WHERE `user_id` = ?", values: [user_tin_id, user_id] });
+  }
+  
+  if (user_pgb_id !== undefined) {
+    updateQueries.push({ query: "UPDATE user_gov_id SET `user_pgb_id` = ? WHERE `user_id` = ?", values: [user_pgb_id, user_id] });
+  }
+  
+  if (user_philh_id !== undefined) {
+    updateQueries.push({ query: "UPDATE user_gov_id SET `user_philh_id` = ? WHERE `user_id` = ?", values: [user_philh_id, user_id] });
+  }
+  
+  if (user_sss_id !== undefined) {
+    updateQueries.push({ query: "UPDATE user_gov_id SET `user_sss_id` = ? WHERE `user_id` = ?", values: [user_sss_id, user_id] });
+  }
+  
+  if (user_gsis_id !== undefined) {
+    updateQueries.push({ query: "UPDATE user_gov_id SET `user_gsis_id` = ? WHERE `user_id` = ?", values: [user_gsis_id, user_id] });
+  }
+  
+  if (user_natl_id !== undefined) {
+    updateQueries.push({ query: "UPDATE user_gov_id SET `user_natl_id` = ? WHERE `user_id` = ?", values: [user_natl_id, user_id] });
+  }
   
 
-    try {
-    const result = await queryDatabase(query, values);
-    const result1 = await queryDatabase(query1, values1);
-    const result2 = await queryDatabase(query2, values2);
-    const result3 = await queryDatabase(query3, values3);
-  
 
-    res.json({
-        user_personal: result, 
-        user_birth: result1, 
-        user_contact: result2, 
-        user_gov_id: result3, 
-    });
+  try {
+    const results = await Promise.all(updateQueries.map(async ({ query, values }) => {
+      return await queryDatabase(query, values);
+    }));
 
-    } catch (err) {
+    res.json(results.reduce((acc, result, index) => {
+      acc[`update_${index + 1}`] = result;
+      return acc;
+    }, {}));
+
+  } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Error executing queries" });
-    }
+  }
 
 });
+
 
 
 

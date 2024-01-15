@@ -1,6 +1,10 @@
 import React from 'react';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/airbnb.css';
+import SexDropdown from '../../partials/profile/SexDropdown';
+import CivilStatusDropdown from '../../partials/profile/CivilStatusDropdown';
+import CitizenshipDropdown from '../../partials/profile/CitizenshipDropdown';
+import ResidencyDropdown from '../../partials/profile/ResidencyDropdown';
 
 const PersonalInfo = ({ selectedTransaction, userInfo, handleChangeData, editMode }) => {
 
@@ -85,7 +89,9 @@ const PersonalInfo = ({ selectedTransaction, userInfo, handleChangeData, editMod
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="sex_type" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Sex</label>
-                      <input value={userInfo.sex_type} onChange={handleChangeData} type="text" name="sex_type" id="sex_type" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                      <select value={userInfo.sex_type} onChange={handleChangeData} defaultValue={0} name="sex_type" id="sex_type" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
+                        <SexDropdown />
+                      </select> 
                     </div>
                     <div className="mt-2 md:px-32 px-12 relative">
                       <label htmlFor="birth_date" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Date of Birth</label>
@@ -142,28 +148,19 @@ const PersonalInfo = ({ selectedTransaction, userInfo, handleChangeData, editMod
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="cvl_status" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Civil Status</label>
                       <select value={userInfo.cvl_status} onChange={handleChangeData} defaultValue={0} name="cvl_status" id="cvl_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
-                        <option value="0">Select Civil Status</option>
-                        <option value="">Option 1</option>
-                        <option value="">Option 2</option>
-                        <option value="">Option 3</option>
+                        <CivilStatusDropdown />
                       </select> 
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="czn_status" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Citizenship</label>
                       <select value={userInfo.czn_status} onChange={handleChangeData} defaultValue={0} name="czn_status" id="czn_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
-                        <option value="0">Select Citizenship</option>
-                        <option value="">Option 1</option>
-                        <option value="">Option 2</option>
-                        <option value="">Option 3</option>
+                        <CitizenshipDropdown />
                       </select> 
                     </div>
                     <div className="mt-2 md:px-32 px-12">
                       <label htmlFor="res_status" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Residency Status</label>
                       <select value={userInfo.res_status} onChange={handleChangeData} defaultValue={0} name="res_status" id="res_status" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6">
-                        <option value="0">Select Residency Status</option>
-                        <option value="">Option 1</option>
-                        <option value="">Option 2</option>
-                        <option value="">Option 3</option>
+                        <ResidencyDropdown />
                       </select> 
                     </div>
                   </form>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminSidebar from '../admin_partials/AdminSidebar';
@@ -26,6 +26,42 @@ const AdminBusinessForm =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
+
+ const [BusinessPermit, setBusinessPermit] = useState([]);
+
+ console.log(BusinessPermit)
+
+ const [processingTransactions, setProcessingTransactions] = useState([]);
+
+ useEffect(() => {
+    const fetchUserTransaction = async () =>{
+      try{
+        const res = await axios.get(`http://localhost:8800/adminrptax/`);
+        setBusinessPermit(res.data.BusinessPermit)
+      } catch (err){
+        console.log(err);
+      }
+      };
+      fetchUserTransaction();
+ }, []);
+
+const [BusinessPermitDetails, setBusinessPermitDetails] = useState(null);
+
+
+
+ const handleProceedForBusinessPermit = (BusinessPermitDetails) => {
+  setBusinessPermitDetails(BusinessPermitDetails)
+ }
+
+const [selectedTransactionId, setSelectedTransactionId] = useState(null);
+
+const handleMoveToProcessing = (transaction) => {
+  setBusinessPermit((prevBusinessPermit) => prevBusinessPermit.filter((t) => t !== transaction));
+  setProcessingTransactions((prevProcessing) => [...prevProcessing, transaction]);
+  setSelectedTransactionId(transaction.transactionId);
+
+}
+
 
   // View Details Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -115,11 +151,16 @@ const AdminBusinessForm =()=>{
           <div className="grid grid-cols-12 gap-4 mx-4 my-4">
             
             <AdminBusinessRequests
+            onProceed ={[handleProceedForBusinessPermit]}
             handleOpenModal={handleOpenModal}
             handleOpenModal2={handleOpenModal2}
             handleOpenModal3={handleOpenModal3}
+            onMoveToProcessing ={handleMoveToProcessing}
             />
             <AdminBusinessProcessing
+            BusinessPermitDetails = {BusinessPermitDetails}
+            processingTransactions = {processingTransactions}
+            selectedTransactionId = {selectedTransactionId}
             handleOpenModal={handleOpenModal}
             handleOpenModal4={handleOpenModal4}
             handleOpenModal5={handleOpenModal5}

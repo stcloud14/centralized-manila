@@ -40,7 +40,7 @@ const AdminUserListForm = () => {
         }
     }
     fetchUserApplications()
-  },[])
+  },[userApplications])
 
 
   const handleRemoveTransaction = (transaction) => {
