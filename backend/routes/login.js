@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import conn2 from './connection.js'
+import bcrypt from 'bcrypt';
 
 const router = Router();
 
-router.get("/:mobile_no/:user_pass", (req, res) => {
+  router.get("/:mobile_no/:user_pass", (req, res) => {
     
     const mobile_no = req.params.mobile_no;
     const user_pass = req.params.user_pass;
@@ -20,6 +21,58 @@ router.get("/:mobile_no/:user_pass", (req, res) => {
       }
       return res.status(200).json(results)
     });
+  });
+
+
+  router.post('/compare-password/:mobile_no/:user_pass', async (req, res) => {
+    try {
+      const mobile_no = req.params.mobile_no;
+      const userEnteredPassword = req.params.user_pass;
+
+      console.log(userEnteredPassword)
+  
+      let hashedUserPass = '';
+  
+      const sql = "SELECT * FROM user_auth WHERE mobile_no = ?";
+      conn2.query(sql, [mobile_no], async (err, results) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "Error occurred while authenticating." });
+        }
+
+        if (results.length > 0) {
+          hashedUserPass = results[0].user_pass;
+
+          console.log(hashedUserPass)
+  
+          try {
+            const passwordMatch = await bcrypt.compare(userEnteredPassword, hashedUserPass);
+  
+            if (passwordMatch) {
+
+              console.log('Matched')
+
+              return res.status(200).json(results);
+            } else {
+
+              console.log('Not matched')
+
+              return res.status(401).json({ message: "Authentication failed" });
+            }
+          } catch (bcryptError) {
+            console.error(bcryptError);
+            return res.status(500).json({ message: "Error comparing passwords." });
+          }
+        } else {
+
+          return res.status(404).json({ message: "User not found" });
+        }
+      });
+
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error." });
+    }
   });
 
 

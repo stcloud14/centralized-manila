@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import conn2 from './connection.js';
 import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcrypt';
 
 const router = Router();
 
@@ -55,8 +56,10 @@ router.post('/check-existence', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const mobile_no = req.body.mobile_no;
+    const user_pass = String(req.body.user_pass);
+
     const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
-    const transID = generateTransactionID();
+    const saltRounds = 10;
 
     const verification_status = 'Unverified';
     const application_status = 'New';
@@ -67,7 +70,8 @@ router.post('/', async (req, res) => {
     const values = [req.body.f_name, req.body.l_name, plainMobileNo, primaryKey];
 
     const query1 = "INSERT INTO user_auth (`mobile_no`, `user_pass`, `user_id`) VALUES (?, ?, ?)";
-    const values1 = [plainMobileNo, req.body.user_pass, primaryKey];
+    const hashedPassword = await bcrypt.hash(user_pass, saltRounds);
+    const values1 = [plainMobileNo, hashedPassword, primaryKey];
 
     const query2 = "INSERT INTO user_personal (`user_id`, `f_name`, `l_name`) VALUES ( ?, ?, ?)";
     const values2 = [primaryKey, req.body.f_name, req.body.l_name];
