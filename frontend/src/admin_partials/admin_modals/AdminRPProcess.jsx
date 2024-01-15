@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
 const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType, onProceed, onMoveToProcessing }) => {
-  const [isProcessModalOpen, setIsProcessModalOpen] = useState(isOpen); // Initialize the state here
+  const [isProcessModalOpen, setIsProcessModalOpen] = useState(isOpen);
 
+  useEffect(() => {
+    // Update the state when the modal is open or closed
+    setIsProcessModalOpen(isOpen);
+  }, [isOpen]);
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
-
   const handleProcessClick = async () => {
     try {
       if (onMoveToProcessing) {
@@ -23,11 +26,15 @@ const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType, o
         onProceed(selectedTransaction);
       }
 
-      handleClose();  
-      setIsProcessModalOpen(false);  
+      handleClose();
     } catch (error) {
       console.error('Error processing transaction', error);
     }
+  };
+
+  const handleCloseModal = () => {
+    // Close the modal and update the state
+    handleClose();
   };
 
   return (
@@ -112,7 +119,7 @@ const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType, o
                   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
                   <div className="flex items-center space-x-5 mt-auto">
                       <button
-                          onClick={handleClose}
+                          onClick={handleCloseModal}
                           type="button"
                           className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 font-normal rounded-sm dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500"
                       >
