@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment/moment.js';
 
+
 const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isOpen4, handleClose4, transType }) => {
   const { transaction_id, status_type, date_processed } = selectedTransaction; 
   const date = moment(date_processed).format('MMMM D, YYYY');
@@ -14,10 +15,10 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
       }
   
       const body = {
-        new_status: 'Reject',
+        new_status: 'Rejected',
       };
   
-      const response = await fetch(`http://localhost:8800/adminrptax/updateReject/`, {
+      const response = await fetch(`http://localhost:8800/adminrptax/updateReject/${selectedTransaction.transaction_id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
         console.log('Transaction status Rejected');
         const updatedTransactions = transactions.map((transaction) =>
           transaction.transaction_id === selectedTransaction.transaction_id
-            ? { ...transaction, status_type: 'Reject' }
+            ? { ...transaction, status_type: 'Rejected' }
             : transaction
         );
   

@@ -74,10 +74,10 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
     );
   
     console.log('Selected transaction:', selected);
-    if (selected && selected.status_type.toLowerCase() !== 'reject') {
+    if (selected && selected.status_type.toLowerCase() !== 'rejected') {
       const updatedSelectedTransaction = {
         ...selected,
-        status_type: 'Reject',
+        status_type: 'Rejected',
       };
       setTransactions((prevTransactions) =>
         prevTransactions.map((transaction) =>
