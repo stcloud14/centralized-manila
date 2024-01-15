@@ -133,5 +133,7 @@ const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType, o
     )
   );
 };
+  
 
 export default AdminRPProcess;
+  
