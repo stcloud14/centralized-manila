@@ -27,7 +27,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
     setTransType(type);
     setSelectedTransaction(transaction);
 
-    if (type === 'Real Property Tax Payment') {
+    if (type === 'Real Property Tax Payment'|| 'Real Property Tax Clearance') {
       setIsProcessModalOpen(true); // Open the process modal
     } else {
       setIsViewModalOpen(true); // Open the view modal for other types

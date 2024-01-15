@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
 const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType, onProceed, onMoveToProcessing }) => {
-  const [isProcessModalOpen, setIsProcessModalOpen] = useState(isOpen); 
+  const [isProcessModalOpen, setIsProcessModalOpen] = useState(isOpen); // Initialize the state here
+
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
   const date = moment(date_processed).format('MMMM D, YYYY');
@@ -133,7 +134,5 @@ const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType, o
     )
   );
 };
-  
 
 export default AdminRPProcess;
-  
