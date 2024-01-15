@@ -1,16 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
-const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType, onProceed, onMoveToProcessing }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
+const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType, onProceed, onMoveToProcessing }) => {
+  const [isProcessModalOpen, setIsProcessModalOpen] = useState(isOpen); 
+  const { transaction_id, status_type, date_processed } = selectedTransaction;
 
-  const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
-
-  const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
+  const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
 
+  const handleProcessClick = async () => {
+    try {
+      if (onMoveToProcessing) {
+        onMoveToProcessing(selectedTransaction);
+      }
+
+      if (Array.isArray(onProceed)) {
+        onProceed.forEach((proceedFunction) => {
+          proceedFunction(selectedTransaction);
+        });
+      } else if (onProceed) {
+        onProceed(selectedTransaction);
+      }
+
+      handleClose();  
+      setIsProcessModalOpen(false);  
+    } catch (error) {
+      console.error('Error processing transaction', error);
+    }
+  };
 
   return (
-    // MAY CONDITION NA MAGDIDISPLAY LANG KUNG ANG ISOPEN AY TRUE, ITO RIN YUNG ISMODALOPEN, IBA LANG NAME
     isOpen && (
       <div className="fixed z-50 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
@@ -96,14 +115,14 @@ const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType, o
                           type="button"
                           className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 font-normal rounded-sm dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500"
                       >
-                          <p>DDHDHDHDHD</p>
+                          <p>Close</p>
                       </button>
                       <button
-                        onClick={handleExpiredClick}
+                        onClick={handleProcessClick}
                         type="button"
-                        className="text-white text-xs md:text-sm bg-yellow-500 border border-yellow-500 hover:bg-yellow-600 hover:border-yellow-600 font-normal rounded-sm px-5 py-2 text-center dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:hover:border-emerald-700 flex items-center"
+                        className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 font-normal rounded-sm px-5 py-2 text-center dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:hover:border-emerald-700 flex items-center"
                       >
-                        <p>&nbsp;Expired</p>
+                        <p>&nbsp;Process</p>
                       </button>
                   </div>
               </div>

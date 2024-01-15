@@ -9,13 +9,13 @@ import AdminRPExpired from '../admin_modals/AdminRPExpired';
 const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProcessing }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isProcessModalOpen, setIsProcessModalOpen] = useState(false); // Initialize the state here
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [transType, setTransType] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [shouldOpenViewModal, setShouldOpenViewModal] = useState(true);
-  const [transactions, setTransactions] = useState([]); // Add this line to define the state
+  const [transactions, setTransactions] = useState([]);
   const [isExpiredModalOpen, setIsExpiredModalOpen] = useState(false);
-
 
   const date1 = moment(taxPayment.date_processed).format('MMMM D, YYYY');
   const time1 = moment(taxPayment.date_processed).format('h:mm A');
@@ -25,24 +25,31 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
 
   const handleOpenModal = (transaction, type) => {
     setTransType(type);
-    setIsModalOpen(true);
     setSelectedTransaction(transaction);
 
-    if (onMoveToProcessing) {
-      onMoveToProcessing(transaction);
+    if (type === 'Real Property Tax Payment') {
+      setIsProcessModalOpen(true); // Open the process modal
+    } else {
+      setIsViewModalOpen(true); // Open the view modal for other types
     }
-
-    if (Array.isArray(onProceed)) {
-      onProceed.forEach((proceedFunction) => {
-        proceedFunction(transaction);
-      });
-    } else if (onProceed) {
-      onProceed(transaction);
-    }
-
     // Set shouldOpenViewModal to false when "Process" button is clicked
     setShouldOpenViewModal(false);
   };
+
+  const handleCloseProcessModal = () => {
+    setIsProcessModalOpen(false);
+  };
+
+  const handleProcessClick = (transaction) => {
+    try {
+      handleCloseModal();
+    } catch (error) {
+      console.error('Error processing transaction', error);
+    }
+    setIsProcessModalOpen(false);  // Close the process modal
+  };
+  
+
 
   const handleOpenViewModal = (transaction, type) => {
     setTransType(type);
@@ -86,8 +93,6 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
       setIsExpiredModalOpen(false);
     }
   };
-  
-  
 
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
@@ -207,20 +212,51 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
             DALAWA YUNG CONDITION, DAPAT TRUE ANG ISMODALOPEN, AND DAPAT MAY LAMAN ANG SELECTEDTRANSACTION (WHICH IS INEXPLAIN KO SA LINE 23)
             DAPAT RIN IPASA DITO YUNG MGA VALUES PARA MAACCESS SA MODAL, YUNG SELECTEDTRANSACTION, YUNG STATE NG MODAL KUNG OPEN OR CLOSE,
             FUNCTION PARA MACLOSE ANG MODAL, AND YUNG TRANS TYPE NA VALUE NG TRANSTYPE */}
-            {isViewModalOpen && selectedTransaction && (
-              <AdminRPView selectedTransaction={selectedTransaction} isOpen={isViewModalOpen} handleClose={handleCloseModal} transType={transType} />
+            {shouldOpenViewModal && isViewModalOpen && selectedTransaction && (
+              <AdminRPView
+                selectedTransaction={selectedTransaction}
+                isOpen={isViewModalOpen}
+                handleClose={handleCloseModal}
+                transType={transType}
+              />
             )}
-             {isExpiredModalOpen && selectedTransaction && (
-  <AdminRPExpired
-    selectedTransaction={selectedTransaction}
-    isOpen={isExpiredModalOpen}  // Corrected prop name
-    handleClose={() => {
-      handleCloseModal();
-      handleExpiredClick(selectedTransaction.transaction_id);
-      setIsExpiredModalOpen(false);
-    }}
-                        />
-              )}
+
+            {isExpiredModalOpen && selectedTransaction && (
+              <AdminRPExpired
+                selectedTransaction={selectedTransaction}
+                isOpen={isExpiredModalOpen}  // Corrected prop name
+                handleClose={() => {
+                  handleCloseModal();
+                  handleExpiredClick(selectedTransaction.transaction_id);
+                  setIsExpiredModalOpen(false);
+                }}
+              />
+            )}
+
+            {isProcessModalOpen && selectedTransaction && (
+              <AdminRPProcess
+                selectedTransaction={selectedTransaction}
+                isOpen={isProcessModalOpen}
+                handleClose={() => {
+                  setIsProcessModalOpen(false);
+                  // Perform any necessary actions after clicking "Process" on the modal
+
+                  // Call onProceed and onMoveToProcessing here if needed
+                  if (onMoveToProcessing) {
+                    onMoveToProcessing(selectedTransaction);
+                  }
+
+                  if (Array.isArray(onProceed)) {
+                    onProceed.forEach((proceedFunction) => {
+                      proceedFunction(selectedTransaction);
+                    });
+                  } else if (onProceed) {
+                    onProceed(selectedTransaction);
+                  }
+                }}
+              />
+            )}
+
             </div>
           </div>
         </div>
