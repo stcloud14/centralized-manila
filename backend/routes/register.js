@@ -5,30 +5,30 @@ import { v4 as uuidv4 } from 'uuid';
 const router = Router();
 
 
-router.get("/", async (req, res) => {
-    const query = "SELECT * FROM user_reg";
-    const query1 = "SELECT * FROM user_auth";
-    const query2 = "SELECT * FROM user_personal";
-    const query3 = "SELECT * FROM user_contact";
-    const query4 = "SELECT * FROM user_gov_id";
-    const query5 = "SELECT * FROM birth_info";
-    const query6 = "SELECT * FROM user_verification";
+// router.get("/", async (req, res) => {
+//     const query = "SELECT * FROM user_reg";
+//     const query1 = "SELECT * FROM user_auth";
+//     const query2 = "SELECT * FROM user_personal";
+//     const query3 = "SELECT * FROM user_contact";
+//     const query4 = "SELECT * FROM user_gov_id";
+//     const query5 = "SELECT * FROM birth_info";
+//     const query6 = "SELECT * FROM user_verification";
 
-    try {
-    const result = await queryDatabase(query);
-    const result1 = await queryDatabase(query1);
-    const result2 = await queryDatabase(query2);
-    const result3 = await queryDatabase(query3);
-    const result4 = await queryDatabase(query4);
-    const result5 = await queryDatabase(query5);
-    const result6 = await queryDatabase(query6);
+//     try {
+//     const result = await queryDatabase(query);
+//     const result1 = await queryDatabase(query1);
+//     const result2 = await queryDatabase(query2);
+//     const result3 = await queryDatabase(query3);
+//     const result4 = await queryDatabase(query4);
+//     const result5 = await queryDatabase(query5);
+//     const result6 = await queryDatabase(query6);
     
-    res.json({ user_reg: result, user_auth: result1, user_personal: result2, user_contact: result3, user_gov_id: result4, birth_info: result5, user_verification: result6 });
-    } catch (err) {
-    console.error(err);
-    res.status(500).send('Error retrieving data');
-    }
-});
+//     res.json({ user_reg: result, user_auth: result1, user_personal: result2, user_contact: result3, user_gov_id: result4, birth_info: result5, user_verification: result6 });
+//     } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Error retrieving data');
+//     }
+// });
 
 router.post('/check-existence', async (req, res) => {
     const { f_name, l_name, mobile_no } = req.body;
@@ -78,11 +78,15 @@ router.post('/', async (req, res) => {
     const query4 = "INSERT INTO user_gov_id (`user_id`) VALUES (?)";
     const values4 = [primaryKey];
 
-    const query5 = "INSERT INTO birth_info (`transaction_id`, `user_id`) VALUES (?, ?)";
-    const values5 = [transID, primaryKey];
+    const query5 = "INSERT INTO user_birth (`user_id`) VALUES (?)";
+    const values5 = [primaryKey];
 
-    const query6 = "INSERT INTO user_verification (`user_id`, `verification_status`, `application_status`) VALUES (?, ?)";
-    const values6 = [primaryKey, verification_status, application_status];
+    const query6 = "INSERT INTO user_image (`user_id`) VALUES (?)";
+    const values6 = [primaryKey];
+
+    const query7 = "INSERT INTO user_verification (`user_id`, `verification_status`, `application_status`) VALUES (?, ?, ?)";
+    const values7 = [primaryKey, verification_status, application_status];
+
 
 
     try {
@@ -93,6 +97,7 @@ router.post('/', async (req, res) => {
     const result4 = await queryDatabase(query4, values4);
     const result5 = await queryDatabase(query5, values5);
     const result6 = await queryDatabase(query6, values6);
+    const result7 = await queryDatabase(query7, values7);
 
 
     res.json({
@@ -102,8 +107,9 @@ router.post('/', async (req, res) => {
         user_personal_result: result2,
         user_contact_result: result3,
         user_gov_id_result: result4,
-        birth_info_result: result5,
-        user_verification_result: result6,
+        user_birth_result: result5,
+        user_image_result: result6,
+        user_verification_result: result7,
     });
     } catch (err) {
     console.error(err);
