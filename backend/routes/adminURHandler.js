@@ -52,12 +52,12 @@ router.get('/', async (req, res) => {
     user_gov_id ug ON ug.user_id = uv.user_id AND ug.user_id IS NOT NULL \
   LEFT JOIN \
     user_image ui ON ui.user_id = uv.user_id AND ui.user_id IS NOT NULL \
-  JOIN \
-    region r ON uc.region_id = r.region_id AND uc.region_id \
-  JOIN \
-    province p ON uc.prov_id = p.prov_id AND uc.prov_id \
-  JOIN \
-    cities c ON uc.city_id = c.city_id AND uc.city_id \
+  LEFT JOIN \
+    region r ON uc.region_id = r.region_id AND uc.region_id IS NOT NULL \
+  LEFT JOIN \
+    province p ON uc.prov_id = p.prov_id AND uc.prov_id IS NOT NULL \
+  LEFT JOIN \
+    cities c ON uc.city_id = c.city_id AND uc.city_id IS NOT NULL \
   WHERE \
     uv.application_status = 'Applying' AND uv.user_valid_id IS NOT NULL \
   ORDER BY up.l_name;";
