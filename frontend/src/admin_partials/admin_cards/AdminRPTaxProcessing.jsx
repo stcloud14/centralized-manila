@@ -7,8 +7,10 @@ import AdminRPView from '../admin_modals/AdminRPView';
 const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [transactions, setTransactions] = useState(processingTransactions);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   const handleOpenRejectModal = (transaction, type) => {
     setTransType(type);
@@ -25,26 +27,58 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
   const handleCloseModals = () => {
     setIsRejectModalOpen(false);
     setIsDoneModalOpen(false);
+    setIsViewModalOpen(false);
     setSelectedTransaction(null);
   };
 
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const handleOpenViewModal = (transaction, type) => {
     setTransType(type);
     setSelectedTransaction(transaction);
     setIsViewModalOpen(true);
   };
+
   const handleViewModalClose = () => {
     setIsViewModalOpen(false);
     setSelectedTransaction(null);
   };
+
+  const handleDoneClick = (updatedTransactionId) => {
+    // Find the selected transaction
+    const selected = uniqueTransactions.find(
+      (transaction) => transaction.transaction_id === updatedTransactionId
+    );
+    // Check if the status is not already 'Complete'
+    if (selected && selected.status_type.toLowerCase() !== 'complete') {
+      // Update the status of the selected transaction to 'Complete'
+      const updatedSelectedTransaction = {
+        ...selected,
+        status_type: 'Complete', // or 'complete' depending on your data
+      };
+      // Update the state with the updated status
+      setTransactions((prevTransactions) =>
+        prevTransactions.map((transaction) =>
+          transaction.transaction_id === updatedTransactionId
+            ? updatedSelectedTransaction
+            : transaction
+        )
+      );
+      // Close the modal
+      handleCloseModals();
+    }
+  };
+  
+  const handleRejectClick = () => {
+   
+    handleCloseModals(); // Close the modal after handling reject
+  };
+
+  //ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
     const query = searchQuery.toUpperCase();
     return transactionId.includes(query);
   };
-  
 
   function removeDuplicatesByKey(array, key) {
     const uniqueObjects = Array.from(new Map(array.map((item) => [item[key], item])).values());
@@ -52,6 +86,7 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
   }
 
   const uniqueTransactions = removeDuplicatesByKey(processingTransactions, 'transaction_id');
+
 
       return (
         
@@ -164,26 +199,35 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
     setTransType={setTransType}
   />
 )}
-           {isRejectModalOpen && selectedTransaction && (
+         {isRejectModalOpen && selectedTransaction && (
         <AdminRPReject
+          transactions={transactions}
           selectedTransaction={selectedTransaction}
-          isOpen={isRejectModalOpen}
-          handleClose={handleCloseModals}
+          isOpen4={isRejectModalOpen}
+          setTransactions={setTransactions}
+          handleClose4={() => {
+            handleCloseModals();
+            handleRejectClick(selectedTransaction.transaction_id);
+          }}
           setTransType={setTransType}
-          handleReject={handleOpenRejectModal}
         />
       )}
+      
 
       {isDoneModalOpen && selectedTransaction && (
-        <AdminRPDone
-          selectedTransaction={selectedTransaction}
-          isOpen5={isDoneModalOpen}
-          handleClose5={handleCloseModals}
-          setTransType={setTransType}
-          handleDone={handleOpenDoneModal}
-        />
+       <AdminRPDone
+       transactions={transactions}
+       setTransactions={setTransactions}
+       selectedTransaction={selectedTransaction}
+       isOpen5={isDoneModalOpen}
+       handleClose5={() => {
+         handleCloseModals();
+         handleDoneClick(selectedTransaction.transaction_id);
+       }}
+       setTransType={setTransType}  // Ensure setTransType is passed
+     />
       )}
-          </div>
+                </div>
         </div>
       </div>
     </>

@@ -12,6 +12,8 @@ const getStatusColors = (statusType) => {
       return { bgColor: 'bg-red-200', textColor: 'text-red-800'};
     case 'Expired':
       return { bgColor: 'bg-blue-200', textColor: 'text-blue-800'};
+    case 'Complete':
+      return { bgColor: 'bg-green-200', textColor: 'text-green-800' };
     default:
       return { bgColor: 'bg-gray-200', textColor: 'text-black'};
   }

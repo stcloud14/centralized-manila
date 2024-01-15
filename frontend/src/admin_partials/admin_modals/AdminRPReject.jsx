@@ -2,15 +2,52 @@ import React from 'react';
 import moment from 'moment/moment.js';
 
 
-const AdminRPReject = ({ isOpen, handleClose, selectedTransaction, transType }) => {
-  
-  const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
-
-  const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
+const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isOpen4, handleClose4, transType }) => {
+  const { transaction_id, status_type, date_processed } = selectedTransaction; 
+  const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
+  const handleRejectClick = async () => {
+    try {
+      if (!selectedTransaction || !selectedTransaction.transaction_id) {
+        console.error("Transaction ID is not defined.");
+        alert("Error updating transaction status. Please try again later.");
+        return;
+      }
+  
+      const body = {
+        new_status: 'Reject',
+      };
+  
+      const response = await fetch(`http://localhost:8800/adminrptax/updateReject/${selectedTransaction.transaction_id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (response.ok) {
+        console.log('Transaction status Rejected');
+        // Assuming you have a function to update the status in the local state
+        // You may need to replace this with your actual logic
+        const updatedTransactions = transactions.map((transaction) =>
+          transaction.transaction_id === selectedTransaction.transaction_id
+            ? { ...transaction, status_type: 'Reject' }
+            : transaction
+        );
+  
+        setTransactions(updatedTransactions);
+        handleClose5(); // Close the modal
+      } else {
+        console.error('Failed to update transaction status');
+      }
+    } catch (error) {
+      console.error('Error updating transaction status', error);
+    }
+  };
 
   return (
-    isOpen && (
+    isOpen4 && (
       <div className="fixed z-50 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
               <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -91,7 +128,7 @@ const AdminRPReject = ({ isOpen, handleClose, selectedTransaction, transType }) 
                   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
                   <div className="flex items-center space-x-5 mt-auto">
                       <button
-                          onClick={handleClose}
+                          onClick={handleClose4}
                           type="button"
                           className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 font-normal rounded-sm dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500"
                       >
@@ -99,7 +136,7 @@ const AdminRPReject = ({ isOpen, handleClose, selectedTransaction, transType }) 
                       </button>
   
                       <button
-                        onClick={handleClose}
+                        onClick={handleRejectClick}
                         type="button"
                         className="text-white text-xs md:text-sm bg-red-500 border border-red-500 hover:bg-red-600 hover:border-red-600 font-normal rounded-sm px-5 py-2 text-center dark:border-red-500 dark:text-white dark:hover:text-white dark:hover:bg-red-700 dark:hover:border-red-700 flex items-center"
                       >

@@ -2,13 +2,49 @@ import React from 'react';
 import moment from 'moment/moment.js';
 
 
-const AdminRPDone = ({ isOpen5, handleClose5, selectedTransaction, transType }) => {
-  
-  const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
-
-  const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
+const AdminRPDone = ({ transactions, setTransactions, selectedTransaction, isOpen5, handleClose5, transType }) => {
+  const { transaction_id, status_type, date_processed } = selectedTransaction;
+  const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
-
+  const handleDoneClick = async () => {
+    try {
+      if (!selectedTransaction || !selectedTransaction.transaction_id) {
+        console.error("Transaction ID is not defined.");
+        alert("Error updating transaction status. Please try again later.");
+        return;
+      }
+  
+      const body = {
+        new_status: 'Complete',
+      };
+  
+      const response = await fetch(`http://localhost:8800/adminrptax/updateComplete/${selectedTransaction.transaction_id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+  
+      if (response.ok) {
+        console.log('Transaction status updated successfully');
+        // Assuming you have a function to update the status in the local state
+        // You may need to replace this with your actual logic
+        const updatedTransactions = transactions.map((transaction) =>
+          transaction.transaction_id === selectedTransaction.transaction_id
+            ? { ...transaction, status_type: 'Complete' }
+            : transaction
+        );
+  
+        setTransactions(updatedTransactions);
+        handleClose5(); // Close the modal
+      } else {
+        console.error('Failed to update transaction status');
+      }
+    } catch (error) {
+      console.error('Error updating transaction status', error);
+    }
+  };
   
   return (
     isOpen5 && (
@@ -100,7 +136,7 @@ const AdminRPDone = ({ isOpen5, handleClose5, selectedTransaction, transType }) 
                       </button>
   
                       <button
-                        onClick={handleClose5}
+                        onClick={handleDoneClick}
                         type="button"
                         className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 font-normal rounded-sm px-5 py-2 text-center dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:hover:border-emerald-700 flex items-center"
                       >
