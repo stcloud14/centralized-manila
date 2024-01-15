@@ -118,6 +118,10 @@ const AdminRPTaxForm = () => {
             taxPayment={taxPayment}
             taxClearance={taxClearance}
             onMoveToProcessing={handleMoveToProcessing}
+            transType={transType}
+            processingTransactions={processingTransactions}
+            selectedTransactionId={selectedTransactionId}
+            setTransType={setTransType}
             />
             <AdminRPTaxProcessing
             taxPayment={taxPayment}

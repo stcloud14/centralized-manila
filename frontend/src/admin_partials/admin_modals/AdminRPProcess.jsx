@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import moment from 'moment/moment.js';
 
-const AdminRPProcess = ({ isOpen3, handleClose3 }) => {
+const AdminRPProcess = ({ selectedTransaction, isOpen, handleClose, transType }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
+
+  const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
+
+  const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
+  const time = moment(date_processed).format('h:mm A');
+
+
   return (
-    isOpen3 && (
+    // MAY CONDITION NA MAGDIDISPLAY LANG KUNG ANG ISOPEN AY TRUE, ITO RIN YUNG ISMODALOPEN, IBA LANG NAME
+    isOpen && (
       <div className="fixed z-50 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
               <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -20,37 +29,58 @@ const AdminRPProcess = ({ isOpen3, handleClose3 }) => {
                           <span className="font-bold md:text-lg text-sm">Transaction Details</span>
                         </div>
                         <div className="mb-6">
+                          {/* SO ITO NA DISPLAY DISPLAY NALANG */}
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">00123456</span>
+                            {/* KAYA WALA TONG SELECTEDTRANSACTION KASI NGA GUMAWA TAYO COPY SA LINE 6 */}
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{transaction_id}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Type</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">Tax Clearance</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{status_type}</span>
                           </div>
+                          {/* ITO NAMAN YUNG CONDITION NA MAGDIDISPLAY LANG KUNG ANG TRANSTYPE NA PINASA AY TAX PAYMENT, NULL IF HINDI */}
+                          {transType === 'Tax Payment' ? 
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Account Name</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.acc_name}</span>
+                          </div>
+                          : null} 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">00123456789</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.rp_tdn}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">0012345654321</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.rp_pin}</span>
                           </div>
+                          {transType === 'Tax Payment' ? 
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">From</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">1st Quarter</span>
+                          </div>
+                          : null} 
+                          {transType === 'Tax Payment' ? 
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">To</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.period_id}</span>
+                          </div>
+                          : null} 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">January 02, 2024</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">07:31 PM</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{time}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-yellow-200 text-yellow-800 w-24">Pending</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-yellow-200 text-yellow-800 w-24">{selectedTransaction.status_type}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Amount Paid</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">P 200.00</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">P {selectedTransaction.amount}</span>
                           </div>
 
                         </div>
@@ -62,25 +92,14 @@ const AdminRPProcess = ({ isOpen3, handleClose3 }) => {
                   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
                   <div className="flex items-center space-x-5 mt-auto">
                       <button
-                          onClick={handleClose3}
+                          onClick={handleClose}
                           type="button"
                           className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 font-normal rounded-sm dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500"
                       >
-                          <p>Cancel</p>
-                      </button>
-  
-                      <button
-                        onClick={handleClose3}
-                        type="button"
-                        className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 font-normal rounded-sm px-5 py-2 text-center dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:hover:border-emerald-700 flex items-center"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                        </svg>
-                        <p>&nbsp;Process</p>
+                          <p>DDHDHDHDHD</p>
                       </button>
                   </div>
-                </div>
+              </div>
 
               </div>
             </div>
@@ -89,4 +108,4 @@ const AdminRPProcess = ({ isOpen3, handleClose3 }) => {
   );
 };
 
-export default AdminRPProcess;
+export default AdminRPView;

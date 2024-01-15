@@ -104,9 +104,12 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
     return uniqueObjects;
   }
 
+  // Get unique transactions based on 'transaction_id'
   const uniqueTransactions = removeDuplicatesByKey(processingTransactions, 'transaction_id');
 
-
+  // Filter unique transactions based on the search query
+  const filteredTransactions = uniqueTransactions.filter(handleSearch);
+  
       return (
         
       <>
@@ -131,7 +134,7 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
              
                   {/* Tax Clearance Sample */}
-                  {uniqueTransactions.map((transaction) => (
+                  {filteredTransactions.map((transaction) => (
                      transaction.trans_type === 'Real Property Tax Clearance' && (
                    <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Clearance')} className="bg-white cursor-pointer dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
@@ -175,7 +178,7 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
                 )  ))}
 
                 {/* Tax Payment Sample */}
-                {uniqueTransactions.map((transaction) => (
+                {filteredTransactions.map((transaction) => (
                   transaction.trans_type === 'Real Property Tax Payment' && (
                <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Payment')} className="bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">

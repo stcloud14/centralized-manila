@@ -108,6 +108,26 @@ router.post('/updateReject/:transaction_id', async (req, res) => {
         res.status(500).json({ error: "Error executing queries", details: err.message });
     }
   });
+
+  
+router.post('/updateExpired/:transaction_id', async (req, res) => {
+    const { transaction_id } = req.params;
+    const { new_status } = req.body;
+  
+    const updateQuery = `UPDATE user_transaction SET status_type = ? WHERE transaction_id = ?;`;
+    try {
+        const result = await queryDatabase(updateQuery, [new_status, transaction_id]);
+  
+        res.json({
+            message: "Successful transaction!",
+            success: result,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error executing queries", details: err.message });
+    }
+  });
+  
   
 
 
