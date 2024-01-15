@@ -5,32 +5,6 @@ import bcrypt from 'bcrypt';
 
 const router = Router();
 
-
-// router.get("/", async (req, res) => {
-//     const query = "SELECT * FROM user_reg";
-//     const query1 = "SELECT * FROM user_auth";
-//     const query2 = "SELECT * FROM user_personal";
-//     const query3 = "SELECT * FROM user_contact";
-//     const query4 = "SELECT * FROM user_gov_id";
-//     const query5 = "SELECT * FROM birth_info";
-//     const query6 = "SELECT * FROM user_verification";
-
-//     try {
-//     const result = await queryDatabase(query);
-//     const result1 = await queryDatabase(query1);
-//     const result2 = await queryDatabase(query2);
-//     const result3 = await queryDatabase(query3);
-//     const result4 = await queryDatabase(query4);
-//     const result5 = await queryDatabase(query5);
-//     const result6 = await queryDatabase(query6);
-    
-//     res.json({ user_reg: result, user_auth: result1, user_personal: result2, user_contact: result3, user_gov_id: result4, birth_info: result5, user_verification: result6 });
-//     } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Error retrieving data');
-//     }
-// });
-
 router.post('/check-existence', async (req, res) => {
     const { f_name, l_name, mobile_no } = req.body;
   
