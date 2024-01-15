@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment/moment.js';
 
-
 const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isOpen4, handleClose4, transType }) => {
   const { transaction_id, status_type, date_processed } = selectedTransaction; 
   const date = moment(date_processed).format('MMMM D, YYYY');
@@ -18,7 +17,7 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
         new_status: 'Reject',
       };
   
-      const response = await fetch(`http://localhost:8800/adminrptax/updateReject/${selectedTransaction.transaction_id}`, {
+      const response = await fetch(`http://localhost:8800/adminrptax/updateReject/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,8 +27,6 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
 
       if (response.ok) {
         console.log('Transaction status Rejected');
-        // Assuming you have a function to update the status in the local state
-        // You may need to replace this with your actual logic
         const updatedTransactions = transactions.map((transaction) =>
           transaction.transaction_id === selectedTransaction.transaction_id
             ? { ...transaction, status_type: 'Reject' }
@@ -37,7 +34,7 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
         );
   
         setTransactions(updatedTransactions);
-        handleClose5(); // Close the modal
+        handleClose4(); // Close the modal
       } else {
         console.error('Failed to update transaction status');
       }

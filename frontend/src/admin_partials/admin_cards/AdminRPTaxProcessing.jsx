@@ -23,7 +23,6 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
     setSelectedTransaction(transaction);
     setIsDoneModalOpen(true);
   };
-
   const handleCloseModals = () => {
     setIsRejectModalOpen(false);
     setIsDoneModalOpen(false);
@@ -41,6 +40,7 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
     setIsViewModalOpen(false);
     setSelectedTransaction(null);
   };
+
 
   const handleDoneClick = (updatedTransactionId) => {
     // Find the selected transaction
@@ -67,9 +67,28 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
     }
   };
   
-  const handleRejectClick = () => {
-   
-    handleCloseModals(); // Close the modal after handling reject
+  const handleRejectClick = (updatedTransactionId) => {
+    console.log('Reject button clicked');
+    const selected = uniqueTransactions.find(
+      (transaction) => transaction.transaction_id === updatedTransactionId
+    );
+  
+    console.log('Selected transaction:', selected);
+    if (selected && selected.status_type.toLowerCase() !== 'reject') {
+      const updatedSelectedTransaction = {
+        ...selected,
+        status_type: 'Reject',
+      };
+      setTransactions((prevTransactions) =>
+        prevTransactions.map((transaction) =>
+          transaction.transaction_id === updatedTransactionId
+            ? updatedSelectedTransaction
+            : transaction
+        )
+      );
+  
+      handleCloseModals(); // Close the modal after handling reject
+    }
   };
 
   //ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
