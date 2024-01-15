@@ -26,14 +26,16 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
   const handleOpenModal = (transaction, type) => {
     setTransType(type);
     setSelectedTransaction(transaction);
-
-    if (type === 'Real Property Tax Payment'|| 'Real Property Tax Clearance') {
+  
+    if (type === 'Real Property Tax Payment' || type === 'Real Property Tax Clearance') {
       setIsProcessModalOpen(true); // Open the process modal
+      setIsViewModalOpen(false); // Close the view modal
+      setShouldOpenViewModal(false);
     } else {
       setIsViewModalOpen(true); // Open the view modal for other types
+      setIsProcessModalOpen(false); // Close the process modal
+      setShouldOpenViewModal(true);
     }
-    // Set shouldOpenViewModal to false when "Process" button is clicked
-    setShouldOpenViewModal(false);
   };
 
   const handleCloseProcessModal = () => {
@@ -212,14 +214,15 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
             DALAWA YUNG CONDITION, DAPAT TRUE ANG ISMODALOPEN, AND DAPAT MAY LAMAN ANG SELECTEDTRANSACTION (WHICH IS INEXPLAIN KO SA LINE 23)
             DAPAT RIN IPASA DITO YUNG MGA VALUES PARA MAACCESS SA MODAL, YUNG SELECTEDTRANSACTION, YUNG STATE NG MODAL KUNG OPEN OR CLOSE,
             FUNCTION PARA MACLOSE ANG MODAL, AND YUNG TRANS TYPE NA VALUE NG TRANSTYPE */}
-            {shouldOpenViewModal && isViewModalOpen && selectedTransaction && (
-              <AdminRPView
-                selectedTransaction={selectedTransaction}
-                isOpen={isViewModalOpen}
-                handleClose={handleCloseModal}
-                transType={transType}
-              />
-            )}
+           {isViewModalOpen && selectedTransaction && !isProcessModalOpen && (
+          <AdminRPView
+            selectedTransaction={selectedTransaction}
+            isOpen={isViewModalOpen}
+            handleClose={handleCloseModal}
+            transType={transType}
+          />
+        )}
+
 
             {isExpiredModalOpen && selectedTransaction && (
               <AdminRPExpired
