@@ -1,6 +1,6 @@
 import express from 'express';
 import conn2 from './connection.js';
-// import twilio from 'twilio';
+import twilio from 'twilio';
 import fetch from 'node-fetch';
 
 
@@ -11,7 +11,7 @@ const router = express.Router();
 const client = async () => {
     try {
       const accountSid = "ACcf61f9c7a0a043216e5ce61059d21ae6";
-      const authToken ="8887510a55939f58a0ff03268eeda7f0";
+      const authToken ="50d3a95ce2c19eb5774043dbc8a2e3b7";
       const twilioPhoneNumber = "+14782490201";
   
       const client = new twilio(accountSid, authToken);
