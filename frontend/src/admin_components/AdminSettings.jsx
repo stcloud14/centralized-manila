@@ -5,6 +5,12 @@ import axios from 'axios';
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import defaultImage from '../images/default_img.png';
+import chiefImg from '../images/CHIEF.png'
+import rptaxImg from '../images/RPTAX.png'
+import businessImg from '../images/BP.png'
+import cedulaImg from '../images/CTC.png'
+import lcrImg from '../images/LCR.png'
+import urImg from '../images/UR.png'
 
 
 
@@ -12,7 +18,41 @@ const AdminSettings =()=>{
   
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const contentRef = useRef(null);
-  // const { user_id } = useParams();
+ 
+  const { admin_type } = useParams();
+
+  let imageUrl;
+  let userName;
+
+  switch (admin_type) {
+    case 'chief_admin':
+      imageUrl = chiefImg;
+      userName = 'CHIEF ADMIN';
+    break;
+    case 'rptax_admin':
+      imageUrl = rptaxImg;
+      userName = 'RPTAX ADMIN';
+      break;
+    case 'business_admin':
+      imageUrl = businessImg;
+      userName = 'BUSINESS PERMIT ADMIN';
+      break;
+    case 'cedula_admin':
+      imageUrl = cedulaImg;
+      userName = 'CTC/CEDULA ADMIN';
+      break;
+    case 'lcr_admin':
+      imageUrl = lcrImg;
+      userName = 'LOCAL CIVIL REGISTRY ADMIN';
+      break;
+    case 'registry_admin':
+      imageUrl = urImg;
+      userName = 'REGISTRY ADMIN';
+      break;
+    default:
+      imageUrl = defaultImage;
+      break;
+  }
 
   // const [isSuccess, setIsSuccess] = useState(false);
   // const [isRemove, setIsRemove] = useState(false);
@@ -275,13 +315,13 @@ const AdminSettings =()=>{
                   )}   */}
 
                   <div className="grid gap-6">
-                    <h1 className='font-medium text-center text-slate-700 dark:text-white'>Profile Picture</h1>
+                    <h1 className='font-medium text-center text-slate-700 dark:text-white'>Avatar</h1>
                     <div className="flex flex-col items-center justify-center">
                     <div className="mb-6 relative">
                       <img
                         name='userImage' 
                         className="inline-block h-72 w-72 rounded-full border-2 border-black dark:border-white p-1 object-cover object-center relative z-1"
-                        src={defaultImage}
+                        src={imageUrl}
                         // src={preSelectedFile || userImage || defaultImg}
                         // onError={(e) => console.error('Error loading image:', e)}
                       />
