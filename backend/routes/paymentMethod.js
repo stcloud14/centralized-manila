@@ -2,7 +2,9 @@ import express from 'express';
 import conn2 from './connection.js';
 import twilio from 'twilio';
 import fetch from 'node-fetch';
+import dotenv from 'dotenv'
 
+dotenv.config();
 
 
 const router = express.Router();
@@ -10,9 +12,9 @@ const router = express.Router();
 
 const client = async () => {
     try {
-      const accountSid = "ACcf61f9c7a0a043216e5ce61059d21ae6";
-      const authToken ="50d3a95ce2c19eb5774043dbc8a2e3b7";
-      const twilioPhoneNumber = "+14782490201";
+      const accountSid = process.env.ACCOUNT_SID;
+      const authToken =process.env.AUTH_TOKEN;
+      const twilioPhoneNumber = process.env.FROM;
   
       const client = new twilio(accountSid, authToken);
   
