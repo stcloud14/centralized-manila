@@ -6,10 +6,9 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [transactions, setTransactions] = useState(processingTransactions);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false); // Add this line to define isConfirmOpen
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false); 
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
-
 
   const handleOpenDoneModal = (transaction, type) => {
     setTransType(type);
@@ -38,7 +37,6 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
     setTransactions(processingTransactions);
   }, [processingTransactions]);
   
-//Done or Complete
 
 const handleDoneClick = async () => {
   try {
@@ -71,7 +69,6 @@ const handleDoneClick = async () => {
   console.error('Error updating transaction', error);
 }
 };
-
 
 const handleCloseModal = () => {
   setIsConfirmOpen(false);
@@ -107,9 +104,6 @@ const handleCloseModal = () => {
     }
   };
    
-
-  //ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
     const query = searchQuery.toUpperCase();
@@ -121,10 +115,7 @@ const handleCloseModal = () => {
     return uniqueObjects;
   }
 
-  // Get unique transactions based on 'transaction_id'
   const uniqueTransactions = removeDuplicatesByKey(processingTransactions, 'transaction_id');
-
-  // Filter unique transactions based on the search query
   const filteredTransactions = uniqueTransactions.filter(handleSearch);
   
       return (
@@ -229,7 +220,7 @@ const handleCloseModal = () => {
                 </div>
               </div>
            ) ))}
-
+            {/* REJECT MODAL */}
             {isConfirmOpen && (
                     <div className="fixed z-50 inset-0 overflow-y-auto">
                       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -271,7 +262,7 @@ const handleCloseModal = () => {
                     </div>
                   )} 
 
-
+          {/* COMPLETE MODAL */}
           {isCompleteModalOpen && (
             <div className="fixed z-50 inset-0 overflow-y-auto">
               <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
 import AdminRPView from '../admin_modals/AdminRPView';
-import AdminRPProcess from '../admin_modals/AdminRPProcess';
-import AdminRPTaxProcessing from '../admin_cards/AdminRPTaxProcessing';
+
 
 
 const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProcessing }) => {
@@ -13,7 +12,6 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [transType, setTransType] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [shouldOpenViewModal, setShouldOpenViewModal] = useState(true);
   const [transactions, setTransactions] = useState([]);
   const [isExpiredModalOpen, setIsExpiredModalOpen] = useState(false);
 
@@ -38,13 +36,6 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
     }
   };
   
-  const handleProcessButtonClick = (transaction) => {
-    // Perform any necessary actions before opening the process modal
-    
-    // Now, open the process modal
-    setIsProcessModalOpen(true);
-  };
-  
   const handleProcessClick = async () => {
     try {
       if (!selectedTransaction || !selectedTransaction.transaction_id) {
@@ -53,14 +44,10 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
         return;
       }
 
-      // Perform any necessary actions before proceeding
-
-      // Call the onMoveToProcessing function
       if (onMoveToProcessing) {
         onMoveToProcessing(selectedTransaction);
       }
 
-      // Call the onProceed function(s)
       if (Array.isArray(onProceed)) {
         onProceed.forEach((proceedFunction) => {
           proceedFunction(selectedTransaction);
@@ -69,7 +56,6 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
         onProceed(selectedTransaction);
       }
 
-      // Close the modal
       handleCloseModal('process');
     } catch (error) {
       console.error('Error processing transaction', error);
@@ -258,7 +244,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
                 </div>
               </div>
               ))} 
-
+          {/* EXPIRED MODAL */}
           {isExpiredModalOpen && (
             <div className="fixed z-50 inset-0 overflow-y-auto">
               <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -296,7 +282,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
               </div>
             </div>
           )}
-          
+         {/* PROCESS MODAL */}
           {isProcessModalOpen && (
             <div className="fixed z-50 inset-0 overflow-y-auto">
               <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -336,14 +322,12 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
           )}
           
           {isViewModalOpen && selectedTransaction && !isExpiredModalOpen && !isProcessModalOpen && (
-  // Only display AdminRPView when isViewModalOpen is true, selectedTransaction is set, 
-  // and neither isExpiredModalOpen nor isProcessModalOpen is true
-  <AdminRPView
-    selectedTransaction={selectedTransaction}
-    isOpen={isViewModalOpen}
-    handleClose={handleCloseModal}
-  />
-)}
+            <AdminRPView
+              selectedTransaction={selectedTransaction}
+              isOpen={isViewModalOpen}
+              handleClose={handleCloseModal}
+            />
+          )}
 
 
             </div>
