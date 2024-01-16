@@ -133,9 +133,11 @@ router.get('/taxpayment/', async (req, res) => {
     COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
     COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
     COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
     COUNT(CASE WHEN trans_type_id = '1' THEN 1 END) AS Total \
     FROM user_transaction \
-    WHERE trans_type_id = '1' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired');"
+    WHERE trans_type_id = '1' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
   
   try {
     const result = await queryDatabase(query);
@@ -146,6 +148,8 @@ router.get('/taxpayment/', async (req, res) => {
         Canceled: result[0].Canceled || 0,
         Rejected: result[0].Rejected || 0,
         Expired: result[0].Expired || 0,
+        Processing: result[0].Processing || 0,
+        Complete: result[0].Complete || 0,
         Total: result[0].Total || 0
     };
 
@@ -164,10 +168,11 @@ router.get('/taxclearance/', async (req, res) => {
     COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, \
     COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
     COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
-    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
     COUNT(CASE WHEN trans_type_id = '2' THEN 1 END) AS Total \
     FROM user_transaction \
-    WHERE trans_type_id = '2' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired');"
+    WHERE trans_type_id = '2' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
   
   try {
     const result = await queryDatabase(query);
@@ -178,6 +183,8 @@ router.get('/taxclearance/', async (req, res) => {
         Canceled: result[0].Canceled || 0,
         Rejected: result[0].Rejected || 0,
         Expired: result[0].Expired || 0,
+        Processing: result[0].Processing || 0,
+        Complete: result[0].Complete || 0,
         Total: result[0].Total || 0
     };
 
@@ -196,10 +203,11 @@ router.get('/businesspermit/', async (req, res) => {
     COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, \
     COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
     COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
-    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
     COUNT(CASE WHEN trans_type_id = '3' THEN 1 END) AS Total \
     FROM user_transaction \
-    WHERE trans_type_id = '3' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired');"
+    WHERE trans_type_id = '3' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
   
   try {
     const result = await queryDatabase(query);
@@ -210,6 +218,8 @@ router.get('/businesspermit/', async (req, res) => {
         Canceled: result[0].Canceled || 0,
         Rejected: result[0].Rejected || 0,
         Expired: result[0].Expired || 0,
+        Processing: result[0].Processing || 0,
+        Complete: result[0].Complete || 0,
         Total: result[0].Total || 0
     };
 
@@ -229,9 +239,11 @@ router.get('/cedulacert/', async (req, res) => {
     COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
     COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
     COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
     COUNT(CASE WHEN trans_type_id = '4' THEN 1 END) AS Total \
     FROM user_transaction \
-    WHERE trans_type_id = '4' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired');"
+    WHERE trans_type_id = '4' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
   
   try {
     const result = await queryDatabase(query);
@@ -242,6 +254,8 @@ router.get('/cedulacert/', async (req, res) => {
         Canceled: result[0].Canceled || 0,
         Rejected: result[0].Rejected || 0,
         Expired: result[0].Expired || 0,
+        Processing: result[0].Processing || 0,
+        Complete: result[0].Complete || 0,
         Total: result[0].Total || 0
     };
 
@@ -261,9 +275,11 @@ router.get('/birthcert/', async (req, res) => {
     COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
     COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
     COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
     COUNT(CASE WHEN trans_type_id = '5' THEN 1 END) AS Total \
     FROM user_transaction \
-    WHERE trans_type_id = '5' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired');"
+    WHERE trans_type_id = '5' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
   
   try {
     const result = await queryDatabase(query);
@@ -274,6 +290,8 @@ router.get('/birthcert/', async (req, res) => {
         Canceled: result[0].Canceled || 0,
         Rejected: result[0].Rejected || 0,
         Expired: result[0].Expired || 0,
+        Processing: result[0].Processing || 0,
+        Complete: result[0].Complete || 0,
         Total: result[0].Total || 0
     };
 
@@ -293,9 +311,11 @@ router.get('/deathcert/', async (req, res) => {
     COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
     COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
     COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
     COUNT(CASE WHEN trans_type_id = '6' THEN 1 END) AS Total \
     FROM user_transaction \
-    WHERE trans_type_id = '6' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired');"
+    WHERE trans_type_id = '6' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
   
   try {
     const result = await queryDatabase(query);
@@ -306,6 +326,8 @@ router.get('/deathcert/', async (req, res) => {
         Canceled: result[0].Canceled || 0,
         Rejected: result[0].Rejected || 0,
         Expired: result[0].Expired || 0,
+        Processing: result[0].Processing || 0,
+        Complete: result[0].Complete || 0,
         Total: result[0].Total || 0
     };
 
@@ -325,9 +347,11 @@ router.get('/marriagecert/', async (req, res) => {
     COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
     COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
     COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
     COUNT(CASE WHEN trans_type_id = '7' THEN 1 END) AS Total \
     FROM user_transaction \
-    WHERE trans_type_id = '7' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired');"
+    WHERE trans_type_id = '7' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
   
   try {
     const result = await queryDatabase(query);
@@ -338,6 +362,8 @@ router.get('/marriagecert/', async (req, res) => {
         Canceled: result[0].Canceled || 0,
         Rejected: result[0].Rejected || 0,
         Expired: result[0].Expired || 0,
+        Processing: result[0].Processing || 0,
+        Complete: result[0].Complete || 0,
         Total: result[0].Total || 0
     };
 

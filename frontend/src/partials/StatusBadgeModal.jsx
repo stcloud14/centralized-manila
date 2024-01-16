@@ -19,6 +19,8 @@ const getStatusColors = (statusType) => {
                                                                          };
     case 'Expired':
       return { bgColor: 'bg-blue-200', textColor: 'text-blue-800', text: <p>The transaction has expired due to non-payment.</p> };
+    case 'Processing':
+      return { bgColor: 'bg-yellow-200', textColor: 'text-yellow-800', text: <p>The transaction has been processing.</p> };
     case 'Complete':
       return { bgColor: 'bg-green-200', textColor: 'text-green-800', text: <p>The transaction is complete.</p> };
     default:

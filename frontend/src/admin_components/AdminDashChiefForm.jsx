@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import moment from 'moment';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import AdminSidebar from '../admin_partials/AdminSidebar';
-import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
+import { useLocation } from 'react-router-dom'; 
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
@@ -20,20 +23,126 @@ import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
+import logoImage from '../images/mnl_header_pdf.png';
 
 const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxPayment, taxClearance, businessPermit, cedulaCert, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities})=>{
-
+  
   const location = useLocation();
   const { pathname, state } = location;
   const admin_type = pathname.split("/")[2];
   const adminRole = state && state.user_role;
 
+  const generateReports = async () => {
+    try {
+      const pdf = new jsPDF();
+  
+      // Load the image as a data URL
+      const imageDataURL = await loadImageAsDataURL(logoImage);
+  
+      // Add image to the PDF
+      pdf.addImage(imageDataURL, 'PNG', 128, 5, 70, 35);
+  
+      // Add horizontal lines
+      pdf.setLineWidth(0.5);
+      pdf.line(130, 35, 195, 35);
+      pdf.line(130, 42, 195, 42);
+      // Set font size before displaying the date
+      pdf.setFontSize(10); 
+      pdf.text('  Date as of now         ' + moment().format('MMMM D, YYYY'), 130, 40);
+      pdf.line(130, 50, 195, 50);
+      // Add the header for the report
+      pdf.autoTable({
+        startY: 43, // Adjust the starting Y-coordinate for the table
+        head: [['Chief Admin Reports', '']],
+        body: [
+          ['Total Business Permit', `P ${revenue.totalBP.toLocaleString()}`],
+          ['Total Cedula', `P ${revenue.totalCC.toLocaleString()}`],
+          ['Total Local Civil Registry', `P ${revenue.totalLCR.toLocaleString()}`],
+          ['Total Real Property', `P ${revenue.totalRP.toLocaleString()}`],
+          ['Total Gross Revenue', `P ${Math.floor(revenue.totalPaid).toLocaleString()}`],
+        ],
+        headStyles: {
+          fillColor: false,
+          lineColor: 0,
+          textColor: 0,
+          fontSize: 10,
+          fontStyle: 'bold',
+          lineWidthTop: 1,
+          lineWidthBottom: 1,
+        },
+        bodyStyles: {
+          fillColor: false,
+          textColor: 0,
+          fontSize: 10,
+        },
+        alternateRowStyles: {
+          fillColor: false,
+          textColor: 0,
+          fontSize: 10,
+        },
+        margin: { top: 80, left: 130 },
+        tableWidth: 70,
+      });
+  
+      // Add horizontal lines
+      pdf.setLineWidth(0.5);
+      pdf.line(130, 90, 195, 90);
+  
+      // Define the table data
+      const tableData = [
+        ['Real Property Tax Payment', taxPayment.Pending + taxPayment.Paid + taxPayment.Canceled + taxPayment.Rejected + taxPayment.Expired + taxPayment.Processing + taxPayment.Complete],
+        ['Real Property Tax Clearance', taxClearance.Pending + taxClearance.Paid + taxClearance.Canceled + taxClearance.Rejected + taxClearance.Expired + taxClearance.Processing + taxClearance.Complete],
+        ['Business Permit', businessPermit.Pending + businessPermit.Paid + businessPermit.Canceled + businessPermit.Rejected + businessPermit.Expired + businessPermit.Processing + businessPermit.Complete],
+        ['CTC/Cedula', cedulaCert.Pending + cedulaCert.Paid + cedulaCert.Canceled + cedulaCert.Rejected + cedulaCert.Expired + cedulaCert.Processing + cedulaCert.Complete],
+        ['Birth Certificate', birthCert.Pending + birthCert.Paid + birthCert.Canceled + birthCert.Rejected + birthCert.Expired + birthCert.Processing + birthCert.Complete],
+        ['Death Certificate', deathCert.Pending + deathCert.Paid + deathCert.Canceled + deathCert.Rejected + deathCert.Expired + deathCert.Processing + birthCert.Complete],
+        ['Marriage Certificate', marriageCert.Pending + marriageCert.Paid + marriageCert.Canceled + marriageCert.Rejected + marriageCert.Expired + marriageCert.Processing + marriageCert.Complete],
+        ['Verified Users', verifiedUsers.length > 0 ? verifiedUsers[0].total_verified : 'N/A'],
+        ['Unverified Users', verifiedUsers.length > 0 ? verifiedUsers[0].total_unverified : 'N/A'],
+        ['Total Users', verifiedUsers.length > 0 ? verifiedUsers[0].total_users : 'N/A'],
+        ['Top Regions', topRegions.Result.length > 0 ? topRegions.Regions.join(', ') : '0'],
+        ['Top Provinces', topProvinces.Result.length > 0 ? topProvinces.Provinces.join(', ') : '0'],
+        ['Top Cities', topCities.Cities.length > 0 ? topCities.Cities.join(', ') : '0'],
+      ];
+  
+      // Set styles for aligning values to the left or right
+      const styles = {
+        cellWidth: 'auto',
+      };  
+  
+      // Add the table to the PDF with styles
+      pdf.autoTable({
+        startY: 100,
+        body: tableData,
+        headStyles: {
+          fillColor: [50, 50, 50],
+          textColor: 255,
+        },
+        styles: styles,
+        columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' } },
+      });
+  
+      pdf.save(`${admin_type}_generate_reports.pdf`);
+    } catch (error) {
+      console.error('Error generating reports:', error);
+    }
+  };
+
+  const loadImageAsDataURL = async (imageUrl) => {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    });
+  };
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
   const [isLoading, setIsLoading] = useState(true);
-
 
   useEffect(() => {
     if (
@@ -100,10 +209,10 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner adminType={'CHIEF'} />
+                <AdminBanner adminType={'CHIEF'} generateReports={generateReports} />
   
                 <div className="grid grid-cols-12 gap-6">
-                  <MainCard transStats={transStats}/>
+                <MainCard transStats={transStats}/>
                   <Revenue revenue={revenue} totalAmount={totalPaid} adminType={'CHIEF'}/>
                   <URstats verifiedUsers={verifiedUsers} />
                   <RPstats taxPayment={taxPayment} />
