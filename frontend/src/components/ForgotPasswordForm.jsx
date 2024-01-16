@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const ForgotPasswordForm = () => {
-  const [mobileNumber, setMobileNumber] = useState('');
   const [showNewPasswordFields, setShowNewPasswordFields] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -62,8 +61,6 @@ const ForgotPasswordForm = () => {
                     id="mobile_no"
                     name="mobile_no"
                     placeholder=' '
-                    value={mobileNumber}
-                    onChange={(e) => setMobileNumber(e.target.value)}
                     className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum"
                     maxLength={14}
                   />
@@ -153,7 +150,7 @@ const ForgotPasswordForm = () => {
 
             <div className="text-center">
               <button
-                className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5"
                 type="button"
                 onClick={handleContinueClick}
               >
