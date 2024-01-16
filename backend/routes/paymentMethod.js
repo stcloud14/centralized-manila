@@ -1,7 +1,37 @@
 import express from 'express';
 import conn2 from './connection.js';
+// import twilio from 'twilio';
+import fetch from 'node-fetch';
+
+
 
 const router = express.Router();
+
+
+const client = async () => {
+    try {
+      const accountSid = "ACcf61f9c7a0a043216e5ce61059d21ae6";
+      const authToken ="8887510a55939f58a0ff03268eeda7f0";
+      const twilioPhoneNumber = "+14782490201";
+  
+      const client = new twilio(accountSid, authToken);
+  
+      const message = 'Thank you for your payment! -Centralized Manila ~ TUP TEST'; 
+  
+      const sentMessage = await client.messages.create({
+        body: message,
+        from: twilioPhoneNumber,
+        to: '+639754137348',
+      });
+  
+      console.log('SMS sent successfully:', sentMessage.sid);
+    } catch (error) {
+      console.error('Error sending SMS:', error);
+    }
+  };
+  
+
+
 
 router.post("/create-checkout-session/:transaction_id", async (req, res) => {
     try {
@@ -73,29 +103,42 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
             console.error('Invalid checkout session - Response structure is unexpected:', responseData);
             return res.status(500).json({ error: 'Error creating checkout session' });
         }
+
     } catch (error) {
         console.error('Error processing checkout session:', error);
         res.status(500).json({ error: 'Error processing checkout session' });
     }
 });
 
+
 router.post('/success/:transactionId', async (req, res) => {
     const transID = req.params.transactionId;
    
     const updateQuery = `UPDATE user_transaction SET status_type = 'Paid' WHERE transaction_id = ?;`;
 
-    try{
-      const result = await queryDatabase(updateQuery, [transID]);
+    try {
+        const result = await queryDatabase(updateQuery, [transID]);
 
-      res.json({
-        message: "Successful transaction!",
-        success: result,
-      });
-    }catch (err){
-      console.error(err);
-      res.status(500).json({ error: "Error executing queries" });
+        // Check if the update was successful before sending SMS
+        if (result && result.affectedRows > 0) {
+            // Update successful, send SMS
+
+            //COMMENT KO MUNA TO PARA D MAG SEND
+            // await client();
+
+            res.json({
+                message: "Successful transaction!",
+                success: result,
+            });
+        } else {
+            // Update failed
+            res.status(500).json({ error: "Error updating transaction status" });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error executing queries" });
     }
-  });
+});
 
 
 function queryDatabase(query, values) {
