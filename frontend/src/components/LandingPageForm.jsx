@@ -184,7 +184,7 @@ const LandingPageForm = () => {
       
     
   return (
-    <div className="relative lg:h-screen md:h-screen min-h-screen bg-[url('./src/images/manila-hd.png')] dark:bg-[url('./src/images/manila-v2.jpg')] bg-cover bg-no-repeat bg-top">
+    <div className="relative lg:h-screen md:h-screen min-h-screen bg-[url('./src/images/manila-v5.jpg')] dark:bg-[url('./src/images/manila-v4.jpg')] bg-cover bg-no-repeat bg-top">
       <div className="flex flex-col md:flex-row h-full">
         
         {/* Left Section */}
