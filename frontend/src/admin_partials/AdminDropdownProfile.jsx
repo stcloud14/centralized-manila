@@ -1,134 +1,62 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Transition from '../utils/Transition';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import defaultImage from '../images/default_img.png';
+import chiefImg from '../images/CHIEF.png'
+import rptaxImg from '../images/RPTAX.png'
+import businessImg from '../images/BP.png'
+import cedulaImg from '../images/CTC.png'
+import lcrImg from '../images/LCR.png'
+import urImg from '../images/UR.png'
 
-const AdminDropdownProfile = ({align}) => {
+const AdminDropdownProfile = ({ align }) => {
+
+  const { admin_type } = useParams();
+
+  let imageUrl;
+  let userName;
+
+  switch (admin_type) {
+    case 'chief_admin':
+      imageUrl = chiefImg;
+      userName = 'CHIEF ADMIN';
+    break;
+    case 'rptax_admin':
+      imageUrl = rptaxImg;
+      userName = 'RPTAX ADMIN';
+      break;
+    case 'business_admin':
+      imageUrl = businessImg;
+      userName = 'BUSINESS PERMIT ADMIN';
+      break;
+    case 'cedula_admin':
+      imageUrl = cedulaImg;
+      userName = 'CTC/CEDULA ADMIN';
+      break;
+    case 'lcr_admin':
+      imageUrl = lcrImg;
+      userName = 'LOCAL CIVIL REGISTRY ADMIN';
+      break;
+    case 'registry_admin':
+      imageUrl = urImg;
+      userName = 'REGISTRY ADMIN';
+      break;
+    default:
+      imageUrl = defaultImage;
+      break;
+  }
+
   
-  const location = useLocation();
-  const { pathname, state } = location;
-  const admin_type = pathname.split("/")[2];
+  // const location = useLocation();
+  // const { pathname, state } = location;
+  // const admin_type = pathname.split("/")[2];
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef(null);
   const dropdown = useRef(null);
-
-  const [userPersonal, setUserPersonal]=useState({})
-
-  const [defaultImg, setDefaultImg] = useState(defaultImage);
-
-  // const [storedImage, setStoredImage] = useState('');
-  // const [userImage, setUserImage] = useState('');
-
-  //   useEffect(()=>{
-  //       const fetchUserPersonal= async()=>{
-  //           try{
-  //               const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
-  //               setUserPersonal((prevData) => {
-  //                 if (prevData.f_name !== res.data.user_personal[0].f_name) {
-  //                   return res.data.user_personal[0];
-  //                 }
-  //                 return prevData;
-  //               });
-
-  //           }catch(err){
-  //               console.log(err)
-  //           }
-  //       }
-  //       fetchUserPersonal()
-  //   },[userPersonal])
-
-
-  //   useEffect(()=>{
-  //     const fetchUserImage= async()=>{
-  //         try{
-  //             const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
-  //             setStoredImage(res.data[0])
-  
-  //         }catch(err){
-  //             console.log(err)
-  //         }
-  //     }
-  //     fetchUserImage()
-  //   },[])
-  
-  
-  //   const checkUserImage = async () => {
-  //     try {
-  //       const imagePath = '../uploads/profileImage/';
-  //       const imageName = storedImage.user_image;
-    
-  //       if (imageName === undefined || imageName === null) {
-  //         console.log('User image name is undefined or null.');
-  //         return;
-  //       }
-    
-  //       const isFileExists = await checkFileExists(imagePath, imageName);
-    
-  //       if (isFileExists !== null && isFileExists !== undefined) {
-  //         if (isFileExists) {
-  //           const fileData = await fetchFileData(`${imagePath}${imageName}`);
-  //           if (fileData) {
-  //             setUserImage(fileData);
-  //             console.log(`File ${imageName} exists.`);
-  //           } else {
-  //             console.log(`File data for ${imageName} is empty or undefined.`);
-  //           }
-  //         } else {
-  //           console.log(`File: ${imageName} does not exist.`);
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.error('Error checking user image path:', error);
-  //     }
-  //   };
-  
-  //   useEffect(() => {
-  //     checkUserImage();
-  //   }, [storedImage]);
-  
-  //   const checkFileExists = async (folderPath, fileName) => {
-  //     try {
-  //       const filePath = `${folderPath}/${fileName}`;
-  //       const response = await fetch(filePath);
-  
-  //       return response.ok;
-  //     } catch (error) {
-  //       console.error('Error checking file existence:', error);
-  //       return false;
-  //     }
-  //   };
-  
-  //   const fetchFileData = async (filePath) => {
-  //     try {
-  //       const response = await fetch(filePath);
-    
-  //       if (!response.ok) {
-  //         if (response.status === 404) {
-  //           console.log('File not found.');
-  //         } else {
-  //           throw new Error(`Failed to fetch file from ${filePath}`);
-  //         }
-  //         return null;
-  //       }
-    
-  //       const fileData = await response.blob();
-    
-  //       if (!fileData || fileData.size === 0) {
-  //         console.log('File data is empty or undefined.');
-  //         return null;
-  //       }
-    
-  //       const dataUrl = URL.createObjectURL(fileData);
-    
-  //       return dataUrl;
-  //     } catch (error) {
-  //       console.error('Error fetching file data:', error);
-  //       return null;
-  //     }
-  //   };
 
 
   // close on click outside
@@ -165,11 +93,10 @@ const AdminDropdownProfile = ({align}) => {
         <img
           name='userImage' 
           className="inline-block h-10 w-10 rounded-full object-cover object-center"
-          // src={userImage ? userImage : defaultImg}
-          // onError={(e) => console.error('Error loading image:', e)}
+          src={imageUrl}
         />
         <div className="flex items-center truncate">
-          <span className="truncate ml-2 mr-1 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{userPersonal.f_name}</span>
+          <span className="truncate ml-2 mr-1 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{userName}</span>
           <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
           </svg>
@@ -192,7 +119,7 @@ const AdminDropdownProfile = ({align}) => {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-[#3d3d3d]">
-            <div className="font-medium text-slate-800 dark:text-slate-100">{userPersonal.f_name} {userPersonal.l_name}</div>
+            <div className="font-medium text-slate-800 dark:text-slate-100">{userName}</div>
             <div className="text-xs text-slate-500 dark:text-slate-400 italic">Administrator</div>
           </div>
           <ul>
