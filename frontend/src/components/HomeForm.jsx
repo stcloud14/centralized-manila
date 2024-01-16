@@ -14,6 +14,21 @@ const HomeForm = () => {
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
+  useEffect(() => {
+    window.watsonAssistantChatOptions = {
+      integrationID: "de2fe5df-48e1-4da9-8410-d789a72fe146",
+      region: "jp-tok",
+      serviceInstanceID: "e50214bf-cd1a-4ede-bc0c-52e7e8ff8c9e",
+      onLoad: async (instance) => { await instance.render(); }
+    };
+
+    setTimeout(function () {
+      const t = document.createElement('script');
+      t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+      document.head.appendChild(t);
+    });
+  }, []); // Run only once on component mount
+
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
       {/* Sidebar */}
@@ -30,14 +45,14 @@ const HomeForm = () => {
 
             {/* Welcome banner */}
             <WelcomeBanner />
-            <AboutSection/>
+            <AboutSection />
 
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
-              <Section1/>
-              <Section2/>
-              <Section3/>
-              <Section4/>
+              <Section1 />
+              <Section2 />
+              <Section3 />
+              <Section4 />
             </div>
           </div>
           <Footer logo={logoSrc} />
@@ -45,6 +60,6 @@ const HomeForm = () => {
       </div>
     </div>
   );
-}
+};
 
 export default HomeForm;

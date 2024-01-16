@@ -7,7 +7,6 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 
 
-
 const LandingPageForm = () => {
   const [userAuth, setUserAuth] = useState({
     mobile_no: "",
@@ -145,42 +144,47 @@ const LandingPageForm = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.get(`http://localhost:8800/login/${userAuth.mobile_no}/${user_pass}`);
-      if (response.data[0].mobile_no === userAuth.mobile_no && response.data[0].user_pass === userAuth.user_pass) {
-        // Authentication successful, set authenticated state to true
-        if (isSubmitting) {
-          return;
-        }
   
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+      
         try {
-          setAuthenticated(true);
-          // Extract user_id from the response data
-          const { user_id } = response.data[0];
-          // Update the user_id in the state
-          setUserAuth((prev) => ({ ...prev, user_id }));
+    
+          const response = await axios.post(`http://localhost:8800/login/compare-password/${userAuth.mobile_no}/${userAuth.user_pass}`);
+      
+          if (response.status === 200) {
+
+            if (isSubmitting) {
+              return;
+            }
+
+            setAuthenticated(true);
+      
+            const user_id = response.data[0].user_id;
+            
+            setUserAuth((prev) => ({ ...prev, user_id }));
+      
+            if (!authenticated) {
+              setIsSubmitting(true); 
+              onCaptchaVerify();
+            }
+          } else {
   
-          // Check if mobile number and password match before triggering the OTP verification process
-         if (!authenticated) {
-            setIsSubmitting(true); // Set to true before calling onCaptchaVerify
-            onCaptchaVerify(); // Call onCaptchaVerify directly
+            setLoginError("Authentication failed. Please check .");
           }
+
         } catch (error) {
-          // Handle errors specific to setting authenticated state and updating user_id
+          console.error(error);
+          setLoginError("Authentication failed. Please check your credentials.");
+        } finally {
+          setIsSubmitting(false);
         }
-      }
-    } catch (error) {
-      console.error(error);
-      setLoginError("Authentication failed. Please check your credentials.");
-    } finally {
-      setIsSubmitting(false); // Reset to false after handling submission
-    }
-  };
+      };
+      
     
   return (
-    <div className="relative lg:h-screen md:h-screen min-h-screen bg-[url('./src/images/manila-hd.png')] dark:bg-[url('./src/images/manila-v2.jpg')] bg-cover bg-no-repeat bg-top">
+    <div className="relative lg:h-screen md:h-screen min-h-screen bg-[url('./src/images/manila-v5.jpg')] dark:bg-[url('./src/images/manila-v4.jpg')] bg-cover bg-no-repeat bg-top">
       <div className="flex flex-col md:flex-row h-full">
         
         {/* Left Section */}
@@ -253,7 +257,7 @@ const LandingPageForm = () => {
               />
               <span>Remember Me</span>
             </label>
-            <a className="text-yellow-500 hover:text-blue-700 hover:text-yellow-600" href="#">Forgot Password?</a>
+            <a className="text-yellow-500 hover:text-blue-700 hover:text-yellow-600" href="/forgotpass">Forgot Password?</a>
           </div>
                       )}
           <div className="text-center">
@@ -284,19 +288,19 @@ const LandingPageForm = () => {
 
           {isSuccess && (
             <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
-              Success! Your SMS has been sent.
+              Success! OTP sent to your number.
             </div>
           )}
 
           {Many_Request && (
             <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
-                Too Many Request please try again Later.
+                Too many request, please try again later.
               </div>
             )}  
           
           {wrong_otp && (
             <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
-                Wrong OTP Re-Type Again.
+                Wrong OTP. Please enter the valid OTP.
               </div>
             )} 
 

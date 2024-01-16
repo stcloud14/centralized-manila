@@ -32,6 +32,7 @@ import About from './pages/About';
 import Contacts from './pages/Contacts';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import PaymentSuccess from './pages/PaymentSuccess';
+import ForgotPassword from './pages/ForgotPassword';
 
 //Import Dashboard Provider
 import { DashboardProvider } from './DashboardContext';
@@ -90,6 +91,7 @@ function App() {
         <Route exact path="/contacts/:user_id" element={<Contacts/>} />
         <Route exact path="/privacypolicy/:user_id" element={<PrivacyPolicy/>} />
         <Route exact path="/paymentsuccess/:user_id" element={<PaymentSuccess/>} />
+        <Route exact path="/forgotpass/" element={<ForgotPassword/>} />
 
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />

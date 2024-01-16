@@ -28,8 +28,7 @@ const router = Router();
 
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, path.join(__dirname, '../../frontend/uploads/profileImage')); //frontend directory
-      // cb(null, path.join(__dirname, '../uploads')); //backend directory
+      cb(null, path.join(__dirname, '../../frontend/uploads/profileImage'));
     },
     filename: function (req, file, cb) {
       const originalName = path.parse(file.originalname);
@@ -41,8 +40,7 @@ const router = Router();
 
   const storage1 = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, path.join(__dirname, '../../frontend/uploads/verification')); //frontend directory
-      // cb(null, path.join(__dirname, '../uploads')); //backend directory
+      cb(null, path.join(__dirname, '../../frontend/uploads/verification'));
     },
     filename: function (req, file, cb) {
       const originalName = path.parse(file.originalname);
@@ -55,7 +53,6 @@ const router = Router();
   const upload = multer({
     storage: storage,
     fileFilter: function (req, file, cb) {
-      // Validate file type (allow only images)
       const allowedFormats = ['.jpg', '.jpeg', '.png'];
       const extname = path.extname(file.originalname).toLowerCase();
       if (allowedFormats.includes(extname)) {
@@ -70,7 +67,6 @@ const router = Router();
   const upload1 = multer({
     storage: storage1,
     fileFilter: function (req, file, cb) {
-      // Validate file type (allow only images)
       const allowedFormats = ['.jpg', '.jpeg', '.png'];
       const extname = path.extname(file.originalname).toLowerCase();
       if (allowedFormats.includes(extname)) {
@@ -81,10 +77,12 @@ const router = Router();
     },
   });
 
+
   const setUserMiddleware = (req, res, next) => {
     req.user_id = req.params.user_id;
     next();
   };
+  
 
   router.post('/uploadimage/:user_id', setUserMiddleware, upload.single('user_img'), async (req, res) => {
     const user_id = req.params.user_id;
@@ -168,40 +166,17 @@ const router = Router();
   });
 
 
-
-
-
-  // router.delete('/accdelete/:user_id:/transaction_id', async (req, res) => {
   router.delete('/accdelete/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
-    // SQL query to delete user account
-    const sql1 = "DELETE FROM user_auth WHERE user_id = ?";
-    const sql2 = "DELETE FROM user_reg WHERE user_id = ?";
-    const sql3 = "DELETE FROM user_personal WHERE user_id = ?";
-    const sql4 = "DELETE FROM user_contact WHERE user_id = ?";
-    const sql5 = "DELETE FROM user_gov_id WHERE user_id = ?";
-    const sql6 = "DELETE FROM birth_info WHERE user_id = ?";
-    // const sql7 = "DELETE FROM address_info WHERE user_id = ?";
-    
+
+    const sql = "DELETE FROM user_reg WHERE user_id = ?";    
 
     try {
-        // Pass user_id as a parameter to the queryDatabase function
-        const result1 = await queryDatabase(sql1, [user_id]);
-        const result2 = await queryDatabase(sql2, [user_id]);
-        const result3 = await queryDatabase(sql3, [user_id]);
-        const result4 = await queryDatabase(sql4, [user_id]);
-        const result5 = await queryDatabase(sql5, [user_id]);
-        const result6 = await queryDatabase(sql6, [user_id]);
-        // const result7 = await queryDatabase(sql7, [user_id]);
+        const result = await queryDatabase(sql, [user_id]);
+
         res.json({
-            message: "Successfully executed",
-            user_auth_result: result1,
-            user_reg_result: result2,
-            user_personal_result: result3,
-            user_contact_result: result4,
-            user_gov_id_result: result5,
-            birth_info_result: result6,
-            // address_info_result: result7,
+            message: "User successfully deleted",
+            deleted_acc_result: result,
         });
     } catch (err) {
         console.error(err);

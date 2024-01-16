@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ThemeToggle from '../partials/ThemeToggle';
 import AdminDropdownProfile from './AdminDropdownProfile';
 
-function AdminHeader({ sidebarOpen, setSidebarOpen, userName }) {
+function AdminHeader({ sidebarOpen, setSidebarOpen, adminType }) {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   return (
@@ -61,7 +61,7 @@ function AdminHeader({ sidebarOpen, setSidebarOpen, userName }) {
             <ThemeToggle />
             {/*  Divider */}
             <hr className="w-px h-6 bg-slate-200 dark:bg-slate-700 border-none" />
-            <AdminDropdownProfile align="right" userName={userName}/>
+            <AdminDropdownProfile align="right" adminType={adminType} />
           </div>
         </div>
       </div>

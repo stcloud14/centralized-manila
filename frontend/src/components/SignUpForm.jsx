@@ -95,8 +95,6 @@ const handleClick= async e=>{
         try {
           // Check if the user already exists
           const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence", {
-            f_name: userReg.f_name,
-            l_name: userReg.l_name,
             mobile_no: userReg.mobile_no,
           });
 

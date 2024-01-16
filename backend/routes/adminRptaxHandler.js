@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN rptax_payment tp ON ut.transaction_id = tp.transaction_id AND tp.transaction_id IS NOT NULL \
-    JOIN year y ON tp.year_id = y.year_id \
+    LEFT JOIN year y ON tp.year_id = y.year_id \
     \
     WHERE ut.trans_type_id = 1 AND ut.status_type = 'Paid'";
 
@@ -71,6 +71,25 @@ router.get('/', async (req, res) => {
         res.status(500).send('Error retrieving data');
     }
 });
+
+router.post('/updateProcess/:transaction_id', async (req, res) => {
+    const { transaction_id } = req.params;
+    const { new_status } = req.body;
+
+    const updateQuery = `UPDATE user_transaction SET status_type = ? WHERE transaction_id = ?;`;
+    try {
+        const result = await queryDatabase(updateQuery, [new_status, transaction_id]);
+
+        res.json({
+            message: "Successful transaction!",
+            success: result,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error executing queries" });
+    }
+});
+
 
 router.post('/updateComplete/:transaction_id', async (req, res) => {
     const { transaction_id } = req.params;
