@@ -1,98 +1,109 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
-import AdminRPReject from '../admin_modals/AdminRPReject';
-import AdminRPDone from '../admin_modals/AdminRPDone';
 import AdminRPView from '../admin_modals/AdminRPView';
 
 const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
-  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
-  const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [transactions, setTransactions] = useState(processingTransactions);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-
-  const handleOpenRejectModal = (transaction, type) => {
-    setTransType(type);
-    setSelectedTransaction(transaction);
-    setIsRejectModalOpen(true);
-  };
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false); 
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
 
   const handleOpenDoneModal = (transaction, type) => {
     setTransType(type);
     setSelectedTransaction(transaction);
-    setIsDoneModalOpen(true);
+    setIsConfirmOpen(true); // Use the correct state variable
   };
-  const handleCloseModals = () => {
-    setIsRejectModalOpen(false);
-    setIsDoneModalOpen(false);
-    setIsViewModalOpen(false);
-    setSelectedTransaction(null);
-  };
-
   const handleOpenViewModal = (transaction, type) => {
     setTransType(type);
     setSelectedTransaction(transaction);
     setIsViewModalOpen(true);
   };
 
-  const handleViewModalClose = () => {
-    setIsViewModalOpen(false);
-    setSelectedTransaction(null);
+  const handleOpenRejectModal = (transaction, type) => {
+    setTransType(type);
+    setSelectedTransaction(transaction);
+    setIsConfirmOpen(true);
   };
 
+  const handleOpenCompleteModal = (transaction, type) => {
+    setTransType(type);
+    setSelectedTransaction(transaction);
+    setIsCompleteModalOpen(true);
+  };
+  
+  useEffect(() => {
+    setTransactions(processingTransactions);
+  }, [processingTransactions]);
+  
 
-  const handleDoneClick = (updatedTransactionId) => {
-    // Find the selected transaction
-    const selected = uniqueTransactions.find(
-      (transaction) => transaction.transaction_id === updatedTransactionId
-    );
-    // Check if the status is not already 'Complete'
-    if (selected && selected.status_type.toLowerCase() !== 'complete') {
-      // Update the status of the selected transaction to 'Complete'
-      const updatedSelectedTransaction = {
-        ...selected,
-        status_type: 'Complete', // or 'complete' depending on your data
-      };
-      // Update the state with the updated status
-      setTransactions((prevTransactions) =>
-        prevTransactions.map((transaction) =>
-          transaction.transaction_id === updatedTransactionId
-            ? updatedSelectedTransaction
-            : transaction
-        )
+const handleDoneClick = async () => {
+  try {
+    if (!selectedTransaction) {
+      console.error('No transaction selected');
+      return;
+    }
+
+    const body = {
+      new_status: 'Complete',
+    };
+
+    const response = await fetch(`http://localhost:8800/adminrptax/updateComplete/${selectedTransaction.transaction_id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    
+    const updatedTransactions = transactions.map((transaction) =>
+    transaction.transaction_id === selectedTransaction.transaction_id
+      ? { ...transaction, status_type: 'Complete' }
+      : transaction
+  );
+
+  setTransactions(updatedTransactions);
+  handleCloseModal();
+} catch (error) {
+  console.error('Error updating transaction', error);
+}
+};
+
+const handleCloseModal = () => {
+  setIsConfirmOpen(false);
+  setIsViewModalOpen(false);
+  setIsCompleteModalOpen(false);
+  setSelectedTransaction(null);
+};
+
+    const handleRejectClick = async () => {
+      try {
+        const body = {
+          new_status: 'Rejected',
+        };
+    
+        const response = await fetch(`http://localhost:8800/adminrptax/updateReject/${selectedTransaction.transaction_id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        });
+  
+        const updatedTransactions = transactions.map((transaction) =>
+        transaction.transaction_id === selectedTransaction.transaction_id
+          ? { ...transaction, status_type: 'Rejected' }
+          : transaction
       );
-      // Close the modal
-      handleCloseModals();
+
+      setTransactions(updatedTransactions);
+      handleCloseModal();
+    } catch (error) {
+      console.error('Error rejecting transaction', error);
     }
   };
-  
-  const handleRejectClick = (updatedTransactionId) => {
-    console.log('Reject button clicked');
-    const selected = uniqueTransactions.find(
-      (transaction) => transaction.transaction_id === updatedTransactionId
-    );
-  
-    console.log('Selected transaction:', selected);
-    if (selected && selected.status_type.toLowerCase() !== 'rejected') {
-      const updatedSelectedTransaction = {
-        ...selected,
-        status_type: 'Rejected',
-      };
-      setTransactions((prevTransactions) =>
-        prevTransactions.map((transaction) =>
-          transaction.transaction_id === updatedTransactionId
-            ? updatedSelectedTransaction
-            : transaction
-        )
-      );
-  
-      handleCloseModals(); // Close the modal after handling reject
-    }
-  };
-
-  //ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-
+   
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
     const query = searchQuery.toUpperCase();
@@ -104,10 +115,7 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
     return uniqueObjects;
   }
 
-  // Get unique transactions based on 'transaction_id'
   const uniqueTransactions = removeDuplicatesByKey(processingTransactions, 'transaction_id');
-
-  // Filter unique transactions based on the search query
   const filteredTransactions = uniqueTransactions.filter(handleSearch);
   
       return (
@@ -136,7 +144,7 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
                   {/* Tax Clearance Sample */}
                   {filteredTransactions.map((transaction) => (
                      transaction.trans_type === 'Real Property Tax Clearance' && (
-                   <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Clearance')} className="bg-white cursor-pointer dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
+                   <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Clearance')} className="cursor-pointer bg-white cursor-pointer dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                   Transaction ID:{transaction.transaction_id}
                 </div>
@@ -163,15 +171,15 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
                   <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
                     <div
                        onClick={() => handleOpenRejectModal(transaction, 'Real Property Tax Clearance')}
-                      className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow"
-                    >
+                       className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow"
+                       >
                       <span className="text-xs font-normal">Reject</span>
                     </div>
                     <div
-                    onClick={() => handleOpenDoneModal(transaction, 'Real Property Tax Clearance')}
+                    onClick={() => handleOpenCompleteModal(transaction, 'Real Property Tax Clearance')}
                       className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow"
                     >
-                      <span className="text-xs font-normal">Done</span>
+                      <span className="text-xs font-normal">Complete</span>
                     </div>
                   </div>
               </div>
@@ -180,7 +188,7 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
                 {/* Tax Payment Sample */}
                 {filteredTransactions.map((transaction) => (
                   transaction.trans_type === 'Real Property Tax Payment' && (
-               <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Payment')} className="bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
+               <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Payment')} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
                 <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                   Transaction ID: {transaction.transaction_id}
                 </div>
@@ -206,49 +214,101 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
                   <div  onClick={() => handleOpenRejectModal(transaction, 'Real Property Tax Payment')}  className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
                     <span className="text-xs font-normal">Reject</span>
                   </div>
-                  <div onClick={() => handleOpenDoneModal(transaction, 'Real Property Tax Payment')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
-                    <span className="text-xs font-normal">Done</span>
+                  <div onClick={() => handleOpenCompleteModal(transaction, 'Real Property Tax Payment')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                    <span className="text-xs font-normal">Complete</span>
                   </div>
                 </div>
               </div>
            ) ))}
+            {/* REJECT MODAL */}
+            {isConfirmOpen && (
+                    <div className="fixed z-50 inset-0 overflow-y-auto">
+                      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                        </div>
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                          &#8203;
+                        </span>
+                        <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                          <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div className="mx-auto mt-4">
+                              <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                              Are you sure to REJECT this card? This is IRREVERSIBLE.
+                              </span>
+                            </div>
+                          </div>
+                          <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                            <button
+                            onClick={(e) => {
+                              e.stopPropagation(); // Add this line to prevent event propagation
+                              handleCloseModal();
+                            }}
+                              type="button"
+                              className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                            >
+                              <p>Cancel</p>
+                            </button>
+                            <button
+                              onClick={handleRejectClick}
+                              type="button"
+                              className="text-white text-xs md:text-sm bg-red-500 border border-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            >
+                              <p>Reject</p>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )} 
 
-           {isViewModalOpen && selectedTransaction && (
-          <AdminRPView
-            selectedTransaction={selectedTransaction}
-            isOpen={isViewModalOpen}
-            handleClose={handleViewModalClose}
-            setTransType={setTransType}
-          />
-        )}
-         {isRejectModalOpen && selectedTransaction && (
-        <AdminRPReject
-          transactions={transactions}
-          selectedTransaction={selectedTransaction}
-          isOpen4={isRejectModalOpen}
-          setTransactions={setTransactions}
-          handleClose4={() => {
-            handleCloseModals();
-            handleRejectClick(selectedTransaction.transaction_id);
-          }}
-          setTransType={setTransType}
-        />
-      )}
-      
+          {/* COMPLETE MODAL */}
+          {isCompleteModalOpen && (
+            <div className="fixed z-50 inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                  &#8203;
+                </span>
+                <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                  <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div className="mx-auto mt-4">
+                      <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                        Are you sure to COMPLETE this transaction? This is IRREVERSIBLE.
+                      </span>
+                    </div>
+                  </div>
+                  <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                    <button
+                      onClick={handleCloseModal}
+                      type="button"
+                      className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                    >
+                      <p>Cancel</p>
+                    </button>
+                    <button
+                      onClick={handleDoneClick} // Adjust the function for completing the transaction
+                      type="button"
+                      className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                      <p>Complete</p>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
-      {isDoneModalOpen && selectedTransaction && (
-       <AdminRPDone
-       transactions={transactions}
-       setTransactions={setTransactions}
-       selectedTransaction={selectedTransaction}
-       isOpen5={isDoneModalOpen}
-       handleClose5={() => {
-         handleCloseModals();
-         handleDoneClick(selectedTransaction.transaction_id);
-       }}
-       setTransType={setTransType}  // Ensure setTransType is passed
-     />
-      )}
+            {isViewModalOpen && selectedTransaction && !isCompleteModalOpen && !isConfirmOpen &&(
+              <AdminRPView
+              selectedTransaction={selectedTransaction}
+              isOpen={isViewModalOpen}
+              handleClose={handleCloseModal}
+              />
+            )}
+
                 </div>
         </div>
       </div>

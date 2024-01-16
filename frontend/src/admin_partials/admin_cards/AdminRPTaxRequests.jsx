@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
 import AdminRPView from '../admin_modals/AdminRPView';
-import AdminRPProcess from '../admin_modals/AdminRPProcess';
-import AdminRPExpired from '../admin_modals/AdminRPExpired';
+
 
 
 const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProcessing }) => {
@@ -13,7 +12,6 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [transType, setTransType] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [shouldOpenViewModal, setShouldOpenViewModal] = useState(true);
   const [transactions, setTransactions] = useState([]);
   const [isExpiredModalOpen, setIsExpiredModalOpen] = useState(false);
 
@@ -22,33 +20,46 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
 
   const date2 = moment(taxClearance.date_processed).format('MMMM D, YYYY');
   const time2 = moment(taxClearance.date_processed).format('h:mm A');
-
-  const handleOpenModal = (transaction, type) => {
+  
+  const handleOpenProcessModal = (transaction, type) => {
     setTransType(type);
     setSelectedTransaction(transaction);
   
     if (type === 'Real Property Tax Payment' || type === 'Real Property Tax Clearance') {
-      setIsProcessModalOpen(true); // Open the process modal
-      setIsViewModalOpen(false); // Close the view modal
-      setShouldOpenViewModal(false);
+      // Open the process modal only for the specified types
+      setIsProcessModalOpen(true);
+      setIsViewModalOpen(false);
     } else {
-      setIsViewModalOpen(true); // Open the view modal for other types
-      setIsProcessModalOpen(false); // Close the process modal
-      setShouldOpenViewModal(true);
+      // Open the view modal for other types
+      setIsViewModalOpen(true);
+      setIsProcessModalOpen(false);
     }
   };
-
-  const handleCloseProcessModal = () => {
-    setIsProcessModalOpen(false);
-  };
-
-  const handleProcessClick = (transaction) => {
+  
+  const handleProcessClick = async () => {
     try {
-      handleCloseModal();
+      if (!selectedTransaction || !selectedTransaction.transaction_id) {
+        console.error("Transaction ID is not defined.");
+        alert("Error updating transaction status. Please try again later.");
+        return;
+      }
+
+      if (onMoveToProcessing) {
+        onMoveToProcessing(selectedTransaction);
+      }
+
+      if (Array.isArray(onProceed)) {
+        onProceed.forEach((proceedFunction) => {
+          proceedFunction(selectedTransaction);
+        });
+      } else if (onProceed) {
+        onProceed(selectedTransaction);
+      }
+
+      handleCloseModal('process');
     } catch (error) {
       console.error('Error processing transaction', error);
     }
-    setIsProcessModalOpen(false);  // Close the process modal
   };
   
 
@@ -59,11 +70,19 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
     setIsViewModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setIsViewModalOpen(false);
+  const handleCloseModal = (modalType) => {
+    if (modalType === 'view') {
+      setIsViewModalOpen(false);
+    } else if (modalType === 'expired') {
+      setIsExpiredModalOpen(false);
+    } else if (modalType === 'process') { // Corrected modalType check
+      setIsProcessModalOpen(false); // Close the process modal
+    } else {
+      setIsModalOpen(false);
+    }
     setSelectedTransaction(null);
   };
+  
 
   const handleExpiredModal = (transaction, type) => {
     setTransType(type);
@@ -71,30 +90,46 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
     setIsViewModalOpen(false); // Close the view modal
     setIsExpiredModalOpen(true); // Open the expired modal
   };
+
+  const handleExpiredClick = async () => {
+    try {
+      if (!selectedTransaction || !selectedTransaction.transaction_id) {
+        console.error("Transaction ID is not defined.");
+        alert("Error updating transaction status. Please try again later.");
+        return;
+      }
   
-  const handleExpiredClick = (updatedTransactionId) => {
-    const selected = transactions.find(
-      (transaction) => transaction.transaction_id === updatedTransactionId
-    );
-  
-    if (selected && selected.status_type.toLowerCase() !== 'expireed') {
-      const updatedSelectedTransaction = {
-        ...selected,
-        status_type: 'Expired', // or 'complete' depending on your data
+      const body = {
+        new_status: 'Expired',
       };
   
-      setTransactions((prevTransactions) =>
-        prevTransactions.map((transaction) =>
-          transaction.transaction_id === updatedTransactionId
-            ? updatedSelectedTransaction
-            : transaction
-        )
-      );
+      const response = await fetch(`http://localhost:8800/adminrptax/updateExpired/${selectedTransaction.transaction_id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
   
-      handleCloseModal();
-      setIsExpiredModalOpen(false);
+      if (response.ok) {
+        console.log('Transaction status updated successfully');
+
+        const updatedTransactions = transactions.map((transaction) =>
+          transaction.transaction_id === selectedTransaction.transaction_id
+            ? { ...transaction, status_type: 'Expired' }
+            : transaction
+        );
+  
+        setTransactions(updatedTransactions);
+        handleCloseModal('expired'); // Close the modal
+      } else {
+        console.error('Failed to update transaction status');
+      }
+    } catch (error) {
+      console.error('Error updating transaction status', error);
     }
   };
+  
 
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
@@ -159,7 +194,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
                     </svg>
                     <span className="text-xs font-normal">&nbsp;Expired</span>
                   </div>
-                 <div onClick={() => handleOpenModal(transaction, 'Real Property Tax Clearance')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                 <div onClick={() => handleOpenProcessModal(transaction, 'Real Property Tax Clearance')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                   </svg>
@@ -200,7 +235,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
                     </svg>
                     <span className="text-xs font-normal">&nbsp;Expired</span>
                   </div>
-                  <div  onClick={() => handleOpenModal(transaction, 'Real Property Tax Payment')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+                  <div  onClick={() => handleOpenProcessModal(transaction, 'Real Property Tax Payment')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                     </svg>
@@ -209,59 +244,91 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
                 </div>
               </div>
               ))} 
+          {/* EXPIRED MODAL */}
+          {isExpiredModalOpen && (
+            <div className="fixed z-50 inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                  &#8203;
+                </span>
+                <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                  <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div className="mx-auto mt-4">
+                      <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                        Are you sure to mark this card as EXPIRED, after clicking the Expired button the process is irreversible.
+                      </span>
+                    </div>
+                  </div>
+                  <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                <button
+                    onClick={() => handleCloseModal('expired')}
+                    type="button"
+                    className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                  >
+                    <p>Cancel</p>
+                  </button>
+                  <button
+                  onClick={() => handleExpiredClick()}  // Add parentheses here
+                  type="button"
+                  className="text-white text-xs md:text-sm bg-yellow-500 border border-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Expired
+                </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+         {/* PROCESS MODAL */}
+          {isProcessModalOpen && (
+            <div className="fixed z-50 inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                  &#8203;
+                </span>
+                <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                  <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div className="mx-auto mt-4">
+                      <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                        Click the PROCESS button to display the card on the Processing Area.
+                      </span>
+                    </div>
+                  </div>
+                  <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                <button
+                    onClick={() => handleCloseModal('process')}
+                    type="button"
+                    className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                  >
+                    <p>Cancel</p>
+                  </button>
+                  <button
+                  onClick={() => handleProcessClick()}  // Add parentheses here
+                  type="button"
+                  className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Process
+                </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {isViewModalOpen && selectedTransaction && !isExpiredModalOpen && !isProcessModalOpen && (
+            <AdminRPView
+              selectedTransaction={selectedTransaction}
+              isOpen={isViewModalOpen}
+              handleClose={handleCloseModal}
+            />
+          )}
 
-            {/* NGAYON ITO NAMAN YUNG COMPONENT NG MODAL, MAG OOPEN LANG TO KAPAG NAG TRUE ANG ISMODALOPEN OR KAPAG CINLICK YUNG CARD,
-            DALAWA YUNG CONDITION, DAPAT TRUE ANG ISMODALOPEN, AND DAPAT MAY LAMAN ANG SELECTEDTRANSACTION (WHICH IS INEXPLAIN KO SA LINE 23)
-            DAPAT RIN IPASA DITO YUNG MGA VALUES PARA MAACCESS SA MODAL, YUNG SELECTEDTRANSACTION, YUNG STATE NG MODAL KUNG OPEN OR CLOSE,
-            FUNCTION PARA MACLOSE ANG MODAL, AND YUNG TRANS TYPE NA VALUE NG TRANSTYPE */}
-           {isViewModalOpen && selectedTransaction && !isProcessModalOpen && (
-          <AdminRPView
-            selectedTransaction={selectedTransaction}
-            isOpen={isViewModalOpen}
-            handleClose={handleCloseModal}
-            transType={transType}
-          />
-        )}
-
-
-            {isExpiredModalOpen && selectedTransaction && (
-              <AdminRPExpired
-                selectedTransaction={selectedTransaction}
-                isOpen={isExpiredModalOpen}  // Corrected prop name
-                handleClose={() => {
-                  handleCloseModal();
-                  handleExpiredClick(selectedTransaction.transaction_id);
-                  setIsExpiredModalOpen(false);
-                }}
-              />
-            )}
-
-            {isProcessModalOpen && selectedTransaction && (
-              <AdminRPProcess
-                selectedTransaction={selectedTransaction}
-                isOpen={isProcessModalOpen}
-                handleClose={() => {
-                  handleCloseModal();
-                  handleExpiredClick(selectedTransaction.transaction_id);
-                  setIsExpiredModalOpen(false);
-                  setIsProcessModalOpen(false);
-                  // Perform any necessary actions after clicking "Process" on the modal
-
-                  // Call onProceed and onMoveToProcessing here if needed
-                  if (onMoveToProcessing) {
-                    onMoveToProcessing(selectedTransaction);
-                  }
-
-                  if (Array.isArray(onProceed)) {
-                    onProceed.forEach((proceedFunction) => {
-                      proceedFunction(selectedTransaction);
-                    });
-                  } else if (onProceed) {
-                    onProceed(selectedTransaction);
-                  }
-                }}
-              />
-            )}
 
             </div>
           </div>
