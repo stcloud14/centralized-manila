@@ -257,7 +257,7 @@ const LandingPageForm = () => {
               />
               <span>Remember Me</span>
             </label>
-            <a className="text-yellow-500 hover:text-blue-700 hover:text-yellow-600" href="#">Forgot Password?</a>
+            <a className="text-yellow-500 hover:text-blue-700 hover:text-yellow-600" href="/forgotpass">Forgot Password?</a>
           </div>
                       )}
           <div className="text-center">
@@ -288,19 +288,19 @@ const LandingPageForm = () => {
 
           {isSuccess && (
             <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
-              Success! Your SMS has been sent.
+              Success! OTP sent to your number.
             </div>
           )}
 
           {Many_Request && (
             <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
-                Too Many Request please try again Later.
+                Too many request, please try again later.
               </div>
             )}  
           
           {wrong_otp && (
             <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
-                Wrong OTP Re-Type Again.
+                Wrong OTP. Please enter the valid OTP.
               </div>
             )} 
 
