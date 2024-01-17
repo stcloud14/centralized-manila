@@ -24,11 +24,7 @@ const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces,
   const adminRole = state && state.user_role;
 
   const generateReports = async () => {
-    try {
-      // Fetch data for the earliest, second_last, previous, and latest months from transStats
-      const transStatsResponse = await axios.get('http://localhost:8800/admin/transstats');
-      const { earliest, second_last, previous, latest } = transStatsResponse.data;
-  
+    try {  
       const pdf = new jsPDF();
   
       // Load the image as a data URL
@@ -50,13 +46,9 @@ const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces,
       // Add the header for the report with month details
       pdf.autoTable({
         startY: 43, // Adjust the starting Y-coordinate for the table
-        head: [['Real Property Tax Admin Reports', '']],
+        head: [['RPTax Admin Reports', '']],
         body: [
           ['Total Real Property', `P ${revenue.totalRP.toLocaleString()}`],
-          ['Earliest Month', moment(earliest).format('MMMM YYYY'),],
-          ['Second Last Month', moment(second_last).format('MMMM YYYY'),],
-          ['Previous Month', moment(previous).format('MMMM YYYY'),],
-          ['Latest Month', moment(latest).format('MMMM YYYY')],  
         ],
         headStyles: {
           fillColor: false,
@@ -81,17 +73,24 @@ const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces,
         tableWidth: 70,
       });
   
-      // Add horizontal lines
+      // Add 3rd horizontal lines
       pdf.setLineWidth(0.5);
-      pdf.line(130, 90, 195, 90);
-  
-      // Define the table data
+      pdf.line(130, 60, 195, 60);
+
+      // Define the table data with optional chaining
       const tableData = [
-        // include here the count of data per month
-        ['Real Property Tax Payment', taxPayment.Pending + taxPayment.Paid + taxPayment.Canceled + taxPayment.Rejected + taxPayment.Expired + taxPayment.Processing + taxPayment.Complete],
-        ['Real Property Tax Clearance', taxClearance.Pending + taxClearance.Paid + taxClearance.Canceled + taxClearance.Rejected + taxClearance.Expired + taxClearance.Processing + taxClearance.Complete],
-      ];
+        ['Tax Payment Last', taxPayment.tp_last || 0],
+        ['Tax Payment Second Last', taxPayment.tp_second_last || 0],
+        ['Tax Payment Previous', taxPayment.tp_previous || 0],
+        ['Tax Payment Current', taxPayment.tp_current || 0],
+        ['Tax Clearance Last', taxClearance.tc_last || 0],
+        ['Tax Clearance Second Last', taxClearance.tc_second_last || 0],
+        ['Tax Clearance Previous', taxClearance.tc_previous || 0],
+        ['Tax Clearance Current', taxClearance.tc_current || 0],
+      ];    
   
+      console.log('table data', tableData);
+
       // Set styles for aligning values to the left or right
       const styles = {
         cellWidth: 'auto',
