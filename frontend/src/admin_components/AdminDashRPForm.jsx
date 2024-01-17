@@ -28,12 +28,6 @@ const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces,
       // Fetch data for the earliest, second_last, previous, and latest months from transStats
       const transStatsResponse = await axios.get('http://localhost:8800/admin/transstats');
       const { earliest, second_last, previous, latest } = transStatsResponse.data;
-
-       // Fetch data for each month
-      const earliestData = await fetchDataForMonth(earliest);
-      const secondLastData = await fetchDataForMonth(second_last);
-      const previousData = await fetchDataForMonth(previous);
-      const latestData = await fetchDataForMonth(latest);
   
       const pdf = new jsPDF();
   
@@ -59,10 +53,10 @@ const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces,
         head: [['Real Property Tax Admin Reports', '']],
         body: [
           ['Total Real Property', `P ${revenue.totalRP.toLocaleString()}`],
-          ['Earliest Month', moment(earliest).format('MMMM YYYY'), getMonthDataCount(earliestData)],
-          ['Second Last Month', moment(second_last).format('MMMM YYYY'), getMonthDataCount(secondLastData)],
-          ['Previous Month', moment(previous).format('MMMM YYYY'), getMonthDataCount(previousData)],
-          ['Latest Month', moment(latest).format('MMMM YYYY'), getMonthDataCount(latestData)],  
+          ['Earliest Month', moment(earliest).format('MMMM YYYY'),],
+          ['Second Last Month', moment(second_last).format('MMMM YYYY'),],
+          ['Previous Month', moment(previous).format('MMMM YYYY'),],
+          ['Latest Month', moment(latest).format('MMMM YYYY')],  
         ],
         headStyles: {
           fillColor: false,
@@ -119,25 +113,6 @@ const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces,
     } catch (error) {
       console.error('Error generating reports:', error);
     }
-  };
-
-  // Helper function to fetch data for a specific month
-  const fetchDataForMonth = async (month) => {
-    try {
-      // Implement the logic to fetch data for the specified month
-      const response = await axios.get(`http://localhost:8800/admin/transstats/${month}`);
-      return response.data; // Return the relevant data from the response
-    } catch (error) {
-      console.error(`Error fetching data for ${month}:`, error);
-      return {}; // Return an empty object in case of an error
-    }
-  };
-
-  // Helper function to get the count of data for a month
-  const getMonthDataCount = (monthData) => {
-    // Implement the logic to get the count of data from the fetched data
-    // Replace the following line with the actual logic based on your data structure
-    return Object.keys(monthData).length; // Placeholder logic; replace with actual implementation
   };
 
   const loadImageAsDataURL = async (imageUrl) => {
