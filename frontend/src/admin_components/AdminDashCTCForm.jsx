@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import moment from 'moment';
+import jsPDF from 'jspdf';
+import { useLocation } from 'react-router-dom'; 
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -10,8 +13,111 @@ import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
+import logoImage from '../images/mnl_header_pdf.png';
 
 const AdminDashCTCForm =({ cedulaCert, topRegions, topProvinces, topCities, revenue, totalCC })=>{
+
+  const location = useLocation();
+  const { pathname, state } = location;
+  const admin_type = pathname.split("/")[2];
+  const adminRole = state && state.user_role;
+
+  const generateReports = async () => {
+    try {  
+      const pdf = new jsPDF();
+  
+      // Load the image as a data URL
+      const imageDataURL = await loadImageAsDataURL(logoImage);
+  
+      // Add image to the PDF
+      pdf.addImage(imageDataURL, 'PNG', 128, 5, 70, 35);
+  
+      // Add horizontal lines
+      pdf.setLineWidth(0.5);
+      pdf.line(130, 35, 195, 35);
+      pdf.line(130, 42, 195, 42);
+  
+      // Set font size before displaying the date
+      pdf.setFontSize(10);
+      pdf.text('  Date as of now         ' + moment().format('MMMM D, YYYY'), 130, 40);
+      pdf.line(130, 50, 195, 50);
+  
+      // Add the header for the report with month details
+      pdf.autoTable({
+        startY: 43, // Adjust the starting Y-coordinate for the table
+        head: [['Cedula Admin Reports', '']],
+        body: [
+          ['Total Cedula', `P ${revenue.totalCC.toLocaleString()}`],
+        ],
+        headStyles: {
+          fillColor: false,
+          lineColor: 0,
+          textColor: 0,
+          fontSize: 10,
+          fontStyle: 'bold',
+          lineWidthTop: 1,
+          lineWidthBottom: 1,
+        },
+        bodyStyles: {
+          fillColor: false,
+          textColor: 0,
+          fontSize: 10,
+        },
+        alternateRowStyles: {
+          fillColor: false,
+          textColor: 0,
+          fontSize: 10,
+        },
+        margin: { top: 80, left: 130 },
+        tableWidth: 70,
+      });
+  
+      // Add 3rd horizontal lines
+      pdf.setLineWidth(0.5);
+      pdf.line(130, 60, 195, 60);
+
+      // Define the table data with optional chaining
+      const tableData = [
+        ['Cedula Last', cedulaCert.cc_last || 0],
+        ['Cedula Second Last', cedulaCert.cc_second_last || 0],
+        ['Cedula Previous', cedulaCert.cc_previous || 0],
+        ['Cedula Current', cedulaCert.cc_current || 0],
+      ];    
+  
+      console.log('table data', tableData);
+
+      // Set styles for aligning values to the left or right
+      const styles = {
+        cellWidth: 'auto',
+      };
+  
+      // Add the table to the PDF with styles
+      pdf.autoTable({
+        startY: 100,
+        body: tableData,
+        headStyles: {
+          fillColor: [50, 50, 50],
+          textColor: 255,
+        },
+        styles: styles,
+        columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' } },
+      });
+  
+      pdf.save(`${admin_type}_generate_reports.pdf`);
+    } catch (error) {
+      console.error('Error generating reports:', error);
+    }
+  };
+
+  const loadImageAsDataURL = async (imageUrl) => {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    });
+  };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -74,7 +180,7 @@ const AdminDashCTCForm =({ cedulaCert, topRegions, topProvinces, topCities, reve
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner adminType={'CEDULA'} />
+                <AdminBanner adminType={'CEDULA'} generateReports={generateReports} />
   
                 <div className="grid grid-cols-12 gap-6">
                   <div className="flex flex-col col-span-full">
