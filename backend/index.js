@@ -16,6 +16,7 @@ import userSettings from './routes/userSettings.js'
 
 import adminRptaxHandler from './routes/adminRptaxHandler.js'
 import adminURHandler from './routes/adminURHandler.js'
+import adminLcrHandler from './routes/adminLcrHandler.js'
 
 import adminDashboard from './routes/adminDashboard.js'
 
@@ -39,6 +40,7 @@ app.use('/payment', paymentMethod);
 
 
 app.use('/adminrptax', adminRptaxHandler);
+app.use('/adminlcr', adminLcrHandler);
 app.use('/adminur', adminURHandler);
 
 app.use('/admin', adminDashboard);

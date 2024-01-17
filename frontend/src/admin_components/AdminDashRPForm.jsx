@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import moment from 'moment';
+import jsPDF from 'jspdf';
+import { useLocation } from 'react-router-dom'; 
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -11,8 +14,141 @@ import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
 import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
+import logoImage from '../images/mnl_header_pdf.png';
 
 const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces, topCities, revenue, totalRP })=>{
+
+  const location = useLocation();
+  const { pathname, state } = location;
+  const admin_type = pathname.split("/")[2];
+  const adminRole = state && state.user_role;
+
+  const generateReports = async () => {
+    try {
+      // Fetch data for the earliest, second_last, previous, and latest months from transStats
+      const transStatsResponse = await axios.get('http://localhost:8800/admin/transstats');
+      const { earliest, second_last, previous, latest } = transStatsResponse.data;
+
+       // Fetch data for each month
+      const earliestData = await fetchDataForMonth(earliest);
+      const secondLastData = await fetchDataForMonth(second_last);
+      const previousData = await fetchDataForMonth(previous);
+      const latestData = await fetchDataForMonth(latest);
+  
+      const pdf = new jsPDF();
+  
+      // Load the image as a data URL
+      const imageDataURL = await loadImageAsDataURL(logoImage);
+  
+      // Add image to the PDF
+      pdf.addImage(imageDataURL, 'PNG', 128, 5, 70, 35);
+  
+      // Add horizontal lines
+      pdf.setLineWidth(0.5);
+      pdf.line(130, 35, 195, 35);
+      pdf.line(130, 42, 195, 42);
+  
+      // Set font size before displaying the date
+      pdf.setFontSize(10);
+      pdf.text('  Date as of now         ' + moment().format('MMMM D, YYYY'), 130, 40);
+      pdf.line(130, 50, 195, 50);
+  
+      // Add the header for the report with month details
+      pdf.autoTable({
+        startY: 43, // Adjust the starting Y-coordinate for the table
+        head: [['Real Property Tax Admin Reports', '']],
+        body: [
+          ['Total Real Property', `P ${revenue.totalRP.toLocaleString()}`],
+          ['Earliest Month', moment(earliest).format('MMMM YYYY'), getMonthDataCount(earliestData)],
+          ['Second Last Month', moment(second_last).format('MMMM YYYY'), getMonthDataCount(secondLastData)],
+          ['Previous Month', moment(previous).format('MMMM YYYY'), getMonthDataCount(previousData)],
+          ['Latest Month', moment(latest).format('MMMM YYYY'), getMonthDataCount(latestData)],  
+        ],
+        headStyles: {
+          fillColor: false,
+          lineColor: 0,
+          textColor: 0,
+          fontSize: 10,
+          fontStyle: 'bold',
+          lineWidthTop: 1,
+          lineWidthBottom: 1,
+        },
+        bodyStyles: {
+          fillColor: false,
+          textColor: 0,
+          fontSize: 10,
+        },
+        alternateRowStyles: {
+          fillColor: false,
+          textColor: 0,
+          fontSize: 10,
+        },
+        margin: { top: 80, left: 130 },
+        tableWidth: 70,
+      });
+  
+      // Add horizontal lines
+      pdf.setLineWidth(0.5);
+      pdf.line(130, 90, 195, 90);
+  
+      // Define the table data
+      const tableData = [
+        // include here the count of data per month
+        ['Real Property Tax Payment', taxPayment.Pending + taxPayment.Paid + taxPayment.Canceled + taxPayment.Rejected + taxPayment.Expired + taxPayment.Processing + taxPayment.Complete],
+        ['Real Property Tax Clearance', taxClearance.Pending + taxClearance.Paid + taxClearance.Canceled + taxClearance.Rejected + taxClearance.Expired + taxClearance.Processing + taxClearance.Complete],
+      ];
+  
+      // Set styles for aligning values to the left or right
+      const styles = {
+        cellWidth: 'auto',
+      };
+  
+      // Add the table to the PDF with styles
+      pdf.autoTable({
+        startY: 100,
+        body: tableData,
+        headStyles: {
+          fillColor: [50, 50, 50],
+          textColor: 255,
+        },
+        styles: styles,
+        columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' } },
+      });
+  
+      pdf.save(`${admin_type}_generate_reports.pdf`);
+    } catch (error) {
+      console.error('Error generating reports:', error);
+    }
+  };
+
+  // Helper function to fetch data for a specific month
+  const fetchDataForMonth = async (month) => {
+    try {
+      // Implement the logic to fetch data for the specified month
+      const response = await axios.get(`http://localhost:8800/admin/transstats/${month}`);
+      return response.data; // Return the relevant data from the response
+    } catch (error) {
+      console.error(`Error fetching data for ${month}:`, error);
+      return {}; // Return an empty object in case of an error
+    }
+  };
+
+  // Helper function to get the count of data for a month
+  const getMonthDataCount = (monthData) => {
+    // Implement the logic to get the count of data from the fetched data
+    // Replace the following line with the actual logic based on your data structure
+    return Object.keys(monthData).length; // Placeholder logic; replace with actual implementation
+  };
+
+  const loadImageAsDataURL = async (imageUrl) => {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    });
+  };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -75,7 +211,7 @@ const AdminDashChiefForm =({ taxPayment, taxClearance, topRegions, topProvinces,
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner adminType={'RPTAX'} />
+                <AdminBanner adminType={'RPTAX'} generateReports={generateReports} />
   
                 <div className="grid grid-cols-12 gap-6">
                   <RPstats taxPayment={taxPayment} />

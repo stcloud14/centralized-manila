@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
@@ -28,6 +28,25 @@ const AdminLocalCivilRegistryForm =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
+
+  const [birthCert, setBirthCert] = useState([]);
+  const [deathCert, setDeathCert] = useState([]);
+  const [marriageCert, setMarriageCert] = useState([]);
+  const [selectedTransactionId, setSelectedTransactionId] = useState(null);
+
+  useEffect(() => {
+    const fetchUserTransaction = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/adminlcr/`);
+        setBirthCert(res.data.birthcert); 
+        setDeathCert(res.data.deathcert);
+        setMarriageCert(res.data.marriagecert);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserTransaction();
+  }, []);
 
   // View Details Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -128,6 +147,10 @@ const AdminLocalCivilRegistryForm =()=>{
             handleOpenModal={handleOpenModal}
             handleOpenModal2={handleOpenModal2}
             handleOpenModal3={handleOpenModal3}
+            birthCert={birthCert}
+            deathCert={deathCert}
+            marriageCert={marriageCert}
+            selectedTransactionId={selectedTransactionId}
             />
             <AdminLCRProcessing
             handleOpenModal={handleOpenModal}
@@ -139,8 +162,15 @@ const AdminLocalCivilRegistryForm =()=>{
 
           <AdminFooter logo={logoSrc} />
         </main>
-
         <AdminLCRBirthView
+          isOpen={isModalOpen}
+          handleClose={handleCloseModal}
+        />
+        <AdminLCRDeathView
+          isOpen={isModalOpen}
+          handleClose={handleCloseModal}
+        />
+        <AdminLCRMarriageView
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
         />
