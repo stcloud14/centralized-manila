@@ -34,9 +34,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
       setIsViewModalOpen(true);
       setIsProcessModalOpen(false);
     }
-  };
-  
-  const handleProcessClick = async () => {
+  }; const handleProcessClick = async () => {
     try {
       if (!selectedTransaction || !selectedTransaction.transaction_id) {
         console.error("Transaction ID is not defined.");
@@ -44,26 +42,58 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
         return;
       }
 
-      if (onMoveToProcessing) {
-        onMoveToProcessing(selectedTransaction);
-      }
+      // Update the status type in the local state
+      const updatedTransactions = transactions.map((transaction) =>
+        transaction.transaction_id === selectedTransaction.transaction_id
+          ? { ...transaction, status_type: 'Processing' }
+          : transaction
+      );
 
-      if (Array.isArray(onProceed)) {
-        onProceed.forEach((proceedFunction) => {
-          proceedFunction(selectedTransaction);
-        });
-      } else if (onProceed) {
-        onProceed(selectedTransaction);
-      }
+      setTransactions(updatedTransactions);
 
-      handleCloseModal('process');
+      // Update the transaction status to 'Processing' in the backend
+      const body = {
+        new_status: 'Processing',
+      };
+
+      const response = await fetch(`http://localhost:8800/adminrptax/updateProcessing/${selectedTransaction.transaction_id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (response.ok) {
+        console.log('Transaction status updated successfully');
+
+        // Execute onMoveToProcessing function if available
+        if (onMoveToProcessing) {
+          onMoveToProcessing(selectedTransaction);
+        }
+
+        // Execute onProceed functions if available
+        if (Array.isArray(onProceed)) {
+          onProceed.forEach((proceedFunction) => {
+            proceedFunction(selectedTransaction);
+          });
+        } else if (onProceed) {
+          onProceed(selectedTransaction);
+        }
+
+        // Close the modal
+        handleCloseModal('process');
+
+        // Reload the page
+        window.location.reload();
+      } else {
+        console.error('Failed to update transaction status');
+      }
     } catch (error) {
-      console.error('Error processing transaction', error);
+      console.error('Error updating transaction status', error);
     }
   };
   
-
-
   const handleOpenViewModal = (transaction, type) => {
     setTransType(type);
     setSelectedTransaction(transaction);

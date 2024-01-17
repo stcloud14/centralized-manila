@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
+import axios from 'axios';
 import AdminRPView from '../admin_modals/AdminRPView';
 
-const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
+const AdminRPTaxProcessing = ({ setTransType }) => {
+  const [processingTransactions, setProcessingTransactions] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [transactions, setTransactions] = useState(processingTransactions);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
@@ -33,10 +35,24 @@ const AdminRPTaxProcessing = ({ processingTransactions, setTransType }) => {
     setIsCompleteModalOpen(true);
   };
   
-  useEffect(() => {
-    setTransactions(processingTransactions);
-  }, [processingTransactions]);
+    useEffect(() => {
+      const fetchProcessingTransactions = async () => {
+        try {
+          const response = await axios.get('http://localhost:8800/adminrptax/Processing');
+          const data = response.data;
   
+          // Assuming the response structure includes 'taxpayment' and 'taxclearance' arrays
+          const processingTransactions = [...data.taxpayment, ...data.taxclearance];
+  
+          setProcessingTransactions(processingTransactions);
+        } catch (error) {
+          console.error('Error fetching processing transactions', error);
+        }
+      };
+  
+      fetchProcessingTransactions();
+    }, []);
+ 
 
 const handleDoneClick = async () => {
   try {
