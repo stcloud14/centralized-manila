@@ -25,7 +25,7 @@ import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 import logoImage from '../images/mnl_header_pdf.png';
 
-const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxPayment, taxClearance, businessPermit, cedulaCert, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities})=>{
+const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxPayment, taxClearance, businessPermit, cedulaCert, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities })=>{
   
   const location = useLocation();
   const { pathname, state } = location;
@@ -56,9 +56,9 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
         head: [['Chief Admin Reports', '']],
         body: [
           ['Total Business Permit', `P ${revenue.totalBP.toLocaleString()}`],
-          ['Total Cedula', `P ${revenue.totalCC.toLocaleString()}`],
+          ['Total CTC/Cedula', `P ${revenue.totalCC.toLocaleString()}`],
           ['Total Local Civil Registry', `P ${revenue.totalLCR.toLocaleString()}`],
-          ['Total Real Property', `P ${revenue.totalRP.toLocaleString()}`],
+          ['Total Real Property Tax', `P ${revenue.totalRP.toLocaleString()}`],
           ['Total Gross Revenue', `P ${Math.floor(revenue.totalPaid).toLocaleString()}`],
         ],
         headStyles: {
@@ -122,7 +122,11 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
         columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' } },
       });
   
-      pdf.save(`${admin_type}_generate_reports.pdf`);
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+      const filename = `${admin_type}_reports_${formattedDate}.pdf`;
+
+      pdf.save(filename);
     } catch (error) {
       console.error('Error generating reports:', error);
     }
