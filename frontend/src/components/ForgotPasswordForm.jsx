@@ -1,19 +1,188 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PasswordRuleIcon from '../partials/register/PasswordRuleIcon';
+import axios from 'axios';
+import auth from '../../firebase.config';  // Updated import statement
+import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 const ForgotPasswordForm = () => {
-  const [stage, setStage] = useState('enterMobile'); // 'enterMobile', 'enterOTP', 'enterNewPassword'
+  const [authenticated, setAuthenticated] = useState(true);
+  const [isSendOTP, setSendOTP] = useState(true);
+  const [isResetPassword, setResetPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  /////UPDATE
+  const [loading, setLoading] = useState(false); // New state for loading indicator
+  
+  const [isSuccess, setIsSuccess] = useState(false); 
+  const [userAuth, setUserAuth] = useState({
+    mobile_no: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loginError, setLoginError] = useState("");
+  const successTimeoutRef = useRef(null);
+  const { mobile_no } = userAuth;
+  const [verification_code, setVerificationCode] = useState("");
+  const [otpDigits, setOtpDigits] = useState(["", "", "", "", "", ""]);
+  const otpInputRefs = useRef(Array.from({ length: 6 }, () => React.createRef()));
+  const navigate = useNavigate();
 
-  const handleContinueClick = () => {
-    if (stage === 'enterMobile') {
-      setStage('enterOTP');
-    } else if (stage === 'enterOTP') {
-      setStage('enterNewPassword');
+  console.log(mobile_no)
+
+  useEffect(() => {
+    // Focus on the first input when the component mounts
+    if (otpInputRefs.current[0].current) {
+      otpInputRefs.current[0].current.focus();
+    }
+  }, []);
+
+  const handleOtpInputChange = (index, value) => {
+    const newOtpDigits = [...otpDigits];
+  
+    // If the input value is empty and Backspace is pressed, move focus to the previous input
+    if (value === '' && index > 0 && otpInputRefs.current[index - 1].current) {
+      otpInputRefs.current[index - 1].current.focus();
+    } else {
+      // Move focus to the next input if the current input is not empty
+      if (index < otpDigits.length - 1 && otpInputRefs.current[index + 1].current) {
+        otpInputRefs.current[index + 1].current.focus();
+      }
+    }
+  
+    newOtpDigits[index] = value;
+    setOtpDigits(newOtpDigits);
+  
+    // Update the verification_code state
+    const newVerificationCode = newOtpDigits.join('');
+    setVerificationCode(newVerificationCode);
+  };
+
+  const handleKeyDown = (index, e) => {
+    // Handle Backspace key to prevent browser navigation
+    if (e.key === 'Backspace' && index > 0 && otpInputRefs.current[index - 1].current) {
+      e.preventDefault();
+
+      // Clear the value of the current input and move focus to the previous input
+      const newOtpDigits = [...otpDigits];
+      newOtpDigits[index] = '';
+      setOtpDigits(newOtpDigits);
+
+      otpInputRefs.current[index - 1].current.focus();
     }
   };
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === 'mobile_no') {
+      const rawValue = value.replace('+63 ', '');
+      const formattedValue = rawValue.replace(/\D/g, '');
+      setUserAuth((prev) => ({ ...prev, [name]: formattedValue }));
+    } else {
+      setUserAuth((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+
+  
+  const handleVerificationSubmit = async () => {
+    try {
+      setLoading(true);
+      console.log("Verification process started...");
+      // Assuming confirmationResult is declared and set elsewhere in your component
+      const codeConfirmation = await confirmationResult.confirm(verification_code);
+      console.log("User signed in successfully:", codeConfirmation.user);
+      setSendOTP(false)
+      setResetPassword(true)
+      console.log(verification_code);
+      // Now you can update the state or perform any other actions as needed
+    } catch (error) {
+      console.error("Error verifying code:", error);
+      if (error.code === "auth/invalid-verification-code") {
+        // Resend verification code or take appropriate action
+        console.log("Resending verification code...");
+        console.log(verification_code);
+        // Implement code resend logic here
+      }
+    }finally {
+      setLoading(false);
+      console.log("Verification process completed.");
+      // setWrongOtp(true);
+    }
+  };
+
+  const onCaptchaVerify = () => {
+    if (!window.recaptchaVerifier) {
+      const recaptchaOptions = {
+        size: 'invisible',
+        callback: (response) => onSignup(response),
+        expiredCallback: () => console.log('Recaptcha expired'),
+      };
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', recaptchaOptions);
+    }
+    window.recaptchaVerifier.verify().catch((error) => {
+      console.error('Error verifying reCAPTCHA:', error);
+    });
+  };
+
+  const onSignup = async (recaptchaToken) => {
+    const appVerifier = window.recaptchaVerifier;
+    const phoneNumber = `+63${userAuth.mobile_no}`;
+  
+    try {
+      // Only proceed with SMS verification if reCAPTCHA verification is successful
+      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
+      window.confirmationResult = confirmationResult;
+      setIsSuccess(true);
+      successTimeoutRef.current = setTimeout(() => {
+        setIsSuccess(false);
+      }, 4000);
+    } catch (error) {
+      console.error('Error signing in:', error);
+      if (error.code === 'auth/too-many-requests') {
+        console.log('Too many requests');
+        setManyRequest(true);
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`http://localhost:8800/login/forgot-pass/${userAuth.mobile_no}`);
+      if (response.status === 200) {
+        if (isSubmitting) {
+          return;
+        }
+        setAuthenticated(false);
+        const user_id = response.data.results[0].user_id
+        setUserAuth((prev) => ({ ...prev, user_id }));
+        console.log(response)
+        if (authenticated) {
+          setIsSubmitting(true); 
+          onCaptchaVerify();
+        }
+      } else {
+        setLoginError("Authentication failed. Please check .");
+      }
+    } catch (error) {
+      console.error(error);
+      setLoginError("Authentication failed. Please check your credentials.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+
+  // const handleContinueClick = () => {
+  //   if (stage === 'enterMobile') {
+  //     setStage('enterOTP');
+  //   } else if (stage === 'enterOTP') {
+  //     setStage('enterNewPassword');
+  //   }
+  // };
 
   const togglePasswordVisibility = (passwordType) => {
     if (passwordType === 'new') {
@@ -22,6 +191,8 @@ const ForgotPasswordForm = () => {
       setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
     }
   };
+
+
 
 
   return (
@@ -49,8 +220,8 @@ const ForgotPasswordForm = () => {
       {/* Right Side */}
       <div className="lg:w-1/2">
         <div className="p-8 lg:me-40 lg:ms-4 lg:pt-10">
-          <form>
-            {stage === 'enterMobile' ? (
+           <form onSubmit={handleSubmit}>
+            {authenticated ? (
               
               <div className="grid md:grid-cols-1">
                 <h1 className='md:text-start text-center text-black text-3xl font-bold md:mt-0 mt-5'>Forgot password</h1>
@@ -63,6 +234,8 @@ const ForgotPasswordForm = () => {
                     placeholder=' '
                     className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum"
                     maxLength={14}
+                    value={`+63 ${userAuth.mobile_no}`}
+                    onChange={handleChange}
                   />
                   <label
                     htmlFor="mobile_no"
@@ -71,10 +244,30 @@ const ForgotPasswordForm = () => {
                     Mobile Number (+63)
                   </label>
                 </div>
+                <div className="text-center">
+                <button
+                  className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5"
+                  type="submit" 
+                  disabled={isSubmitting}
+                >
+                  Continue
+                </button>
+                {authenticated && loginError && (
+                <p className="text-red-600 p-2 text-xs rounded-full mt-5">{loginError}</p>
+              )}
+              </div>
               </div>
             ) : null}
 
-            {stage === 'enterOTP' ? (
+            <div id="recaptcha-container"></div>
+
+            {isSuccess && (
+            <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+              Success! OTP sent to your number.
+            </div>
+          )}
+
+            {!authenticated && isSendOTP ? (
               <div className="grid grid-cols-1 items-center">
                 <h1 className='md:text-start text-center text-black text-3xl font-bold md:mt-0 mt-5'>OTP Verification</h1>
                 <h1 className='md:text-start text-center text-black text-sm mb-5'>Enter the OTP code sent to your mobile number.</h1>
@@ -84,19 +277,38 @@ const ForgotPasswordForm = () => {
                   </svg>
                 </div>
                 <div className="flex justify-center space-x-2">
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      maxLength="1"
-                      className="w-10 h-10 text-center border border-gray-300 rounded-lg dark:border-slate-400 dark:text-slate-700 bg-transparent"
-                    />
-                  ))}
+                {otpDigits.map((digit, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    maxLength="1"
+                    value={digit}
+                    onChange={(e) => handleOtpInputChange(index, e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(index, e)}
+                    className="w-10 h-10 text-center border border-gray-300 rounded-lg dark:border-slate-400 dark:text-slate-700 bg-transparent"
+                    ref={otpInputRefs.current[index]}
+                  />
+                ))}
                 </div>
+                <div className="text-center">
+                {loading ? (
+                <div className="spinner-border text-blue-500" role="status">
+                  <span className="visually-hidden">Verifying...</span>
+                </div>
+                ) : (
+                <button
+                  className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5"
+                  type="button" 
+                   onClick={handleVerificationSubmit}
+                >
+                  Verify
+                </button>
+                )}
+              </div>
             </div>
             ) : null}
 
-            {stage === 'enterNewPassword' ? (
+            {isResetPassword && !authenticated && !isSendOTP ? (
               <div className="grid md:grid-cols-1">
                 <h1 className='md:text-start text-center text-black text-3xl font-bold md:mt-0 mt-5'>Reset your password</h1>
                 <h1 className='md:text-start text-center text-black text-sm mb-3'>Create your new password, it must be:</h1>
@@ -192,10 +404,18 @@ const ForgotPasswordForm = () => {
                     )}
                   </button>
                 </div>
+                <div className="text-center">
+                <button
+                  className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5"
+                  type="button" 
+                >
+                  Submit
+                </button>
+              </div>
               </div>
             ) : null}
 
-            {stage === 'enterMobile' && (
+            {/* {stage === 'enterMobile' && (
               <div className="text-center">
                 <button
                   className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5"
@@ -205,19 +425,9 @@ const ForgotPasswordForm = () => {
                   Continue
                 </button>
               </div>
-            )}
+            )} */}
 
-            {stage === 'enterOTP' && (
-              <div className="text-center">
-                <button
-                  className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5"
-                  type="button" 
-                  onClick={handleContinueClick}
-                >
-                  Verify
-                </button>
-              </div>
-            )}
+{/* 
 
             {stage === 'enterNewPassword' && (
               <div className="text-center">
@@ -228,7 +438,7 @@ const ForgotPasswordForm = () => {
                   Submit
                 </button>
               </div>
-            )}
+            )} */}
 
           </form>
         </div>
