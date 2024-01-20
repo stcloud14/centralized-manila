@@ -96,7 +96,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
   return (
     isOpen && (
     <div className="fixed z-50 inset-0 ">
-    <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
+    <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 lg:mx-10 md:mx-10 text-center text-xs md:text-sm sm:block sm:p-0">
       <div className="fixed inset-0 transition-opacity" aria-hidden="true">
         <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
       </div>
@@ -123,8 +123,9 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
                   Verify Account
                 </h1>
                 <div className="my-2">
-                  <p className="text-sm text-gray-500 dark:text-slate-400">
-                    Please ensure that the information currently displayed in your profile is the most recent and accurate before proceeding with the verification process.
+                  <p className="text-sm text-gray-600 dark:text-slate-400 text-justify">
+                    Please ensure that the information currently displayed in your profile is the most recent and accurate before proceeding with the verification process. Kindly note that it may take
+                    <span className="font-semibold text-gray-700 dark:text-slate-300"> 3 to 5 working days for the verification to be processed.</span>
                   </p>
                 </div>
               </div>
@@ -174,8 +175,8 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, userI
               <p className="mb-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                 <span className="font-semibold text-xs sm:text-sm">
                   Click to upload
-                </span>{' '}
-                or drag and drop
+                </span>{' '}<span className="hidden md:inline-block">or drag and drop</span>
+                
               </p>
               <p className="text-[10px] sm:text-[12px] text-gray-500 dark:text-gray-400">
                 PNG, JPEG, SVG (MAX. 3MB)
