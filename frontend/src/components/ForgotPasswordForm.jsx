@@ -26,7 +26,8 @@ const ForgotPasswordForm = () => {
   const [verification_code, setVerificationCode] = useState("");
   const [otpDigits, setOtpDigits] = useState(["", "", "", "", "", ""]);
   const otpInputRefs = useRef(Array.from({ length: 6 }, () => React.createRef()));
-  const navigate = useNavigate();
+  
+
 
   console.log(mobile_no)
 
@@ -176,14 +177,6 @@ const ForgotPasswordForm = () => {
   };
 
 
-  // const handleContinueClick = () => {
-  //   if (stage === 'enterMobile') {
-  //     setStage('enterOTP');
-  //   } else if (stage === 'enterOTP') {
-  //     setStage('enterNewPassword');
-  //   }
-  // };
-
   const togglePasswordVisibility = (passwordType) => {
     if (passwordType === 'new') {
       setShowNewPassword((prevShowNewPassword) => !prevShowNewPassword);
@@ -193,6 +186,58 @@ const ForgotPasswordForm = () => {
   };
 
 
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    symbol: false,
+    number: false,
+  });
+
+  const [userReg, setUserReg] = useState({
+    user_pass:"",
+});
+
+const [passwordError, setPasswordError] = useState('');
+const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.,-=])[A-Za-z\d!@#$%^&*.,-=]{8,}$/;
+const navigate = useNavigate();
+
+
+  useEffect(() => {
+    setPasswordCriteria({
+      length: /^.{8,}$/.test(userReg.user_pass),
+      uppercase: /[A-Z]/.test(userReg.user_pass),
+      lowercase: /[a-z]/.test(userReg.user_pass),
+      symbol: /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(userReg.user_pass),
+      number: /\d/.test(userReg.user_pass),
+    });
+  }, [userReg.user_pass]);
+
+
+    
+const handleClick= async e=>{
+  e.preventDefault()
+
+  const { user_pass } = userReg;
+  const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.,-=])[A-Za-z\d!@#$%^&*.,-=]{8,}$/;
+
+  if (user_pass && !passwordRule.test(user_pass)) {
+    setPasswordError('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.');
+    setTimeout(() => {
+      setPasswordError('');
+    }, 3000);
+
+  } else {
+          await axios.post("http://localhost:8800/register", userReg);
+          setIsSuccess(true);
+          console.log('Successful Reset password');
+          setTimeout(() => {
+            setIsSuccess(false);
+          }, 3000);
+          navigate("/");
+        }
+      } 
+      
 
 
   return (
@@ -309,7 +354,10 @@ const ForgotPasswordForm = () => {
             ) : null}
 
             {isResetPassword && !authenticated && !isSendOTP ? (
+              
               <div className="grid md:grid-cols-1">
+
+                {passwordError && <h3 className="text-red-500 text-xs md:text-sm">{passwordError}</h3>}
                 <h1 className='md:text-start text-center text-black text-3xl font-bold md:mt-0 mt-5'>Reset your password</h1>
                 <h1 className='md:text-start text-center text-black text-sm mb-3'>Create your new password, it must be:</h1>
                 <div className='mb-5'>  
@@ -317,21 +365,25 @@ const ForgotPasswordForm = () => {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" dataSlot="icon" className="w-4 h-4">
                       <path className="stroke-emerald-500" strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
                     </svg>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <PasswordRuleIcon isValid={passwordCriteria.length} />
                     <h1 className="italic text-xs">Minimum of 8 Characters</h1>
                   </div>
-
+                  
                   <div className="flex items-center">
-                    <PasswordRuleIcon />
+                    <PasswordRuleIcon isValid={passwordCriteria.uppercase && passwordCriteria.lowercase} />
                     <h1 className="italic text-xs">At Least one uppercase and lowercase letter</h1>
                   </div>
 
                   <div className="flex items-center">
-                    <PasswordRuleIcon />
+                    <PasswordRuleIcon isValid={passwordCriteria.symbol} />
                     <h1 className="italic text-xs">At least one symbol (ex. !@#$%^&*.,-=)</h1>
                   </div>
 
                   <div className="flex items-center">
-                    <PasswordRuleIcon />
+                    <PasswordRuleIcon isValid={passwordCriteria.number} />
                     <h1 className="italic text-xs">At least one number</h1>
                   </div>
                 </div>
@@ -407,7 +459,8 @@ const ForgotPasswordForm = () => {
                 <div className="text-center">
                 <button
                   className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5"
-                  type="button" 
+                  type="button"
+                  onClick={handleClick}
                 >
                   Submit
                 </button>
@@ -415,30 +468,6 @@ const ForgotPasswordForm = () => {
               </div>
             ) : null}
 
-            {/* {stage === 'enterMobile' && (
-              <div className="text-center">
-                <button
-                  className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5"
-                  type="button" 
-                  onClick={handleContinueClick}
-                >
-                  Continue
-                </button>
-              </div>
-            )} */}
-
-{/* 
-
-            {stage === 'enterNewPassword' && (
-              <div className="text-center">
-                <button
-                  className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 mt-5"
-                  type="button" 
-                >
-                  Submit
-                </button>
-              </div>
-            )} */}
 
           </form>
         </div>
