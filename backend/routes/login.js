@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import conn2 from './connection.js'
+import conn1 from './connection1.js'
 import bcrypt from 'bcrypt';
 
 const router = Router();
@@ -82,7 +83,7 @@ router.post('/forgot-pass/:mobile_no', (req, res) => {
     const authSql = "SELECT * FROM admin_auth WHERE mobile_no = ? AND password = ?";
   
     // Authenticate Admin
-    conn2.query(authSql, [admin_name, admin_pass], (err, authResults) => {
+    conn1.query(authSql, [admin_name, admin_pass], (err, authResults) => {
       if (err) {
         console.error("Authentication Error:", err);
         return res.status(500).json({ message: "Error occurred while authenticating." });

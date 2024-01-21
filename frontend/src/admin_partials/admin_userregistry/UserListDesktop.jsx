@@ -25,7 +25,17 @@ const UserListDesktop = ({ handleOpenModal, userApplications }) => {
                     <tr>
                         <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                             <div className="flex items-center pl-3">
-                              Name
+                              Last Name
+                            </div>
+                        </th>
+                        <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                            <div className="flex items-center pl-3">
+                              First Name
+                            </div>
+                        </th>
+                        <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                            <div className="flex items-center pl-3">
+                              Middle Name
                             </div>
                         </th>
                         <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
@@ -69,7 +79,17 @@ const UserListDesktop = ({ handleOpenModal, userApplications }) => {
                 <tr key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                   <td className="px-1 py-2 whitespace-nowrap">
                     <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white pl-3">
-                      {transaction.l_name}, {transaction.f_name} {transaction.m_name}
+                      {transaction.l_name}
+                    </div>
+                  </td>
+                  <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                    <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white pl-3">
+                      {transaction.f_name}
+                    </div>
+                  </td>
+                  <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                    <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white pl-3">
+                      {transaction.m_name}
                     </div>
                   </td>
                   <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
