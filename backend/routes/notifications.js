@@ -12,11 +12,15 @@ router.get('/:user_id', async (req, res) => {
 
     const query = "SELECT * FROM user_notif WHERE user_id = ? ORDER BY date DESC";
     const values = [user_id];
+
+    const query1 = "SELECT COUNT(*) AS total_notif FROM user_notif;";
+    const values1 = [user_id];
   
     try {
     const result = await queryDatabase(query, values);
+    const result1 = await queryDatabase(query1, values1);
 
-    if (result.length > 0) {
+    if (result.length > 0 && result1.length > 0) {
         const notifications = result.map(row => {
             const formattedDate = moment(row.date).format('MMMM D, YYYY');
             const formattedTime = moment(row.date).format('h:mm A');
@@ -28,7 +32,10 @@ router.get('/:user_id', async (req, res) => {
             };
         });
 
-        res.json(notifications);
+        res.json({
+            user_notif: notifications,
+            notif_count: result1[0].total_notif,
+        });
 
     } else {
         res.status(404).send('No records found for the specified user_id');
