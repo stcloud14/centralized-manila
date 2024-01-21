@@ -186,7 +186,7 @@ const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSea
                   </button>
 
         {isDropdownOpen && (
-          <div className="absolute right-0 w-[405px] mt-2 origin-top-right py-1 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
+          <div className="absolute right-0 w-[405px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
 
               {/* Date Row */}
               <div className="flex justify-between items-center">
@@ -265,7 +265,7 @@ const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSea
                 <div className="flex justify-between items-center">
                   <span className="block py-2 text-xs">Type:</span>
                     <select  onChange={handleInputChange}  value={selectedType}  name=""  id=""  className="py-2.5 px-0 text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 md:py-0.5 rounded-full peer cursor-pointer w-[210px]">
-                      <option value="SELECTSTATUS" className="dark:bg-[#3d3d3d]">Select Status</option>
+                      <option value="SELECTSTATUS" className="dark:bg-[#3d3d3d]">Select Type</option>
                       <option value="RPTAXPAYMENT" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
                       <option value="RPTAXCLEARANCE" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
                       <option value="BUSINESSPERMIT" className="dark:bg-[#3d3d3d]">Business Permit</option>
@@ -303,6 +303,11 @@ const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSea
                       <option value="CANCELED" className="bg-slate-200 text-slate-800">Canceled</option>
                     </select>
                 </div>
+
+                <button type="button" onClick={toggleDropdown} className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 mt-1 mb-0.5 rounded-full flex items-center ml-auto">
+
+                    <span className="">Filter</span>
+                  </button>
           </div>
         )}
       </div>
