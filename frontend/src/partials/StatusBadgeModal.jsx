@@ -9,14 +9,15 @@ const getStatusColors = (statusType) => {
     case 'Canceled':
       return { bgColor: 'bg-slate-200', textColor: 'text-slate-800', text: <p>The transaction is canceled.</p> };
     case 'Rejected':
-      return { bgColor: 'bg-red-200', textColor: 'text-red-800', text: <p>The transaction has been rejected. Potential causes include:<br/>
-                                                                          <div className='ml-1'>• Incorrect or incomplete documentation submitted.</div>
-                                                                          <div className='ml-1'>• Failure to adhere to specific procedural requirements.</div>
-                                                                          <div className='ml-1'>• Inconsistent or conflicting details in the submitted paperwork.</div>
-                                                                          <div className='ml-1'>• Non-compliance with City Hall regulations.</div>
-                                                                          <div className='ml-1'>• No records found.</div>
-                                                                          </p>
-                                                                         };
+      return { bgColor: 'bg-red-200', textColor: 'text-red-800', text: 
+        <p>The transaction has been rejected. Potential causes include:<br/>
+        <div className='ml-1'>• Incorrect or incomplete documentation submitted.</div>
+        <div className='ml-1'>• Failure to adhere to specific procedural requirements.</div>
+        <div className='ml-1'>• Inconsistent or conflicting details in the submitted paperwork.</div>
+        <div className='ml-1'>• Non-compliance with City Hall regulations.</div>
+        <div className='ml-1'>• No records found.</div>
+        </p>
+        };
     case 'Expired':
       return { bgColor: 'bg-blue-200', textColor: 'text-blue-800', text: <p>The transaction has expired due to non-payment.</p> };
     case 'Processing':
