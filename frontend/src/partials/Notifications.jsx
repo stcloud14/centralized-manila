@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-import Transition from '../utils/Transition';
-import { useParams } from 'react-router-dom';
 
-function Notifications({ notifications, dropdownOpen, setDropdownOpen }) {
+function Notifications({ notifications }) {
 
 
   return (
