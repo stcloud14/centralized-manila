@@ -23,6 +23,8 @@ const TransactionHistoryForm = () => {
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [sortOrder, setSortOrder] = useState('desc');
   const [sortOption, setSortOption] = useState('date_processed');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [userPersonal, setUserPersonal]=useState({})
 
   useEffect(() => {
@@ -75,7 +77,7 @@ const TransactionHistoryForm = () => {
     };
   }, []);
 
-
+// Filter for date transaction
   const handleSearch = (e) => {
     const searchInput = e.toUpperCase();
     setSearchInput(searchInput);
@@ -83,7 +85,12 @@ const TransactionHistoryForm = () => {
     const filteredTransactions = userTransaction.filter((transaction) => {
       const transactionId = transaction.transaction_id.toString().toUpperCase();
   
-      return transactionId.includes(searchInput) && isSubsequence(searchInput, transactionId);
+      return (
+        transactionId.includes(searchInput) &&
+        isSubsequence(searchInput, transactionId) &&
+        (!startDate || new Date(transaction.date_processed) >= new Date(startDate)) &&
+        (!endDate || new Date(transaction.date_processed) <= new Date(endDate))
+      );
     });
   
     setFilteredTransactions(filteredTransactions.length > 0 ? filteredTransactions : 0);
@@ -171,6 +178,8 @@ const logoSrc = '../src/images/mnl_footer.svg';
               handleSortChange={handleSortChange}
               sortOption={sortOption}
               sortedTransactions={sortedTransactions} 
+              startDate={startDate}
+              endDate={endDate}
               userPersonal={userPersonal} />
             ) : (
               // For Desktop View
@@ -184,6 +193,8 @@ const logoSrc = '../src/images/mnl_footer.svg';
               sortOrder={sortOrder}
               SortIcon={SortIcon}
               sortedTransactions={sortedTransactions} 
+              startDate={startDate}
+              endDate={endDate}
               userPersonal={userPersonal} />
             )}
           </div>

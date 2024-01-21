@@ -4,10 +4,9 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import logoImage from '../../images/mnl_header_pdf.png';
 
-const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, userPersonal }) => {
+const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, userPersonal }) => {
 
   const generatePDF = async () => {
-
     try {
       const pdf = new jsPDF();
   
@@ -16,103 +15,116 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
   
       // Add image to the PDF
       pdf.addImage(imageDataURL, 'PNG', 128, 5, 70, 35);
-
-        pdf.setLineWidth(0.5);
-        pdf.line(130, 40, 195, 40);
-        pdf.line(130, 47, 195, 47);
-        pdf.line(130, 64, 195, 64);
-
-        // Account Summary table
-        const totalAllBalances = sortedTransactions.reduce((total, transaction) => {
-          const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
-          const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.payment) : 0;
-
-          if (!isNaN(amount) && !isNaN(payment)) {
-              total += amount - payment;
-              total = Math.max(total, 0);
-          }
-
-          return total;
+  
+      pdf.setLineWidth(0.5);
+      pdf.line(130, 40, 195, 40);
+      pdf.line(130, 47, 195, 47);
+      pdf.line(130, 64, 195, 64);
+  
+      // Account Summary table
+      const totalAllBalances = sortedTransactions.reduce((total, transaction) => {
+        const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
+        const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.payment) : 0;
+  
+        if (!isNaN(amount) && !isNaN(payment)) {
+          total += amount - payment;
+          total = Math.max(total, 0);
+        }
+  
+        return total;
       }, 0);
-
-        pdf.autoTable({
-          startY: 40,
-          head: [['Account Summary','']],
-          body: [
-              ['',''], 
-              // Update this line in the "Account Summary" table
-              ['Total Balance', `P ${Math.floor(totalAllBalances)}`],
-          ],
-          headStyles: {
-              fillColor: false,  // Remove background color
-              lineColor: 0,
-              textColor: 0,
-              fontSize: 10,
-              fontStyle: 'bold',
-              lineWidthTop: 1,    // Thickness of the top border
-              lineWidthBottom: 1, // Thickness of the bottom border
-          },
-          bodyStyles: {
-              fillColor: false,  // Remove background color
-              textColor: 0,
-              fontSize: 10,
-          },
-          alternateRowStyles: {
-              fillColor: false,  // Remove background color
-              textColor: 0,  
-              fontSize: 10,
-          },
-          margin: { top: 60, left: 130 },
-          tableWidth: 65,
+  
+      pdf.autoTable({
+        startY: 40,
+        head: [['Account Summary', '']],
+        body: [
+          ['', ''],
+          // Update this line in the "Account Summary" table
+          ['Total Balance', `P ${Math.floor(totalAllBalances)}`],
+        ],
+        headStyles: {
+          fillColor: false, // Remove background color
+          lineColor: 0,
+          textColor: 0,
+          fontSize: 10,
+          fontStyle: 'bold',
+          lineWidthTop: 1, // Thickness of the top border
+          lineWidthBottom: 1, // Thickness of the bottom border
+        },
+        bodyStyles: {
+          fillColor: false, // Remove background color
+          textColor: 0,
+          fontSize: 10,
+        },
+        alternateRowStyles: {
+          fillColor: false, // Remove background color
+          textColor: 0,
+          fontSize: 10,
+        },
+        margin: { top: 60, left: 130 },
+        tableWidth: 65,
       });
-      
-        // Adjust the starting y-coordinate for the table
-        const tableStartY = 74;
-
-        // Define styles for the table header
-        const headerStyles = {
-            fillColor: [50, 50, 50],
-            textColor: 255,
-        };
-
-        pdf.autoTable({
-          startY: tableStartY,
-          head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
-          body: sortedTransactions.map((transaction, index) => {
-            const amount = parseFloat(transaction.amount) || 0;
-            const payment = parseFloat(transaction.payment) || 0;
-        
-            // Validate that both amount and payment are valid numbers
-            if (isNaN(amount) || isNaN(payment)) {
-                // Handle non-numeric values, such as displaying an error message or setting them to 0
-                console.error(`Invalid amount or payment for transaction ID ${transaction.transaction_id}`);
-            }
-            
-            // Calculate balance for each row independently
-            let rowBalance = amount - payment;
-            rowBalance = Math.max(rowBalance, 0); // Ensure balance is not negative
-        
-            // Display 0 balance in the first row when amount is paid, and actual balance in subsequent rows
-            const displayBalance = transaction.status_type === 'Paid' && index === 0 ? 'P 0' : `P ${rowBalance < 0 ? '-' : ''}${Math.floor(Math.abs(rowBalance))}`;
-        
-            return [
-                new Date(transaction.date_processed).toLocaleDateString('en-GB'),
-                transaction.time,
-                transaction.transaction_id,
-                transaction.trans_type,
-                transaction.status_type === 'Pending' && transaction.amount ? `P ${Math.floor(amount)}` : '',
-                transaction.status_type === 'Paid' ? `P ${Math.floor(amount)}` : '', // Display payment amount only when amount status is 'Paid'
-                displayBalance, // Display balance with a minus sign when it's negative
-            ];
-          }),
-          headStyles: headerStyles,
-        });
-
-        pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
+  
+      // Adjust the starting y-coordinate for the table
+      const tableStartY = 74;
+  
+      // Define styles for the table header
+      const headerStyles = {
+        fillColor: [50, 50, 50],
+        textColor: 255,
+      };
+  
+      // Filter transactions based on start and end dates
+      const filteredTransactions = sortedTransactions.filter((transaction) => {
+        const transactionDate = new Date(transaction.date_processed);
+        return (
+          (!startDate || transactionDate >= new Date(startDate)) &&
+          (!endDate || transactionDate <= new Date(endDate))
+        );
+      });
+  
+      pdf.autoTable({
+        startY: tableStartY,
+        head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
+        body: filteredTransactions.map((transaction, index) => {
+          const amount = parseFloat(transaction.amount) || 0;
+          const payment = parseFloat(transaction.payment) || 0;
+  
+          // Validate that both amount and payment are valid numbers
+          if (isNaN(amount) || isNaN(payment)) {
+            // Handle non-numeric values, such as displaying an error message or setting them to 0
+            console.error(`Invalid amount or payment for transaction ID ${transaction.transaction_id}`);
+          }
+  
+          // Calculate balance for each row independently
+          let rowBalance = amount - payment;
+          rowBalance = Math.max(rowBalance, 0); // Ensure balance is not negative
+  
+          // Display 0 balance in the first row when amount is paid, and actual balance in subsequent rows
+          const displayBalance =
+            transaction.status_type === 'Paid' && index === 0
+              ? 'P 0'
+              : `P ${rowBalance < 0 ? '-' : ''}${Math.floor(Math.abs(rowBalance))}`;
+  
+          return [
+            new Date(transaction.date_processed).toLocaleDateString('en-GB'),
+            transaction.time,
+            transaction.transaction_id,
+            transaction.trans_type,
+            transaction.status_type === 'Pending' && transaction.amount ? `P ${Math.floor(amount)}` : '',
+            transaction.status_type === 'Paid' ? `P ${Math.floor(amount)}` : '', // Display payment amount only when amount status is 'Paid'
+            displayBalance, // Display balance with a minus sign when it's negative
+          ];
+        }),
+        headStyles: headerStyles,
+      });
+  
+      pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
     } catch (error) {
       console.error('Error generating transaction history:', error);
     }
   };
+  
 
   const loadImageAsDataURL = async (imageUrl) => {
     const response = await fetch(imageUrl);
