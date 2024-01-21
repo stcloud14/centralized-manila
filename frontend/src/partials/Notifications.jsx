@@ -12,7 +12,6 @@ function Notifications({ notifications, dropdownOpen, setDropdownOpen }) {
             <li key={notif.id} className="border-b border-slate-200 dark:border-[#3d3d3d] last:border-0">
               <div
                 className="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-[#242424]"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 <span className="block text-sm mb-2">
                     <span className="font-medium text-slate-800 dark:text-slate-100">{notif.title}</span>
