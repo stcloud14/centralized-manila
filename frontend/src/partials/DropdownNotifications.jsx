@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Transition from '../utils/Transition';
+import Notifications from './Notifications';
 
-function DropdownNotifications({
-  align
-}) {
+function DropdownNotifications({ align }) {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -65,44 +64,9 @@ function DropdownNotifications({
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-4">Notifications</div>
-          <ul>
-            <li className="border-b border-slate-200 dark:border-[#3d3d3d] last:border-0">
-              <div
-                className="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-[#242424]"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                <span className="block text-sm mb-2"><span className="font-medium text-slate-800 dark:text-slate-100">Edit your information in a swipe</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
-                <span className="block text-xs font-normal text-slate-400 dark:text-slate-500">
-                    <span>Feb 9, 2021</span>
-                    <span >&nbsp; 12:32 PM</span>
-                </span>
-              </div>
-            </li>
-            <li className="border-b border-slate-200 dark:border-[#3d3d3d] last:border-0">
-              <div
-                className="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-[#242424]"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                <span className="block text-sm mb-2"><span className="font-medium text-slate-800 dark:text-slate-100">Welcome to Centralized Manila!</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
-                <span className="block text-xs font-normal text-slate-400 dark:text-slate-500">
-                    <span>Feb 9, 2021</span>
-                    <span >&nbsp; 07:31 AM</span>
-                </span>
-              </div>
-            </li>
-            <li className="border-b border-slate-200 dark:border-[#3d3d3d] last:border-0">
-              <div
-                className="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-[#242424]"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                <span className="block text-sm mb-2"><span className="font-medium text-slate-800 dark:text-slate-100">Say goodbye to paper receipts!</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
-                <span className="block text-xs font-normal text-slate-400 dark:text-slate-500">
-                    <span>Feb 9, 2021</span>
-                    <span >&nbsp; 08:31 AM</span>
-                </span>
-              </div>
-            </li>
-          </ul>
+          
+          <Notifications dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} />
+
         </div>
       </Transition>
     </div>

@@ -13,6 +13,7 @@ import cedulaHandler from './routes/cedulaHandler.js';
 import busPermitHandler from './routes/busPermitHandler.js';
 import paymentMethod from './routes/paymentMethod.js';
 import userSettings from './routes/userSettings.js'
+import notifications from './routes/notifications.js'
 
 import adminRptaxHandler from './routes/adminRptaxHandler.js'
 import adminURHandler from './routes/adminURHandler.js'
@@ -37,6 +38,7 @@ app.use('/marriagecertificate', marriageCertHandler)
 app.use('/transachistory', transactionHandler);
 app.use('/usersettings', userSettings);
 app.use('/payment', paymentMethod);
+app.use('/notifications', notifications);
 
 
 app.use('/adminrptax', adminRptaxHandler);
