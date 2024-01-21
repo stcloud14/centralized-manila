@@ -13,7 +13,7 @@ router.get('/:user_id', async (req, res) => {
     const query = "SELECT * FROM user_notif WHERE user_id = ? ORDER BY date DESC";
     const values = [user_id];
 
-    const query1 = "SELECT COUNT(*) AS total_notif FROM user_notif;";
+    const query1 = "SELECT COUNT(*) AS total_notif FROM user_notif WHERE is_read = false";
     const values1 = [user_id];
   
     try {
