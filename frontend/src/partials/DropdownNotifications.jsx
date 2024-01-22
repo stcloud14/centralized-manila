@@ -35,6 +35,29 @@ function DropdownNotifications({ align }) {
 }, []);
 
 
+const handleRead = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await axios.post(`http://localhost:8800/notifications/markread/${user_id}`);
+
+    if (response.status === 200) {
+      try {
+        const res = await axios.get(`http://localhost:8800/notifications/${user_id}`);
+        setNotificationCount(res.data.notif_count);
+        setNotifications(res.data.user_notif);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.error('ERROR:', response.statusText);
+    }
+  } catch (err) {
+    console.error('Transaction error:', err);
+  }
+};
+
+
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
@@ -101,8 +124,8 @@ function DropdownNotifications({ align }) {
               </button>
 
               {isDropdownOpen1 && (
-                <div className="absolute right-6 top-9 w-[200px] origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20 cursor-pointer">
-                  <button>
+                <div className="absolute right-6 top-9 w-[200px] origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
+                  <button onClick={handleRead} className='cursor-pointer'>
                   <span className="flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
