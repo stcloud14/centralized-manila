@@ -40,7 +40,6 @@ const handleRead = async (e) => {
 
   try {
     const response = await axios.post(`http://localhost:8800/notifications/markread/${user_id}`);
-
     setDropdownOpen1(false);
 
     if (response.status === 200) {
@@ -134,9 +133,9 @@ const handleRead = async (e) => {
               </button>
 
               {isDropdownOpen1 && (
-                <div className="absolute right-6 top-9 w-[200px] origin-top-right flex items-center py-2 px-3 bg-white text-slate-500 hover:bg-slate-100 dark:hover:bg-[#3d3d3d] dark:bg-[#212121] dark:text-slate-400 border border-slate-200 dark:border-[#3d3d3d] rounded-sm shadow-md z-20 cursor-pointer">
+                <div className="absolute right-6 top-9 w-[200px] origin-top-right flex group items-center py-2 px-3 bg-white text-slate-500 hover:bg-slate-100 dark:hover:bg-[#3d3d3d] dark:bg-[#212121] dark:text-slate-400 border border-slate-200 dark:border-[#3d3d3d] rounded-sm shadow-md z-20 cursor-pointer">
                   <button onClick={handleRead}>
-                    <span className="flex items-center">
+                    <span className="flex items-center group">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 mr-2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 9v.906a2.25 2.25 0 0 1-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 0 0 1.183 1.981l6.478 3.488m8.839 2.51-4.66-2.51m0 0-1.023-.55a2.25 2.25 0 0 0-2.134 0l-1.022.55m0 0-4.661 2.51m16.5 1.615a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.844a2.25 2.25 0 0 1 1.183-1.981l7.5-4.039a2.25 2.25 0 0 1 2.134 0l7.5 4.039a2.25 2.25 0 0 1 1.183 1.98V19.5Z" />
                       </svg>
