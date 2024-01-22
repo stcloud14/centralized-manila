@@ -41,6 +41,8 @@ const handleRead = async (e) => {
   try {
     const response = await axios.post(`http://localhost:8800/notifications/markread/${user_id}`);
 
+    setDropdownOpen1(false);
+    
     if (response.status === 200) {
       try {
         const res = await axios.get(`http://localhost:8800/notifications/${user_id}`);
