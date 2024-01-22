@@ -169,7 +169,7 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                       className="bg-transparent text-xs md:text-sm border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-full w-full"
                     /> */}
                     <button
-                  className="group flex justify-center w-full items-center text-center p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full mt-2"
+                  className="group flex justify-center w-full items-center text-center p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full"
                   onClick={generatePDF}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -290,22 +290,28 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                         backgroundColor:
                           selectedStatus === "PENDING" ? "#fef08a" :
                           selectedStatus === "PAID" ? "#bbf7d0" :
-                          selectedStatus === "COMPLETE" ? "#bfdbfe" :
+                          selectedStatus === "PROCESSING" ? "#bfdbfe" :
+                          selectedStatus === "COMPLETE" ? "#fbcfe8" :
                           selectedStatus === "REJECTED" ? "#fecaca" :
-                          selectedStatus === "CANCELED" ? "#e2e8f0" : "transparent",
+                          selectedStatus === "CANCELED" ? "#e2e8f0" : 
+                          selectedStatus === "EXPIRED" ? "#fed7aa" : "transparent",
                         color:
                           selectedStatus === "PENDING" ? "#a86728" :
                           selectedStatus === "PAID" ? "#247256" :
-                          selectedStatus === "COMPLETE" ? "#1565C0" :
+                          selectedStatus === "PROCESSING" ? "#1565C0" :
+                          selectedStatus === "COMPLETE" ? "#a12863" :
                           selectedStatus === "REJECTED" ? "#a22b34" :
-                          selectedStatus === "CANCELED" ? "#000000" : "#718096"
+                          selectedStatus === "CANCELED" ? "#000000" : 
+                          selectedStatus === "EXPIRED" ? "#a23d1e" : "#718096"
                       }}>
                       <option value="SELECTSTATUS" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d]">Select Status</option>
                       <option value="PENDING" className="bg-yellow-200 text-yellow-800">Pending</option>
                       <option value="PAID" className="bg-green-200 text-green-800">Paid</option>
-                      <option value="COMPLETE" className="bg-blue-200 text-blue-800">Complete</option>
+                      <option value="PROCESSING" className="bg-blue-200 text-blue-800">Processing</option>
+                      <option value="COMPLETE" className="bg-pink-200 text-pink-800">Complete</option>
                       <option value="REJECTED" className="text-red-800 bg-red-200">Rejected</option>
                       <option value="CANCELED" className="bg-slate-200 text-slate-800">Canceled</option>
+                      <option value="EXPIRED" className="bg-orange-200 text-orange-800">Expired</option>
                     </select>
                 </div>
 

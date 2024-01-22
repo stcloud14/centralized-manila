@@ -167,7 +167,7 @@ const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSea
         <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
           <div className="px-5 py-5">
             <h1 className='font-medium text-center text-slate-700 dark:text-white mb-7 md:mb-3'>Transaction History</h1>
-              <div className="flex items-center justify-end mb-4 md:px-0 md:pr-0.5 px-0.5 text-xs">
+              <div className="flex items-center justify-end mb-2 md:px-0 md:pr-0.5 px-0.5 text-xs">
                 {/* <div className="relative mr-2">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -285,22 +285,28 @@ const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSea
                         backgroundColor:
                           selectedStatus === "PENDING" ? "#fef08a" :
                           selectedStatus === "PAID" ? "#bbf7d0" :
-                          selectedStatus === "COMPLETE" ? "#bfdbfe" :
+                          selectedStatus === "PROCESSING" ? "#bfdbfe" :
+                          selectedStatus === "COMPLETE" ? "#fbcfe8" :
                           selectedStatus === "REJECTED" ? "#fecaca" :
-                          selectedStatus === "CANCELED" ? "#e2e8f0" : "transparent",
+                          selectedStatus === "CANCELED" ? "#e2e8f0" : 
+                          selectedStatus === "EXPIRED" ? "#fed7aa" : "transparent",
                         color:
                           selectedStatus === "PENDING" ? "#a86728" :
                           selectedStatus === "PAID" ? "#247256" :
-                          selectedStatus === "COMPLETE" ? "#1565C0" :
+                          selectedStatus === "PROCESSING" ? "#1565C0" :
+                          selectedStatus === "COMPLETE" ? "#a12863" :
                           selectedStatus === "REJECTED" ? "#a22b34" :
-                          selectedStatus === "CANCELED" ? "#000000" : "#718096"
+                          selectedStatus === "CANCELED" ? "#000000" : 
+                          selectedStatus === "EXPIRED" ? "#a23d1e" : "#718096"
                       }}>
                       <option value="SELECTSTATUS" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d]">Select Status</option>
                       <option value="PENDING" className="bg-yellow-200 text-yellow-800">Pending</option>
                       <option value="PAID" className="bg-green-200 text-green-800">Paid</option>
-                      <option value="COMPLETE" className="bg-blue-200 text-blue-800">Complete</option>
+                      <option value="PROCESSING" className="bg-blue-200 text-blue-800">Processing</option>
+                      <option value="COMPLETE" className="bg-pink-200 text-pink-800">Complete</option>
                       <option value="REJECTED" className="text-red-800 bg-red-200">Rejected</option>
                       <option value="CANCELED" className="bg-slate-200 text-slate-800">Canceled</option>
+                      <option value="EXPIRED" className="bg-orange-200 text-orange-800">Expired</option>
                     </select>
                 </div>
 
@@ -310,7 +316,7 @@ const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSea
                   </button>
           </div>
         )}
-      </div>
+                </div>
 
                 <button onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 mr-2 rounded-full inline-flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
