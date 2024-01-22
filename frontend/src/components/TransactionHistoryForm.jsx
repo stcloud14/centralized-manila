@@ -131,16 +131,15 @@ const TransactionHistoryForm = () => {
     setSelectedType('');
   };
 
-  const handleInputChange = (e) => {
-    const selectedValue = e.target.value;
 
-    setSelectedType(selectedValue);
+  const handleInputChange = (e) => {
+    console.log("Dropdown Value Changed:", e.target.value);
+    setSelectedType(e.target.value);
   };
 
   const handleInputChange2 = (e) => {
-    const selectedStatus = e.target.value;
-
-    setSelectedStatus(selectedStatus);
+    console.log("Dropdown Value Changed:", e.target.value);
+    setSelectedStatus(e.target.value); 
   };
 
 
@@ -221,6 +220,8 @@ const logoSrc = '../src/images/mnl_footer.svg';
               selectedDate={selectedDate}
               selectedDatee={selectedDatee}
               selectedStatus={selectedStatus}
+              handleInputChange={handleInputChange}
+              handleInputChange2={handleInputChange2}
               selectedType={selectedType}
               userPersonal={userPersonal} />
             )}
