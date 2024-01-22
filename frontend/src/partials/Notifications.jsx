@@ -50,17 +50,17 @@ function Notifications({ notifications }) {
         <ul>
             {notifications.map((notif) => (
             <li key={notif.id} className="border-b border-slate-200 dark:border-[#3d3d3d] last:border-0">
-              <div
-                className="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-[#242424]"
-              >
-                <span className="block text-sm mb-2">
-                    <span className="font-medium text-slate-800 dark:text-slate-100">{notif.title}</span>
-                    <span>{notif.message}</span>
-                    <span className="block text-xs font-normal text-slate-400 dark:text-slate-500">
-                        <span>{formatDate(notif.date)}</span>
-                        {/* <span >&nbsp; {notif.time}</span> */}
-                    </span>
+              <div className="py-2 px-4 hover:bg-slate-50 dark:hover:bg-[#242424] flex items-center justify-between">
+              <span className="block text-sm mb-2">
+                <span className="font-medium text-slate-800 dark:text-slate-100">{notif.title}</span>
+                <span>{notif.message}</span>
+                <span className="block text-xs font-normal text-slate-400 dark:text-slate-500">
+                  <span>{formatDate(notif.date)}</span>
                 </span>
+              </span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#0866ff" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0866ff" class="w-3 h-3 mr-1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
               </div>
             </li>
             ))}
