@@ -17,6 +17,8 @@ const ForgotPasswordForm = () => {
   
   const [isSuccess, setIsSuccess] = useState(false); 
   const [isSuccess1, setIsSuccess1] = useState(false); 
+  const [countdown, setCountdown] = useState(false);
+  
   const [userAuth, setUserAuth] = useState({
     mobile_no: "",
   });
@@ -239,17 +241,24 @@ const navigate = useNavigate();
                       });
                       setIsSuccess1(true);
                       console.log('Successful Reset password');
+  
+                      const countdownInterval = setInterval(() => {
+                        setCountdown((prevCountdown) => prevCountdown - 1);
+                      }, 1000); // 1000 milliseconds = 1 second
                       setTimeout(() => {
                         setIsSuccess1(false);
-                        navigate('/')
-                      }, 5000);
+                        setCountdown(5);
+                      }, 3000); // 5000 milliseconds = 5 seconds
+                      setTimeout(() => {
+                        clearInterval(countdownInterval);
+                        navigate('/');
+                      }, 8000);
                     } catch (error) {
                       console.error(error);
                       // Handle error during password change
                     }
                   }
-                };          
-      
+                };
       const handleChange = (e) => {
         const { name, value } = e.target;
     
@@ -354,6 +363,14 @@ const navigate = useNavigate();
                 Wrong OTP. Please enter the valid OTP.
               </div>
             )} 
+
+          {countdown > 0 && (
+        <div className="text-blue-700 md:text-sm text-xs bg-blue-200 text-center rounded-full px-1.5 py-1.5 mb-5">
+
+          Redirecting to the Home Page: {countdown}
+
+        </div>
+      )}
 
             {!authenticated && isSendOTP ? (
               <div className="grid grid-cols-1 items-center">
