@@ -37,6 +37,34 @@ router.get('/:user_id', async (req, res) => {
 });
 
 
+router.post('/markread/:user_id', async (req, res) => {
+    const user_id = req.params.user_id;
+  
+    const query = "UPDATE user_notif SET is_read = 1 WHERE is_read = 0 AND user_id = ?";
+    const values = [user_id];
+  
+    try {
+      const result = await queryDatabase(query, values);
+  
+      if (result.affectedRows > 0) {
+        // Update was successful
+        const updatedNotifications = await queryDatabase("SELECT * FROM user_notif WHERE user_id = ? ORDER BY date DESC", [user_id]);
+  
+        res.json({
+          user_notif: updatedNotifications,
+        });
+      } else {
+        res.status(404).json({ error: 'No records found for the specified user_id' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Error updating data' });
+    }
+  });
+  
+
+
+
   
 //   // API endpoint to add a new notification
 //   app.post('/api/notifications/add', (req, res) => {

@@ -35,6 +35,31 @@ function DropdownNotifications({ align }) {
 }, []);
 
 
+const handleRead = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await axios.post(`http://localhost:8800/notifications/markread/${user_id}`);
+
+    setDropdownOpen1(false);
+
+    if (response.status === 200) {
+      try {
+        const res = await axios.get(`http://localhost:8800/notifications/${user_id}`);
+        setNotificationCount(res.data.notif_count);
+        setNotifications(res.data.user_notif);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.error('ERROR:', response.statusText);
+    }
+  } catch (err) {
+    console.error('Transaction error:', err);
+  }
+};
+
+
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
@@ -69,9 +94,11 @@ function DropdownNotifications({ align }) {
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-slate-500 dark:text-zinc-400">
             <path fillRule="evenodd" d="M5.25 9a6.75 6.75 0 0 1 13.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 0 1-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 1 1-7.48 0 24.585 24.585 0 0 1-4.831-1.244.75.75 0 0 1-.298-1.205A8.217 8.217 0 0 0 5.25 9.75V9Zm4.502 8.9a2.25 2.25 0 1 0 4.496 0 25.057 25.057 0 0 1-4.496 0Z" clipRule="evenodd" />
         </svg>
+        {notificationCount > 0 ? 
         <div className="absolute -top-[0.30rem] -right-[0.30rem] w-[1.17rem] h-[1.17rem] bg-rose-500 border-2 border-white dark:border-[#181818] rounded-full flex items-center justify-center text-[0.55rem] text-white font-semibold">
           <span>{notificationCount}</span>
         </div>
+        : null}
       </button>
 
       <Transition
@@ -91,21 +118,21 @@ function DropdownNotifications({ align }) {
         >
           <div className="flex items-center justify-between text-xs font-semibold text-slate-400 dark:text-slate-500  pt-1.5 pb-2 px-4">NOTIFICATIONS
             <div className="flex items-center">
-              <button type="button" onClick={toggleDropdown1} className="">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 hover:text-slate-500 dark:hover:text-slate-400">
-                  <path fillRule="evenodd" d="M4.5 12a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm6 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm6 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" clipRule="evenodd" />
+              <button type="button" onClick={toggleDropdown1} className="w-6 h-6 rounded-full bg-white hover:bg-slate-200 dark:bg-[#181818] dark:hover:bg-[#3d3d3d]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#a1a1aa" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                 </svg>
               </button>
 
               {isDropdownOpen1 && (
-                <div className="absolute right-6 top-9 w-[200px] origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20 cursor-pointer">
-                  <button>
-                  <span className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                  </svg>
-                    Mark all as read
-                  </span>
+                <div className="absolute right-6 top-9 w-[200px] origin-top-right pb-1 pt-2 px-3 bg-white hover:bg-slate-100  dark:hover:bg-[#3d3d3d] dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20 cursor-pointer">
+                  <button onClick={handleRead}>
+                    <span className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+                      Mark all as read
+                    </span>
                   </button>
                 </div>
               )}
