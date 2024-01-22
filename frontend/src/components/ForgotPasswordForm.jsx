@@ -7,9 +7,9 @@ import auth from '../../firebase.config';  // Updated import statement
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 const ForgotPasswordForm = () => {
-  const [authenticated, setAuthenticated] = useState(false); //set false and later remove it so that it will works place true
-  const [isSendOTP, setSendOTP] = useState(false); //set false and later remove it so that it will works place true
-  const [isResetPassword, setResetPassword] = useState(true); //set it false when you are done configure
+  const [authenticated, setAuthenticated] = useState(true); //set false and later remove it so that it will works place true
+  const [isSendOTP, setSendOTP] = useState(true); //set false and later remove it so that it will works place true
+  const [isResetPassword, setResetPassword] = useState(false); //set it false when you are done configure
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   /////UPDATE
@@ -142,7 +142,7 @@ const ForgotPasswordForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8800/login/forgot-pass/${userAuth.mobile_no}`);
+      const response = await axios.post(`http://localhost:8800/forgotpass/forgot-pass/${userAuth.mobile_no}`);
       if (response.status === 200) {
         if (isSubmitting) {
           return;
@@ -220,7 +220,7 @@ const navigate = useNavigate();
                     }, 3000);
 
                   } else {
-                          await axios.post(`http://localhost:8800/forgotpass/${user_id}`);
+                          await axios.post(`http://localhost:8800/forgotpass/reset-pass/${user_id}`);
                           setIsSuccess(true);
                           console.log('Successful Reset password');
                           setTimeout(() => {
