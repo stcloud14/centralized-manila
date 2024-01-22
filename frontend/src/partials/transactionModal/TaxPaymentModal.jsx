@@ -122,7 +122,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) =>
               </span>
               <div className="inline-block align-bottom rounded-lg text-center overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
                 {transaction_id ? (
-                  status_type !== 'Paid' && (
+                  status_type === 'Pending' && (
                     <div className='bg-white dark:bg-[#212121] mb-5 p-5 rounded-lg'>
                       <div className="grid md:grid-cols-4 grid-cols-2 gap-3 items-center justify-center text-xs w-full">
                         <div className="flex flex-col items-center text-center">
