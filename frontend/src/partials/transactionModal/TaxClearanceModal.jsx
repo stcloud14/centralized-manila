@@ -226,7 +226,7 @@ const TaxClearanceModal = ({ user_id, selectedTransaction, onClose, onSubmit }) 
                         </button>
                         )}
                       </div>
-                  </div>
+                    </div>
     
                   </div>
                 </div>
