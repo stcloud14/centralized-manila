@@ -23,8 +23,10 @@ const TransactionHistoryForm = () => {
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [sortOrder, setSortOrder] = useState('desc');
   const [sortOption, setSortOption] = useState('date_processed');
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDatee, setSelectedDatee] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectedType, setSelectedType] = useState('');
   const [userPersonal, setUserPersonal]=useState({})
 
   useEffect(() => {
@@ -77,7 +79,7 @@ const TransactionHistoryForm = () => {
     };
   }, []);
 
-// Filter for date transaction
+  // Filter for selected date range, type, status of transaction
   const handleSearch = (e) => {
     const searchInput = e.toUpperCase();
     setSearchInput(searchInput);
@@ -88,8 +90,10 @@ const TransactionHistoryForm = () => {
       return (
         transactionId.includes(searchInput) &&
         isSubsequence(searchInput, transactionId) &&
-        (!startDate || new Date(transaction.date_processed) >= new Date(startDate)) &&
-        (!endDate || new Date(transaction.date_processed) <= new Date(endDate))
+        (!selectedDate || new Date(transaction.date_processed) >= new Date(selectedDate)) &&
+        (!selectedDatee || new Date(transaction.date_processed) <= new Date(selectedDatee)) &&
+        (!selectedStatus || selectedStatus === '' || transaction.status.toUpperCase().includes(selectedStatus.toUpperCase())) &&
+        (!selectedType || selectedType === '' || transaction.type.toUpperCase().includes(selectedType.toUpperCase()))
       );
     });
   
@@ -117,11 +121,28 @@ const TransactionHistoryForm = () => {
 
 
   const handleClearFilter = () => {
-    setSearchInput([]);
+    setSearchInput('');
     setFilteredTransactions([]);
     setSortOption('date_processed');
-    setSortOrder('desc')
+    setSortOrder('desc');
+    setSelectedDate('');
+    setSelectedDatee('');
+    setSelectedStatus('');
+    setSelectedType('');
   };
+
+  const handleInputChange = (e) => {
+    const selectedValue = e.target.value;
+
+    setSelectedType(selectedValue);
+  };
+
+  const handleInputChange2 = (e) => {
+    const selectedStatus = e.target.value;
+
+    setSelectedStatus(selectedStatus);
+  };
+
 
 
   const handleSortChange = (option) => {
@@ -178,8 +199,12 @@ const logoSrc = '../src/images/mnl_footer.svg';
               handleSortChange={handleSortChange}
               sortOption={sortOption}
               sortedTransactions={sortedTransactions} 
-              startDate={startDate}
-              endDate={endDate}
+              handleInputChange={handleInputChange}
+              handleInputChange2={handleInputChange2}
+              selectedDate={selectedDate}
+              selectedDatee={selectedDatee}
+              selectedStatus={selectedStatus}
+              selectedType={selectedType}
               userPersonal={userPersonal} />
             ) : (
               // For Desktop View
@@ -193,8 +218,10 @@ const logoSrc = '../src/images/mnl_footer.svg';
               sortOrder={sortOrder}
               SortIcon={SortIcon}
               sortedTransactions={sortedTransactions} 
-              startDate={startDate}
-              endDate={endDate}
+              selectedDate={selectedDate}
+              selectedDatee={selectedDatee}
+              selectedStatus={selectedStatus}
+              selectedType={selectedType}
               userPersonal={userPersonal} />
             )}
           </div>
