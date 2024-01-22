@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import StatusBadgeDesktop from '../StatusBadgeDesktop';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import logoImage from '../../images/mnl_header_pdf.png';
+import Flatpickr from 'react-flatpickr';
 
-const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, userPersonal }) => {
+import TransTypeDropdown from '../transDropdown/TransTypeDropdown';
+import StatusTypeDropdown from '../transDropdown/StatusTypeDropdown';
+
+const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, userPersonal }) => {
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
 
   const generatePDF = async () => {
     try {
@@ -77,9 +86,10 @@ const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSea
       // Filter transactions based on start and end dates
       const filteredTransactions = sortedTransactions.filter((transaction) => {
         const transactionDate = new Date(transaction.date_processed);
+
         return (
-          (!startDate || transactionDate >= new Date(startDate)) &&
-          (!endDate || transactionDate <= new Date(endDate))
+          (!selectedDate || transactionDate >= new Date(selectedDate)) &&
+          (!selectedDatee || transactionDate <= new Date(selectedDatee))  
         );
       });
   
@@ -143,15 +153,146 @@ const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSea
         <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
           <div className="px-5 py-5">
             <h1 className='font-medium text-center text-slate-700 dark:text-white mb-7 md:mb-3'>Transaction History</h1>
-              <div className="flex items-center justify-end mb-4 md:px-0 md:pr-0.5 px-0.5 text-xs">
-                <div className="relative mr-2">
+              <div className="flex items-center justify-end mb-2 md:px-0 md:pr-0.5 px-0.5 text-xs">
+                {/* <div className="relative mr-2">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                   </span>
                   <input value={searchInput} onChange={(e) => handleSearch(e.target.value.toUpperCase())} id="searchInput" onKeyDown={(e) => e.key === 'Enter' && handleSearch()} type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full md:w-80 border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-full w-full md:w-auto"/>
+                </div> */}
+                
+                <div className="relative inline-block text-left z-10">
+                  <button type="button" onClick={toggleDropdown} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 mr-2 rounded-full inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                      <path className="stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+                  </svg>
+                    <span className="pl-1">Filter</span>
+                  </button>
+
+        {isDropdownOpen && (
+          <div className="absolute right-0 w-[405px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
+
+              {/* Date Row */}
+              <div className="flex justify-between items-center">
+                  <span className="block py-2 text-xs">Date:</span>
+                  <span>
+                          <Flatpickr
+                            id=""
+                            name=""
+                            value={selectedDate}
+                            onChange={(date) => {
+                              const formattedDate = date.length > 0 ? (() => {
+                                const originalDate = new Date(date[0]);
+                                originalDate.setDate(originalDate.getDate() + 1);
+                                return originalDate.toISOString().split('T')[0];
+                              })() : '';
+                              setSelectedDate(formattedDate);
+                            }}
+                            options={{
+                              dateFormat: 'Y-m-d',
+                              altInput: true,
+                              altFormat: 'F j, Y',
+                            }}
+                            placeholder="From"
+                            className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[140px]"
+                          />
+                          <span> - </span>
+                          <Flatpickr
+                            id=""
+                            name=""
+                            value={selectedDatee}
+                            onChange={(date) => {
+                              const formattedDate = date.length > 0 ? (() => {
+                                const originalDate = new Date(date[0]);
+                                originalDate.setDate(originalDate.getDate() + 1);
+                                return originalDate.toISOString().split('T')[0];
+                              })() : '';
+                              setSelectedDatee(formattedDate);
+                            }}
+                            options={{
+                              dateFormat: 'Y-m-d',
+                              altInput: true,
+                              altFormat: 'F j, Y',
+                            }}
+                            placeholder="To"
+                            className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[140px]"
+                          />
+                    </span>
+                 </div>
+              
+
+              {/* Transaction ID Row */}
+              <div className="flex justify-between items-center">
+                  <span className="block pr-10 py-2 text-xs">
+                    Transaction ID:
+                  </span>
+
+                  <div className="relative flex items-center">
+                    <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                        <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                      </svg>
+                    </span>
+                    <input
+                      value={searchInput}
+                      onChange={(e) => handleSearch(e.target.value.toUpperCase())}
+                      id="searchInput"
+                      onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                      type="text"
+                      placeholder="Search ID..."
+                      className="bg-transparent text-xs w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-full"
+                    />
+                  </div>
                 </div>
+
+                {/* Type Row */}
+                <div className="flex justify-between items-center">
+                  <span className="block py-2 text-xs">Type:</span>
+                    <select  value={selectedType} onChange={handleInputChange} name=""  id=""  className="py-2.5 px-0 text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 md:py-0.5 rounded-full peer cursor-pointer w-[210px]">
+                      <TransTypeDropdown />
+                  </select>
+                </div>
+
+                {/* Status Row */}
+                <div className="flex justify-between items-center">
+                  <span className="block py-2 text-xs">Status:</span>
+                    <select  value={selectedStatus} onChange={handleInputChange2} name="" id="" className={`py-2.5 px-0 text-xs border bg-transparent border-slate-300 pl-4 md:py-0.5 rounded-full peer cursor-pointer`}
+                      style={{
+                        width: "125px",
+                        backgroundColor:
+                          selectedStatus === "PENDING" ? "#fef08a" :
+                          selectedStatus === "PAID" ? "#bbf7d0" :
+                          selectedStatus === "COMPLETE" ? "#bfdbfe" :
+                          selectedStatus === "REJECTED" ? "#fecaca" :
+                          selectedStatus === "CANCELED" ? "#e2e8f0" : "transparent",
+                        color:
+                          selectedStatus === "Pending" ? "#a86728" :
+                          selectedStatus === "Paid" ? "#247256" :
+                          selectedStatus === "PROCESSING" ? "#1565C0" :
+                          selectedStatus === "Complete" ? "#a12863" :
+                          selectedStatus === "Rejected" ? "#a22b34" :
+                          selectedStatus === "Canceled" ? "#000000" : 
+                          selectedStatus === "EXPIRED" ? "#a23d1e" : "#718096"
+                      }}>
+                      <option value="SELECTSTATUS" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d]">Select Status</option>
+                      <option value="PENDING" className="bg-yellow-200 text-yellow-800">Pending</option>
+                      <option value="PAID" className="bg-green-200 text-green-800">Paid</option>
+                      <option value="COMPLETE" className="bg-blue-200 text-blue-800">Complete</option>
+                      <option value="REJECTED" className="text-red-800 bg-red-200">Rejected</option>
+                      <option value="CANCELED" className="bg-slate-200 text-slate-800">Canceled</option>
+                    </select>
+                </div>
+
+                <button type="button" onClick={toggleDropdown} className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 mt-1 mb-0.5 rounded-full flex items-center ml-auto">
+
+                    <span className="">Filter</span>
+                  </button>
+          </div>
+        )}
+                </div>
+
                 <button onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 mr-2 rounded-full inline-flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
