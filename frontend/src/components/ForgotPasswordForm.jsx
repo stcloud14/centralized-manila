@@ -78,11 +78,6 @@ const ForgotPasswordForm = () => {
     }
   };
 
-
- 
-
-
-  
   const handleVerificationSubmit = async () => {
     try {
       setLoading(true);
