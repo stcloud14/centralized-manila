@@ -12,7 +12,7 @@ const conn1 = mysql.createConnection({
       console.error("Error connecting to the database: " + err);
       return;
     }
-    console.log("Connected to the second database");
+    console.log("Connected to the admindatabase");
   });
 
 

@@ -21,19 +21,19 @@ router.get('/:user_id', async (req, res) => {
     const result1 = await queryDatabase(query1, values1);
 
     if (result.length > 0 && result1.length > 0) {
-        const notifications = result.map(row => {
-            const formattedDate = moment(row.date).format('MMMM D, YYYY');
-            const formattedTime = moment(row.date).format('h:mm A');
+        // const notifications = result.map(row => {
+        //     const formattedDate = moment(row.date).format('MMMM D, YYYY');
+        //     const formattedTime = moment(row.date).format('h:mm A');
 
-            return {
-                ...row,
-                date: formattedDate,
-                time: formattedTime,
-            };
-        });
+        //     return {
+        //         ...row,
+        //         date: formattedDate,
+        //         time: formattedTime,
+        //     };
+        // });
 
         res.json({
-            user_notif: notifications,
+            user_notif: result,
             notif_count: result1[0].total_notif,
         });
 
