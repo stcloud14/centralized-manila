@@ -117,12 +117,6 @@ const TransactionHistoryForm = () => {
   
     return false;
   };
-  
-  const handleDateChange = (startDate, endDate) => {
-    setSelectedDate(startDate);
-    setSelectedDatee(endDate);
-    handleSearch(searchInput);
-  };
 
   const handleClearFilter = () => {
     setSearchInput('');
