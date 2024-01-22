@@ -20,7 +20,7 @@ router.get('/:user_id', async (req, res) => {
     const result = await queryDatabase(query, values);
     const result1 = await queryDatabase(query1, values1);
 
-    if (result.length > 0 && result1.length > 0) {
+    if (result.length > 0) {
         
         res.json({
             user_notif: result,
