@@ -7,9 +7,9 @@ import auth from '../../firebase.config';  // Updated import statement
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 const ForgotPasswordForm = () => {
-  const [authenticated, setAuthenticated] = useState(true);
-  const [isSendOTP, setSendOTP] = useState(true);
-  const [isResetPassword, setResetPassword] = useState(false);
+  const [authenticated, setAuthenticated] = useState(true); //set false and later remove it so that it will works place true
+  const [isSendOTP, setSendOTP] = useState(true); //set false and later remove it so that it will works place true
+  const [isResetPassword, setResetPassword] = useState(false); //set it false when you are done configure
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   /////UPDATE
@@ -74,17 +74,7 @@ const ForgotPasswordForm = () => {
   };
 
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === 'mobile_no') {
-      const rawValue = value.replace('+63 ', '');
-      const formattedValue = rawValue.replace(/\D/g, '');
-      setUserAuth((prev) => ({ ...prev, [name]: formattedValue }));
-    } else {
-      setUserAuth((prev) => ({ ...prev, [name]: value }));
-    }
-  };
+ 
 
 
   
@@ -130,7 +120,7 @@ const ForgotPasswordForm = () => {
 
   const onSignup = async (recaptchaToken) => {
     const appVerifier = window.recaptchaVerifier;
-    const phoneNumber = `+63${userAuth.mobile_no}`;
+    // const phoneNumber = `+63${userAuth.mobile_no}`;
   
     try {
       // Only proceed with SMS verification if reCAPTCHA verification is successful
@@ -152,7 +142,7 @@ const ForgotPasswordForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8800/login/forgot-pass/${userAuth.mobile_no}`);
+      const response = await axios.post(`http://localhost:8800/forgotpass/forgot-pass/${userAuth.mobile_no}`);
       if (response.status === 200) {
         if (isSubmitting) {
           return;
@@ -196,6 +186,8 @@ const ForgotPasswordForm = () => {
 
   const [userReg, setUserReg] = useState({
     user_pass:"",
+    new_user_pass:"",
+    confirm_user_pass:"",
 });
 
 const [passwordError, setPasswordError] = useState('');
@@ -205,39 +197,50 @@ const navigate = useNavigate();
 
   useEffect(() => {
     setPasswordCriteria({
-      length: /^.{8,}$/.test(userReg.user_pass),
-      uppercase: /[A-Z]/.test(userReg.user_pass),
-      lowercase: /[a-z]/.test(userReg.user_pass),
-      symbol: /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(userReg.user_pass),
-      number: /\d/.test(userReg.user_pass),
+      length: /^.{8,}$/.test(userReg.new_user_pass),
+      uppercase: /[A-Z]/.test(userReg.new_user_pass),
+      lowercase: /[a-z]/.test(userReg.new_user_pass),
+      symbol: /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(userReg.new_user_pass),
+      number: /\d/.test(userReg.new_user_pass),
     });
-  }, [userReg.user_pass]);
+  }, [userReg.new_user_pass]);
 
 
     
-const handleClick= async e=>{
-  e.preventDefault()
+            const handleClick= async e=>{
+              e.preventDefault()
 
-  const { user_pass } = userReg;
-  const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.,-=])[A-Za-z\d!@#$%^&*.,-=]{8,}$/;
+                  const { new_user_pass } = userReg;
+                  const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.,-=])[A-Za-z\d!@#$%^&*.,-=]{8,}$/;
 
-  if (user_pass && !passwordRule.test(user_pass)) {
-    setPasswordError('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.');
-    setTimeout(() => {
-      setPasswordError('');
-    }, 3000);
+                  if (new_user_pass && !passwordRule.test(new_user_pass)) {
+                    setPasswordError('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.');
+                    setTimeout(() => {
+                      setPasswordError('');
+                    }, 3000);
 
-  } else {
-          await axios.post("http://localhost:8800/register", userReg);
-          setIsSuccess(true);
-          console.log('Successful Reset password');
-          setTimeout(() => {
-            setIsSuccess(false);
-          }, 3000);
-          navigate("/");
-        }
-      } 
+                  } else {
+                          await axios.post(`http://localhost:8800/forgotpass/reset-pass/${user_id}`);
+                          setIsSuccess(true);
+                          console.log('Successful Reset password');
+                          setTimeout(() => {
+                            setIsSuccess(false);
+                          }, 3000);
+                          navigate("/");
+                        }
+              }             
       
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+    
+        if (name === 'mobile_no') {
+          const rawValue = value.replace('+63 ', '');
+          const formattedValue = rawValue.replace(/\D/g, '');
+          setUserAuth((prev) => ({ ...prev, [name]: formattedValue }));
+        } else {
+          setUserReg((prev) => ({ ...prev, [name]: value }));
+        }
+      };
 
 
   return (
@@ -391,13 +394,15 @@ const handleClick= async e=>{
                 <div className="relative z-0 w-full lg:mb-0 group">
                   <input
                     type={showNewPassword ? 'text' : 'password'}
-                    id="new_password"
-                    name="new_password"
+                    id="new_user_pass"
+                    name="new_user_pass"
                     placeholder=" "
+                    onChange={handleChange}
+                    value={userReg.new_user_pass}
                     className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum"
                   />
                   <label
-                    htmlFor="new_password"
+                    htmlFor="user_pass"
                     className="peer-focus:font-medium appearance-none absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
                     New Password
@@ -425,14 +430,16 @@ const handleClick= async e=>{
                 {/* Confirm New Password */}
                 <div className="relative z-0 w-full lg:mb-0 group mt-4">
                   <input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    id="confirm_password"
-                    name="confirm_password"
-                    placeholder=" "
+                   type={showConfirmPassword ? 'text' : 'password'}
+                   id="confirm_user_pass"
+                   name="confirm_user_pass"
+                   placeholder=" "
+                   onChange={handleChange}
+                   value={userReg.confirm_user_pass}
                     className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum"
                   />
                   <label
-                    htmlFor="confirm_password"
+                    htmlFor="user_pass"
                     className="peer-focus:font-medium appearance-none absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
                     Confirm New Password
