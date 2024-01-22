@@ -116,24 +116,21 @@ const handleRead = async (e) => {
         >
           <div className="flex items-center justify-between text-xs font-semibold text-slate-400 dark:text-slate-500  pt-1.5 pb-2 px-4">NOTIFICATIONS
             <div className="flex items-center">
-              <button type="button" onClick={toggleDropdown1} className="">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2b2a2a " class="w-6 h-6 ">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#a1a1aa " viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 ">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-                  <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm0 8.625a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25ZM15.375 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0ZM7.5 10.875a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z" clip-rule="evenodd" />
+              <button type="button" onClick={toggleDropdown1} className="w-6 h-6 rounded-full bg-white hover:bg-slate-200 dark:bg-[#181818] dark:hover:bg-[#3d3d3d]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#a1a1aa" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                 </svg>
               </button>
 
               {isDropdownOpen1 && (
-                <div className="absolute right-6 top-9 w-[200px] origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
-                  <button onClick={handleRead} className='cursor-pointer'>
-                  <span className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                  </svg>
-                    Mark all as read
-                  </span>
+                <div className="absolute right-6 top-9 w-[200px] origin-top-right pb-1 pt-2 px-3 bg-white hover:bg-slate-100  dark:hover:bg-[#3d3d3d] dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20 cursor-pointer">
+                  <button>
+                    <span className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+                      Mark all as read
+                    </span>
                   </button>
                 </div>
               )}
