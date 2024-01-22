@@ -5,30 +5,15 @@ import 'jspdf-autotable';
 import logoImage from '../../images/mnl_header_pdf.png';
 import Flatpickr from 'react-flatpickr';
 
-const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, userPersonal }) => {
+import TransTypeDropdown from '../transDropdown/TransTypeDropdown';
+import StatusTypeDropdown from '../transDropdown/StatusTypeDropdown';
+
+const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, userPersonal }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedDatee, setSelectedDatee] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [selectedType, setSelectedType] = useState('');
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
-
-  const handleInputChange = (e) => {
-    const selectedValue = e.target.value;
-
-    setSelectedType(selectedValue);
-  };
-
-  const handleInputChange2 = (e) => {
-    const selectedValue = e.target.value;
-
-    setSelectedStatus(selectedValue);
-  };
-  
-
 
   const generatePDF = async () => {
     try {
@@ -101,9 +86,10 @@ const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSea
       // Filter transactions based on start and end dates
       const filteredTransactions = sortedTransactions.filter((transaction) => {
         const transactionDate = new Date(transaction.date_processed);
+
         return (
-          (!startDate || transactionDate >= new Date(startDate)) &&
-          (!endDate || transactionDate <= new Date(endDate))
+          (!selectedDate || transactionDate >= new Date(selectedDate)) &&
+          (!selectedDatee || transactionDate <= new Date(selectedDatee))  
         );
       });
   
@@ -264,49 +250,38 @@ const TransDesktop = ({ startDate, endDate, searchInput, handleSearch, handleSea
                 {/* Type Row */}
                 <div className="flex justify-between items-center">
                   <span className="block py-2 text-xs">Type:</span>
-                    <select  onChange={handleInputChange}  value={selectedType}  name=""  id=""  className="py-2.5 px-0 text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 md:py-0.5 rounded-full peer cursor-pointer w-[210px]">
-                      <option value="SELECTSTATUS" className="dark:bg-[#3d3d3d]">Select Type</option>
-                      <option value="RPTAXPAYMENT" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
-                      <option value="RPTAXCLEARANCE" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
-                      <option value="BUSINESSPERMIT" className="dark:bg-[#3d3d3d]">Business Permit</option>
-                      <option value="CTC" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
-                      <option value="BIRTHC" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
-                      <option value="DEATHC" className="dark:bg-[#3d3d3d]">Death Certificate</option>
-                      <option value="MARRIAGEC" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
+                    <select  value={selectedType} onChange={handleInputChange} name=""  id=""  className="py-2.5 px-0 text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 md:py-0.5 rounded-full peer cursor-pointer w-[210px]">
+                      <TransTypeDropdown />
                   </select>
                 </div>
 
                 {/* Status Row */}
                 <div className="flex justify-between items-center">
                   <span className="block py-2 text-xs">Status:</span>
-                    <select onChange={handleInputChange2} value={selectedStatus} name="" id="" className={`py-2.5 px-0 text-xs border bg-transparent border-slate-300 pl-4 md:py-0.5 rounded-full peer cursor-pointer`}
+                    <select  value={selectedStatus} onChange={handleInputChange2} name="" id="" className={`py-2.5 px-0 text-xs border bg-transparent border-slate-300 pl-4 md:py-0.5 rounded-full peer cursor-pointer`}
                       style={{
                         width: "125px",
                         backgroundColor:
                           selectedStatus === "PENDING" ? "#fef08a" :
                           selectedStatus === "PAID" ? "#bbf7d0" :
-                          selectedStatus === "PROCESSING" ? "#bfdbfe" :
-                          selectedStatus === "COMPLETE" ? "#fbcfe8" :
+                          selectedStatus === "COMPLETE" ? "#bfdbfe" :
                           selectedStatus === "REJECTED" ? "#fecaca" :
-                          selectedStatus === "CANCELED" ? "#e2e8f0" : 
-                          selectedStatus === "EXPIRED" ? "#fed7aa" : "transparent",
+                          selectedStatus === "CANCELED" ? "#e2e8f0" : "transparent",
                         color:
-                          selectedStatus === "PENDING" ? "#a86728" :
-                          selectedStatus === "PAID" ? "#247256" :
+                          selectedStatus === "Pending" ? "#a86728" :
+                          selectedStatus === "Paid" ? "#247256" :
                           selectedStatus === "PROCESSING" ? "#1565C0" :
-                          selectedStatus === "COMPLETE" ? "#a12863" :
-                          selectedStatus === "REJECTED" ? "#a22b34" :
-                          selectedStatus === "CANCELED" ? "#000000" : 
+                          selectedStatus === "Complete" ? "#a12863" :
+                          selectedStatus === "Rejected" ? "#a22b34" :
+                          selectedStatus === "Canceled" ? "#000000" : 
                           selectedStatus === "EXPIRED" ? "#a23d1e" : "#718096"
                       }}>
                       <option value="SELECTSTATUS" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d]">Select Status</option>
                       <option value="PENDING" className="bg-yellow-200 text-yellow-800">Pending</option>
                       <option value="PAID" className="bg-green-200 text-green-800">Paid</option>
-                      <option value="PROCESSING" className="bg-blue-200 text-blue-800">Processing</option>
-                      <option value="COMPLETE" className="bg-pink-200 text-pink-800">Complete</option>
+                      <option value="COMPLETE" className="bg-blue-200 text-blue-800">Complete</option>
                       <option value="REJECTED" className="text-red-800 bg-red-200">Rejected</option>
                       <option value="CANCELED" className="bg-slate-200 text-slate-800">Canceled</option>
-                      <option value="EXPIRED" className="bg-orange-200 text-orange-800">Expired</option>
                     </select>
                 </div>
 
