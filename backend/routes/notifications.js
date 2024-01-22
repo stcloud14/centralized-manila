@@ -20,20 +20,10 @@ router.get('/:user_id', async (req, res) => {
     const result = await queryDatabase(query, values);
     const result1 = await queryDatabase(query1, values1);
 
-    if (result.length > 0 && result1.length > 0) {
-        const notifications = result.map(row => {
-            const formattedDate = moment(row.date).format('MMMM D, YYYY');
-            const formattedTime = moment(row.date).format('h:mm A');
-
-            return {
-                ...row,
-                date: formattedDate,
-                time: formattedTime,
-            };
-        });
-
+    if (result.length > 0) {
+        
         res.json({
-            user_notif: notifications,
+            user_notif: result,
             notif_count: result1[0].total_notif,
         });
 
@@ -45,6 +35,34 @@ router.get('/:user_id', async (req, res) => {
     res.status(500).send('Error retrieving data');
     }
 });
+
+
+router.post('/markread/:user_id', async (req, res) => {
+    const user_id = req.params.user_id;
+  
+    const query = "UPDATE user_notif SET is_read = 1 WHERE is_read = 0 AND user_id = ?";
+    const values = [user_id];
+  
+    try {
+      const result = await queryDatabase(query, values);
+  
+      if (result.affectedRows > 0) {
+        // Update was successful
+        const updatedNotifications = await queryDatabase("SELECT * FROM user_notif WHERE user_id = ? ORDER BY date DESC", [user_id]);
+  
+        res.json({
+          user_notif: updatedNotifications,
+        });
+      } else {
+        res.status(404).json({ error: 'No records found for the specified user_id' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Error updating data' });
+    }
+  });
+  
+
 
 
   
