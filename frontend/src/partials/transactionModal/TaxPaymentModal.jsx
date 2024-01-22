@@ -120,8 +120,51 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) =>
               <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
                 &#8203;
               </span>
-              <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
-                <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div className="inline-block align-bottom rounded-lg text-center overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
+                {transaction_id ? (
+                  status_type === 'Pending' && (
+                    <div className='bg-white dark:bg-[#212121] mb-5 p-5 rounded-lg'>
+                      <div className="grid md:grid-cols-4 grid-cols-2 gap-3 items-center justify-center text-xs w-full">
+                        <div className="flex flex-col items-center text-center">
+                          <span>Step 1</span>
+                          <span>Fill the Form</span>
+                          <div className="w-full h-1 bg-blue-200 dark:bg-slate-400" />
+                        </div>
+                        <div className="flex flex-col items-center text-center">
+                          <span>Step 2</span>
+                          <span>Review and Submit</span>
+                          <div className="w-full h-1 bg-blue-200 dark:bg-slate-400" />
+                        </div>
+                        <div className="flex flex-col col-span-2 items-center text-center mt-2 sm:mt-0">
+                          <span className='font-semibold text-blue-500'>Final Step</span>
+                          <span className='font-normal text-blue-500'>Pay the transaction</span>
+                          <div className="w-full h-1 bg-blue-500" />
+                        </div>
+                      </div>
+                    </div> ) 
+                    ) : (
+                    <div className='bg-white dark:bg-[#212121] mb-5 p-5 rounded-lg'>
+                      <div className="grid md:grid-cols-4 grid-cols-2 gap-3 items-center justify-center text-xs w-full">
+                        <div className="flex flex-col items-center text-center">
+                          <span>Step 1</span>
+                          <span>Fill the Form</span>
+                          <div className="w-full h-1 bg-blue-200 dark:bg-slate-400" />
+                        </div>
+                        <div className="flex flex-col items-center text-center">
+                          <span className='font-semibold text-blue-500'>Step 2</span>
+                          <span className='font-normal text-blue-500'>Review and Submit</span>
+                          <div className="w-full h-1 bg-blue-500" />
+                        </div>
+                        <div className="flex flex-col col-span-2 items-center text-center mt-2 sm:mt-0">
+                          <span>Final Step</span>
+                          <span>Pay the transaction</span>
+                          <div className="w-full h-1 bg-blue-200 dark:bg-slate-400" />
+                        </div>
+                      </div>
+                    </div>
+                )}
+                
+                <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-t-lg">
                   <div className="mx-auto mt-2">
                     <div className="sm:mt-0" id="modal-headline">   
                       <div className="mx-auto">
@@ -209,7 +252,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) =>
                 <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
                   {/* <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/> */}
 
-                  {status_type !== 'Paid' && (
+                  {status_type === 'Pending' && transaction_id ? (
                     <button
                       onClick={makePayment}
                       type="button"
@@ -217,7 +260,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) =>
                     >
                       <span className="font-semibold whitespace-nowrap ml-2"> PAY: {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00' : '-'}</span>
                     </button>
-                  )}
+                  ): null}
                   
                   <div className="flex items-center space-x-2 ml-auto">
                     <button

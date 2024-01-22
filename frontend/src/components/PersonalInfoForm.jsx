@@ -64,7 +64,7 @@ const PersonalInfoForm =()=>{
 
   const finalValue = updatedValue === "0" ? null : updatedValue;
 
-  if (name === 'cvl_status' || name === 'czn_status' || name === 'res_status') {
+  if (name === 'cvl_id' || name === 'czn_id' || name === 'res_id' || name === 'sex_id') {
 
     setUserPersonal((prevData) => ({
       ...prevData,
@@ -141,23 +141,40 @@ const PersonalInfoForm =()=>{
     const handleProceed = (e) => {
       e.preventDefault();
       
-      const requiredFields = ['f_name', 'l_name', 'sex_type', 'cvl_status', 'czn_status', 'res_status'];
+      const requiredFields = ['f_name', 'l_name', 'sex_id', 'cvl_id', 'czn_id', 'res_id'];
       const requiredFields1 = ['birth_date', 'birth_place'];
+
+      const isAnyFieldEdited = requiredFields.some((field) => {
+        const value = userPersonal[field];
+        return value !== userPersonal[field]; // Check if the field is different from its initial value
+      });
 
       const isIncompletePersonal = requiredFields.some((field) => {
         const value = userPersonal[field];
-        return value == null || value.trim() === "";
+        return (typeof value !== 'string' || value.trim() === "" || value === null);
       });
       
 
       const isIncompleteBirth = requiredFields1.some((field) => {
         const value = userBirth[field];
-        return value == null || value.trim() === "";
+        return (typeof value !== 'string' || value.trim() === "" || value === null);
       });
 
       const scrollToTop = () => {
         contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       };
+
+      if (isAnyFieldEdited || isIncompleteBirth) {
+        scrollToTop();
+        setShowWarning(true);
+        setTimeout(() => {
+          setShowWarning(false);
+        }, 3000);
+      } else {
+        scrollToTop();
+        setIsModalOpen(true);
+      }
+    
 
       if (isIncompletePersonal || isIncompleteBirth) {
         scrollToTop();
@@ -286,7 +303,7 @@ const PersonalInfoForm =()=>{
                     disabled={!editMode}>
                    <SexDropdown/>
                   </select> */}
-                  <select onChange={handleChangePersonal} value={userPersonal.sex_type} defaultValue={0} name="sex_type" id="sex_type" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed' } ${
+                  <select onChange={handleChangePersonal} value={userPersonal.sex_id} defaultValue={0} name="sex_id" id="sex_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed' } ${
                     !editMode ? 'border-slate-200 dark:border-gray-700 text-slate-500 dark:text-zinc-400': ''
                       }`}
                       placeholder=" "
@@ -294,7 +311,7 @@ const PersonalInfoForm =()=>{
                       disabled={!editMode}>
                       <SexDropdown />
                   </select>
-                  <label htmlFor="sex_type" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
+                  <label htmlFor="sex_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
                 </div>
                 
                 <div
@@ -393,7 +410,7 @@ const PersonalInfoForm =()=>{
                     disabled={!editMode}>
                   <CivilStatusDropdown/>
                   </select> */}
-                  <select onChange={handleChangePersonal} value={userPersonal.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed' } ${
+                  <select onChange={handleChangePersonal} value={userPersonal.cvl_id} defaultValue={0} name="cvl_id" id="cvl_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed' } ${
                     !editMode ? 'border-slate-200 dark:border-gray-700 text-slate-500 dark:text-zinc-400': ''
                       }`}
                       placeholder=" "
@@ -401,7 +418,7 @@ const PersonalInfoForm =()=>{
                       disabled={!editMode}>
                       <CivilStatusDropdown />
                   </select>
-                  <label htmlFor="cvl_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
+                  <label htmlFor="cvl_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group">
@@ -413,7 +430,7 @@ const PersonalInfoForm =()=>{
                     disabled={!editMode}>
                    <CitizenshipDropdown/>
                   </select> */}
-                  <select onChange={handleChangePersonal} value={userPersonal.czn_status} defaultValue={0} name="czn_status" id="czn_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed' } ${
+                  <select onChange={handleChangePersonal} value={userPersonal.czn_id} defaultValue={0} name="czn_id" id="czn_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed' } ${
                     !editMode ? 'border-slate-200 dark:border-gray-700 text-slate-500 dark:text-zinc-400': ''
                   }`}
                   placeholder=" "
@@ -423,7 +440,7 @@ const PersonalInfoForm =()=>{
                   <CitizenshipDropdown />
                 </select>
 
-                  <label htmlFor="czn_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
+                  <label htmlFor="czn_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group">
@@ -435,7 +452,7 @@ const PersonalInfoForm =()=>{
                     disabled={!editMode}>
                   <ResidencyDropdown/>
                   </select> */}
-                  <select onChange={handleChangePersonal} value={userPersonal.res_status} defaultValue={0} name="res_status" id="res_status" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed'  } ${
+                  <select onChange={handleChangePersonal} value={userPersonal.res_id} defaultValue={0} name="res_id" id="res_id" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${ editMode ? 'cursor-pointer' : 'cursor-not-allowed'  } ${
                     !editMode ? 'border-slate-200 dark:border-gray-700 text-slate-500 dark:text-zinc-400' : ''
                   }`}
                   placeholder=" "
@@ -443,7 +460,7 @@ const PersonalInfoForm =()=>{
                   disabled={!editMode}>
                   <ResidencyDropdown />
                 </select>
-                  <label htmlFor="res_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
+                  <label htmlFor="res_id" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
                 </div>
               </div>
 
