@@ -39,6 +39,7 @@ const DeathCertificateForm =()=>{
     printDisplay: 0,
     deathc_regionLabel: '',
     deathc_provinceLabel: '',
+    deathc_printLabel: '',
     deathc_municipalLabel: '',
     deathc_reqregionLabel: '',
     deathc_reqprovinceLabel: '',
@@ -83,11 +84,11 @@ const DeathCertificateForm =()=>{
       e.preventDefault();
       
       // Please fill up the necessary forms
-    const requiredFields = ['deathc_lname', 'deathc_fname', 'deathc_sex', 'deathc_region', 'deathc_province',
+    const requiredFields = ['deathc_lname', /*'deathc_fname', 'deathc_sex', 'deathc_region', 'deathc_province',
     'deathc_municipal', 'deathc_date', 'deathc_reqlname', 'deathc_reqfname',
     'deathc_reqrelation', 'deathc_mobileno', 'deathc_reqregion', 'deathc_reqprovince',
     'deathc_reqmunicipal', 'deathc_reqbrgy', 'deathc_reqhnum', 'deathc_reqstreet', 'deathc_reqzip',
-    'deathc_nocopies', 'deathc_print', 'deathc_purpose', 'deathc_validid']; //The input fields that is required
+    'deathc_nocopies', 'deathc_print', 'deathc_purpose', 'deathc_validid'*/]; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !deathCert[field]);
 
     if (isIncomplete) {
@@ -159,6 +160,8 @@ const DeathCertificateForm =()=>{
       } 
       
       if (id === 'deathc_print') {
+
+        const label = e.target.options[e.target.selectedIndex].getAttribute('label');
         const displayValue = updateAmount({ value });
         const copiesValue = prevData.deathc_nocopies || 0;
         const product = copiesValue * displayValue;
@@ -169,6 +172,7 @@ const DeathCertificateForm =()=>{
           deathc_amount: totalAmountPaid,
           initialPrint: displayValue,
           printDisplay: product,
+          deathc_printLabel: label,
         };
       }
 
@@ -278,11 +282,11 @@ const DeathCertificateForm =()=>{
   function updateAmount({ value }) {
 
     switch (value) {
-      case 'Front':
-      case 'Back':
+      case '1':
+      case '2':
         return 50;
   
-      case 'Front and Back':
+      case '3':
         return 100;
   
       default:

@@ -293,7 +293,7 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">What to Print</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_print || birthTransaction.print_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_printLabel || birthTransaction.print_type || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Purpose</span>

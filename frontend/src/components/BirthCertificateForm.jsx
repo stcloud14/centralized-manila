@@ -81,11 +81,11 @@ const BirthCertificateForm =()=>{
     const handleProceed = (e) => {
       e.preventDefault();
       // Please fill up the necessary forms
-      const requiredFields = ['birthc_hospital', 'birthc_nocopies', 'birthc_print', 'birthc_purpose', 'birthc_validid',
+      const requiredFields = ['birthc_hospital',/* 'birthc_nocopies', 'birthc_print', 'birthc_purpose', 'birthc_validid',
       'birthc_reqregion', 'birthc_reqprovince', 'birthc_reqmunicipal', 'birthc_reqbrgy', 'birthc_reqhnum', 'birthc_reqstreet', 'birthc_reqzip',
       'birthc_reqlname', 'birthc_reqfname', 'birthc_reqrelation', 'birthc_reqmobnum',
       'birthc_motherlname', 'birthc_motherfname',
-      'birthc_region', 'birthc_province', 'birthc_municipal', 'birthc_date', 'birthc_lname', 'birthc_fname', 'birthc_sex']; //The input fields that is required
+    'birthc_region', 'birthc_province', 'birthc_municipal', 'birthc_date', 'birthc_lname', 'birthc_fname', 'birthc_sex'*/]; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !birthCert[field]);
 
     if (isIncomplete) {
@@ -156,6 +156,8 @@ const BirthCertificateForm =()=>{
       } 
       
       if (id === 'birthc_print') {
+
+        const label = e.target.options[e.target.selectedIndex].getAttribute('label');
         const displayValue = updateAmount({ value });
         const copiesValue = prevData.birthc_nocopies || 0;
         const product = copiesValue * displayValue;
@@ -166,6 +168,7 @@ const BirthCertificateForm =()=>{
           birthc_amount: totalAmountPaid,
           initialPrint: displayValue,
           printDisplay: product,
+          birthc_printLabel: label,
         };
       }
 
@@ -285,11 +288,11 @@ const BirthCertificateForm =()=>{
   function updateAmount({ value }) {
 
     switch (value) {
-      case 'Front':
-      case 'Back':
+      case '1':
+      case '2':
         return 50;
   
-      case 'Front and Back':
+      case '3':
         return 100;
   
       default:
