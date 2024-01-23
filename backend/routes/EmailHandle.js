@@ -1,18 +1,10 @@
 import nodemailer from 'nodemailer';
+import conn2 from './connection.js';
 import { Router } from 'express';
 
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-//   port: 465,
-//   auth: {
-//     user: process.env.MAIL_USERNAME,
-//     pass: process.env.MAIL_PASSWORD,
-//   },
-// });
 
 
 const transporter = nodemailer.createTransport({
@@ -86,6 +78,27 @@ const FormatMail = (user_email, data, trans_type) => {
 };
 
 
+    router.get('/:user_id', async (req, res) => {
+        const user_id = req.params.user_id;
+    
+        const query = "SELECT user_email FROM user_contact WHERE user_id = ?";
+    
+        try {
+        const result = await queryDatabase(query, [user_id]);
+    
+        if (result.length > 0 && result[0].user_email) {
+            const user_email = result[0].user_email;
+            res.json({ user_email });
+        } else {
+            console.error("Invalid response format or missing user_email");
+            res.status(404).json({ error: "User not found or missing email" });
+        }
+        } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving data');
+        }
+    });
+
 
   router.post('/send-email/:user_email', async (req, res) => {
 
@@ -121,6 +134,19 @@ const FormatMail = (user_email, data, trans_type) => {
     }
 
   });
+
+
+  function queryDatabase(query, values) {
+    return new Promise((resolve, reject) => {
+    conn2.query(query, values, (err, data) => {
+        if (err) {
+        reject(err);
+        } else {
+        resolve(data);
+        }
+    });
+    });
+  }
 
 
 
