@@ -8,6 +8,7 @@ import Footer from '../partials/Footer';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 import TransMobile from '../partials/transactionHistory/transMobile';
 import TransDesktop from '../partials/transactionHistory/transDesktop';
+import TransFilter from '../partials/transactionHistory/transFilter';
 
 
 const TransactionHistoryForm = () => {
@@ -290,7 +291,9 @@ const logoSrc = '../src/images/mnl_footer.svg';
               selectedType={selectedType}
               userPersonal={userPersonal}
                />
+               
             )}
+            
           </div>
           <Footer logo={logoSrc} />
         </main>
