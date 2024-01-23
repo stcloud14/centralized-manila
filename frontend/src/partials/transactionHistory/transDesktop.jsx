@@ -84,14 +84,22 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
         textColor: 255,
       };
   
-      // Filter transactions based on start and end dates
+      // Filter transactions based on start and end dates, type, and status
       const filteredTransactions = sortedTransactions.filter((transaction) => {
         const transactionDate = new Date(transaction.date_processed);
-
-        return (
+        const isDateInRange =
           (!selectedDate || transactionDate >= new Date(selectedDate)) &&
-          (!selectedDatee || transactionDate <= new Date(selectedDatee))  
-        );
+          (!selectedDatee || transactionDate <= new Date(selectedDatee));
+
+        const isTypeMatching =
+          !selectedType || selectedType === '0' || transaction.trans_type === selectedType;
+
+        const isStatusMatching =
+          !selectedStatus ||
+          selectedStatus === 'All' ||
+          transaction.status_type.toLowerCase() === selectedStatus.toLowerCase();
+
+        return isDateInRange && isTypeMatching && isStatusMatching;
       });
   
       pdf.autoTable({
@@ -108,14 +116,17 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
           }
   
           // Calculate balance for each row independently
-          let rowBalance = amount - payment;
-          rowBalance = Math.max(rowBalance, 0); // Ensure balance is not negative
-  
+          let rowBalance = 0; // Initialize rowBalance to 0
+
+          if (transaction.status_type === 'Pending') {
+            rowBalance = amount - payment;
+            rowBalance = Math.max(rowBalance, 0); // Ensure balance is not negative
+          }
+
           // Display 0 balance in the first row when amount is paid, and actual balance in subsequent rows
           const displayBalance =
-            transaction.status_type === 'Paid' && index === 0
-              ? 'P 0'
-              : `P ${rowBalance < 0 ? '-' : ''}${Math.floor(Math.abs(rowBalance))}`;
+            transaction.status_type === 'Paid' ? 'P 0' : `P ${rowBalance < 0 ? '-' : ''}${Math.floor(Math.abs(rowBalance))}`;
+
   
           return [
             new Date(transaction.date_processed).toLocaleDateString('en-GB'),
