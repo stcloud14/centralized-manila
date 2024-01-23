@@ -85,29 +85,22 @@ const TransactionHistoryForm = () => {
 
   // Filter for selected date range, type, status of transaction
   const handleSearch = (e) => {
-    // const searchInput = e.toUpperCase();
-    // setSearchInput(searchInput);
-
-    const filteredTransactions = sortedTransactions
+    const filteredTransactions = userTransaction
       .filter((transaction) => {
         const transactionId = transaction.transaction_id.toString().toUpperCase();
-
+  
         const isDateInRange = (() => {
           if (!selectedDate || !selectedDatee) {
             return true; // No date range selected, include all transactions
           }
-
+  
           const transactionDate = new Date(transaction.date_processed);
           const startDate = new Date(selectedDate);
           const endDate = new Date(selectedDatee);
-
-          console.log("Transaction Date:", transactionDate);
-          console.log("Start Date:", startDate);
-          console.log("End Date:", endDate);
-
+  
           return startDate <= transactionDate && transactionDate <= endDate;
         });
-
+  
         return (
           transactionId.includes(searchInput) &&
           isSubsequence(searchInput, transactionId) &&
@@ -120,16 +113,14 @@ const TransactionHistoryForm = () => {
         // Sort the transactions based on the selected option and order
         const valueA = a[sortOption];
         const valueB = b[sortOption];
-
+  
         if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
         if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
         return 0;
       });
-
-    console.log("Filtered Transactions:", filteredTransactions);
-
-    setFilteredTransactions(filteredTransactions);
-  };
+  
+    setFilteredTransactions(() => filteredTransactions);
+  };  
      
   // Make sure that the transaction searching is the same order in terms of characters
   const isSubsequence = (search, str) => {
