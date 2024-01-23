@@ -102,12 +102,6 @@ const DeathCertificateForm =()=>{
             console.error(fetchError);
           }
 
-
-
-
-
-
-
           setIsSuccess(true); // Set success state to true
           handleCloseModal(); // Close the modal
           contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
