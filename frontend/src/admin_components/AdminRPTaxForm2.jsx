@@ -12,12 +12,11 @@ import AdminRPProcess from '../admin_partials/admin_modals/AdminRPProcess';
 import AdminRPReject from '../admin_partials/admin_modals/AdminRPReject';
 import AdminRPDone from '../admin_partials/admin_modals/AdminRPDone';
 
-import AdminRPTaxRequests from '../admin_partials/admin_cards/AdminRPTaxRequests';
 import AdminRPTaxProcessing from '../admin_partials/admin_cards/AdminRPTaxProcessing';
 
 
 
-const AdminRPTaxForm = () => {
+const AdminRPTaxForm2 = () => {
 
   
   const location = useLocation();
@@ -111,18 +110,7 @@ const AdminRPTaxForm = () => {
           </div>
 
           {/*  Two Sections */}
-          <div className="grid grid-cols-12 gap-4 mx-4 my-4">
-            
-            <AdminRPTaxRequests
-            onProceed={[handleProceedForTaxClearance, handleProceedForTaxPayment]}
-            taxPayment={taxPayment}
-            taxClearance={taxClearance}
-            onMoveToProcessing={handleMoveToProcessing}
-            transType={transType}
-            processingTransactions={processingTransactions}
-            selectedTransactionId={selectedTransactionId}
-            setTransType={setTransType}
-            />
+          <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             <AdminRPTaxProcessing
             taxPayment={taxPayment}
             taxClearance={taxClearance}
@@ -144,4 +132,4 @@ const AdminRPTaxForm = () => {
   );
 }
 
-export default AdminRPTaxForm;
+export default AdminRPTaxForm2;
