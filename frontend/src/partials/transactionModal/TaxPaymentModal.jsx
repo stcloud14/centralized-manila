@@ -111,6 +111,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) =>
   }, [transaction_id]);
 
 
+
   return (
     <div className="fixed z-50 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
@@ -255,6 +256,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) =>
                   {status_type === 'Pending' && transaction_id ? (
                     <button
                       onClick={makePayment}
+      
                       type="button"
                       className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                     >

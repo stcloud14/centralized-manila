@@ -176,24 +176,27 @@ const router = Router();
 //   return `${lastTwoDigitsRpPin}${lastDigitRpTdn}`;
 // }
 
-router.get('/payment/', async (req, res) => {
+router.get('/payment/:user_id', async (req, res) => {
+  const user_id = req.params.user_id;
 
-    const query = "SELECT * FROM user_transaction";
-    const query1 = "SELECT * FROM rptax_payment";
-    const query2 = "SELECT * FROM transaction_info";
-  
-    try {
-    const result = await queryDatabase(query);
-    const result1 = await queryDatabase(query1);
-    const result2 = await queryDatabase(query2);
-  
-    
-    res.json({ user_transaction: result, rptax_payment: result1, transaction_info: result2 });
-    } catch (err) {
+  const query = "SELECT user_email FROM user_contact WHERE user_id = ?";
+
+  try {
+    const result = await queryDatabase(query, [user_id]);
+
+    if (result.length > 0 && result[0].user_email) {
+      const user_email = result[0].user_email;
+      res.json({ user_email });
+    } else {
+      console.error("Invalid response format or missing user_email");
+      res.status(404).json({ error: "User not found or missing email" });
+    }
+  } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
-    }
-  });
+  }
+});
+
   
   
   router.post('/payment/:user_id', async (req, res) => {

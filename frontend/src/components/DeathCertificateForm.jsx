@@ -116,6 +116,34 @@ const DeathCertificateForm =()=>{
     const updatedValue = isNaN(value) ? value.toUpperCase() : value;
   
     setDeathCert((prevData) => {
+
+      if (id === 'deathc_telno' || id === 'deathc_mobileno' || id ==='deathc_reqzip') {
+        const formattedValue = value.replace(/\D/g, '');
+
+        let maxLength;
+      if (id === 'deathc_mobileno') {
+        maxLength = 11;
+      } else if (id === 'deathc_telno') {
+        maxLength = 8;
+      }else if (id === 'deathc_reqzip') {
+        maxLength = 4;
+      }
+
+      if (formattedValue.length > maxLength) {
+        const truncatedValue = formattedValue.slice(0, maxLength);
+
+        return {
+          ...prevData,
+          [id]: truncatedValue,
+        };
+      }
+
+        return {
+          ...prevData,
+          [id]: formattedValue,
+        };
+      }
+
       if (id === 'deathc_nocopies') {
         const initialValue = parseInt(value, 10) || 0;
         const displayValue = prevData.initialPrint || 0;

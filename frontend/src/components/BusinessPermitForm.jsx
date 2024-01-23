@@ -50,6 +50,8 @@ const BusinessPermitForm =()=>{
     bus_bprovinceLabel: '',
     bus_bcityLabel: '',
     bus_purposeLabel: '',
+    bus_busTypeLabel: '',
+    bus_sexLabel: '',
     bus_valididLabel: '',
     bus_office_partial: '',
     bus_office: 'MAIN OFFICE',
@@ -264,6 +266,24 @@ const BusinessPermitForm =()=>{
       || id === 'bus_rent') {
         const formattedValue = value.replace(/\D/g, '');
 
+        let maxLength;
+      if (id === 'bus_mobile_no') {
+        maxLength = 11;
+      } else if (id === 'bus_tel_no') {
+        maxLength = 8;
+      }else if (id === 'bus_bzip') {
+        maxLength = 4;
+      }
+
+      if (formattedValue.length > maxLength) {
+        const truncatedValue = formattedValue.slice(0, maxLength);
+
+        return {
+          ...prevData,
+          [id]: truncatedValue,
+        };
+      }
+
         return {
           ...prevData,
           [id]: formattedValue,
@@ -296,6 +316,7 @@ const BusinessPermitForm =()=>{
           [name]: value,
         };
       } 
+      
 
       if (name === 'bus_tax_incentives') {
         
@@ -391,6 +412,17 @@ const BusinessPermitForm =()=>{
           ...prevData,
           [id]: value,
           bus_bprovinceLabel: label,
+        };
+      }
+
+      if (id === 'bus_sex') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          bus_sexLabel: label,
         };
       }
 
