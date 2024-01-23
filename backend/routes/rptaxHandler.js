@@ -184,6 +184,9 @@ const router = Router();
     const plainAmount = amount.replace(/,/g, '');
     const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
     const transType = '1';
+    const trans_type = 'Real Property Tax Payment';
+    const notif_title = 'Transaction Payment Pending';
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-semibold dark:text-white">P ${plainAmount}</span>.</p>`;
     const statusType = 'Pending';
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
@@ -196,11 +199,15 @@ const router = Router();
   
     const query2 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";
     const values2 = [transID, plainAmount];
+
+    const query3 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+    const values3 = [user_id, formattedDate, notif_title, notif_message];
   
     try {
     const result = await queryDatabase(query, values);
     const result1 = await queryDatabase(query1, values1);
     const result2 = await queryDatabase(query2, values2);
+    const result3 = await queryDatabase(query3, values3);
   
   
     res.json({
@@ -208,6 +215,7 @@ const router = Router();
         user_transaction_result: result,
         rptax_payment_result: result1,
         transaction_info_result: result2,
+        notif_result: result3,
   
     });
     } catch (err) {

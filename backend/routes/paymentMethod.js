@@ -49,6 +49,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
 
         // Convert amount to an integer
         const amount = parseInt(data.amount);
+        const newAmount = amount * 100;
 
         // Validate amount
         if (isNaN(amount)) {
@@ -57,10 +58,9 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         }
 
         // Replace this with your actual logic to get user_id and trans_type
-
         
         const { transaction_id } = req.params;
-        const success_url = `http://localhost:5173/paymentsuccess/${user_id}?transaction_id=${transaction_id}`;
+        const success_url = `http://localhost:5173/paymentsuccess/${user_id}?transaction_id=${transaction_id}&amount=${newAmount}&user_id=${user_id}`;
         const cancel_url = `http://localhost:5173/transachistory/${user_id}`;
 
         const options = {
@@ -80,7 +80,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
                         line_items: [
                             {
                                 currency: 'PHP',
-                                amount: amount * 100, // Adjusted amount here
+                                amount: newAmount, // Adjusted amount here
                                 description: 'MANILA CENTRALIZATION',
                                 name: trans_type,
                                 quantity: 1
@@ -115,11 +115,22 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
 
 router.post('/success/:transactionId', async (req, res) => {
     const transID = req.params.transactionId;
-   
+    const amount = req.body.amount;
+    const user_id = req.body.userId;
+
+    const notif_title = 'Transaction Payment Success';
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your payment of <span className="font-semibold dark:text-white">P ${amount}</span> for <span className="font-semibold dark:text-white">${transID}</span> has been successfully received. Please await further updates.</p>`;
+    const date = new Date();
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
     const updateQuery = `UPDATE user_transaction SET status_type = 'Paid' WHERE transaction_id = ?;`;
+
+    const query = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+    const values = [user_id, formattedDate, notif_title, notif_message];
 
     try {
         const result = await queryDatabase(updateQuery, [transID]);
+        const result1 = await queryDatabase(query, values);
 
         // Check if the update was successful before sending SMS
         if (result && result.affectedRows > 0) {
@@ -131,6 +142,7 @@ router.post('/success/:transactionId', async (req, res) => {
             res.json({
                 message: "Successful transaction!",
                 success: result,
+                push_notif: result1,
             });
         } else {
             // Update failed

@@ -12,6 +12,18 @@ import FilterButton from '../FilterButton';
 const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
+  const formatAmount = (amount) => {
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount)) {
+      return 'Invalid Amount';
+    }
+  
+    // Add .00 to the amount
+    const formattedAmount = parsedAmount.toFixed(2);
+  
+    return `P ${formattedAmount}`;
+  };
+
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -295,7 +307,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
                     <StatusBadgeDesktop statusType={transaction.status_type} />
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                    P {transaction.amount}
+                    {formatAmount(transaction.amount)}
                   </td>
                   <td className="pl-3 pr-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
                     <div className="group cursor-pointer">

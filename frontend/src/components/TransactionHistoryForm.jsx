@@ -173,33 +173,53 @@ const TransactionHistoryForm = () => {
     console.log("Dropdown Value Changed:", selectedStatus);
     setSelectedStatus(selectedStatus);
   };
-  const handleSortChange = () => {
-    // Toggle between ascending and descending order
-    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-    setSortOrder(newSortOrder);
+
+  //Clickable Icon of date, type, and etc
   
-    // Sort transactions by date
-    const sortedByDate = [...sortedTransactions].sort((a, b) => {
-      const dateA = new Date(a.date_processed);
-      const dateB = new Date(b.date_processed);
-      return newSortOrder === 'asc' ? dateA - dateB : dateB - dateA;
-    });
+const handleSortChange = (newSortOption) => {
+  // Toggle between ascending and descending order
+  const newSortOrder =
+    sortOption === newSortOption ? (sortOrder === 'asc' ? 'desc' : 'asc') : 'asc';
+  setSortOrder(newSortOrder);
+  setSortOption(newSortOption);
+
+  // Sort transactions based on the selected option and order
+  const sortedTransactions = sortTransactions(newSortOption, newSortOrder);
+
+  // Update the state with the sorted transactions
+  setFilteredTransactions(sortedTransactions);
+};
+
+const sortTransactions = (option, order) => {
+  return userTransaction.slice().sort((a, b) => {
+    let valueA, valueB;
+
+    if (option === 'date_processed') {
+      valueA = new Date(a.date_processed);
+      valueB = new Date(b.date_processed);
+    } else if (option === 'status_type') {
+      valueA = a.status_type.toLowerCase();
+      valueB = b.status_type.toLowerCase();
+    } else if (option === 'trans_type') {
+      valueA = a.trans_type;
+      valueB = b.trans_type;
+    } else if (option === 'amount') {
+      valueA = parseFloat(a.amount);
+      valueB = parseFloat(b.amount);
+    } else {
+      // Handle other sorting criteria if needed
+    }
+
+    if (valueA < valueB) return order === 'asc' ? -1 : 1;
+    if (valueA > valueB) return order === 'asc' ? 1 : -1;
+    return 0;
+  });
+};
+
   
-    // Update the state with the sorted transactions
-    setFilteredTransactions(sortedByDate);
-  };
   
+  // ... (existing code)
   
-  const sortTransactions = (transactions) => {
-    return transactions.slice().sort((a, b) => {
-      const valueA = a[sortOption];
-      const valueB = b[sortOption];
-  
-      if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
-      if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
-      return 0;
-    });
-  };
   
   const sortedTransactions = sortTransactions(filteredTransactions.length > 0 ? filteredTransactions : userTransaction);
 

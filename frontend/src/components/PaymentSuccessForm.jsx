@@ -18,18 +18,24 @@ const PaymentSuccessForm = () => {
   const userId = currentUrl.substr(startIndex, 6);
   const location = useLocation();
 
-  const getTransId = () => {
+  const getTransactionDetails = () => {
     const searchParams = new URLSearchParams(location.search);
-    return searchParams.get('transaction_id');
+    const transactionId = searchParams.get('transaction_id');
+    const amount = searchParams.get('amount');
+    const userId = searchParams.get('user_id');
+  
+    return { transactionId, amount, userId };
   };
+  
+  // Example usage
+  const transactionDetails = getTransactionDetails();
 
-  const transactionId = getTransId();
-
+  console.log(transactionDetails)
 
 
   const handleReturn = async () => {
     try {
-      const res = await axios.post(`http://localhost:8800/payment/success/${transactionId}`);
+      const res = await axios.post(`http://localhost:8800/payment/success/${transactionDetails.transactionId}`, transactionDetails);
       window.location.href = `http://localhost:5173/transachistory/${userId}`;
     } catch (err) {
       console.error(err);
