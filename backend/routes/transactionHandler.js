@@ -143,7 +143,7 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
     const query = "SELECT bi.user_id, r.region_name AS region, p.prov_name AS province, c.city_name AS municipal, bc.transaction_id, bi.birth_date, \
-    bo.l_name, bo.f_name, bo.m_name, bo.suffix_type, bo.sex_id, bo.hospital_name, bo.country, bo.birth_reg_no, \
+    bo.l_name, bo.f_name, bo.m_name, bo.suffix_type, st.sex_type, bo.hospital_name, bo.country, bo.birth_reg_no, \
     br.l_name AS reql_name,br.f_name AS reqf_name, br.m_name AS reqm_name, br.suffix_type AS reqsuffix, br.owner_relation, br.requestor_tin, br.tel_no, br.mobile_no, \
     fi.father_fname, fi.father_mname, fi.father_lname, fi.suffix_type AS fathersuffix, \
     mi.mother_fname, mi.mother_mname, mi.mother_lname, mi.suffix_type AS mothersuffix, \
@@ -168,6 +168,7 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
     LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
     \
     WHERE  bc.transaction_id = ?"
 
