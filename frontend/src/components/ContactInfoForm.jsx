@@ -100,7 +100,7 @@ const ContactInfoForm =()=>{
     
     
     // Please fill up the necessary forms
-    const requiredFields = ['user_email', 'mobile_no', 'tel_no', 'region_id', 'prov_id', 'city_id', 'house_floor', 'bldg_name', 'brgy_dist', 'zip_code']; //The input fields that is required
+    const requiredFields = ['user_email', 'mobile_no', 'region_id', 'prov_id', 'city_id', 'house_floor', 'bldg_name', 'brgy_dist', 'zip_code']; //The input fields that is required
     const isIncomplete = requiredFields.some((field) => !userContact[field]);
 
     if (isIncomplete) {
@@ -185,7 +185,6 @@ const ContactInfoForm =()=>{
                       !editMode && 'border-slate-200 dark:border-gray-700 cursor-not-allowed text-slate-500 dark:text-zinc-400'
                     }`}
                     placeholder=" "
-                    required
                     disabled={!editMode}/>
                     <label htmlFor="tel_no" className={`peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
                       !editMode && 'text-gray-500'
