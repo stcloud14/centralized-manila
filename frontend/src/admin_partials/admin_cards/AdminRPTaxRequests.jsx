@@ -261,6 +261,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
   
             {/* Render Content */}
             {renderContent()}
+            
             {/* All Modals */}
 
             {/* PROCESS MODAL */}
