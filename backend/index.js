@@ -15,7 +15,7 @@ import paymentMethod from './routes/paymentMethod.js';
 import userSettings from './routes/userSettings.js'
 import notifications from './routes/notifications.js'
 import forgotPassword from './routes/forgotPassword.js'
-
+import EmailHandler from './routes/EmailHandle.js'
 
 
 import adminRptaxHandler from './routes/adminRptaxHandler.js'
@@ -43,7 +43,7 @@ app.use('/usersettings', userSettings);
 app.use('/payment', paymentMethod);
 app.use('/notifications', notifications);
 app.use('/forgotpass', forgotPassword);
-
+app.use('/email', EmailHandler)
 
 
 
