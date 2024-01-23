@@ -98,7 +98,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
             <ul className="submenu mt-3 text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600">
             
               {/* Dashboard */}
-                            {/* Dashboard chief_admin */}
+              {/* Dashboard chief_admin */}
               {admin_type === 'chief_admin'  ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
@@ -120,7 +120,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               </li>
               ) : null}
 
-                            {/* Dashboard Real Property Tax */}
+              {/* Dashboard Real Property Tax */}
               {admin_type === 'rptax_admin'  ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
@@ -142,7 +142,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               </li>
               ) : null}
 
-                            {/* Dashboard Business Permit */}
+              {/* Dashboard Business Permit */}
               {admin_type === 'business_admin'  ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
@@ -164,7 +164,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               </li>
               ) : null} 
 
-                            {/* Dashboard CTC / Cedula */}
+              {/* Dashboard CTC / Cedula */}
               {admin_type === 'cedula_admin'  ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
@@ -209,7 +209,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               </li>
               ) : null} 
 
-            {admin_type === 'registry_admin'  ? (
+              {admin_type === 'registry_admin'  ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
                 end 
@@ -237,27 +237,71 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
 
               {/* Real Property Tax */}
               {admin_type === 'chief_admin' || admin_type === 'rptax_admin' ? (
-              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
-                <NavLink
-                to={admin_type === 'chief_admin' ? `/admin_rptax/${admin_type}` : `/admin_rptax/${admin_type}`}
-                className={({ isActive }) =>
-                    'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
-                  }
-                >
-                  <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="shrink-0 w-6 h-6">
-                      <path className="fill-slate-400" d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875z" />
-                      <path className="fill-slate-400" d="M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 001.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 001.897 1.384C6.809 12.164 9.315 12.75 12 12.75z" />
-                      <path className="fill-slate-500" d="M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 15.914 9.315 16.5 12 16.5z" />
-                      <path className="fill-slate-500" d="M12 20.25c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 19.664 9.315 20.25 12 20.25z" />
-                    </svg>
-                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                      Real Property Tax
-                    </span>
-                  </div>
-                </NavLink>
-              </li>
-            ) : null}
+              <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
+                {(handleClick, open) => {
+                  return (
+                    <React.Fragment>
+                      <a
+                        href="#0"
+                        className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded ? handleClick() : setSidebarExpanded(true);
+                        }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 w-6 h-6">
+                              <path className='fill-slate-400' fillRule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z" clipRule="evenodd" />
+                              <path className='fill-slate-500' d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
+                            </svg>
+                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                              Real Property Tax
+                            </span>
+                          </div>
+                          {/* Icon */}
+                          <div className="flex shrink-0 ml-2">
+                            <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`} viewBox="0 0 12 12">
+                              <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                            </svg>
+                          </div>
+                        </div>
+                      </a>
+                      <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                        <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
+                          <li className="mb-1 last:mb-0">
+                            <NavLink
+                              end to={admin_type === 'chief_admin' ? `/admin_rptax1/${admin_type}` : `/admin_rptax1/${admin_type}`}
+
+                              className={({ isActive }) =>
+                                'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
+                              }
+                            >
+                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                Requests
+                              </span>
+                            </NavLink>
+                          </li>
+
+                          <li className="mb-1 last:mb-0">
+                            <NavLink
+                            end to={admin_type === 'chief_admin' ? `/admin_rptax2/${admin_type}` : `/admin_rptax2/${admin_type}`}
+                              className={({ isActive }) =>
+                                'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
+                              }
+                            >
+                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                Processing Section
+                              </span>
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </div>
+                    </React.Fragment>
+                  );
+                }}
+              </AdminSidebarLinkGroup>
+              ) : null}
 
               {/* Business Permit */}
               {admin_type === 'chief_admin' || admin_type === 'business_admin' ? (
@@ -291,7 +335,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
-            ) : null}
+              ) : null}
 
               {/* CTC / Cedula */}
               {admin_type === 'chief_admin' || admin_type === 'cedula_admin' ? (
@@ -402,7 +446,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   );
                 }}
               </AdminSidebarLinkGroup>
-                            ) : null}
+              ) : null}
 
             </ul>
           </div>

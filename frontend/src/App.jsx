@@ -46,7 +46,8 @@ import AdminDashLCR from './admin_pages/AdminDashLCR';
 import AdminDashUR from './admin_pages/AdminDashUR';
 
 // Import Admin Pages
-import AdminRPTax from './admin_pages/AdminRPTax';
+import AdminRPTax1 from './admin_pages/AdminRPTax1';
+import AdminRPTax2 from './admin_pages/AdminRPTax2';
 import AdminBusiness from './admin_pages/AdminBusiness';
 import AdminCedula from './admin_pages/AdminCedula';
 import AdminLocalCivilRegistry from './admin_pages/AdminLocalCivilRegistry';
@@ -96,7 +97,8 @@ function App() {
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
         <Route exact path="/admin_settings/:admin_type" element={<AdminSettings />} />
-        <Route exact path="/admin_rptax/:admin_type" element={<AdminRPTax />} />
+        <Route exact path="/admin_rptax1/:admin_type" element={<AdminRPTax1 />} />
+        <Route exact path="/admin_rptax2/:admin_type" element={<AdminRPTax2 />} />
         <Route exact path="/admin_business/:admin_type" element={<AdminBusiness />} />
         <Route exact path="/admin_cedula/:admin_type" element={<AdminCedula />} />
         <Route exact path="/admin_lcr/:admin_type" element={<AdminLocalCivilRegistry />} />

@@ -42,6 +42,7 @@ const BirthCertificateForm =()=>{
     birthc_reqregionLabel: '',
     birthc_reqprovinceLabel: '',
     birthc_reqmunicipalLabel: '',
+    birthc_sexLabel: '',
     birthc_purposeLabel: '',
     birthc_valididLabel: '',
   }));
@@ -209,6 +210,18 @@ const BirthCertificateForm =()=>{
           birthc_reqmunicipalLabel: label,
         };
       }
+
+      if (id === 'birthc_sex') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          birthc_sexLabel: label,
+        };
+      }
+
 
       if (id === 'birthc_purpose') {
 

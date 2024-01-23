@@ -19,7 +19,7 @@ const Footer = ({ logo }) => {
           <Link to={`/home/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">About</Link>
           <Link to={`/news/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">News</Link>
           <Link to={`/contacts/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">Contact</Link>
-          <Link to={`/faqs/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">FAQs</Link>
+          {/* <Link to={`/faqs/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">FAQs</Link> */}
           <Link to={`/privacypolicy/${user_id}`} className="mb-2 sm:mb-0 sm:ml-0 sm:mr-8">Privacy Policy</Link>
         </div>
       </div>
