@@ -10,6 +10,8 @@ function DropdownNotifications({ align }) {
   const [notificationCount, setNotificationCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
 
+  console.log(notifications)
+
   const trigger = useRef(null);
   const dropdown = useRef(null);
 

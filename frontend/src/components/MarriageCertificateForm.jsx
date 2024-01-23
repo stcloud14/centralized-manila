@@ -40,6 +40,7 @@ const MarriageCertificateForm =()=>{
     marriagec_provinceLabel: '',
     marriagec_municipalLabel: '',
     marriagec_reqregionLabel: '',
+    marriagec_printLabel: '',
     marriagec_reqprovinceLabel: '',
     marriagec_reqmunicipalLabel: '',
     marriagec_purposeLabel: '',
@@ -82,12 +83,12 @@ const MarriageCertificateForm =()=>{
       e.preventDefault();
   
       // Please fill up the necessary forms
-      const requiredFields = ['marriagec_hlname', 'marriagec_hfname', 'marriagec_wlname', 'marriagec_wfname',
+      const requiredFields = ['marriagec_hlname', /* 'marriagec_hfname', 'marriagec_wlname', 'marriagec_wfname',
       'marriagec_region', 'marriagec_province', 'marriagec_municipal', 'marriagec_date',
       'marriagec_reqlname', 'marriagec_reqfname', 'marriagec_reqrelation',
       'marriagec_mobileno', 'marriagec_reqregion', 'marriagec_reqprovince',
       'marriagec_reqmunicipal', 'marriagec_reqbrgy', 'marriagec_reqhnum', 'marriagec_reqstreet',
-      'marriagec_reqzip', 'marriagec_nocopies', 'marriagec_print', 'marriagec_purpose', 'marriagec_validid']; //The input fields that is required
+    'marriagec_reqzip', 'marriagec_nocopies', 'marriagec_print', 'marriagec_purpose', 'marriagec_validid'*/]; //The input fields that is required
       const isIncomplete = requiredFields.some((field) => !marriageCert[field]);
   
       if (isIncomplete) {
@@ -158,6 +159,8 @@ const MarriageCertificateForm =()=>{
       } 
       
       if (id === 'marriagec_print') {
+
+        const label = e.target.options[e.target.selectedIndex].getAttribute('label');
         const displayValue = updateAmount({ value });
         const copiesValue = prevData.marriagec_nocopies || 0;
         const product = copiesValue * displayValue;
@@ -168,6 +171,7 @@ const MarriageCertificateForm =()=>{
           marriagec_amount: totalAmountPaid,
           initialPrint: displayValue,
           printDisplay: product,
+          marriagec_printLabel: label,
         };
       }
 
@@ -276,11 +280,11 @@ const MarriageCertificateForm =()=>{
   function updateAmount({ value }) {
 
     switch (value) {
-      case 'Front':
-      case 'Back':
+      case '1':
+      case '2':
         return 50;
   
-      case 'Front and Back':
+      case '3':
         return 100;
   
       default:

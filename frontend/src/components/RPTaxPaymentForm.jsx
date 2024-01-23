@@ -175,6 +175,8 @@ const handleCheckboxChange = (e) => {
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
@@ -184,9 +186,10 @@ const handleCheckboxChange = (e) => {
             const body = {
               data: rptaxPayment,
               trans_type: trans_type,
+              f_name: f_name,
+              l_name: l_name
             };
   
-            // Proceed with additional logic after updating state
             try {
               const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
   
@@ -197,7 +200,7 @@ const handleCheckboxChange = (e) => {
                 alert("Failed to send email.");
               }
             } catch (emailError) {
-              //
+              alert(emailError);
             }
           } else {
             console.error('Transaction error:', res.statusText);

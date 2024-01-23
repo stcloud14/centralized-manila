@@ -49,6 +49,7 @@ const BusinessPermitForm =()=>{
     bus_bregionLabel: '',
     bus_bprovinceLabel: '',
     bus_bcityLabel: '',
+    bus_printLabel: '',
     bus_purposeLabel: '',
     bus_busTypeLabel: '',
     bus_sexLabel: '',
@@ -66,6 +67,7 @@ const BusinessPermitForm =()=>{
   });
 
   console.log(busOffice)
+  console.log(busPermit)
 
 
   const [dataRow, setDataRow] = useState([]);
@@ -341,6 +343,8 @@ const BusinessPermitForm =()=>{
       } 
       
       if (id === 'bus_print') {
+
+        const label = e.target.options[e.target.selectedIndex].getAttribute('label');
         const displayValue = updateAmount({ value });
         const copiesValue = prevData.bus_nocopies || 0;
         const product = copiesValue * displayValue;
@@ -351,6 +355,7 @@ const BusinessPermitForm =()=>{
           bus_amount: totalAmountPaid,
           initialPrint: displayValue,
           printDisplay: product,
+          bus_printLabel: label,
         };
       }
 
@@ -378,6 +383,7 @@ const BusinessPermitForm =()=>{
           bus_provinceLabel: label,
         };
       }
+
 
       if (id === 'bus_city') {
 
@@ -509,11 +515,11 @@ const BusinessPermitForm =()=>{
   function updateAmount({ value }) {
 
     switch (value) {
-      case 'Front':
-      case 'Back':
+      case '1':
+      case '2':
         return 50;
   
-      case 'Front and Back':
+      case '3':
         return 100;
   
       default:
@@ -550,13 +556,6 @@ const BusinessPermitForm =()=>{
         const response = await axios.post(`http://localhost:8800/buspermit/bus/${user_id}`, busPermit);
 
         if (response.status === 200) {
-
-
-
-
-
-
-          
             setIsSuccess(true);
             handleCloseModal();
             contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });

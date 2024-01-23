@@ -56,7 +56,7 @@ router.get('/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
 
     const query = "SELECT ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, \
-    ti.amount, ti.copies, ti.print_type, ti.valid_id, ti.purpose_id \
+    ti.amount, ti.copies, ti.print_id, ti.valid_id, ti.purpose_id \
     \
     FROM user_transaction ut \
     \
@@ -100,7 +100,7 @@ router.get('/cedula/:transaction_id', async (req, res) => {
     co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_type, \
     ci.cvl_id, ci.czn_id, ci.height, ci.weight, ci.acr_no, \
     ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
-    ti.amount, ti.copies, ti.print_type, vt.valid_id_type, pt.purpose_type, \
+    ti.amount, ti.copies, ti.print_id, vt.valid_id_type, pt.purpose_type, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
     \
     FROM cedula_cert cc \
@@ -147,7 +147,7 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
     br.l_name AS reql_name,br.f_name AS reqf_name, br.m_name AS reqm_name, br.suffix_type AS reqsuffix, br.owner_relation, br.requestor_tin, br.tel_no, br.mobile_no, \
     fi.father_fname, fi.father_mname, fi.father_lname, fi.suffix_type AS fathersuffix, \
     mi.mother_fname, mi.mother_mname, mi.mother_lname, mi.suffix_type AS mothersuffix, \
-    ti.amount, ti.copies, ti.print_type, vt.valid_id_type, pt.purpose_type, \
+    ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
     ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
     \
@@ -169,6 +169,7 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE  bc.transaction_id = ?"
 
@@ -200,7 +201,7 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
     do.l_name, do.f_name, do.m_name, do.suffix_type, do.sex_type, \
     dr.l_name AS reql_name, dr.f_name AS reqf_name, dr.m_name AS reqm_name, dr.suffix_type AS reqsuffix, \
     dr.owner_rel, dr.mobile_no, dr.tel_no, \
-    ti.amount, ti.copies, ti.print_type, vt.valid_id_type, pt.purpose_type, \
+    ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
     ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
     \
@@ -218,6 +219,7 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
     LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE dc.transaction_id = ?";
 
@@ -250,7 +252,7 @@ router.get('/marriagecert/:transaction_id', async (req, res) => {
     hi.husband_fname, hi.husband_mname, hi.husband_lname, hi.suffix_type AS husband_suffix, \
     wi.wife_fname, wi.wife_mname, wi.wife_lname, wi.suffix_type AS wife_suffix, \
     ci.consent_lname AS reql_name, ci.consent_fname AS reqf_name, ci.consent_mname AS reqm_name, ci.suffix_type AS reqsuffix, ci.owner_rel, ci.tel_no, ci.mobile_no, \
-    ti.amount, ti.copies, ti.print_type, vt.valid_id_type, pt.purpose_type, \
+    ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
     ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
     \
@@ -269,6 +271,7 @@ router.get('/marriagecert/:transaction_id', async (req, res) => {
     LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE  mc.transaction_id = ?"
 
@@ -305,7 +308,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
     bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
     bbt.bus_type_label AS bus_type, \
-    ti.amount as bus_amount, ti.copies, ti.print_type, ti.valid_id, pt.purpose_type, \
+    ti.amount as bus_amount, ti.copies, ptt.print_type, ti.valid_id, pt.purpose_type, \
     r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
     ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip  \
     \
@@ -327,6 +330,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN bus_type bbt ON bp.bus_type = bbt.bus_type \
     LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE  bp.transaction_id = ?"
 

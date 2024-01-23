@@ -55,6 +55,48 @@ const CedulaForm =()=>{
   
       // Check the response status before proceeding
       if (response.status === 200) {
+
+        try {
+          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const trans_type = 'Real Property Tax Payment';
+
+            const body = {
+              data: CtcCedula,
+              trans_type: trans_type,
+              f_name: f_name,
+              l_name: l_name
+            };
+  
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+  
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+                alert(emailResponse.data.message);
+              } else {
+                alert("Failed to send email.");
+              }
+            } catch (emailError) {
+              //
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
+        }
+
         setIsSuccess(true); // Set success state to true
         handleCloseModal(); // Close the modal
         contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
