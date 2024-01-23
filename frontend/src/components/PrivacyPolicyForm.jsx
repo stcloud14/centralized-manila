@@ -187,17 +187,17 @@ const PrivacyPolicyForm =()=>{
               Unless specified otherwise by law or relevant policies, we will retain your pertinent personal information indefinitely for historical and statistical purposes. If a retention period is mandated by law and/or City Government of Manila policies, all relevant records will be securely disposed of after the specified period.
             </span>
               <br/><br/>
-            <h1 className="text-slate-800 dark:text-slate-100 font-medium">Your Rights with Respect to Your Personal Data</h1>
+            <h1 className="text-slate-800 dark:text-slate-100 font-medium">Under the Data Privacy Act of 2012, you have the following rights:</h1>
             <div className="ml-3 text-left text-slate-700 dark:text-white ">
               <p className="mb-1 mt-2">• Right to be informed,</p>
-              <p className="mb-1">Right to access,</p>
-              <p className="mb-1">Right to object,</p>
-              <p className="mb-1">Right to erase or block,</p>
-              <p className="mb-1">Right to rectify,</p>
-              <p className="mb-1">Right to damages,</p>
-              <p className="mb-1">Right to object,</p>
-              <p className="mb-1">Right to data portability and</p>
-              <p className="">Right to file a complaint.</p>
+              <p className="mb-1">• Right to access,</p>
+              <p className="mb-1">• Right to object,</p>
+              <p className="mb-1">• Right to erase or block,</p>
+              <p className="mb-1">• Right to rectify,</p>
+              <p className="mb-1">• Right to damages,</p>
+              <p className="mb-1">• Right to object,</p>
+              <p className="mb-1">• Right to data portability and</p>
+              <p className="">• Right to file a complaint.</p>
             </div>
               <br/>
             <span className="text-left text-slate-700 dark:text-white">
