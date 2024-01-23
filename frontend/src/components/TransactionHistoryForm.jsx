@@ -46,14 +46,21 @@ const TransactionHistoryForm = () => {
       try {
         const res = await axios.get(`http://localhost:8800/transachistory/${user_id}`);
         const transactions = res.data;
-  
-        setUserTransaction(transactions);
-        setFilteredTransactions(transactions);
+
+        // Sort transactions by date in descending order (newest to oldest)
+        const sortedTransactions = transactions.slice().sort((a, b) => {
+          const dateA = new Date(a.date_processed);
+          const dateB = new Date(b.date_processed);
+          return dateB - dateA;
+        });
+
+        setUserTransaction(sortedTransactions);
+        setFilteredTransactions(sortedTransactions);
       } catch (err) {
         console.log(err);
       }
     };
-  
+
     fetchUserTransaction();
   }, [user_id]);
 
@@ -159,52 +166,29 @@ const TransactionHistoryForm = () => {
     const selectedType = e.target.value;
     console.log("Dropdown Value Changed:", selectedType);
     setSelectedType(selectedType);
-  
-    // const updatedFilteredTransactions = sortedTransactions.filter((transaction) => {
-    //   return (
-    //     (!selectedType || selectedType === '0' || transaction.trans_type === selectedType) &&
-    //     (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase()) &&
-    //     isDateInRange(transaction)
-    //   );
-    // });
-  
-    // setFilteredTransactions(updatedFilteredTransactions);
   };
   
   const handleInputChange2 = (e) => {
     const selectedStatus = e.target.value;
     console.log("Dropdown Value Changed:", selectedStatus);
     setSelectedStatus(selectedStatus);
+  };
+  const handleSortChange = () => {
+    // Toggle between ascending and descending order
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortOrder(newSortOrder);
   
-    // const updatedFilteredTransactions = sortedTransactions.filter((transaction) => {
-    //   return (
-    //     (!selectedType || selectedType === '0' || transaction.trans_type === selectedType) &&
-    //     (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase()) &&
-    //     isDateInRange(transaction)
-    //   );
-    // });
+    // Sort transactions by date
+    const sortedByDate = [...sortedTransactions].sort((a, b) => {
+      const dateA = new Date(a.date_processed);
+      const dateB = new Date(b.date_processed);
+      return newSortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+    });
   
-    // setFilteredTransactions(updatedFilteredTransactions);
+    // Update the state with the sorted transactions
+    setFilteredTransactions(sortedByDate);
   };
   
-  // const isDateInRange = (transaction) => {
-  //   if (!selectedDate || !selectedDatee) {
-  //     return true; // No date range selected, include all transactions
-  //   }
-  
-  //   const transactionDate = new Date(transaction.date_processed);
-  //   const startDate = new Date(selectedDate);
-  //   const endDate = new Date(selectedDatee);
-  
-  //   return startDate <= transactionDate && transactionDate <= endDate;
-  // };
-
-  const handleSortChange = (option) => {
-    const newOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-  
-    setSortOption(option);
-    setSortOrder(newOrder);
-  };
   
   const sortTransactions = (transactions) => {
     return transactions.slice().sort((a, b) => {
@@ -216,9 +200,8 @@ const TransactionHistoryForm = () => {
       return 0;
     });
   };
-
-const sortedTransactions = sortTransactions(filteredTransactions.length > 0 ? filteredTransactions : userTransaction);
-
+  
+  const sortedTransactions = sortTransactions(filteredTransactions.length > 0 ? filteredTransactions : userTransaction);
 
 const SortIcon = ({ order }) => (
   <button className="group flex items-center px-1">
@@ -242,53 +225,54 @@ const logoSrc = '../src/images/mnl_footer.svg';
 
         <main className="overflow-y-auto">
           <div className="flex flex-col justify-between mx-4 mt-4">
-            {sortedTransactions.length === 0 ? (
-              <p>No records to show</p>
+            {isMobileView ? (
+              // For Mobile View
+              <TransMobile 
+                searchInput={searchInput}   
+                setSearchInput={setSearchInput}
+                handleSearch={handleSearch} 
+                handleOpenModal={handleOpenModal} 
+                handleClearFilter={handleClearFilter} 
+                handleSortChange={handleSortChange}
+                sortOption={sortOption}
+                sortOrder={sortOrder}
+                SortIcon={SortIcon}
+                sortedTransactions={sortedTransactions} 
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                selectedDatee={selectedDatee}
+                setSelectedDatee={setSelectedDatee}
+                selectedStatus={selectedStatus}
+                handleInputChange={handleInputChange}
+                handleInputChange2={handleInputChange2}
+                selectedType={selectedType}
+                filteredTransactions={filteredTransactions}
+                userPersonal={userPersonal}
+              />
             ) : (
-              isMobileView ? (           
-                // For Mobile View
-                <TransMobile 
-                  searchInput={searchInput} 
-                  handleSearch={handleSearch} 
-                  handleOpenModal={handleOpenModal}  
-                  handleClearFilter={handleClearFilter} 
-                  handleSortChange={handleSortChange}
-                  sortOption={sortOption}
-                  sortedTransactions={sortedTransactions} 
-                  handleInputChange={handleInputChange}
-                  handleInputChange2={handleInputChange2}
-                  selectedDate={selectedDate}
-                  setSelectedDate={setSelectedDate}
-                  selectedDatee={selectedDatee}
-                  setSelectedDatee={setSelectedDatee}
-                  selectedStatus={selectedStatus}
-                  selectedType={selectedType}
-                  filteredTransactions={filteredTransactions}
-                  userPersonal={userPersonal} />
-              ) : (
-                // For Desktop View
-                <TransDesktop 
-                  searchInput={searchInput} 
-                  setSearchInput={setSearchInput}
-                  handleSearch={handleSearch} 
-                  handleOpenModal={handleOpenModal} 
-                  handleClearFilter={handleClearFilter} 
-                  handleSortChange={handleSortChange}
-                  sortOption={sortOption}
-                  sortOrder={sortOrder}
-                  SortIcon={SortIcon}
-                  sortedTransactions={sortedTransactions} 
-                  selectedDate={selectedDate}
-                  setSelectedDate={setSelectedDate}
-                  selectedDatee={selectedDatee}
-                  setSelectedDatee={setSelectedDatee}
-                  selectedStatus={selectedStatus}
-                  handleInputChange={handleInputChange}
-                  handleInputChange2={handleInputChange2}
-                  selectedType={selectedType}
-                  filteredTransactions={filteredTransactions}
-                  userPersonal={userPersonal} />
-              )
+              // For Desktop View
+              <TransDesktop 
+                searchInput={searchInput} 
+                setSearchInput={setSearchInput}
+                handleSearch={handleSearch} 
+                handleOpenModal={handleOpenModal} 
+                handleClearFilter={handleClearFilter} 
+                handleSortChange={handleSortChange}
+                sortOption={sortOption}
+                sortOrder={sortOrder}
+                SortIcon={SortIcon}
+                sortedTransactions={sortedTransactions} 
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                selectedDatee={selectedDatee}
+                setSelectedDatee={setSelectedDatee}
+                selectedStatus={selectedStatus}
+                handleInputChange={handleInputChange}
+                handleInputChange2={handleInputChange2}
+                selectedType={selectedType}
+                filteredTransactions={filteredTransactions}
+                userPersonal={userPersonal}
+              />
             )}
           </div>
           <Footer logo={logoSrc} />

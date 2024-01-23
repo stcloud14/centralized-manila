@@ -26,7 +26,7 @@ const ContactsForm = () => {
 
         <main className="overflow-y-auto">
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <div className="bg-white dark:bg-[#181818] p-6 mb-6 rounded-sm shadow-md flex flex-col md:flex-row items-center justify-center md:justify-between">
+            <div className="bg-white dark:bg-[#181818] p-6 mb-6 rounded-sm shadow-md flex flex-col md:flex-row items-center justify-center md:gap-12">
               {/* Left side with images */}
               <div className='flex items-baseline mb-4 md:mb-0 md:ml-10'>
                 <img src={CallingGirlImage} alt="Banner Image" className='md:w-60 md:h-60 w-44 h-44 object-contain'/>
@@ -35,18 +35,16 @@ const ContactsForm = () => {
               </div>
 
               {/* Right side with text */}
-              <div className='md:ml-16 text-center md:text-left'>
-                <h1 className="text-xl lg:text-3xl md:text-3xl text-slate-800 dark:text-slate-100 font-medium mb-1">
-                  Welcome to Centralized
-                  <span className='text-blue-600'> M</span>
-                  <span className='text-red-500'>a</span>
-                  <span className='text-yellow-500'>n</span>
-                  <span className='text-green-500'>i</span>
-                  <span className='text-blue-600'>l</span>
-                  <span className='text-red-500'>a</span>
-                  <span className='pl-1'></span>
+              <div className='md:mr-20 text-center md:text-left'>
+                <h1 className="text-xl md:text-5xl text-slate-800 dark:text-slate-100 font-medium mb-1">
+                  Get in
+                  <span className='text-blue-500'> t</span>
+                  <span className='text-red-500'>o</span>
+                  <span className='text-yellow-500'>u</span>
+                  <span className='text-blue-500'>c</span>
+                  <span className='text-emerald-500'>h</span>
                 </h1>
-                <p className="text-md dark:text-slate-400 font-thin">Contacts Page</p>
+                <p className="text-md dark:text-slate-400 font-thin">We'd love to hear from you!</p>
               </div>
             </div>
 

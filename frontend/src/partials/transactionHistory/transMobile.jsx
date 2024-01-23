@@ -1,36 +1,22 @@
 import React, { useState } from 'react';
-import StatusBadgeMobile from '../StatusBadgeMobile';
-import TransDropdownFilter from './transDropdownFilter';
+import StatusBadgeDesktop from '../StatusBadgeDesktop';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import logoImage from '../../images/mnl_header_pdf.png';
 import Flatpickr from 'react-flatpickr';
 
-const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortedTransactions, userPersonal }) => {
+import TransTypeDropdown from '../transDropdown/TransTypeDropdown';
+import StatusTypeDropdown from '../transDropdown/StatusTypeDropdown';
+import FilterButton from '../FilterButton';
+
+const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedDatee, setSelectedDatee] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [selectedType, setSelectedType] = useState('');
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
-  const handleInputChange = (e) => {
-    const selectedValue = e.target.value;
-
-    setSelectedType(selectedValue);
-  };
-
-  const handleInputChange2 = (e) => {
-    const selectedValue = e.target.value;
-
-    setSelectedStatus(selectedValue);
-  };
-
   const generatePDF = async () => {
-
     try {
       const pdf = new jsPDF();
   
@@ -39,99 +25,123 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
   
       // Add image to the PDF
       pdf.addImage(imageDataURL, 'PNG', 128, 5, 70, 35);
+  
+      pdf.setLineWidth(0.5);
+      pdf.line(130, 40, 195, 40);
+      pdf.line(130, 47, 195, 47);
+      pdf.line(130, 64, 195, 64);
+  
+      // Account Summary table
+      const totalAllBalances = sortedTransactions.reduce((total, transaction) => {
+        const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
+        const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.payment) : 0;
+  
+        if (!isNaN(amount) && !isNaN(payment)) {
+          total += amount - payment;
+          total = Math.max(total, 0);
+        }
+  
+        return total;
+      }, 0);
+  
+      pdf.autoTable({
+        startY: 40,
+        head: [['Account Summary', '']],
+        body: [
+          ['', ''],
+          // Update this line in the "Account Summary" table
+          ['Total Balance', `P ${Math.floor(totalAllBalances)}`],
+        ],
+        headStyles: {
+          fillColor: false, // Remove background color
+          lineColor: 0,
+          textColor: 0,
+          fontSize: 10,
+          fontStyle: 'bold',
+          lineWidthTop: 1, // Thickness of the top border
+          lineWidthBottom: 1, // Thickness of the bottom border
+        },
+        bodyStyles: {
+          fillColor: false, // Remove background color
+          textColor: 0,
+          fontSize: 10,
+        },
+        alternateRowStyles: {
+          fillColor: false, // Remove background color
+          textColor: 0,
+          fontSize: 10,
+        },
+        margin: { top: 60, left: 130 },
+        tableWidth: 65,
+      });
+  
+      // Adjust the starting y-coordinate for the table
+      const tableStartY = 74;
+  
+      // Define styles for the table header
+      const headerStyles = {
+        fillColor: [50, 50, 50],
+        textColor: 255,
+      };
+  
+      // Filter transactions based on start and end dates, type, and status
+      const filteredTransactions = sortedTransactions.filter((transaction) => {
+        const transactionDate = new Date(transaction.date_processed);
+        const isDateInRange =
+          (!selectedDate || transactionDate >= new Date(selectedDate)) &&
+          (!selectedDatee || transactionDate <= new Date(selectedDatee));
 
-        pdf.setLineWidth(0.5);
-        pdf.line(130, 40, 195, 40);
-        pdf.line(130, 47, 195, 47);
-        pdf.line(130, 64, 195, 64);
+        const isTypeMatching =
+          !selectedType || selectedType === '0' || transaction.trans_type === selectedType;
 
-        // Account Summary table
-        const totalAllBalances = sortedTransactions.reduce((total, transaction) => {
-          const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
-          const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.payment) : 0;
+        const isStatusMatching =
+          !selectedStatus ||
+          selectedStatus === 'All' ||
+          transaction.status_type.toLowerCase() === selectedStatus.toLowerCase();
 
-          if (!isNaN(amount) && !isNaN(payment)) {
-              total += amount - payment;
-              total = Math.max(total, 0);
+        return isDateInRange && isTypeMatching && isStatusMatching;
+      });
+  
+      pdf.autoTable({
+        startY: tableStartY,
+        head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
+        body: filteredTransactions.map((transaction, index) => {
+          const amount = parseFloat(transaction.amount) || 0;
+          const payment = parseFloat(transaction.payment) || 0;
+  
+          // Validate that both amount and payment are valid numbers
+          if (isNaN(amount) || isNaN(payment)) {
+            // Handle non-numeric values, such as displaying an error message or setting them to 0
+            console.error(`Invalid amount or payment for transaction ID ${transaction.transaction_id}`);
+          }
+  
+          // Calculate balance for each row independently
+          let rowBalance = 0; // Initialize rowBalance to 0
+
+          if (transaction.status_type === 'Pending') {
+            rowBalance = amount - payment;
+            rowBalance = Math.max(rowBalance, 0); // Ensure balance is not negative
           }
 
-          return total;
-      }, 0);
+          // Display 0 balance in the first row when amount is paid, and actual balance in subsequent rows
+          const displayBalance =
+            transaction.status_type === 'Paid' ? 'P 0' : `P ${rowBalance < 0 ? '-' : ''}${Math.floor(Math.abs(rowBalance))}`;
 
-        pdf.autoTable({
-          startY: 40,
-          head: [['Account Summary','']],
-          body: [
-              ['',''], 
-              // Update this line in the "Account Summary" table
-              ['Total Balance', `P ${Math.floor(totalAllBalances)}`],
-          ],
-          headStyles: {
-              fillColor: false,  // Remove background color
-              lineColor: 0,
-              textColor: 0,
-              fontSize: 10,
-              fontStyle: 'bold',
-              lineWidthTop: 1,    // Thickness of the top border
-              lineWidthBottom: 1, // Thickness of the bottom border
-          },
-          bodyStyles: {
-              fillColor: false,  // Remove background color
-              textColor: 0,
-              fontSize: 10,
-          },
-          alternateRowStyles: {
-              fillColor: false,  // Remove background color
-              textColor: 0,  
-              fontSize: 10,
-          },
-          margin: { top: 60, left: 130 },
-          tableWidth: 65,
+  
+          return [
+            new Date(transaction.date_processed).toLocaleDateString('en-GB'),
+            transaction.time,
+            transaction.transaction_id,
+            transaction.trans_type,
+            transaction.status_type === 'Pending' && transaction.amount ? `P ${Math.floor(amount)}` : '',
+            transaction.status_type === 'Paid' ? `P ${Math.floor(amount)}` : '', // Display payment amount only when amount status is 'Paid'
+            displayBalance, // Display balance with a minus sign when it's negative
+          ];
+        }),
+        headStyles: headerStyles,
       });
-      
-        // Adjust the starting y-coordinate for the table
-        const tableStartY = 74;
-
-        // Define styles for the table header
-        const headerStyles = {
-            fillColor: [50, 50, 50],
-            textColor: 255,
-        };
-
-        pdf.autoTable({
-          startY: tableStartY,
-          head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
-          body: sortedTransactions.map((transaction, index) => {
-            const amount = parseFloat(transaction.amount) || 0;
-            const payment = parseFloat(transaction.payment) || 0;
-        
-            // Validate that both amount and payment are valid numbers
-            if (isNaN(amount) || isNaN(payment)) {
-                // Handle non-numeric values, such as displaying an error message or setting them to 0
-                console.error(`Invalid amount or payment for transaction ID ${transaction.transaction_id}`);
-            }
-            
-            // Calculate balance for each row independently
-            let rowBalance = amount - payment;
-            rowBalance = Math.max(rowBalance, 0); // Ensure balance is not negative
-        
-            // Display 0 balance in the first row when amount is paid, and actual balance in subsequent rows
-            const displayBalance = transaction.status_type === 'Paid' && index === 0 ? 'P 0' : `P ${rowBalance < 0 ? '-' : ''}${Math.floor(Math.abs(rowBalance))}`;
-        
-            return [
-                new Date(transaction.date_processed).toLocaleDateString('en-GB'),
-                transaction.time,
-                transaction.transaction_id,
-                transaction.trans_type,
-                transaction.status_type === 'Pending' && transaction.amount ? `P ${Math.floor(amount)}` : '',
-                transaction.status_type === 'Paid' ? `P ${Math.floor(amount)}` : '', // Display payment amount only when amount status is 'Paid'
-                displayBalance, // Display balance with a minus sign when it's negative
-            ];
-          }),
-          headStyles: headerStyles,
-        });
-
-        pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
+  
+      pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
     } catch (error) {
       console.error('Error generating transaction history:', error);
     }
@@ -154,20 +164,6 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                 <h1 className='font-medium text-center text-slate-700 dark:text-white mb-5'>Transaction History</h1>
                 <div className="flex justify-center items-center mb-3 md:px-0 md:pr-0.5 px-0.5 text-xs">
                   <div className="relative mr-2 w-full">
-                    {/* <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                        <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
-                    </span>
-                    <input
-                      id="searchInput"
-                      value={searchInput}
-                      onChange={handleSearchInputChange} 
-                      onKeyDown={(e) => e.key === 'Enter' && handleSearch()} 
-                      type="text"
-                      placeholder="Search ID..."
-                      className="bg-transparent text-xs md:text-sm border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-full w-full"
-                    /> */}
                     <button
                   className="group flex justify-center w-full items-center text-center p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full"
                   onClick={generatePDF}
@@ -195,222 +191,133 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                     <span className="pl-1">Filter</span>
                   </button>
 
-        {isDropdownOpen && (
-          <div className="absolute right-0 w-[270px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
-
-              {/* Date Row */}
-              <div className="flex justify-center pb-1.5">
-                  <span>
-                          <Flatpickr
-                            id=""
-                            name=""
-                            value={selectedDate}
-                            onChange={(date) => {
-                              const formattedDate = date.length > 0 ? (() => {
-                                const originalDate = new Date(date[0]);
-                                originalDate.setDate(originalDate.getDate() + 1);
-                                return originalDate.toISOString().split('T')[0];
-                              })() : '';
-                              setSelectedDate(formattedDate);
-                            }}
-                            options={{
-                              dateFormat: 'Y-m-d',
-                              altInput: true,
-                              altFormat: 'F j, Y',
-                            }}
-                            placeholder="From"
-                            className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[110px]"
-                          />
-                          <span> - </span>
-                          <Flatpickr
-                            id=""
-                            name=""
-                            value={selectedDatee}
-                            onChange={(date) => {
-                              const formattedDate = date.length > 0 ? (() => {
-                                const originalDate = new Date(date[0]);
-                                originalDate.setDate(originalDate.getDate() + 1);
-                                return originalDate.toISOString().split('T')[0];
-                              })() : '';
-                              setSelectedDatee(formattedDate);
-                            }}
-                            options={{
-                              dateFormat: 'Y-m-d',
-                              altInput: true,
-                              altFormat: 'F j, Y',
-                            }}
-                            placeholder="To"
-                            className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[110px]"
-                          />
-                    </span>
-                 </div>
-              
-
-              {/* Transaction ID Row */}
-              <div className="flex justify-center">
-
-                  <div className="relative flex items-center">
-                    <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3">
-                        <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
-                    </span>
-                    <input
-                      value={searchInput}
-                      onChange={(e) => handleSearch(e.target.value.toUpperCase())}
-                      id="searchInput"
-                      onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                      type="text"
-                      placeholder="Search ID..."
-                      className="bg-transparent text-xs w-[235px] border border-slate-300 text-slate-700 dark:text-white pl-6 py-1 md:py-0.5 rounded-full"
-                    />
-                  </div>
-                </div>
-
-                {/* Type Row */}
-                <div className="flex justify-center py-1.5">
-                    <select  onChange={handleInputChange}  value={selectedType}  name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-full peer cursor-pointer h-[33.5px] w-[235px]">
-                      <option value="SELECTSTATUS" className="dark:bg-[#3d3d3d]">Select Type</option>
-                      <option value="RPTAXPAYMENT" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
-                      <option value="RPTAXCLEARANCE" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
-                      <option value="BUSINESSPERMIT" className="dark:bg-[#3d3d3d]">Business Permit</option>
-                      <option value="CTC" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
-                      <option value="BIRTHC" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
-                      <option value="DEATHC" className="dark:bg-[#3d3d3d]">Death Certificate</option>
-                      <option value="MARRIAGEC" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
-                  </select>
-                </div>
-
-                {/* Status Row */}
-                <div className="flex justify-center ">
-                    <select onChange={handleInputChange2} value={selectedStatus} name="" id="" className={`font-semibold px-0 text-xs border bg-transparent border-slate-300 pl-4  rounded-full peer cursor-pointer`}
-                      style={{
-                        width: "235px",
-                        height: "33.5px",
-                        backgroundColor:
-                          selectedStatus === "Pending" ? "#fef08a" :
-                          selectedStatus === "Paid" ? "#a7f3d0" :
-                          selectedStatus === "Processing" ? "#e9d5ff" :
-                          selectedStatus === "Complete" ? "#bfdbfe" :
-                          selectedStatus === "Rejected" ? "#fecaca" :
-                          selectedStatus === "Canceled" ? "#e2e8f0" : 
-                          selectedStatus === "Expired" ? "#fed7aa" : "transparent",
-                        color:
-                          selectedStatus === "Pending" ? "#854d0e"  : 
-                          selectedStatus === "Paid" ? "#065f46" :
-                          selectedStatus === "Processing" ? "#6b21a8" :
-                          selectedStatus === "Complete" ? "#1e40af" :
-                          selectedStatus === "Rejected" ? "#991b1b" :
-                          selectedStatus === "Canceled" ? "#1e293b" : 
-                          selectedStatus === "Expired" ? "#9a3412" : "#718096",
-                      }}>
-                       <option value="" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d] font-semibold">Select Status</option>
-                      <option value="Pending" className="bg-yellow-200 text-yellow-800 font-semibold">Pending</option>
-                      <option value="Paid" className="bg-emerald-200 text-emerald-800 font-semibold">Paid</option>
-                      <option value="Processing" className="bg-purple-200 text-purple-800 font-semibold">Processing</option>
-                      <option value="Complete" className="bg-blue-200 text-blue-800 font-semibold">Complete</option>
-                      <option value="Rejected" className="bg-red-200 text-red-800 font-semibold">Rejected</option>
-                      <option value="Canceled" className="bg-slate-200 text-slate-800 font-semibold">Canceled</option>
-                      <option value="Expired" className="bg-orange-200 text-orange-800 font-semibold">Expired</option>
-                    </select>
-                </div>
-
-                <button type="button" onClick={toggleDropdown} className="bg-blue-500 hover:bg-blue-600 text-white mr-1.5 px-4 py-1 mt-2 mb-0.5 rounded-full flex items-center ml-auto">
-                    <span>Filter</span>
-                  </button>
-          </div>
+                  {isDropdownOpen && (
+         <FilterButton 
+         searchInput={searchInput} 
+         setSearchInput={setSearchInput}
+         handleSearch={handleSearch} 
+         selectedDate={selectedDate}
+         setSelectedDate={setSelectedDate}
+         selectedDatee={selectedDatee}
+         setSelectedDatee={setSelectedDatee}
+         selectedStatus={selectedStatus}
+         handleInputChange={handleInputChange}
+         handleInputChange2={handleInputChange2}
+         selectedType={selectedType}
+         />
         )}
-      </div>
-                  
                 </div>
-                {/* <div className="flex text-xs mb-5">
+
+                <button onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 mr-2 rounded-full inline-flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  </svg>
+                  <span>&nbsp;Clear</span>
+                </button>
+                  
                 <button
-                  className="group flex justify-center w-full items-center text-center p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full mt-2"
+                  className="group border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white px-4 py-1 rounded-full inline-flex items-center"
                   onClick={generatePDF}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                     <path className="stroke-emerald-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
                   </svg>
-                  <span className="text-xs font-normal px-0.5">&nbsp;Download SOA</span>
+                  <span>&nbsp;Download SOA</span>
                 </button>
-                </div> */}
-
-                {/* <div className="flex justify center items-center text-[0.60rem] mb-5 space-px-2 space-x-2">
-                  <div className="group flex justify-center w-full items-center text-center">
-                    <span>Sort By: </span>
-                  </div>
-                  <button className="flex justify-center w-full items-center text-center p-1 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full">
-                    <span>Date</span>
-                  </button>
-
-                  <button className="flex justify-center w-full items-center text-center p-1 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full">
-                    <span>Type</span>
-                  </button>
-                  <button className="flex justify-center w-full items-center text-center p-1 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full">
-                    <span>Status</span>
-                  </button>
-                  <button className="flex justify-center w-full items-center text-center p-1 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full">
-                    <span>Amount</span>
-                  </button>
-                </div> */}
-                {/* {filteredTransactions.length > 0 ? filteredTransactions.map((transaction) => ( */}
-                {sortedTransactions.map((transaction) => (
-
-                  <div key={transaction.transaction_id} className="bg-white dark:bg-[#333333] shadow-md rounded-md mb-4">
-                    <div className=" text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-md px-4 py-1.5">
-                      Transaction ID: {transaction.transaction_id}
-                    </div>
-                    <div className="px-4 py-5">
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: {transaction.date}</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time: {transaction.time}</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
-                      <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
-                        <span>Status:</span> <StatusBadgeMobile statusType={transaction.status_type} />
-                      </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P {transaction.amount}</div>
-                      <div className="mt-5 group">
-                        <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full mt-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
-                            <path className="stroke-blue-500" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                            <path className="stroke-blue-500" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                          <span className="text-xs font-normal">&nbsp;View Details</span>
-                        </div>
-                      </div>
-                    </div>  
-                  </div>
-                ))} 
-                {/* )) : userTransaction.map((transaction) => (
-                    
-                    <div key={transaction.transaction_id} className="bg-white dark:bg-[#333333] shadow-md rounded-md mb-4">
-                    <div className=" text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-md px-4 py-1.5">
-                        Transaction ID: {transaction.transaction_id}
-                    </div>
-                    <div className="px-4 py-5">
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: {transaction.date}</div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time: {transaction.time}</div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
-                        <div className="whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 my-1">
-                        Status: <StatusBadgeMobile statusType={transaction.status_type} />
-                        </div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P {transaction.amount}</div>
-                        <div className="mt-5 group">
-                        <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full mt-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
-                            <path className="stroke-blue-500" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                            <path className="stroke-blue-500" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            <span className="text-xs font-normal">&nbsp;View Details</span>
-                        </div>
-                        </div>
-                    </div>  
-                    </div>
-                ))} */}
               </div>
+
+            <div className="relative overflow-x-auto shadow-md md:rounded-lg rounded-md">
+              <table className="w-full text-left text-xs md:text-sm rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead className="text-gray-700 uppercase bg-slate-200 dark:bg-[#212121] dark:text-slate-400">
+                    <tr>
+                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                            <div className="flex items-center pl-3">
+                              Transaction ID
+                            </div>
+                        </th>
+                        <th onClick={() => handleSortChange('date_processed')} scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                            <div className="flex items-center">
+                              Date{sortOption === 'date_processed'} <SortIcon order={sortOrder} />
+                            </div>
+                        </th>
+                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                            <div className="flex items-center">
+                              Time
+                            </div>
+                        </th>
+                        <th onClick={() => handleSortChange('trans_type')} scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                            <div className="flex items-center">
+                              Type{sortOption === 'trans_type'} <SortIcon order={sortOrder} />
+                            </div>
+                        </th><th onClick={() => handleSortChange('status_type')} scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                            <div className="flex items-center">
+                              Status{sortOption === 'status_type'} <SortIcon order={sortOrder} />
+                            </div>
+                        </th><th onClick={() => handleSortChange('amount')} scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                            <div className="flex items-center">
+                              Amount{sortOption === 'amount'} <SortIcon order={sortOrder} />
+                            </div>
+                        </th>
+                        <th>
+                          {/* View Details*/}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {filteredTransactions.length === 0 ? (
+                    <tr>
+                      <td colSpan="7" className="text-center py-4">
+                        {searchInput || selectedType || selectedStatus ? (
+                          <span>No records found.</span>
+                        ) : (
+                          <span>No records available.</span>
+                        )}
+                      </td>
+                    </tr>
+                  ) : (
+                  filteredTransactions.map((transaction) => (
+                <tr key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+                  <td className="pl-6 pr-3 py-4 whitespace-nowrap">
+                    <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                      {transaction.transaction_id}
+                    </div>
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                    {transaction.date}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                    {transaction.time}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                    {transaction.trans_type}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap">
+                    <StatusBadgeDesktop statusType={transaction.status_type} />
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                    P {transaction.amount}
+                  </td>
+                  <td className="pl-3 pr-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
+                    <div className="group cursor-pointer">
+                      <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center px-4 p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full" >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:stroke-white">
+                          <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                          <path className="stroke-blue-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>   
+                        <span className="text-xs font-normal">&nbsp;View Details</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                  ))
+                )}
+              </tbody>
+              </table>
+            </div>
+          </div>
         </div>
         </>
-
-    );
+      );
 }
      
 

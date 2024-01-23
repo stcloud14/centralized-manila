@@ -171,17 +171,24 @@ const handleCheckboxChange = (e) => {
       if (response.status === 200) {
         // Fetch user_email after successful payment
         try {
-          const res = await axios.get(`http://localhost:8800/rptax/payment/${user_id}`);
+          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
+
+            const trans_type = 'Real Property Tax Payment';
+
+            const body = {
+              data: rptaxPayment,
+              trans_type: trans_type,
+            };
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`);
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
