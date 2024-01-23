@@ -89,7 +89,7 @@ router.get('/', async (req, res) => {
     const query = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
     const values = [transID, user_id, transType, statusType, formattedDate];
 
-    const query1 = "INSERT INTO transaction_info (`transaction_id`, `amount`, `copies`, `print_type`, `valid_id`, `purpose_id`) VALUES (?, ?, ?, ?, ?, ?)";
+    const query1 = "INSERT INTO transaction_info (`transaction_id`, `amount`, `copies`, `print_id`, `valid_id`, `purpose_id`) VALUES (?, ?, ?, ?, ?, ?)";
     const values1 = [transID, birthc_amount, birthc_nocopies, birthc_print, validID, purpose];
 
     const query2 = "INSERT INTO birth_cert (`transaction_id`, `region_id`, `prov_id`, `city_id`) VALUES (?, ?, ?, ?)";
