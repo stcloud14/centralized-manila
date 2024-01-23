@@ -556,6 +556,48 @@ const BusinessPermitForm =()=>{
         const response = await axios.post(`http://localhost:8800/buspermit/bus/${user_id}`, busPermit);
 
         if (response.status === 200) {
+
+          try {
+            const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+            
+            if (res.data.user_email) {
+              const updatedUserEmail = res.data.user_email;
+              const f_name = res.data.f_name;
+              const l_name = res.data.l_name;
+              console.log('FETCHED USER EMAIL:', updatedUserEmail);
+  
+              const user_email = updatedUserEmail;
+  
+              const trans_type = 'Business Permit';
+  
+              const body = {
+                data: busPermit,
+                trans_type: trans_type,
+                f_name: f_name,
+                l_name: l_name
+              };
+    
+              try {
+                const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+    
+                if (emailResponse.data && emailResponse.data.message) {
+                  console.log('SENT EMAIL');
+                  alert(emailResponse.data.message);
+                } else {
+                  alert("Failed to send email.");
+                }
+              } catch (emailError) {
+                // alert(emailError);
+              }
+            } else {
+              console.error('Transaction error:', res.statusText);
+            }
+          } catch (fetchError) {
+            console.log('NOT FETCHING EMAIL');
+            console.error(fetchError);
+          }
+
+
             setIsSuccess(true);
             handleCloseModal();
             contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
