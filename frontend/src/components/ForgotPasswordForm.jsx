@@ -8,7 +8,7 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 const ForgotPasswordForm = () => {
   const [authenticated, setAuthenticated] = useState(true); //set false and later remove it so that it will works place true
-  const [isSendOTP, setSendOTP] = useState(true); //set false and later remove it so that it will works place true
+  const [isSendOTP, setSendOTP] = useState(false); //set false and later remove it so that it will works place true
   const [isResetPassword, setResetPassword] = useState(false); //set it false when you are done configure
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -124,7 +124,7 @@ const ForgotPasswordForm = () => {
 
   const onSignup = async (recaptchaToken) => {
     const appVerifier = window.recaptchaVerifier;
-    const phoneNumber = `+63${userAuth.mobile_no}`;
+    // const phoneNumber = `+63${userAuth.mobile_no}`;
   
     try {
       // Only proceed with SMS verification if reCAPTCHA verification is successful
@@ -157,7 +157,8 @@ const ForgotPasswordForm = () => {
         console.log(response)
         if (authenticated) {
           setIsSubmitting(true); 
-          onCaptchaVerify();
+          // onCaptchaVerify();
+          setResetPassword(true)
         }
       } else {
         setLoginError("Authentication failed. Please check .");
@@ -195,7 +196,7 @@ const ForgotPasswordForm = () => {
 });
 
 const [passwordError, setPasswordError] = useState('');
-const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.,-=])[A-Za-z\d!@#$%^&*.,-=]{8,}$/;
+const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z\d!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
 const navigate = useNavigate();
 
 
@@ -211,49 +212,57 @@ const navigate = useNavigate();
 
 
     
-            const handleClick= async (e) =>{
-              e.preventDefault()
-
-                  const { new_user_pass, confirm_user_pass } = userReg;
-                  const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.,-=])[A-Za-z\d!@#$%^&*.,-=]{8,}$/;
-
-                  if (new_user_pass && !passwordRule.test(new_user_pass)) {
-                    setPasswordError(
-                      'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.'
-                    );
-                    setTimeout(() => {
-                      setPasswordError('');
-                    }, 3000);
-                  } else if (new_user_pass !== confirm_user_pass) {
-                    setPasswordError("New password and confirm password don't match.");
-                    setTimeout(() => {
-                      setPasswordError('');
-                    }, 3000);
-                  } else {
-                    try {
-                      await axios.put(`http://localhost:8800/forgotpass/reset_pass/${userAuth.mobile_no}`, {
-                        new_user_pass,
-                      });
-                      setIsSuccess1(true);
-                      console.log('Successful Reset password');
+  const handleClick = async (e) => {
+    e.preventDefault();
   
-                      const countdownInterval = setInterval(() => {
-                        setCountdown((prevCountdown) => prevCountdown - 1);
-                      }, 1000); // 1000 milliseconds = 1 second
-                      setTimeout(() => {
-                        setIsSuccess1(false);
-                        setCountdown(5);
-                      }, 3000); // 5000 milliseconds = 5 seconds
-                      setTimeout(() => {
-                        clearInterval(countdownInterval);
-                        navigate('/');
-                      }, 8000);
-                    } catch (error) {
-                      console.error(error);
-                      // Handle error during password change
-                    }
-                  }
-                };
+    const { new_user_pass, confirm_user_pass } = userReg;
+    const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z\d!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
+  
+    if (new_user_pass && passwordRule.test(new_user_pass)) {
+      // Password meets the rule
+      if (new_user_pass !== confirm_user_pass) {
+        // Confirm password doesn't match
+        setPasswordError("New password and confirm password don't match.");
+        setTimeout(() => {
+          setPasswordError('');
+        }, 3000);
+      } else {
+        try {
+          await axios.put(`http://localhost:8800/forgotpass/reset_pass/${userAuth.mobile_no}`, {
+            new_user_pass,
+          });
+          setIsSuccess1(true);
+          console.log('Successful Reset password');
+  
+          const countdownInterval = setInterval(() => {
+            setCountdown((prevCountdown) => prevCountdown - 1);
+          }, 1000);
+  
+          setTimeout(() => {
+            setIsSuccess1(false);
+            setCountdown(5);
+          }, 3000);
+  
+          setTimeout(() => {
+            clearInterval(countdownInterval);
+            navigate('/');
+          }, 8000);
+        } catch (error) {
+          console.error(error);
+          // Handle error during password change
+        }
+      }
+    } else {
+      // Password doesn't meet the rule
+      setPasswordError(
+        'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.'
+      );
+      setTimeout(() => {
+        setPasswordError('');
+      }, 3000);
+    }
+  };
+
       const handleChange = (e) => {
         const { name, value } = e.target;
     
