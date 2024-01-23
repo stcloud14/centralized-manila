@@ -84,7 +84,7 @@ const TransactionHistoryForm = () => {
     const searchInput = e.toUpperCase();
     setSearchInput(searchInput);
   
-    const filteredTransactions = userTransaction.filter((transaction) => {
+    const filteredTransactions = sortedTransactions.filter((transaction) => {
       const transactionId = transaction.transaction_id.toString().toUpperCase();
   
       return (
@@ -92,12 +92,12 @@ const TransactionHistoryForm = () => {
         isSubsequence(searchInput, transactionId) &&
         (!selectedDate || new Date(transaction.date_processed) >= new Date(selectedDate)) &&
         (!selectedDatee || new Date(transaction.date_processed) <= new Date(selectedDatee)) &&
-        (!selectedType || selectedType === 'All' || transaction.trans_type.toLowerCase() === selectedType.toLowerCase()) &&
+        (!selectedType || selectedType === '0' || transaction.trans_type === selectedType) &&
         (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase())
       );
     });
   
-    setFilteredTransactions(filteredTransactions.length > 0 ? filteredTransactions : []);
+    setFilteredTransactions(filteredTransactions);
   };    
   
   // Make sure that the transaction searching is the same order in terms of characters
@@ -148,7 +148,7 @@ const TransactionHistoryForm = () => {
   useEffect(() => {
     // This effect will run after the component renders
     handleSearch(searchInput);
-  }, [selectedStatus, searchInput]);
+  }, [selectedStatus, searchInput, selectedType]);
   
 
   const handleSortChange = (option) => {

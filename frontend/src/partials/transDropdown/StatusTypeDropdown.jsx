@@ -3,7 +3,7 @@ import React from 'react';
     const StatusTypeDropdown = () => {
         return (
             <>
-                      <option value="" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d] font-semibold">Select Status</option>
+                      <option value="All" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d] font-semibold">Select Status</option>
                       <option value="Pending" className="bg-yellow-200 text-yellow-800 font-semibold">Pending</option>
                       <option value="Paid" className="bg-emerald-200 text-emerald-800 font-semibold">Paid</option>
                       <option value="Processing" className="bg-purple-200 text-purple-800 font-semibold">Processing</option>
