@@ -74,7 +74,8 @@ const FormatMail = (user_email, body) => {
       <div style="background: radial-gradient(at center top, rgb(64, 141, 81), rgb(41, 81, 65)); color: #ffffff; padding-top: 1rem; padding-bottom: 1rem; margin: auto; text-align: center;">
         Â© 2023 Centralized Manila, Inc. All Rights Reserved.
       </div>
-    </div>`;
+    </div>
+    `;
 };
 
 
