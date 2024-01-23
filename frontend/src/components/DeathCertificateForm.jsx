@@ -61,10 +61,62 @@ const DeathCertificateForm =()=>{
     
         // Check the response status before proceeding
         if (response.status === 200) {
+
+          try {
+            const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+            
+            if (res.data.user_email) {
+              const updatedUserEmail = res.data.user_email;
+              const f_name = res.data.f_name;
+              const l_name = res.data.l_name;
+              console.log('FETCHED USER EMAIL:', updatedUserEmail);
+  
+              const user_email = updatedUserEmail;
+  
+              const trans_type = 'Death Certificate';
+  
+              const body = {
+                data: deathCert,
+                trans_type: trans_type,
+                f_name: f_name,
+                l_name: l_name
+              };
+    
+              try {
+                const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+    
+                if (emailResponse.data && emailResponse.data.message) {
+                  console.log('SENT EMAIL');
+                  alert(emailResponse.data.message);
+                } else {
+                  alert("Failed to send email.");
+                }
+              } catch (emailError) {
+                // alert(emailError);
+              }
+            } else {
+              console.error('Transaction error:', res.statusText);
+            }
+          } catch (fetchError) {
+            console.log('NOT FETCHING EMAIL');
+            console.error(fetchError);
+          }
+
+
+
+
+
+
+
           setIsSuccess(true); // Set success state to true
           handleCloseModal(); // Close the modal
           contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
           console.log('Transaction successful');
+
+          setTimeout(() => {
+            window.location.href = `/transachistory/${user_id}`;
+          }, 2000); 
+  
     
           setTimeout(() => {
             setIsSuccess(false);
@@ -354,17 +406,24 @@ const DeathCertificateForm =()=>{
               <h1 className='font-medium text-center text-slate-700 dark:text-white'>Local Civil Registry</h1>
               <h1 className='mb-6 text-sm italic text-center text-slate-700 dark:text-gray-300'>Death Certificate</h1>
 
-              {isSuccess && (
-              <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
-                Transaction success on Death Certificate!
+              {isSuccess && (                
+              <div className="my-5 text-center">
+                <div className="mb-5 inline-flex items-center justify-center w-12 h-12">
+                  <svg aria-hidden="true" className="pb-0 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                  </svg>
+                </div>
+                <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction successful! Redirecting to Transaction History...</div> 
               </div>
-              )}  
+            )}
 
-              {showWarning && (
-              <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+
+            {showWarning && (
+              <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
                 Please fill in all required fields before proceeding.
               </div>
-              )} 
+            )}
 
               {/* Group 1 - Document Owner's Personal Information*/}
               <h1 className='text-xs text-slate-700 dark:text-white mt-8'>All fields mark with <Req /> are required.</h1>
