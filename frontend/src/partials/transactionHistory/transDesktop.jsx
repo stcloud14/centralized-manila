@@ -12,6 +12,17 @@ import FilterButton from '../FilterButton';
 const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   
+  const formatAmount = (amount) => {
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount)) {
+      return 'Invalid Amount';
+    }
+  
+    // Add .00 to the amount
+    const formattedAmount = parsedAmount.toFixed(2);
+  
+    return `P ${formattedAmount}`;
+  };
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -51,7 +62,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
         body: [
           ['', ''],
           // Update this line in the "Account Summary" table
-          ['Total Balance', `P ${Math.floor(totalAllBalances)}`],
+          ['Total Balance', `P ${totalAllBalances.toFixed(2)}`],
         ],
         headStyles: {
           fillColor: false, // Remove background color
@@ -109,34 +120,35 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
         body: filteredTransactions.map((transaction, index) => {
           const amount = parseFloat(transaction.amount) || 0;
           const payment = parseFloat(transaction.payment) || 0;
-  
+      
           // Validate that both amount and payment are valid numbers
           if (isNaN(amount) || isNaN(payment)) {
             // Handle non-numeric values, such as displaying an error message or setting them to 0
             console.error(`Invalid amount or payment for transaction ID ${transaction.transaction_id}`);
           }
-  
+      
+          // Declare rowBalance outside the map function
+          let rowBalance = 0;
+      
           // Calculate balance for each row independently
-          let rowBalance = 0; // Initialize rowBalance to 0
-
           if (transaction.status_type === 'Pending') {
             rowBalance = amount - payment;
             rowBalance = Math.max(rowBalance, 0); // Ensure balance is not negative
           }
-
-          // Display 0 balance in the first row when amount is paid, and actual balance in subsequent rows
-          const displayBalance =
-            transaction.status_type === 'Paid' ? 'P 0' : `P ${rowBalance < 0 ? '-' : ''}${Math.floor(Math.abs(rowBalance))}`;
-
-  
+      
+          // Format numeric values to have two decimal places
+          const formattedAmount = `P ${amount.toFixed(2)}`;
+          const formattedPayment = `P ${payment.toFixed(2)}`;
+          const displayBalance = `P ${rowBalance < 0 ? '-' : ''}${Math.abs(rowBalance).toFixed(2)}`;
+      
           return [
             new Date(transaction.date_processed).toLocaleDateString('en-GB'),
             transaction.time,
             transaction.transaction_id,
             transaction.trans_type,
-            transaction.status_type === 'Pending' && transaction.amount ? `P ${Math.floor(amount)}` : '',
-            transaction.status_type === 'Paid' ? `P ${Math.floor(amount)}` : '', // Display payment amount only when amount status is 'Paid'
-            displayBalance, // Display balance with a minus sign when it's negative
+            transaction.status_type === 'Pending' && transaction.amount ? formattedAmount : '',
+            transaction.status_type === 'Paid' ? formattedAmount : '',
+            displayBalance,
           ];
         }),
         headStyles: headerStyles,
@@ -288,7 +300,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
                     <StatusBadgeDesktop statusType={transaction.status_type} />
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                    P {transaction.amount}
+                    {formatAmount(transaction.amount)}
                   </td>
                   <td className="pl-3 pr-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
                     <div className="group cursor-pointer">
