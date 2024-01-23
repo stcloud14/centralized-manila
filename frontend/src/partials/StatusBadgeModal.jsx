@@ -5,7 +5,7 @@ const getStatusColors = (statusType) => {
     case 'Pending':
       return { bgColor: 'bg-yellow-200', textColor: 'text-yellow-800', text: <p>Awaiting payment. Please pay the required amount.</p>};
     case 'Paid':
-      return { bgColor: 'bg-green-200', textColor: 'text-green-800', text: <p>The transaction is presently undergoing processing.</p> };
+      return { bgColor: 'bg-emerald-200', textColor: 'text-emerald-800', text: <p>The transaction is presently undergoing processing.</p> };
     case 'Canceled':
       return { bgColor: 'bg-slate-200', textColor: 'text-slate-800', text: <p>The transaction is canceled.</p> };
     case 'Rejected':
@@ -21,9 +21,9 @@ const getStatusColors = (statusType) => {
     case 'Expired':
       return { bgColor: 'bg-orange-200', textColor: 'text-orange-800', text: <p>The transaction has expired due to non-payment.</p> };
     case 'Processing':
-      return { bgColor: 'bg-blue-200', textColor: 'text-blue-800', text: <p>The transaction is currently being processed.</p> };
+      return { bgColor: 'bg-purple-200', textColor: 'text-purple-800', text: <p>The transaction is currently being processed.</p> };
     case 'Complete':
-      return { bgColor: 'bg-pink-200', textColor: 'text-pink-800', text: <p>The transaction is complete.</p> };
+      return { bgColor: 'bg-blue-200', textColor: 'text-blue-800', text: <p>The transaction is complete.</p> };
     default:
       return { bgColor: 'bg-gray-200', textColor: 'text-black'};
   }

@@ -5,7 +5,7 @@ const getStatusColors = (statusType) => {
     case 'Pending':
       return { bgColor: 'bg-yellow-200', textColor: 'text-yellow-800' };
     case 'Paid':
-      return { bgColor: 'bg-green-200', textColor: 'text-green-800' };
+      return { bgColor: 'bg-emerald-200', textColor: 'text-emerald-800' };
     case 'Canceled':
       return { bgColor: 'bg-slate-200', textColor: 'text-slate-800' };
     case 'Rejected':
@@ -13,9 +13,9 @@ const getStatusColors = (statusType) => {
     case 'Expired':
       return { bgColor: 'bg-orange-200', textColor: 'text-orange-800' };
     case 'Processing':
-      return { bgColor: 'bg-blue-200', textColor: 'text-blue-800' };
+      return { bgColor: 'bg-purple-200', textColor: 'text-purple-800' };
      case 'Complete':
-      return { bgColor: 'bg-pink-200', textColor: 'text-pink-800'};
+      return { bgColor: 'bg-blue-200', textColor: 'text-blue-800'};
     default:
       return { bgColor: 'bg-gray-200', textColor: 'text-black' };
   }
