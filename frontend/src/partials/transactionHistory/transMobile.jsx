@@ -283,39 +283,39 @@ const TransMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
 
                 {/* Status Row */}
                 <div className="flex justify-center ">
-                    <select onChange={handleInputChange2} value={selectedStatus} name="" id="" className={` px-0 text-xs border bg-transparent border-slate-300 pl-4  rounded-full peer cursor-pointer`}
+                    <select onChange={handleInputChange2} value={selectedStatus} name="" id="" className={`font-semibold px-0 text-xs border bg-transparent border-slate-300 pl-4  rounded-full peer cursor-pointer`}
                       style={{
                         width: "235px",
                         height: "33.5px",
                         backgroundColor:
-                          selectedStatus === "PENDING" ? "#fef08a" :
-                          selectedStatus === "PAID" ? "#bbf7d0" :
-                          selectedStatus === "PROCESSING" ? "#bfdbfe" :
-                          selectedStatus === "COMPLETE" ? "#fbcfe8" :
-                          selectedStatus === "REJECTED" ? "#fecaca" :
-                          selectedStatus === "CANCELED" ? "#e2e8f0" : 
-                          selectedStatus === "EXPIRED" ? "#fed7aa" : "transparent",
+                          selectedStatus === "Pending" ? "#fef08a" :
+                          selectedStatus === "Paid" ? "#bbf7d0" :
+                          selectedStatus === "Processing" ? "#bfdbfe" :
+                          selectedStatus === "Complete" ? "#fbcfe8" :
+                          selectedStatus === "Rejected" ? "#fecaca" :
+                          selectedStatus === "Canceled" ? "#e2e8f0" : 
+                          selectedStatus === "Expired" ? "#fed7aa" : "transparent",
                         color:
-                          selectedStatus === "PENDING" ? "#a86728" :
-                          selectedStatus === "PAID" ? "#247256" :
-                          selectedStatus === "PROCESSING" ? "#1565C0" :
-                          selectedStatus === "COMPLETE" ? "#a12863" :
-                          selectedStatus === "REJECTED" ? "#a22b34" :
-                          selectedStatus === "CANCELED" ? "#000000" : 
-                          selectedStatus === "EXPIRED" ? "#a23d1e" : "#718096"
+                          selectedStatus === "Pending" ? "#854d0e"  : 
+                          selectedStatus === "Paid" ? "#166534" :
+                          selectedStatus === "Processing" ? "#1e40af" :
+                          selectedStatus === "Complete" ? "#9d174d" :
+                          selectedStatus === "Rejected" ? "#991b1b" :
+                          selectedStatus === "Canceled" ? "#1e293b" : 
+                          selectedStatus === "Expired" ? "#9a3412" : "#718096",
                       }}>
-                      <option value="SELECTSTATUS" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d]">Select Status</option>
-                      <option value="PENDING" className="bg-yellow-200 text-yellow-800">Pending</option>
-                      <option value="PAID" className="bg-green-200 text-green-800">Paid</option>
-                      <option value="PROCESSING" className="bg-blue-200 text-blue-800">Processing</option>
-                      <option value="COMPLETE" className="bg-pink-200 text-pink-800">Complete</option>
-                      <option value="REJECTED" className="text-red-800 bg-red-200">Rejected</option>
-                      <option value="CANCELED" className="bg-slate-200 text-slate-800">Canceled</option>
-                      <option value="EXPIRED" className="bg-orange-200 text-orange-800">Expired</option>
+                      <option value="" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d] font-semibold">Select Status</option>
+                      <option value="Pending" className="bg-yellow-200 text-yellow-800 font-semibold">Pending</option>
+                      <option value="Paid" className="bg-green-200 text-green-800 font-semibold">Paid</option>
+                      <option value="Processing" className="bg-blue-200 text-blue-800 font-semibold">Processing</option>
+                      <option value="Complete" className="bg-pink-200 text-pink-800 font-semibold">Complete</option>
+                      <option value="Rejected" className="bg-red-200 text-red-800 font-semibold">Rejected</option>
+                      <option value="Canceled" className="bg-slate-200 text-slate-800 font-semibold">Canceled</option>
+                      <option value="Expired" className="bg-orange-200 text-orange-800 font-semibold">Expired</option>
                     </select>
                 </div>
 
-                <button type="button" onClick={toggleDropdown} className="bg-slate-500 hover:bg-slate-600 text-white mr-1.5 px-4 py-1 mt-2 mb-0.5 rounded-full flex items-center ml-auto">
+                <button type="button" onClick={toggleDropdown} className="bg-blue-500 hover:bg-blue-600 text-white mr-1.5 px-4 py-1 mt-2 mb-0.5 rounded-full flex items-center ml-auto">
                     <span>Filter</span>
                   </button>
           </div>
