@@ -125,47 +125,67 @@ const AuditDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
               <div className="flex justify-between items-center">
                   <span className="block py-2 text-xs">Date:</span>
                   <span>
-                          <Flatpickr
-                            id=""
-                            name=""
-                            value={selectedDate}
-                            onChange={(date) => {
-                              const formattedDate = date.length > 0 ? (() => {
-                                const originalDate = new Date(date[0]);
-                                originalDate.setDate(originalDate.getDate() + 1);
-                                return originalDate.toISOString().split('T')[0];
-                              })() : '';
-                              setSelectedDate(formattedDate);
-                            }}
-                            options={{
-                              dateFormat: 'Y-m-d',
-                              altInput: true,
-                              altFormat: 'F j, Y',
-                            }}
-                            placeholder="From"
-                            className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[140px]"
-                          />
-                          <span> - </span>
-                          <Flatpickr
-                            id=""
-                            name=""
-                            value={selectedDatee}
-                            onChange={(date) => {
-                              const formattedDate = date.length > 0 ? (() => {
-                                const originalDate = new Date(date[0]);
-                                originalDate.setDate(originalDate.getDate() + 1);
-                                return originalDate.toISOString().split('T')[0];
-                              })() : '';
-                              setSelectedDatee(formattedDate);
-                            }}
-                            options={{
-                              dateFormat: 'Y-m-d',
-                              altInput: true,
-                              altFormat: 'F j, Y',
-                            }}
-                            placeholder="To"
-                            className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[140px]"
-                          />
+                  <Flatpickr
+                    value={selectedDate}
+                    onChange={(date) => setSelectedDate(date[0])}
+                    options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                        if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                            '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                            monthDropdown.style.backgroundColor = '#212121';
+                        }
+                        }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                        '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                        }
+                    },
+                    }}
+                    placeholder="From"
+                    className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[150px]"
+                    />
+                  <span> - </span>
+                  <Flatpickr
+                    value={selectedDate}
+                    onChange={(date) => setSelectedDate(date[0])}
+                    options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                        if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                            '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                            monthDropdown.style.backgroundColor = '#212121';
+                        }
+                        }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                        '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                        }
+                    },
+                    }}
+                    placeholder="To"
+                    className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[150px]"
+                    />
                     </span>
                  </div>
               
