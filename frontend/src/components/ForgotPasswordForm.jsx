@@ -16,11 +16,16 @@ const ForgotPasswordForm = () => {
   const [loading, setLoading] = useState(false); // New state for loading indicator
   
   const [isSuccess, setIsSuccess] = useState(false); 
+  const [isSuccess1, setIsSuccess1] = useState(false); 
+  const [countdown, setCountdown] = useState(false);
+  
   const [userAuth, setUserAuth] = useState({
     mobile_no: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loginError, setLoginError] = useState("");
+  const [wrong_otp, setWrongOtp] = useState(false);
+  const [Many_Request, setManyRequest] = useState(false);
   const successTimeoutRef = useRef(null);
   const { mobile_no } = userAuth;
   const [verification_code, setVerificationCode] = useState("");
@@ -73,11 +78,6 @@ const ForgotPasswordForm = () => {
     }
   };
 
-
- 
-
-
-  
   const handleVerificationSubmit = async () => {
     try {
       setLoading(true);
@@ -95,12 +95,16 @@ const ForgotPasswordForm = () => {
         // Resend verification code or take appropriate action
         console.log("Resending verification code...");
         console.log(verification_code);
-        // Implement code resend logic here
+        setLoading(false);
+        console.log("Verification process completed.");
+        setWrongOtp(true);
+        setTimeout(() => {
+          setWrongOtp(false);
+        }, 4000);
       }
     }finally {
       setLoading(false);
       console.log("Verification process completed.");
-      // setWrongOtp(true);
     }
   };
 
@@ -120,7 +124,7 @@ const ForgotPasswordForm = () => {
 
   const onSignup = async (recaptchaToken) => {
     const appVerifier = window.recaptchaVerifier;
-    // const phoneNumber = `+63${userAuth.mobile_no}`;
+    const phoneNumber = `+63${userAuth.mobile_no}`;
   
     try {
       // Only proceed with SMS verification if reCAPTCHA verification is successful
@@ -207,29 +211,49 @@ const navigate = useNavigate();
 
 
     
-            const handleClick= async e=>{
+            const handleClick= async (e) =>{
               e.preventDefault()
 
-                  const { new_user_pass } = userReg;
+                  const { new_user_pass, confirm_user_pass } = userReg;
                   const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.,-=])[A-Za-z\d!@#$%^&*.,-=]{8,}$/;
 
                   if (new_user_pass && !passwordRule.test(new_user_pass)) {
-                    setPasswordError('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.');
+                    setPasswordError(
+                      'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.'
+                    );
                     setTimeout(() => {
                       setPasswordError('');
                     }, 3000);
-
+                  } else if (new_user_pass !== confirm_user_pass) {
+                    setPasswordError("New password and confirm password don't match.");
+                    setTimeout(() => {
+                      setPasswordError('');
+                    }, 3000);
                   } else {
-                          await axios.post(`http://localhost:8800/forgotpass/reset-pass/${user_id}`);
-                          setIsSuccess(true);
-                          console.log('Successful Reset password');
-                          setTimeout(() => {
-                            setIsSuccess(false);
-                          }, 3000);
-                          navigate("/");
-                        }
-              }             
-      
+                    try {
+                      await axios.put(`http://localhost:8800/forgotpass/reset_pass/${userAuth.mobile_no}`, {
+                        new_user_pass,
+                      });
+                      setIsSuccess1(true);
+                      console.log('Successful Reset password');
+  
+                      const countdownInterval = setInterval(() => {
+                        setCountdown((prevCountdown) => prevCountdown - 1);
+                      }, 1000); // 1000 milliseconds = 1 second
+                      setTimeout(() => {
+                        setIsSuccess1(false);
+                        setCountdown(5);
+                      }, 3000); // 5000 milliseconds = 5 seconds
+                      setTimeout(() => {
+                        clearInterval(countdownInterval);
+                        navigate('/');
+                      }, 8000);
+                    } catch (error) {
+                      console.error(error);
+                      // Handle error during password change
+                    }
+                  }
+                };
       const handleChange = (e) => {
         const { name, value } = e.target;
     
@@ -314,6 +338,34 @@ const navigate = useNavigate();
               Success! OTP sent to your number.
             </div>
           )}
+
+
+          {isSuccess1 && (
+            <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+              Success Change Password
+            </div>
+
+          )}
+
+          {Many_Request && (
+            <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
+                Too many request, please try again later.
+              </div>
+            )}  
+
+          {wrong_otp && (
+            <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
+                Wrong OTP. Please enter the valid OTP.
+              </div>
+            )} 
+
+          {countdown > 0 && (
+        <div className="text-blue-700 md:text-sm text-xs bg-blue-200 text-center rounded-full px-1.5 py-1.5 mb-5">
+
+          Redirecting to the Home Page: {countdown}
+
+        </div>
+      )}
 
             {!authenticated && isSendOTP ? (
               <div className="grid grid-cols-1 items-center">

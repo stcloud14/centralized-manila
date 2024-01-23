@@ -92,13 +92,13 @@ const TransactionHistoryForm = () => {
         isSubsequence(searchInput, transactionId) &&
         (!selectedDate || new Date(transaction.date_processed) >= new Date(selectedDate)) &&
         (!selectedDatee || new Date(transaction.date_processed) <= new Date(selectedDatee)) &&
-        (!selectedStatus || selectedStatus === '' || transaction.status.toUpperCase().includes(selectedStatus.toUpperCase())) &&
-        (!selectedType || selectedType === '' || transaction.type.toUpperCase().includes(selectedType.toUpperCase()))
+        (!selectedType || selectedType === 'All' || transaction.trans_type.toLowerCase() === selectedType.toLowerCase()) &&
+        (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase())
       );
     });
   
-    setFilteredTransactions(filteredTransactions.length > 0 ? filteredTransactions : 0);
-  };
+    setFilteredTransactions(filteredTransactions.length > 0 ? filteredTransactions : []);
+  };    
   
   // Make sure that the transaction searching is the same order in terms of characters
   const isSubsequence = (search, str) => {
@@ -117,8 +117,6 @@ const TransactionHistoryForm = () => {
   
     return false;
   };
-  
-
 
   const handleClearFilter = () => {
     setSearchInput('');
@@ -131,18 +129,17 @@ const TransactionHistoryForm = () => {
     setSelectedType('');
   };
 
-
   const handleInputChange = (e) => {
-    console.log("Dropdown Value Changed:", e.target.value);
-    setSelectedType(e.target.value);
+    const selectedType = e.target.value;
+    setSelectedType(selectedType);
+    handleSearch(searchInput);
   };
-
+  
   const handleInputChange2 = (e) => {
-    console.log("Dropdown Value Changed:", e.target.value);
-    setSelectedStatus(e.target.value); 
-  };
-
-
+    const selectedStatus = e.target.value;
+    setSelectedStatus(selectedStatus);
+    handleSearch(searchInput);
+  };  
 
   const handleSortChange = (option) => {
     const newOrder = sortOrder === 'asc' ? 'desc' : 'asc';

@@ -10,6 +10,7 @@ import StatusTypeDropdown from '../transDropdown/StatusTypeDropdown';
 
 const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, userPersonal }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -262,28 +263,21 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                       style={{
                         width: "125px",
                         backgroundColor:
-                          selectedStatus === "PENDING" ? "#fef08a" :
-                          selectedStatus === "PAID" ? "#bbf7d0" :
-                          selectedStatus === "COMPLETE" ? "#bfdbfe" :
-                          selectedStatus === "REJECTED" ? "#fecaca" :
-                          selectedStatus === "CANCELED" ? "#e2e8f0" : "transparent",
+                          selectedStatus === "Pending" ? "#fef08a" :
+                          selectedStatus === "Paid" ? "#bbf7d0" :
+                          selectedStatus === "Complete" ? "#bfdbfe" :
+                          selectedStatus === "Rejected" ? "#fecaca" :
+                          selectedStatus === "Canceled" ? "#e2e8f0" : "transparent",
                         color:
                           selectedStatus === "Pending" ? "#a86728" :
                           selectedStatus === "Paid" ? "#247256" :
-                          selectedStatus === "PROCESSING" ? "#1565C0" :
+                          selectedStatus === "Processing" ? "#1565C0" :
                           selectedStatus === "Complete" ? "#a12863" :
                           selectedStatus === "Rejected" ? "#a22b34" :
                           selectedStatus === "Canceled" ? "#000000" : 
-                          selectedStatus === "EXPIRED" ? "#a23d1e" : "#718096"
+                          selectedStatus === "Expired" ? "#a23d1e" : "#718096"
                       }}>
-                      <option value="SELECTSTATUS" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d]">Select Status</option>
-                      <option value="PENDING" className="bg-yellow-200 text-yellow-800">Pending</option>
-                      <option value="PAID" className="bg-green-200 text-green-800">Paid</option>
-                      <option value="PROCESSING" className="bg-blue-200 text-blue-800">Processing</option>
-                      <option value="COMPLETE" className="bg-pink-200 text-pink-800">Complete</option>
-                      <option value="REJECTED" className="text-red-800 bg-red-200">Rejected</option>
-                      <option value="CANCELED" className="bg-slate-200 text-slate-800">Canceled</option>
-                      <option value="EXPIRED" className="bg-orange-200 text-orange-800">Expired</option>
+                        <StatusTypeDropdown />
                     </select>
                 </div>
 
