@@ -50,7 +50,7 @@ const FormatMail = (user_email) => {
       <div
         style="padding-top: 1.25rem; padding-bottom: 1.25rem;">
         <h1 style="font-size: 1.5rem; line-height: 2rem; font-weight: 700; text-align: center; text-transform: uppercase;">
-          Password Request Sent
+          Request
         </h1>
         <p style="margin-top: 0.5rem; font-weight: 700;">
           Dear User,
