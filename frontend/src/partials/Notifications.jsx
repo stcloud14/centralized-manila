@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+
 function Notifications({ notifications }) {
 
     const formatDate = (dateString) => {
@@ -54,8 +55,8 @@ function Notifications({ notifications }) {
             <li key={notif.id} className="border-b border-slate-200 dark:border-[#3d3d3d] last:border-0">
               <div className="py-2 px-4 hover:bg-slate-50 dark:hover:bg-[#242424] flex items-center justify-between">
               <span className="block text-sm">
-                <p className="font-medium text-slate-800 dark:text-slate-100">{notif.title}</p>
-                <p className="text-[0.8rem] pb-2">{notif.message}</p>
+                <p className="font-semibold text-slate-800 dark:text-slate-100">{notif.title}</p>
+                <p dangerouslySetInnerHTML={{ __html: notif.message.replace(/className/g, 'class') }} />
                 <span className="block text-xs font-normal text-slate-400 dark:text-slate-500">
                   <span className="text-[0.7rem]">{formatDate(notif.date)}</span>
                 </span>

@@ -186,7 +186,6 @@ const handleCheckboxChange = (e) => {
               trans_type: trans_type,
             };
   
-            // Proceed with additional logic after updating state
             try {
               const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
   
@@ -197,7 +196,7 @@ const handleCheckboxChange = (e) => {
                 alert("Failed to send email.");
               }
             } catch (emailError) {
-              //
+              alert(emailError);
             }
           } else {
             console.error('Transaction error:', res.statusText);
