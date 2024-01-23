@@ -8,7 +8,7 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 const ForgotPasswordForm = () => {
   const [authenticated, setAuthenticated] = useState(true); //set false and later remove it so that it will works place true
-  const [isSendOTP, setSendOTP] = useState(false); //set false and later remove it so that it will works place true
+  const [isSendOTP, setSendOTP] = useState(true); //set false and later remove it so that it will works place true
   const [isResetPassword, setResetPassword] = useState(false); //set it false when you are done configure
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -124,7 +124,7 @@ const ForgotPasswordForm = () => {
 
   const onSignup = async (recaptchaToken) => {
     const appVerifier = window.recaptchaVerifier;
-    // const phoneNumber = `+63${userAuth.mobile_no}`;
+    const phoneNumber = `+63${userAuth.mobile_no}`;
   
     try {
       // Only proceed with SMS verification if reCAPTCHA verification is successful
@@ -157,8 +157,7 @@ const ForgotPasswordForm = () => {
         console.log(response)
         if (authenticated) {
           setIsSubmitting(true); 
-          // onCaptchaVerify();
-          setResetPassword(true)
+          onCaptchaVerify();
         }
       } else {
         setLoginError("Authentication failed. Please check .");

@@ -84,14 +84,22 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
         textColor: 255,
       };
   
-      // Filter transactions based on start and end dates
+      // Filter transactions based on start and end dates, type, and status
       const filteredTransactions = sortedTransactions.filter((transaction) => {
         const transactionDate = new Date(transaction.date_processed);
-
-        return (
+        const isDateInRange =
           (!selectedDate || transactionDate >= new Date(selectedDate)) &&
-          (!selectedDatee || transactionDate <= new Date(selectedDatee))  
-        );
+          (!selectedDatee || transactionDate <= new Date(selectedDatee));
+
+        const isTypeMatching =
+          !selectedType || selectedType === '0' || transaction.trans_type === selectedType;
+
+        const isStatusMatching =
+          !selectedStatus ||
+          selectedStatus === 'All' ||
+          transaction.status_type.toLowerCase() === selectedStatus.toLowerCase();
+
+        return isDateInRange && isTypeMatching && isStatusMatching;
       });
   
       pdf.autoTable({
@@ -108,14 +116,17 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
           }
   
           // Calculate balance for each row independently
-          let rowBalance = amount - payment;
-          rowBalance = Math.max(rowBalance, 0); // Ensure balance is not negative
-  
+          let rowBalance = 0; // Initialize rowBalance to 0
+
+          if (transaction.status_type === 'Pending') {
+            rowBalance = amount - payment;
+            rowBalance = Math.max(rowBalance, 0); // Ensure balance is not negative
+          }
+
           // Display 0 balance in the first row when amount is paid, and actual balance in subsequent rows
           const displayBalance =
-            transaction.status_type === 'Paid' && index === 0
-              ? 'P 0'
-              : `P ${rowBalance < 0 ? '-' : ''}${Math.floor(Math.abs(rowBalance))}`;
+            transaction.status_type === 'Paid' ? 'P 0' : `P ${rowBalance < 0 ? '-' : ''}${Math.floor(Math.abs(rowBalance))}`;
+
   
           return [
             new Date(transaction.date_processed).toLocaleDateString('en-GB'),
@@ -176,25 +187,12 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
           <div className="absolute right-0 w-[405px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
 
               {/* Date Row */}
-              <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center">
                   <span className="block py-2 text-xs">Date:</span>
                   <span>
-                  <Flatpickr
-                      id=""
-                      name=""
-                      value=""
-                      onChange={(date) => {
-                        const formattedDate = date.length > 0 ? (() => {
-                          const originalDate = new Date(date[0]);
-                          originalDate.setDate(originalDate.getDate() + 1);
-                          return originalDate.toISOString().split('T')[0];
-                        })() : '';
-                        
-                        setDeathCert((prevData) => ({
-                          ...prevData,
-                          deathc_date: formattedDate,
-                        }))
-                      }}
+                    <Flatpickr
+                      value={selectedDate}
+                      onChange={(date) => setSelectedDate(date[0])}
                       options={{
                         dateFormat: 'Y-m-d',
                         altInput: true,
@@ -220,24 +218,12 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                         },
                       }}
                       placeholder="From"
-                      className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"/>
+                      className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"
+                    />
                     <span> - </span>
-                          <Flatpickr
-                      id=""
-                      name=""
-                      value=""
-                      onChange={(date) => {
-                        const formattedDate = date.length > 0 ? (() => {
-                          const originalDate = new Date(date[0]);
-                          originalDate.setDate(originalDate.getDate() + 1);
-                          return originalDate.toISOString().split('T')[0];
-                        })() : '';
-                        
-                        setDeathCert((prevData) => ({
-                          ...prevData,
-                          deathc_date: formattedDate,
-                        }))
-                      }}
+                    <Flatpickr
+                      value={selectedDatee}
+                      onChange={(date) => setSelectedDatee(date[0])}
                       options={{
                         dateFormat: 'Y-m-d',
                         altInput: true,
@@ -263,9 +249,10 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                         },
                       }}
                       placeholder="To"
-                      className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"/>
-                    </span>
-                 </div>
+                      className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"
+                    />
+                  </span>
+                </div>
               
 
               {/* Transaction ID Row */}
