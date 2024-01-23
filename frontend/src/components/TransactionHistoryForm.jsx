@@ -45,11 +45,15 @@ const TransactionHistoryForm = () => {
     const fetchUserTransaction = async () => {
       try {
         const res = await axios.get(`http://localhost:8800/transachistory/${user_id}`);
-        setUserTransaction(res.data);
+        const transactions = res.data;
+  
+        setUserTransaction(transactions);
+        setFilteredTransactions(transactions);
       } catch (err) {
         console.log(err);
       }
     };
+  
     fetchUserTransaction();
   }, [user_id]);
 
@@ -147,7 +151,7 @@ const TransactionHistoryForm = () => {
 
   const handleClearFilter = () => {
     setSearchInput('');
-    setFilteredTransactions([]);
+    setFilteredTransactions(userTransaction);
     setSortOption('date_processed');
     setSortOrder('desc');
     setSelectedDate('');
@@ -156,9 +160,9 @@ const TransactionHistoryForm = () => {
     setSelectedType('');
   };
 
-  // useEffect(() => {
-  //   handleSearch(searchInput);
-  // }, [selectedStatus, searchInput, selectedType, selectedDate, selectedDatee]);
+  // For handle sorting and filtering
+  useEffect(() => {
+  }, [filteredTransactions, sortOption, sortOrder, selectedDate, selectedDatee, selectedType, selectedStatus]);
 
   const handleInputChange = (e) => {
     const selectedType = e.target.value;
@@ -247,55 +251,60 @@ const logoSrc = '../src/images/mnl_footer.svg';
 
         <main className="overflow-y-auto">
           <div className="flex flex-col justify-between mx-4 mt-4">
-            
-            {isMobileView ? (           
-              // For Mobile View
-              <TransMobile searchInput={searchInput} 
-              handleSearch={handleSearch} 
-              // handleSearchInputChange={handleSearchInputChange} 
-              handleOpenModal={handleOpenModal}  
-              handleClearFilter={handleClearFilter} 
-              handleSortChange={handleSortChange}
-              sortOption={sortOption}
-              sortedTransactions={sortedTransactions} 
-              handleInputChange={handleInputChange}
-              handleInputChange2={handleInputChange2}
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-              selectedDatee={selectedDatee}
-              setSelectedDatee={setSelectedDatee}
-              selectedStatus={selectedStatus}
-              selectedType={selectedType}
-              userPersonal={userPersonal} />
+            {sortedTransactions.length === 0 ? (
+              <p>No records to show</p>
             ) : (
-              // For Desktop View
-              <TransDesktop searchInput={searchInput} 
-              setSearchInput={setSearchInput}
-              handleSearch={handleSearch} 
-              // handleSearchInputChange={handleSearchInputChange} 
-              handleOpenModal={handleOpenModal} 
-              handleClearFilter={handleClearFilter} 
-              handleSortChange={handleSortChange}
-              sortOption={sortOption}
-              sortOrder={sortOrder}
-              SortIcon={SortIcon}
-              sortedTransactions={sortedTransactions} 
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-              selectedDatee={selectedDatee}
-              setSelectedDatee={setSelectedDatee}
-              selectedStatus={selectedStatus}
-              handleInputChange={handleInputChange}
-              handleInputChange2={handleInputChange2}
-              selectedType={selectedType}
-              userPersonal={userPersonal} />
+              isMobileView ? (           
+                // For Mobile View
+                <TransMobile 
+                  searchInput={searchInput} 
+                  handleSearch={handleSearch} 
+                  handleOpenModal={handleOpenModal}  
+                  handleClearFilter={handleClearFilter} 
+                  handleSortChange={handleSortChange}
+                  sortOption={sortOption}
+                  sortedTransactions={sortedTransactions} 
+                  handleInputChange={handleInputChange}
+                  handleInputChange2={handleInputChange2}
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                  selectedDatee={selectedDatee}
+                  setSelectedDatee={setSelectedDatee}
+                  selectedStatus={selectedStatus}
+                  selectedType={selectedType}
+                  filteredTransactions={filteredTransactions}
+                  userPersonal={userPersonal} />
+              ) : (
+                // For Desktop View
+                <TransDesktop 
+                  searchInput={searchInput} 
+                  setSearchInput={setSearchInput}
+                  handleSearch={handleSearch} 
+                  handleOpenModal={handleOpenModal} 
+                  handleClearFilter={handleClearFilter} 
+                  handleSortChange={handleSortChange}
+                  sortOption={sortOption}
+                  sortOrder={sortOrder}
+                  SortIcon={SortIcon}
+                  sortedTransactions={sortedTransactions} 
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                  selectedDatee={selectedDatee}
+                  setSelectedDatee={setSelectedDatee}
+                  selectedStatus={selectedStatus}
+                  handleInputChange={handleInputChange}
+                  handleInputChange2={handleInputChange2}
+                  selectedType={selectedType}
+                  filteredTransactions={filteredTransactions}
+                  userPersonal={userPersonal} />
+              )
             )}
           </div>
           <Footer logo={logoSrc} />
         </main>
 
         {isModalOpen && selectedTransaction && (
-          <ModalTransaction user_id={user_id} selectedTransaction={selectedTransaction} modalType={selectedTransaction.trans_type} onClose={handleCloseModal}  />
+          <ModalTransaction user_id={user_id} selectedTransaction={selectedTransaction} modalType={selectedTransaction.trans_type} onClose={handleCloseModal} />
         )}
       </div>
     </div>
