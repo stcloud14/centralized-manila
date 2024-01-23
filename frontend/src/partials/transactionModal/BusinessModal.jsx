@@ -158,7 +158,7 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Business Type</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_type ? businessTransaction.bus_type : '-'}</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_typeLabel || businessTransaction.bus_type || '-'}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Business Name</span>
@@ -202,7 +202,7 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
                     ) : null}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Sex</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_sex ? businessTransaction.bus_sex : '-'}</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_sexLabel || businessTransaction.bus_sex || '-'}</span>
                     </div>
 
                     <br />

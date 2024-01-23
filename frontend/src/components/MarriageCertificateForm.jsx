@@ -115,6 +115,34 @@ const MarriageCertificateForm =()=>{
     const updatedValue = isNaN(value) ? value.toUpperCase() : value;
 
     setMarriageCert((prevData) => {
+
+      if (id === 'marriagec_telno' || id === 'marriagec_mobileno' || id ==='marriagec_reqzip') {
+        const formattedValue = value.replace(/\D/g, '');
+
+        let maxLength;
+      if (id === 'marriagec_mobileno') {
+        maxLength = 11;
+      } else if (id === 'marriagec_telno') {
+        maxLength = 8;
+      }else if (id === 'marriagec_reqzip') {
+        maxLength = 4;
+      }
+
+      if (formattedValue.length > maxLength) {
+        const truncatedValue = formattedValue.slice(0, maxLength);
+
+        return {
+          ...prevData,
+          [id]: truncatedValue,
+        };
+      }
+
+        return {
+          ...prevData,
+          [id]: formattedValue,
+        };
+      }
+
       if (id === 'marriagec_nocopies') {
         const initialValue = parseInt(value, 10) || 0;
         const displayValue = prevData.initialPrint || 0;
@@ -494,7 +522,7 @@ const MarriageCertificateForm =()=>{
                     <label htmlFor="marriagec_reqrelation" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Relationship to the Owner<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={marriageCert.marriagec_mobilenum} type="text" name="marriagec_mobileno" id="marriagec_mobileno" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input onChange={handleInputChange} value={marriageCert.marriagec_mobileno} type="text" name="marriagec_mobileno" id="marriagec_mobileno" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
                     <label htmlFor="marriagec_mobileno" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile Number<Req /></label>
                   </div><div className="relative z-0 w-full mb-6 group">
                     <input onChange={handleInputChange} value={marriageCert.marriagec_telno} type="text" name="marriagec_telno" id="marriagec_telno" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
