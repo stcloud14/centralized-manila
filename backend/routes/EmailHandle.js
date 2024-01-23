@@ -29,7 +29,8 @@ const transporter = nodemailer.createTransport({
 const router = Router();
 
 const FormatMail = (user_email, data, trans_type) => {
-  return `<div style="max-width: 48rem; margin-left: auto; margin-right: auto;">
+  return `
+  <div style="max-width: 48rem; margin-left: auto; margin-right: auto;">
       <div style="background: radial-gradient(at center top, rgb(64, 141, 81), rgb(41, 81, 65)); display: flex; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 1.25rem; padding-right: 1.25rem; justify-content: space-between; align-items: center; ">
         <div style="text-align: center; margin: auto">
           <span style="font-size: 1.25rem; font-weight: 700; color: #ffffff;">
@@ -82,7 +83,8 @@ const FormatMail = (user_email, data, trans_type) => {
       <div style="background: radial-gradient(at center top, rgb(64, 141, 81), rgb(41, 81, 65)); color: #ffffff; padding-top: 1rem; padding-bottom: 1rem; margin: auto; text-align: center;">
         Â© 2023 Centralized Manila, Inc. All Rights Reserved.
       </div>
-    </div>`;
+    </div>
+    `;
 };
 
 
