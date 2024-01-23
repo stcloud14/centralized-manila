@@ -8,7 +8,7 @@ import Flatpickr from 'react-flatpickr';
 import TransTypeDropdown from '../transDropdown/TransTypeDropdown';
 import StatusTypeDropdown from '../transDropdown/StatusTypeDropdown';
 
-const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, userPersonal }) => {
+const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, userPersonal }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   
 
@@ -269,7 +269,7 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                     </span>
                     <input
                       value={searchInput}
-                      onChange={(e) => handleSearch(e.target.value.toUpperCase())}
+                      onChange={(e) => setSearchInput(e.target.value.toUpperCase())}
                       id="searchInput"
                       onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                       type="text"
@@ -314,7 +314,7 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                     </select>
                 </div>
 
-                <button type="button" onClick={toggleDropdown} className="w-[6rem] bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 mt-1 mb-0.5 rounded-full flex items-center ml-auto">
+                <button type="button" onClick={handleSearch} className="w-[6rem] bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 mt-1 mb-0.5 rounded-full flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
                 </button>
           </div>
