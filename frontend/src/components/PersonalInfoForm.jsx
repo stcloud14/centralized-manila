@@ -151,7 +151,7 @@ const PersonalInfoForm =()=>{
 
       const isIncompletePersonal = requiredFields.some((field) => {
         const value = userPersonal[field];
-        return (typeof value !== 'string' || value.trim() === "" || value === null);
+        return (value === null);
       });
       
 

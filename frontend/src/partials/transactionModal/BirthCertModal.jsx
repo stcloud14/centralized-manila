@@ -124,7 +124,7 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
                           ) : null}
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Sex</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_sexLabel || birthTransaction.sex_id || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_sexLabel || birthTransaction.sex_type || '-'}</span>
                           </div>
 
                           <br/>
