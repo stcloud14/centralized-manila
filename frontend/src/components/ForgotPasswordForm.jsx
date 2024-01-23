@@ -222,17 +222,17 @@ const navigate = useNavigate();
       // Password meets the rule
       if (new_user_pass !== confirm_user_pass) {
         // Confirm password doesn't match
-        setPasswordError("New password and confirm password don't match.");
+        setPasswordError("The new password and the confirmed password do not match.");
         setTimeout(() => {
           setPasswordError('');
-        }, 3000);
+        }, 4000);
       } else {
         try {
           await axios.put(`http://localhost:8800/forgotpass/reset_pass/${userAuth.mobile_no}`, {
             new_user_pass,
           });
           setIsSuccess1(true);
-          console.log('Successful Reset password');
+          console.log('Password reset successful!');
   
           const countdownInterval = setInterval(() => {
             setCountdown((prevCountdown) => prevCountdown - 1);
@@ -255,11 +255,11 @@ const navigate = useNavigate();
     } else {
       // Password doesn't meet the rule
       setPasswordError(
-        'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.'
+        'Password must be at least 8 characters long, including at least one uppercase letter, one lowercase letter, one symbol, and one number.'
       );
       setTimeout(() => {
         setPasswordError('');
-      }, 3000);
+      }, 5500);
     }
   };
 
@@ -342,18 +342,16 @@ const navigate = useNavigate();
 
             <div id="recaptcha-container"></div>
 
-            {isSuccess && (
-            <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
-              Success! OTP sent to your number.
-            </div>
+          {isSuccess && (
+          <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+            Success! OTP sent to your number.
+          </div>
           )}
-
 
           {isSuccess1 && (
             <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
-              Success Change Password
+              Password reset success!
             </div>
-
           )}
 
           {Many_Request && (
@@ -364,14 +362,14 @@ const navigate = useNavigate();
 
           {wrong_otp && (
             <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
-                Wrong OTP. Please enter the valid OTP.
+                Incorrect OTP. Please input a valid OTP.
               </div>
             )} 
 
           {countdown > 0 && (
         <div className="text-blue-700 md:text-sm text-xs bg-blue-200 text-center rounded-full px-1.5 py-1.5 mb-5">
 
-          Redirecting to the Home Page: {countdown}
+          Redirecting to the Home Page in <span className='font-bold'>{countdown}</span>
 
         </div>
       )}
@@ -421,15 +419,10 @@ const navigate = useNavigate();
               
               <div className="grid md:grid-cols-1">
 
-                {passwordError && <h3 className="text-red-500 text-xs md:text-sm">{passwordError}</h3>}
+                {passwordError && <h3 className="text-red-500 text-xs md:text-sm text-justify mb-1">{passwordError}</h3>}
                 <h1 className='md:text-start text-center text-black text-3xl font-bold md:mt-0 mt-5'>Reset your password</h1>
                 <h1 className='md:text-start text-center text-black text-sm mb-3'>Create your new password, it must be:</h1>
                 <div className='mb-5'>  
-                  <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" dataSlot="icon" className="w-4 h-4">
-                      <path className="stroke-emerald-500" strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-                    </svg>
-                  </div>
                   
                   <div className="flex items-center">
                     <PasswordRuleIcon isValid={passwordCriteria.length} />
