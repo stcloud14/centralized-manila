@@ -179,47 +179,91 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
               <div className="flex justify-between items-center">
                   <span className="block py-2 text-xs">Date:</span>
                   <span>
+                  <Flatpickr
+                      id=""
+                      name=""
+                      value=""
+                      onChange={(date) => {
+                        const formattedDate = date.length > 0 ? (() => {
+                          const originalDate = new Date(date[0]);
+                          originalDate.setDate(originalDate.getDate() + 1);
+                          return originalDate.toISOString().split('T')[0];
+                        })() : '';
+                        
+                        setDeathCert((prevData) => ({
+                          ...prevData,
+                          deathc_date: formattedDate,
+                        }))
+                      }}
+                      options={{
+                        dateFormat: 'Y-m-d',
+                        altInput: true,
+                        altFormat: 'F j, Y',
+                        appendTo: document.body,
+                        onOpen: function (selectedDates, dateStr, instance) {
+                          if (document.documentElement.classList.contains('dark')) {
+                            const monthDropdown = instance.calendarContainer.querySelector(
+                              '.flatpickr-monthDropdown-months'
+                            );
+                            if (monthDropdown) {
+                              monthDropdown.style.backgroundColor = '#212121';
+                            }
+                          }
+                        },
+                        onClose: function (selectedDates, dateStr, instance) {
+                          const monthDropdown = instance.calendarContainer.querySelector(
+                            '.flatpickr-monthDropdown-months'
+                          );
+                          if (monthDropdown) {
+                            monthDropdown.style.backgroundColor = '';
+                          }
+                        },
+                      }}
+                      placeholder="From"
+                      className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"/>
+                    <span> - </span>
                           <Flatpickr
-                            id=""
-                            name=""
-                            value={selectedDate}
-                            onChange={(date) => {
-                              const formattedDate = date.length > 0 ? (() => {
-                                const originalDate = new Date(date[0]);
-                                originalDate.setDate(originalDate.getDate() + 1);
-                                return originalDate.toISOString().split('T')[0];
-                              })() : '';
-                              setSelectedDate(formattedDate);
-                            }}
-                            options={{
-                              dateFormat: 'Y-m-d',
-                              altInput: true,
-                              altFormat: 'F j, Y',
-                            }}
-                            placeholder="From"
-                            className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[140px]"
-                          />
-                          <span> - </span>
-                          <Flatpickr
-                            id=""
-                            name=""
-                            value={selectedDatee}
-                            onChange={(date) => {
-                              const formattedDate = date.length > 0 ? (() => {
-                                const originalDate = new Date(date[0]);
-                                originalDate.setDate(originalDate.getDate() + 1);
-                                return originalDate.toISOString().split('T')[0];
-                              })() : '';
-                              setSelectedDatee(formattedDate);
-                            }}
-                            options={{
-                              dateFormat: 'Y-m-d',
-                              altInput: true,
-                              altFormat: 'F j, Y',
-                            }}
-                            placeholder="To"
-                            className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[140px]"
-                          />
+                      id=""
+                      name=""
+                      value=""
+                      onChange={(date) => {
+                        const formattedDate = date.length > 0 ? (() => {
+                          const originalDate = new Date(date[0]);
+                          originalDate.setDate(originalDate.getDate() + 1);
+                          return originalDate.toISOString().split('T')[0];
+                        })() : '';
+                        
+                        setDeathCert((prevData) => ({
+                          ...prevData,
+                          deathc_date: formattedDate,
+                        }))
+                      }}
+                      options={{
+                        dateFormat: 'Y-m-d',
+                        altInput: true,
+                        altFormat: 'F j, Y',
+                        appendTo: document.body,
+                        onOpen: function (selectedDates, dateStr, instance) {
+                          if (document.documentElement.classList.contains('dark')) {
+                            const monthDropdown = instance.calendarContainer.querySelector(
+                              '.flatpickr-monthDropdown-months'
+                            );
+                            if (monthDropdown) {
+                              monthDropdown.style.backgroundColor = '#212121';
+                            }
+                          }
+                        },
+                        onClose: function (selectedDates, dateStr, instance) {
+                          const monthDropdown = instance.calendarContainer.querySelector(
+                            '.flatpickr-monthDropdown-months'
+                          );
+                          if (monthDropdown) {
+                            monthDropdown.style.backgroundColor = '';
+                          }
+                        },
+                      }}
+                      placeholder="From"
+                      className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"/>
                     </span>
                  </div>
               
@@ -259,23 +303,25 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                 {/* Status Row */}
                 <div className="flex justify-between items-center">
                   <span className="block py-2 text-xs">Status:</span>
-                    <select  value={selectedStatus} onChange={handleInputChange2} name="" id="" className={`py-2.5 px-0 text-xs border bg-transparent border-slate-300 pl-4 md:py-0.5 rounded-full peer cursor-pointer`}
+                    <select  value={selectedStatus} onChange={handleInputChange2} name="" id="" className={`font-semibold py-2.5 px-0 text-xs border bg-transparent border-slate-300 pl-4 md:py-0.5 rounded-full peer cursor-pointer`}
                       style={{
                         width: "125px",
                         backgroundColor:
                           selectedStatus === "Pending" ? "#fef08a" :
                           selectedStatus === "Paid" ? "#bbf7d0" :
-                          selectedStatus === "Complete" ? "#bfdbfe" :
+                          selectedStatus === "Processing" ? "#bfdbfe" :
+                          selectedStatus === "Complete" ? "#fbcfe8" :
                           selectedStatus === "Rejected" ? "#fecaca" :
-                          selectedStatus === "Canceled" ? "#e2e8f0" : "transparent",
+                          selectedStatus === "Canceled" ? "#e2e8f0" : 
+                          selectedStatus === "Expired" ? "#fed7aa" : "transparent",
                         color:
-                          selectedStatus === "Pending" ? "#a86728" :
+                          selectedStatus === "Pending" ? "#a86728"  : 
                           selectedStatus === "Paid" ? "#247256" :
                           selectedStatus === "Processing" ? "#1565C0" :
                           selectedStatus === "Complete" ? "#a12863" :
                           selectedStatus === "Rejected" ? "#a22b34" :
                           selectedStatus === "Canceled" ? "#000000" : 
-                          selectedStatus === "Expired" ? "#a23d1e" : "#718096"
+                          selectedStatus === "Expired" ? "#a23d1e" : "#718096",
                       }}>
                         <StatusTypeDropdown />
                     </select>
