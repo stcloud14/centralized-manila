@@ -8,11 +8,9 @@ import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBPView from '../admin_partials/admin_modals/AdminBPView';
 
 import AdminBusinessRequests from '../admin_partials/admin_cards/AdminBusinessRequests';
-import AdminBusinessProcessing from '../admin_partials/admin_cards/AdminBusinessProcessing';
 
 
-
-const AdminBusinessForm =()=>{
+const AdminBusinessForm1 =()=>{
 
 
   
@@ -148,7 +146,7 @@ const handleMoveToProcessing = (transaction) => {
           </div>
 
           {/*  Two Sections */}
-          <div className="grid grid-cols-12 gap-4 mx-4 my-4">
+          <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
             <AdminBusinessRequests
             onProceed ={[handleProceedForBusinessPermit]}
@@ -157,15 +155,6 @@ const handleMoveToProcessing = (transaction) => {
             handleOpenModal3={handleOpenModal3}
             onMoveToProcessing ={handleMoveToProcessing}
             />
-            <AdminBusinessProcessing
-            BusinessPermitDetails = {BusinessPermitDetails}
-            processingTransactions = {processingTransactions}
-            selectedTransactionId = {selectedTransactionId}
-            handleOpenModal={handleOpenModal}
-            handleOpenModal4={handleOpenModal4}
-            handleOpenModal5={handleOpenModal5}
-            />
-
           </div>
 
           <AdminFooter logo={logoSrc} />
@@ -180,4 +169,4 @@ const handleMoveToProcessing = (transaction) => {
   );
 }
 
-export default AdminBusinessForm;
+export default AdminBusinessForm1;

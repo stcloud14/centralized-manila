@@ -27,7 +27,6 @@ const RPTaxPaymentForm =()=>{
     year_label: '',
   }));
 
-  console.log(rptaxPayment);
 
   const handleInputChange = (e) => {
   const { name, value } = e.target;
@@ -166,19 +165,52 @@ const handleCheckboxChange = (e) => {
     e.preventDefault();
   
     try {
+      // Make a POST request to save rptaxPayment data
       const response = await axios.post(`http://localhost:8800/rptax/payment/${user_id}`, rptaxPayment);
   
-      // Check the response status before proceeding
       if (response.status === 200) {
+        // Fetch user_email after successful payment
+        try {
+          const res = await axios.get(`http://localhost:8800/rptax/payment/${user_id}`);
+          
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+  
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`);
+  
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+                alert(emailResponse.data.message);
+              } else {
+                alert("Failed to send email.");
+              }
+            } catch (emailError) {
+              //
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
+        }
+  
+        // Continue with the logic for a successful transaction
         setIsSuccess(true);
         handleCloseModal();
         contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
         console.log('Transaction successful');
-  
-        setTimeout(() => {
-          window.location.href = `/transachistory/${user_id}`;
-        }, 2000); 
 
+        setTimeout(() => {
+          window.location.href = `/transachistory/${user_id}`
+        }, 2100);
+  
+        // Set a timeout for isSuccess to false after 2.1 seconds
         setTimeout(() => {
           setIsSuccess(false);
         }, 2100);
@@ -186,10 +218,11 @@ const handleCheckboxChange = (e) => {
       } else {
         console.error('Transaction error:', response.statusText);
       }
-    } catch (err) {
-      console.error('Transaction error:', err);
+    } catch (transactionError) {
+      console.error('Transaction error:', transactionError);
     }
   };
+  
 
   
   const [isModalOpen, setIsModalOpen] = useState(false);
