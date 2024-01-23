@@ -200,7 +200,7 @@ const handleCheckboxChange = (e) => {
                 alert("Failed to send email.");
               }
             } catch (emailError) {
-              alert(emailError);
+              // alert(emailError);
             }
           } else {
             console.error('Transaction error:', res.statusText);

@@ -67,7 +67,7 @@ const CedulaForm =()=>{
 
             const user_email = updatedUserEmail;
 
-            const trans_type = 'Real Property Tax Payment';
+            const trans_type = 'Community Tax Certificate';
 
             const body = {
               data: CtcCedula,
