@@ -299,7 +299,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     const query = "SELECT  r.region_name AS bus_bregion, p.prov_name AS bus_bprovince, c.city_name AS bus_bcity, \
     ba.brgy_dist AS bus_bbgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
     bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin, bp.bus_lessor, bp.bus_rent, bp.owned, \
-    bo.bus_fname, bo.bus_mname, bo.bus_lname, bo.suffix_type AS bus_suffix, bo.sex_type AS bus_sex,\
+    bo.bus_fname, bo.bus_mname, bo.bus_lname, bo.suffix_type AS bus_suffix, st.sex_type AS bus_sex,\
     ai.email AS bus_email, ai.tel_no AS bus_tel_no, ai.mobile_no AS bus_mobile_no, \
     bot.bus_floor, bot.bus_emp, bot.bus_male_emp, bot.bus_female_emp, bot.bus_van_no, bot.bus_truck_no, bot.bus_motor_no,\
     bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
@@ -326,6 +326,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN bus_type bbt ON bp.bus_type = bbt.bus_type \
+    LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
     \
     WHERE  bp.transaction_id = ?"
 

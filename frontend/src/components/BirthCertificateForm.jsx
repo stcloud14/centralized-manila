@@ -113,6 +113,34 @@ const BirthCertificateForm =()=>{
     const updatedValue = isNaN(value) ? value.toUpperCase() : value;
 
     setBirthCert((prevData) => {
+
+      if (id === 'birthc_reqtelnum' || id === 'birthc_reqmobnum' || id ==='birthc_reqzip') {
+        const formattedValue = value.replace(/\D/g, '');
+
+        let maxLength;
+      if (id === 'birthc_reqmobnum') {
+        maxLength = 11;
+      } else if (id === 'birthc_reqtelnum') {
+        maxLength = 8;
+      }else if (id === 'birthc_reqzip') {
+        maxLength = 4;
+      }
+
+      if (formattedValue.length > maxLength) {
+        const truncatedValue = formattedValue.slice(0, maxLength);
+
+        return {
+          ...prevData,
+          [id]: truncatedValue,
+        };
+      }
+
+        return {
+          ...prevData,
+          [id]: formattedValue,
+        };
+      }
+
       if (id === 'birthc_nocopies') {
         const initialValue = parseInt(value, 10) || 0;
         const displayValue = prevData.initialPrint || 0;
