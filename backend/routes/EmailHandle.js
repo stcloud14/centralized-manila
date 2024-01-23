@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 
 const router = Router();
 
-const FormatMail = (user_email, data, trans_type) => {
+const FormatMail = (user_email, body) => {
   return `<div style="max-width: 48rem; margin-left: auto; margin-right: auto;">
       <div style="background: radial-gradient(at center top, rgb(64, 141, 81), rgb(41, 81, 65)); display: flex; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 1.25rem; padding-right: 1.25rem; justify-content: space-between; align-items: center; ">
         <div style="text-align: center; margin: auto">
@@ -39,11 +39,11 @@ const FormatMail = (user_email, data, trans_type) => {
           Request
         </h1>
         <p style="margin-top: 0.5rem; font-weight: 700;">
-          Dear ${data.acc_name},
+          Dear ${body.l_name}, ${body.f_name},
         </p>
         <div style="text-align: justify;">
           <p style="margin-top: 0.75rem;">
-            We received a request to process your ${trans_type}
+            We received a request to process your ${body.trans_type}
             through your email address,
             <span style="font-weight: 700;">${user_email}</span>
             
@@ -64,7 +64,7 @@ const FormatMail = (user_email, data, trans_type) => {
             <span style="font-weight: 700;">services.CentralizedManila@gmail.com</span>
             to remove your email address from that Google Account.
           </p>
-          <p>${data.amount}</p>
+          <p>${body.data.amount}</p>
         </div>
         <p style="margin-top: 0.75rem; font-weight: 700;">
           Sincerely yours,
@@ -81,14 +81,16 @@ const FormatMail = (user_email, data, trans_type) => {
     router.get('/:user_id', async (req, res) => {
         const user_id = req.params.user_id;
     
-        const query = "SELECT user_email FROM user_contact WHERE user_id = ?";
+        const query = "SELECT uc.user_email, up.f_name, up.l_name FROM user_contact uc JOIN user_personal up ON uc.user_id = up.user_id WHERE uc.user_id = ?";
     
         try {
         const result = await queryDatabase(query, [user_id]);
     
         if (result.length > 0 && result[0].user_email) {
             const user_email = result[0].user_email;
-            res.json({ user_email });
+            const f_name = result[0].f_name;
+            const l_name = result[0].l_name;
+            res.json({ user_email, f_name, l_name });
         } else {
             console.error("Invalid response format or missing user_email");
             res.status(404).json({ error: "User not found or missing email" });
@@ -103,7 +105,7 @@ const FormatMail = (user_email, data, trans_type) => {
   router.post('/send-email/:user_email', async (req, res) => {
 
     const { user_email } = req.params;
-    const data = req.body.data;
+    const body = req.body;
     const transType = req.body.trans_type;
   
     if (!user_email) {
@@ -118,7 +120,7 @@ const FormatMail = (user_email, data, trans_type) => {
             from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
             to: user_email,
             subject: transType,
-            html: FormatMail(user_email, data, transType), 
+            html: FormatMail(user_email, body), 
         });
 
         if (!result.response) return res.status(400).json({ error: "Error sending email" });
