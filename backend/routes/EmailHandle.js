@@ -13,12 +13,6 @@ dotenv.config();
 //     pass: process.env.MAIL_PASSWORD,
 //   },
 // });
-console.log(process.env.SMTP_HOST);
-console.log(process.env.SMTP_PORT);
-console.log(process.env.MAIL_USERNAME);
-console.log(process.env.MAIL_PASSWORD);
-console.log(process.env.SMTP_PASSWORD);
-
 
 
 const transporter = nodemailer.createTransport({
