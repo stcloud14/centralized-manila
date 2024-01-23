@@ -156,24 +156,53 @@ const TransactionHistoryForm = () => {
     setSelectedType('');
   };
 
+  useEffect(() => {
+    handleSearch(searchInput);
+  }, [selectedStatus, searchInput, selectedType, selectedDate, selectedDatee]);
+
   const handleInputChange = (e) => {
     const selectedType = e.target.value;
     console.log("Dropdown Value Changed:", selectedType);
     setSelectedType(selectedType);
-    handleSearch(searchInput);
+  
+    const updatedFilteredTransactions = sortedTransactions.filter((transaction) => {
+      return (
+        (!selectedType || selectedType === '0' || transaction.trans_type === selectedType) &&
+        (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase()) &&
+        isDateInRange(transaction)
+      );
+    });
+  
+    setFilteredTransactions(updatedFilteredTransactions);
   };
   
   const handleInputChange2 = (e) => {
     const selectedStatus = e.target.value;
     console.log("Dropdown Value Changed:", selectedStatus);
     setSelectedStatus(selectedStatus);
+  
+    const updatedFilteredTransactions = sortedTransactions.filter((transaction) => {
+      return (
+        (!selectedType || selectedType === '0' || transaction.trans_type === selectedType) &&
+        (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase()) &&
+        isDateInRange(transaction)
+      );
+    });
+  
+    setFilteredTransactions(updatedFilteredTransactions);
   };
   
-  useEffect(() => {
-    handleSearch(searchInput);
-  }, [selectedStatus, searchInput, selectedType, selectedDate, selectedDatee]);
+  const isDateInRange = (transaction) => {
+    if (!selectedDate || !selectedDatee) {
+      return true; // No date range selected, include all transactions
+    }
   
+    const transactionDate = new Date(transaction.date_processed);
+    const startDate = new Date(selectedDate);
+    const endDate = new Date(selectedDatee);
   
+    return startDate <= transactionDate && transactionDate <= endDate;
+  };
 
   const handleSortChange = (option) => {
     const newOrder = sortOrder === 'asc' ? 'desc' : 'asc';
