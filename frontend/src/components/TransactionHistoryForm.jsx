@@ -83,23 +83,50 @@ const TransactionHistoryForm = () => {
   const handleSearch = (e) => {
     const searchInput = e.toUpperCase();
     setSearchInput(searchInput);
-  
-    const filteredTransactions = userTransaction.filter((transaction) => {
-      const transactionId = transaction.transaction_id.toString().toUpperCase();
-  
-      return (
-        transactionId.includes(searchInput) &&
-        isSubsequence(searchInput, transactionId) &&
-        (!selectedDate || new Date(transaction.date_processed) >= new Date(selectedDate)) &&
-        (!selectedDatee || new Date(transaction.date_processed) <= new Date(selectedDatee)) &&
-        (!selectedType || selectedType === 'All' || transaction.trans_type.toLowerCase() === selectedType.toLowerCase()) &&
-        (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase())
-      );
-    });
-  
-    setFilteredTransactions(filteredTransactions.length > 0 ? filteredTransactions : []);
-  };    
-  
+
+    const filteredTransactions = sortedTransactions
+      .filter((transaction) => {
+        const transactionId = transaction.transaction_id.toString().toUpperCase();
+
+        const isDateInRange = (() => {
+          if (!selectedDate || !selectedDatee) {
+            return true; // No date range selected, include all transactions
+          }
+
+          const transactionDate = new Date(transaction.date_processed);
+          const startDate = new Date(selectedDate);
+          const endDate = new Date(selectedDatee);
+
+          console.log("Transaction Date:", transactionDate);
+          console.log("Start Date:", startDate);
+          console.log("End Date:", endDate);
+
+          return startDate <= transactionDate && transactionDate <= endDate;
+        });
+
+        return (
+          transactionId.includes(searchInput) &&
+          isSubsequence(searchInput, transactionId) &&
+          isDateInRange() && // Call the function to check date range
+          (!selectedType || selectedType === '0' || transaction.trans_type === selectedType) &&
+          (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase())
+        );
+      })
+      .sort((a, b) => {
+        // Sort the transactions based on the selected option and order
+        const valueA = a[sortOption];
+        const valueB = b[sortOption];
+
+        if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
+        if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+    console.log("Filtered Transactions:", filteredTransactions);
+
+    setFilteredTransactions(filteredTransactions);
+  };
+     
   // Make sure that the transaction searching is the same order in terms of characters
   const isSubsequence = (search, str) => {
     let i = 0;
@@ -131,15 +158,22 @@ const TransactionHistoryForm = () => {
 
   const handleInputChange = (e) => {
     const selectedType = e.target.value;
+    console.log("Dropdown Value Changed:", selectedType);
     setSelectedType(selectedType);
     handleSearch(searchInput);
   };
   
   const handleInputChange2 = (e) => {
     const selectedStatus = e.target.value;
+    console.log("Dropdown Value Changed:", selectedStatus);
     setSelectedStatus(selectedStatus);
+  };
+  
+  useEffect(() => {
     handleSearch(searchInput);
-  };  
+  }, [selectedStatus, searchInput, selectedType, selectedDate, selectedDatee]);
+  
+  
 
   const handleSortChange = (option) => {
     const newOrder = sortOrder === 'asc' ? 'desc' : 'asc';
@@ -198,7 +232,9 @@ const logoSrc = '../src/images/mnl_footer.svg';
               handleInputChange={handleInputChange}
               handleInputChange2={handleInputChange2}
               selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
               selectedDatee={selectedDatee}
+              setSelectedDatee={setSelectedDatee}
               selectedStatus={selectedStatus}
               selectedType={selectedType}
               userPersonal={userPersonal} />
@@ -215,7 +251,9 @@ const logoSrc = '../src/images/mnl_footer.svg';
               SortIcon={SortIcon}
               sortedTransactions={sortedTransactions} 
               selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
               selectedDatee={selectedDatee}
+              setSelectedDatee={setSelectedDatee}
               selectedStatus={selectedStatus}
               handleInputChange={handleInputChange}
               handleInputChange2={handleInputChange2}
