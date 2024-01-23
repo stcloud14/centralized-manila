@@ -308,17 +308,17 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                         width: "125px",
                         backgroundColor:
                           selectedStatus === "Pending" ? "#fef08a" :
-                          selectedStatus === "Paid" ? "#bbf7d0" :
-                          selectedStatus === "Processing" ? "#bfdbfe" :
-                          selectedStatus === "Complete" ? "#fbcfe8" :
+                          selectedStatus === "Paid" ? "#a7f3d0" :
+                          selectedStatus === "Processing" ? "#e9d5ff" :
+                          selectedStatus === "Complete" ? "#bfdbfe" :
                           selectedStatus === "Rejected" ? "#fecaca" :
                           selectedStatus === "Canceled" ? "#e2e8f0" : 
                           selectedStatus === "Expired" ? "#fed7aa" : "transparent",
                         color:
                           selectedStatus === "Pending" ? "#854d0e"  : 
-                          selectedStatus === "Paid" ? "#166534" :
-                          selectedStatus === "Processing" ? "#1e40af" :
-                          selectedStatus === "Complete" ? "#9d174d" :
+                          selectedStatus === "Paid" ? "#065f46" :
+                          selectedStatus === "Processing" ? "#6b21a8" :
+                          selectedStatus === "Complete" ? "#1e40af" :
                           selectedStatus === "Rejected" ? "#991b1b" :
                           selectedStatus === "Canceled" ? "#1e293b" : 
                           selectedStatus === "Expired" ? "#9a3412" : "#718096",

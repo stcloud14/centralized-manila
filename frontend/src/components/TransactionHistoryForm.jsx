@@ -131,15 +131,25 @@ const TransactionHistoryForm = () => {
 
   const handleInputChange = (e) => {
     const selectedType = e.target.value;
+    console.log("Dropdown Value Changed:", selectedStatus);
+
     setSelectedType(selectedType);
     handleSearch(searchInput);
   };
   
   const handleInputChange2 = (e) => {
     const selectedStatus = e.target.value;
+    console.log("Dropdown Value Changed:", selectedStatus);
+  
+    // Update the state using setSelectedStatus
     setSelectedStatus(selectedStatus);
+  };
+  
+  useEffect(() => {
+    // This effect will run after the component renders
     handleSearch(searchInput);
-  };  
+  }, [selectedStatus, searchInput]);
+  
 
   const handleSortChange = (option) => {
     const newOrder = sortOrder === 'asc' ? 'desc' : 'asc';
