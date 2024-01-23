@@ -173,12 +173,22 @@ const TransactionHistoryForm = () => {
     console.log("Dropdown Value Changed:", selectedStatus);
     setSelectedStatus(selectedStatus);
   };
-
-  const handleSortChange = (option) => {
-    const newOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-    setSortOption(option);
-    setSortOrder(newOrder);
-  };  
+  const handleSortChange = () => {
+    // Toggle between ascending and descending order
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortOrder(newSortOrder);
+  
+    // Sort transactions by date
+    const sortedByDate = [...sortedTransactions].sort((a, b) => {
+      const dateA = new Date(a.date_processed);
+      const dateB = new Date(b.date_processed);
+      return newSortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+  
+    // Update the state with the sorted transactions
+    setFilteredTransactions(sortedByDate);
+  };
+  
   
   const sortTransactions = (transactions) => {
     return transactions.slice().sort((a, b) => {
@@ -190,9 +200,8 @@ const TransactionHistoryForm = () => {
       return 0;
     });
   };
-
-const sortedTransactions = sortTransactions(filteredTransactions.length > 0 ? filteredTransactions : userTransaction);
-
+  
+  const sortedTransactions = sortTransactions(filteredTransactions.length > 0 ? filteredTransactions : userTransaction);
 
 const SortIcon = ({ order }) => (
   <button className="group flex items-center px-1">
