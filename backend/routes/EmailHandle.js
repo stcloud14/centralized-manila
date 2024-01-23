@@ -21,60 +21,65 @@ const transporter = nodemailer.createTransport({
 const router = Router();
 
 const FormatMail = (user_email, body) => {
-  return `<div style="max-width: 48rem; margin-left: auto; margin-right: auto;">
-      <div style="background: radial-gradient(at center top, rgb(64, 141, 81), rgb(41, 81, 65)); display: flex; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 1.25rem; padding-right: 1.25rem; justify-content: space-between; align-items: center; ">
-        <div style="text-align: center; margin: auto">
-          <span style="font-size: 1.25rem; font-weight: 700; color: #ffffff;">
-            MUNICIPALITY OF RODRIGUEZ, RIZAL 
-          </span>
-          <br/>
-          <span style="font-size: 0.875rem; font-weight: 500; color: #ffffff;">
-                M.H. Del Pilar Road, Rodriguez 1860 Rizal.
-          </span>
-        </div>
-      </div>
-      <div
-        style="padding-top: 1.25rem; padding-bottom: 1.25rem;">
-        <h1 style="font-size: 1.5rem; line-height: 2rem; font-weight: 700; text-align: center; text-transform: uppercase;">
-          Request
-        </h1>
-        <p style="margin-top: 0.5rem; font-weight: 700;">
-          Dear ${body.l_name}, ${body.f_name},
-        </p>
-        <div style="text-align: justify;">
-          <p style="margin-top: 0.75rem;">
-            We received a request to process your ${body.trans_type}
-            through your email address,
-            <span style="font-weight: 700;">${user_email}</span>
-            
-          </p>
-          <p style="margin-top: 0.75rem;">Your account verification code is:</p>
-          <div style="text-align: center; font-size: 3rem; font-weight: 700; height: 70px; margin: auto">
-                "Your Request is PENDING"
-          </div>
-          <p>
-            If you did not request this code, it is possible that someone else
-            is trying to access the Centralized Manila account of
-            <span style="font-weight: 700;"> ${user_email}</span>
-          </p>
-          <p style="margin-top: 0.5rem;">
-            Your received this message because this email address is listed as
-            the recovery email for the Centralized Manila. If that is incorrect,
-            please contact
-            <span style="font-weight: 700;">services.CentralizedManila@gmail.com</span>
-            to remove your email address from that Google Account.
-          </p>
-          <p>${body.data.amount}</p>
-        </div>
-        <p style="margin-top: 0.75rem; font-weight: 700;">
-          Sincerely yours,
-        </p>
-        <p style="font-weight: 700; ">Centralized Manila</p>
-      </div>
-      <div style="background: radial-gradient(at center top, rgb(64, 141, 81), rgb(41, 81, 65)); color: #ffffff; padding-top: 1rem; padding-bottom: 1rem; margin: auto; text-align: center;">
-        Â© 2023 Centralized Manila, Inc. All Rights Reserved.
-      </div>
-    </div>
+  return `
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color:black!important">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/0GZ4s69/mnl-header-pdf.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%">
+                          <td style="padding:0px 20px 10px 20px">
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi ${body.f_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span></h2>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:5px;border-style: dashed;">P E N D I N G</h1>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>${body.data.amount}</p>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">If you did not request this transcation, it is possible that someone else is trying to access the Centralized Manila account of <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0;margin-top:-5px"> You received this message because this email address is listed as the recovery email for the Centralized Manila. If that is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
     `;
 };
 
