@@ -28,7 +28,7 @@ const transporter = nodemailer.createTransport({
 
 const router = Router();
 
-const FormatMail = (user_email) => {
+const FormatMail = (user_email, data, trans_type) => {
   return `<div style="max-width: 48rem; margin-left: auto; margin-right: auto;">
       <div style="background: radial-gradient(at center top, rgb(64, 141, 81), rgb(41, 81, 65)); display: flex; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 1.25rem; padding-right: 1.25rem; justify-content: space-between; align-items: center; ">
         <div style="text-align: center; margin: auto">
@@ -47,11 +47,11 @@ const FormatMail = (user_email) => {
           Request
         </h1>
         <p style="margin-top: 0.5rem; font-weight: 700;">
-          Dear User,
+          Dear ${data.acc_name},
         </p>
         <div style="text-align: justify;">
           <p style="margin-top: 0.75rem;">
-            We received a request to access your Bagong Montalban Account
+            We received a request to process your ${trans_type}
             through your email address,
             <span style="font-weight: 700;">${user_email}</span>
             
@@ -72,6 +72,7 @@ const FormatMail = (user_email) => {
             <span style="font-weight: 700;">services.CentralizedManila@gmail.com</span>
             to remove your email address from that Google Account.
           </p>
+          <p>${data.amount}</p>
         </div>
         <p style="margin-top: 0.75rem; font-weight: 700;">
           Sincerely yours,
@@ -85,53 +86,41 @@ const FormatMail = (user_email) => {
 };
 
 
-const Send = async (user_email) => {
+
+  router.post('/send-email/:user_email', async (req, res) => {
+
+    const { user_email } = req.params;
+    const data = req.body.data;
+    const transType = req.body.trans_type;
+  
+    if (!user_email) {
+    return res.status(400).json({ error: "user_email is missing or empty!" });
+    }
+
     try {
-        const result = await transporter.sendMail({
+
+        // const result = await Send(user_email);
+
+        const result = transporter.sendMail({
             from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
             to: user_email,
-            subject: "RPTAX REQUEST",
-            html: FormatMail(user_email), 
+            subject: transType,
+            html: FormatMail(user_email, data, transType), 
         });
-        console.log("Email sent successfully:", result);
-        return result;
-    } catch (error) {
-        console.error("Error sending email:", error);
-        return { error: "Error sending email" };
-    }
-};
 
+        if (!result.response) return res.status(400).json({ error: "Error sending email" });
 
-const SendEmail = async (req, res) => {
-    try {
-      const { user_email } = req.params;
-
-      console.log(user_email)
-  
-      // Check if user_email is undefined or an empty string
-      if (!user_email) {
-        return res.status(400).json({ error: "user_email is missing or empty!" });
-      }
-  
-    //   const found = await User.find({ user_email: user_email });
-  
-    //   if (found.length === 0) {
-    //     return res.status(400).json({ error: "Email not registered!" });
-    //   }
-  
-      const result = await Send(user_email);
-      if (!result.response) return res.status(400).json({ error: "Error sending email" });
-  
-      res.status(200).json({
+        res.json({
         type: found[0].type,
         message: "Email has been successfully sent!",
-      });
+        });
+
     } catch (err) {
-      res.status(500).json({ error: err.message });
+        console.error(err);
+        res.status(500).json({ error: err.message });
     }
-};
-  
-  router.post('/send-email/:user_email', SendEmail);
+
+  });
 
 
 

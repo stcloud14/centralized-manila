@@ -178,10 +178,17 @@ const handleCheckboxChange = (e) => {
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
+
+            const trans_type = 'Real Property Tax Payment';
+
+            const body = {
+              data: rptaxPayment,
+              trans_type: trans_type,
+            };
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`);
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
