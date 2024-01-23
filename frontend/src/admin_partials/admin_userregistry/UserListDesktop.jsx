@@ -78,17 +78,17 @@ const UserListDesktop = ({ handleOpenModal, userApplications }) => {
                 {userApplications?.map((transaction) => ( 
                 <tr key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                   <td className="px-1 py-2 whitespace-nowrap">
-                    <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white pl-3">
+                    <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                       {transaction.l_name}
                     </div>
                   </td>
                   <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                    <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white pl-3">
+                    <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                       {transaction.f_name}
                     </div>
                   </td>
                   <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                    <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white pl-3">
+                    <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                       {transaction.m_name}
                     </div>
                   </td>
