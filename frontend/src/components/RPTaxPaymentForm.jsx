@@ -171,7 +171,7 @@ const handleCheckboxChange = (e) => {
       if (response.status === 200) {
         // Fetch user_email after successful payment
         try {
-          const res = await axios.get(`http://localhost:8800/rptax/payment/${user_id}`);
+          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
