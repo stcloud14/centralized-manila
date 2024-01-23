@@ -68,24 +68,24 @@ const FormatMail = (user_email) => {
           </div>
           <p>
             If you did not request this code, it is possible that someone else
-            is trying to access the Bagong Montalban account of
+            is trying to access the Centralized Manila account of
             <span style="font-weight: 700;"> ${user_email}</span>
           </p>
           <p style="margin-top: 0.5rem;">
             Your received this message because this email address is listed as
-            the recovery email for the Bagong Montalban Account. If that is incorrect,
+            the recovery email for the Centralized Manila. If that is incorrect,
             please contact
-            <span style="font-weight: 700;">services.montalban@gmail.com</span>
+            <span style="font-weight: 700;">services.CentralizedManila@gmail.com</span>
             to remove your email address from that Google Account.
           </p>
         </div>
         <p style="margin-top: 0.75rem; font-weight: 700;">
           Sincerely yours,
         </p>
-        <p style="font-weight: 700; ">The Bagong Montalban team</p>
+        <p style="font-weight: 700; ">Centralized Manila</p>
       </div>
       <div style="background: radial-gradient(at center top, rgb(64, 141, 81), rgb(41, 81, 65)); color: #ffffff; padding-top: 1rem; padding-bottom: 1rem; margin: auto; text-align: center;">
-        Â© 2023 Bagong Montalban, Inc. All Rights Reserved.
+        Â© 2023 Centralized Manila, Inc. All Rights Reserved.
       </div>
     </div>`;
 };
