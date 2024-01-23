@@ -94,7 +94,7 @@ const FormatMail = (user_email) => {
 const Send = async (user_email) => {
     try {
         const result = await transporter.sendMail({
-            from: { name: "Bagong Montalban", address: process.env.MAIL_USERNAME },
+            from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
             to: user_email,
             subject: "RPTAX REQUEST",
             html: FormatMail(user_email), 
