@@ -194,7 +194,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
             {/* Contents */}
 
             {/* Tax Clearance Sample */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
               
               {/* ITO NAMAN YUNG MAPPING, LAHAT NG LAMAN NG LINE 40, IDIDISPLAY NITO, SINCE ANG INITIAL AY WALA PA NAMANG VALUE ANG SEARCH QUERY, LAHAT IDIDISPLAY DITO AND MAG FIFILTER LANG KAPAG MAY NILAGAY NA SA SEARCH, AND MADIDISPLAY LANG YUNG MATCHED TRANSACTION */}
               {filteredTaxClearance.map((transaction) => (
