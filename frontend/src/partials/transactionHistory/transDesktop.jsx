@@ -262,7 +262,7 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                           }
                         },
                       }}
-                      placeholder="From"
+                      placeholder="To"
                       className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"/>
                     </span>
                  </div>
@@ -327,10 +327,9 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                     </select>
                 </div>
 
-                <button type="button" onClick={toggleDropdown} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 mt-1 mb-0.5 rounded-full flex items-center ml-auto">
-
-                    <span className="">Filter</span>
-                  </button>
+                <button type="button" onClick={toggleDropdown} className="w-[6rem] bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 mt-1 mb-0.5 rounded-full flex items-center ml-auto">
+                  <span className="mx-auto">Filter</span>
+                </button>
           </div>
         )}
                 </div>
