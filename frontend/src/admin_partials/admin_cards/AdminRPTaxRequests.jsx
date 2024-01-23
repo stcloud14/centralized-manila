@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
 import AdminRPView from '../admin_modals/AdminRPView';
+import RPCardView from '../admin_rptax/RPCardView';
+import RPTableView from '../admin_rptax/RPTableView';
 
 
 
@@ -179,178 +181,21 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
   const renderContent = () => {
     if (viewMode === 'table') {
       return (
-        <div className="relative overflow-x-auto shadow-md rounded-sm">
-          <table className="w-full text-left text-xs md:text-sm rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-gray-700 border-l-4 dark:border-l-[#212121] uppercase bg-slate-200 dark:bg-[#212121] dark:text-slate-400">
-                <tr>
-                    <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
-                        <div className="flex items-center pl-3">
-                          Transaction ID
-                        </div>
-                    </th>
-                    <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
-                        <div className="flex items-center">
-                          Date
-                        </div>
-                    </th>
-                    <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
-                        <div className="flex items-center">
-                          Tax Declaration Number
-                        </div>
-                    </th>
-                    <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
-                        <div className="flex items-center">
-                          Property Identification Number
-                        </div>
-                    </th>
-                    <th>
-                      {/* Actions */}
-                    </th>
-                </tr>
-            </thead>
-            <tbody> 
-              <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
-                <td className="px-1 py-2 border-l-4 border-l-[#0057e7] whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                  <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
-                    17059267-DBB7F8193 
-                  </div>
-                </td>
-                <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                  January 22, 2024
-                </td>
-                <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                  AA-10088-00003
-                </td>
-                <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                  678-92-121-212-122
-                </td>
-                <td className="py-1 whitespace-nowrap">
-                  <div className="flex justify-center gap-4 px-2">
-                    <div className="group cursor-pointer flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-blue-500 hover:text-blue-600">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                      </svg>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-
-              <tr className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
-                <td className="px-1 py-2 whitespace-nowrap border-l-4 border-l-blue-400 text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                  <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
-                    17059267-DBB7F8193 
-                  </div>
-                </td>
-                <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                  January 22, 2024
-                </td>
-                <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                  AA-10088-00003
-                </td>
-                <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                  678-92-121-212-122
-                </td>
-                <td className="py-1 whitespace-nowrap">
-                  <div className="flex justify-center gap-4 px-2">
-                    <div className="group cursor-pointer flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-blue-500 hover:text-blue-600">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                      </svg>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              
-            </tbody>
-          </table>
-        </div>
+        <RPTableView/>
       );
     } else if (viewMode === 'card') {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
-              
-          {/* ITO NAMAN YUNG MAPPING, LAHAT NG LAMAN NG LINE 40, IDIDISPLAY NITO, SINCE ANG INITIAL AY WALA PA NAMANG VALUE ANG SEARCH QUERY, LAHAT IDIDISPLAY DITO AND MAG FIFILTER LANG KAPAG MAY NILAGAY NA SA SEARCH, AND MADIDISPLAY LANG YUNG MATCHED TRANSACTION */}
-          {filteredTaxClearance.map((transaction) => (
-
-          // ITO YUNG KAPAG PININDOT YUNG BUONG CARD, MAG OOPEN YUNG MODAL, IPAPASA YUNG DETAILS NG TRANSACTION NA PININDOT, AND ISESET SA PARAMETER NG LINE 19 NA ANG TYPE AY TAX CLEARANCE
-          <div onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Clearance')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
-            <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-              Transaction ID: {transaction.transaction_id}
-            </div>
-
-            <div className="flex-grow px-4 pt-5 pb-4">
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">TDN: {transaction.rp_tdn} </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">PIN: {transaction.rp_pin}  </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date Processed: {date2}  </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time Processed: {time2} </div>
-              <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
-                <span>Status: {transaction.status_type}</span>
-              </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P {transaction.amount}</div>
-            </div>
-
-            <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-              <div onClick={() => handleExpiredModal(transaction, 'Real Property Tax Clearance')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-sm mt-2 flex-grow">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
-                <span className="text-xs font-normal">&nbsp;Expired</span>
-              </div>
-              <div onClick={() => handleOpenProcessModal(transaction, 'Real Property Tax Clearance')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-              </svg>
-              <span className="text-xs font-normal">&nbsp;Process</span>
-            </div>
-
-            </div>
-          </div>
-          ))} 
-
-          {/* SAME LANG TO SA TAAS */}
-          {/* Tax Payment Sample */}
-          {filteredTaxPayment.map((transaction) => (
-          <div onClick={() => handleOpenViewModal (transaction, 'Real Property Tax Payment')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
-            <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-              Transaction ID: {transaction.transaction_id}
-            </div>
-
-            <div className="flex-grow px-4 pt-5 pb-4">
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type:  {transaction.trans_type}</div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Account Name: {transaction.acc_name} </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">TDN: {transaction.rp_tdn}</div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">PIN: {transaction.rp_pin} </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">From: 1st Quarter </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">To: {transaction.period_id} </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date Processed: {date1}  </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time Processed: {time1} </div>
-              <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
-                <span>Status: {transaction.status_type}</span>
-              </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P {transaction.amount}</div>
-            </div>
-
-            <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-              <div onClick={() => handleExpiredModal(transaction, 'Real Property Tax Payment')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-sm mt-2 flex-grow">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
-                <span className="text-xs font-normal">&nbsp;Expired</span>
-              </div>
-              <div  onClick={() => handleOpenProcessModal(transaction, 'Real Property Tax Payment')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
-                <span className="text-xs font-normal">&nbsp;Process</span>
-              </div>
-            </div>
-          </div>
-          ))} 
-      
-        </div>
+        <RPCardView
+          filteredTaxClearance={filteredTaxClearance}
+          filteredTaxPayment={filteredTaxPayment}
+          date1={date1}
+          time1={time1}
+          date2={date2}
+          time2={time2}
+          handleExpiredModal={handleExpiredModal}
+          handleOpenProcessModal={handleOpenProcessModal}
+          handleOpenViewModal={handleOpenViewModal}
+        />
       );
     }
   };
@@ -360,7 +205,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
         {/* Requests Area */}
         <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200">
           <div className="px-5 py-5">
-            <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>Requests</h1>
+            <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>Tax Clearance and Tax Payment Requests</h1>
 
             {/* View Toggle */}
             <div className="flex justify-end items-center text-xs mb-7">
