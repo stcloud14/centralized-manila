@@ -550,13 +550,6 @@ const BusinessPermitForm =()=>{
         const response = await axios.post(`http://localhost:8800/buspermit/bus/${user_id}`, busPermit);
 
         if (response.status === 200) {
-
-
-
-
-
-
-          
             setIsSuccess(true);
             handleCloseModal();
             contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
