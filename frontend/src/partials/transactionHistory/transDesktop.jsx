@@ -176,25 +176,12 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
           <div className="absolute right-0 w-[405px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
 
               {/* Date Row */}
-              <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center">
                   <span className="block py-2 text-xs">Date:</span>
                   <span>
-                  <Flatpickr
-                      id=""
-                      name=""
-                      value=""
-                      onChange={(date) => {
-                        const formattedDate = date.length > 0 ? (() => {
-                          const originalDate = new Date(date[0]);
-                          originalDate.setDate(originalDate.getDate() + 1);
-                          return originalDate.toISOString().split('T')[0];
-                        })() : '';
-                        
-                        setDeathCert((prevData) => ({
-                          ...prevData,
-                          deathc_date: formattedDate,
-                        }))
-                      }}
+                    <Flatpickr
+                      value={selectedDate}
+                      onChange={(date) => setSelectedDate(date[0])}
                       options={{
                         dateFormat: 'Y-m-d',
                         altInput: true,
@@ -220,24 +207,12 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                         },
                       }}
                       placeholder="From"
-                      className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"/>
+                      className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"
+                    />
                     <span> - </span>
-                          <Flatpickr
-                      id=""
-                      name=""
-                      value=""
-                      onChange={(date) => {
-                        const formattedDate = date.length > 0 ? (() => {
-                          const originalDate = new Date(date[0]);
-                          originalDate.setDate(originalDate.getDate() + 1);
-                          return originalDate.toISOString().split('T')[0];
-                        })() : '';
-                        
-                        setDeathCert((prevData) => ({
-                          ...prevData,
-                          deathc_date: formattedDate,
-                        }))
-                      }}
+                    <Flatpickr
+                      value={selectedDatee}
+                      onChange={(date) => setSelectedDatee(date[0])}
                       options={{
                         dateFormat: 'Y-m-d',
                         altInput: true,
@@ -263,9 +238,10 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                         },
                       }}
                       placeholder="To"
-                      className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"/>
-                    </span>
-                 </div>
+                      className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"
+                    />
+                  </span>
+                </div>
               
 
               {/* Transaction ID Row */}
