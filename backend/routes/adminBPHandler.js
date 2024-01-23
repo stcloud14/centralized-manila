@@ -2,8 +2,6 @@ import { Router, response } from 'express';
 import moment from 'moment/moment.js';
 import conn2 from './connection.js';
 
-
-
 const router = Router();
 
 
