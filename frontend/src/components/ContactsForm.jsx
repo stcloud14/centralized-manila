@@ -6,7 +6,9 @@ import RealEstateImage from '../images/RealEstate.jpg';
 import TaxPayerLoungeImage from '../images/TaxPayerLounge.jpg';
 import LocalCivilRegistryImage from '../images/LocalCivilRegistry.jpg';
 import ElectronicDataProcessingImage from '../images/ElectronicDataProcessing.jpg';
-import CallingGirlImage from '../images/CallingGirl.png';
+import SittingGirlImage from '../images/resources/contacts.png';
+import CallingGirlImage from '../images/resources/contacts_02.png';
+import CallingGuyImage from '../images/resources/contacts_03.png';
 
 const ContactsForm = () => {
   const contentRef = useRef(null);
@@ -24,23 +26,29 @@ const ContactsForm = () => {
 
         <main className="overflow-y-auto">
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-              <div className="bg-white dark:bg-[#181818] py-6 px-6 md:px-20 mb-6 rounded-sm shadow-md grid grid-cols-8 items-center justify-between">
-                <div className="col-span-full sm:col-span-3 flex items-center justify-center">
-                  <img src={CallingGirlImage} alt="Banner Image" className='md:w-60 md:h-60 w-44 h-44 object-contain mb-4 md:mb-0'/>
-                </div>
-                <div className="col-span-full sm:col-span-5">
-                  <h1 className="text-xl lg:text-3xl md:text-3xl text-slate-800 dark:text-slate-100 font-medium text-center">
-                    Welcome to Centralized
-                    <span className='text-blue-600'> M</span>
-                    <span className='text-red-500'>a</span>
-                    <span className='text-yellow-500'>n</span>
-                    <span className='text-green-500'>i</span>
-                    <span className='text-blue-600'>l</span>
-                    <span className='text-red-500'>a</span><br/>
-                    <span className=''> Contacts Page</span>
-                  </h1>
-                </div>
+            <div className="bg-white dark:bg-[#181818] p-6 mb-6 rounded-sm shadow-md flex flex-col md:flex-row items-center justify-center md:gap-12">
+              {/* Left side with images */}
+              <div className='flex items-baseline mb-4 md:mb-0 md:ml-10'>
+                <img src={CallingGirlImage} alt="Banner Image" className='md:w-60 md:h-60 w-44 h-44 object-contain'/>
+                <img src={SittingGirlImage} alt="Banner Image" className='md:w-32 md:h-32 w-20 h-20 object-contain'/>
+                <img src={CallingGuyImage} alt="Banner Image" className='md:w-60 md:h-60 w-44 h-44 object-contain'/>
               </div>
+
+              {/* Right side with text */}
+              <div className='md:mr-20 text-center md:text-left'>
+                <h1 className="text-xl md:text-5xl text-slate-800 dark:text-slate-100 font-medium mb-1">
+                  Get in
+                  <span className='text-blue-500'> t</span>
+                  <span className='text-red-500'>o</span>
+                  <span className='text-yellow-500'>u</span>
+                  <span className='text-blue-500'>c</span>
+                  <span className='text-emerald-500'>h</span>
+                </h1>
+                <p className="text-md dark:text-slate-400 font-thin">We'd love to hear from you!</p>
+              </div>
+            </div>
+
+
               <div className="grid grid-rows-3 grid-cols-8 gap-6">
               <div className="hidden md:flex flex-col col-span-full sm:col-span-3 bg-white dark:bg-[#181818] shadow-md rounded-sm">
                 <div className="md:flex-1 px-5 py-4 md:flex">

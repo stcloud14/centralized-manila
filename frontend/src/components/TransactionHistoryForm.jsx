@@ -249,19 +249,22 @@ const logoSrc = '../src/images/mnl_footer.svg';
                 // For Mobile View
                 <TransMobile 
                   searchInput={searchInput} 
+                  setSearchInput={setSearchInput}
                   handleSearch={handleSearch} 
-                  handleOpenModal={handleOpenModal}  
+                  handleOpenModal={handleOpenModal} 
                   handleClearFilter={handleClearFilter} 
                   handleSortChange={handleSortChange}
                   sortOption={sortOption}
+                  sortOrder={sortOrder}
+                  SortIcon={SortIcon}
                   sortedTransactions={sortedTransactions} 
-                  handleInputChange={handleInputChange}
-                  handleInputChange2={handleInputChange2}
                   selectedDate={selectedDate}
                   setSelectedDate={setSelectedDate}
                   selectedDatee={selectedDatee}
                   setSelectedDatee={setSelectedDatee}
                   selectedStatus={selectedStatus}
+                  handleInputChange={handleInputChange}
+                  handleInputChange2={handleInputChange2}
                   selectedType={selectedType}
                   filteredTransactions={filteredTransactions}
                   userPersonal={userPersonal} />
