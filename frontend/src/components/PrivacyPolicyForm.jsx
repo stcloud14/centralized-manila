@@ -114,8 +114,6 @@ const PrivacyPolicyForm =()=>{
             <span className="text-left text-slate-700 dark:text-white">
               <br/>
               To the extent permitted or required by law, we use your personal data to pursue our legitimate interests as a local government unit of the City of Manila, including a variety of administrative, research, historical, and statistical purposes. For example, we may use the information we collect for purposes such as but not limited to:
-              <br/><br/>
-              In the event that you supply us with personal data belonging to other individuals (e.g., heirs), we will require you to affirm that you have obtained the consent of such individuals. This affirmation can be done through a consent form provided by the Data Protection Officer (DPO) of the City Government of Manila.
             </span>
             <div className="ml-3 text-left text-slate-700 dark:text-white ">
               <p className="mb-1 mt-2">1. Job Application</p>
