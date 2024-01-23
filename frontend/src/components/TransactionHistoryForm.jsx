@@ -8,7 +8,6 @@ import Footer from '../partials/Footer';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 import TransMobile from '../partials/transactionHistory/transMobile';
 import TransDesktop from '../partials/transactionHistory/transDesktop';
-import TransFilter from '../partials/transactionHistory/transFilter';
 
 
 const TransactionHistoryForm = () => {
@@ -20,7 +19,7 @@ const TransactionHistoryForm = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userTransaction, setUserTransaction] = useState([]);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [searchInput, setSearchInput] = useState();
+  const [searchInput, setSearchInput] = useState('');
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [sortOrder, setSortOrder] = useState('desc');
   const [sortOption, setSortOption] = useState('date_processed');
@@ -81,7 +80,7 @@ const TransactionHistoryForm = () => {
   }, []);
 
   // Filter for selected date range, type, status of transaction
-  const handleSearch = () => {
+  const handleSearch = (e) => {
     // const searchInput = e.toUpperCase();
     // setSearchInput(searchInput);
 
@@ -289,11 +288,8 @@ const logoSrc = '../src/images/mnl_footer.svg';
               handleInputChange={handleInputChange}
               handleInputChange2={handleInputChange2}
               selectedType={selectedType}
-              userPersonal={userPersonal}
-               />
-               
+              userPersonal={userPersonal} />
             )}
-            
           </div>
           <Footer logo={logoSrc} />
         </main>
