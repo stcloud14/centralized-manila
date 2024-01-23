@@ -262,7 +262,7 @@ const TransDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                           }
                         },
                       }}
-                      placeholder="From"
+                      placeholder="To"
                       className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"/>
                     </span>
                  </div>
