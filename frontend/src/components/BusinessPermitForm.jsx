@@ -39,7 +39,7 @@ const BusinessPermitForm =()=>{
 
   const [busPermit, setBusPermit] = useState((prevData) => ({
     ...prevData,
-    bus_amount: 0,
+    amount: 0,
     initialPrint: 0,
     printDisplay: 0,
     bus_typeLabel: '',
@@ -337,7 +337,7 @@ const BusinessPermitForm =()=>{
         return {
           ...prevData,
           [id]: initialValue,
-          bus_amount: totalAmountPaid,
+          amount: totalAmountPaid,
           printDisplay: product,
         };
       } 
@@ -352,7 +352,7 @@ const BusinessPermitForm =()=>{
         return {
           ...prevData,
           [id]: value,
-          bus_amount: totalAmountPaid,
+          amount: totalAmountPaid,
           initialPrint: displayValue,
           printDisplay: product,
           bus_printLabel: label,
@@ -570,12 +570,12 @@ const BusinessPermitForm =()=>{
   
               const trans_type = 'Business Permit';
   
-              const rowData = { ...busPermit, trans_type};
+              const rowDataForm = { ...busPermit, trans_type};
 
               const status_type = 'P E N D I N G';
   
               const body = {
-                data: rowData,
+                data: rowDataForm,
                 status_type: status_type,
                 f_name: f_name,
                 l_name: l_name
@@ -599,7 +599,6 @@ const BusinessPermitForm =()=>{
             console.log('NOT FETCHING EMAIL');
             console.error(fetchError);
           }
-
 
             setIsSuccess(true);
             handleCloseModal();
@@ -1709,7 +1708,7 @@ const BusinessPermitForm =()=>{
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">
                          <span className="font-medium whitespace-nowrap">Total Amount Paid</span>
-                         <span name="" id="bus_amount" className="whitespace-nowrap">{`P ${busPermit.bus_amount.toFixed(2)}`}</span>
+                         <span name="" id="amount" className="whitespace-nowrap">{`P ${busPermit.amount.toFixed(2)}`}</span>
                      </div>
                  </div>
               </div>

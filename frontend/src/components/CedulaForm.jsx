@@ -39,7 +39,7 @@ const CedulaForm =()=>{
     ctc_salariesca: 0,
     ctc_totalamount: 0,
     ctc_interest: 0,
-    ctc_amountpayable: 0,
+    amount: 0,
     ctc_residencetaxdue: '',
   }));
   
@@ -178,7 +178,7 @@ const handleInputChange = (e) => {
         ctc_cedamount: incomeCedAmount,
         ctc_totalamount: totalAmount,
         ctc_interest: totalInterest,
-        ctc_amountpayable: totalAmountPaid,
+        amount: totalAmountPaid,
       };
     }
 
@@ -200,7 +200,7 @@ const handleInputChange = (e) => {
         ctc_grossca: grossCedAmount,
         ctc_totalamount: totalAmount,
         ctc_interest: totalInterest,
-        ctc_amountpayable: totalAmountPaid,
+        amount: totalAmountPaid,
       };
     }
 
@@ -222,7 +222,7 @@ const handleInputChange = (e) => {
         ctc_salariesca: salariesCedAmount,
         ctc_totalamount: totalAmount,
         ctc_interest: totalInterest,
-        ctc_amountpayable: totalAmountPaid,
+        amount: totalAmountPaid,
       };
     }
     
@@ -632,7 +632,7 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">
                   <span className="font-medium whitespace-nowrap">Total Amount To Pay</span>
-                  <span name="ctc_amount" id="ctc_amount" className="whitespace-nowrap">P {CtcCedula.ctc_amountpayable} .00</span>
+                  <span name="ctc_amount" id="ctc_amount" className="whitespace-nowrap">P {CtcCedula.amount} .00</span>
                 </div>
                  </div>
               </div>

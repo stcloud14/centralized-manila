@@ -100,7 +100,7 @@ let transID = null;
         bus_nocopies,
         bus_print,
         bus_purpose,
-        bus_amount,
+        amount,
     } = req.body;
 
     transID = generateTransactionID();
@@ -110,7 +110,7 @@ let transID = null;
     const statusType = 'Pending';
     const trans_type = 'Business Permit';
     const notif_title = 'Transaction Payment Pending';
-    const plainAmount = bus_amount;
+    const plainAmount = amount;
     const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-semibold dark:text-white">P ${plainAmount}</span>.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
@@ -174,15 +174,15 @@ let transID = null;
     const { bus_office } = req.body.busOffice; 
   
     try {
-        const query = "INSERT INTO bus_activity (`bus_office`, `bus_line`, `bus_psic`, `bus_products`, `bus_units_no`, `bus_total_cap`, `transaction_id`) VALUES ?";
-        const values = [dataArray.map(data => [bus_office, data.bus_line, data.bus_psic, data.bus_products, data.bus_units_no, data.bus_total_cap, transID])];
+      const query = "INSERT INTO bus_activity (`bus_office`, `bus_line`, `bus_psic`, `bus_products`, `bus_units_no`, `bus_total_cap`, `transaction_id`) VALUES ?";
+      const values = [dataArray.map(data => [bus_office, data.bus_line, data.bus_psic, data.bus_products, data.bus_units_no, data.bus_total_cap, transID])];
 
-        await queryDatabase(query, values);
-  
-        res.json({ success: true });
+      await queryDatabase(query, values);
+
+      res.json({ success: true });
     } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Error executing queries" });
+        console.error(err);
+        res.status(500).json({ error: "Error executing queries" });
     }
 });
 
