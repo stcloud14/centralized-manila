@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     const query = "SELECT ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, br.l_name, br.f_name, br.m_name, bi.birth_date, \
-    ti.amount, ti.copies, ti.print_type, ti.valid_id, ti.purpose_id \
+    ti.amount, ti.copies, ptt.print_type, ti.valid_id, ti.purpose_id \
     \
     FROM user_transaction ut \
     \
@@ -14,11 +14,12 @@ router.get('/', async (req, res) => {
     LEFT JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN birth_info bi ON ut.transaction_id = bi.transaction_id AND bi.transaction_id IS NOT NULL \
     LEFT JOIN birth_requestor br ON ut.transaction_id = br.transaction_id AND br.transaction_id IS NOT NULL \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE ut.trans_type_id = 5 AND ut.status_type = 'Paid'";
 
     const query1 = "SELECT ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, dr.l_name, dr.f_name, dr.m_name, dc.death_date, \
-    ti.amount, ti.copies, ti.print_type, ti.valid_id, ti.purpose_id \
+    ti.amount, ti.copies, ptt.print_type, ti.valid_id, ti.purpose_id \
     \
     FROM user_transaction ut \
     \
@@ -26,11 +27,12 @@ router.get('/', async (req, res) => {
     LEFT JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN death_cert dc ON ut.transaction_id = dc.transaction_id AND dc.transaction_id IS NOT NULL \
     LEFT JOIN death_requestor dr ON ut.transaction_id = dr.transaction_id AND dr.transaction_id IS NOT NULL \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE ut.trans_type_id = 6 AND ut.status_type = 'Paid'";
 
     const query2 = "SELECT ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, ci.consent_fname, ci.consent_mname, ci.consent_lname, mc.marriage_date, \
-    ti.amount, ti.copies, ti.print_type, ti.valid_id, ti.purpose_id \
+    ti.amount, ti.copies, ptt.print_type, ti.valid_id, ti.purpose_id \
     \
     FROM user_transaction ut \
     \
@@ -38,6 +40,7 @@ router.get('/', async (req, res) => {
     LEFT JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN marriage_cert mc ON ut.transaction_id = mc.transaction_id AND mc.transaction_id IS NOT NULL \
     LEFT JOIN consent_info ci ON ut.transaction_id = ci.transaction_id AND ci.transaction_id IS NOT NULL \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE ut.trans_type_id = 7 AND ut.status_type = 'Paid'";
 

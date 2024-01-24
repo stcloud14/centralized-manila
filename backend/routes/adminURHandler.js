@@ -17,10 +17,10 @@ router.get('/', async (req, res) => {
     up.m_name, \
     up.l_name, \
     up.suffix_type, \
-    up.sex_type, \
-    up.cvl_status, \
-    up.res_status, \
-    up.czn_status, \
+    st.sex_type, \
+    cs.cvl_status, \
+    rs.res_status, \
+    css.czn_status, \
     ub.birth_date, \
     ub.birth_place, \
     uc.user_email, \
@@ -56,6 +56,10 @@ router.get('/', async (req, res) => {
     region r ON uc.region_id = r.region_id AND uc.region_id IS NOT NULL \
   LEFT JOIN \
     province p ON uc.prov_id = p.prov_id AND uc.prov_id IS NOT NULL \
+    LEFT JOIN sex_type st ON up.sex_id = st.sex_id \
+    LEFT JOIN cvl_status cs ON up.cvl_id = cs.cvl_id \
+    LEFT JOIN res_status rs ON up.res_id = rs.res_id \
+    LEFT JOIN czn_status css ON up.czn_id = css.czn_id \
   LEFT JOIN \
     cities c ON uc.city_id = c.city_id AND uc.city_id IS NOT NULL \
   WHERE \
@@ -69,10 +73,10 @@ router.get('/', async (req, res) => {
     up.m_name, \
     up.l_name, \
     up.suffix_type, \
-    up.sex_type, \
-    up.cvl_status, \
-    up.res_status, \
-    up.czn_status, \
+    st.sex_type, \
+    cs.cvl_status, \
+    rs.res_status, \
+    css.czn_status, \
     ub.birth_date, \
     ub.birth_place, \
     uc.user_email, \
@@ -113,6 +117,10 @@ router.get('/', async (req, res) => {
     region r ON uc.region_id = r.region_id AND uc.region_id \
   JOIN \
     province p ON uc.prov_id = p.prov_id AND uc.prov_id \
+    LEFT JOIN sex_type st ON up.sex_id = st.sex_id \
+    LEFT JOIN cvl_status cs ON up.cvl_id = cs.cvl_id \
+    LEFT JOIN res_status rs ON up.res_id = rs.res_id \
+    LEFT JOIN czn_status css ON up.czn_id = css.czn_id \
   JOIN \
     cities c ON uc.city_id = c.city_id AND uc.city_id \
   ORDER BY up.l_name;";
