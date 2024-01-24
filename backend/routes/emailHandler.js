@@ -156,23 +156,6 @@ const FormatMail = (user_email, body) => {
 
 
 
-//   router.post('/send-email/:userEmail', async (req, res) => {
-//     const user_id = req.params.user_id;
-
-//     const query = "SELECT user_email FROM user_contact WHERE user_id = ?";
-  
-//     try {
-//     const result = await queryDatabase(query, [user_id]);
-    
-//     res.json(result[0].user_email);
-//     console.log(result[0].user_email);
-//     } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Error retrieving data');
-//     }
-//   });
-
-
   
 // const Send = async (email) => {
 //     const result = await transporter.sendMail({

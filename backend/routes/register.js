@@ -49,8 +49,8 @@ router.post('/', async (req, res) => {
     const query2 = "INSERT INTO user_personal (`user_id`, `f_name`, `l_name`) VALUES ( ?, ?, ?)";
     const values2 = [primaryKey, req.body.f_name, req.body.l_name];
 
-    const query3 = "INSERT INTO user_contact (`user_id`, `mobile_no`) VALUES (?, ?)";
-    const values3 = [primaryKey, req.body.mobile_no];
+    const query3 = "INSERT INTO user_contact (`user_id`, `mobile_no`, `user_email`) VALUES (?, ?, ?)";
+    const values3 = [primaryKey, req.body.mobile_no, req.body.user_email];
 
     const query4 = "INSERT INTO user_gov_id (`user_id`) VALUES (?)";
     const values4 = [primaryKey];

@@ -46,8 +46,6 @@ function Notifications({ notifications }) {
         return `${formattedHours}:${formattedMinutes} ${ampm}`;
       };
 
-      console.log(notifications)
-
 
   return (
         <ul className="h-[21.2rem] overflow-y-auto">
