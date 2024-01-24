@@ -181,7 +181,17 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
   const renderContent = () => {
     if (viewMode === 'table') {
       return (
-        <RPTableView/>
+        <RPTableView
+        filteredTaxClearance={filteredTaxClearance}
+        filteredTaxPayment={filteredTaxPayment}
+        date1={date1}
+        time1={time1}
+        date2={date2}
+        time2={time2}
+        handleExpiredModal={handleExpiredModal}
+        handleOpenProcessModal={handleOpenProcessModal}
+        handleOpenViewModal={handleOpenViewModal}
+        />
       );
     } else if (viewMode === 'card') {
       return (

@@ -84,7 +84,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
           fontSize: 10,
         },
         margin: { top: 60, left: 130 },
-        tableWidth: 65,
+        tableWidth: 'auto',
       });
   
       // Adjust the starting y-coordinate for the table
@@ -116,7 +116,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
   
       pdf.autoTable({
         startY: tableStartY,
-        head: [['Date', 'Time', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
+        head: [['Date', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
         body: filteredTransactions.map((transaction, index) => {
           const amount = parseFloat(transaction.amount) || 0;
           const payment = parseFloat(transaction.payment) || 0;
@@ -143,7 +143,6 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
       
           return [
             new Date(transaction.date_processed).toLocaleDateString('en-GB'),
-            transaction.time,
             transaction.transaction_id,
             transaction.trans_type,
             transaction.status_type === 'Pending' && transaction.amount ? formattedAmount : '',
