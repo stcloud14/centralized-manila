@@ -28,15 +28,6 @@ const [passwordCriteria, setPasswordCriteria] = useState({
 
 
 useEffect(() => {
-  // if (user_pass && !passwordRule.test(user_pass)) {
-  //   setPasswordError(
-  //     'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.'
-  //   );
-  //   setTimeout(() => {
-  //     setPasswordError('');
-  //   }, 3000);
-  // }
-
   // Check each requirement and update the state
   setPasswordCriteria({
     length: /^.{8,}$/.test(userReg.user_pass),
