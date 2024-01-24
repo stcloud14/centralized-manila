@@ -108,6 +108,10 @@ let transID = null;
     
     const transType = '3';
     const statusType = 'Pending';
+    const trans_type = 'Business Permit';
+    const notif_title = 'Transaction Payment Pending';
+    const plainAmount = bus_amount;
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-semibold dark:text-white">P ${plainAmount}</span>.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
@@ -116,7 +120,7 @@ let transID = null;
     const values = [transID, user_id, transType, statusType, formattedDate];
   
     const query1 = "INSERT INTO transaction_info (`transaction_id`, `amount`, `copies`, `print_id`, `valid_id`, `purpose_id`) VALUES (?, ?, ?, ?, ?, ?)";
-    const values1 = [transID, bus_amount, bus_nocopies, bus_print, bus_validid, bus_purpose];
+    const values1 = [transID, plainAmount, bus_nocopies, bus_print, bus_validid, bus_purpose];
 
     const query2 = "INSERT INTO address_info (`transaction_id`, `email`, `mobile_no`, `tel_no`, `region_id`, `prov_id`, `city_id`, `brgy_dist`, `house_floor`, `bldg_name`, `zip_code`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const values2 = [transID, bus_email, bus_mobile_no, bus_tel_no, bus_region, bus_province, bus_city, bus_brgy, bus_hnum, bus_street, bus_zip];
@@ -132,6 +136,9 @@ let transID = null;
 
     const query6 = "INSERT INTO bus_operation (`transaction_id`, `bus_floor`, `bus_emp`, `bus_male_emp`, `bus_female_emp`, `bus_van_no`, `bus_truck_no`, `bus_motor_no`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     const values6 = [transID, bus_floor, bus_emp, bus_male_emp, bus_female_emp, bus_van_no, bus_truck_no, bus_motor_no];
+    
+    const query7 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+    const values7 = [user_id, formattedDate, notif_title, notif_message];
 
     try {
     const result = await queryDatabase(query, values);
@@ -141,6 +148,7 @@ let transID = null;
     const result4 = await queryDatabase(query4, values4);
     const result5 = await queryDatabase(query5, values5);
     const result6 = await queryDatabase(query6, values6);
+    const result7 = await queryDatabase(query7, values7);
   
   
     res.json({
@@ -151,6 +159,7 @@ let transID = null;
         bus_owner: result4, 
         bus_address: result5, 
         bus_operation: result6, 
+        notif_result: result7,
     });
 
     } catch (err) {

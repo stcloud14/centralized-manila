@@ -69,6 +69,10 @@ router.get('/', async (req, res) => {
     const transID = generateTransactionID();
     const transType = '6';
     const statusType = 'Pending';
+    const notif_title = 'Transaction Payment Pending';
+    const plainAmount = deathc_amount;
+    const trans_type = 'Death Certificate';
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-semibold dark:text-white">P ${plainAmount}</span>.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
@@ -76,7 +80,7 @@ router.get('/', async (req, res) => {
     const values = [transID, user_id, transType, statusType, formattedDate];
   
     const query1 = "INSERT INTO transaction_info (`transaction_id`, `amount`, `copies`, `print_id`, `valid_id`, `purpose_id`) VALUES (?, ?, ?, ?, ?, ?)";
-    const values1 = [transID, deathc_amount, deathc_nocopies, deathc_print, validID, purpose];
+    const values1 = [transID, plainAmount, deathc_nocopies, deathc_print, validID, purpose];
 
     const query2 = "INSERT INTO death_cert (`transaction_id`, `region_id`, `prov_id`, `city_id`, `death_date`) VALUES (?, ?, ?, ?, ?)";
     const values2 = [transID, deathc_region, deathc_province, deathc_municipal, deathc_date];
@@ -90,6 +94,9 @@ router.get('/', async (req, res) => {
     const query5 = "INSERT INTO address_info (`transaction_id`, `region_id`, `prov_id`, `city_id`, `brgy_dist`, `house_floor`, `bldg_name`, `zip_code`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     const values5 = [transID, deathc_reqregion, deathc_reqprovince, deathc_reqmunicipal, deathc_reqbrgy, deathc_reqhnum, deathc_reqstreet, deathc_reqzip];
 
+    const query6 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+    const values6 = [user_id, formattedDate, notif_title, notif_message];
+
     try {
     const result = await queryDatabase(query, values);
     const result1 = await queryDatabase(query1, values1);
@@ -97,6 +104,7 @@ router.get('/', async (req, res) => {
     const result3 = await queryDatabase(query3, values3);
     const result4 = await queryDatabase(query4, values4);
     const result5 = await queryDatabase(query5, values5);
+    const result6= await queryDatabase(query6, values6);
   
   
     res.json({
@@ -107,6 +115,7 @@ router.get('/', async (req, res) => {
         death_doc_owner_result: result3,
         death_requestor_result: result4,
         address_info_result: result5,
+        notif_result: result6,
   
     });
     } catch (err) {
