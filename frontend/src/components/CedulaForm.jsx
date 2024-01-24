@@ -69,9 +69,13 @@ const CedulaForm =()=>{
 
             const trans_type = 'Community Tax Certificate';
 
+            const rowData = { ...CtcCedula, trans_type};
+
+            const status_type = 'P E N D I N G';
+
             const body = {
-              data: CtcCedula,
-              trans_type: trans_type,
+              data: rowData,
+              status_type: status_type,
               f_name: f_name,
               l_name: l_name
             };
@@ -82,12 +86,11 @@ const CedulaForm =()=>{
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
-                alert(emailResponse.data.message);
               } else {
-                alert("Failed to send email.");
+                console.log("Failed to send email.");
               }
             } catch (emailError) {
-              //
+              // alert(emailError);
             }
           } else {
             console.error('Transaction error:', res.statusText);

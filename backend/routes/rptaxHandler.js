@@ -250,29 +250,41 @@ const router = Router();
     const user_id = req.params.user_id;
     const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
     const transType = '2';
+    const plainAmount = req.body.amount;
+    const trans_type = 'Real Property Tax Clerance';
+    const notif_title = 'Transaction Payment Pending';
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-semibold dark:text-white">P ${plainAmount}</span>.</p>`;
     const statusType = 'Pending';
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
   
+
+
+
     const query5 = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
     const values5 = [transID, user_id, transType, statusType, formattedDate];
   
     const query6 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";
-    const values6 = [transID, req.body.amount];
+    const values6 = [transID, plainAmount];
   
     const query4 = "INSERT INTO rptax_clearance (`rp_tdn`, `rp_pin`, `transaction_id`) VALUES (?, ?, ?)";
     const values4 = [req.body.rp_tdn, req.body.rp_pin, transID];
+
+    const query3 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+    const values3 = [user_id, formattedDate, notif_title, notif_message];
   
     try {
       const result5 = await queryDatabase(query5, values5);
       const result6 = await queryDatabase(query6, values6);
       const result4 = await queryDatabase(query4, values4);
+      const result3 = await queryDatabase(query3, values3);
   
       res.json({
         message: "Successfully executed",
         user_transaction_result: result5,
         transaction_info_result: result6,
         rptax_clearance_result: result4,
+        notif_result: result3,
       });
     } catch (err) {
       console.error(err);

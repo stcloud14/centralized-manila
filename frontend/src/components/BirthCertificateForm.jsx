@@ -73,9 +73,13 @@ const BirthCertificateForm =()=>{
     
                 const trans_type = 'Birth Certificate';
     
+                const rowData = { ...birthCert, trans_type};
+
+                const status_type = 'P E N D I N G';
+    
                 const body = {
-                  data: birthCert,
-                  trans_type: trans_type,
+                  data: rowData,
+                  status_type: status_type,
                   f_name: f_name,
                   l_name: l_name
                 };
@@ -85,9 +89,8 @@ const BirthCertificateForm =()=>{
       
                   if (emailResponse.data && emailResponse.data.message) {
                     console.log('SENT EMAIL');
-                    alert(emailResponse.data.message);
                   } else {
-                    alert("Failed to send email.");
+                    console.log("Failed to send email.");
                   }
                 } catch (emailError) {
                   // alert(emailError);

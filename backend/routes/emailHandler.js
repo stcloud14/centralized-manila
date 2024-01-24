@@ -50,9 +50,9 @@ const FormatMail = (user_email, body) => {
                         <tr style="width:100%">
                           <td style="padding:0px 20px 10px 20px">
                             <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi ${body.f_name}!</h1>
-                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span></h2>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span></h2>
                             <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
-                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:5px;border-style: dashed;">P E N D I N G</h1>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:5px;border-style: dashed;">${body.status_type}</h1>
                             <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>${body.data.amount}</p>
                             <p style="font-size:16px;line-height:24px;margin:16px 0">If you did not request this transcation, it is possible that someone else is trying to access the Centralized Manila account of <span style="font-weight: 700;"> ${user_email}</span></p>
                             <p style="font-size:16px;line-height:24px;margin:16px 0;margin-top:-5px"> You received this message because this email address is listed as the recovery email for the Centralized Manila. If that is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
@@ -112,35 +112,33 @@ const FormatMail = (user_email, body) => {
 
     const { user_email } = req.params;
     const body = req.body;
-    const transType = req.body.trans_type;
+    const transType = req.body.data.trans_type;
+    // const statType = req.body.status_type;
   
     if (!user_email) {
     return res.status(400).json({ error: "user_email is missing or empty!" });
     }
 
     try {
-
-        // const result = await Send(user_email);
-
-        const result = transporter.sendMail({
-            from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
-            to: user_email,
-            subject: transType,
-            html: FormatMail(user_email, body), 
-        });
-
-        if (!result.response) return res.status(400).json({ error: "Error sending email" });
-
-        res.json({
-        type: found[0].type,
+      const result = await transporter.sendMail({
+        from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
+        to: user_email,
+        subject: transType,
+        html: FormatMail(user_email, body),
+      });
+    
+      if (!result.response) {
+        return res.status(400).json({ error: "Error sending email" });
+      }
+    
+      res.json({
         message: "Email has been successfully sent!",
-        });
-
+      });
+    
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: err.message });
+      console.error(err);
+      res.status(500).json({ error: err.message });
     }
-
   });
 
 
