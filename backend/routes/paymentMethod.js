@@ -116,10 +116,11 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
 router.post('/success/:transactionId', async (req, res) => {
     const transID = req.params.transactionId;
     const amount = req.body.amount;
+    const newAmount = amount / 100;
     const user_id = req.body.userId;
 
     const notif_title = 'Transaction Payment Success';
-    const notif_message = `<p className="text-[0.8rem] pb-2">Your payment of <span className="font-semibold dark:text-white">P ${amount}</span> for <span className="font-semibold dark:text-white">${transID}</span> has been successfully received. Please await further updates.</p>`;
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your payment of <span className="font-semibold dark:text-white">P ${newAmount}</span> for <span className="font-semibold dark:text-white">${transID}</span> has been successfully received. Please await further updates.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
