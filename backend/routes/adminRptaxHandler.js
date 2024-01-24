@@ -9,23 +9,25 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     const query = "SELECT ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, tp.acc_name, tp.rp_tdn, tp.rp_pin, y.year_period, tp.period_id, \
-    ti.amount, ti.copies, ti.print_type, ti.valid_id, ti.purpose_id \
+    ti.amount, ti.copies, ptt.print_type, ti.valid_id, ti.purpose_id \
     \
     FROM user_transaction ut \
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN rptax_payment tp ON ut.transaction_id = tp.transaction_id AND tp.transaction_id IS NOT NULL \
     LEFT JOIN year y ON tp.year_id = y.year_id \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE ut.trans_type_id = 1 AND ut.status_type = 'Paid'";
 
     const query1 = "SELECT ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, tp.rp_tdn, tp.rp_pin, \
-    ti.amount, ti.copies, ti.print_type, ti.valid_id, ti.purpose_id \
+    ti.amount, ti.copies, ptt.print_type, ti.valid_id, ti.purpose_id \
     \
     FROM user_transaction ut \
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN rptax_clearance tp ON ut.transaction_id = tp.transaction_id AND tp.transaction_id IS NOT NULL \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE ut.trans_type_id = 2 AND ut.status_type = 'Paid'";
 
@@ -74,23 +76,25 @@ router.get('/', async (req, res) => {
 
 router.get('/Processing', async (req, res) => {
     const query = "SELECT ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, tp.acc_name, tp.rp_tdn, tp.rp_pin, y.year_period, tp.period_id, \
-    ti.amount, ti.copies, ti.print_type, ti.valid_id, ti.purpose_id \
+    ti.amount, ti.copies, ptt.print_type, ti.valid_id, ti.purpose_id \
     \
     FROM user_transaction ut \
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN rptax_payment tp ON ut.transaction_id = tp.transaction_id AND tp.transaction_id IS NOT NULL \
     LEFT JOIN year y ON tp.year_id = y.year_id \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE ut.trans_type_id = 1 AND ut.status_type = 'Processing'";
 
     const query1 = "SELECT ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, tp.rp_tdn, tp.rp_pin, \
-    ti.amount, ti.copies, ti.print_type, ti.valid_id, ti.purpose_id \
+    ti.amount, ti.copies, ptt.print_type, ti.valid_id, ti.purpose_id \
     \
     FROM user_transaction ut \
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN rptax_clearance tp ON ut.transaction_id = tp.transaction_id AND tp.transaction_id IS NOT NULL \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE ut.trans_type_id = 2 AND ut.status_type = 'Processing'";
 
