@@ -34,7 +34,7 @@ const AdminBusinessForm1 =()=>{
  useEffect(() => {
     const fetchUserTransaction = async () =>{
       try{
-        const res = await axios.get(`http://localhost:8800/adminrptax/`);
+        const res = await axios.get(`http://localhost:8800/adminbp/`);
         setBusinessPermit(res.data.BusinessPermit)
       } catch (err){
         console.log(err);
@@ -70,49 +70,49 @@ const handleMoveToProcessing = (transaction) => {
     setIsModalOpen(false);
   };
 
-   // Expired Modal
-   const [isModalOpen2, setIsModalOpen2] = useState(false);
-   const handleOpenModal2 = () => {
-       setIsModalOpen2(true);
-     }
-   const handleCloseModal2 = () => {
-     setIsModalOpen2(false);
-   };
+  //  // Expired Modal
+  //  const [isModalOpen2, setIsModalOpen2] = useState(false);
+  //  const handleOpenModal2 = () => {
+  //      setIsModalOpen2(true);
+  //    }
+  //  const handleCloseModal2 = () => {
+  //    setIsModalOpen2(false);
+  //  };
 
-   // Process Modal
-   const [isModalOpen3, setIsModalOpen3] = useState(false);
-   const handleOpenModal3 = () => {
-       setIsModalOpen3(true);
-     }
-   const handleCloseModal3 = () => {
-     setIsModalOpen3(false);
-   };
+  //  // Process Modal
+  //  const [isModalOpen3, setIsModalOpen3] = useState(false);
+  //  const handleOpenModal3 = () => {
+  //      setIsModalOpen3(true);
+  //    }
+  //  const handleCloseModal3 = () => {
+  //    setIsModalOpen3(false);
+  //  };
 
-   // Reject Modal
-   const [isModalOpen4, setIsModalOpen4] = useState(false);
-   const handleOpenModal4 = () => {
-       setIsModalOpen4(true);
-     }
-   const handleCloseModal4 = () => {
-     setIsModalOpen4(false);
-   };
+  //  // Reject Modal
+  //  const [isModalOpen4, setIsModalOpen4] = useState(false);
+  //  const handleOpenModal4 = () => {
+  //      setIsModalOpen4(true);
+  //    }
+  //  const handleCloseModal4 = () => {
+  //    setIsModalOpen4(false);
+  //  };
 
-   // Done Modal
-   const [isModalOpen5, setIsModalOpen5] = useState(false);
-   const handleOpenModal5 = () => {
-       setIsModalOpen5(true);
-     }
-   const handleCloseModal5 = () => {
-     setIsModalOpen5(false);
-   }
-
-
+  //  // Done Modal
+  //  const [isModalOpen5, setIsModalOpen5] = useState(false);
+  //  const handleOpenModal5 = () => {
+  //      setIsModalOpen5(true);
+  //    }
+  //  const handleCloseModal5 = () => {
+  //    setIsModalOpen5(false);
+  //  }
 
 
-  const handleProcessModal = (event) => {
-    event.stopPropagation();
-    console.log('Processing')
-  };
+
+
+  // const handleProcessModal = (event) => {
+  //   event.stopPropagation();
+  //   console.log('Processing')
+  // };
 
   
 
@@ -151,9 +151,6 @@ const handleMoveToProcessing = (transaction) => {
             <AdminBusinessRequests
             onProceed ={[handleProceedForBusinessPermit]}
             handleOpenModal={handleOpenModal}
-            handleOpenModal2={handleOpenModal2}
-            handleOpenModal3={handleOpenModal3}
-            onMoveToProcessing ={handleMoveToProcessing}
             />
           </div>
 

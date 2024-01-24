@@ -19,6 +19,7 @@ import emailHandler from './routes/emailHandler.js'
 
 
 import adminRptaxHandler from './routes/adminRptaxHandler.js'
+import adminBPHandler from './routes/adminBPHandler.js'
 import adminURHandler from './routes/adminURHandler.js'
 import adminLcrHandler from './routes/adminLcrHandler.js'
 
@@ -48,6 +49,7 @@ app.use('/email', emailHandler)
 
 
 app.use('/adminrptax', adminRptaxHandler);
+app.use('/adminbp', adminBPHandler);
 app.use('/adminlcr', adminLcrHandler);
 app.use('/adminur', adminURHandler);
 
