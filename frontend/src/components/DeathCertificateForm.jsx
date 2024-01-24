@@ -34,7 +34,7 @@ const DeathCertificateForm =()=>{
 
   const [deathCert, setDeathCert] = useState((prevData) => ({
     ...prevData,
-    deathc_amount: 0,
+    amount: 0,
     initialPrint: 0,
     printDisplay: 0,
     deathc_regionLabel: '',
@@ -203,7 +203,7 @@ const DeathCertificateForm =()=>{
         return {
           ...prevData,
           [id]: initialValue,
-          deathc_amount: totalAmountPaid,
+          amount: totalAmountPaid,
           printDisplay: product,
         };
       } 
@@ -218,7 +218,7 @@ const DeathCertificateForm =()=>{
         return {
           ...prevData,
           [id]: value,
-          deathc_amount: totalAmountPaid,
+          amount: totalAmountPaid,
           initialPrint: displayValue,
           printDisplay: product,
           deathc_printLabel: label,
@@ -670,7 +670,7 @@ const DeathCertificateForm =()=>{
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">
                          <span className="font-medium whitespace-nowrap">Total Amount Paid</span>
-                         <span name="" id="deathc_amount" className="whitespace-nowrap">{`P ${deathCert.deathc_amount.toFixed(2)}`}</span>
+                         <span name="" id="amount" className="whitespace-nowrap">{`P ${deathCert.amount.toFixed(2)}`}</span>
                      </div>
                  </div>
               </div>

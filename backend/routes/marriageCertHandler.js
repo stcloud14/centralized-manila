@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
         marriagec_print,
         marriagec_purpose,
         marriagec_validid,
-        marriagec_amount,
+        amount,
     } = req.body;
 
     const purpose = parseInt(req.body.marriagec_purpose, 10) || null;
@@ -71,7 +71,7 @@ router.get('/', async (req, res) => {
     const transType = '7';
     const statusType = 'Pending';
     const notif_title = 'Transaction Payment Pending';
-    const plainAmount = marriagec_amount;
+    const plainAmount = amount;
     const trans_type = 'Marriage Certificate';
     const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-semibold dark:text-white">P ${plainAmount}</span>.</p>`;
     const date = new Date();

@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
         deathc_print,
         deathc_purpose,
         deathc_validid,
-        deathc_amount,
+        amount,
     } = req.body;
 
 
@@ -70,7 +70,7 @@ router.get('/', async (req, res) => {
     const transType = '6';
     const statusType = 'Pending';
     const notif_title = 'Transaction Payment Pending';
-    const plainAmount = deathc_amount;
+    const plainAmount = amount;
     const trans_type = 'Death Certificate';
     const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-semibold dark:text-white">P ${plainAmount}</span>.</p>`;
     const date = new Date();

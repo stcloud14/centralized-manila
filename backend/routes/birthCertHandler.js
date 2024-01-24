@@ -75,7 +75,7 @@ router.get('/', async (req, res) => {
         birthc_print,
         birthc_purpose,
         birthc_validid,
-        birthc_amount,
+        amount,
     } = req.body;
 
     const purpose = parseInt(req.body.birthc_purpose, 10) || null;
@@ -84,7 +84,7 @@ router.get('/', async (req, res) => {
     const transType = '5';
     const statusType = 'Pending';
     const notif_title = 'Transaction Payment Pending';
-    const plainAmount = birthc_amount;
+    const plainAmount = amount;
     const trans_type = 'Birth Certificate';
     const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-semibold dark:text-white">P ${plainAmount}</span>.</p>`;
     const date = new Date();

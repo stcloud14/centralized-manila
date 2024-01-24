@@ -33,7 +33,7 @@ const BirthCertificateForm =()=>{
 
   const [birthCert, setBirthCert] = useState((prevData) => ({
     ...prevData,
-    birthc_amount: 0,
+    amount: 0,
     initialPrint: 0,
     printDisplay: 0,
     birthc_regionLabel: '',
@@ -198,7 +198,7 @@ const BirthCertificateForm =()=>{
         return {
           ...prevData,
           [id]: initialValue,
-          birthc_amount: totalAmountPaid,
+          amount: totalAmountPaid,
           printDisplay: product,
         };
       } 
@@ -213,7 +213,7 @@ const BirthCertificateForm =()=>{
         return {
           ...prevData,
           [id]: value,
-          birthc_amount: totalAmountPaid,
+          amount: totalAmountPaid,
           initialPrint: displayValue,
           printDisplay: product,
           birthc_printLabel: label,
@@ -747,7 +747,7 @@ const BirthCertificateForm =()=>{
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">
                          <span className="font-medium whitespace-nowrap">Total Amount Paid</span>
-                         <span id="birthc_amount" className="whitespace-nowrap">{`P ${birthCert.birthc_amount.toFixed(2)}`}</span>
+                         <span id="amount" className="whitespace-nowrap">{`P ${birthCert.amount.toFixed(2)}`}</span>
                      </div>
                  </div>
               </div>

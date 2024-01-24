@@ -33,7 +33,7 @@ const MarriageCertificateForm =()=>{
 
   const [marriageCert, setMarriageCert] = useState((prevData) => ({
     ...prevData,
-    marriagec_amount: 0,
+    amount: 0,
     initialPrint: 0,
     printDisplay: 0,
     marriagec_regionLabel: '',
@@ -202,7 +202,7 @@ const MarriageCertificateForm =()=>{
         return {
           ...prevData,
           [id]: initialValue,
-          marriagec_amount: totalAmountPaid,
+          amount: totalAmountPaid,
           printDisplay: product,
         };
       } 
@@ -217,7 +217,7 @@ const MarriageCertificateForm =()=>{
         return {
           ...prevData,
           [id]: value,
-          marriagec_amount: totalAmountPaid,
+          amount: totalAmountPaid,
           initialPrint: displayValue,
           printDisplay: product,
           marriagec_printLabel: label,
@@ -685,7 +685,7 @@ const MarriageCertificateForm =()=>{
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">
                          <span className="font-medium whitespace-nowrap">Total Amount Paid</span>
-                         <span name="" id="marriagec_amount" className="whitespace-nowrap">{`P ${marriageCert.marriagec_amount.toFixed(2)}`}</span>
+                         <span name="" id="amount" className="whitespace-nowrap">{`P ${marriageCert.amount.toFixed(2)}`}</span>
                      </div>
                  </div>
               </div>
