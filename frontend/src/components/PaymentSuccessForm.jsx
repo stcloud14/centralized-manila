@@ -23,8 +23,9 @@ const PaymentSuccessForm = () => {
     const transactionId = searchParams.get('transaction_id');
     const amount = searchParams.get('amount');
     const userId = searchParams.get('user_id');
-  
-    return { transactionId, amount, userId };
+    const trans_type = searchParams.get('trans_type');
+    
+    return { transactionId, amount, userId, trans_type };
   };
   
   // Example usage
@@ -36,8 +37,56 @@ const PaymentSuccessForm = () => {
   const handleReturn = async () => {
     try {
       const res = await axios.post(`http://localhost:8800/payment/success/${transactionDetails.transactionId}`, transactionDetails);
+      
+      
+      try {
+        const res = await axios.get(`http://localhost:8800/email/${userId}`);
+        
+        if (res.data.user_email) {
+          const updatedUserEmail = res.data.user_email;
+          const f_name = res.data.f_name;
+          const l_name = res.data.l_name;
+          console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+          const user_email = updatedUserEmail;
+
+          const status_type = 'P A I D';
+
+          const body = {
+            data: transactionDetails,
+            f_name: f_name,
+            l_name: l_name,
+            status_type: status_type
+          };
+
+          try {
+            const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+          
+            if (emailResponse.data && emailResponse.data.message) {
+              console.log('SENT EMAIL:', emailResponse.data.message);
+
+            } else {
+              console.error('Email response:', emailResponse);
+
+            }
+          } catch (emailError) {
+            console.error('Error sending email:', emailError);
+          }
+          
+        } else {
+          console.error('Transaction error:', res.statusText);
+        }
+      } catch (fetchError) {
+        console.log('NOT FETCHING EMAIL');
+        console.error(fetchError);
+      }
+
+      // setTimeout(() => {
       window.location.href = `http://localhost:5173/transachistory/${userId}`;
-    } catch (err) {
+      // }, 1000);
+
+    } 
+    catch (err) {
       console.error(err);
     }
   };

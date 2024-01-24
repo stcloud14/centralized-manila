@@ -25,6 +25,7 @@ const RPTaxPaymentForm =()=>{
   const [rptaxPayment, setRptaxPayment]=useState((prevData) => ({
     ...prevData,
     year_label: '',
+
   }));
 
 
@@ -183,9 +184,13 @@ const handleCheckboxChange = (e) => {
 
             const trans_type = 'Real Property Tax Payment';
 
+            const rowData = { ...rptaxPayment, trans_type};
+
+            const status_type = 'P E N D I N G';
+
             const body = {
-              data: rptaxPayment,
-              trans_type: trans_type,
+              data: rowData,
+              status_type: status_type,
               f_name: f_name,
               l_name: l_name
             };
@@ -195,9 +200,8 @@ const handleCheckboxChange = (e) => {
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
-                alert(emailResponse.data.message);
               } else {
-                alert("Failed to send email.");
+                console.log("Failed to send email.");
               }
             } catch (emailError) {
               // alert(emailError);
