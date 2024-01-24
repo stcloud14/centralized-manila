@@ -69,45 +69,56 @@ const handleChange = (e) => {
   }
 };
 
-const handleClick= async e=>{
-    e.preventDefault()
+const [showWarning, setShowWarning] = useState(false);
 
-    const { user_pass } = userReg;
-    const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z\d!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
+const handleClick = async (e) => {
+  e.preventDefault();
 
-    if (user_pass && !passwordRule.test(user_pass)) {
-      setPasswordError('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.');
+  const { user_pass } = userReg;
+  const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z\d!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
+
+  if (user_pass && !passwordRule.test(user_pass)) {
+    setPasswordError('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one symbol, and one number.');
+    setTimeout(() => {
+      setPasswordError('');
+    }, 3000);
+  } else {
+    const requiredFields = ['f_name', 'l_name', 'user_email', 'mobile_no', 'user_pass'];
+    const isIncomplete = requiredFields.some((field) => !userReg[field]);
+
+    if (isIncomplete) {
+      setShowWarning(true);
       setTimeout(() => {
-        setPasswordError('');
-      }, 3000);
-
-    } else {
-
-        try {
-          // Check if the user already exists
-          const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence", {
-            mobile_no: userReg.mobile_no,
-          });
-
-          if (existenceCheckResponse.data.exists) {
-            // User exists, display a message or redirect to the login page
-            alert(existenceCheckResponse.data.message);
-            navigate("/register");
-          } else {
-            // User does not exist, proceed with registration
-            await axios.post("http://localhost:8800/register", userReg);
-            setIsSuccess(true);
-            console.log('Successful Register');
-            setTimeout(() => {
-              setIsSuccess(false);
-            }, 3000);
-            navigate("/register");
-          }
-        } catch (err) {
-          console.log(err);
-        }
+        setShowWarning(false);
+      }, 4000);
+      return; // Prevent registration if fields are incomplete
     }
-  };
+
+    try {
+      // Check if the user already exists
+      const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence", {
+        mobile_no: userReg.mobile_no,
+      });
+
+      if (existenceCheckResponse.data.exists) {
+        // User exists, display a message or redirect to the login page
+        alert(existenceCheckResponse.data.message);
+        navigate("/register");
+      } else {
+        // User does not exist, proceed with registration
+        await axios.post("http://localhost:8800/register", userReg);
+        setIsSuccess(true);
+        console.log('Successful Register');
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 3000);
+        navigate("/register");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+};
 
 console.log(userReg)
   return (
@@ -121,10 +132,15 @@ console.log(userReg)
    
             <div className='form px-6 sm:px-6 md:px-12 lg:px-64'>
             {isSuccess && (
-                  <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
-                    Successful Register!
-                  </div>
-                  )}
+              <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                Successful Register!
+              </div>
+            )}
+            {showWarning && (
+              <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
+                Please fill in all required fields before proceeding.
+              </div>
+            )}
             <div className="grid md:grid-cols-2 md:gap-6 sm:grid-cols-1">
                     <div className=" relative z-0 w-full mb-6 group">
                     <input onChange={handleChange} value={userReg.f_name} type="text" name="f_name" id="f_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
