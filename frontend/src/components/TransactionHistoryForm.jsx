@@ -100,13 +100,15 @@ const TransactionHistoryForm = () => {
           if (!selectedDate || !selectedDatee) {
             return true; // No date range selected, include all transactions
           }
-  
+        
           const transactionDate = new Date(transaction.date_processed);
           const startDate = new Date(selectedDate);
           const endDate = new Date(selectedDatee);
-  
+          endDate.setHours(23, 59, 59, 999);
+        
           return startDate <= transactionDate && transactionDate <= endDate;
         });
+        
   
         return (
           transactionId.includes(searchInput) &&
