@@ -73,9 +73,13 @@ const MarriageCertificateForm =()=>{
     
                 const trans_type = 'Marriage Certificate';
     
+                const rowData = { ...marriageCert, trans_type};
+
+                const status_type = 'P E N D I N G';
+    
                 const body = {
-                  data: marriageCert,
-                  trans_type: trans_type,
+                  data: rowData,
+                  status_type: status_type,
                   f_name: f_name,
                   l_name: l_name
                 };
@@ -85,9 +89,8 @@ const MarriageCertificateForm =()=>{
       
                   if (emailResponse.data && emailResponse.data.message) {
                     console.log('SENT EMAIL');
-                    alert(emailResponse.data.message);
                   } else {
-                    alert("Failed to send email.");
+                    console.log("Failed to send email.");
                   }
                 } catch (emailError) {
                   // alert(emailError);
@@ -98,7 +101,7 @@ const MarriageCertificateForm =()=>{
             } catch (fetchError) {
               console.log('NOT FETCHING EMAIL');
               console.error(fetchError);
-            }  
+            }
 
 
             setIsSuccess(true); // Set success state to true
