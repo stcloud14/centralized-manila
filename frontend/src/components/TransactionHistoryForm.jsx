@@ -181,7 +181,7 @@ const TransactionHistoryForm = () => {
 const handleSortChange = (newSortOption) => {
   // Toggle between ascending and descending order
   const newSortOrder =
-    sortOption === newSortOption ? (sortOrder === 'asc' ? 'desc' : 'asc') : 'asc';
+  sortOption === newSortOption ? (sortOrder === 'asc' ? 'desc' : 'asc') : 'asc';
   setSortOrder(newSortOrder);
   setSortOption(newSortOption);
 
@@ -217,20 +217,15 @@ const sortTransactions = (option, order) => {
     return 0;
   });
 };
-
-  
-  
-  // ... (existing code)
-  
   
   const sortedTransactions = sortTransactions(filteredTransactions.length > 0 ? filteredTransactions : userTransaction);
 
-const SortIcon = ({ order }) => (
-  <button className="group flex items-center px-1">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-      <path className="group-hover:stroke-black dark:group-hover:stroke-white cursor-pointer" strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-    </svg>
-  </button>
+  const SortIcon = ({ order }) => (
+    <button className="group flex items-center px-1">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+        <path className="group-hover:stroke-black dark:group-hover:stroke-white cursor-pointer" strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+      </svg>
+    </button>
   );
 
 const logoSrc = '../src/images/mnl_footer.svg';
