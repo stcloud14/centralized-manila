@@ -175,7 +175,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
               <div className="px-5 py-5">
                 <h1 className='font-medium text-center text-slate-700 dark:text-white mb-5'>Transaction History</h1>
                 <div className="flex justify-center items-center mb-3 md:px-0 md:pr-0.5 px-0.5 text-xs">
-                  <div className="relative mr-2 w-full">
+                  {/* <div className="relative mr-2 w-full">
                     <button
                   className="group flex justify-center w-full items-center text-center p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-full"
                   onClick={generatePDF}
@@ -185,14 +185,14 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
                   </svg>
                   <span className="text-xs font-normal px-0.5">&nbsp;Download SOA</span>
                 </button>
-                  </div>
+                  </div> */}
                 
-                  <button onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white px-2.5 py-1 mr-2 rounded-full inline-flex items-center">
+                  {/* <button onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white px-2.5 py-1 mr-2 rounded-full inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
                     <span>Clear</span>
-                  </button>
+                  </button> */}
 
                   {/* <TransDropdownFilter handleSortChange={handleSortChange} sortOption={sortOption}/> */}
                   <div className="relative inline-block text-left z-10">

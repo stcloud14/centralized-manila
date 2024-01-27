@@ -8,7 +8,7 @@ function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelecte
 
   return (
     <>
-        <div className="absolute right-0 w-[405px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
+        <div className="absolute right-[-275px] md:right-10 w-[405px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
 
         {/* Date Row */}
         <div className="flex justify-between items-center">
@@ -114,7 +114,7 @@ function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelecte
         {/* Status Row */}
         <div className="flex justify-between items-center">
             <span className="block py-2 text-xs">Status:</span>
-            <select  value={selectedStatus} onChange={handleInputChange2} name="" id="" className={`font-semibold py-2.5 px-0 text-xs border bg-transparent border-slate-300 pl-4 md:py-0.5 rounded-full peer cursor-pointer`}
+            <select  value={selectedStatus} onChange={handleInputChange2} name="" id="" className={`font-semibold mt-1 sm:mt-[0]  py-2.5 px-0 text-xs border bg-transparent border-slate-300 pl-4 md:py-0.5 rounded-full peer cursor-pointer`}
                 style={{
                 width: "125px",
                 backgroundColor:
