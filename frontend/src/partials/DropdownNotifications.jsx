@@ -112,7 +112,7 @@ const handleRead = async (e) => {
       </button>
 
       <Transition
-        className={`origin-top-right z-10 absolute top-full md:-mr-0 -mr-[6rem] min-w-[19rem] bg-white dark:bg-[#181818] border border-slate-200 dark:border-[#3d3d3d] pt-1.5 rounded shadow-lg overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
+        className={`origin-top-right z-10 absolute top-full md:-mr-0 -mr-[6rem] md:min-w-[19rem] min-w-[16rem] bg-white dark:bg-[#181818] border border-slate-200 dark:border-[#3d3d3d] pt-1.5 rounded shadow-lg overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
         show={dropdownOpen}
         enter="transition ease-out duration-200 transform"
         enterStart="opacity-0 -translate-y-2"
