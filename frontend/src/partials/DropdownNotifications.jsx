@@ -98,7 +98,7 @@ const handleRead = async () => {
         ref={trigger}
         className={`w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-[#2b2a2a] dark:hover:bg-[#3d3d3d] rounded-full ${dropdownOpen && 'bg-slate-200'}`}
         aria-haspopup="true"
-        onClick={() => setDropdownOpen(!dropdownOpen)}
+        onClick={() => { setDropdownOpen(!dropdownOpen); setDropdownOpen1(false); }}
         aria-expanded={dropdownOpen}
       >
         <span className="sr-only">Notifications</span>
