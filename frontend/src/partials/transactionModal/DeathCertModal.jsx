@@ -121,7 +121,7 @@ const DeathModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
             </div>
           )}   
                         
-                        <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-t-lg">
+          <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-t-lg">
             <div className="mb-6">
             <span className="font-bold md:text-lg text-sm">Death Certificate Transaction Details</span>
             </div>
