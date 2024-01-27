@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
+import { useParams } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -11,13 +11,7 @@ import AdminRPTaxRequests from '../admin_partials/admin_cards/AdminRPTaxRequests
 
 const AdminRPTaxForm1 = () => {
 
-  
-  const location = useLocation();
-  const { pathname, state } = location;
-  console.log("pathname", pathname);
-  const admin_type = pathname.split("/")[2];
-
-  console.log("userrole", admin_type)
+  const { admin_type } = useParams();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -26,46 +20,25 @@ const AdminRPTaxForm1 = () => {
   const [taxPayment, setTaxPayment] = useState([]);
   const [taxClearance, setTaxClearance] = useState([]);
 
-  console.log(taxPayment)
-  console.log(taxClearance)
 
-  const [transType, setTransType] = useState('');
+  const fetchUserTransaction = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8800/adminrptax/`);
+      setTaxPayment(res.data.taxpayment);
+      setTaxClearance(res.data.taxclearance);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleUpdateData = () => {
+    fetchUserTransaction();
+  };
 
 
   useEffect(() => {
-    const fetchUserTransaction = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/adminrptax/`);
-        setTaxPayment(res.data.taxpayment);
-        setTaxClearance(res.data.taxclearance);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchUserTransaction();
   }, []);
-
-  // const [taxClearanceDetails, setTaxClearanceDetails] = useState(null);
-  // const [taxPaymentDetails, setTaxPaymentDetails] = useState(null);
-
-  // const handleProceedForTaxClearance = (taxClearanceDetails) => {
-  //   setTaxClearanceDetails(taxClearanceDetails);
-  // };
-
-  // const handleProceedForTaxPayment = (taxPaymentDetails) => {
-  //   setTaxPaymentDetails(taxPaymentDetails);
-  // };
-
-  // const [selectedTransactionId, setSelectedTransactionId] = useState(null);
-
-  // const handleMoveToProcessing = (transaction) => {
-  //   setTaxPayment((prevTaxPayment) => prevTaxPayment.filter((t) => t !== transaction));
-  //   setTaxClearance((prevTaxClearance) => prevTaxClearance.filter((t) => t !== transaction));
-  //   setProcessingTransactions((prevProcessing) => [...prevProcessing, transaction]);
-  //   setSelectedTransactionId(transaction.transactionId);  // Use transaction.transactionId instead of transactionId
-  // };
-  
-  
 
 
 
@@ -108,8 +81,7 @@ const AdminRPTaxForm1 = () => {
             <AdminRPTaxRequests
             taxPayment={taxPayment}
             taxClearance={taxClearance}
-            // transType={transType}
-            // setTransType={setTransType}
+            handleUpdateData={handleUpdateData}
             />
           </div>
 

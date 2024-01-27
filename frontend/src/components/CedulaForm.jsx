@@ -378,7 +378,7 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                 </div>
                 <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction successful! Redirecting to Transaction History...</div> 
               </div>
-            )}
+              )}
 
 
             {showWarning && (

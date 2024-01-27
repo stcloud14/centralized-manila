@@ -54,7 +54,7 @@ const FormatMail = (user_email, body, amount) => {
                             <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
                             <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:5px;border-style: dashed;">${body.status_type}</h1>
                             <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
-                            <p style="font-size:16px;line-height:24px;margin:16px 0">If you did not request this transcation, it is possible that someone else is trying to access the Centralized Manila account of <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">If you did not request this transaction, it is possible that someone else is trying to access the Centralized Manila account of <span style="font-weight: 700;"> ${user_email}</span></p>
                             <p style="font-size:16px;line-height:24px;margin:16px 0;margin-top:-5px"> You received this message because this email address is listed as the recovery email for the Centralized Manila. If that is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
                           </td>
                         </tr>

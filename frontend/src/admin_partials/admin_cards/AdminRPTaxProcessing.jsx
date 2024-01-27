@@ -1,331 +1,423 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment/moment.js';
-import axios from 'axios';
+import axios from 'axios'
+
 import AdminRPView from '../admin_modals/AdminRPView';
+import RPCardView from '../admin_rptax/RPCardView';
+import RPTableView from '../admin_rptax/RPTableView';
 
-const AdminRPTaxProcessing = ({ setTransType }) => {
-  const [processingTransactions, setProcessingTransactions] = useState([]);
+
+
+const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) => {
+  
   const [searchQuery, setSearchQuery] = useState('');
-  const [transactions, setTransactions] = useState(processingTransactions);
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false); 
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-  const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
+  const [viewMode, setViewMode] = useState('table'); 
 
-  const handleOpenDoneModal = (transaction, type) => {
-    setTransType(type);
-    setSelectedTransaction(transaction);
-    setIsConfirmOpen(true); // Use the correct state variable
-  };
-  const handleOpenViewModal = (transaction, type) => {
-    setTransType(type);
-    setSelectedTransaction(transaction);
-    setIsViewModalOpen(true);
-  };
-
-  const handleOpenRejectModal = (transaction, type) => {
-    setTransType(type);
-    setSelectedTransaction(transaction);
-    setIsConfirmOpen(true);
-  };
-
-  const handleOpenCompleteModal = (transaction, type) => {
-    setTransType(type);
-    setSelectedTransaction(transaction);
-    setIsCompleteModalOpen(true);
-  };
+  const [modalView, setModalView] = useState(false); 
+  const [isSuccess, setIsSuccess] = useState(false);
   
-    useEffect(() => {
-      const fetchProcessingTransactions = async () => {
-        try {
-          const response = await axios.get('http://localhost:8800/adminrptax/Processing');
-          const data = response.data;
+  const [isCompleteConfirm, setIsCompleteConfirm] = useState(false);
+  const [isRejectConfirm, setIsRejectConfirm] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [selectedTransaction, setSelectedTransaction] = useState();
+  const [transType, setTransType] = useState();
   
-          // Assuming the response structure includes 'taxpayment' and 'taxclearance' arrays
-          const processingTransactions = [...data.taxpayment, ...data.taxclearance];
-  
-          setProcessingTransactions(processingTransactions);
-        } catch (error) {
-          console.error('Error fetching processing transactions', error);
-        }
-      };
-  
-      fetchProcessingTransactions();
-    }, []);
- 
-
-const handleDoneClick = async () => {
-  try {
-    if (!selectedTransaction) {
-      console.error('No transaction selected');
-      return;
-    }
-
-    const body = {
-      new_status: 'Complete',
-    };
-
-    const response = await fetch(`http://localhost:8800/adminrptax/updateComplete/${selectedTransaction.transaction_id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
-    
-    const updatedTransactions = transactions.map((transaction) =>
-    transaction.transaction_id === selectedTransaction.transaction_id
-      ? { ...transaction, status_type: 'Complete' }
-      : transaction
-  );
-
-  setTransactions(updatedTransactions);
-  handleCloseModal();
-} catch (error) {
-  console.error('Error updating transaction', error);
-}
-};
-
-const handleCloseModal = () => {
-  setIsConfirmOpen(false);
-  setIsViewModalOpen(false);
-  setIsCompleteModalOpen(false);
-  setSelectedTransaction(null);
-};
-
-    const handleRejectClick = async () => {
-      try {
-        const body = {
-          new_status: 'Rejected',
-        };
-    
-        const response = await fetch(`http://localhost:8800/adminrptax/updateReject/${selectedTransaction.transaction_id}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(body),
-        });
-  
-        const updatedTransactions = transactions.map((transaction) =>
-        transaction.transaction_id === selectedTransaction.transaction_id
-          ? { ...transaction, status_type: 'Rejected' }
-          : transaction
-      );
-
-      setTransactions(updatedTransactions);
-      handleCloseModal();
-    } catch (error) {
-      console.error('Error rejecting transaction', error);
-    }
-  };
-   
+  console.log(selectedTransaction)
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
     const query = searchQuery.toUpperCase();
     return transactionId.includes(query);
   };
 
-  function removeDuplicatesByKey(array, key) {
-    const uniqueObjects = Array.from(new Map(array.map((item) => [item[key], item])).values());
-    return uniqueObjects;
-  }
+  const filteredTaxClearance = taxClearance.filter(handleSearch);
 
-  const uniqueTransactions = removeDuplicatesByKey(processingTransactions, 'transaction_id');
-  const filteredTransactions = uniqueTransactions.filter(handleSearch);
-  
+  const filteredTaxPayment = taxPayment.filter(handleSearch);
+
+
+  const handleToggleView = (mode) => {
+    setViewMode(mode);
+  };
+
+  const handleModalOpen = (transaction, type) => {
+    setSelectedTransaction(transaction);
+    setTransType(type);
+    setModalView(true);
+  };
+
+  const handleModalClose = () => {
+    setModalView(false);
+  };
+
+  const handleCompleteConfirm = (transaction) => {
+    setSelectedTransaction(transaction);
+    setIsCompleteConfirm(true);
+  };
+
+  const handleRejectConfirm = (transaction) => {
+    setSelectedTransaction(transaction);
+    setIsRejectConfirm(true);
+  };
+
+  const handleConfirmClose = () => {
+    setIsCompleteConfirm(false);
+    setIsRejectConfirm(false);
+  };
+
+
+  const renderContent = () => {
+    if (viewMode === 'table') {
       return (
-        
-      <>
-        {/*  Processing Area */}
-        <div className="flex flex-col col-span-full bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200">
-              <div className="px-5 py-5">
-                <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>Processing Section</h1>
+        <RPTableView
+          filteredTaxClearance={filteredTaxClearance}
+          filteredTaxPayment={filteredTaxPayment}
+          handleModalOpen={handleModalOpen}
+          handleRejectConfirm={handleRejectConfirm}
+          handleCompleteConfirm={handleCompleteConfirm}
+        />
+      );
+    } else if (viewMode === 'card') {
+      return (
+        <RPCardView
+          filteredTaxClearance={filteredTaxClearance}
+          filteredTaxPayment={filteredTaxPayment}
+          handleModalOpen={handleModalOpen}
+          handleRejectConfirm={handleRejectConfirm}
+          handleCompleteConfirm={handleCompleteConfirm}
+        />
+      );
+    }
+  };
 
-                {/* Search */}
-                <div className="flex items-center text-xs mb-7">
-                  <div className="relative w-full">
-                    <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                        <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
-                    </span>
-                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-                  </div>
-                </div>
 
-                {/* Contents */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
-             
-                  {/* Tax Clearance Sample */}
-                  {filteredTransactions.map((transaction) => (
-                     transaction.trans_type === 'Real Property Tax Clearance' && (
-                   <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Clearance')} className="cursor-pointer bg-white cursor-pointer dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
-                <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                  Transaction ID:{transaction.transaction_id}
-                </div>
-               
-                <div className="flex-grow px-4 pt-5 pb-4">
-                    {transaction.trans_type === 'Real Property Tax Clearance' && (
-                      <>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">TDN: {transaction.rp_tdn}</div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">PIN: {transaction.rp_pin}</div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">
-                          Date Processed: {moment(transaction.date_processed).format('MMMM D, YYYY')}
-                        </div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">
-                          Time Processed: {moment(transaction.date_processed).format('h:mm A')}
-                        </div>
-                        <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
-                          <span>Status: {transaction.status_type}</span>
-                        </div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P {transaction.amount}</div>
-                      </>
-                    )}
-                  </div>
-                  <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                    <div
-                       onClick={() => handleOpenRejectModal(transaction, 'Real Property Tax Clearance')}
-                       className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow"
-                       >
-                      <span className="text-xs font-normal">Reject</span>
-                    </div>
-                    <div
-                    onClick={() => handleOpenCompleteModal(transaction, 'Real Property Tax Clearance')}
-                      className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow"
-                    >
-                      <span className="text-xs font-normal">Complete</span>
-                    </div>
-                  </div>
-              </div>
-                )  ))}
+  const handleComplete = async () => {  
 
-                {/* Tax Payment Sample */}
-                {filteredTransactions.map((transaction) => (
-                  transaction.trans_type === 'Real Property Tax Payment' && (
-               <div key={`${transaction.trans_type}_${transaction.transaction_id}`} onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Payment')} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
-                <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                  Transaction ID: {transaction.transaction_id}
-                </div>
-                <div className="flex-grow px-4 pt-5 pb-4">
-                  {transaction.trans_type === 'Real Property Tax Payment' && (
-                    <>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Account Name: {transaction.acc_name} </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">TDN: {transaction.rp_tdn}</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">PIN: {transaction.rp_pin} </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">From: 1st Quarter </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">To: {transaction.period_id} </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date Processed: {moment(transaction.date_processed).format('MMMM D, YYYY')} </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time Processed: {moment(transaction.date_processed).format('h:mm A')}</div>
-                      <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
-                        <span>Status: {transaction.status_type}</span>
-                      </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P {transaction.amount}</div>
-                    </>
-                  )}
-                </div>
-                <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-                  <div  onClick={() => handleOpenRejectModal(transaction, 'Real Property Tax Payment')}  className="flex justify-center items-center text-center cursor-pointer p-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-sm mt-2 flex-grow">
-                    <span className="text-xs font-normal">Reject</span>
-                  </div>
-                  <div onClick={() => handleOpenCompleteModal(transaction, 'Real Property Tax Payment')} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
-                    <span className="text-xs font-normal">Complete</span>
-                  </div>
-                </div>
-              </div>
-           ) ))}
-            {/* REJECT MODAL */}
-            {isConfirmOpen && (
-                    <div className="fixed z-50 inset-0 overflow-y-auto">
-                      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                        </div>
-                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                          &#8203;
-                        </span>
-                        <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                          <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div className="mx-auto mt-4">
-                              <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                              Are you sure to REJECT this card? This is IRREVERSIBLE.
-                              </span>
-                            </div>
-                          </div>
-                          <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
-                            <button
-                            onClick={(e) => {
-                              e.stopPropagation(); // Add this line to prevent event propagation
-                              handleCloseModal();
-                            }}
-                              type="button"
-                              className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                            >
-                              <p>Cancel</p>
-                            </button>
-                            <button
-                              onClick={handleRejectClick}
-                              type="button"
-                              className="text-white text-xs md:text-sm bg-red-500 border border-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            >
-                              <p>Reject</p>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )} 
+    const transaction_id = selectedTransaction.transaction_id;
+    const trans_type = selectedTransaction.trans_type;
+    const user_id = selectedTransaction.user_id;
+  
+    try {
+      const response = await axios.post(`http://localhost:8800/adminrptax/updatecomplete/${transaction_id}`, selectedTransaction);
+  
+      // Check the response status before proceeding
+      if (response.status === 200) {
 
-          {/* COMPLETE MODAL */}
-          {isCompleteModalOpen && (
-            <div className="fixed z-50 inset-0 overflow-y-auto">
-              <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                </div>
-                <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                  &#8203;
-                </span>
-                <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                  <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div className="mx-auto mt-4">
-                      <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                        Are you sure to COMPLETE this transaction? This is IRREVERSIBLE.
-                      </span>
-                    </div>
-                  </div>
-                  <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
-                    <button
-                      onClick={handleCloseModal}
-                      type="button"
-                      className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                    >
-                      <p>Cancel</p>
-                    </button>
-                    <button
-                      onClick={handleDoneClick} // Adjust the function for completing the transaction
-                      type="button"
-                      className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      <p>Complete</p>
-                    </button>
-                  </div>
-                </div>
-              </div>
+        try {
+          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const rowData = { ...selectedTransaction, trans_type};
+
+            const status_type = 'C O M P L E T E';
+
+            const body = {
+              data: rowData,
+              status_type: status_type,
+              f_name: f_name,
+              l_name: l_name
+            };
+  
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+  
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+              } else {
+                console.log("Failed to send email.");
+              }
+            } catch (emailError) {
+              // alert(emailError);
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
+        }
+
+        setIsLoading(false);
+        handleConfirmClose();
+        handleUpdateData();
+        setSelectedTransaction('');
+
+        setIsSuccess(true); // Set success state to true
+        console.log('Update successful');
+
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 2100);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
+
+
+  const handleReject = async () => {  
+
+    const transaction_id = selectedTransaction.transaction_id;
+    const trans_type = selectedTransaction.trans_type;
+    const user_id = selectedTransaction.user_id;
+  
+    try {
+      const response = await axios.post(`http://localhost:8800/adminrptax/updatereject/${transaction_id}`, selectedTransaction);
+  
+      // Check the response status before proceeding
+      if (response.status === 200) {
+
+        try {
+          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const rowData = { ...selectedTransaction, trans_type};
+
+            const status_type = 'R E J E C T E D';
+
+            const body = {
+              data: rowData,
+              status_type: status_type,
+              f_name: f_name,
+              l_name: l_name
+            };
+  
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+  
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+              } else {
+                console.log("Failed to send email.");
+              }
+            } catch (emailError) {
+              // alert(emailError);
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
+        }
+
+        setIsLoading(false);
+        handleConfirmClose();
+        handleUpdateData();
+        setSelectedTransaction('');
+
+        setIsSuccess(true); // Set success state to true
+        console.log('Update successful');
+
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 2100);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
+
+
+  return (
+    <>
+      {/* Requests Area */}
+      <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200">
+        <div className="px-5 py-5">
+          <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>Tax Clearance and Tax Payment Processing</h1>
+
+          {isSuccess && (                
+            <div className="my-5 text-center">
+              <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction update successful!</div> 
             </div>
-          )}
-
-            {isViewModalOpen && selectedTransaction && !isCompleteModalOpen && !isConfirmOpen &&(
-              <AdminRPView
-              selectedTransaction={selectedTransaction}
-              isOpen={isViewModalOpen}
-              handleClose={handleCloseModal}
-              />
             )}
 
+          {/* View Toggle */}
+          <div className="flex justify-end items-center text-xs mb-7">
+            <div className="relative flex items-center">
+              {/* Tabular View Toggle */}
+              <button onClick={() => handleToggleView('table')}  className='flex items-center p-1 text-slate-500 hover:text-black dark:text-slate-400 dark:hover:text-white'>
+                {viewMode === 'table' ? <span className='text-black dark:text-white'>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                    <path fillRule="evenodd" d="M1.5 5.625c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v12.75c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 18.375V5.625ZM21 9.375A.375.375 0 0 0 20.625 9h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 0 0 .375-.375v-1.5Zm0 3.75a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 0 0 .375-.375v-1.5Zm0 3.75a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 0 0 .375-.375v-1.5ZM10.875 18.75a.375.375 0 0 0 .375-.375v-1.5a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5ZM3.375 15h7.5a.375.375 0 0 0 .375-.375v-1.5a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375Zm0-3.75h7.5a.375.375 0 0 0 .375-.375v-1.5A.375.375 0 0 0 10.875 9h-7.5A.375.375 0 0 0 3 9.375v1.5c0 .207.168.375.375.375Z" clipRule="evenodd" />
+                  </svg>
+                  </span> : 
+                  
+                  <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                    <path fillRule="evenodd" d="M1.5 5.625c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v12.75c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 18.375V5.625ZM21 9.375A.375.375 0 0 0 20.625 9h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 0 0 .375-.375v-1.5Zm0 3.75a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 0 0 .375-.375v-1.5Zm0 3.75a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 0 0 .375-.375v-1.5ZM10.875 18.75a.375.375 0 0 0 .375-.375v-1.5a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h7.5ZM3.375 15h7.5a.375.375 0 0 0 .375-.375v-1.5a.375.375 0 0 0-.375-.375h-7.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375Zm0-3.75h7.5a.375.375 0 0 0 .375-.375v-1.5A.375.375 0 0 0 10.875 9h-7.5A.375.375 0 0 0 3 9.375v1.5c0 .207.168.375.375.375Z" clipRule="evenodd" />
+                  </svg>
+                  </span>}
+              </button>
+              
+              {/* Divider */}
+              <div className="h-6 mx-2 border-r border-gray-300"></div>
+              
+              {/* Card View Toggle */}
+              <button onClick={() => handleToggleView('card')} className="flex items-center p-1 text-slate-500 hover:text-black dark:text-slate-400 dark:hover:text-white">
+                {viewMode === 'card' ? <span className='text-black dark:text-white'>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                    <path d="M15 3.75H9v16.5h6V3.75ZM16.5 20.25h3.375c1.035 0 1.875-.84 1.875-1.875V5.625c0-1.036-.84-1.875-1.875-1.875H16.5v16.5ZM4.125 3.75H7.5v16.5H4.125a1.875 1.875 0 0 1-1.875-1.875V5.625c0-1.036.84-1.875 1.875-1.875Z" />
+                  </svg>
+                  </span> : 
+                  
+                  <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                      <path d="M15 3.75H9v16.5h6V3.75ZM16.5 20.25h3.375c1.035 0 1.875-.84 1.875-1.875V5.625c0-1.036-.84-1.875-1.875-1.875H16.5v16.5ZM4.125 3.75H7.5v16.5H4.125a1.875 1.875 0 0 1-1.875-1.875V5.625c0-1.036.84-1.875 1.875-1.875Z" />
+                    </svg>
+                  </span>}
+                
+              </button>
+            </div>
+          </div>
+
+          {/* Search */}
+          <div className="flex items-center text-xs mb-7">
+            <div className="relative w-full">
+              <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                  <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </span>
+              <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+            </div>
+          </div>
+
+          {/* Render Content */}
+          {renderContent()}
+          
+          {/* PROCESS MODAL */}
+          {isCompleteConfirm && (
+              <div className="fixed z-50 inset-0 overflow-y-auto">
+                <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                  <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                  </div>
+                  <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                    &#8203;
+                  </span>
+                  <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                      <div className="mx-auto mt-4">
+                        <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                          Would you like to mark this transaction as complete?
+                        </span>
+                      </div>
+                    </div>
+                    <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                      <button
+                        onClick={handleConfirmClose}
+                        type="button"
+                        className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                      >
+                        <p>Cancel</p>
+                      </button>
+                    
+                    <button
+                    onClick={handleComplete} 
+                    type="button"
+                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                      Confirm
+                    </button>
+                    </div>
+
+                    {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
+                    <span>
+                      Please wait for a moment...
+                    </span>
+
+                    {isLoading ? (
+                      <span>
+                        Please wait for a moment...
+                      </span>
+                    ) : null}
+
+                  </div>
                 </div>
+              </div>
+            )}
+
+            {/* REJECT MODAL */}
+            {isRejectConfirm && (
+              <div className="fixed z-50 inset-0 overflow-y-auto">
+                <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                  <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                  </div>
+                  <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                    &#8203;
+                  </span>
+                  <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                      <div className="mx-auto mt-4">
+                        <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                          Are you sure you would like to REJECT this transaction? This is irreversible.
+                        </span>
+                      </div>
+                    </div>
+                    <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                      <button
+                        onClick={handleConfirmClose}
+                        type="button"
+                        className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                      >
+                      <p>Cancel</p>
+                      </button>
+                    
+                      <button
+                      onClick={handleReject} 
+                      type="button"
+                      className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        Confirm
+                      </button>
+                      </div>
+
+                      {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
+                    <span>
+                      Please wait for a moment...
+                    </span>
+
+                    {isLoading ? (
+                      <span>
+                        Please wait for a moment...
+                      </span>
+                    ) : null}
+                    
+                  </div>
+                </div>
+              </div>
+            )}
+
+          {selectedTransaction && modalView && (
+          <AdminRPView
+            // selectedTransaction={selectedTransaction}
+            selectedTransaction={selectedTransaction}
+            isOpen={modalView}
+            handleClose={handleModalClose}
+            transType={transType}
+          />
+          )}
         </div>
       </div>
     </>

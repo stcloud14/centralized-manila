@@ -3,10 +3,12 @@ import moment from 'moment/moment.js';
 
 const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
 
-  const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
+  const { transaction_id, status_type } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
 
-  const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
-  const time = moment(date_processed).format('h:mm A');
+  // const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
+  // const time = moment(date_processed).format('h:mm A');
+
+  console.log(selectedTransaction)
 
 
   return (
@@ -68,11 +70,11 @@ const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) =>
                           : null} 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.date}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{time}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.time}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
