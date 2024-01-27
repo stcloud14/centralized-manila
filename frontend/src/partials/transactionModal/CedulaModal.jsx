@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment/moment.js';
+// import QRCode from 'react-qr-code';
 import StatusBadgeModal from '../StatusBadgeModal';
 
 const CedulaModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
@@ -320,7 +321,14 @@ const CedulaModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
                     </button>
                   ): null}
                  
-                 
+                  {/* QR Code Section 
+                  <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                    <div className="whitespace-nowrap md:mb-0 mb-1">
+                      {cedulaTransaction.transaction_id ? (
+                        <QRCode value={downloadLink} size={100} />
+                      ) : null}
+                    </div>
+                  </div> */}
                  
                   <div className="flex items-center space-x-2 ml-auto">
                       <button
