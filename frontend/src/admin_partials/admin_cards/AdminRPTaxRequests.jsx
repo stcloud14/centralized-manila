@@ -346,7 +346,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                     </button>
                     </div>
 
-
+                    <div className="font-medium bg-white dark:bg-[#212121] text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm">
                     {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
                     <span>
                       Please wait for a moment...
@@ -357,7 +357,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                         Please wait for a moment...
                       </span>
                     ) : null}
-
+                    </div>
 
                   </div>
                 </div>
@@ -405,6 +405,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
 
                   </div>
 
+                  <div className="font-medium bg-white dark:bg-[#212121] text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm">
                     {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
                     <span>
                       Please wait for a moment...
@@ -415,6 +416,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                         Please wait for a moment...
                       </span>
                     ) : null}
+                    </div>
 
                   </div>
                 </div>
