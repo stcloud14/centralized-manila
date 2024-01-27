@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 
 const router = Router();
 
-const FormatMail = (user_email, body) => {
+const FormatMail = (user_email, body, amount) => {
   return `
   <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color:black!important">
   <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
@@ -53,7 +53,7 @@ const FormatMail = (user_email, body) => {
                             <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span></h2>
                             <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
                             <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:5px;border-style: dashed;">${body.status_type}</h1>
-                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${body.data.amount}.00</p>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
                             <p style="font-size:16px;line-height:24px;margin:16px 0">If you did not request this transcation, it is possible that someone else is trying to access the Centralized Manila account of <span style="font-weight: 700;"> ${user_email}</span></p>
                             <p style="font-size:16px;line-height:24px;margin:16px 0;margin-top:-5px"> You received this message because this email address is listed as the recovery email for the Centralized Manila. If that is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
                           </td>
@@ -113,6 +113,8 @@ const FormatMail = (user_email, body) => {
     const { user_email } = req.params;
     const body = req.body;
     const transType = req.body.data.trans_type;
+    const amount = req.body.data.amount / 100;
+
     // const statType = req.body.status_type;
   
     if (!user_email) {
@@ -124,7 +126,7 @@ const FormatMail = (user_email, body) => {
         from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
         to: user_email,
         subject: transType,
-        html: FormatMail(user_email, body),
+        html: FormatMail(user_email, body, amount),
       });
     
       if (!result.response) {

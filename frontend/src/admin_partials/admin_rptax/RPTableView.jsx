@@ -1,6 +1,8 @@
 import React from 'react';
 
-const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, date1, date2, handleExpiredModal, handleOpenProcessModal, handleOpenViewModal }) => (
+const RPTableView = ({ filteredTaxClearance, filteredTaxPayment }) => {
+
+  return (
   <div className="relative overflow-x-auto shadow-md rounded-sm">
     <table className="w-full text-left text-xs md:text-sm rtl:text-right text-gray-500 dark:text-gray-400">
       <thead className="text-gray-700 border-l-4 dark:border-l-[#212121] uppercase bg-slate-200 dark:bg-[#212121] dark:text-slate-400">
@@ -33,14 +35,14 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, date1, date2, h
       <tbody>
 
         {filteredTaxClearance && filteredTaxClearance.map((transaction) => (
-          <tr  onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Clearance')} key={transaction.transaction_id} className=' cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+          <tr key={transaction.transaction_id} className=' cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
             <td className="px-1 py-2 border-l-4 border-l-[#0057e7] whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
               <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                 {transaction.transaction_id}
               </div>
             </td>
             <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-              {date1}
+              {transaction.date}
             </td>
             <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
               {transaction.rp_tdn}
@@ -62,14 +64,14 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, date1, date2, h
         ))}
 
         {filteredTaxPayment && filteredTaxPayment.map((transaction) => (
-          <tr  onClick={() => handleOpenViewModal(transaction, 'Real Property Tax Payment')}  key={transaction.transaction_id} className=' cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+          <tr key={transaction.transaction_id} className=' cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
             <td className="px-1 py-2 whitespace-nowrap border-l-4 border-l-blue-400 text-xs md:text-sm text-slate-500 dark:text-slate-400">
               <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                 {transaction.transaction_id}
               </div>
             </td>
             <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-              {date2}
+              {transaction.date}
             </td>
             <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
               {transaction.rp_tdn}
@@ -92,6 +94,7 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, date1, date2, h
       </tbody>
     </table>
   </div>
-);
+  );
+};
 
 export default RPTableView;

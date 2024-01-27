@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment/moment.js';
 
 import AdminRPView from '../admin_modals/AdminRPView';
 import RPCardView from '../admin_rptax/RPCardView';
@@ -7,162 +6,11 @@ import RPTableView from '../admin_rptax/RPTableView';
 
 
 
-const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProcessing }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-  const [isProcessModalOpen, setIsProcessModalOpen] = useState(false); // Initialize the state here
+const AdminRPTaxRequests = ({ taxPayment, taxClearance }) => {
+
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [transType, setTransType] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [transactions, setTransactions] = useState([]);
-  const [isExpiredModalOpen, setIsExpiredModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState('table'); 
-
-  const date1 = moment(taxPayment.date_processed).format('MMMM D, YYYY');
-  const time1 = moment(taxPayment.date_processed).format('h:mm A');
-
-  const date2 = moment(taxClearance.date_processed).format('MMMM D, YYYY');
-  const time2 = moment(taxClearance.date_processed).format('h:mm A');
-  
-  const handleOpenProcessModal = (transaction, type) => {
-    setTransType(type);
-    setSelectedTransaction(transaction);
-  
-    if (type === 'Real Property Tax Payment' || type === 'Real Property Tax Clearance') {
-      // Open the process modal only for the specified types
-      setIsProcessModalOpen(true);
-      setIsViewModalOpen(false);
-    } else {
-      // Open the view modal for other types
-      setIsViewModalOpen(true);
-      setIsProcessModalOpen(false);
-    }
-  }; const handleProcessClick = async () => {
-    try {
-      if (!selectedTransaction || !selectedTransaction.transaction_id) {
-        console.error("Transaction ID is not defined.");
-        alert("Error updating transaction status. Please try again later.");
-        return;
-      }
-
-      // Update the status type in the local state
-      const updatedTransactions = transactions.map((transaction) =>
-        transaction.transaction_id === selectedTransaction.transaction_id
-          ? { ...transaction, status_type: 'Processing' }
-          : transaction
-      );
-
-      setTransactions(updatedTransactions);
-
-      // Update the transaction status to 'Processing' in the backend
-      const body = {
-        new_status: 'Processing',
-      };
-
-      const response = await fetch(`http://localhost:8800/adminrptax/updateProcessing/${selectedTransaction.transaction_id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
-
-      if (response.ok) {
-        console.log('Transaction status updated successfully');
-
-        // Execute onMoveToProcessing function if available
-        if (onMoveToProcessing) {
-          onMoveToProcessing(selectedTransaction);
-        }
-
-        // Execute onProceed functions if available
-        if (Array.isArray(onProceed)) {
-          onProceed.forEach((proceedFunction) => {
-            proceedFunction(selectedTransaction);
-          });
-        } else if (onProceed) {
-          onProceed(selectedTransaction);
-        }
-
-        // Close the modal
-        handleCloseModal('process');
-
-        // Reload the page
-        window.location.reload();
-      } else {
-        console.error('Failed to update transaction status');
-      }
-    } catch (error) {
-      console.error('Error updating transaction status', error);
-    }
-  };
-  
-  const handleOpenViewModal = (transaction, type) => {
-    setTransType(type);
-    setSelectedTransaction(transaction);
-    setIsViewModalOpen(true);
-  };
-
-  const handleCloseModal = (modalType) => {
-    if (modalType === 'view') {
-      setIsViewModalOpen(false);
-    } else if (modalType === 'expired') {
-      setIsExpiredModalOpen(false);
-    } else if (modalType === 'process') { // Corrected modalType check
-      setIsProcessModalOpen(false); // Close the process modal
-    } else {
-      setIsModalOpen(false);
-    }
-    setSelectedTransaction(null);
-  };
-  
-
-  const handleExpiredModal = (transaction, type) => {
-    setTransType(type);
-    setSelectedTransaction(transaction);
-    setIsViewModalOpen(false); // Close the view modal
-    setIsExpiredModalOpen(true); // Open the expired modal
-  };
-
-  const handleExpiredClick = async () => {
-    try {
-      if (!selectedTransaction || !selectedTransaction.transaction_id) {
-        console.error("Transaction ID is not defined.");
-        alert("Error updating transaction status. Please try again later.");
-        return;
-      }
-  
-      const body = {
-        new_status: 'Expired',
-      };
-  
-      const response = await fetch(`http://localhost:8800/adminrptax/updateExpired/${selectedTransaction.transaction_id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
-  
-      if (response.ok) {
-        console.log('Transaction status updated successfully');
-
-        const updatedTransactions = transactions.map((transaction) =>
-          transaction.transaction_id === selectedTransaction.transaction_id
-            ? { ...transaction, status_type: 'Expired' }
-            : transaction
-        );
-  
-        setTransactions(updatedTransactions);
-        handleCloseModal('expired'); // Close the modal
-      } else {
-        console.error('Failed to update transaction status');
-      }
-    } catch (error) {
-      console.error('Error updating transaction status', error);
-    }
-  };
-  
 
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
@@ -174,9 +22,11 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
 
   const filteredTaxPayment = taxPayment.filter(handleSearch);
 
+
   const handleToggleView = (mode) => {
     setViewMode(mode);
   };
+
 
   const renderContent = () => {
     if (viewMode === 'table') {
@@ -184,13 +34,6 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
         <RPTableView
         filteredTaxClearance={filteredTaxClearance}
         filteredTaxPayment={filteredTaxPayment}
-        date1={date1}
-        time1={time1}
-        date2={date2}
-        time2={time2}
-        handleExpiredModal={handleExpiredModal}
-        handleOpenProcessModal={handleOpenProcessModal}
-        handleOpenViewModal={handleOpenViewModal}
         />
       );
     } else if (viewMode === 'card') {
@@ -198,17 +41,11 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
         <RPCardView
           filteredTaxClearance={filteredTaxClearance}
           filteredTaxPayment={filteredTaxPayment}
-          date1={date1}
-          time1={time1}
-          date2={date2}
-          time2={time2}
-          handleExpiredModal={handleExpiredModal}
-          handleOpenProcessModal={handleOpenProcessModal}
-          handleOpenViewModal={handleOpenViewModal}
         />
       );
     }
   };
+
 
     return (
       <>
@@ -275,7 +112,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
             {/* All Modals */}
 
             {/* PROCESS MODAL */}
-            {isProcessModalOpen && (
+            {/* {isProcessModalOpen && (
               <div className="fixed z-50 inset-0 overflow-y-auto">
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                   <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -311,10 +148,10 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* EXPIRED MODAL */}
-            {isExpiredModalOpen && (
+            {/* {isExpiredModalOpen && (
               <div className="fixed z-50 inset-0 overflow-y-auto">
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                   <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -350,13 +187,11 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, onProceed, onMoveToProce
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
 
-            {isViewModalOpen && selectedTransaction && !isExpiredModalOpen && !isProcessModalOpen && (
+            {selectedTransaction && (
             <AdminRPView
               selectedTransaction={selectedTransaction}
-              isOpen={isViewModalOpen}
-              handleClose={handleCloseModal}
             />
             )}
           </div>

@@ -28,9 +28,9 @@ const AdminRPTaxForm1 = () => {
 
   console.log(taxPayment)
   console.log(taxClearance)
+
   const [transType, setTransType] = useState('');
 
-  const [processingTransactions, setProcessingTransactions] = useState([]); // Initial state for processing transactions
 
   useEffect(() => {
     const fetchUserTransaction = async () => {
@@ -45,29 +45,29 @@ const AdminRPTaxForm1 = () => {
     fetchUserTransaction();
   }, []);
 
-  const [taxClearanceDetails, setTaxClearanceDetails] = useState(null);
-  const [taxPaymentDetails, setTaxPaymentDetails] = useState(null);
+  // const [taxClearanceDetails, setTaxClearanceDetails] = useState(null);
+  // const [taxPaymentDetails, setTaxPaymentDetails] = useState(null);
 
-  const handleProceedForTaxClearance = (taxClearanceDetails) => {
-    setTaxClearanceDetails(taxClearanceDetails);
-  };
+  // const handleProceedForTaxClearance = (taxClearanceDetails) => {
+  //   setTaxClearanceDetails(taxClearanceDetails);
+  // };
 
-  const handleProceedForTaxPayment = (taxPaymentDetails) => {
-    setTaxPaymentDetails(taxPaymentDetails);
-  };
-  const [selectedTransactionId, setSelectedTransactionId] = useState(null);
+  // const handleProceedForTaxPayment = (taxPaymentDetails) => {
+  //   setTaxPaymentDetails(taxPaymentDetails);
+  // };
 
-  const handleMoveToProcessing = (transaction) => {
-    setTaxPayment((prevTaxPayment) => prevTaxPayment.filter((t) => t !== transaction));
-    setTaxClearance((prevTaxClearance) => prevTaxClearance.filter((t) => t !== transaction));
-    setProcessingTransactions((prevProcessing) => [...prevProcessing, transaction]);
-    setSelectedTransactionId(transaction.transactionId);  // Use transaction.transactionId instead of transactionId
-  };
+  // const [selectedTransactionId, setSelectedTransactionId] = useState(null);
+
+  // const handleMoveToProcessing = (transaction) => {
+  //   setTaxPayment((prevTaxPayment) => prevTaxPayment.filter((t) => t !== transaction));
+  //   setTaxClearance((prevTaxClearance) => prevTaxClearance.filter((t) => t !== transaction));
+  //   setProcessingTransactions((prevProcessing) => [...prevProcessing, transaction]);
+  //   setSelectedTransactionId(transaction.transactionId);  // Use transaction.transactionId instead of transactionId
+  // };
   
   
 
- 
-  
+
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -102,18 +102,14 @@ const AdminRPTaxForm1 = () => {
             </div>
           </div>
 
-          {/*  Two Sections */}
+          {/*  Requests Section */}
           <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
             <AdminRPTaxRequests
-            onProceed={[handleProceedForTaxClearance, handleProceedForTaxPayment]}
             taxPayment={taxPayment}
             taxClearance={taxClearance}
-            onMoveToProcessing={handleMoveToProcessing}
-            transType={transType}
-            processingTransactions={processingTransactions}
-            selectedTransactionId={selectedTransactionId}
-            setTransType={setTransType}
+            // transType={transType}
+            // setTransType={setTransType}
             />
           </div>
 
