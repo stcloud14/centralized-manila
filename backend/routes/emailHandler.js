@@ -120,7 +120,7 @@ const ResetPassMail = (user_email, body, amount) => {
               <tr>
                 <td>
                   <p style="font-size:14px;line-height:1.5;margin:16px 0">Hi ${body.l_name}!,</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">You updated the password for your Twitch account on<!-- --> <!-- -->Jun 23, 2022, 4:06:00 PM<!-- -->. If this was you, then no further action is required.</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">You updated the password for your Centralized Manila account on ${body.formattedDate}. If this was you, then no further action is required.</p>
                   <p style="font-size:14px;line-height:1.5;margin:16px 0">However if you did NOT perform this password change, please<!-- --> <a href="http://localhost:5173/forgotpass" style="color:#067df7;text-decoration:underline" target="_blank">reset your account password</a> <!-- -->immediately.</p>
                   <p style="font-size:14px;line-height:1.5;margin:16px 0">Still have questions? Please contact<!-- --> <a href="#" style="color:#067df7;text-decoration:underline" target="_blank">Centralized Manila</a></p>
                   <p style="font-size:14px;line-height:1.5;margin:16px 0">Thanks,<br />Centralized Manila Team</p>
@@ -228,6 +228,7 @@ const ResetPassMail = (user_email, body, amount) => {
     const body = req.body;
     const transType = req.body.data.trans_type;
     const amount = req.body.data.amount / 100;
+    const formattedDate = req.body.data.formattedDate;
 
     // const statType = req.body.status_type;
   

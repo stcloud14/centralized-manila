@@ -235,10 +235,14 @@ const navigate = useNavigate();
             try {
               const res = await axios.get(`http://localhost:8800/email/${user_id}`);
               
+              const date = new Date();
+              const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
               if (res.data.user_email) {
                 const updatedUserEmail = res.data.user_email;
                 const f_name = res.data.f_name;
                 const l_name = res.data.l_name;
+
     
                 console.log('FETCHED USER EMAIL:', updatedUserEmail);
     
@@ -246,13 +250,14 @@ const navigate = useNavigate();
     
                 const trans_type = 'Reset Password';
     
-                const rowData = { ...userReg, trans_type};
-    
-                const status_type = 'P E N D I N G';
+                const rowData = { ...userReg, trans_type, formattedDate};
+
+                // const status_type = 'P E N D I N G';
     
                 const body = {
                   data: rowData,
-                  status_type: status_type,
+                  formattedDate: formattedDate,
+                  // status_type: status_type,
                   // f_name: f_name,
                   l_name: l_name
                 };
@@ -281,19 +286,19 @@ const navigate = useNavigate();
             setIsSuccess1(true);
             console.log('Password reset successful!');
     
-            const countdownInterval = setInterval(() => {
-              setCountdown((prevCountdown) => prevCountdown - 1);
-            }, 1000);
+            // const countdownInterval = setInterval(() => {
+            //   setCountdown((prevCountdown) => prevCountdown - 1);
+            // }, 1000);
     
-            setTimeout(() => {
-              setIsSuccess1(false);
-              setCountdown(5);
-            }, 3000);
+            // setTimeout(() => {
+            //   setIsSuccess1(false);
+            //   setCountdown(5);
+            // }, 3000);
     
-            setTimeout(() => {
-              clearInterval(countdownInterval);
-              navigate('/');
-            }, 8000);
+            // setTimeout(() => {
+            //   clearInterval(countdownInterval);
+            //   navigate('/');
+            // }, 8000);
           
           }
         } catch (error) {
