@@ -49,7 +49,7 @@ const FormatMail = (user_email, body, amount) => {
                       <tbody style="width:100%">
                         <tr style="width:100%">
                           <td style="padding:0px 20px 10px 20px">
-                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi ${body.f_name}!</h1>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi ${body.l_name}!</h1>
                             <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span></h2>
                             <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
                             <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:5px;border-style: dashed;">${body.status_type}</h1>
@@ -71,6 +71,83 @@ const FormatMail = (user_email, body, amount) => {
                 <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
                 © 2024 Centralized Manila. All rights reserved.
                 </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+    `;
+};
+
+
+const ResetPassMail = (user_email, body, amount) => {
+  return `
+  <body style="background-color:#efeef1;font-family:HelveticaNeue,Helvetica,Arial,sans-serif">
+  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:580px;margin:30px auto;background-color:#ffffff">
+    <tbody>
+      <tr style="width:100%">
+        <td>
+          <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="display:flex;justify-content:center;aling-items:center;padding:30px">
+            <tbody>
+              <tr>
+                <td><img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/twitch-logo.png" style="display:block;outline:none;border:none;text-decoration:none" width="114" /></td>
+              </tr>
+            </tbody>
+          </table>
+          <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="width:100%;display:flex">
+            <tbody>
+              <tr>
+                <td>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation">
+                    <tbody style="width:100%">
+                      <tr style="width:100%">
+                        <td data-id="__react-email-column" style="border-bottom:1px solid rgb(238,238,238);width:249px"></td>
+                        <td data-id="__react-email-column" style="border-bottom:1px solid rgb(145,71,255);width:102px"></td>
+                        <td data-id="__react-email-column" style="border-bottom:1px solid rgb(238,238,238);width:249px"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:5px 20px 10px 20px">
+            <tbody>
+              <tr>
+                <td>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Hi ${body.l_name}!,</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">You updated the password for your Twitch account on<!-- --> <!-- -->Jun 23, 2022, 4:06:00 PM<!-- -->. If this was you, then no further action is required.</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">However if you did NOT perform this password change, please<!-- --> <a href="http://localhost:5173/forgotpass" style="color:#067df7;text-decoration:underline" target="_blank">reset your account password</a> <!-- -->immediately.</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Still have questions? Please contact<!-- --> <a href="#" style="color:#067df7;text-decoration:underline" target="_blank">Centralized Manila</a></p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Thanks,<br />Centralized Manila Team</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:580px;margin:0 auto">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation">
+            <tbody style="width:100%">
+              <tr style="width:100%">
+                <td align="right" data-id="__react-email-column" style="width:50%;padding-right:8px"><img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/twitch-icon-twitter.png" style="display:block;outline:none;border:none;text-decoration:none" /></td>
+                <td align="left" data-id="__react-email-column" style="width:50%;padding-left:8px"><img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/twitch-icon-facebook.png" style="display:block;outline:none;border:none;text-decoration:none" /></td>
+              </tr>
+            </tbody>
+          </table>
+          <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation">
+            <tbody style="width:100%">
+              <tr style="width:100%">
+                <p style="font-size:14px;line-height:24px;margin:16px 0;text-align:center;color:#706a7b">© 2022 Twitch, All Rights Reserved <br />350 Bush Street, 2nd Floor, San Francisco, CA, 94104 - USA</p>
               </tr>
             </tbody>
           </table>
@@ -127,6 +204,43 @@ const FormatMail = (user_email, body, amount) => {
         to: user_email,
         subject: transType,
         html: FormatMail(user_email, body, amount),
+      });
+    
+      if (!result.response) {
+        return res.status(400).json({ error: "Error sending email" });
+      }
+    
+      res.json({
+        message: "Email has been successfully sent!",
+      });
+    
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+
+  
+  router.post('/reset-email/:user_email', async (req, res) => {
+
+    const { user_email } = req.params;
+    const body = req.body;
+    const transType = req.body.data.trans_type;
+    const amount = req.body.data.amount / 100;
+
+    // const statType = req.body.status_type;
+  
+    if (!user_email) {
+    return res.status(400).json({ error: "user_email is missing or empty!" });
+    }
+
+    try {
+      const result = await transporter.sendMail({
+        from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
+        to: user_email,
+        subject: transType,
+        html: ResetPassMail(user_email, body, amount),
       });
     
       if (!result.response) {

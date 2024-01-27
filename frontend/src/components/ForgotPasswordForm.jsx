@@ -212,7 +212,7 @@ const navigate = useNavigate();
   const handleClick = async (e) => {
     e.preventDefault();
   
-    const { new_user_pass, confirm_user_pass } = userReg;
+    const { new_user_pass, confirm_user_pass, user_id } = userReg;
     const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z\d!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
   
     if (new_user_pass && passwordRule.test(new_user_pass)) {
@@ -225,27 +225,77 @@ const navigate = useNavigate();
         }, 4000);
       } else {
         try {
-          await axios.put(`http://localhost:8800/forgotpass/reset_pass/${userReg.mobile_no}`, {
-            new_user_pass,
+          const response = await axios.put(`http://localhost:8800/forgotpass/reset_pass/${userReg.mobile_no}`, {
+            new_user_pass: userReg.new_user_pass,
+            user_id: userReg.user_id,
           });
 
+          if (response.status === 200) {
 
-          setIsSuccess1(true);
-          console.log('Password reset successful!');
-  
-          const countdownInterval = setInterval(() => {
-            setCountdown((prevCountdown) => prevCountdown - 1);
-          }, 1000);
-  
-          setTimeout(() => {
-            setIsSuccess1(false);
-            setCountdown(5);
-          }, 3000);
-  
-          setTimeout(() => {
-            clearInterval(countdownInterval);
-            navigate('/');
-          }, 8000);
+            try {
+              const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+              
+              if (res.data.user_email) {
+                const updatedUserEmail = res.data.user_email;
+                const f_name = res.data.f_name;
+                const l_name = res.data.l_name;
+    
+                console.log('FETCHED USER EMAIL:', updatedUserEmail);
+    
+                const user_email = updatedUserEmail;
+    
+                const trans_type = 'Reset Password';
+    
+                const rowData = { ...userReg, trans_type};
+    
+                const status_type = 'P E N D I N G';
+    
+                const body = {
+                  data: rowData,
+                  status_type: status_type,
+                  // f_name: f_name,
+                  l_name: l_name
+                };
+      
+                // Proceed with additional logic after updating state
+                try {
+                  const emailResponse = await axios.post(`http://localhost:8800/email/reset-email/${user_email}`, body);
+      
+                  if (emailResponse.data && emailResponse.data.message) {
+                    console.log('SENT EMAIL');
+                    // alert(emailResponse.data.message);
+                  } else {
+                    console.log("Failed to send email.");
+                  }
+                } catch (emailError) {
+                  //
+                }
+              } else {
+                console.error('Transaction error:', res.statusText);
+              }
+            } catch (fetchError) {
+              console.log('NOT FETCHING EMAIL');
+              console.error(fetchError);
+            }
+
+            setIsSuccess1(true);
+            console.log('Password reset successful!');
+    
+            // const countdownInterval = setInterval(() => {
+            //   setCountdown((prevCountdown) => prevCountdown - 1);
+            // }, 1000);
+    
+            // setTimeout(() => {
+            //   setIsSuccess1(false);
+            //   setCountdown(5);
+            // }, 3000);
+    
+            // setTimeout(() => {
+            //   clearInterval(countdownInterval);
+            //   navigate('/');
+            // }, 8000);
+          
+          }
         } catch (error) {
           console.error(error);
           // Handle error during password change
