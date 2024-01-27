@@ -60,7 +60,7 @@ function Notifications({ notifications }) {
             notifications.map((notif) => (
               <li key={notif.id} className="border-b border-slate-200 dark:border-[#3d3d3d] last:border-0">
                 <div className="py-2 px-4 hover:bg-slate-50 dark:hover:bg-[#242424] flex items-center justify-between">
-                  <span className="block text-sm">
+                  <span className="block md:text-sm text-xs">
                     <p className="font-semibold text-slate-800 dark:text-slate-100">{notif.title}</p>
                     <p dangerouslySetInnerHTML={{ __html: notif.message.replace(/className/g, 'class') }} />
                     <span className="block text-xs font-normal text-slate-400 dark:text-slate-500">
