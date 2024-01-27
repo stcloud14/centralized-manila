@@ -88,7 +88,6 @@ const UserSettings =()=>{
             const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
             setStoredImage(res.data[0].user_image)
             setIsVerifiedStatus(res.data[0].verification_status)
-
         }catch(err){
             console.log(err)
         }
@@ -155,14 +154,14 @@ const UserSettings =()=>{
   const checkFileExists = async (folderPath, fileName) => {
     try {
       const filePath = `${folderPath}/${fileName}`;
-      const response = await fetch(filePath);
-
-      return response.ok;
+      const response = await axios.head(filePath);
+  
+      return response.status === 200;
     } catch (error) {
       console.error('Error checking file existence:', error);
       return false;
     }
-  };
+  };  
 
   const fetchFileData = async (filePath) => {
     try {
@@ -340,13 +339,16 @@ const UserSettings =()=>{
                     <h1 className='font-medium text-center text-slate-700 dark:text-white'>Profile Picture</h1>
                     <div className="flex flex-col items-center justify-center">
                     <div className="mb-6 relative">
-                      <img
-                        name='userImage' 
-                        className="inline-block h-72 w-72 rounded-full border-2 border-black dark:border-white p-1 object-cover object-center relative z-1"
-                        src={preSelectedFile || userImage || defaultImg}
-                        onError={(e) => console.error('Error loading image:', e)}
-                      />
-                    
+                    <img
+                      name='userImage' 
+                      className="inline-block h-72 w-72 rounded-full border-2 border-black dark:border-white p-1 object-cover object-center relative z-1"
+                      src={preSelectedFile || userImage || defaultImg}
+                      alt="User Profile"
+                      onError={(e) => {
+                        console.error('Error loading image for user profile:', e);
+                      }}
+                    />
+         
                     {/* Verified Check Mark */}
                     {verifiedStatus === 'Verified' ? (
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-[125px] h-[125px] pb-3 text-blue-400 absolute bottom-10 right-9 z-10 transform translate-x-1/2 translate-y-1/2" viewBox="0 0 841.89 595.28">

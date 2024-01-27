@@ -240,6 +240,7 @@ const DropdownProfile = ({ align }) => {
             <div className="flex sm:flex-row items-start justify-between mb-[-0.90rem] font-medium text-slate-800 dark:text-slate-100">
                   <span className="font-medium whitespace-nowrap">{userPersonal.f_name} {userPersonal.l_name}</span>
                   <span className="whitespace-nowrap">
+                    {verifiedStatus === 'Verified' ? (
                       <svg xmlns="http://www.w3.org/2000/svg" className="w-9 h-9 pb-3 text-blue-400" viewBox="0 0 841.89 595.28">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -6 23 38" fill="white">
                         <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
@@ -251,9 +252,10 @@ const DropdownProfile = ({ align }) => {
                           C325.55,293.77,398.88,366.9,398.88,366.9z"/>
                       </g>
                       </svg>
+                    ) : null}
                   </span>
               </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 italic">User</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400 italic" style={{ marginTop: '10px' }}>User</div>
           </div>
           <ul>
             <li>
