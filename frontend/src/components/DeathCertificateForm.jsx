@@ -114,10 +114,9 @@ const DeathCertificateForm =()=>{
             window.location.href = `/transachistory/${user_id}`;
           }, 2000); 
   
-    
           setTimeout(() => {
             setIsSuccess(false);
-          }, 3000);
+          }, 2100);
         } else {
           console.error('Transaction error:', response.statusText);
         }
@@ -401,7 +400,24 @@ const DeathCertificateForm =()=>{
                  
             <form onSubmit={handleSubmit} className={`overflow-y-auto ${isModalVisible ? 'blur' : ''}`}>
               <h1 className='font-medium text-center text-slate-700 dark:text-white'>Local Civil Registry</h1>
-              <h1 className='mb-6 text-sm italic text-center text-slate-700 dark:text-gray-300'>Death Certificate</h1>
+              <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Death Certificate</h1>
+              <div className="grid md:grid-cols-4 grid-cols-2 gap-3 items-center justify-center text-xs w-full">
+                <div className="flex flex-col items-center text-center">
+                  <span className='font-semibold text-blue-500'>Step 1</span>
+                  <span className='font-normal text-blue-500'>Fill the Form</span>
+                  <div className="w-full h-1 bg-blue-500" />
+                </div>
+                <div className="flex flex-col items-center text-center">
+                  <span>Step 2</span>
+                  <span>Review and Submit</span>
+                  <div className="w-full h-1 bg-blue-200 dark:bg-slate-400" />
+                </div>
+                <div className="flex flex-col col-span-2 items-center text-center mt-2 sm:mt-0">
+                  <span>Final Step</span>
+                  <span>Pay the transaction</span>
+                  <div className="w-full h-1 bg-blue-200 dark:bg-slate-400" />
+                </div>
+              </div>
 
               {isSuccess && (                
               <div className="my-5 text-center">
@@ -413,14 +429,14 @@ const DeathCertificateForm =()=>{
                 </div>
                 <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction successful! Redirecting to Transaction History...</div> 
               </div>
-            )}
+              )}
 
 
-            {showWarning && (
-              <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
-                Please fill in all required fields before proceeding.
-              </div>
-            )}
+              {showWarning && (
+                <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
+                  Please fill in all required fields before proceeding.
+                </div>
+              )} 
 
               {/* Group 1 - Document Owner's Personal Information*/}
               <h1 className='text-xs text-slate-700 dark:text-white mt-8'>All fields mark with <Req /> are required.</h1>
