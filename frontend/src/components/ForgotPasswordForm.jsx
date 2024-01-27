@@ -8,26 +8,27 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 const ForgotPasswordForm = () => {
   const [authenticated, setAuthenticated] = useState(true); //set false and later remove it so that it will works place true
-  const [isSendOTP, setSendOTP] = useState(true); //set false and later remove it so that it will works place true
+  const [isSendOTP, setSendOTP] = useState(false); //set false and later remove it so that it will works place true
   const [isResetPassword, setResetPassword] = useState(false); //set it false when you are done configure
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   /////UPDATE
   const [loading, setLoading] = useState(false); // New state for loading indicator
-  
+  const [userReg, setUserReg] = useState({
+    mobile_no: "",
+    user_pass:"",
+    new_user_pass:"",
+    confirm_user_pass:"",
+});
   const [isSuccess, setIsSuccess] = useState(false); 
   const [isSuccess1, setIsSuccess1] = useState(false); 
   const [countdown, setCountdown] = useState(false);
-  
-  const [userAuth, setUserAuth] = useState({
-    mobile_no: "",
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [wrong_otp, setWrongOtp] = useState(false);
   const [Many_Request, setManyRequest] = useState(false);
   const successTimeoutRef = useRef(null);
-  const { mobile_no } = userAuth;
+  const { mobile_no } = userReg;
   const [verification_code, setVerificationCode] = useState("");
   const [otpDigits, setOtpDigits] = useState(["", "", "", "", "", ""]);
   const otpInputRefs = useRef(Array.from({ length: 6 }, () => React.createRef()));
@@ -124,7 +125,7 @@ const ForgotPasswordForm = () => {
 
   const onSignup = async (recaptchaToken) => {
     const appVerifier = window.recaptchaVerifier;
-    const phoneNumber = `+63${userAuth.mobile_no}`;
+    // const phoneNumber = `+63${userReg.mobile_no}`;
   
     try {
       // Only proceed with SMS verification if reCAPTCHA verification is successful
@@ -146,18 +147,19 @@ const ForgotPasswordForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8800/forgotpass/forgot-pass/${userAuth.mobile_no}`);
+      const response = await axios.post(`http://localhost:8800/forgotpass/forgot-pass/${userReg.mobile_no}`);
       if (response.status === 200) {
         if (isSubmitting) {
           return;
         }
         setAuthenticated(false);
         const user_id = response.data.results[0].user_id
-        setUserAuth((prev) => ({ ...prev, user_id }));
+        setUserReg((prev) => ({ ...prev, user_id }));
         console.log(response)
         if (authenticated) {
           setIsSubmitting(true); 
-          onCaptchaVerify();
+          // onCaptchaVerify();
+          setResetPassword(true)
         }
       } else {
         setLoginError("Authentication failed. Please check .");
@@ -188,11 +190,7 @@ const ForgotPasswordForm = () => {
     number: false,
   });
 
-  const [userReg, setUserReg] = useState({
-    user_pass:"",
-    new_user_pass:"",
-    confirm_user_pass:"",
-});
+
 
 const [passwordError, setPasswordError] = useState('');
 const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z\d!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
@@ -227,9 +225,11 @@ const navigate = useNavigate();
         }, 4000);
       } else {
         try {
-          await axios.put(`http://localhost:8800/forgotpass/reset_pass/${userAuth.mobile_no}`, {
+          await axios.put(`http://localhost:8800/forgotpass/reset_pass/${userReg.mobile_no}`, {
             new_user_pass,
           });
+
+
           setIsSuccess1(true);
           console.log('Password reset successful!');
   
@@ -268,7 +268,7 @@ const navigate = useNavigate();
         if (name === 'mobile_no') {
           const rawValue = value.replace('+63 ', '');
           const formattedValue = rawValue.replace(/\D/g, '');
-          setUserAuth((prev) => ({ ...prev, [name]: formattedValue }));
+          setUserReg((prev) => ({ ...prev, [name]: formattedValue }));
         } else {
           setUserReg((prev) => ({ ...prev, [name]: value }));
         }
@@ -314,7 +314,7 @@ const navigate = useNavigate();
                     placeholder=' '
                     className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-400 appearance-none text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum"
                     maxLength={14}
-                    value={`+63 ${userAuth.mobile_no}`}
+                    value={`+63 ${userReg.mobile_no}`}
                     onChange={handleChange}
                   />
                   <label
