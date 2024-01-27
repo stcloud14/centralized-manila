@@ -7,21 +7,23 @@ import { useParams } from 'react-router-dom';
 function DropdownNotifications({ align }) {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen1, setDropdownOpen1] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
-
-  console.log(notifications)
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
+  console.log(trigger)
+  console.log(dropdownOpen)
+  console.log(dropdownOpen1)
+
+  console.log(notifications)
+
+  
+
   const { user_id } = useParams();
 
-  const [isDropdownOpen1, setDropdownOpen1] = useState(false);
-
-  const toggleDropdown1 = () => {
-    setDropdownOpen1(!isDropdownOpen1);
-  };
 
   useEffect(() => {
     const fetchUserNotification = async () => {
@@ -37,18 +39,17 @@ function DropdownNotifications({ align }) {
 }, []);
 
 
-const handleRead = async (e) => {
-  e.preventDefault();
-
+const handleRead = async () => {
+ 
   try {
     const response = await axios.post(`http://localhost:8800/notifications/markread/${user_id}`);
-    setDropdownOpen1(false);
 
     if (response.status === 200) {
       try {
         const res = await axios.get(`http://localhost:8800/notifications/${user_id}`);
         setNotificationCount(res.data.notif_count);
         setNotifications(res.data.user_notif);
+        setDropdownOpen1(false);
       } catch (err) {
         console.log(err);
       }
@@ -77,18 +78,18 @@ const handleRead = async (e) => {
     return () => document.removeEventListener('click', clickHandler);
   }, [dropdownOpen]); 
 
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }) => {
-      if (keyCode === 27) {
-        setDropdownOpen(false);
-        setDropdownOpen1(false);
-      }
-    };
+  // // close if the esc key is pressed
+  // useEffect(() => {
+  //   const keyHandler = ({ keyCode }) => {
+  //     if (keyCode === 27) {
+  //       setDropdownOpen(false);
+  //       setDropdownOpen1(false);
+  //     }
+  //   };
 
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
-  }, [dropdownOpen]);
+  //   document.addEventListener('keydown', keyHandler);
+  //   return () => document.removeEventListener('keydown', keyHandler);
+  // }, [dropdownOpen]);
 
 
   return (
@@ -124,17 +125,16 @@ const handleRead = async (e) => {
         <div
           ref={dropdown}
           onFocus={() => setDropdownOpen(true)}
-          onBlur={() => setDropdownOpen(false)}
         >
           <div className="flex items-center justify-between text-xs font-semibold text-slate-400 dark:text-slate-500  pt-1.5 pb-2 px-4">NOTIFICATIONS
             <div className="flex items-center">
-              <button type="button" onClick={toggleDropdown1} className="w-6 h-6 rounded-full hover:text-slate-500 dark:hover:text-slate-400">
+              <button type="button" onClick={() => setDropdownOpen1(!dropdownOpen1)} className="w-6 h-6 rounded-full hover:text-slate-500 dark:hover:text-slate-400">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                 </svg>
               </button>
 
-              {isDropdownOpen1 && (
+              {dropdownOpen1 && (
                 <div className="absolute right-6 top-9 w-[200px] origin-top-right flex group items-center py-2 px-3 bg-white text-slate-500 hover:bg-slate-100 dark:hover:bg-[#3d3d3d] dark:bg-[#212121] dark:text-slate-400 border border-slate-200 dark:border-[#3d3d3d] rounded-sm shadow-md z-20 cursor-pointer">
                   <button onClick={handleRead}>
                     <span className="flex items-center group">
