@@ -255,7 +255,11 @@ const DropdownProfile = ({ align }) => {
                     ) : null}
                   </span>
               </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 italic" style={{ marginTop: '10px' }}>User</div>
+                  {verifiedStatus === 'Verified' ? (
+                    <div className="text-xs text-slate-500 dark:text-slate-400 italic">User</div>
+                    ) : 
+                    <div className="text-xs text-slate-500 dark:text-slate-400 italic mt-2.5">User</div>
+                   }
           </div>
           <ul>
             <li>

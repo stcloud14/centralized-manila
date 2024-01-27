@@ -153,9 +153,6 @@ const handleMoveToProcessing = (transaction) => {
             BusinessPermitDetails = {BusinessPermitDetails}
             processingTransactions = {processingTransactions}
             selectedTransactionId = {selectedTransactionId}
-            handleOpenModal={handleOpenModal}
-            handleOpenModal4={handleOpenModal4}
-            handleOpenModal5={handleOpenModal5}
             />
 
           </div>

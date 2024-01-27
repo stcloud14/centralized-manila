@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-
+import Footer from '../partials/Footer';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 
@@ -7,6 +7,7 @@ const PrivacyPolicyForm =()=>{
 
   const contentRef = useRef(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const logoSrc = '../src/images/mnl_footer.svg';
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -237,6 +238,7 @@ const PrivacyPolicyForm =()=>{
             
             </div>
           </div>
+          <Footer logo={logoSrc} />
         </main>
 
 

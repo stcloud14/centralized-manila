@@ -8,11 +8,11 @@ function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelecte
 
   return (
     <>
-        <div className="absolute right-[-275px] md:right-10 w-[405px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
+        <div className="absolute w-[270px] origin-top-right py-2 px-3 mt-[32px] sm:mt-2 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20 md:right-10 sm:w-[405px]">
 
         {/* Date Row */}
-        <div className="flex justify-between items-center">
-            <span className="block py-2 text-xs">Date:</span>
+        <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+            <span className="hidden sm:block text-xs">Date:</span>
             <span>
             <Flatpickr
                 value={selectedDate}
@@ -42,7 +42,7 @@ function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelecte
                 },
                 }}
                 placeholder="From"
-                className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"
+                className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[110px] sm:w-[150px]"
             />
             <span> - </span>
             <Flatpickr
@@ -73,15 +73,15 @@ function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelecte
                 },
                 }}
                 placeholder="To"
-                className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[150px]"
+                className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-full w-[110px] sm:w-[150px]"
             />
             </span>
         </div>
 
 
         {/* Transaction ID Row */}
-        <div className="flex justify-between items-center">
-            <span className="block pr-10 py-2 text-xs">
+        <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+            <span className="hidden sm:block pr-10 text-xs">
             Transaction ID:
             </span>
 
@@ -98,25 +98,24 @@ function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelecte
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 type="text"
                 placeholder="Search ID..."
-                className="bg-transparent text-xs w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-full"
+                className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-full"
             />
             </div>
         </div>
 
         {/* Type Row */}
-        <div className="flex justify-between items-center">
-            <span className="block py-2 text-xs">Type:</span>
-            <select  value={selectedType} onChange={handleInputChange} name=""  id=""  className="py-2.5 px-0 text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 md:py-0.5 rounded-full peer cursor-pointer w-[210px]">
+        <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+            <span className="hidden sm:block py-2 text-xs">Type:</span>
+            <select  value={selectedType} onChange={handleInputChange} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-full peer cursor-pointer h-[33.5px] w-[235px]">
                 <TransTypeDropdown />
             </select>
         </div>
 
         {/* Status Row */}
-        <div className="flex justify-between items-center">
-            <span className="block py-2 text-xs">Status:</span>
-            <select  value={selectedStatus} onChange={handleInputChange2} name="" id="" className={`font-semibold mt-1 sm:mt-[0]  py-2.5 px-0 text-xs border bg-transparent border-slate-300 pl-4 md:py-0.5 rounded-full peer cursor-pointer`}
+        <div className="flex justify-center sm:justify-between items-center">
+            <span className="hidden sm:block py-2 text-xs">Status:</span>
+            <select value={selectedStatus} onChange={handleInputChange2} name="" id="" className={`font-semibold text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-full peer cursor-pointer h-[33.5px] w-[235px]`}
                 style={{
-                width: "125px",
                 backgroundColor:
                     selectedStatus === "Pending" ? "#fef08a" :
                     selectedStatus === "Paid" ? "#a7f3d0" :
@@ -138,7 +137,7 @@ function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelecte
             </select>
         </div>
 
-        <button type="button" onClick={handleSearch} className="w-[6rem] bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 mt-1 mb-0.5 rounded-full flex items-center ml-auto">
+        <button type="button" onClick={handleSearch} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-full flex items-center ml-auto">
             <span className="mx-auto">Filter</span>
         </button>
         </div>

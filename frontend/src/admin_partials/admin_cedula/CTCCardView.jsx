@@ -2,7 +2,7 @@ import React from 'react';
 
 const CTCCardView = ({}) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
 
           <div className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
             <div className="text-xs font-semibold border-t-4 border-[#ffa700] text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
