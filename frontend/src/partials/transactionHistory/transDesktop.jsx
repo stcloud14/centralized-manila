@@ -195,22 +195,23 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
                     <span className="pl-1">Filter</span>
                   </button>
 
-        {isDropdownOpen && (
-          <FilterButton 
-          searchInput={searchInput} 
-          setSearchInput={setSearchInput}
-          handleSearch={handleSearch} 
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          selectedDatee={selectedDatee}
-          setSelectedDatee={setSelectedDatee}
-          selectedStatus={selectedStatus}
-          handleInputChange={handleInputChange}
-          handleInputChange2={handleInputChange2}
-          selectedType={selectedType}
-          toggleDropdown={toggleDropdown}
-          />
-        )}
+                    {isDropdownOpen && (
+                      <FilterButton 
+                      searchInput={searchInput} 
+                      setSearchInput={setSearchInput}
+                      handleSearch={handleSearch} 
+                      selectedDate={selectedDate}
+                      setSelectedDate={setSelectedDate}
+                      selectedDatee={selectedDatee}
+                      setSelectedDatee={setSelectedDatee}
+                      selectedStatus={selectedStatus}
+                      handleInputChange={handleInputChange}
+                      handleInputChange2={handleInputChange2}
+                      selectedType={selectedType}
+                      toggleDropdown={toggleDropdown}
+                      />
+                    )}
+                    
                 </div>
 
                 <button onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 mr-2 rounded-full inline-flex items-center">
