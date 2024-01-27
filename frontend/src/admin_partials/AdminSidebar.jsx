@@ -374,7 +374,74 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               ) : null}
 
               {/* CTC / Cedula */}
+              {/* Business Permit */}
               {admin_type === 'chief_admin' || admin_type === 'cedula_admin' ? (
+              <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
+                {(handleClick, open) => {
+                  return (
+                    <React.Fragment>
+                      <a
+                        href="#0"
+                        className="block text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600 truncate transition duration-150"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded ? handleClick() : setSidebarExpanded(true);
+                        }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 w-6 h-6">
+                            <path fillRule="evenodd" className='fill-slate-400' d="M4.5 3.75a3 3 0 00-3 3v10.5a3 3 0 003 3h15a3 3 0 003-3V6.75a3 3 0 00-3-3h-15zm4.125 3a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm-3.873 8.703a4.126 4.126 0 017.746 0 .75.75 0 01-.351.92 7.47 7.47 0 01-3.522.877 7.47 7.47 0 01-3.522-.877.75.75 0 01-.351-.92zM15 8.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15zM14.25 12a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H15a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15z" clipRule="evenodd" />
+                          </svg>
+                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                              CTC / Cedula
+                            </span>
+                          </div>
+                          {/* Icon */}
+                          <div className="flex shrink-0 ml-2">
+                            <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`} viewBox="0 0 12 12">
+                              <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                            </svg>
+                          </div>
+                        </div>
+                      </a>
+                      <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                        <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
+                          <li className="mb-1 last:mb-0">
+                            <NavLink
+                            end to={admin_type === 'chief_admin' ? `/admin_cedula1/${admin_type}` : `/admin_cedula1/${admin_type}`}
+
+                              className={({ isActive }) =>
+                                'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
+                              }
+                            >
+                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                              Transaction Requests
+                              </span>
+                            </NavLink>
+                          </li>
+
+                          <li className="mb-1 last:mb-0">
+                            <NavLink
+                            end to={admin_type === 'chief_admin' ? `/admin_cedula2/${admin_type}` : `/admin_cedula2/${admin_type}`}
+                              className={({ isActive }) =>
+                                'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
+                              }
+                            >
+                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                Processing Section
+                              </span>
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </div>
+                    </React.Fragment>
+                  );
+                }}
+              </AdminSidebarLinkGroup>
+              ) : null}
+
+              {/* {admin_type === 'chief_admin' || admin_type === 'cedula_admin' ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink
                     end to={admin_type === 'chief_admin' ? `/admin_cedula/${admin_type}` : `/admin_cedula/${admin_type}`}
@@ -392,7 +459,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
-              ) : null}
+              ) : null} */}
 
 
               {/* Local Civil Registry */}

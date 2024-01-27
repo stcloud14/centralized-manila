@@ -8,8 +8,8 @@ const RPCardView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen,
           {filteredTaxClearance.map((transaction) => (
 
           // ITO YUNG KAPAG PININDOT YUNG BUONG CARD, MAG OOPEN YUNG MODAL, IPAPASA YUNG DETAILS NG TRANSACTION NA PININDOT, AND ISESET SA PARAMETER NG LINE 19 NA ANG TYPE AY TAX CLEARANCE
-          <div onClick={(e) => handleModalOpen(transaction, 'Tax Payment', e)} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
-            <div className="text-xs font-semibold border-t-4 border-[#0057e7] text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
+          <div onClick={(e) => handleModalOpen(transaction, 'Tax Clearance', e)} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
+            <div className="text-xs font-semibold border-t-4 border-blue-500 text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
               Transaction ID: {transaction.transaction_id}
             </div>
 
@@ -58,7 +58,7 @@ const RPCardView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen,
           {/* Tax Payment Sample */}
           {filteredTaxPayment.map((transaction) => (
           <div onClick={() => handleModalOpen(transaction, 'Tax Payment')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
-            <div className="text-xs font-semibold text-slate-60 border-t-4 border-blue-500 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
+            <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
               Transaction ID: {transaction.transaction_id}
             </div>
 
