@@ -208,6 +208,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
           handleInputChange={handleInputChange}
           handleInputChange2={handleInputChange2}
           selectedType={selectedType}
+          toggleDropdown={toggleDropdown}
           />
         )}
                 </div>
