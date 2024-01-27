@@ -92,6 +92,12 @@ const handleRead = async () => {
   // }, [dropdownOpen]);
 
 
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
+
   return (
     <div className="relative inline-flex">
       <button
@@ -135,7 +141,21 @@ const handleRead = async () => {
               </button>
 
               {dropdownOpen1 && (
-                <div className="absolute right-6 top-9 w-[200px] origin-top-right flex group items-center py-2 px-3 bg-white text-slate-500 hover:bg-slate-100 dark:hover:bg-[#3d3d3d] dark:bg-[#212121] dark:text-slate-400 border border-slate-200 dark:border-[#3d3d3d] rounded-sm shadow-md z-20 cursor-pointer">
+                <div className="absolute right-6 top-9 w-[200px] origin-top-right flex flex-col gap-2 group items-left py-2 px-3 bg-white text-slate-500 dark:bg-[#212121] dark:text-slate-400 border border-slate-200 dark:border-[#3d3d3d] rounded-sm shadow-md z-20">
+                  
+                  <label className="relative inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      value=""
+                      className="sr-only peer"
+                      checked={isChecked}
+                      onChange={handleToggle}
+                    />
+                    <div className={`w-7 h-3 bg-slate-300 cursor-pointer peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 dark:peer-focus:ring-emerald-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[3px] after:start-[2.5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-500`}></div>
+                    <span className="ms-2.5 font-medium text-xs">Only show unread</span>
+                  </label>
+
+
                   <button onClick={handleRead}>
                     <span className="flex items-center group">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 mr-2">
@@ -144,6 +164,7 @@ const handleRead = async () => {
                       <span className='font-medium'>Mark all as read</span>
                     </span>
                   </button>
+ 
                 </div>
               )}
             </div>
