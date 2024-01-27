@@ -52,7 +52,8 @@ import AdminBusiness1 from './admin_pages/AdminBusiness1';
 import AdminBusiness2 from './admin_pages/AdminBusiness2';
 import AdminCedula1 from './admin_pages/AdminCedula1';
 import AdminCedula2 from './admin_pages/AdminCedula2';
-import AdminLocalCivilRegistry from './admin_pages/AdminLocalCivilRegistry';
+import AdminLCR1 from './admin_pages/AdminLCR1';
+import AdminLCR2 from './admin_pages/AdminLCR2';
 import AdminUserList from './admin_pages/AdminUserList';
 import AdminVerifyReqs from './admin_pages/AdminVerifyReqs';
 import AdminAuditTrail from './admin_pages/AdminAuditTrail';
@@ -105,7 +106,8 @@ function App() {
         <Route exact path="/admin_business2/:admin_type" element={<AdminBusiness2 />} />
         <Route exact path="/admin_cedula1/:admin_type" element={<AdminCedula1 />} />
         <Route exact path="/admin_cedula2/:admin_type" element={<AdminCedula2 />} />
-        <Route exact path="/admin_lcr/:admin_type" element={<AdminLocalCivilRegistry />} />
+        <Route exact path="/admin_lcr1/:admin_type" element={<AdminLCR1 />} />
+        <Route exact path="/admin_lcr2/:admin_type" element={<AdminLCR2 />} />
         <Route exact path="/admin_userlist/:admin_type" element={<AdminUserList />} />
         <Route exact path="/admin_verifyreqs/:admin_type" element={<AdminVerifyReqs />} />
         <Route exact path="/admin_audittrail/:admin_type" element={<AdminAuditTrail />} />

@@ -10,11 +10,10 @@ import AdminLCRMarriageView from '../admin_partials/admin_modals/AdminLCRMarriag
 import AdminLCRDeathView from '../admin_partials/admin_modals/AdminLCRDeathView';
 
 import AdminLCRRequests from '../admin_partials/admin_cards/AdminLCRRequests';
-import AdminLCRProcessing from '../admin_partials/admin_cards/AdminLCRProcessing';
 
 
 
-const AdminLocalCivilRegistryForm =()=>{
+const AdminLCRForm2 =()=>{
 
 
   
@@ -56,45 +55,6 @@ const AdminLocalCivilRegistryForm =()=>{
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
-   // Expired Modal
-   const [isModalOpen2, setIsModalOpen2] = useState(false);
-   const handleOpenModal2 = () => {
-       setIsModalOpen2(true);
-     }
-   const handleCloseModal2 = () => {
-     setIsModalOpen2(false);
-   };
-
-   // Process Modal
-   const [isModalOpen3, setIsModalOpen3] = useState(false);
-   const handleOpenModal3 = () => {
-       setIsModalOpen3(true);
-     }
-   const handleCloseModal3 = () => {
-     setIsModalOpen3(false);
-   };
-
-   // Reject Modal
-   const [isModalOpen4, setIsModalOpen4] = useState(false);
-   const handleOpenModal4 = () => {
-       setIsModalOpen4(true);
-     }
-   const handleCloseModal4 = () => {
-     setIsModalOpen4(false);
-   };
-
-   // Done Modal
-   const [isModalOpen5, setIsModalOpen5] = useState(false);
-   const handleOpenModal5 = () => {
-       setIsModalOpen5(true);
-     }
-   const handleCloseModal5 = () => {
-     setIsModalOpen5(false);
-   }
-
-
-
 
   const handleProcessModal = (event) => {
     event.stopPropagation();
@@ -141,21 +101,9 @@ const AdminLocalCivilRegistryForm =()=>{
           </div>
 
           {/*  Two Sections */}
-          <div className="grid grid-cols-12 gap-4 mx-4 my-4">
+          <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
             <AdminLCRRequests
-            handleOpenModal={handleOpenModal}
-            handleOpenModal2={handleOpenModal2}
-            handleOpenModal3={handleOpenModal3}
-            birthCert={birthCert}
-            deathCert={deathCert}
-            marriageCert={marriageCert}
-            selectedTransactionId={selectedTransactionId}
-            />
-            <AdminLCRProcessing
-            handleOpenModal={handleOpenModal}
-            handleOpenModal4={handleOpenModal4}
-            handleOpenModal5={handleOpenModal5}
             />
 
           </div>
@@ -180,4 +128,4 @@ const AdminLocalCivilRegistryForm =()=>{
   );
 }
 
-export default AdminLocalCivilRegistryForm;
+export default AdminLCRForm2;
