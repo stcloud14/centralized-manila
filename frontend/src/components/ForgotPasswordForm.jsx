@@ -281,19 +281,19 @@ const navigate = useNavigate();
             setIsSuccess1(true);
             console.log('Password reset successful!');
     
-            // const countdownInterval = setInterval(() => {
-            //   setCountdown((prevCountdown) => prevCountdown - 1);
-            // }, 1000);
+            const countdownInterval = setInterval(() => {
+              setCountdown((prevCountdown) => prevCountdown - 1);
+            }, 1000);
     
-            // setTimeout(() => {
-            //   setIsSuccess1(false);
-            //   setCountdown(5);
-            // }, 3000);
+            setTimeout(() => {
+              setIsSuccess1(false);
+              setCountdown(5);
+            }, 3000);
     
-            // setTimeout(() => {
-            //   clearInterval(countdownInterval);
-            //   navigate('/');
-            // }, 8000);
+            setTimeout(() => {
+              clearInterval(countdownInterval);
+              navigate('/');
+            }, 8000);
           
           }
         } catch (error) {
