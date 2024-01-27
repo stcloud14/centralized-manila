@@ -42,7 +42,7 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                   </button>
 
         {isDropdownOpen && (
-          <div className="absolute right- w-[270px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
+          <div className="absolute w-[270px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
 
               {/* Date Row */}
               <div className="flex justify-center pb-1.5">
@@ -129,7 +129,7 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
 
                 {/* Status Row */}
                 <div className="flex justify-center ">
-                    <select onChange={handleInputChange2} value={selectedStatus} name="" id="" className={` px-0 text-xs border bg-transparent border-slate-300 pl-4  rounded-sm peer cursor-pointer`}
+                    <select onChange={handleInputChange2} value={selectedStatus} name="" id="" className={` px-0 text-xs border bg-transparent border-slate-300 pl-4 rounded-sm peer cursor-pointer`}
                       style={{
                         width: "235px",
                         height: "33.5px",
@@ -161,7 +161,7 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                     </select>
                 </div>
 
-                <button type="button" onClick={toggleDropdown} className="bg-slate-500 hover:bg-slate-600 text-white mr-1.5 px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+                <button type="button" onClick={toggleDropdown} className="bg-blue-500 hover:bg-blue-600 text-white mr-1.5 px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                     <span>Filter</span>
                   </button>
           </div>
