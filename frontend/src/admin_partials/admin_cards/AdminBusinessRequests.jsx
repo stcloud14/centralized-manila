@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BPCardView from "../admin_business/BPCardView";
 import BPTableView from "../admin_business/BPTableView";
 
-const AdminBusinessRequests = ({handleOpenModal, handleOpenModal2, handleOpenModal3}) => {
+const AdminBusinessRequests = ({ }) => {
     const [viewMode, setViewMode] = useState('table'); 
 
     const handleToggleView = (mode) => {

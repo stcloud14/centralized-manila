@@ -150,7 +150,6 @@ const handleMoveToProcessing = (transaction) => {
             
             <AdminBusinessRequests
             onProceed ={[handleProceedForBusinessPermit]}
-            handleOpenModal={handleOpenModal}
             />
           </div>
 
