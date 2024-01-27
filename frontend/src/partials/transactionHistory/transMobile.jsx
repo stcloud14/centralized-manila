@@ -216,6 +216,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
                         handleInputChange={handleInputChange}
                         handleInputChange2={handleInputChange2}
                         selectedType={selectedType}
+                        toggleDropdown={toggleDropdown}
                         />
                       )}
                   </div>
