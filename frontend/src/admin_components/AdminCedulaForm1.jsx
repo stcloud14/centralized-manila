@@ -8,11 +8,10 @@ import AdminFooter from '../admin_partials/AdminFooter';
 import AdminCTCView from '../admin_partials/admin_modals/AdminCTCView';
 
 import AdminCTCRequests from '../admin_partials/admin_cards/AdminCTCRequests';
-import AdminCTCProcessing from '../admin_partials/admin_cards/AdminCTCProcessing';
 
 
 
-const AdminCedulaForm =()=>{
+const AdminCedulaForm1 =()=>{
 
 
   
@@ -112,19 +111,11 @@ const AdminCedulaForm =()=>{
           </div>
 
           {/*  Two Sections */}
-          <div className="grid grid-cols-12 gap-4 mx-4 my-4">
+          <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
             <AdminCTCRequests
-            handleOpenModal={handleOpenModal}
-            handleOpenModal2={handleOpenModal2}
-            handleOpenModal3={handleOpenModal3}
+            
             />
-            <AdminCTCProcessing
-            handleOpenModal={handleOpenModal}
-            handleOpenModal4={handleOpenModal4}
-            handleOpenModal5={handleOpenModal5}
-            />
-
           </div>
 
           <AdminFooter logo={logoSrc} />
@@ -139,4 +130,4 @@ const AdminCedulaForm =()=>{
   );
 }
 
-export default AdminCedulaForm;
+export default AdminCedulaForm1;

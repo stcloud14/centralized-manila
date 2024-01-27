@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 
-import AdminBPView from '../admin_partials/admin_modals/AdminBPView';
+import AdminCTCView from '../admin_partials/admin_modals/AdminCTCView';
 
-import AdminBusinessProcessing from '../admin_partials/admin_cards/AdminBusinessProcessing';
+import AdminCTCProcessing from '../admin_partials/admin_cards/AdminCTCProcessing';
 
 
 
-const AdminBusinessForm2 =()=>{
+const AdminCedulaForm2 =()=>{
 
 
   
@@ -25,42 +25,6 @@ const AdminBusinessForm2 =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
-
- const [BusinessPermit, setBusinessPermit] = useState([]);
-
- console.log(BusinessPermit)
-
- const [processingTransactions, setProcessingTransactions] = useState([]);
-
- useEffect(() => {
-    const fetchUserTransaction = async () =>{
-      try{
-        const res = await axios.get(`http://localhost:8800/adminrptax/`);
-        setBusinessPermit(res.data.BusinessPermit)
-      } catch (err){
-        console.log(err);
-      }
-      };
-      fetchUserTransaction();
- }, []);
-
-const [BusinessPermitDetails, setBusinessPermitDetails] = useState(null);
-
-
-
- const handleProceedForBusinessPermit = (BusinessPermitDetails) => {
-  setBusinessPermitDetails(BusinessPermitDetails)
- }
-
-const [selectedTransactionId, setSelectedTransactionId] = useState(null);
-
-const handleMoveToProcessing = (transaction) => {
-  setBusinessPermit((prevBusinessPermit) => prevBusinessPermit.filter((t) => t !== transaction));
-  setProcessingTransactions((prevProcessing) => [...prevProcessing, transaction]);
-  setSelectedTransactionId(transaction.transactionId);
-
-}
-
 
   // View Details Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -134,13 +98,13 @@ const handleMoveToProcessing = (transaction) => {
           {/*  Banner */}
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-sm rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-5 py-5">
-              <h1 className="font-medium text-center text-slate-700 dark:text-white">Business Permit</h1>
+              <h1 className="font-medium text-center text-slate-700 dark:text-white">Community Tax Certificate (CTC) or Cedula</h1>
               <h1 className="mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300">Transactions</h1>
 
               <div className="flex items-center justify-center space-x-6 text-xs">
                 <div className="flex items-center">
-                  <div className="w-4 h-1 mr-2 bg-[#d62d20]"></div>
-                  <p className="text-slate-700 dark:text-white">Business Permit</p>
+                  <div className="w-4 h-1 mr-2 bg-[#ffa700]"></div>
+                  <p className="text-slate-700 dark:text-white">Community Tax Certificate (CTC) or Cedula</p>
                 </div>
               </div>
             </div>
@@ -149,10 +113,8 @@ const handleMoveToProcessing = (transaction) => {
           {/*  Two Sections */}
           <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
-            <AdminBusinessProcessing
-            BusinessPermitDetails = {BusinessPermitDetails}
-            processingTransactions = {processingTransactions}
-            selectedTransactionId = {selectedTransactionId}
+            <AdminCTCProcessing
+
             />
 
           </div>
@@ -160,7 +122,7 @@ const handleMoveToProcessing = (transaction) => {
           <AdminFooter logo={logoSrc} />
         </main>
 
-        <AdminBPView
+        <AdminCTCView
           isOpen={isModalOpen}
           handleClose={handleCloseModal}
         />
@@ -169,4 +131,4 @@ const handleMoveToProcessing = (transaction) => {
   );
 }
 
-export default AdminBusinessForm2;
+export default AdminCedulaForm2;
