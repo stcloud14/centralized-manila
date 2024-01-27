@@ -114,9 +114,7 @@ const AdminCedulaForm1 =()=>{
           <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
             <AdminCTCRequests
-            handleOpenModal={handleOpenModal}
-            handleOpenModal2={handleOpenModal2}
-            handleOpenModal3={handleOpenModal3}
+            
             />
           </div>
 

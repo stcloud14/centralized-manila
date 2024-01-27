@@ -26,15 +26,15 @@ const CTCTableView = ({ }) => (
                   </div>
               </th>
               <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
-            <div className="flex justify-center items-center">
-              Reject
-            </div>
-          </th>
-          <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
-            <div className="flex justify-center items-center">
-              Process
-            </div>
-          </th>
+                <div className="flex justify-center items-center">
+                  Reject
+                </div>
+              </th>
+              <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                <div className="flex justify-center items-center">
+                  Process
+                </div>
+              </th>
           </tr>
       </thead>
       <tbody> 
