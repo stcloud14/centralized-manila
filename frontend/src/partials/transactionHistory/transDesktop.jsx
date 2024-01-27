@@ -43,8 +43,26 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
       pdf.line(130, 47, 195, 47);
       pdf.line(130, 64, 195, 64);
   
+      // Filter transactions based on start and end dates, type, and status
+      const filteredTransactions = sortedTransactions.filter((transaction) => {
+        const transactionDate = new Date(transaction.date_processed);
+        const isDateInRange =
+          (!selectedDate || transactionDate >= new Date(selectedDate)) &&
+          (!selectedDatee || transactionDate <= new Date(selectedDatee));
+  
+        const isTypeMatching =
+          !selectedType || selectedType === '0' || transaction.trans_type === selectedType;
+  
+        const isStatusMatching =
+          !selectedStatus ||
+          selectedStatus === 'All' ||
+          transaction.status_type.toLowerCase() === selectedStatus.toLowerCase();
+  
+        return isDateInRange && isTypeMatching && isStatusMatching;
+      });
+  
       // Account Summary table
-      const totalAllBalances = sortedTransactions.reduce((total, transaction) => {
+      const totalAllBalances = filteredTransactions.reduce((total, transaction) => {
         const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
         const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.payment) : 0;
   
@@ -61,25 +79,24 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
         head: [['Account Summary', '']],
         body: [
           ['', ''],
-          // Update this line in the "Account Summary" table
           ['Total Balance', `P ${totalAllBalances.toFixed(2)}`],
         ],
         headStyles: {
-          fillColor: false, // Remove background color
+          fillColor: false,
           lineColor: 0,
           textColor: 0,
           fontSize: 10,
           fontStyle: 'bold',
-          lineWidthTop: 1, // Thickness of the top border
-          lineWidthBottom: 1, // Thickness of the bottom border
+          lineWidthTop: 1,
+          lineWidthBottom: 1,
         },
         bodyStyles: {
-          fillColor: false, // Remove background color
+          fillColor: false,
           textColor: 0,
           fontSize: 10,
         },
         alternateRowStyles: {
-          fillColor: false, // Remove background color
+          fillColor: false,
           textColor: 0,
           fontSize: 10,
         },
@@ -96,24 +113,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleSearchI
         textColor: 255,
       };
   
-      // Filter transactions based on start and end dates, type, and status
-      const filteredTransactions = sortedTransactions.filter((transaction) => {
-        const transactionDate = new Date(transaction.date_processed);
-        const isDateInRange =
-          (!selectedDate || transactionDate >= new Date(selectedDate)) &&
-          (!selectedDatee || transactionDate <= new Date(selectedDatee));
-
-        const isTypeMatching =
-          !selectedType || selectedType === '0' || transaction.trans_type === selectedType;
-
-        const isStatusMatching =
-          !selectedStatus ||
-          selectedStatus === 'All' ||
-          transaction.status_type.toLowerCase() === selectedStatus.toLowerCase();
-
-        return isDateInRange && isTypeMatching && isStatusMatching;
-      });
-  
+      // Transaction Details table
       pdf.autoTable({
         startY: tableStartY,
         head: [['Date', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
