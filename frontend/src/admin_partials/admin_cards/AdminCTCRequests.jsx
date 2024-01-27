@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CTCCardView from "../admin_cedula/CTCCardView";
 import CTCTableView from "../admin_cedula/CTCTableView";
 
-const AdminBusinessRequests = ({handleOpenModal, handleOpenModal2, handleOpenModal3}) => {
+const AdminCTCRequests = ({handleOpenModal, handleOpenModal2, handleOpenModal3}) => {
     const [viewMode, setViewMode] = useState('table'); 
 
     const handleToggleView = (mode) => {
@@ -89,5 +89,5 @@ const AdminBusinessRequests = ({handleOpenModal, handleOpenModal2, handleOpenMod
     );
   };
   
-  export default AdminBusinessRequests;
+  export default AdminCTCRequests;
   
