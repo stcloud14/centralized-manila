@@ -8,7 +8,7 @@ const router = Router();
 
 
 router.get('/', async (req, res) => {
-    const query = "SELECT ut.transaction_id, ut.user_id, tt.trans_type, ut.status_type, ut.date_processed, tp.acc_name, tp.rp_tdn, tp.rp_pin, y.year_period, tp.period_id, \
+    const query = "SELECT ut.transaction_id, ut.user_id, tt.trans_type, ut.status_type, ut.date_processed, ut.expiry_date, tp.acc_name, tp.rp_tdn, tp.rp_pin, y.year_period, tp.period_id, \
     ti.amount, ti.copies, ptt.print_type, ti.valid_id, ti.purpose_id \
     \
     FROM user_transaction ut \
@@ -74,8 +74,9 @@ router.get('/', async (req, res) => {
     }
 });
 
+
 router.get('/processing', async (req, res) => {
-    const query = "SELECT ut.transaction_id, ut.user_id, tt.trans_type, ut.status_type, ut.date_processed, tp.acc_name, tp.rp_tdn, tp.rp_pin, y.year_period, tp.period_id, \
+    const query = "SELECT ut.transaction_id, ut.user_id, tt.trans_type, ut.status_type, ut.date_processed, ut.expiry_date, tp.acc_name, tp.rp_tdn, tp.rp_pin, y.year_period, tp.period_id, \
     ti.amount, ti.copies, ptt.print_type, ti.valid_id, ti.purpose_id \
     \
     FROM user_transaction ut \

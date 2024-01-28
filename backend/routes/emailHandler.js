@@ -84,6 +84,70 @@ const FormatMail = (user_email, body, amount) => {
 };
 
 
+const FormatExpiredMail = (transaction) => {
+  return `
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color:black!important">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/0GZ4s69/mnl-header-pdf.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%">
+                          <td style="padding:0px 20px 10px 20px">
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi ${transaction.l_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${transaction.trans_type} through your email address <span style="font-weight: 700;">${transaction.user_email}</span></h2>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction <span style="font-weight: 600;">'${transaction.transaction_id}'</span> is:</p>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:5px;border-style: dashed;">E X P I R E D</h1>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Amount: </span>P ${transaction.amount}.00</p>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">If you did not request this transaction, it is possible that someone else is trying to access the Centralized Manila account of <span style="font-weight: 700;"> ${transaction.user_email}</span></p>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0;margin-top:-5px"> You received this message because this email address is listed as the recovery email for the Centralized Manila. If that is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+    `;
+};
+
+
 const ResetPassMail = (user_email, body, amount) => {
   return `
   <body style="background-color:#efeef1;font-family:HelveticaNeue,Helvetica,Arial,sans-serif">
@@ -257,6 +321,78 @@ const ResetPassMail = (user_email, body, amount) => {
       res.status(500).json({ error: err.message });
     }
   });
+
+
+
+  router.post('/updateexpired', async (req, res) => {
+    const expiryUpdateQuery = `UPDATE user_transaction SET status_type = 'Expired' WHERE expiry_date < CURRENT_DATE AND status_type = 'Pending';`;
+
+    try {
+      const expiryUpdateResult = await queryDatabase(expiryUpdateQuery);
+  
+      const expiredTransactionsQuery = `
+          SELECT uc.user_email, ut.transaction_id, up.f_name, up.l_name, tt.trans_type, ut.status_type, ti.amount
+          FROM user_contact uc
+          JOIN user_personal up ON uc.user_id = up.user_id
+          JOIN user_transaction ut ON uc.user_id = ut.user_id
+          JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id
+          JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id
+          WHERE ut.status_type = 'Expired' AND ut.expiry_emailed = false
+      `;
+  
+      const expiredTransactionsResult = await queryDatabase(expiredTransactionsQuery);
+      const data = expiredTransactionsResult;
+  
+      // Check if there are new transactions to email
+      if (data.length > 0) {
+          // Send email for each expired transaction
+          const emailPromises = data.map(async (transaction) => {
+              try {
+                  const resultEmail = await transporter.sendMail({
+                      from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
+                      to: transaction.user_email,
+                      subject: transaction.trans_type,
+                      html: FormatExpiredMail(transaction),
+                  });
+  
+                  if (!resultEmail.response) {
+                      throw new Error("Error sending email");
+                  }
+  
+                  const expiryEmailedQuery = `UPDATE user_transaction SET expiry_emailed = true WHERE transaction_id = ?;`;
+                  const expiryEmailedValues = [transaction.transaction_id];
+                  await queryDatabase(expiryEmailedQuery, expiryEmailedValues);
+  
+                  return { success: true, transaction: transaction };
+
+              } catch (err) {
+                  console.error(err);
+                  throw new Error(`Error sending email for transaction: ${transaction.trans_type}`);
+              }
+          });
+  
+          const emailResults = await Promise.all(emailPromises);
+  
+          res.json({
+              message: "Expired pending transactions!",
+              success: expiryUpdateResult && emailResults.every((result) => result.success),
+              emailResults: emailResults,
+          });
+      } else {
+          res.json({
+              message: "No expired pending transactions found.",
+              success: expiryUpdateResult,
+          });
+      }
+    
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+    
+  });
+
+
 
 
   function queryDatabase(query, values) {

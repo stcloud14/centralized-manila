@@ -190,9 +190,12 @@ const router = Router();
     const statusType = 'Pending';
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+    const expiryDate = new Date();
+    expiryDate.setDate(date.getDate() + 5);
+    const formattedExpiryDate = `${expiryDate.getFullYear()}-${(expiryDate.getMonth() + 1).toString().padStart(2, '0')}-${expiryDate.getDate().toString().padStart(2, '0')} ${expiryDate.getHours().toString().padStart(2, '0')}:${expiryDate.getMinutes().toString().padStart(2, '0')}:${expiryDate.getSeconds().toString().padStart(2, '0')}`;
 
-    const query = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
-    const values = [transID, user_id, transType, statusType, formattedDate];
+    const query = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`, `expiry_date`) VALUES (?, ?, ?, ?, ?, ?)";
+    const values = [transID, user_id, transType, statusType, formattedDate, formattedExpiryDate];
   
     const query1 = "INSERT INTO rptax_payment (`transaction_id`, `acc_name`, `rp_tdn`, `rp_pin`, `year_id`, `period_id`) VALUES (?, ?, ?, ?, ?, ?)";
     const values1 = [transID, req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period];
@@ -257,12 +260,12 @@ const router = Router();
     const statusType = 'Pending';
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-  
+    const expiryDate = new Date();
+    expiryDate.setDate(date.getDate() + 5);
+    const formattedExpiryDate = `${expiryDate.getFullYear()}-${(expiryDate.getMonth() + 1).toString().padStart(2, '0')}-${expiryDate.getDate().toString().padStart(2, '0')} ${expiryDate.getHours().toString().padStart(2, '0')}:${expiryDate.getMinutes().toString().padStart(2, '0')}:${expiryDate.getSeconds().toString().padStart(2, '0')}`;
 
-
-
-    const query5 = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`) VALUES (?, ?, ?, ?, ?)";
-    const values5 = [transID, user_id, transType, statusType, formattedDate];
+    const query5 = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`, `expiry_date`) VALUES (?, ?, ?, ?, ?)";
+    const values5 = [transID, user_id, transType, statusType, formattedDate, formattedExpiryDate];
   
     const query6 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";
     const values6 = [transID, plainAmount];
