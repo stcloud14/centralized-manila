@@ -30,6 +30,7 @@ router.post('/check-existence', async (req, res) => {
 router.post('/', async (req, res) => {
     const mobile_no = req.body.mobile_no;
     const user_pass = String(req.body.user_pass);
+    
 
     const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
     const saltRounds = 10;
@@ -79,6 +80,7 @@ router.post('/', async (req, res) => {
 
     res.json({
         message: "Successfully executed",
+        user_id: primaryKey,
         user_reg_result: result,
         user_auth_result: result1,
         user_personal_result: result2,
