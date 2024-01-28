@@ -362,7 +362,7 @@ const RegisteredAccountEmail = (user_email, body) => {
       const expiryUpdateResult = await queryDatabase(expiryUpdateQuery);
   
       const expiredTransactionsQuery = `
-          SELECT uc.user_email, ut.transaction_id, up.f_name, up.l_name, tt.trans_type, ut.status_type, ti.amount
+          SELECT uc.user_email, ut.transaction_id, ut.user_id, up.f_name, up.l_name, tt.trans_type, ut.status_type, ti.amount
           FROM user_contact uc
           JOIN user_personal up ON uc.user_id = up.user_id
           JOIN user_transaction ut ON uc.user_id = ut.user_id
@@ -393,6 +393,15 @@ const RegisteredAccountEmail = (user_email, body) => {
                   const expiryEmailedQuery = `UPDATE user_transaction SET expiry_emailed = true WHERE transaction_id = ?;`;
                   const expiryEmailedValues = [transaction.transaction_id];
                   await queryDatabase(expiryEmailedQuery, expiryEmailedValues);
+
+                  const notif_title = 'Transaction Expired';
+                  const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${transaction.trans_type}: ${transaction.transaction_id}</span> has <span className="font-semibold dark:text-white">EXPIRED</span> due to non-payment. Kindly generate a new transaction if you would like to make another request.</p>`;
+                  const date = new Date();
+                  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
+                  const query = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+                  const values = [transaction.user_id, formattedDate, notif_title, notif_message];
+                  await queryDatabase(query, values);
   
                   return { success: true, transaction: transaction };
 

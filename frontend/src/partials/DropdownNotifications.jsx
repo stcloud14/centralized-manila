@@ -9,6 +9,8 @@ function DropdownNotifications({ align }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOpen1, setDropdownOpen1] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
+  const [allNotif, setAllNotif] = useState([]);
+  const [unreadNotif, setUnreadNotif] = useState([]);
   const [notifications, setNotifications] = useState([]);
 
   const trigger = useRef(null);
@@ -22,7 +24,10 @@ function DropdownNotifications({ align }) {
       try {
         const res = await axios.get(`http://localhost:8800/notifications/${user_id}`);
         setNotificationCount(res.data.notif_count);
+        setAllNotif(res.data.user_notif);
         setNotifications(res.data.user_notif);
+        setUnreadNotif(res.data.notif_unread);
+
       } catch (err) {
         console.log(err);
       }
@@ -40,7 +45,10 @@ const handleRead = async () => {
       try {
         const res = await axios.get(`http://localhost:8800/notifications/${user_id}`);
         setNotificationCount(res.data.notif_count);
+        setAllNotif(res.data.user_notif);
         setNotifications(res.data.user_notif);
+        setUnreadNotif(res.data.notif_unread);
+
         setDropdownOpen1(false);
       } catch (err) {
         console.log(err);
@@ -70,25 +78,21 @@ const handleRead = async () => {
     return () => document.removeEventListener('click', clickHandler);
   }, [dropdownOpen]); 
 
-  // // close if the esc key is pressed
-  // useEffect(() => {
-  //   const keyHandler = ({ keyCode }) => {
-  //     if (keyCode === 27) {
-  //       setDropdownOpen(false);
-  //       setDropdownOpen1(false);
-  //     }
-  //   };
-
-  //   document.addEventListener('keydown', keyHandler);
-  //   return () => document.removeEventListener('keydown', keyHandler);
-  // }, [dropdownOpen]);
-
 
   const [isChecked, setIsChecked] = useState(false);
 
   const handleToggle = () => {
     setIsChecked(!isChecked);
   };
+
+  useEffect(() => {
+    console.log('Changed displayed info');
+    const selectedArray = isChecked ? unreadNotif : allNotif;
+    setNotifications(selectedArray);
+  }, [isChecked]);
+
+
+
 
   return (
     <div className="relative inline-flex">

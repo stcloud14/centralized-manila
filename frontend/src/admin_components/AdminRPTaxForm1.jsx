@@ -40,7 +40,8 @@ const AdminRPTaxForm1 = () => {
 
   const fetchExpiredTransaction = async () => {
     try {
-      await axios.post(`http://localhost:8800/email/updateexpired`);
+      // await axios.post(`http://localhost:8800/email/updateexpired`);
+      console.log('Sent emails')
 
     } catch (err) {
       console.log(err);
