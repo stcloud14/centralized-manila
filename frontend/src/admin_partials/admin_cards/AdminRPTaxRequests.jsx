@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
+import Flatpickr from 'react-flatpickr';
 
 import AdminRPView from '../admin_modals/AdminRPView';
 import RPCardView from '../admin_rptax/RPCardView';
@@ -8,6 +9,9 @@ import RPTableView from '../admin_rptax/RPTableView';
 
 
 const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
+
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDatee, setSelectedDatee] = useState('');
 
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState('table'); 
@@ -292,15 +296,62 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
 
             {/* Search */}
             <div className="flex items-center text-xs mb-7">
-              <div className="relative w-full">
+              <div className="relative flex items-center w-full">
                 <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                     <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                   </svg>
                 </span>
-                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white mr-2 pl-8 py-1 md:py-0.5 rounded-sm"/>
+                <div className="flex items-center">
+                  <p className="pr-1 text-slate-700 dark:text-white">Date:</p>
+                  <Flatpickr
+                    id=""
+                    name=""
+                    value={selectedDate}
+                    onChange={(date) => {
+                      const formattedDate = date.length > 0 ? (() => {
+                        const originalDate = new Date(date[0]);
+                        originalDate.setDate(originalDate.getDate() + 1);
+                        return originalDate.toISOString().split('T')[0];
+                      })() : '';
+                      setSelectedDate(formattedDate);
+                    }}
+                    options={{
+                      dateFormat: 'Y-m-d',
+                      altInput: true,
+                      altFormat: 'F j, Y',
+                    }}
+                    placeholder="From"
+                    className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                  />
+                </div>
+                <span className="px-1">-</span>
+                <div className="flex items-center">
+                  <Flatpickr
+                    id=""
+                    name=""
+                    value={selectedDatee}
+                    onChange={(date) => {
+                      const formattedDate = date.length > 0 ? (() => {
+                        const originalDate = new Date(date[0]);
+                        originalDate.setDate(originalDate.getDate() + 1);
+                        return originalDate.toISOString().split('T')[0];
+                      })() : '';
+                      setSelectedDatee(formattedDate);
+                    }}
+                    options={{
+                      dateFormat: 'Y-m-d',
+                      altInput: true,
+                      altFormat: 'F j, Y',
+                    }}
+                    placeholder="To"
+                    className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                  />
+                </div>
               </div>
             </div>
+
   
             {/* Render Content */}
             {renderContent()}
