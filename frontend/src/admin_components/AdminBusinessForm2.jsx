@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
+import { useParams } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -13,107 +14,30 @@ import AdminBusinessProcessing from '../admin_partials/admin_cards/AdminBusiness
 
 const AdminBusinessForm2 =()=>{
 
-
-  
-  const location = useLocation();
-  const { pathname, state } = location;
-  console.log("pathname", pathname);
-  const admin_type = pathname.split("/")[2];
-
-  console.log("userrole", admin_type)
+  const { admin_type } = useParams();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
- const [BusinessPermit, setBusinessPermit] = useState([]);
+  const [businessPermit, setBusinessPermit] = useState([]);
 
- console.log(BusinessPermit)
-
- const [processingTransactions, setProcessingTransactions] = useState([]);
-
- useEffect(() => {
-    const fetchUserTransaction = async () =>{
-      try{
-        const res = await axios.get(`http://localhost:8800/adminrptax/`);
-        setBusinessPermit(res.data.BusinessPermit)
-      } catch (err){
-        console.log(err);
-      }
-      };
-      fetchUserTransaction();
- }, []);
-
-const [BusinessPermitDetails, setBusinessPermitDetails] = useState(null);
-
-
-
- const handleProceedForBusinessPermit = (BusinessPermitDetails) => {
-  setBusinessPermitDetails(BusinessPermitDetails)
- }
-
-const [selectedTransactionId, setSelectedTransactionId] = useState(null);
-
-const handleMoveToProcessing = (transaction) => {
-  setBusinessPermit((prevBusinessPermit) => prevBusinessPermit.filter((t) => t !== transaction));
-  setProcessingTransactions((prevProcessing) => [...prevProcessing, transaction]);
-  setSelectedTransactionId(transaction.transactionId);
-
-}
-
-
-  // View Details Modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => {
-      setIsModalOpen(true);
+  const fetchUserTransaction = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8800/adminbp/processing/`);
+      setBusinessPermit(res.data.businesspermit);
+    } catch (err) {
+      console.log(err);
     }
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
   };
 
-   // Expired Modal
-   const [isModalOpen2, setIsModalOpen2] = useState(false);
-   const handleOpenModal2 = () => {
-       setIsModalOpen2(true);
-     }
-   const handleCloseModal2 = () => {
-     setIsModalOpen2(false);
-   };
+    const handleUpdateData = () => {
+      fetchUserTransaction();
+    };
 
-   // Process Modal
-   const [isModalOpen3, setIsModalOpen3] = useState(false);
-   const handleOpenModal3 = () => {
-       setIsModalOpen3(true);
-     }
-   const handleCloseModal3 = () => {
-     setIsModalOpen3(false);
-   };
-
-   // Reject Modal
-   const [isModalOpen4, setIsModalOpen4] = useState(false);
-   const handleOpenModal4 = () => {
-       setIsModalOpen4(true);
-     }
-   const handleCloseModal4 = () => {
-     setIsModalOpen4(false);
-   };
-
-   // Done Modal
-   const [isModalOpen5, setIsModalOpen5] = useState(false);
-   const handleOpenModal5 = () => {
-       setIsModalOpen5(true);
-     }
-   const handleCloseModal5 = () => {
-     setIsModalOpen5(false);
-   }
-
-
-
-
-  const handleProcessModal = (event) => {
-    event.stopPropagation();
-    console.log('Processing')
-  };
+    useEffect(() => {
+      fetchUserTransaction();
+    }, []);
 
   
 
@@ -150,9 +74,8 @@ const handleMoveToProcessing = (transaction) => {
           <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
             <AdminBusinessProcessing
-            BusinessPermitDetails = {BusinessPermitDetails}
-            processingTransactions = {processingTransactions}
-            selectedTransactionId = {selectedTransactionId}
+            businessPermit = {businessPermit}
+            handleUpdateData={handleUpdateData}
             />
 
           </div>
@@ -160,10 +83,6 @@ const handleMoveToProcessing = (transaction) => {
           <AdminFooter logo={logoSrc} />
         </main>
 
-        <AdminBPView
-          isOpen={isModalOpen}
-          handleClose={handleCloseModal}
-        />
       </div>
     </div>
   );

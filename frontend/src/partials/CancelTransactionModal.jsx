@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CancelTransactionModal = ({ }) => {
+const CancelTransactionModal = ({ onClose, onCancel }) => {
 
   return (
     <div className="fixed z-50 inset-0 overflow-hidden">
@@ -28,7 +28,7 @@ const CancelTransactionModal = ({ }) => {
           <div className="mr-0 md:mr-2 px-3 pb-5 gap-3 sm:px-4">
             <div className="flex justify-end items-center space-x-2 mt-auto">
               <button
-                  onClick=""        
+                  onClick={onClose}        
                   type="button"
                   className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                   >
@@ -36,7 +36,7 @@ const CancelTransactionModal = ({ }) => {
               </button>
 
               <button
-                onClick=""
+                onClick={onCancel}
                 
                 type="button"
                 className="text-white text-xs text-center px-5 py-2 md:text-sm bg-red-500 border border-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-white dark:hover:text-white dark:hover:bg-red-700 dark:focus:ring-red-800"
