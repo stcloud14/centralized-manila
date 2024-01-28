@@ -229,7 +229,7 @@ const navigate = useNavigate();
             new_user_pass: userReg.new_user_pass,
             user_id: userReg.user_id,
           });
-
+          
           if (response.status === 200) {
 
             try {
