@@ -116,22 +116,17 @@ router.post('/updateprocess/:transaction_id', async (req, res) => {
 
     const updateQuery = `UPDATE user_transaction SET status_type = 'Processing' WHERE transaction_id = ?;`;
 
-    const query = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
-    const values = [user_id, formattedDate, notif_title, notif_message];
-
     try {
         const result = await queryDatabase(updateQuery, [transaction_id]);
-        const result1 = await queryDatabase(query,values);
 
-        console.log('User Transactions (Processing):', userTransactions);
-
-    res.json({
-      cedulacert: userTransactions,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error retrieving data');
-  }
+        res.json({
+            message: "Updated transaction!",
+            success: result,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error executing queries" });
+    }
 });
 
 
@@ -147,17 +142,12 @@ router.post('/updatecomplete/:transaction_id', async (req, res) => {
 
     const updateQuery = `UPDATE user_transaction SET status_type = 'Complete' WHERE transaction_id = ?;`;
 
-    const query = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
-    const values = [user_id, formattedDate, notif_title, notif_message];
-
     try {
         const result = await queryDatabase(updateQuery, [transaction_id]);
-        const result1 = await queryDatabase(query,values);
 
         res.json({
             message: "Updated transaction!",
             success: result,
-            notif: result1,
         });
     } catch (err) {
         console.error(err);

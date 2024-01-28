@@ -10,7 +10,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isProcessConfirm, setIsProcessConfirm] = useState(false);
+  const [isCompleteConfirm, setIsCompleteConfirm] = useState(false);
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState();
@@ -52,8 +52,15 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
   };
 
   const handleConfirmClose = () => {
-    setIsProcessConfirm(false);
+    setIsCompleteConfirm(false);  // Fix the variable name
     setIsRejectConfirm(false);
+    setModalView(false);
+  };
+  
+
+  const handleCompleteConfirm = (transaction) => {
+    setSelectedTransaction(transaction);
+    setIsCompleteConfirm(true);
   };
 
   const renderContent = () => {
@@ -63,8 +70,9 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
         filteredctcCedula={filteredctcCedula}
           handleModalOpen={handleModalOpen}
           handleRejectConfirm={handleRejectConfirm}
+          handleCompleteConfirm={handleCompleteConfirm}
           handleProcessConfirm={handleProcessConfirm}
-          
+
         />
       );
     } else if (viewMode === 'card') {
@@ -73,21 +81,22 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
         filteredctcCedula={filteredctcCedula}
           handleModalOpen={handleModalOpen}
           handleRejectConfirm={handleRejectConfirm}
+          handleCompleteConfirm={handleCompleteConfirm}
           handleProcessConfirm={handleProcessConfirm}
-        
+
         />
       );
     }
   };
 
-  const handleProcess = async () => {  
+  const handleComplete = async () => {  
 
     const transaction_id = selectedTransaction.transaction_id;
     const trans_type = selectedTransaction.trans_type;
     const user_id = selectedTransaction.user_id;
   
     try {
-      const response = await axios.post(`http://localhost:8800/adminctc/updateprocess/${transaction_id}`, selectedTransaction);
+      const response = await axios.post(`http://localhost:8800/adminctc/updatecomplete/${transaction_id}`, selectedTransaction);
   
       // Check the response status before proceeding
       if (response.status === 200) {
@@ -105,7 +114,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
 
             const rowData = { ...selectedTransaction, trans_type};
 
-            const status_type = 'P R O C E S S I N G';
+            const status_type = 'C O M P L E T E';
 
             const body = {
               data: rowData,
@@ -232,7 +241,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
         {/* Requests Area */}
         <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200">
           <div className="px-5 py-5">
-            <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>CTC / Cedula Requests</h1>
+            <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>CTC / Cedula Processing</h1>
 
             {isSuccess && (                
               <div className="my-5 text-center">
@@ -264,39 +273,39 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                 
                 {/* Card View Toggle */}
                 <button onClick={() => handleToggleView('card')} className="flex items-center p-1 text-slate-500 hover:text-black dark:text-slate-400 dark:hover:text-white">
-                  {viewMode === 'card' ? <span className='text-black dark:text-white'>
+                {viewMode === 'card' ? <span className='text-black dark:text-white'>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                    <path d="M15 3.75H9v16.5h6V3.75ZM16.5 20.25h3.375c1.035 0 1.875-.84 1.875-1.875V5.625c0-1.036-.84-1.875-1.875-1.875H16.5v16.5ZM4.125 3.75H7.5v16.5H4.125a1.875 1.875 0 0 1-1.875-1.875V5.625c0-1.036.84-1.875 1.875-1.875Z" />
+                  </svg>
+                  </span> : 
+                  
+                  <span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                       <path d="M15 3.75H9v16.5h6V3.75ZM16.5 20.25h3.375c1.035 0 1.875-.84 1.875-1.875V5.625c0-1.036-.84-1.875-1.875-1.875H16.5v16.5ZM4.125 3.75H7.5v16.5H4.125a1.875 1.875 0 0 1-1.875-1.875V5.625c0-1.036.84-1.875 1.875-1.875Z" />
                     </svg>
-                    </span> : 
-                    
-                    <span>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                        <path d="M15 3.75H9v16.5h6V3.75ZM16.5 20.25h3.375c1.035 0 1.875-.84 1.875-1.875V5.625c0-1.036-.84-1.875-1.875-1.875H16.5v16.5ZM4.125 3.75H7.5v16.5H4.125a1.875 1.875 0 0 1-1.875-1.875V5.625c0-1.036.84-1.875 1.875-1.875Z" />
-                      </svg>
-                    </span>}
-                  
-                </button>
-              </div>
+                  </span>}
+                
+              </button>
             </div>
+          </div>
 
-            {/* Search */}
-            <div className="flex items-center text-xs mb-7">
-              <div className="relative w-full">
-                <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                    <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                  </svg>
-                </span>
-                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-              </div>
+          {/* Search */}
+          <div className="flex items-center text-xs mb-7">
+            <div className="relative w-full">
+              <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                  <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </span>
+              <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
             </div>
-  
-            {/* Render Content */}
-            {renderContent()}
-            
-            {/* All Modals */}
-            {isProcessConfirm && (
+          </div>
+
+          {/* Render Content */}
+          {renderContent()}
+          
+          {/* PROCESS MODAL */}
+          {isCompleteConfirm && (
               <div className="fixed z-50 inset-0 overflow-y-auto">
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                   <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -309,33 +318,28 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                     <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                       <div className="mx-auto mt-4">
                         <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                          Are you sure you would like to move this transaction into the Processing section?
+                          Would you like to mark this transaction as complete?
                         </span>
                       </div>
                     </div>
-
                     <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                      <button
+                        onClick={handleConfirmClose}
+                        type="button"
+                        className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                      >
+                        <p>Cancel</p>
+                      </button>
+                    
                     <button
-                      onClick={handleConfirmClose}
-                      type="button"
-                      className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                    >
-                      <p>Cancel</p>
-                    </button>
-
-                    <button
-                    onClick={() => {
-                      handleProcess();
-                      setIsLoading(true);
-                    }}
+                    onClick={handleComplete} 
                     type="button"
                     className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
-                    Confirm
+                      Confirm
                     </button>
                     </div>
 
-                    <div className="font-medium bg-white dark:bg-[#212121] text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm">
                     {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
                     <span>
                       Please wait for a moment...
@@ -346,7 +350,6 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                         Please wait for a moment...
                       </span>
                     ) : null}
-                    </div>
 
                   </div>
                 </div>
@@ -371,31 +374,25 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                         </span>
                       </div>
                     </div>
-                  
-                  <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
-                    <button
-                      onClick={handleConfirmClose}
-                      type="button"
-                      className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                    >
+                    <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                      <button
+                        onClick={handleConfirmClose}
+                        type="button"
+                        className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                      >
                       <p>Cancel</p>
-                    </button>
+                      </button>
+                    
+                      <button
+                      onClick={handleReject} 
+                      type="button"
+                      className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        Confirm
+                      </button>
+                      </div>
 
-                    <button
-                    onClick={() => {
-                      handleReject();
-                      setIsLoading(true);
-                    }}
-                    type="button"
-                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      Confirm
-                    </button>
-
-                  </div>
-
-                  <div className="font-medium bg-white dark:bg-[#212121] text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm">
-                    {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
+                      {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
                     <span>
                       Please wait for a moment...
                     </span>
@@ -405,12 +402,12 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                         Please wait for a moment...
                       </span>
                     ) : null}
-                    </div>
-
+                    
                   </div>
                 </div>
               </div>
             )}
+
            {selectedTransaction && modalView && (
             <AdminCTCView
               // selectedTransaction={selectedTransaction}

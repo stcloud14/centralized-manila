@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
+import Flatpickr from 'react-flatpickr';
 
 import AdminCTCView from '../admin_modals/AdminCTCView';
 import CTCCardView from "../admin_cedula/CTCCardView";
@@ -15,7 +16,9 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState();
   const [transType, setTransType] = useState();
-
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDatee, setSelectedDatee] = useState('');
+  
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
     const query = searchQuery.toUpperCase();
@@ -284,20 +287,88 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
 
             {/* Search */}
             <div className="flex items-center text-xs mb-7">
-              <div className="relative w-full">
+              <div className="relative flex items-center w-full">
                 <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                     <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                   </svg>
                 </span>
-                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white mr-2 pl-8 py-1 md:py-0.5 rounded-sm"/>
+                <div className="flex items-center">
+                  <p className="pr-1 text-slate-700 dark:text-white">Date:</p>
+                  <Flatpickr
+                    value={selectedDate}
+                    onChange={(date) => setSelectedDate(date[0])}
+                    options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                        if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                            '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                            monthDropdown.style.backgroundColor = '#212121';
+                        }
+                        }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                        '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                        }
+                    },
+                    }}
+                    placeholder="From"
+                    className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                  />
+                </div>
+                <span className="px-1">-</span>
+                <div className="flex items-center">
+                  <Flatpickr
+                    value={selectedDatee}
+                    onChange={(date) => setSelectedDatee(date[0])}
+                    options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                        if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                            '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                            monthDropdown.style.backgroundColor = '#212121';
+                        }
+                        }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                        '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                        }
+                    },
+                    }}
+                    placeholder="To"
+                    className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                  />
+                </div>
               </div>
             </div>
+
   
             {/* Render Content */}
             {renderContent()}
-            
-            {/* Process Modals */}
+          
+
+            {/* PROCESS MODAL */}
             {isProcessConfirm && (
               <div className="fixed z-50 inset-0 overflow-y-auto">
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
