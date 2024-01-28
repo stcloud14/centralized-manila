@@ -3,8 +3,6 @@ import React, { useState, useRef, useEffect } from 'react';
 
 function Notifications({ notifications }) {
 
-  console.log(notifications)
-
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const today = new Date();

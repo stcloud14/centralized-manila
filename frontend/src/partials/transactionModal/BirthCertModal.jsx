@@ -16,7 +16,9 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpe
   
   const [birthTransaction, setBirthTransaction] = useState({});
 
-  
+  const [isCancelConfirmed, setIsCancelConfirmed] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const makePayment = async () => {
     try {
         if (!transaction_id) {
@@ -54,7 +56,74 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpe
 };
 
 
+const cancelTrans = async (e) => {
+  e.preventDefault();
 
+  try {
+
+    const response = await axios.post(`http://localhost:8800/transachistory/canceltrans/${transaction_id}`, selectedTransaction);
+
+    if (response.status === 200) {
+      // Fetch user_email after successful payment
+      try {
+        const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+        
+        if (res.data.user_email) {
+          const updatedUserEmail = res.data.user_email;
+          const f_name = res.data.f_name;
+          const l_name = res.data.l_name;
+          console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+          const user_email = updatedUserEmail;
+
+          const trans_type = 'Real Property Tax Payment';
+
+          const rowData = { ...selectedTransaction, trans_type};
+
+          const status_type = 'C A N C E L E D';
+
+          const body = {
+            data: rowData,
+            status_type: status_type,
+            f_name: f_name,
+            l_name: l_name
+          };
+
+          try {
+            const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+
+            if (emailResponse.data && emailResponse.data.message) {
+              console.log('SENT EMAIL');
+            } else {
+              console.log("Failed to send email.");
+            }
+          } catch (emailError) {
+            // alert(emailError);
+          }
+        } else {
+          console.error('Transaction error:', res.statusText);
+        }
+      } catch (fetchError) {
+        console.log('NOT FETCHING EMAIL');
+        console.error(fetchError);
+      }
+
+      setIsCancelConfirmed(false);
+        setIsSuccess(true);
+        console.log('Transaction canceled');
+  
+        setTimeout(() => {
+          setIsSuccess(false);
+          onClose();
+        }, 2100);
+        
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    } catch (transactionError) {
+      console.error('Transaction error:', transactionError);
+    }
+  };
 
   useEffect(() => {
     const fetchBirthTransaction = async () => {
@@ -73,6 +142,15 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpe
     };
     fetchBirthTransaction();
   }, [transaction_id]);
+
+
+  const handleOpenConfirm = () => {
+    setIsCancelConfirmed(true);
+  };
+
+  const handleCloseConfirm = () => {
+    setIsCancelConfirmed(false);
+  };
  
   return (
     <div className="fixed z-50 inset-0 ">
@@ -132,6 +210,12 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpe
             <span className="font-bold md:text-lg text-sm">Birth Certificate Transaction Details</span>
             </div>
           </div>
+
+          {isSuccess && (                
+            <div className="my-5 text-center">
+              <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction Canceled!</div> 
+            </div>
+          )}
 
           <div className="md:max-h-[16rem] max-h-[9rem] bg-white dark:bg-[#212121] pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">   
             <div className="mx-auto">
@@ -427,7 +511,7 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpe
 
             <div className="flex items-center space-x-2 ml-auto">
                 <button
-                    onClick={handleOpenModal}
+                    onClick={handleOpenConfirm}
                     type="button"
                     className="text-red-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
                     <p>Cancel Transaction</p>
@@ -452,8 +536,12 @@ const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpe
               )}
             </div>
           </div>
-
         </div>
+
+        {isCancelConfirmed && (
+          <CancelTransactionModal onClose={handleCloseConfirm} onCancel={cancelTrans} />
+        )}
+
       </div>
     </div>
   );
