@@ -62,6 +62,59 @@ const AdminVerifyReqsForm =()=>{
       const response = await axios.post(`http://localhost:8800/adminur/approve/${transaction.user_id}`);
   
       if (response.status === 200) {
+
+
+        try {
+          const res = await axios.get(`http://localhost:8800/email/${transaction.user_id}`);
+          
+          const date = new Date();
+          const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+
+
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const trans_type = 'Verified Success';
+
+            const rowData = { ...transaction, trans_type, formattedDate};
+
+            const status_type = 'V E R I F I E D';
+
+            const body = {
+              data: rowData,
+              formattedDate: formattedDate,
+              status_type: status_type,
+              // f_name: f_name,
+              l_name: l_name
+            };
+  
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/status-verified-email/${user_email}`, body);
+  
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+                // alert(emailResponse.data.message);
+              } else {
+                console.log("Failed to send email.");
+              }
+            } catch (emailError) {
+              //
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
+        }
+
         setIsApproved(true);
         setIsPlaceholder(transaction.l_name)
   
@@ -87,6 +140,60 @@ const AdminVerifyReqsForm =()=>{
       const response = await axios.post(`http://localhost:8800/adminur/decline/${transaction.user_id}`);
   
       if (response.status === 200) {
+
+        try {
+          const res = await axios.get(`http://localhost:8800/email/${transaction.user_id}`);
+          
+          const date = new Date();
+          const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+
+
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const trans_type = 'Verified Failed';
+
+            const rowData = { ...transaction, trans_type, formattedDate};
+
+            const status_type = 'R E J E C T E D';
+
+            const body = {
+              data: rowData,
+              formattedDate: formattedDate,
+              status_type: status_type,
+              // f_name: f_name,
+              l_name: l_name
+            };
+  
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/status-verified-email/${user_email}`, body);
+  
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+                // alert(emailResponse.data.message);
+              } else {
+                console.log("Failed to send email.");
+              }
+            } catch (emailError) {
+              //
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
+        }
+
+
+
         setIsDeclined(true);
         setIsPlaceholder(transaction.l_name)
 
