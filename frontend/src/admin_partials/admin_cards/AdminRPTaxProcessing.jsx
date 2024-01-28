@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
+import Flatpickr from 'react-flatpickr';
 
 import AdminRPView from '../admin_modals/AdminRPView';
 import RPCardView from '../admin_rptax/RPCardView';
@@ -9,6 +10,9 @@ import RPTableView from '../admin_rptax/RPTableView';
 
 const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) => {
   
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDatee, setSelectedDatee] = useState('');
+
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState('table'); 
 
@@ -290,17 +294,73 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
             </div>
           </div>
 
-          {/* Search */}
-          <div className="flex items-center text-xs mb-7">
-            <div className="relative w-full">
-              <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                  <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
-              </span>
-              <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+            {/* Search */}
+            <div className="flex flex-col items-center md:flex-row text-xs mx-2 mb-2 sm:mb-7">
+              <div className="relative flex flex-col items-center md:flex-row w-full">
+                <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mb-[0.5rem] sm:mb-0">
+                    <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+                </span>
+                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white mr-0 sm:mr-2 pl-8 py-1 md:py-0.5 rounded-sm mb-2 md:mb-0"/>
+              </div>
+              <div className="flex w-full items-center">
+                <p className="pr-1 text-slate-700 dark:text-white">Date:</p>
+                <Flatpickr
+                  value={selectedDate}
+                  onChange={(date) => setSelectedDate(date[0])}
+                  options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                      if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                        if (monthDropdown) {
+                          monthDropdown.style.backgroundColor = '#212121';
+                        }
+                      }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                      const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                      if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                      }
+                    },
+                  }}
+                  placeholder="From"
+                  className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                />
+                <span className="px-1">-</span>
+                <Flatpickr
+                  value={selectedDatee}
+                  onChange={(date) => setSelectedDatee(date[0])}
+                  options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                      if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                        if (monthDropdown) {
+                          monthDropdown.style.backgroundColor = '#212121';
+                        }
+                      }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                      const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                      if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                      }
+                    },
+                  }}
+                  placeholder="To"
+                  className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                />
+              </div>      
             </div>
-          </div>
 
           {/* Render Content */}
           {renderContent()}
@@ -335,22 +395,41 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
                     <button
                     onClick={handleComplete} 
                     type="button"
-                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                     >
                       Confirm
                     </button>
                     </div>
 
+                    <div className="font-medium flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
                     {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
-                    <span>
+                    <svg
+                      aria-hidden="true"
+                      className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                    <span className="pl-2">
                       Please wait for a moment...
                     </span>
+
 
                     {isLoading ? (
                       <span>
                         Please wait for a moment...
                       </span>
                     ) : null}
+                    </div>
 
                   </div>
                 </div>
@@ -387,22 +466,41 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
                       <button
                       onClick={handleReject} 
                       type="button"
-                      className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                       >
                         Confirm
                       </button>
                       </div>
 
-                      {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
-                    <span>
+                    <div className="font-medium flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
+                    {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
+                    <svg
+                      aria-hidden="true"
+                      className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                    <span className="pl-2">
                       Please wait for a moment...
                     </span>
+
 
                     {isLoading ? (
                       <span>
                         Please wait for a moment...
                       </span>
                     ) : null}
+                    </div>
                     
                   </div>
                 </div>
