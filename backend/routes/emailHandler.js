@@ -49,7 +49,7 @@ const FormatMail = (user_email, body, amount) => {
                       <tbody style="width:100%">
                         <tr style="width:100%; color:black !important;">
                           <td style="padding:0px 20px 10px 20px">
-                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: ${body.transaction_id} </span></p>
                             
                             <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
                             <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
@@ -59,8 +59,8 @@ const FormatMail = (user_email, body, amount) => {
                             <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>${body.data.acc_name}</p>
                             <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>${body.data.rp_tdn}</p>
                             <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>${body.data.rp_pin}</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>${body.data.rp_tdn}</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>${body.data.rp_tdn}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>${body.data.date}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>${body.data.time}</p>
                             <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${body.data.amount}.00</p>
 
                             <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
@@ -883,28 +883,36 @@ const VerificationMail = (user_email, body, amount) => {
 
 
 
-    router.get('/:user_id', async (req, res) => {
-        const user_id = req.params.user_id;
-    
-        const query = "SELECT uc.user_email, up.f_name, up.l_name FROM user_contact uc JOIN user_personal up ON uc.user_id = up.user_id WHERE uc.user_id = ?";
-    
-        try {
-        const result = await queryDatabase(query, [user_id]);
-    
-        if (result.length > 0 && result[0].user_email) {
-            const user_email = result[0].user_email;
-            const f_name = result[0].f_name;
-            const l_name = result[0].l_name;
-            res.json({ user_email, f_name, l_name });
-        } else {
-            console.error("Invalid response format or missing user_email");
-            res.status(404).json({ error: "User not found or missing email" });
-        }
-        } catch (err) {
-        console.error(err);
-        res.status(500).send('Error retrieving data');
-        }
-    });
+router.get('/:user_id', async (req, res) => {
+  const user_id = req.params.user_id;
+
+  const query = `
+      SELECT uc.user_email, up.f_name, up.l_name, ut.transaction_id
+      FROM user_contact uc
+      JOIN user_personal up ON uc.user_id = up.user_id
+      JOIN user_transaction ut ON uc.user_id = ut.user_id
+      WHERE uc.user_id = ?`;
+
+  try {
+      const result = await queryDatabase(query, [user_id]);
+
+      if (result.length > 0) {
+          const { user_email, f_name, l_name, transaction_id } = result[0];
+          if (user_email) {
+              res.json({ user_email, f_name, l_name, transaction_id });
+          } else {
+              console.error("Missing user_email in the database");
+              res.status(500).json({ error: "Internal Server Error" });
+          }
+      } else {
+          console.error("User not found");
+          res.status(404).json({ error: "User not found" });
+      }
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error retrieving data');
+  }
+});
 
 
     router.post('/send-email/:user_email', async (req, res) => {
