@@ -306,21 +306,31 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                 <div className="flex items-center">
                   <p className="pr-1 text-slate-700 dark:text-white">Date:</p>
                   <Flatpickr
-                    id=""
-                    name=""
                     value={selectedDate}
-                    onChange={(date) => {
-                      const formattedDate = date.length > 0 ? (() => {
-                        const originalDate = new Date(date[0]);
-                        originalDate.setDate(originalDate.getDate() + 1);
-                        return originalDate.toISOString().split('T')[0];
-                      })() : '';
-                      setSelectedDate(formattedDate);
-                    }}
+                    onChange={(date) => setSelectedDate(date[0])}
                     options={{
-                      dateFormat: 'Y-m-d',
-                      altInput: true,
-                      altFormat: 'F j, Y',
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                        if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                            '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                            monthDropdown.style.backgroundColor = '#212121';
+                        }
+                        }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                        '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                        }
+                    },
                     }}
                     placeholder="From"
                     className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
@@ -329,21 +339,31 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                 <span className="px-1">-</span>
                 <div className="flex items-center">
                   <Flatpickr
-                    id=""
-                    name=""
                     value={selectedDatee}
-                    onChange={(date) => {
-                      const formattedDate = date.length > 0 ? (() => {
-                        const originalDate = new Date(date[0]);
-                        originalDate.setDate(originalDate.getDate() + 1);
-                        return originalDate.toISOString().split('T')[0];
-                      })() : '';
-                      setSelectedDatee(formattedDate);
-                    }}
+                    onChange={(date) => setSelectedDatee(date[0])}
                     options={{
-                      dateFormat: 'Y-m-d',
-                      altInput: true,
-                      altFormat: 'F j, Y',
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                        if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                            '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                            monthDropdown.style.backgroundColor = '#212121';
+                        }
+                        }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                        const monthDropdown = instance.calendarContainer.querySelector(
+                        '.flatpickr-monthDropdown-months'
+                        );
+                        if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                        }
+                    },
                     }}
                     placeholder="To"
                     className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
