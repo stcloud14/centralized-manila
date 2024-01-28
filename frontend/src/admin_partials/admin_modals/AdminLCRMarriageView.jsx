@@ -1,6 +1,12 @@
 import React from 'react';
+import moment from 'moment';
 
-const AdminLCRMarriageView = ({ isOpen, handleClose }) => {
+const AdminLCRMarriageView = ({ selectedTransaction, isOpen, handleClose, transType }) => {
+
+  const { transaction_id, status_type, marriage_date } = selectedTransaction;
+  console.log(selectedTransaction)
+  const formattedMarriageDate = moment(marriage_date).format('MMMM D, YYYY');
+
   return (
     isOpen && (
       <div className="fixed z-50 inset-0 ">
@@ -26,30 +32,33 @@ const AdminLCRMarriageView = ({ isOpen, handleClose }) => {
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{transaction_id}</span>
                           </div>
                        
                         <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
                             <span className="font-semibold whitespace-nowrap">Husband's Personal Information</span>
                           </div>
+                          {transType === 'Marriage Certificate' ? 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Husband's Last Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.husband_lname}</span>
                           </div>
+                          :null}
+                          {transType === 'Marriage Certificate' ? 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Husband's First Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.husband_fname}</span>
                           </div>
-                          
+                          :null}
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Husband's Middle Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.husband_mname}</span>
                           </div>
                           
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Husband's Suffix</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.husband_suffix}</span>
                           </div>
                           
                           
@@ -60,19 +69,19 @@ const AdminLCRMarriageView = ({ isOpen, handleClose }) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Wife's Last Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.wife_lname}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Wife's First Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.wife_fname}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Wife's Middle Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.wife_mname}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Wife's Suffix</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.wife_suffix}</span>
                           </div>
                                                     
                           <br/>
@@ -82,19 +91,19 @@ const AdminLCRMarriageView = ({ isOpen, handleClose }) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region of Marriage</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.region}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province of Marriage</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.province}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal of Marriage</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.city}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date of Marriage</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{formattedMarriageDate}</span>
                           </div>
                                                                               
                           <br/>
@@ -104,37 +113,37 @@ const AdminLCRMarriageView = ({ isOpen, handleClose }) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Last Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reql_name}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqf_name}</span>
                           </div>
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqm_name}</span>
                           </div>
                           
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqsuffix}</span>
                           </div>
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Relationship to the Owner</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.owner_rel}</span>
                           </div>
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tel_no}</span>
                           </div>
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mobile No.</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.mobile_no}</span>
                           </div>
                                                                                                         
                           <br/>
@@ -144,50 +153,50 @@ const AdminLCRMarriageView = ({ isOpen, handleClose }) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqregion}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqprovince}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqcity}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Barangay</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.brgy_dist}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">House No. / Unit Floor</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.house_floor}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Street / Building Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bldg_name}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.zip_code}</span>
                           </div>
 
                           <br/>
 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Copies</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.copies}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">What to Print</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.print_type}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Purpose</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.purpose_type}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.valid_id_type}</span>
                           </div>
                         </div>
                         
@@ -200,28 +209,31 @@ const AdminLCRMarriageView = ({ isOpen, handleClose }) => {
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.date}</span>
                           </div>
                          
 
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.time}</span>
                           </div>
 
-                          
+                          {transType === 'Marriage Certificate' ? 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">-</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">{status_type}</span>
                           </div>
+                          :null }
                           
 
                           <hr className='mt-7 mb-1'/>
+                          {transType === 'Marriage Certificate' ? 
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">-</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">P {selectedTransaction.amount}</span>
                           </div>
+                          :null }
                         </div>
 
                         <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
+import { useParams} from 'react-router-dom';
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -12,17 +12,9 @@ import AdminLCRDeathView from '../admin_partials/admin_modals/AdminLCRDeathView'
 import AdminLCRProcessing from '../admin_partials/admin_cards/AdminLCRProcessing';
 
 
-
 const AdminLCRForm2 =()=>{
 
-
-  
-  const location = useLocation();
-  const { pathname, state } = location;
-  console.log("pathname", pathname);
-  const admin_type = pathname.split("/")[2];
-
-  console.log("userrole", admin_type)
+  const { admin_type } = useParams();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -31,41 +23,26 @@ const AdminLCRForm2 =()=>{
   const [birthCert, setBirthCert] = useState([]);
   const [deathCert, setDeathCert] = useState([]);
   const [marriageCert, setMarriageCert] = useState([]);
-  const [selectedTransactionId, setSelectedTransactionId] = useState(null);
+
+
+  const fetchUserTransaction = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8800/adminlcr/processing/`);
+      setBirthCert(res.data.birthcert); 
+      setDeathCert(res.data.deathcert);
+      setMarriageCert(res.data.marriagecert);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  const handleUpdateData = () => {
+    fetchUserTransaction();
+  };
 
   useEffect(() => {
-    const fetchUserTransaction = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/adminlcr/`);
-        setBirthCert(res.data.birthcert); 
-        setDeathCert(res.data.deathcert);
-        setMarriageCert(res.data.marriagecert);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchUserTransaction();
   }, []);
-
-  // View Details Modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => {
-      setIsModalOpen(true);
-    }
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
- 
-
-
-
-  const handleProcessModal = (event) => {
-    event.stopPropagation();
-    console.log('Processing')
-  };
-
-  
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -108,24 +85,21 @@ const AdminLCRForm2 =()=>{
           <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
             <AdminLCRProcessing
+              birthCert={birthCert}
+              deathCert={deathCert}
+              marriageCert={marriageCert}
+              handleUpdateData={handleUpdateData}
             />
-
           </div>
 
           <AdminFooter logo={logoSrc} />
         </main>
-        <AdminLCRBirthView
-          isOpen={isModalOpen}
-          handleClose={handleCloseModal}
+        {/*<AdminLCRBirthView
         />
         <AdminLCRDeathView
-          isOpen={isModalOpen}
-          handleClose={handleCloseModal}
         />
         <AdminLCRMarriageView
-          isOpen={isModalOpen}
-          handleClose={handleCloseModal}
-        />
+        />*/}
         
       </div>
     </div>
