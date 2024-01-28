@@ -225,6 +225,37 @@ const ResetPassMail = (user_email, body, amount) => {
 };
 
 
+const RegisteredAccountEmail = (user_email, body) => {
+  return `
+  <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
+    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
+      <tbody>
+        <tr style="width:100%">
+          <td><img alt="Koala" height="50" src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/koala-logo.png" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" width="170" />
+            <p style="font-size:16px;line-height:26px;margin:16px 0">Hi ${body.l_name},</p>
+            <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Centralized Manila, the sales intelligence platform that helps you uncover qualified leads and close deals faster.</p>
+            <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align:center">
+              <tbody>
+                <tr>
+                  <td><a href="http://localhost:5173/" style="background-color:#5F51E8;border-radius:3px;color:#fff;font-size:16px;text-decoration:none;text-align:center;display:inline-block;padding:12px 12px 12px 12px;line-height:100%;max-width:100%" target="_blank"><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">Get started</span><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a></td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:16px;line-height:26px;margin:16px 0">Best,<br />The Centralized team</p>
+            <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
+            <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">470 Noor Ave STE B #1148, South San Francisco, CA 94080</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+
+    `;
+};
+
+
+
+
     router.get('/:user_id', async (req, res) => {
         const user_id = req.params.user_id;
     
@@ -249,78 +280,78 @@ const ResetPassMail = (user_email, body, amount) => {
     });
 
 
-  router.post('/send-email/:user_email', async (req, res) => {
+    router.post('/send-email/:user_email', async (req, res) => {
 
-    const { user_email } = req.params;
-    const body = req.body;
-    const transType = req.body.data.trans_type;
-    const amount = req.body.data.amount / 100;
+      const { user_email } = req.params;
+      const body = req.body;
+      const transType = req.body.data.trans_type;
+      const amount = req.body.data.amount / 100;
 
-    // const statType = req.body.status_type;
-  
-    if (!user_email) {
-    return res.status(400).json({ error: "user_email is missing or empty!" });
-    }
-
-    try {
-      const result = await transporter.sendMail({
-        from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
-        to: user_email,
-        subject: transType,
-        html: FormatMail(user_email, body, amount),
-      });
+      // const statType = req.body.status_type;
     
-      if (!result.response) {
-        return res.status(400).json({ error: "Error sending email" });
+      if (!user_email) {
+      return res.status(400).json({ error: "user_email is missing or empty!" });
       }
-    
-      res.json({
-        message: "Email has been successfully sent!",
-      });
-    
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: err.message });
-    }
-  });
 
-
-  
-  router.post('/reset-email/:user_email', async (req, res) => {
-
-    const { user_email } = req.params;
-    const body = req.body;
-    const transType = req.body.data.trans_type;
-    const amount = req.body.data.amount / 100;
-    const formattedDate = req.body.data.formattedDate;
-
-    // const statType = req.body.status_type;
-  
-    if (!user_email) {
-    return res.status(400).json({ error: "user_email is missing or empty!" });
-    }
-
-    try {
-      const result = await transporter.sendMail({
-        from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
-        to: user_email,
-        subject: transType,
-        html: ResetPassMail(user_email, body, amount),
-      });
-    
-      if (!result.response) {
-        return res.status(400).json({ error: "Error sending email" });
+      try {
+        const result = await transporter.sendMail({
+          from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
+          to: user_email,
+          subject: transType,
+          html: FormatMail(user_email, body, amount),
+        });
+      
+        if (!result.response) {
+          return res.status(400).json({ error: "Error sending email" });
+        }
+      
+        res.json({
+          message: "Email has been successfully sent!",
+        });
+      
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
       }
+    });
+
+
     
-      res.json({
-        message: "Email has been successfully sent!",
-      });
+    router.post('/reset-email/:user_email', async (req, res) => {
+
+      const { user_email } = req.params;
+      const body = req.body;
+      const transType = req.body.data.trans_type;
+      const amount = req.body.data.amount / 100;
+      const formattedDate = req.body.data.formattedDate;
+
+      // const statType = req.body.status_type;
     
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: err.message });
-    }
-  });
+      if (!user_email) {
+      return res.status(400).json({ error: "user_email is missing or empty!" });
+      }
+
+      try {
+        const result = await transporter.sendMail({
+          from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
+          to: user_email,
+          subject: transType,
+          html: ResetPassMail(user_email, body, amount),
+        });
+      
+        if (!result.response) {
+          return res.status(400).json({ error: "Error sending email" });
+        }
+      
+        res.json({
+          message: "Email has been successfully sent!",
+        });
+      
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+      }
+    });
 
 
 
@@ -394,6 +425,41 @@ const ResetPassMail = (user_email, body, amount) => {
 
 
 
+
+
+
+    router.post('/registered-send-email/:user_email', async (req, res) => {
+
+      const { user_email } = req.params;
+      const body = req.body;
+      const transType = req.body.data.trans_type;
+
+    
+      if (!user_email) {
+      return res.status(400).json({ error: "user_email is missing or empty!" });
+      }
+
+      try {
+        const result = await transporter.sendMail({
+          from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
+          to: user_email,
+          subject: transType,
+          html: RegisteredAccountEmail(user_email, body),
+        });
+      
+        if (!result.response) {
+          return res.status(400).json({ error: "Error sending email" });
+        }
+      
+        res.json({
+          message: "Email has been successfully sent!",
+        });
+      
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+      }
+    });
 
   function queryDatabase(query, values) {
     return new Promise((resolve, reject) => {

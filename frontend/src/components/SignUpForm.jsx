@@ -103,10 +103,65 @@ const handleClick = async (e) => {
       if (existenceCheckResponse.data.exists) {
         // User exists, display a message or redirect to the login page
         alert(existenceCheckResponse.data.message);
+
+        
         navigate("/register");
       } else {
         // User does not exist, proceed with registration
-        await axios.post("http://localhost:8800/register", userReg);
+        const response = await axios.post("http://localhost:8800/register", userReg);
+        if (response.status === 200) {
+          const user_id = response.data.user_id;
+          try {
+            const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+            
+            // const date = new Date();
+            // const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
+            if (res.data.user_email) {
+              const updatedUserEmail = res.data.user_email;
+              const f_name = res.data.f_name;
+              const l_name = res.data.l_name;
+
+  
+              console.log('FETCHED USER EMAIL:', updatedUserEmail);
+  
+              const user_email = updatedUserEmail;
+  
+              const trans_type = 'Welcome New User';
+  
+              const rowData = { ...userReg, trans_type};
+
+              // const status_type = 'P E N D I N G';
+  
+              const body = {
+                data: rowData,
+                // formattedDate: formattedDate,
+                // status_type: status_type,
+                // f_name: f_name,
+                l_name: l_name
+              };
+    
+              // Proceed with additional logic after updating state
+              try {
+                const emailResponse = await axios.post(`http://localhost:8800/email/registered-send-email/${user_email}`, body);
+    
+                if (emailResponse.data && emailResponse.data.message) {
+                  console.log('SENT EMAIL');
+                  // alert(emailResponse.data.message);
+                } else {
+                  console.log("Failed to send email.");
+                }
+              } catch (emailError) {
+                //
+              }
+            } else {
+              console.error('Transaction error:', res.statusText);
+            }
+          } catch (fetchError) {
+            console.log('NOT FETCHING EMAIL');
+            console.error(fetchError);
+          }
+        }
         setIsSuccess(true);
         console.log('Successful Register');
         setTimeout(() => {
