@@ -14,14 +14,6 @@ function DropdownNotifications({ align }) {
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
-  console.log(trigger)
-  console.log(dropdownOpen)
-  console.log(dropdownOpen1)
-
-  console.log(notifications)
-
-  
-
   const { user_id } = useParams();
 
 

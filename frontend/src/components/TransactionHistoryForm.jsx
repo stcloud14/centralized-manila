@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
@@ -27,6 +28,8 @@ const TransactionHistoryForm = () => {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [userPersonal, setUserPersonal]=useState({})
+
+  console.log(userTransaction)
 
   useEffect(() => {
     const fetchUserPersonal = async () => {
