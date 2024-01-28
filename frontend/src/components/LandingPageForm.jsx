@@ -123,6 +123,7 @@ const LandingPageForm = () => {
     });
   };
 
+
   const onSignup = async (recaptchaToken) => {
     const appVerifier = window.recaptchaVerifier;
     const phoneNumber = `+63${userAuth.mobile_no}`;
