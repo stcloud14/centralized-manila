@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 
-import AdminCTCView from '../admin_partials/admin_modals/AdminCTCView';
-
 import AdminCTCProcessing from '../admin_partials/admin_cards/AdminCTCProcessing';
-
 
 
 const AdminCedulaForm2 =()=>{
 
-
-  
   const location = useLocation();
   const { pathname, state } = location;
   console.log("pathname", pathname);
@@ -26,57 +22,26 @@ const AdminCedulaForm2 =()=>{
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
-  // View Details Modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => {
-      setIsModalOpen(true);
+  const [ctcCedula, setctcCedula] = useState([]);
+
+  const fetchUserTransaction = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8800/adminctc/processing/`);
+      console.log('Response:', res.data);
+      setctcCedula(res.data.cedulacert);
+    } catch (err) {
+      console.log('Fetch error:', err);
     }
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
   };
-
-   // Expired Modal
-   const [isModalOpen2, setIsModalOpen2] = useState(false);
-   const handleOpenModal2 = () => {
-       setIsModalOpen2(true);
-     }
-   const handleCloseModal2 = () => {
-     setIsModalOpen2(false);
-   };
-
-   // Process Modal
-   const [isModalOpen3, setIsModalOpen3] = useState(false);
-   const handleOpenModal3 = () => {
-       setIsModalOpen3(true);
-     }
-   const handleCloseModal3 = () => {
-     setIsModalOpen3(false);
-   };
-
-   // Reject Modal
-   const [isModalOpen4, setIsModalOpen4] = useState(false);
-   const handleOpenModal4 = () => {
-       setIsModalOpen4(true);
-     }
-   const handleCloseModal4 = () => {
-     setIsModalOpen4(false);
-   };
-
-   // Done Modal
-   const [isModalOpen5, setIsModalOpen5] = useState(false);
-   const handleOpenModal5 = () => {
-       setIsModalOpen5(true);
-     }
-   const handleCloseModal5 = () => {
-     setIsModalOpen5(false);
-   }
-
-
-
-
-  const handleProcessModal = (event) => {
-    event.stopPropagation();
-    console.log('Processing')
+  
+  
+  
+  useEffect(() => {
+    fetchUserTransaction();
+  }, []);
+  
+  const handleUpdateData = () => {
+    fetchUserTransaction();
   };
 
   
@@ -114,18 +79,14 @@ const AdminCedulaForm2 =()=>{
           <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
             <AdminCTCProcessing
-
+            ctcCedula={ctcCedula} 
+            handleUpdateData={handleUpdateData}
             />
 
           </div>
 
           <AdminFooter logo={logoSrc} />
         </main>
-
-        <AdminCTCView
-          isOpen={isModalOpen}
-          handleClose={handleCloseModal}
-        />
       </div>
     </div>
   );

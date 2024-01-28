@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import moment from 'moment/moment.js';
 
-const AdminCTCView = ({ isOpen, handleClose }) => {
+const AdminCTCView = ({ selectedTransaction, isOpen, handleClose }) => {
+
+  const { transaction_id, status_type } = selectedTransaction;
+  
+
+  console.log(selectedTransaction)
+
+
   return (
     isOpen && (
       <div className="fixed z-50 inset-0 ">
@@ -17,9 +25,6 @@ const AdminCTCView = ({ isOpen, handleClose }) => {
                           <span className="font-bold md:text-lg text-sm">Cedula Transaction Details</span>
                           </div>
                         </div>
-          
-          
-          
           <div className="max-h-[19.5rem] pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
             <div className="mx-auto">
                     <div className="sm:mt-0" id="modal-headline">   
@@ -28,7 +33,11 @@ const AdminCTCView = ({ isOpen, handleClose }) => {
                         
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{transaction_id}</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Type</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{status_type}</span>
                           </div>
                        
                         <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
@@ -36,23 +45,23 @@ const AdminCTCView = ({ isOpen, handleClose }) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Last Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.l_name}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">First Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.f_name}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Middle Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.m_name}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Suffix</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.suffix_type}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Sex</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.sex_type}</span>
                           </div>
 
                           <br/>
@@ -62,31 +71,31 @@ const AdminCTCView = ({ isOpen, handleClose }) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.region_name}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.prov_name}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.city_name}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Barangay</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.brgy_dist}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">House No. / Unit Floor</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.house_floor}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Street / Building Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bldg_name}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Zip Code</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.zip_code}</span>
                           </div>
 
                           <br/>
@@ -96,58 +105,58 @@ const AdminCTCView = ({ isOpen, handleClose }) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Civil Status</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.cvl_status}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Country of Citizenship</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.czn_id}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Height (ft)</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.height}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Weight (kg)</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.weight}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Alien Certificate of Registration No.</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.acr_no}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
                             <br/>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Employment Status</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.emp_status}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Payer Account No.</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.acc_no}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Residence Tax Due</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">    {moment(selectedTransaction.cedula_date).format('MMMM DD, YYYY')}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.valid_id_type}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Profession/Occupation/Business</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.pob_status}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Income from Real Property</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.income_id}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Earnings from Business</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.gross_id}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Earnings from Profession</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.salary_id}</span>
                           </div>
                         </div>
                         
@@ -160,27 +169,27 @@ const AdminCTCView = ({ isOpen, handleClose }) => {
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Date Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.date}</span>
                           </div>
                          
 
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.time}</span>
                           </div>
 
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">-</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>
                           </div>
                           
 
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
                             <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">-</span>
+                            <span className="font-semibold whitespace-nowrap ml-4">P {selectedTransaction.amount + '.00' }</span>
                           </div>
                         </div>
 
