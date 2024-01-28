@@ -313,7 +313,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
             </div> */}
 
               {filteredTransactions.length === 0 ? (
-                <div className="text-center py-4">
+                <div className="text-center text-sm py-4">
                   {searchInput || selectedType || selectedStatus ? (
                     <span>No records found.</span>
                   ) : (
