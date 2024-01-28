@@ -49,19 +49,19 @@ const FormatMail = (user_email, body, amount) => {
                       <tbody style="width:100%">
                         <tr style="width:100%; color:black !important;">
                           <td style="padding:0px 20px 10px 20px">
-                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: ${body.transaction_id} </span></p>
                             
                             <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
                             <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
                             <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
                             <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
 
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>${body.data.acc_name}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>${body.data.rp_tdn}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>${body.data.rp_pin}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>${body.data.date}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>${body.data.time}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${body.data.amount}.00</p>
 
                             <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
                             <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
@@ -810,29 +810,109 @@ const RegisteredAccountEmail = (user_email, body) => {
 
 
 
+const VerificationMail = (user_email, body, amount) => {
+  return `
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%; color:black !important;">
+                          <td style="padding:0px 20px 10px 20px">
+                            
+                            
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.verification} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
 
-    router.get('/:user_id', async (req, res) => {
-        const user_id = req.params.user_id;
-    
-        const query = "SELECT uc.user_email, up.f_name, up.l_name FROM user_contact uc JOIN user_personal up ON uc.user_id = up.user_id WHERE uc.user_id = ?";
-    
-        try {
-        const result = await queryDatabase(query, [user_id]);
-    
-        if (result.length > 0 && result[0].user_email) {
-            const user_email = result[0].user_email;
-            const f_name = result[0].f_name;
-            const l_name = result[0].l_name;
-            res.json({ user_email, f_name, l_name });
-        } else {
-            console.error("Invalid response format or missing user_email");
-            res.status(404).json({ error: "User not found or missing email" });
-        }
-        } catch (err) {
-        console.error(err);
-        res.status(500).send('Error retrieving data');
-        }
-    });
+
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+
+                            <hr style="margin:10px 0"/>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0;margin-top:-5px">This email is sent as your address is listed as the recovery email for Centralized Manila. If this is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+    `;
+};
+
+
+
+
+router.get('/:user_id', async (req, res) => {
+  const user_id = req.params.user_id;
+
+  const query = `
+      SELECT uc.user_email, up.f_name, up.l_name, ut.transaction_id
+      FROM user_contact uc
+      JOIN user_personal up ON uc.user_id = up.user_id
+      JOIN user_transaction ut ON uc.user_id = ut.user_id
+      WHERE uc.user_id = ?`;
+
+  try {
+      const result = await queryDatabase(query, [user_id]);
+
+      if (result.length > 0) {
+          const { user_email, f_name, l_name, transaction_id } = result[0];
+          if (user_email) {
+              res.json({ user_email, f_name, l_name, transaction_id });
+          } else {
+              console.error("Missing user_email in the database");
+              res.status(500).json({ error: "Internal Server Error" });
+          }
+      } else {
+          console.error("User not found");
+          res.status(404).json({ error: "User not found" });
+      }
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error retrieving data');
+  }
+});
 
 
     router.post('/send-email/:user_email', async (req, res) => {
@@ -950,7 +1030,7 @@ const RegisteredAccountEmail = (user_email, body) => {
                   await queryDatabase(expiryEmailedQuery, expiryEmailedValues);
 
                   const notif_title = 'Transaction Expired';
-                  const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${transaction.trans_type}: ${transaction.transaction_id}</span> has <span className="font-semibold dark:text-white">EXPIRED</span> due to non-payment. Kindly generate a new transaction if you would like to make another request.</p>`;
+                  const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${transaction.trans_type}: ${transaction.transaction_id}</span> has <span className="font-medium dark:text-white">EXPIRED</span> due to non-payment. Kindly generate a new transaction if you would like to make another request.</p>`;
                   const date = new Date();
                   const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
@@ -1037,6 +1117,43 @@ const RegisteredAccountEmail = (user_email, body) => {
     });
   }
 
+
+  router.post('/status-verified-email/:user_email', async (req, res) => {
+
+    const { user_email } = req.params;
+    const body = req.body;
+    const transType = req.body.data.trans_type;
+    const verification = req.body.data.verification;
+    const amount = req.body.data.amount / 100;
+    const formattedDate = req.body.data.formattedDate;
+
+    // const statType = req.body.status_type;
+  
+    if (!user_email) {
+    return res.status(400).json({ error: "user_email is missing or empty!" });
+    }
+
+    try {
+      const result = await transporter.sendMail({
+        from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
+        to: user_email,
+        subject: transType,
+        html: VerificationMail(user_email, body, amount),
+      });
+    
+      if (!result.response) {
+        return res.status(400).json({ error: "Error sending email" });
+      }
+    
+      res.json({
+        message: "Email has been successfully sent!",
+      });
+    
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: err.message });
+    }
+  });
 
 
   

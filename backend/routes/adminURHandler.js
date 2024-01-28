@@ -147,17 +147,28 @@ router.post('/approve/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
     const vStatus = 'Verified';
     const aStatus = 'Complete';
+    const notif_title = 'Verification Successful!';
+    const date = new Date();
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+    const notif_message = `</span> We're excited to inform you that your account verification process has been successfully approved!  </p>`;
    
     try {
+
+      
       const query = "UPDATE user_verification SET `verification_status` = ?, `application_status` = ? WHERE `user_id` = ?";
       const values = [vStatus, aStatus, user_id];
+
+      const query1 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+      const values1 = [user_id, formattedDate, notif_title, notif_message];
       
       const result = await queryDatabase(query, values);
+      const result1 = await queryDatabase(query1, values1);
       
       res.json({
         success: true,
         message: "Verification approved!",
         result: result,
+        result1: result1,
       });
 
     } catch (error) {
@@ -172,22 +183,32 @@ router.post('/decline/:user_id', async (req, res) => {
   const user_id = req.params.user_id;
   const vStatus = 'Unverified';
   const aStatus = 'Declined';
+  const notif_title = 'Verification Failed!';
+  const date = new Date();
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+  const notif_message = `</span> We regret to inform you that your verification process has been declined due to not meeting the required criteria.</p>`;
  
   try {
     const query = "UPDATE user_verification SET `verification_status` = ?, `application_status` = ? WHERE `user_id` = ?";
     const values = [vStatus, aStatus, user_id];
     
+
+    const query1 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+    const values1 = [user_id, formattedDate, notif_title, notif_message];
+    
     const result = await queryDatabase(query, values);
+    const result1 = await queryDatabase(query1, values1);
     
     res.json({
       success: true,
-      message: "Verification approved!",
+      message: "Verification Decline!",
       result: result,
+      result1: result1,
     });
 
   } catch (error) {
     console.error('Error during verification:', error);
-    res.status(500).json({ success: false, message: 'Verification failed' });
+    res.status(500).json({ success: false, message: 'Verification Approved' });
   }
 });
 

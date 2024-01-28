@@ -320,7 +320,7 @@ router.post('/updateprocess/:transaction_id', async (req, res) => {
     const trans_type = req.body.trans_type;
 
     const notif_title = 'Transaction Undergoing Processing';
-    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transaction_id}</span> is currently undergoing processing.</p>`;
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transaction_id}</span> is currently undergoing processing.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
@@ -350,7 +350,7 @@ router.post('/updatecomplete/:transaction_id', async (req, res) => {
     const trans_type = req.body.trans_type;
 
     const notif_title = 'Transaction Complete';
-    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transaction_id}</span> has been marked <span className="font-semibold dark:text-white">COMPLETE</span>. Kindly view the transaction for the next steps.</p>`;
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transaction_id}</span> has been marked <span className="font-medium dark:text-white">COMPLETE</span>. Kindly view the transaction for the next steps.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
@@ -380,7 +380,7 @@ router.post('/updatereject/:transaction_id', async (req, res) => {
     const trans_type = req.body.trans_type;
 
     const notif_title = 'Transaction Rejected';
-    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transaction_id}</span> has been <span className="font-semibold dark:text-white">REJECTED</span>. Kindly view the transaction for possible causes of rejection.</p>`;
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transaction_id}</span> has been <span className="font-medium dark:text-white">REJECTED</span>. Kindly view the transaction for possible causes of rejection.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 

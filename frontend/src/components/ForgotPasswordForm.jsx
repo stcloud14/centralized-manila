@@ -8,7 +8,7 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 const ForgotPasswordForm = () => {
   const [authenticated, setAuthenticated] = useState(true); //set false and later remove it so that it will works place true
-  const [isSendOTP, setSendOTP] = useState(false); //set false and later remove it so that it will works place true
+  const [isSendOTP, setSendOTP] = useState(true); //set false and later remove it so that it will works place true
   const [isResetPassword, setResetPassword] = useState(false); //set it false when you are done configure
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -158,8 +158,7 @@ const ForgotPasswordForm = () => {
         console.log(response)
         if (authenticated) {
           setIsSubmitting(true); 
-          // onCaptchaVerify();
-          setResetPassword(true)
+          onCaptchaVerify();
         }
       } else {
         setLoginError("Authentication failed. Please check .");
@@ -286,19 +285,19 @@ const navigate = useNavigate();
             setIsSuccess1(true);
             console.log('Password reset successful!');
     
-            // const countdownInterval = setInterval(() => {
-            //   setCountdown((prevCountdown) => prevCountdown - 1);
-            // }, 1000);
+            const countdownInterval = setInterval(() => {
+              setCountdown((prevCountdown) => prevCountdown - 1);
+            }, 1000);
     
-            // setTimeout(() => {
-            //   setIsSuccess1(false);
-            //   setCountdown(5);
-            // }, 3000);
+            setTimeout(() => {
+              setIsSuccess1(false);
+              setCountdown(5);
+            }, 1000);
     
-            // setTimeout(() => {
-            //   clearInterval(countdownInterval);
-            //   navigate('/');
-            // }, 8000);
+            setTimeout(() => {
+              clearInterval(countdownInterval);
+              navigate('/');
+            }, 6000);
           
           }
         } catch (error) {
