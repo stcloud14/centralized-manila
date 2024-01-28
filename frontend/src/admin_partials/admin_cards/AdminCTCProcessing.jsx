@@ -64,7 +64,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
           handleModalOpen={handleModalOpen}
           handleRejectConfirm={handleRejectConfirm}
           handleProcessConfirm={handleProcessConfirm}
-          section={'Requests'}
+          
         />
       );
     } else if (viewMode === 'card') {
@@ -74,7 +74,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
           handleModalOpen={handleModalOpen}
           handleRejectConfirm={handleRejectConfirm}
           handleProcessConfirm={handleProcessConfirm}
-          section={'Requests'}
+        
         />
       );
     }

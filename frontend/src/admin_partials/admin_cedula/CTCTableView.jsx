@@ -34,7 +34,7 @@ return (
               </th>
               <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                 <div className="flex justify-center items-center">
-                  Process
+                  Complete
                 </div>
               </th>
           </tr>
@@ -58,6 +58,7 @@ return (
           <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400 uppercase">
           {transaction.f_name}
           </td>
+
           <td className="py-1 whitespace-nowrap">
               <div className="flex justify-center gap-4 px-1">
                 <div onClick={(e) => { e.stopPropagation(); handleRejectConfirm(transaction); }} className="group cursor-pointer flex items-center">
@@ -98,8 +99,10 @@ return (
               </div>
             </td>
             )}
-</tr>
+
+          </tr>
         ))}
+
 
 
       </tbody>
