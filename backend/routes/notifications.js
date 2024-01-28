@@ -13,18 +13,23 @@ router.get('/:user_id', async (req, res) => {
     const query = "SELECT * FROM user_notif WHERE user_id = ? ORDER BY date DESC";
     const values = [user_id];
 
-    const query1 = "SELECT COUNT(*) AS total_notif FROM user_notif WHERE is_read = false";
+    const query1 = "SELECT COUNT(*) AS total_notif FROM user_notif WHERE is_read = false AND user_id = ?";
     const values1 = [user_id];
+
+    const query2 = "SELECT * FROM user_notif WHERE user_id = ? AND is_read = false ORDER BY date DESC";
+    const values2 = [user_id];
   
     try {
     const result = await queryDatabase(query, values);
     const result1 = await queryDatabase(query1, values1);
+    const result2 = await queryDatabase(query2, values2);
 
     if (result.length > 0) {
         
         res.json({
             user_notif: result,
             notif_count: result1[0].total_notif,
+            notif_unread: result2,
         });
 
     } else {
