@@ -80,7 +80,7 @@ const AdminVerifyReqsForm =()=>{
 
             const user_email = updatedUserEmail;
 
-            const trans_type = 'Verified Success';
+            const trans_type = 'Verification Success';
 
             const verification = 'Verification'
 
@@ -159,7 +159,7 @@ const AdminVerifyReqsForm =()=>{
 
             const user_email = updatedUserEmail;
 
-            const trans_type = 'Verified Failed';
+            const trans_type = 'Verification Failed';
 
             const verification = 'Verification'
 
