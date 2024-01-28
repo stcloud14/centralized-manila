@@ -56,12 +56,12 @@ const FormatMail = (user_email, body, amount) => {
                             <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
                             <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
 
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>${body.data.acc_name}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>${body.data.rp_tdn}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>${body.data.rp_pin}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>${body.data.rp_tdn}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>${body.data.rp_tdn}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${body.data.amount}.00</p>
 
                             <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
                             <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
