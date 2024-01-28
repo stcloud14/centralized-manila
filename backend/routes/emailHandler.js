@@ -22,7 +22,7 @@ const router = Router();
 
 const FormatMail = (user_email, body, amount) => {
   return `
-  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color:black!important">
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
   <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
     <tbody>
       <tr>
@@ -31,7 +31,7 @@ const FormatMail = (user_email, body, amount) => {
             <tbody>
               <tr>
                 <td style="padding:3px">
-                  <img src="https://i.ibb.co/0GZ4s69/mnl-header-pdf.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
                 </td>
               </tr>
               <tr>
@@ -47,16 +47,30 @@ const FormatMail = (user_email, body, amount) => {
                   </table>
                   <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
                       <tbody style="width:100%">
-                        <tr style="width:100%">
+                        <tr style="width:100%; color:black !important;">
                           <td style="padding:0px 20px 10px 20px">
-                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi ${body.l_name}!</h1>
-                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span></h2>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
                             <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
-                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:5px;border-style: dashed;">${body.status_type}</h1>
-                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
-                            <p style="font-size:16px;line-height:24px;margin:16px 0">If you did not request this transaction, it is possible that someone else is trying to access the Centralized Manila account of <span style="font-weight: 700;"> ${user_email}</span></p>
-                            <p style="font-size:16px;line-height:24px;margin:16px 0;margin-top:-5px"> You received this message because this email address is listed as the recovery email for the Centralized Manila. If that is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
-                          </td>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
+
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
+
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+
+                            <hr style="margin:10px 0"/>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0;margin-top:-5px">This email is sent as your address is listed as the recovery email for Centralized Manila. If this is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+
+                            </td>
                         </tr>
                       </tbody>
                     </table>
@@ -83,6 +97,550 @@ const FormatMail = (user_email, body, amount) => {
     `;
 };
 
+/* --------------------- Tax Payment (Pending) ---------------------
+return `
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%; color:black !important;">
+                          <td style="padding:0px 20px 10px 20px">
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
+
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
+
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+
+                            <hr style="margin:10px 0"/>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0;margin-top:-5px">This email is sent as your address is listed as the recovery email for Centralized Manila. If this is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+    `;
+*/
+
+/* --------------------- Tax Clearance (Pending) ---------------------
+return `
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%; color:black !important;">
+                          <td style="padding:0px 20px 10px 20px">
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
+
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
+
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+
+                            <hr style="margin:10px 0"/>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0;margin-top:-5px">This email is sent as your address is listed as the recovery email for Centralized Manila. If this is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+    `;
+*/
+
+/* --------------------- Business Permit (Pending) ---------------------
+return `
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%; color:black !important;">
+                          <td style="padding:0px 20px 10px 20px">
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
+
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Business Name: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Registration No.: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TIN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
+
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+
+                            <hr style="margin:10px 0"/>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0;margin-top:-5px">This email is sent as your address is listed as the recovery email for Centralized Manila. If this is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+    `;
+*/
+
+/* --------------------- CTC / Cedula (Pending) ---------------------
+return `
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%; color:black !important;">
+                          <td style="padding:0px 20px 10px 20px">
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
+
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Full Name: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">City: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
+
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+
+                            <hr style="margin:10px 0"/>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0;margin-top:-5px">This email is sent as your address is listed as the recovery email for Centralized Manila. If this is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+    `;
+*/
+
+/* --------------------- LCR (Pending) ---------------------
+return `
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%; color:black !important;">
+                          <td style="padding:0px 20px 10px 20px">
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
+
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Full Name: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">City: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Purpose: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
+
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+
+                            <hr style="margin:10px 0"/>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0;margin-top:-5px">This email is sent as your address is listed as the recovery email for Centralized Manila. If this is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+    `;
+*/
+
+
+/* --------------------- Tax Payment (Complete) ---------------------
+return `
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%; color:black !important;">
+                          <td style="padding:0px 20px 10px 20px">
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We are pleased to inform you that your request for ${body.data.trans_type} has been successfully processed.</h2>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
+
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">The transaction details are as follows:</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount Paid: </span>P ${amount}.00</p>
+
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+
+                            <hr style="margin:10px 0"/>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0;margin-top:-5px">This email is sent as your address is listed as the recovery email for Centralized Manila. If this is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+    `;
+*/
+
+/* --------------------- Tax Payment (Paid) ---------------------
+return `
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%; color:black !important;">
+                          <td style="padding:0px 20px 10px 20px">
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We are delighted to confirm that your payment for ${body.data.trans_type} has been successfully processed.</h2>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is now marked as:</p>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
+
+                            <p style="font-size:16px;line-height:24px;margin:16px 0">Below are the transaction details for your reference:</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount Paid: </span>P ${amount}.00</p>
+
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+
+                            <hr style="margin:10px 0"/>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0;margin-top:-5px">This email is sent as your address is listed as the recovery email for Centralized Manila. If this is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+    `;
+*/
+
+
+
 
 const FormatExpiredMail = (transaction) => {
   return `
@@ -95,7 +653,7 @@ const FormatExpiredMail = (transaction) => {
             <tbody>
               <tr>
                 <td style="padding:3px">
-                  <img src="https://i.ibb.co/0GZ4s69/mnl-header-pdf.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
                 </td>
               </tr>
               <tr>
@@ -118,9 +676,14 @@ const FormatExpiredMail = (transaction) => {
                             <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction <span style="font-weight: 600;">'${transaction.transaction_id}'</span> is:</p>
                             <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:5px;border-style: dashed;">E X P I R E D</h1>
                             <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Amount: </span>P ${transaction.amount}.00</p>
-                            <p style="font-size:16px;line-height:24px;margin:16px 0">If you did not request this transaction, it is possible that someone else is trying to access the Centralized Manila account of <span style="font-weight: 700;"> ${transaction.user_email}</span></p>
-                            <p style="font-size:16px;line-height:24px;margin:16px 0;margin-top:-5px"> You received this message because this email address is listed as the recovery email for the Centralized Manila. If that is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
-                          </td>
+                            
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+
+                            <hr style="margin:10px 0"/>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
+                            <p style="font-size:14px;line-height:24px;margin:16px 0;margin-top:-5px">This email is sent as your address is listed as the recovery email for Centralized Manila. If this is incorrect, please contact <span style="font-weight: 700;">centralizedmanila@gmail.com</span> to remove your email address from that Google Account.</p>
+                            </td>
                         </tr>
                       </tbody>
                     </table>
@@ -158,7 +721,7 @@ const ResetPassMail = (user_email, body, amount) => {
           <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="display:flex;justify-content:center;aling-items:center;padding:30px">
             <tbody>
               <tr>
-                <td><img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/twitch-logo.png" style="display:block;outline:none;border:none;text-decoration:none" width="114" /></td>
+                <td><img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display:block;outline:none;border:none;text-decoration:none" width="114" /></td>
               </tr>
             </tbody>
           </table>
@@ -183,11 +746,11 @@ const ResetPassMail = (user_email, body, amount) => {
             <tbody>
               <tr>
                 <td>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Hi ${body.l_name}!,</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Dear Mr./Ms./Mrs. ${body.l_name}!,</p>
                   <p style="font-size:14px;line-height:1.5;margin:16px 0">You updated the password for your Centralized Manila account on ${body.formattedDate}. If this was you, then no further action is required.</p>
                   <p style="font-size:14px;line-height:1.5;margin:16px 0">However if you did NOT perform this password change, please<!-- --> <a href="http://localhost:5173/forgotpass" style="color:#067df7;text-decoration:underline" target="_blank">reset your account password</a> <!-- -->immediately.</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Still have questions? Please contact<!-- --> <a href="#" style="color:#067df7;text-decoration:underline" target="_blank">Centralized Manila</a></p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Thanks,<br />Centralized Manila Team</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Still have questions? Reach us<!-- --> <a href="#" style="color:#067df7;text-decoration:underline" target="_blank">Centralized Manila</a></p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Best regards,<br />Centralized Manila</p>
                 </td>
               </tr>
             </tbody>
@@ -203,15 +766,7 @@ const ResetPassMail = (user_email, body, amount) => {
           <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation">
             <tbody style="width:100%">
               <tr style="width:100%">
-                <td align="right" data-id="__react-email-column" style="width:50%;padding-right:8px"><img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/twitch-icon-twitter.png" style="display:block;outline:none;border:none;text-decoration:none" /></td>
-                <td align="left" data-id="__react-email-column" style="width:50%;padding-left:8px"><img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/twitch-icon-facebook.png" style="display:block;outline:none;border:none;text-decoration:none" /></td>
-              </tr>
-            </tbody>
-          </table>
-          <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation">
-            <tbody style="width:100%">
-              <tr style="width:100%">
-                <p style="font-size:14px;line-height:24px;margin:16px 0;text-align:center;color:#706a7b">© 2022 Twitch, All Rights Reserved <br />350 Bush Street, 2nd Floor, San Francisco, CA, 94104 - USA</p>
+                <p style="font-size:14px;line-height:24px;margin:16px 0;text-align:center;color:#706a7b">© 2024 Centralized Manila. All rights reserved.</p>
               </tr>
             </tbody>
           </table>
@@ -231,19 +786,19 @@ const RegisteredAccountEmail = (user_email, body) => {
     <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
       <tbody>
         <tr style="width:100%">
-          <td><img alt="Koala" height="50" src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/koala-logo.png" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" width="170" />
-            <p style="font-size:16px;line-height:26px;margin:16px 0">Hi ${body.l_name},</p>
-            <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Centralized Manila, the sales intelligence platform that helps you uncover qualified leads and close deals faster.</p>
+          <td><img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" width="40%" height="auto" />
+            <p style="font-size:16px;line-height:26px;margin:16px 0">Greetings Mr./Ms./Mrs. ${body.l_name}!</p>
+            <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Centralized Manila, your portal to an amazing new world filled with efficient digital services.</p>
             <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align:center">
               <tbody>
                 <tr>
-                  <td><a href="http://localhost:5173/" style="background-color:#5F51E8;border-radius:3px;color:#fff;font-size:16px;text-decoration:none;text-align:center;display:inline-block;padding:12px 12px 12px 12px;line-height:100%;max-width:100%" target="_blank"><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">Get started</span><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a></td>
+                  <td><a href="http://localhost:5173/" style="background-color:#3E7DEC;border-radius:3px;color:white;font-size:16px;text-decoration:none;text-align:center;display:inline-block;padding:12px 12px 12px 12px;line-height:100%;max-width:100%" target="_blank"><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">Get started</span><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a></td>
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:16px;line-height:26px;margin:16px 0">Best,<br />The Centralized team</p>
+            <p style="font-size:16px;line-height:26px;margin:16px 0">Best regards,<br />Centralized Manila</p>
             <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
-            <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">470 Noor Ave STE B #1148, South San Francisco, CA 94080</p>
+            <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">© 2024 Centralized Manila. All rights reserved.</p>
           </td>
         </tr>
       </tbody>
