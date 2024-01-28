@@ -35,6 +35,14 @@ router.post('/', async (req, res) => {
     const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
     const saltRounds = 10;
 
+
+    const notif_title = 'Welcome New User';
+    const trans_type = 'Welcome New User';
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}</span> is currently awaiting payment. Please pay the required amount of <span className="font-semibold dark:text-white"></span>.</p>`;
+    const date = new Date();
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
+
     const verification_status = 'Unverified';
     const application_status = 'New';
 
@@ -65,6 +73,9 @@ router.post('/', async (req, res) => {
     const query7 = "INSERT INTO user_verification (`user_id`, `verification_status`, `application_status`) VALUES (?, ?, ?)";
     const values7 = [primaryKey, verification_status, application_status];
 
+    const query8 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+    const values8 = [primaryKey, formattedDate, notif_title, notif_message];
+
 
 
     try {
@@ -76,6 +87,7 @@ router.post('/', async (req, res) => {
     const result5 = await queryDatabase(query5, values5);
     const result6 = await queryDatabase(query6, values6);
     const result7 = await queryDatabase(query7, values7);
+    const result8 = await queryDatabase(query8, values8);
 
 
     res.json({
@@ -89,6 +101,7 @@ router.post('/', async (req, res) => {
         user_birth_result: result5,
         user_image_result: result6,
         user_verification_result: result7,
+        notif_result: result8,
     });
     } catch (err) {
     console.error(err);
