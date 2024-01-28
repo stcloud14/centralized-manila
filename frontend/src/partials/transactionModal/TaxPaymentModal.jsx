@@ -4,11 +4,12 @@ import moment from 'moment/moment.js';
 import Paymongo from 'paymongo';
 // import QRCode from 'react-qr-code';
 import StatusBadgeModal from '../StatusBadgeModal';
+import CancelTransactionModal from '../CancelTransactionModal';
 
 console.log("API Key:", process.env.SECRET_KEY);
 const paymongo = new Paymongo(process.env.SECRET_KEY);
 
-const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) => {
+const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpenModal }) => {
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
   const trans_type = 'Real Property Tax Payment';
@@ -275,6 +276,13 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit }) =>
                   </div> */}
                   
                   <div className="flex items-center space-x-2 ml-auto">
+                    <button
+                        onClick={handleOpenModal}
+                        type="button"
+                        className="text-red-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
+                        <p>Cancel Transaction</p>
+                    </button>
+
                     <button
                       onClick={onClose}
                       type="button"

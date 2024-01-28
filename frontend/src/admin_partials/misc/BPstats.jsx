@@ -63,8 +63,8 @@ function BPstats({ businessPermit }) {
           {
             label: 'Processing',
             data: [businessPermit.Processing],
-            backgroundColor: tailwindConfig().theme.colors.purple[500],
-            hoverBackgroundColor: tailwindConfig().theme.colors.purple[600],
+            backgroundColor: tailwindConfig().theme.colors.purple[600],
+            hoverBackgroundColor: tailwindConfig().theme.colors.purple[700],
             barPercentage: 1,
             categoryPercentage: 1,
           },

@@ -3,8 +3,9 @@ import axios from 'axios';
 import moment from 'moment/moment.js';
 // import QRCode from 'react-qr-code';
 import StatusBadgeModal from '../StatusBadgeModal';
+import CancelTransactionModal from '../CancelTransactionModal';
 
-const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, businessImages, onClose, onSubmit }) => {
+const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, businessImages, onClose, onSubmit, handleOpenModal }) => {
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
@@ -668,6 +669,13 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
                   </div> */}
 
             <div className="flex items-center space-x-2 ml-auto">
+                <button
+                    onClick={handleOpenModal}
+                    type="button"
+                    className="text-red-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
+                    <p>Cancel Transaction</p>
+                </button>
+
                 <button
                     onClick={onClose}
                     type="button"
