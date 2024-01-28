@@ -59,8 +59,8 @@ const FormatMail = (user_email, body, amount) => {
                             <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>${body.data.acc_name}</p>
                             <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>${body.data.rp_tdn}</p>
                             <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>${body.data.rp_pin}</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>${body.data.date}</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>${body.data.time}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>${body.data.formattedDate}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>${body.data.formattedTime}</p>
                             <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${body.data.amount}.00</p>
 
                             <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
