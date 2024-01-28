@@ -839,10 +839,10 @@ const VerificationMail = (user_email, body, amount) => {
                       <tbody style="width:100%">
                         <tr style="width:100%; color:black !important;">
                           <td style="padding:0px 20px 10px 20px">
-                            <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Transaction ID: </span>[insert transaction id here]</p>
+                            
                             
                             <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi Mr./Ms./Mrs ${body.l_name}!</h1>
-                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.trans_type} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
+                            <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.verification} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
                             <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
 
 
@@ -1115,6 +1115,7 @@ const VerificationMail = (user_email, body, amount) => {
     const { user_email } = req.params;
     const body = req.body;
     const transType = req.body.data.trans_type;
+    const verification = req.body.data.verification;
     const amount = req.body.data.amount / 100;
     const formattedDate = req.body.data.formattedDate;
 
