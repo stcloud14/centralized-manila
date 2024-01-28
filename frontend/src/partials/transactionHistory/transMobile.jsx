@@ -357,7 +357,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
                         <span className="font-semibold">Type:</span> {transaction.trans_type}
                       </div>
                       <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
-                        <span className="font-semibold">Status:</span> <StatusBadgeDesktop statusType={transaction.status_type} />
+                        <span className="font-semibold">Status:</span>&nbsp;<StatusBadgeDesktop statusType={transaction.status_type} />
                       </div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">
                         <span className="font-semibold">Amount:</span>  {formatAmount(transaction.amount)}
