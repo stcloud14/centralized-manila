@@ -119,6 +119,7 @@ const handleClick = async (e) => {
 
             if (res.data.user_email) {
               const updatedUserEmail = res.data.user_email;
+              const f_name = res.data.f_name;
               const l_name = res.data.l_name;
 
   
@@ -130,10 +131,13 @@ const handleClick = async (e) => {
   
               const rowData = { ...userReg, trans_type};
 
+              // const status_type = 'P E N D I N G';
   
               const body = {
                 data: rowData,
                 // formattedDate: formattedDate,
+                // status_type: status_type,
+                // f_name: f_name,
                 l_name: l_name
               };
     
