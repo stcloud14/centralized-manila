@@ -76,7 +76,7 @@ const purpose = parseInt(req.body.ctc_purpose, 10) || null;
     const plainAmount = amount;
     const trans_type = 'Community Tax Certificate';
     const statusType = 'Pending';
-    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-semibold dark:text-white">P ${plainAmount}</span>.</p>`;
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-medium dark:text-white">P ${plainAmount}</span>.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
     const expiryDate = new Date();

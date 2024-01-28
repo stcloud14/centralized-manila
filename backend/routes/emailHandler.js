@@ -1022,7 +1022,7 @@ const VerificationMail = (user_email, body, amount) => {
                   await queryDatabase(expiryEmailedQuery, expiryEmailedValues);
 
                   const notif_title = 'Transaction Expired';
-                  const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${transaction.trans_type}: ${transaction.transaction_id}</span> has <span className="font-semibold dark:text-white">EXPIRED</span> due to non-payment. Kindly generate a new transaction if you would like to make another request.</p>`;
+                  const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${transaction.trans_type}: ${transaction.transaction_id}</span> has <span className="font-medium dark:text-white">EXPIRED</span> due to non-payment. Kindly generate a new transaction if you would like to make another request.</p>`;
                   const date = new Date();
                   const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
