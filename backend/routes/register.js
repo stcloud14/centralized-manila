@@ -36,7 +36,8 @@ router.post('/', async (req, res) => {
     const saltRounds = 10;
 
 
-    const notif_title = 'Welcome New User';
+    const notif_title = `Welcome, ${req.body.l_name}!`;
+
     const notif_message = `</span> Congratulations! Your registration with Centralized Manila was successful, and we're glad to welcome you to our platform. <span className="font-semibold dark:text-white"></span>.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
