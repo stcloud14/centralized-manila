@@ -4,7 +4,7 @@ import TransTypeDropdown from '../partials/transDropdown/TransTypeDropdown';
 import StatusTypeDropdown from '../partials/transDropdown/StatusTypeDropdown';
 
 
-function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, searchInput, setSearchInput, handleInputChange, handleInputChange2, handleSearch, selectedStatus, selectedType }) {
+function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, searchInput, setSearchInput, handleInputChange, handleInputChange2, handleSearch, selectedStatus, selectedType, toggleDropdown }) {
 
   return (
     <>
@@ -137,7 +137,7 @@ function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelecte
             </select>
         </div>
 
-        <button type="button" onClick={handleSearch} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-full flex items-center ml-auto">
+        <button type="button" onClick={() => { handleSearch(); toggleDropdown(); }} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-full flex items-center ml-auto">
             <span className="mx-auto">Filter</span>
         </button>
         </div>

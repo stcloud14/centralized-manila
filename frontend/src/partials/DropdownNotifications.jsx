@@ -7,21 +7,23 @@ import { useParams } from 'react-router-dom';
 function DropdownNotifications({ align }) {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen1, setDropdownOpen1] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
-
-  console.log(notifications)
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
+  console.log(trigger)
+  console.log(dropdownOpen)
+  console.log(dropdownOpen1)
+
+  console.log(notifications)
+
+  
+
   const { user_id } = useParams();
 
-  const [isDropdownOpen1, setDropdownOpen1] = useState(false);
-
-  const toggleDropdown1 = () => {
-    setDropdownOpen1(!isDropdownOpen1);
-  };
 
   useEffect(() => {
     const fetchUserNotification = async () => {
@@ -37,18 +39,17 @@ function DropdownNotifications({ align }) {
 }, []);
 
 
-const handleRead = async (e) => {
-  e.preventDefault();
-
+const handleRead = async () => {
+ 
   try {
     const response = await axios.post(`http://localhost:8800/notifications/markread/${user_id}`);
-    setDropdownOpen1(false);
 
     if (response.status === 200) {
       try {
         const res = await axios.get(`http://localhost:8800/notifications/${user_id}`);
         setNotificationCount(res.data.notif_count);
         setNotifications(res.data.user_notif);
+        setDropdownOpen1(false);
       } catch (err) {
         console.log(err);
       }
@@ -77,19 +78,25 @@ const handleRead = async (e) => {
     return () => document.removeEventListener('click', clickHandler);
   }, [dropdownOpen]); 
 
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }) => {
-      if (keyCode === 27) {
-        setDropdownOpen(false);
-        setDropdownOpen1(false);
-      }
-    };
+  // // close if the esc key is pressed
+  // useEffect(() => {
+  //   const keyHandler = ({ keyCode }) => {
+  //     if (keyCode === 27) {
+  //       setDropdownOpen(false);
+  //       setDropdownOpen1(false);
+  //     }
+  //   };
 
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
-  }, [dropdownOpen]);
+  //   document.addEventListener('keydown', keyHandler);
+  //   return () => document.removeEventListener('keydown', keyHandler);
+  // }, [dropdownOpen]);
 
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
 
   return (
     <div className="relative inline-flex">
@@ -97,7 +104,7 @@ const handleRead = async (e) => {
         ref={trigger}
         className={`w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-[#2b2a2a] dark:hover:bg-[#3d3d3d] rounded-full ${dropdownOpen && 'bg-slate-200'}`}
         aria-haspopup="true"
-        onClick={() => setDropdownOpen(!dropdownOpen)}
+        onClick={() => { setDropdownOpen(!dropdownOpen); setDropdownOpen1(false); }}
         aria-expanded={dropdownOpen}
       >
         <span className="sr-only">Notifications</span>
@@ -124,18 +131,31 @@ const handleRead = async (e) => {
         <div
           ref={dropdown}
           onFocus={() => setDropdownOpen(true)}
-          onBlur={() => setDropdownOpen(false)}
         >
           <div className="flex items-center justify-between text-xs font-semibold text-slate-400 dark:text-slate-500  pt-1.5 pb-2 px-4">NOTIFICATIONS
             <div className="flex items-center">
-              <button type="button" onClick={toggleDropdown1} className="w-6 h-6 rounded-full hover:text-slate-500 dark:hover:text-slate-400">
+              <button type="button" onClick={() => setDropdownOpen1(!dropdownOpen1)} className="w-6 h-6 rounded-full hover:text-slate-500 dark:hover:text-slate-400">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                 </svg>
               </button>
 
-              {isDropdownOpen1 && (
-                <div className="absolute right-6 top-9 w-[200px] origin-top-right flex group items-center py-2 px-3 bg-white text-slate-500 hover:bg-slate-100 dark:hover:bg-[#3d3d3d] dark:bg-[#212121] dark:text-slate-400 border border-slate-200 dark:border-[#3d3d3d] rounded-sm shadow-md z-20 cursor-pointer">
+              {dropdownOpen1 && (
+                <div className="absolute right-6 top-9 w-[200px] origin-top-right flex flex-col gap-2 group items-left py-2 px-3 bg-white text-slate-500 dark:bg-[#212121] dark:text-slate-400 border border-slate-200 dark:border-[#3d3d3d] rounded-sm shadow-md z-20">
+                  
+                  <label className="relative inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      value=""
+                      className="sr-only peer"
+                      checked={isChecked}
+                      onChange={handleToggle}
+                    />
+                    <div className={`w-7 h-3 bg-slate-300 cursor-pointer peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 dark:peer-focus:ring-emerald-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[3px] after:start-[2.5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-500`}></div>
+                    <span className="ms-2.5 font-medium text-xs">Only show unread</span>
+                  </label>
+
+
                   <button onClick={handleRead}>
                     <span className="flex items-center group">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 mr-2">
@@ -144,6 +164,7 @@ const handleRead = async (e) => {
                       <span className='font-medium'>Mark all as read</span>
                     </span>
                   </button>
+ 
                 </div>
               )}
             </div>

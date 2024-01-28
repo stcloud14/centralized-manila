@@ -94,6 +94,13 @@ const BirthCertificateForm =()=>{
                   }
                 } catch (emailError) {
                   // alert(emailError);
+                  setTimeout(() => {
+                    window.location.href = `/transachistory/${user_id}`;
+                  }, 2000); 
+          
+                  setTimeout(() => {
+                    setIsSuccess(false);
+                  }, 2100);
                 }
               } else {
                 console.error('Transaction error:', res.statusText);
@@ -407,10 +414,26 @@ const BirthCertificateForm =()=>{
            
             <form onSubmit={handleSubmit} className={`overflow-y-auto ${isModalVisible ? 'blur' : ''}`}>
             <h1 className='font-medium text-center text-slate-700 dark:text-white'>Local Civil Registry</h1>
-            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Birth Certificate</h1>
+              <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Birth Certificate</h1>
+              <div className="grid md:grid-cols-4 grid-cols-2 gap-3 items-center justify-center text-xs w-full">
+                <div className="flex flex-col items-center text-center">
+                  <span className='font-semibold text-blue-500'>Step 1</span>
+                  <span className='font-normal text-blue-500'>Fill the Form</span>
+                  <div className="w-full h-1 bg-blue-500" />
+                </div>
+                <div className="flex flex-col items-center text-center">
+                  <span>Step 2</span>
+                  <span>Review and Submit</span>
+                  <div className="w-full h-1 bg-blue-200 dark:bg-slate-400" />
+                </div>
+                <div className="flex flex-col col-span-2 items-center text-center mt-2 sm:mt-0">
+                  <span>Final Step</span>
+                  <span>Pay the transaction</span>
+                  <div className="w-full h-1 bg-blue-200 dark:bg-slate-400" />
+                </div>
+              </div>
 
-
-            {isSuccess && (                
+              {isSuccess && (                
               <div className="my-5 text-center">
                 <div className="mb-5 inline-flex items-center justify-center w-12 h-12">
                   <svg aria-hidden="true" className="pb-0 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -420,14 +443,14 @@ const BirthCertificateForm =()=>{
                 </div>
                 <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction successful! Redirecting to Transaction History...</div> 
               </div>
-            )}
+              )}
 
 
-            {showWarning && (
-              <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
-                Please fill in all required fields before proceeding.
-              </div>
-            )}
+              {showWarning && (
+                <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
+                  Please fill in all required fields before proceeding.
+                </div>
+              )} 
               <h1 className='text-xs text-slate-700 dark:text-white mt-8'>All fields mark with <Req /> are required.</h1>
               {/* Group 1 - Document Owner's Personal Information*/}
               <div className='pt-0.5'>

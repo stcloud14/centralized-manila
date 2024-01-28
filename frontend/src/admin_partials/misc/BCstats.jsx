@@ -55,6 +55,22 @@ function BCstats({ birthCert }) {
           {
             label: 'Expired',
             data: [birthCert.Expired],
+            backgroundColor: tailwindConfig().theme.colors.orange[500],
+            hoverBackgroundColor: tailwindConfig().theme.colors.orange[600],
+            barPercentage: 1,
+            categoryPercentage: 1,
+          },
+          {
+            label: 'Processing',
+            data: [birthCert.Processing],
+            backgroundColor: tailwindConfig().theme.colors.purple[500],
+            hoverBackgroundColor: tailwindConfig().theme.colors.purple[600],
+            barPercentage: 1,
+            categoryPercentage: 1,
+          },
+          {
+            label: 'Complete',
+            data: [birthCert.Complete],
             backgroundColor: tailwindConfig().theme.colors.blue[500],
             hoverBackgroundColor: tailwindConfig().theme.colors.blue[600],
             barPercentage: 1,
