@@ -176,6 +176,7 @@ const handleCheckboxChange = (e) => {
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
+            const transaction_id = res.data.transaction_id;
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
@@ -191,6 +192,7 @@ const handleCheckboxChange = (e) => {
             const body = {
               data: rowData,
               status_type: status_type,
+              transaction_id: transaction_id,
               f_name: f_name,
               l_name: l_name
             };
