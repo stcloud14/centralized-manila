@@ -59,20 +59,21 @@ const AdminVerifyReqsForm =()=>{
 
   const handleApprove = async (transaction) => {
     try {
-      const response = await axios.post(`http://localhost:8800/adminur/approve/${transaction.user_id}`);
+      const response = await axios.post(`http://localhost:8800/adminur/approve/${transaction.user_id}`, {
+        user_id: transaction.user_id,
+      });
   
       if (response.status === 200) {
-
 
         try {
           const res = await axios.get(`http://localhost:8800/email/${transaction.user_id}`);
           
-          const date = new Date();
-          const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+          // const date = new Date();
+          // const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
-            const f_name = res.data.f_name;
+            // const f_name = res.data.f_name;
             const l_name = res.data.l_name;
 
 
@@ -84,13 +85,13 @@ const AdminVerifyReqsForm =()=>{
 
             const verification = 'Verification'
 
-            const rowData = { ...transaction, trans_type, formattedDate, verification};
+            const rowData = { ...transaction, trans_type, verification};
 
             const status_type = 'V E R I F I E D';
 
             const body = {
               data: rowData,
-              formattedDate: formattedDate,
+              // formattedDate: formattedDate,
               status_type: status_type,
               // f_name: f_name,
               l_name: l_name
