@@ -32,34 +32,53 @@ const AuditDesktop = ({ auditTrail }) => {
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
-  
+
+
   function formatTimeAgo(time_stamp) {
-    const now = new Date();
     const createdAt = new Date(time_stamp);
-    const timeDifference = now - createdAt;
-    const minutes = Math.floor(timeDifference / (1000 * 60));
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(minutes / 1440);
-    const weeks = Math.floor(days / 7);
-    const months = Math.floor(days / 30);
-    const years = Math.floor(days / 365);
+
+    const day = createdAt.toLocaleDateString('en-US', { day: 'numeric' });
+    const month = createdAt.toLocaleDateString('en-US', { month: 'short' });
+    const time = createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+    return `${day} ${month} at ${time}`;
+}
   
-    if (minutes < 1) {
-      return 'Just now';
-    } else if (minutes < 60) {
-      return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
-    } else if (hours < 24) {
-      return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
-    } else if (days < 7) {
-      return `${days} ${days === 1 ? 'day' : 'days'} ago`;
-    } else if (weeks < 4) {
-      return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
-    } else if (months < 12) {
-      return `${months} ${months === 1 ? 'month' : 'months'} ago`;
-    } else {
-      return `${years} ${years === 1 ? 'year' : 'years'} ago`;
-    }
-  }
+  // function formatTimeAgo(time_stamp) {
+  //   const now = new Date();
+  //   const createdAt = new Date(time_stamp);
+  //   const timeDifference = now - createdAt;
+  //   const minutes = Math.floor(timeDifference / (1000 * 60));
+  //   const hours = Math.floor(minutes / 60);
+  //   const days = Math.floor(minutes / 1440);
+  //   const weeks = Math.floor(days / 7);
+  //   const months = Math.floor(days / 30);
+  //   const years = Math.floor(days / 365);
+  
+  //   if (minutes < 1) {
+  //     return 'Just now';
+  //   } else if (minutes < 60) {
+  //     return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
+  //   } else if (hours < 24) {
+  //     return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+  //   } else if (days < 7) {
+  //     if (days === 1) {
+  //       return 'Yesterday at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  //     } else {
+  //       return createdAt.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) +
+  //         ' at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  //     }
+  //   } else if (weeks < 4) {
+  //     return createdAt.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) +
+  //       ' at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  //   } else if (months < 12) {
+  //     return createdAt.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) +
+  //       ' at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  //   } else {
+  //     return createdAt.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) +
+  //       ' at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  //   }
+  // }
 
   const getImage = (admin) => {
     switch (admin) {
