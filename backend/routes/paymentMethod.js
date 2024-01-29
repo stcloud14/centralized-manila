@@ -113,11 +113,11 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
 });
 
 
-router.post('/success/:transactionId', async (req, res) => {
-    const transID = req.params.transactionId;
+router.post('/success/:transaction_id', async (req, res) => {
+    const transID = req.params.transaction_id;
     const amount = req.body.amount;
     const newAmount = amount / 100;
-    const user_id = req.body.userId;
+    const user_id = req.body.user_id;
 
     const notif_title = 'Transaction Payment Success';
     const notif_message = `<p className="text-[0.8rem] pb-2">Your payment of <span className="font-medium dark:text-white">P ${newAmount}</span> for <span className="font-medium dark:text-white">${transID}</span> has been successfully received. Please await further updates.</p>`;
