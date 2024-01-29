@@ -282,7 +282,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                 </select>
               </div>
 
-              <div className="flex flex-row sm:flex-col items-start w-full sm:pr-4 mb-[0.5rem]sm:mb-0">
+              <div className="flex flex-row sm:flex-col items-start w-full mb-[0.5rem]sm:mb-0">
                 <span className="hidden sm:block pr-1 pb-1 text-slate-700 dark:text-white">Date:</span>
               <div className="flex sm:flex-row w-full">
                 <Flatpickr
