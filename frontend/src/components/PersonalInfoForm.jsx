@@ -215,8 +215,19 @@ const PersonalInfoForm =()=>{
                  
            
             <form onSubmit={handleSubmit}>
-            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Edit Personal Information</h1>
-            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Update your personal details by completing the form below. <br/>Ensure accuracy in your personal information to maintain up-to-date records.</h1>
+            <div className="grid grid-cols-5 items-center">
+              <div className="flex mb-7">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 flex">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                </svg>
+                <h1 className="text-[0.45rem] flex text-gray-500 dark:text-gray-400 pl-1">Update your personal details by completing the form below. <br/>Ensure accuracy in your personal information to <br/>maintain up-to-date records.</h1>
+              </div>
+              <div className="flex flex-col col-span-3">
+                <h1 className="font-medium text-center text-slate-700 dark:text-white">Profile</h1>
+                <h1 className="mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300">Edit Personal Information</h1>
+              </div>
+            </div>
+
 
               {isSuccess && (
               <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
