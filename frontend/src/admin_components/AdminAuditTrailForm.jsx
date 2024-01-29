@@ -118,7 +118,6 @@ const SortIcon = ({ order }) => (
   </button>
   );
 
-console.log(userTransaction)
 
 const logoSrc = '../src/images/mnl_footer.svg';
 
@@ -164,9 +163,9 @@ const logoSrc = '../src/images/mnl_footer.svg';
           <AdminFooter logo={logoSrc} />
         </main>
 
-        {isModalOpen && selectedTransaction && (
+        {/* {isModalOpen && selectedTransaction && (
           <ModalTransaction user_id={user_id} selectedTransaction={selectedTransaction} modalType={selectedTransaction.trans_type} onClose={handleCloseModal} />
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -114,19 +114,21 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
             const updatedUserEmail = res.data.user_email;
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
             const rowData = { ...selectedTransaction, trans_type};
 
-            const status_type = 'C O M P L E T E';
+            const statusType = 'Complete';
 
             const body = {
               data: rowData,
-              status_type: status_type,
               f_name: f_name,
-              l_name: l_name
+              l_name: l_name,
+              sex_type: sex_type,
+              status_type: statusType,
             };
   
             // Proceed with additional logic after updating state
@@ -188,19 +190,21 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
             const updatedUserEmail = res.data.user_email;
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
             const rowData = { ...selectedTransaction, trans_type};
 
-            const status_type = 'R E J E C T E D';
+            const statusType = 'Rejected';
 
             const body = {
               data: rowData,
-              status_type: status_type,
               f_name: f_name,
-              l_name: l_name
+              l_name: l_name,
+              sex_type: sex_type,
+              status_type: statusType,
             };
   
             // Proceed with additional logic after updating state

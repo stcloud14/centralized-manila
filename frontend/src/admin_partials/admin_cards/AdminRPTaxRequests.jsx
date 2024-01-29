@@ -28,6 +28,8 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
   const [selectedTransaction, setSelectedTransaction] = useState();
   const [transType, setTransType] = useState();
 
+  console.log(selectedTransaction)
+
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
     const query = searchQuery.toUpperCase();
@@ -114,19 +116,21 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
             const updatedUserEmail = res.data.user_email;
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
             const rowData = { ...selectedTransaction, trans_type};
 
-            const status_type = 'P R O C E S S I N G';
+            const statusType = 'Processing';
 
             const body = {
               data: rowData,
-              status_type: status_type,
               f_name: f_name,
-              l_name: l_name
+              l_name: l_name,
+              sex_type: sex_type,
+              status_type: statusType,
             };
   
             // Proceed with additional logic after updating state
@@ -188,19 +192,21 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
             const updatedUserEmail = res.data.user_email;
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
             const rowData = { ...selectedTransaction, trans_type};
 
-            const status_type = 'R E J E C T E D';
+            const statusType = 'Rejected';
 
             const body = {
               data: rowData,
-              status_type: status_type,
               f_name: f_name,
-              l_name: l_name
+              l_name: l_name,
+              sex_type: sex_type,
+              status_type: statusType,
             };
   
             // Proceed with additional logic after updating state
