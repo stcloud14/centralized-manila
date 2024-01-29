@@ -119,155 +119,153 @@ const AuditDesktop = ({ searchInput, handleSearch, handleSearchInputChange, hand
                   </button>
 
         {isDropdownOpen && (
-          <div className="absolute right-0 w-[405px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
+        <div className="absolute w-[270px] origin-top-right py-2 px-3 mt-[32px] sm:mt-2 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-sm shadow-2xl z-20 md:right-10 sm:w-[405px]">
 
-              {/* Date Row */}
-              <div className="flex justify-between items-center">
-                  <span className="block py-2 text-xs">Date:</span>
-                  <span>
-                  <Flatpickr
-                    value={selectedDate}
-                    onChange={(date) => setSelectedDate(date[0])}
-                    options={{
-                    dateFormat: 'Y-m-d',
-                    altInput: true,
-                    altFormat: 'F j, Y',
-                    appendTo: document.body,
-                    onOpen: function (selectedDates, dateStr, instance) {
-                        if (document.documentElement.classList.contains('dark')) {
-                        const monthDropdown = instance.calendarContainer.querySelector(
-                            '.flatpickr-monthDropdown-months'
-                        );
-                        if (monthDropdown) {
-                            monthDropdown.style.backgroundColor = '#212121';
-                        }
-                        }
-                    },
-                    onClose: function (selectedDates, dateStr, instance) {
-                        const monthDropdown = instance.calendarContainer.querySelector(
+        {/* Date Row */}
+        <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+            <span className="hidden sm:block text-xs">Date:</span>
+            <span>
+            <Flatpickr
+                value={selectedDate}
+                onChange={(date) => setSelectedDate(date[0])}
+                options={{
+                dateFormat: 'Y-m-d',
+                altInput: true,
+                altFormat: 'F j, Y',
+                appendTo: document.body,
+                onOpen: function (selectedDates, dateStr, instance) {
+                    if (document.documentElement.classList.contains('dark')) {
+                    const monthDropdown = instance.calendarContainer.querySelector(
                         '.flatpickr-monthDropdown-months'
-                        );
-                        if (monthDropdown) {
-                        monthDropdown.style.backgroundColor = '';
-                        }
-                    },
-                    }}
-                    placeholder="From"
-                    className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[150px]"
-                    />
-                  <span> - </span>
-                  <Flatpickr
-                    value={selectedDate}
-                    onChange={(date) => setSelectedDate(date[0])}
-                    options={{
-                    dateFormat: 'Y-m-d',
-                    altInput: true,
-                    altFormat: 'F j, Y',
-                    appendTo: document.body,
-                    onOpen: function (selectedDates, dateStr, instance) {
-                        if (document.documentElement.classList.contains('dark')) {
-                        const monthDropdown = instance.calendarContainer.querySelector(
-                            '.flatpickr-monthDropdown-months'
-                        );
-                        if (monthDropdown) {
-                            monthDropdown.style.backgroundColor = '#212121';
-                        }
-                        }
-                    },
-                    onClose: function (selectedDates, dateStr, instance) {
-                        const monthDropdown = instance.calendarContainer.querySelector(
+                    );
+                    if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '#212121';
+                    }
+                    }
+                },
+                onClose: function (selectedDates, dateStr, instance) {
+                    const monthDropdown = instance.calendarContainer.querySelector(
+                    '.flatpickr-monthDropdown-months'
+                    );
+                    if (monthDropdown) {
+                    monthDropdown.style.backgroundColor = '';
+                    }
+                },
+                }}
+                placeholder="From"
+                className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[110px] sm:w-[150px]"
+            />
+            <span> - </span>
+            <Flatpickr
+                value={selectedDatee}
+                onChange={(date) => setSelectedDatee(date[0])}
+                options={{
+                dateFormat: 'Y-m-d',
+                altInput: true,
+                altFormat: 'F j, Y',
+                appendTo: document.body,
+                onOpen: function (selectedDates, dateStr, instance) {
+                    if (document.documentElement.classList.contains('dark')) {
+                    const monthDropdown = instance.calendarContainer.querySelector(
                         '.flatpickr-monthDropdown-months'
-                        );
-                        if (monthDropdown) {
-                        monthDropdown.style.backgroundColor = '';
-                        }
-                    },
-                    }}
-                    placeholder="To"
-                    className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[150px]"
-                    />
-                    </span>
-                 </div>
-              
+                    );
+                    if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '#212121';
+                    }
+                    }
+                },
+                onClose: function (selectedDates, dateStr, instance) {
+                    const monthDropdown = instance.calendarContainer.querySelector(
+                    '.flatpickr-monthDropdown-months'
+                    );
+                    if (monthDropdown) {
+                    monthDropdown.style.backgroundColor = '';
+                    }
+                },
+                }}
+                placeholder="To"
+                className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[110px] sm:w-[150px]"
+            />
+            </span>
+        </div>
 
-              {/* Transaction ID Row */}
-              <div className="flex justify-between items-center">
-                  <span className="block pr-10 py-2 text-xs">
-                    Transaction ID:
-                  </span>
 
-                  <div className="relative flex items-center">
-                    <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                        <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
-                    </span>
-                    <input
-                      value={searchInput}
-                      onChange={(e) => handleSearch(e.target.value.toUpperCase())}
-                      id="searchInput"
-                      onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                      type="text"
-                      placeholder="Search ID..."
-                      className="bg-transparent text-xs w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
-                    />
-                  </div>
-                </div>
+        {/* Transaction ID Row */}
+        <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+            <span className="hidden sm:block pr-10 text-xs">
+            Transaction ID:
+            </span>
 
-                {/* Type Row */}
-                <div className="flex justify-between items-center">
-                  <span className="block py-2 text-xs">Type:</span>
-                    <select  onChange={handleInputChange}  value={selectedType}  name=""  id=""  className="py-2.5 px-0 text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 md:py-0.5 rounded-sm peer cursor-pointer w-[210px]">
-                      <option value="SELECTSTATUS" className="dark:bg-[#3d3d3d]">Select Type</option>
-                      <option value="RPTAXPAYMENT" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
-                      <option value="RPTAXCLEARANCE" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
-                      <option value="BUSINESSPERMIT" className="dark:bg-[#3d3d3d]">Business Permit</option>
-                      <option value="CTC" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
-                      <option value="BIRTHC" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
-                      <option value="DEATHC" className="dark:bg-[#3d3d3d]">Death Certificate</option>
-                      <option value="MARRIAGEC" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
-                  </select>
-                </div>
+            <div className="relative flex items-center">
+            <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+            </span>
+            <input
+                value=""
+                onChange=""
+                id="searchInput"
+                onKeyDown=""
+                type="text"
+                placeholder="Search ID..."
+                className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
+            />
+            </div>
+        </div>
 
-                {/* Status Row */}
-                <div className="flex justify-between items-center">
-                  <span className="block py-2 text-xs">Status:</span>
-                    <select onChange={handleInputChange2} value={selectedStatus} name="" id="" className={`py-2.5 px-0 text-xs border bg-transparent border-slate-300 pl-4 md:py-0.5 rounded-sm peer cursor-pointer`}
-                      style={{
-                        width: "125px",
-                        backgroundColor:
-                          selectedStatus === "PENDING" ? "#fef08a" :
-                          selectedStatus === "PAID" ? "#bbf7d0" :
-                          selectedStatus === "PROCESSING" ? "#bfdbfe" :
-                          selectedStatus === "COMPLETE" ? "#fbcfe8" :
-                          selectedStatus === "REJECTED" ? "#fecaca" :
-                          selectedStatus === "CANCELED" ? "#e2e8f0" : 
-                          selectedStatus === "EXPIRED" ? "#fed7aa" : "transparent",
-                        color:
-                          selectedStatus === "PENDING" ? "#a86728" :
-                          selectedStatus === "PAID" ? "#247256" :
-                          selectedStatus === "PROCESSING" ? "#1565C0" :
-                          selectedStatus === "COMPLETE" ? "#a12863" :
-                          selectedStatus === "REJECTED" ? "#a22b34" :
-                          selectedStatus === "CANCELED" ? "#000000" : 
-                          selectedStatus === "EXPIRED" ? "#a23d1e" : "#718096"
-                      }}>
-                      <option value="SELECTSTATUS" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d]">Select Status</option>
-                      <option value="PENDING" className="bg-yellow-200 text-yellow-800">Pending</option>
-                      <option value="PAID" className="bg-green-200 text-green-800">Paid</option>
-                      <option value="PROCESSING" className="bg-blue-200 text-blue-800">Processing</option>
-                      <option value="COMPLETE" className="bg-pink-200 text-pink-800">Complete</option>
-                      <option value="REJECTED" className="text-red-800 bg-red-200">Rejected</option>
-                      <option value="CANCELED" className="bg-slate-200 text-slate-800">Canceled</option>
-                      <option value="EXPIRED" className="bg-orange-200 text-orange-800">Expired</option>
-                    </select>
-                </div>
+        {/* Type Row */}
+        <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+            <span className="hidden sm:block text-xs">Type:</span>
+            <select  value="" onChange="" name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+              <option value="All" className="dark:bg-[#3d3d3d]">Select Type</option>
+              <option value="Real Property Tax Payment" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
+              <option value="Real Property Tax Clearance" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
+              <option value="Business Permit" className="dark:bg-[#3d3d3d]">Business Permit</option>
+              <option value="Community Tax Certificate" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
+              <option value="Birth Certificate" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
+              <option value="Death Certificate" className="dark:bg-[#3d3d3d]">Death Certificate</option>
+              <option value="Marriage Certificate" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
+            </select>
+        </div>
 
-                <button type="button" onClick={toggleDropdown} className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 mt-1 mb-0.5 rounded-sm flex items-center ml-auto">
+        {/* Status Row */}
+        <div className="flex justify-center sm:justify-between items-center">
+            <span className="hidden sm:block text-xs">Status:</span>
+            <select value="" onChange="" name="" id="" className={`font-semibold text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]`}
+                style={{
+                backgroundColor:
+                    selectedStatus === "Pending" ? "#fef08a" :
+                    selectedStatus === "Paid" ? "#a7f3d0" :
+                    selectedStatus === "Processing" ? "#e9d5ff" :
+                    selectedStatus === "Complete" ? "#bfdbfe" :
+                    selectedStatus === "Rejected" ? "#fecaca" :
+                    selectedStatus === "Canceled" ? "#e2e8f0" : 
+                    selectedStatus === "Expired" ? "#fed7aa" : "transparent",
+                color:
+                    selectedStatus === "Pending" ? "#854d0e"  : 
+                    selectedStatus === "Paid" ? "#065f46" :
+                    selectedStatus === "Processing" ? "#6b21a8" :
+                    selectedStatus === "Complete" ? "#1e40af" :
+                    selectedStatus === "Rejected" ? "#991b1b" :
+                    selectedStatus === "Canceled" ? "#1e293b" : 
+                    selectedStatus === "Expired" ? "#9a3412" : "#718096",
+                }}>
+                <option value="All" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d] font-semibold">Select Status</option>
+                <option value="Pending" className="bg-yellow-200 text-yellow-800 font-semibold">Pending</option>
+                <option value="Paid" className="bg-emerald-200 text-emerald-800 font-semibold">Paid</option>
+                <option value="Processing" className="bg-purple-200 text-purple-800 font-semibold">Processing</option>
+                <option value="Complete" className="bg-blue-200 text-blue-800 font-semibold">Complete</option>
+                <option value="Rejected" className="bg-red-200 text-red-800 font-semibold">Rejected</option>
+                <option value="Canceled" className="bg-slate-200 text-slate-800 font-semibold">Canceled</option>
+                <option value="Expired" className="bg-orange-200 text-orange-800 font-semibold">Expired</option>
+            </select>
+        </div>
 
-                    <span className="">Filter</span>
-                  </button>
-          </div>
+        <button type="button" onClick="" className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+            <span className="mx-auto">Filter</span>
+        </button>
+        </div>
         )}
                 </div>
 

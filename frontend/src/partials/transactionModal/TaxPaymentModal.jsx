@@ -5,6 +5,7 @@ import Paymongo from 'paymongo';
 // import QRCode from 'react-qr-code';
 import StatusBadgeModal from '../StatusBadgeModal';
 import CancelTransactionModal from '../CancelTransactionModal';
+import Loading from '../../partials/Loading';
 
 console.log("API Key:", process.env.SECRET_KEY);
 const paymongo = new Paymongo(process.env.SECRET_KEY);
@@ -350,7 +351,11 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                     )}
                   </div>
                 </div>
-
+                {/* LOADING ANIMATION */}
+                <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                  <Loading/>
+                </div>
+                {/* LOADING ANIMATION */}
               </div>
 
               {isCancelConfirmed && (
