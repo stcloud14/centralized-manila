@@ -263,7 +263,10 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
               )}
 
             {/* Search */}
+            {/* First Row */}
             <div className="flex flex-col items-center md:flex-row text-xs pb-2">
+
+              {/* Transaction ID */}
               <div className="relative flex flex-row sm:flex-col items-start w-full sm:pr-4 mb-[0.5rem] sm:mb-0">
               <span className="hidden sm:block pr-1 pb-1 text-slate-700 dark:text-white">Transaction ID:</span>
                 <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
@@ -273,6 +276,8 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                 </span>
                 <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search Transaction ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
               </div>
+
+              {/* Transaction Type */}
               <div className="flex flex-row sm:flex-col items-start w-full sm:pr-4 mb-[0.5rem] sm:mb-0">
                 <span className="hidden sm:block pr-1 pb-1 pt-[0.25rem] sm:pt-0 text-slate-700 dark:text-white">Type:</span>
                 <select onChange="" value="" name="" id="" className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-2 py-1 rounded-sm peer cursor-pointer w-full">
@@ -282,6 +287,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                 </select>
               </div>
 
+              {/* Date */}
               <div className="flex flex-row sm:flex-col items-start w-full mb-[0.5rem]sm:mb-0">
                 <span className="hidden sm:block pr-1 pb-1 text-slate-700 dark:text-white">Date:</span>
               <div className="flex sm:flex-row w-full">
@@ -342,8 +348,11 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
               </div> 
             </div>
 
+              {/* 2nd Filter Row */}
           <div className="flex flex-col items-center md:flex-row text-xs pb-5">
-            <div className="relative flex flex-row sm:flex-col items-start w-full sm:pr-4 mb-[0.5rem] sm:mb-0">
+
+              {/* Tax Identification Number */}
+              <div className="relative flex flex-row sm:flex-col items-start w-full sm:pr-4 mb-[0.5rem] sm:mb-0">
               <span className="hidden sm:block  pr-1 pb-1 text-slate-700 dark:text-white">Tax Identification Number:</span>
                 <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 sm:mt-[1.2rem]">
@@ -352,6 +361,8 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                 </span>
                 <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search TIN..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
               </div>
+
+              {/* Property Identification Number */}
               <div className="relative flex flex-row sm:flex-col items-start w-full sm:pr-4 mb-[0.5rem] sm:mb-0">
               <span className="hidden sm:block pr-1 pb-1 text-slate-700 dark:text-white">Property Identification Number:</span>
                 <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
@@ -361,7 +372,9 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                 </span>
                 <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search PIN..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
               </div>
-            <div className="flex w-full sm:w-32 items-center justify-center sm:mt-[1.5rem]">
+
+              {/* Clear Button */}
+              <div className="flex w-full sm:w-32 items-center justify-center sm:mt-[1.3rem]">
                 <button onClick="" className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 w-full rounded-sm inline-flex justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -369,8 +382,9 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                   <span>&nbsp;Clear</span>
                 </button>
               </div>
+
               {/* View Toggle */}
-            <div className="flex items-center text-xs ml-2 mt-[1.5rem]">
+            <div className="flex items-center text-xs ml-2 mt-[1.3rem]">
               <div className="relative flex items-center">
                 {/* Tabular View Toggle */}
                 <button onClick={() => handleToggleView('table')}  className='flex items-center p-1 text-slate-500 hover:text-black dark:text-slate-400 dark:hover:text-white'>
