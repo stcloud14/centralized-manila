@@ -169,13 +169,27 @@ const handleCloseConfirm = () => {
 };
 
 
-const generateDownloadLink = (data) => {
-  console.log('Generating download link:', data.transaction_id);
-  return `http://localhost:8800/transachistory/buspermit/${data.transaction_id}`;
+  // QR Download 
+  const generateDownloadLink = (data) => {
+    console.log('Generating download link:', data.transaction_id);
+    return `http://localhost:8800/transachistory/buspermit/${data.transaction_id}/download`;
 };
 
-const downloadLink = isScanned ? generateDownloadLink(businessTransaction) : null;
-console.log('Download link:', downloadLink);
+  const downloadLink = isScanned ? generateDownloadLink(businessTransaction) : null;
+  console.log('Download link:', downloadLink);
+
+  const handleDownload = async () => {
+      try {
+          const pdfRes = await axios.get(downloadLink, { responseType: 'blob' });
+          const pdfBlob = new Blob([pdfRes.data], { type: 'application/pdf' });
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+
+          // Open the PDF in a new window
+          window.open(pdfUrl, '_blank');
+      } catch (err) {
+          console.error(err);
+      }
+  };
 
  
   return (
@@ -759,16 +773,20 @@ console.log('Download link:', downloadLink);
             ): null}
 
 
-          {/* QR Code Section */}
-          <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
-                        <div className="whitespace-nowrap md:mb-0 mb-1">
-                            {businessTransaction ? (
-                                <QRCode value={downloadLink || ''} size={100} />
-                            ) : (
-                                <Loading />
-                            )}
-                        </div>
-                    </div>
+           {/* QR Code Section */}
+           <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
+                <div className="whitespace-nowrap md:mb-0 mb-1">
+                    {businessTransaction ? (
+                        // Automatically redirect to the download link when the QR code is clicked
+                        <a href={generateDownloadLink(businessTransaction)} target="_blank" rel="noreferrer">
+                            <QRCode value={generateDownloadLink(businessTransaction)} size={100} />
+                        </a>
+                    ) : (
+                        <Loading />
+                    )}
+                </div>
+            </div>
+                 
 
 
             <div className="flex items-center space-x-2 ml-auto">
