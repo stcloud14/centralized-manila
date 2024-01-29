@@ -131,8 +131,8 @@ return (
             <div className="px-5 py-5">
               
             <form onSubmit={handleSubmit}>
-            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Profile</h1>
-            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Government Information</h1>    
+            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Edit Government Information</h1>
+            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Maintain accurate government records by updating your information below. <br/>Ensure accuracy in your government-related information to maintain up-to-date records.</h1>    
 
               {isSuccess && (
               <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
