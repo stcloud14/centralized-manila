@@ -61,7 +61,7 @@ const FormatMail = (user_email, typeInfo, body, amount, dynamicSex, dynamicMessa
                             <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">${dynamicAmountTitle} </span>P ${amount}.00</p>
 
                             <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
-                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila Team</p>
 
                             <hr style="margin:10px 0"/>
                             <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
@@ -109,7 +109,7 @@ const RegisteredAccountEmail = (user_email, body) => {
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:16px;line-height:26px;margin:16px 0">Best regards,<br />Centralized Manila</p>
+            <p style="font-size:16px;line-height:26px;margin:16px 0">Best regards,<br />Centralized Manila Team</p>
             <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
             <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">© 2024 Centralized Manila. All rights reserved.</p>
           </td>
@@ -160,7 +160,7 @@ const ResetPassMail = (user_email, body, amount) => {
                   <p style="font-size:14px;line-height:1.5;margin:16px 0">You updated the password for your Centralized Manila account on ${body.formattedDate}. If this was you, then no further action is required.</p>
                   <p style="font-size:14px;line-height:1.5;margin:16px 0">However if you did NOT perform this password change, please<!-- --> <a href="http://localhost:5173/forgotpass" style="color:#067df7;text-decoration:underline" target="_blank">reset your account password</a> <!-- -->immediately.</p>
                   <p style="font-size:14px;line-height:1.5;margin:16px 0">Still have questions? Reach us<!-- --> <a href="#" style="color:#067df7;text-decoration:underline" target="_blank">Centralized Manila</a></p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Best regards,<br />Centralized Manila</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Best regards,<br />Centralized Manila Team</p>
                 </td>
               </tr>
             </tbody>
@@ -226,7 +226,7 @@ const FormatExpiredMail = (transaction) => {
                             <p style="font-size:16px;line-height:24px;margin:16px 0"><span style="font-weight: 600;">Amount: </span>P ${transaction.amount}.00</p>
                             
                             <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
-                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila Team</p>
 
                             <hr style="margin:10px 0"/>
                             <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
@@ -295,7 +295,7 @@ const VerificationMail = (user_email, body, amount) => {
 
 
                             <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
-                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila Team</p>
 
                             <hr style="margin:10px 0"/>
                             <p style="font-size:14px;line-height:24px;margin:16px 0">If you did not initiate this transaction, there is a possibility that someone else may be attempting to access the Centralized Manila account associated with <span style="font-weight: 700;"> ${user_email}</span></p>
@@ -369,7 +369,7 @@ router.get('/:user_id', async (req, res) => {
       const body = req.body;
       const transType = req.body.data.trans_type;
       const rawAmount = req.body.data.amount;
-      const amount = parseInt(rawAmount.replace(/,/g, ''), 10);
+      const amount = typeof rawAmount === 'string' ? parseInt(rawAmount.replace(/,/g, ''), 10) : null;
       const statusType = req.body.status_type;
       const sexType = req.body.sex_type;
      

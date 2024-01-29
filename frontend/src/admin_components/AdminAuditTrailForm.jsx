@@ -18,37 +18,22 @@ const  AdminAuditTrailForm = () => {
   const user_id = pathname.split("/")[2];
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [userTransaction, setUserTransaction] = useState([]);
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [searchInput, setSearchInput] = useState('');
-  const [filteredTransactions, setFilteredTransactions] = useState([]);
-  const [sortOrder, setSortOrder] = useState('desc');
-  const [sortOption, setSortOption] = useState('date_processed');
+  const [auditTrail, setAuditTrail] = useState();
 
 
   useEffect(() => {
-    const fetchUserTransaction = async () => {
+    const fetchAuditTrail = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/transachistory/${user_id}`);
-        setUserTransaction(res.data);
+        const res = await axios.get(`http://localhost:8800/audittrail/`);
+        setAuditTrail(res.data);
       } catch (err) {
         console.log(err);
       }
     };
-    fetchUserTransaction();
+    fetchAuditTrail();
   }, [user_id]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = (transaction) => {
-    setIsModalOpen(true);
-    setSelectedTransaction(transaction);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedTransaction(null);
-  };
+  
 
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
 
@@ -65,61 +50,9 @@ const  AdminAuditTrailForm = () => {
   }, []);
 
 
-  const handleSearchInputChange = (e) => {
-    const input = e.target.value;
-    const inputUpperCase = input.toUpperCase();
-
-    setSearchInput(inputUpperCase);
-  };
-
-  const handleSearch = () => {
-
-    const filteredTransactions = userTransaction.filter(transaction => 
-    transaction.transaction_id.toString().includes(searchInput)
-    );
-  
-    setFilteredTransactions(filteredTransactions);
-  };
-
-  const handleClearFilter = () => {
-    setSearchInput([]);
-    setFilteredTransactions([]);
-    setSortOption('date_processed');
-    setSortOrder('desc')
-  };
+  const logoSrc = '../src/images/mnl_footer.svg';
 
 
-  const handleSortChange = (option) => {
-    const newOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-  
-    setSortOption(option);
-    setSortOrder(newOrder);
-  };
-  
-  const sortTransactions = (transactions) => {
-    return transactions.slice().sort((a, b) => {
-      const valueA = a[sortOption];
-      const valueB = b[sortOption];
-  
-      if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
-      if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
-      return 0;
-    });
-  };
-
-const sortedTransactions = sortTransactions(filteredTransactions.length > 0 ? filteredTransactions : userTransaction);
-
-
-const SortIcon = ({ order }) => (
-  <button className="group flex items-center px-1">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-      <path className="group-hover:stroke-black dark:group-hover:stroke-white cursor-pointer" strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-    </svg>
-  </button>
-  );
-
-
-const logoSrc = '../src/images/mnl_footer.svg';
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -138,34 +71,15 @@ const logoSrc = '../src/images/mnl_footer.svg';
                  
             {isMobileView ? (           
               // For Mobile View
-              <AuditMobile searchInput={searchInput} 
-              handleSearch={handleSearch} 
-              handleSearchInputChange={handleSearchInputChange} 
-              handleOpenModal={handleOpenModal}  
-              handleClearFilter={handleClearFilter} 
-              handleSortChange={handleSortChange}
-              sortOption={sortOption}
-              sortedTransactions={sortedTransactions} />
+              <AuditMobile  />
             ) : (
               // For Desktop View
-              <AuditDesktop searchInput={searchInput} 
-              handleSearch={handleSearch} 
-              handleSearchInputChange={handleSearchInputChange} 
-              handleOpenModal={handleOpenModal} 
-              handleClearFilter={handleClearFilter} 
-              handleSortChange={handleSortChange}
-              sortOption={sortOption}
-              sortOrder={sortOrder}
-              SortIcon={SortIcon}
-              sortedTransactions={sortedTransactions} />
+              <AuditDesktop auditTrail={auditTrail} />
             )}
           </div>
           <AdminFooter logo={logoSrc} />
         </main>
 
-        {/* {isModalOpen && selectedTransaction && (
-          <ModalTransaction user_id={user_id} selectedTransaction={selectedTransaction} modalType={selectedTransaction.trans_type} onClose={handleCloseModal} />
-        )} */}
       </div>
     </div>
   );
