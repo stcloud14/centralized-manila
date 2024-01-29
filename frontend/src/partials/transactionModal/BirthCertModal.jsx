@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import QRCode from 'react-qr-code';
+import jsPDF from 'jspdf';
 import moment from 'moment/moment.js';
 import StatusBadgeModal from '../StatusBadgeModal';
 import CancelTransactionModal from '../CancelTransactionModal';
@@ -145,13 +146,27 @@ const cancelTrans = async (e) => {
     fetchBirthTransaction();
   }, [transaction_id]);
 
+  // QR Download 
   const generateDownloadLink = (data) => {
     console.log('Generating download link:', data.transaction_id);
-    return `http://localhost:8800/transachistory/birthcert/${data.transaction_id}`;
-  };
+    return `http://localhost:8800/transachistory/birthcert/${data.transaction_id}/download`;
+};
 
   const downloadLink = isScanned ? generateDownloadLink(birthTransaction) : null;
   console.log('Download link:', downloadLink);
+
+  const handleDownload = async () => {
+      try {
+          const pdfRes = await axios.get(downloadLink, { responseType: 'blob' });
+          const pdfBlob = new Blob([pdfRes.data], { type: 'application/pdf' });
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+
+          // Open the PDF in a new window
+          window.open(pdfUrl, '_blank');
+      } catch (err) {
+          console.error(err);
+      }
+  };
 
   const handleOpenConfirm = () => {
     setIsCancelConfirmed(true);
@@ -513,7 +528,10 @@ const cancelTrans = async (e) => {
             <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
                 <div className="whitespace-nowrap md:mb-0 mb-1">
                     {birthTransaction ? (
-                        <QRCode value={downloadLink || ''} size={100} />
+                        // Automatically redirect to the download link when the QR code is clicked
+                        <a href={generateDownloadLink(birthTransaction)} target="_blank" rel="noreferrer">
+                            <QRCode value={generateDownloadLink(birthTransaction)} size={100} />
+                        </a>
                     ) : (
                         <Loading />
                     )}
