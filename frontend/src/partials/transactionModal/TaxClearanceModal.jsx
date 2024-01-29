@@ -309,12 +309,14 @@ const cancelTrans = async (e) => {
                       
                       
                       <div className="flex items-center space-x-2 ml-auto">
-                          <button
-                              onClick={handleOpenConfirm}
-                              type="button"
-                              className="text-red-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
-                              <p>Cancel Transaction</p>
-                          </button>
+                        {status_type === 'Paid' && transaction_id ? (
+                        <button
+                            onClick={handleOpenConfirm}
+                            type="button"
+                            className="text-red-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
+                            <p>Cancel Transaction</p>
+                        </button>
+                        ): null}
 
                           <button
                               onClick={onClose}
