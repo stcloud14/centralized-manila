@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from 'moment/moment.js';
 import StatusBadgeModal from '../StatusBadgeModal';
 import CancelTransactionModal from '../CancelTransactionModal';
+import Loading from '../../partials/Loading';
 
 const BirthModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpenModal }) => {
 
@@ -535,7 +536,12 @@ const cancelTrans = async (e) => {
               </button>
               )}
             </div>
+          </div> 
+          {/* LOADING ANIMATION */}
+          <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+            <Loading/>
           </div>
+          {/* LOADING ANIMATION */}
         </div>
 
         {isCancelConfirmed && (
