@@ -174,7 +174,7 @@ return `
     `;
 */
 
-/* --------------------- Tax Clearance (Pending) ---------------------
+const SendRpCleranceMail = (user_email, body, amount) => {
 return `
   <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
   <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
@@ -210,11 +210,11 @@ return `
                             <p style="font-size:16px;line-height:24px;margin:16px 0">The current status of this transaction is:</p>
                             <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
 
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>[insert here]</p>
-                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${amount}.00</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>${body.data.rp_tdn}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>${body.data.rp_pin}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>${body.data.formattedDate}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>${body.data.formattedTime}</p>
+                            <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Amount to pay: </span>P ${body.data.amount}.00</p>
 
                             <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
                             <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila</p>
@@ -248,7 +248,7 @@ return `
 </body>
 
     `;
-*/
+}
 
 /* --------------------- Business Permit (Pending) ---------------------
 return `
@@ -915,7 +915,7 @@ router.get('/:user_id', async (req, res) => {
 });
 
 
-    router.post('/send-email/:user_email', async (req, res) => {
+    router.post('/rptax-mail/send-email/:user_email', async (req, res) => {
 
       const { user_email } = req.params;
       const body = req.body;
@@ -934,6 +934,42 @@ router.get('/:user_id', async (req, res) => {
           to: user_email,
           subject: transType,
           html: FormatMail(user_email, body, amount),
+        });
+      
+        if (!result.response) {
+          return res.status(400).json({ error: "Error sending email" });
+        }
+      
+        res.json({
+          message: "Email has been successfully sent!",
+        });
+      
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+      }
+    });
+
+    
+    router.post('/rpclerance-mail/send-email/:user_email', async (req, res) => {
+
+      const { user_email } = req.params;
+      const body = req.body;
+      const transType = req.body.data.trans_type;
+      const amount = req.body.data.amount / 100;
+
+      // const statType = req.body.status_type;
+    
+      if (!user_email) {
+      return res.status(400).json({ error: "user_email is missing or empty!" });
+      }
+
+      try {
+        const result = await transporter.sendMail({
+          from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
+          to: user_email,
+          subject: transType,
+          html: SendRpCleranceMail(user_email, body, amount),
         });
       
         if (!result.response) {

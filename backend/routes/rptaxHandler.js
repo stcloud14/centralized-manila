@@ -264,7 +264,7 @@ const router = Router();
     expiryDate.setDate(date.getDate() + 5);
     const formattedExpiryDate = `${expiryDate.getFullYear()}-${(expiryDate.getMonth() + 1).toString().padStart(2, '0')}-${expiryDate.getDate().toString().padStart(2, '0')} ${expiryDate.getHours().toString().padStart(2, '0')}:${expiryDate.getMinutes().toString().padStart(2, '0')}:${expiryDate.getSeconds().toString().padStart(2, '0')}`;
 
-    const query5 = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`, `expiry_date`) VALUES (?, ?, ?, ?, ?)";
+    const query5 = "INSERT INTO user_transaction (`transaction_id`, `user_id`, `trans_type_id`, `status_type`, `date_processed`, `expiry_date`) VALUES (?, ?, ?, ?, ?, ?)";
     const values5 = [transID, user_id, transType, statusType, formattedDate, formattedExpiryDate];
   
     const query6 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";

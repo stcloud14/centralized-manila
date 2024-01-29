@@ -130,8 +130,20 @@ const RPTaxClearanceForm =()=>{
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
+            const transaction_id = res.data.transaction_id;
             const f_name = res.data.f_name;
+            const m_name = res.data.m_name;
             const l_name = res.data.l_name;
+            const currentDate = new Date();
+            const formattedDate = currentDate.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+            const formattedTime = currentDate.toLocaleTimeString('en-US', {
+              hour: 'numeric',
+              minute: 'numeric'
+          });
 
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
@@ -139,20 +151,21 @@ const RPTaxClearanceForm =()=>{
 
             const trans_type = 'Real Property Tax Clearance';
 
-            const rowData = { ...rptaxClearance, trans_type};
+            const rowData = { ...rptaxClearance, trans_type, formattedDate, formattedTime};
 
             const status_type = 'P E N D I N G';
 
             const body = {
               data: rowData,
               status_type: status_type,
+              transaction_id: transaction_id,
               f_name: f_name,
               l_name: l_name
             };
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+              const emailResponse = await axios.post(`http://localhost:8800/email/rpclerance-mail/send-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
