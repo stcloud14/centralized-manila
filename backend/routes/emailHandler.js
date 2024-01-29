@@ -376,50 +376,78 @@ router.get('/:user_id', async (req, res) => {
 
       const message = {
         Pending: `
-          <h2 style="font-size:26px;font-weight:bold;text-align:center">We have received a request to process your ${transType} via the email address <span style="font-weight: 700;">${user_email}</span>.</h2>
-          <h2 style="font-size:26px;font-weight:bold;text-align:center">We appreciate your patience, and we will notify you once the transaction is complete. If you have any questions, please do not hesitate to reach out to us.</h2>
-          <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
-          <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">P E N D I N G</h1>
+        <h2 style="font-size:26px;font-weight:bold;text-align:center">We have received a request to process your ${transType} via the email address <span style="font-weight: 700;">${user_email}</span>.</h2>
+        <p style="font-size:16px;line-height:24px;margin:16px 0">The transaction will be processed once the payment is received. Please ensure that the payment is made to proceed with the transaction, and we will notify you once the transaction is complete. If you have any questions, please do not hesitate to reach out to us.</p>        
+        <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
+          <div style="border: 3px dashed #fef08a; padding: 3px; border-radius: 3px;">
+              <div style="background-color: #fef08a; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #854d0e;">
+                  Pending
+              </div>
+          </div>
         `,
         Paid: `
           <h2 style="font-size:26px;font-weight:bold;text-align:center">We are pleased to inform you that your ${transType} has been successfully processed. The payment for this transaction has been received and confirmed.</h2>
-          <h2 style="font-size:26px;font-weight:bold;text-align:center">Thank you for your prompt payment. If you have any further inquiries, please feel free to contact us.</h2>
+          <p style="font-size:16px;line-height:24px;margin:16px 0">Thank you for your prompt payment. If you have any further inquiries, please feel free to contact us.</h2>
           <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
-          <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">P A I D</h1>
+          <div style="border: 3px dashed #a7f3d0; padding: 3px; border-radius: 3px;">
+              <div style="background-color: #a7f3d0; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #065f46;">
+                  Paid
+              </div>
+          </div>
         `,
         Processing: `
           <h2 style="font-size:26px;font-weight:bold;text-align:center">Your ${transType} is currently being processed.</h2>
-          <h2 style="font-size:26px;font-weight:bold;text-align:center">Our team is diligently working to complete the transaction, and we will notify you once it has been successfully processed.</h2>
+          <p style="font-size:16px;line-height:24px;margin:16px 0">Our team is diligently working to complete the transaction, and we will notify you once it has been successfully processed.</h2>
           <h2 style="font-size:26px;font-weight:bold;text-align:center">Thank you for your patience and understanding.</h2>
           <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
-          <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">P R O C E S S I N G</h1>
+          <div style="border: 3px dashed #e9d5ff; padding: 3px; border-radius: 3px;">
+              <div style="background-color: #e9d5ff; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #6b21a8;">
+                  Processing
+              </div>
+          </div>
         `,
         Canceled: `
           <h2 style="font-size:26px;font-weight:bold;text-align:center">We regret to inform you that your ${transType} request has been canceled.</h2>
-          <h2 style="font-size:26px;font-weight:bold;text-align:center">If you have any questions or concerns regarding this cancellation, please contact our customer support for further assistance.</h2>
+          <p style="font-size:16px;line-height:24px;margin:16px 0">If you have any questions or concerns regarding this cancellation, please contact our customer support for further assistance.</h2>
           <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
-          <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">C A N C E L E D</h1>
+          <div style="border: 3px dashed #e2e8f0; padding: 3px; border-radius: 3px;">
+              <div style="background-color: #e2e8f0; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #020617;">
+                  Canceled
+              </div>
+          </div>
         `,
         Rejected: `
           <h2 style="font-size:26px;font-weight:bold;text-align:center">We are sorry, but your ${transType} request has been rejected.</h2>
-          <h2 style="font-size:26px;font-weight:bold;text-align:center">Please review the provided details and make sure all information is accurate.</h2>
-          <h2 style="font-size:26px;font-weight:bold;text-align:center">If you need further assistance or clarification, feel free to reach out to our customer support team.</h2>
+          <p style="font-size:16px;line-height:24px;margin:16px 0">Please review the provided details and make sure all information is accurate.</h2>
+          <p style="font-size:16px;line-height:24px;margin:16px 0">If you need further assistance or clarification, feel free to reach out to our customer support team.</h2>
           <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
-          <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">R E J E C T E D</h1>
+          <div style="border: 3px dashed #fecaca; padding: 3px; border-radius: 3px;">
+              <div style="background-color: #fecaca; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #991b1b;">
+                  Rejected
+              </div>
+          </div>
         `,
         Expired: `
           <h2 style="font-size:26px;font-weight:bold;text-align:center">Unfortunately, your ${transType} request has expired.</h2>
-          <h2 style="font-size:26px;font-weight:bold;text-align:center">Please initiate a new transaction if you still wish to proceed with the payment.</h2>
-          <h2 style="font-size:26px;font-weight:bold;text-align:center">If you have any questions, don't hesitate to contact our support team for assistance.</h2>
+          <p style="font-size:16px;line-height:24px;margin:16px 0">Please initiate a new transaction if you still wish to proceed with the payment.</h2>
+          <p style="font-size:16px;line-height:24px;margin:16px 0">If you have any questions, don't hesitate to contact our support team for assistance.</h2>
           <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
-          <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">E X P I R E D</h1>
-        `,
+          <div style="border: 3px dashed #fed7aa; padding: 3px; border-radius: 3px;">
+              <div style="background-color: #fed7aa; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #9a3412;">
+                  Expired
+              </div>
+          </div>
+          `,
         Complete: `
           <h2 style="font-size:26px;font-weight:bold;text-align:center">Congratulations! Your ${transType} has been successfully processed and is now marked as complete.</h2>
-          <h2 style="font-size:26px;font-weight:bold;text-align:center">You will receive a confirmation email shortly. If you have any additional questions or need further assistance, feel free to reach out to our customer support team.</h2>
+          <p style="font-size:16px;line-height:24px;margin:16px 0">You will receive a confirmation email shortly. If you have any additional questions or need further assistance, feel free to reach out to our customer support team.</h2>
           <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
-          <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">C O M P L E T E</h1>
-        `,
+          <div style="border: 3px dashed #93c5fd; padding: 3px; border-radius: 3px;">
+              <div style="background-color: #93c5fd; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #1e40af;">
+                  Complete
+              </div>
+          </div>
+          `,
       };
 
 
