@@ -51,13 +51,18 @@ const AuditDesktop = ({ auditTrail }) => {
     } else if (hours < 24) {
       return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
     } else if (days < 7) {
-      return `${days} ${days === 1 ? 'day' : 'days'} ago`;
+      if (days === 1) {
+        return 'Yesterday at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+      } else {
+        return `${days} days ago`;
+      }
     } else if (weeks < 4) {
       return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
     } else if (months < 12) {
       return `${months} ${months === 1 ? 'month' : 'months'} ago`;
     } else {
-      return `${years} ${years === 1 ? 'year' : 'years'} ago`;
+      return createdAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+        ' at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     }
   }
 
