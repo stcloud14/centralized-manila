@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment/moment.js';
 import Paymongo from 'paymongo';
-// import QRCode from 'react-qr-code';
+import QRCode from 'react-qr-code';
 import StatusBadgeModal from '../StatusBadgeModal';
 import CancelTransactionModal from '../CancelTransactionModal';
 import Loading from '../../partials/Loading';
@@ -19,6 +19,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
   const time = moment(date_processed).format('h:mm A');
 
   const [taxPaymentTransaction, setTaxPaymentTransaction] = useState({});
+  const [isScanned, setIsScanned] = useState(true);
 
   const [isCancelConfirmed, setIsCancelConfirmed] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -156,6 +157,13 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
     setIsCancelConfirmed(false);
   };
 
+  const generateDownloadLink = (data) => {
+    console.log('Generating download link:', data.transaction_id);
+    return `http://localhost:8800/transachistory/taxpayment/${data.transaction_id}`;
+  };
+
+  const downloadLink = isScanned ? generateDownloadLink(taxPaymentTransaction) : null;
+  console.log('Download link:', downloadLink);
 
   return (
     <div className="fixed z-50 inset-0 overflow-y-auto">
@@ -315,14 +323,17 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                     </button>
                   ): null}
 
-                 {/* QR Code Section 
-                  <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                    <div className="whitespace-nowrap md:mb-0 mb-1">
-                      {taxPaymetTransaction.transaction_id ? (
-                        <QRCode value={downloadLink} size={100} />
-                      ) : null}
-                    </div>
-                  </div> */}
+
+            {/* QR Code Section */}
+            <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
+                  <div className="whitespace-nowrap md:mb-0 mb-1">
+                      {taxPaymentTransaction ? (
+                          <QRCode value={downloadLink || ''} size={100} />
+                      ) : (
+                          <Loading />
+                      )}
+                  </div>
+              </div>
                   
                   <div className="flex items-center space-x-2 ml-auto">
                     {status_type === 'Pending' && transaction_id ? (
