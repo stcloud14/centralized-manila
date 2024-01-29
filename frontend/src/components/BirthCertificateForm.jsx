@@ -60,29 +60,43 @@ const BirthCertificateForm =()=>{
           // Check the response status before proceeding
           if (response.status === 200) {
 
-            try {
-              const res = await axios.get(`http://localhost:8800/email/${user_id}`);
-              
-              if (res.data.user_email) {
-                const updatedUserEmail = res.data.user_email;
-                const f_name = res.data.f_name;
-                const l_name = res.data.l_name;
-                console.log('FETCHED USER EMAIL:', updatedUserEmail);
-    
-                const user_email = updatedUserEmail;
-    
-                const trans_type = 'Birth Certificate';
-    
-                const rowData = { ...birthCert, trans_type};
-
-                const status_type = 'P E N D I N G';
-    
-                const body = {
-                  data: rowData,
-                  status_type: status_type,
-                  f_name: f_name,
-                  l_name: l_name
-                };
+                try {
+                  const res1 = await axios.get(`http://localhost:8800/transachistory/transId/${user_id}`);
+                  const transaction_id = res1.data[0]?.transaction_id;
+        
+                  const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+                  
+                  if (res.data.user_email) {
+                    const updatedUserEmail = res.data.user_email;
+                    const f_name = res.data.f_name;
+                    const l_name = res.data.l_name;
+                    const currentDate = new Date();
+                            const date = currentDate.toLocaleDateString('en-US', {
+                                month: 'long',
+                                day: 'numeric',
+                                year: 'numeric'
+                            });
+                            const time = currentDate.toLocaleTimeString('en-US', {
+                              hour: 'numeric',
+                              minute: 'numeric'
+                          });
+                    
+                    console.log('FETCHED USER EMAIL:', updatedUserEmail);
+        
+                    const user_email = updatedUserEmail;
+        
+                    const trans_type = 'Birth Certificate';
+        
+                    const rowData = { ...birthCert, transaction_id, trans_type, date, time};
+        
+                    const status_type = 'Pending';
+        
+                    const body = {
+                      data: rowData,
+                      status_type: status_type,
+                      f_name: f_name,
+                      l_name: l_name
+                    };
       
                 try {
                   const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);

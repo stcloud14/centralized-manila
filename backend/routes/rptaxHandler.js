@@ -20,24 +20,6 @@ const router = Router();
 //   );
 // });
 
-  router.get('/payment/transId/:user_id', async (req, res) => {
-    const user_id = req.params.user_id;
-    const query = `SELECT transaction_id
-      FROM user_transaction
-      WHERE trans_type_id = 1 AND user_id = ?
-      ORDER BY date_processed DESC
-      LIMIT 1;`;
-
-    try {
-    const result = await queryDatabase(query, [user_id]);
-    
-    res.json(result);
-    } catch (err) {
-    console.error(err);
-    res.status(500).send('Error retrieving data');
-    }
-  });
-
   
   router.post('/payment/:user_id', async (req, res) => {
     const user_id = req.params.user_id;

@@ -172,11 +172,8 @@ const handleCheckboxChange = (e) => {
       if (response.status === 200) {
         // Fetch user_email after successful payment
         try {
-          const res1 = await axios.get(`http://localhost:8800/rptax/payment/transId/${user_id}`);
+          const res1 = await axios.get(`http://localhost:8800/transachistory/transId/${user_id}`);
           const transaction_id = res1.data[0]?.transaction_id;
-
-          // console.log(res1)
-          console.log(transaction_id)
 
           const res = await axios.get(`http://localhost:8800/email/${user_id}`);
           
@@ -203,7 +200,7 @@ const handleCheckboxChange = (e) => {
 
             const rowData = { ...rptaxPayment, transaction_id, trans_type, date, time};
 
-            const status_type = 'P E N D I N G';
+            const status_type = 'Pending';
 
             const body = {
               data: rowData,
