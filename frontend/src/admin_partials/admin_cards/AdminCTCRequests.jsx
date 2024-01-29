@@ -5,6 +5,7 @@ import Flatpickr from 'react-flatpickr';
 import AdminCTCView from '../admin_modals/AdminCTCView';
 import CTCCardView from "../admin_cedula/CTCCardView";
 import CTCTableView from "../admin_cedula/CTCTableView";
+import Loading from '../../partials/Loading';
 
 const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -408,18 +409,9 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
                     </button>
                     </div>
 
-                    <div className="font-medium bg-white dark:bg-[#212121] text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm">
-                    {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
-                    <span>
-                      Please wait for a moment...
-                    </span>
-
                     {isLoading ? (
-                      <span>
-                        Please wait for a moment...
-                      </span>
+                      <Loading />
                     ) : null}
-                    </div>
 
                   </div>
                 </div>
@@ -467,18 +459,9 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
 
                   </div>
 
-                  <div className="font-medium bg-white dark:bg-[#212121] text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm">
-                    {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
-                    <span>
-                      Please wait for a moment...
-                    </span>
-
-                    {isLoading ? (
-                      <span>
-                        Please wait for a moment...
-                      </span>
+                  {isLoading ? (
+                      <Loading />
                     ) : null}
-                    </div>
 
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import axios from 'axios'
 import AdminCTCView from '../admin_modals/AdminCTCView';
 import CTCCardView from "../admin_cedula/CTCCardView";
 import CTCTableView from "../admin_cedula/CTCTableView";
+import Loading from '../../partials/Loading';
 
 const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -340,15 +341,8 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                     </button>
                     </div>
 
-                    {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
-                    <span>
-                      Please wait for a moment...
-                    </span>
-
                     {isLoading ? (
-                      <span>
-                        Please wait for a moment...
-                      </span>
+                      <Loading />
                     ) : null}
 
                   </div>
@@ -392,15 +386,8 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                       </button>
                       </div>
 
-                      {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
-                    <span>
-                      Please wait for a moment...
-                    </span>
-
-                    {isLoading ? (
-                      <span>
-                        Please wait for a moment...
-                      </span>
+                      {isLoading ? (
+                      <Loading />
                     ) : null}
                     
                   </div>

@@ -5,6 +5,7 @@ import Flatpickr from 'react-flatpickr';
 import AdminBPView from '../admin_modals/AdminBPView';
 import BPCardView from '../admin_business/BPCardView';
 import BPTableView from '../admin_business/BPTableView';
+import Loading from '../../partials/Loading';
 
 const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
 
@@ -407,18 +408,9 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
                     </button>
                     </div>
 
-                    <div className="font-medium bg-white dark:bg-[#212121] text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm">
-                    {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
-                    <span>
-                      Please wait for a moment...
-                    </span>
-
                     {isLoading ? (
-                      <span>
-                        Please wait for a moment...
-                      </span>
+                      <Loading />
                     ) : null}
-                    </div>
 
                   </div>
                 </div>
@@ -466,18 +458,9 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
 
                   </div>
 
-                  <div className="font-medium bg-white dark:bg-[#212121] text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm">
-                    {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
-                    <span>
-                      Please wait for a moment...
-                    </span>
-
-                    {isLoading ? (
-                      <span>
-                        Please wait for a moment...
-                      </span>
+                  {isLoading ? (
+                      <Loading />
                     ) : null}
-                    </div>
 
                   </div>
                 </div>

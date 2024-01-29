@@ -4,6 +4,7 @@ import axios from 'axios'
 import AdminBPView from '../admin_modals/AdminBPView';
 import BPCardView from '../admin_business/BPCardView';  
 import BPTableView from '../admin_business/BPTableView';
+import Loading from '../../partials/Loading';
 
 const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
   
@@ -340,15 +341,8 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
                     </button>
                     </div>
 
-                    {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
-                    <span>
-                      Please wait for a moment...
-                    </span>
-
                     {isLoading ? (
-                      <span>
-                        Please wait for a moment...
-                      </span>
+                      <Loading />
                     ) : null}
 
                   </div>
@@ -392,15 +386,8 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
                       </button>
                       </div>
 
-                      {/* FOR DESIGN PURPOSES, APPLY THE MODIFICATION AT THE BOTTOM, AND REMOVE AFTER*/}
-                    <span>
-                      Please wait for a moment...
-                    </span>
-
                     {isLoading ? (
-                      <span>
-                        Please wait for a moment...
-                      </span>
+                      <Loading />
                     ) : null}
                     
                   </div>
