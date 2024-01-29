@@ -166,6 +166,121 @@ router.get('/cedula/:transaction_id', async (req, res) => {
     }    
 });
 
+// QR Code Link Download
+router.get('/cedula/:transaction_id/download', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS municipality, cc.transaction_id, cc.cedula_date, \
+    co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_type, \
+    ci.cvl_id, ci.czn_id, ci.height, ci.weight, ci.acr_no, cv.cvl_status, \
+    ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
+    ti.amount, ti.copies, ti.print_id, vt.valid_id_type, pt.purpose_type, \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    \
+    FROM cedula_cert cc \
+    \
+    LEFT JOIN transaction_info ti ON cc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN address_info ai ON cc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_doc_owner co ON cc.transaction_id = co.transaction_id AND co.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_other_info ci ON cc.transaction_id = ci.transaction_id AND ci.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_transaction_info ct ON cc.transaction_id = ct.transaction_id AND ct.transaction_id IS NOT NULL \
+    LEFT JOIN region r ON cc.region_id = r.region_id \
+    LEFT JOIN province p ON cc.prov_id = p.prov_id \
+    LEFT JOIN cities c ON cc.city_id = c.city_id \
+    LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
+    LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    LEFT JOIN cvl_status cv ON ci.cvl_id = cv.cvl_id \
+    \
+    WHERE  cc.transaction_id = ?"
+
+     // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
+        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
+
+        try {
+            const result = await queryDatabase(query, [transaction_id]);
+    
+            if (result.length > 0) {
+                const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+                const cedulaTransaction = {
+                    ...result[0],
+                    birth_date: formattedDate,
+                };
+    
+                const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
+                const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
+    
+                cedulaTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+    
+                const pdf = new jsPDF();
+    
+                pdf.addImage(cedulaTransaction.logoImage, 'PNG', 128, 5, 70, 35);
+    
+                pdf.setFontSize(16);
+                pdf.setTextColor(255, 255, 255); // Set text color to white
+                pdf.setFillColor(0, 0, 0); // Set background color to black
+
+                pdf.setFontSize(12);
+                pdf.setTextColor(0, 0, 0); // Set text color back to black
+        
+              const cedulaDetailsHeaders = ['Field', 'Value'];
+              const cedulaDetailsData = [
+                ['Transaction ID', cedulaTransaction.transaction_id],
+                ['Last Name', cedulaTransaction.l_name],
+                ['First Name', cedulaTransaction.f_name],
+                ['Middle Name', cedulaTransaction.m_name],
+                ['Suffix', cedulaTransaction.suffix_type],
+                ['Sex', cedulaTransaction.sex_type],
+                ['Region', cedulaTransaction.region],
+                ['Province', cedulaTransaction.province],
+                ['Municipal', cedulaTransaction.municipality],
+                ['Barangay', cedulaTransaction.brgy_dist],
+                ['House No. / Unit Floor', cedulaTransaction.house_floor],
+                ['Stret / Building Name', cedulaTransaction.bldg_name],
+                ['Zip Code', cedulaTransaction.zip_code],
+                ['Civil Status', cedulaTransaction.cvl_status],
+                ['Country of Citizenship', cedulaTransaction.czn_id],
+                ['Height (ft)', cedulaTransaction.height],
+                ['Weight (kg)', cedulaTransaction.weight],
+                ['Alien Certificate of Registration No.', cedulaTransaction.acr_no],
+                ['Employment Status', cedulaTransaction.emp_status],
+                ['Tax Payer Account No.', cedulaTransaction.acc_no],
+                ['Residence Tax Due', cedulaTransaction.cedula_date],
+                ['Valid ID to Present Upon Claiming', cedulaTransaction.valid_id_type],
+                ['Profession/Occupation/Business', cedulaTransaction.pob_status],
+                ['Income From Real Property', cedulaTransaction.income_id],
+                ['Earning From Business', cedulaTransaction.salary_id],
+                ['Earning From Profession', cedulaTransaction.gross_id],
+                ['Amount', cedulaTransaction.amount],
+              ];
+              
+              pdf.autoTable({
+                head: [cedulaDetailsHeaders], 
+                body: cedulaDetailsData,
+                startY: 40,
+                margin: { horizontal: 10 },
+                theme: 'grid', 
+                headStyles: {
+                    fillColor: [50, 50, 50], // Set the background color of the header row to black
+                    textColor: 255, // Set the text color of the header row to white
+                },
+                styles: {
+                }
+            });
+
+            // Save or send the PDF
+            const pdfBuffer = pdf.output('arraybuffer');
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=birth_cert_${transaction_id}.pdf`);
+            res.send(Buffer.from(pdfBuffer));
+        } else {
+            res.status(404).json({ error: 'Transaction not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 router.get('/birthcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
@@ -353,7 +468,7 @@ router.get('/birthcert/:transaction_id/download', async (req, res) => {
             // Save or send the PDF
             const pdfBuffer = pdf.output('arraybuffer');
             res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename=birth_cert_${transaction_id}.pdf`);
+            res.setHeader('Content-Disposition', `attachment; filename=cedula_cert_${transaction_id}.pdf`);
             res.send(Buffer.from(pdfBuffer));
         } else {
             res.status(404).json({ error: 'Transaction not found' });
@@ -415,6 +530,133 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
     }    
 });
 
+
+// QR Code Link Download
+router.get('/deathcert/:transaction_id/download', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT r.region_name AS region, p.prov_name AS province, c.city_name AS city, dc.transaction_id, dc.death_date, \
+    do.l_name, do.f_name, do.m_name, do.suffix_type, do.sex_type, \
+    dr.l_name AS reql_name, dr.f_name AS reqf_name, dr.m_name AS reqm_name, dr.suffix_type AS reqsuffix, \
+    dr.owner_rel, dr.mobile_no, dr.tel_no, \
+    ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
+    ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    \
+    FROM death_cert dc \
+    \
+    LEFT JOIN transaction_info ti ON dc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN address_info ai ON dc.transaction_id = ai.transaction_id IS NOT NULL \
+    LEFT JOIN death_doc_owner do ON dc.transaction_id = do.transaction_id AND do.transaction_id IS NOT NULL \
+    LEFT JOIN death_requestor dr ON dc.transaction_id = dr.transaction_id AND dr.transaction_id IS NOT NULL \
+    LEFT JOIN region r ON dc.region_id = r.region_id \
+    LEFT JOIN region r1 ON ai.region_id = r1.region_id \
+    LEFT JOIN province p ON dc.prov_id = p.prov_id \
+    LEFT JOIN province p1 ON ai.prov_id = p1.prov_id \
+    LEFT JOIN cities c ON dc.city_id = c.city_id \
+    LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
+    LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
+    LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
+    \
+    WHERE dc.transaction_id = ?";
+
+        // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
+        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
+
+        try {
+            const result = await queryDatabase(query, [transaction_id]);
+    
+            if (result.length > 0) {
+                const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+                const deathTransaction = {
+                    ...result[0],
+                    birth_date: formattedDate,
+                };
+    
+                // Read the image file and convert it to base64
+                const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
+                const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
+    
+                // Assuming birthTransaction.logoImage is a base64-encoded data URI
+                deathTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+    
+                // Generate PDF
+                const pdf = new jsPDF();
+    
+                // Add logo at the upper right corner
+                pdf.addImage(deathTransaction.logoImage, 'PNG', 128, 5, 70, 35);
+    
+                // Set font size and style for the header
+                pdf.setFontSize(16);
+                pdf.setTextColor(255, 255, 255); // Set text color to white
+                pdf.setFillColor(0, 0, 0); // Set background color to black
+
+                // Set font size and style for the rest of the document
+                pdf.setFontSize(12);
+                pdf.setTextColor(0, 0, 0); // Set text color back to black
+        
+              // Add birth details using autotable plugin
+              const deathDetailsHeaders = ['Field', 'Value'];
+              const deathDetailsData = [
+                ['Transaction ID', deathTransaction.transaction_id],
+                ['Last Name', deathTransaction.l_name],
+                ['First Name', deathTransaction.f_name],
+                ['Middle Name', deathTransaction.m_name],
+                ['Sex', deathTransaction.sex_type],
+                ['Region of Death', deathTransaction.region],
+                ['Province of Death', deathTransaction.province],
+                ['Municipal of Death', deathTransaction.city],
+                ['Death Date', deathTransaction.death_date],
+                ['Requestor Last Name', deathTransaction.reql_name],
+                ['Requestor First Name', deathTransaction.reqf_name],
+                ['Requestor Middle Name', deathTransaction.reqm_name],
+                ['Requestor Suffix', deathTransaction.reqsuffix],
+                ['Requestor Owner Relation', deathTransaction.owner_relation],
+                ['Requestor Mobile No', deathTransaction.mobile_no],
+                ['Requestor Region', deathTransaction.reqregion],
+                ['Requestor Province', deathTransaction.reqprovince],
+                ['Requestor Municipality', deathTransaction.reqcity],
+                ['Barangay', deathTransaction.brgy_dist],
+                ['House No. / UNit Floor', deathTransaction.house_floor],
+                ['Street / Building Name', deathTransaction.bldg_name],
+                ['Zip Code', deathTransaction.zip_code],
+                ['No. of Copies', deathTransaction.copies],
+                ['What to Print', deathTransaction.print_tyoe],
+                ['Purpose', deathTransaction.purpose_type],
+                ['Number of Copies', deathTransaction.copies],
+                ['Valid ID to Present Upon Claiming', deathTransaction.valid_id_type],
+                ['Amount', deathTransaction.amount],
+              ];
+              
+              pdf.autoTable({
+                head: [deathDetailsHeaders], 
+                body: deathDetailsData,
+                startY: 40,
+                margin: { horizontal: 10 },
+                theme: 'grid', 
+                headStyles: {
+                    fillColor: [50, 50, 50], // Set the background color of the header row to black
+                    textColor: 255, // Set the text color of the header row to white
+                },
+                styles: {
+                }
+            });
+
+            // Save or send the PDF
+            const pdfBuffer = pdf.output('arraybuffer');
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=dearh_cert_${transaction_id}.pdf`);
+            res.send(Buffer.from(pdfBuffer));
+        } else {
+            res.status(404).json({ error: 'Transaction not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 router.get('/marriagecert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
@@ -465,6 +707,139 @@ router.get('/marriagecert/:transaction_id', async (req, res) => {
         res.status(500).send('Error retrieving data');
     }    
 });
+
+
+// QR Code Link Download
+router.get('/marriagecert/:transaction_id/download', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS city, mc.transaction_id, mc.marriage_date, \
+    hi.husband_fname, hi.husband_mname, hi.husband_lname, hi.suffix_type AS husband_suffix, \
+    wi.wife_fname, wi.wife_mname, wi.wife_lname, wi.suffix_type AS wife_suffix, \
+    ci.consent_lname AS reql_name, ci.consent_fname AS reqf_name, ci.consent_mname AS reqm_name, ci.suffix_type AS reqsuffix, ci.owner_rel, ci.tel_no, ci.mobile_no, \
+    ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
+    ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    \
+    FROM marriage_cert mc \
+    \
+    LEFT JOIN transaction_info ti ON mc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN address_info ai ON mc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
+    LEFT JOIN husband_info hi ON mc.transaction_id = hi.transaction_id AND hi.transaction_id IS NOT NULL \
+    LEFT JOIN wife_info wi ON mc.transaction_id = wi.transaction_id AND wi.transaction_id IS NOT NULL \
+    LEFT JOIN consent_info ci ON mc.transaction_id = ci.transaction_id AND ci.transaction_id IS NOT NULL \
+    LEFT JOIN region r ON mc.region_id = r.region_id \
+    LEFT JOIN region r1 ON ai.region_id = r1.region_id \
+    LEFT JOIN province p ON mc.prov_id = p.prov_id \
+    LEFT JOIN province p1 ON ai.prov_id = p1.prov_id \
+    LEFT JOIN cities c ON mc.city_id = c.city_id \
+    LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
+    LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
+    LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
+    \
+    WHERE  mc.transaction_id = ?"
+        // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
+        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
+
+        try {
+            const result = await queryDatabase(query, [transaction_id]);
+    
+            if (result.length > 0) {
+                const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+                const marriageTransaction = {
+                    ...result[0],
+                    birth_date: formattedDate,
+                };
+    
+                // Read the image file and convert it to base64
+                const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
+                const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
+    
+                // Assuming birthTransaction.logoImage is a base64-encoded data URI
+                marriageTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+    
+                // Generate PDF
+                const pdf = new jsPDF();
+    
+                // Add logo at the upper right corner
+                pdf.addImage(marriageTransaction.logoImage, 'PNG', 128, 5, 70, 35);
+    
+                // Set font size and style for the header
+                pdf.setFontSize(16);
+                pdf.setTextColor(255, 255, 255); // Set text color to white
+                pdf.setFillColor(0, 0, 0); // Set background color to black
+
+                // Set font size and style for the rest of the document
+                pdf.setFontSize(12);
+                pdf.setTextColor(0, 0, 0); // Set text color back to black
+        
+              // Add birth details using autotable plugin
+              const marriageDetailsHeaders = ['Field', 'Value'];
+              const marriageDetailsData = [
+                ['Transaction ID', marriageTransaction.transaction_id],
+                ['Husband Last Name', marriageTransaction.husband_lname],
+                ['Husband First Name', marriageTransaction.husband_fname],
+                ['Husband Middle Name', marriageTransaction.husband_mname],
+                ['Wife Last Name', marriageTransaction.wife_lname],
+                ['Wife First Name', marriageTransaction.wife_fname],
+                ['Wife Middle Name', marriageTransaction.wife_mname],
+                ['Region of Marriage', marriageTransaction.region],
+                ['Province of Marriage', marriageTransaction.province],
+                ['Municipal of Marriage', marriageTransaction.city],
+                ['Marriage Date', marriageTransaction.marriage_date],
+
+                ['Requestor Last Name', marriageTransaction.reql_name],
+                ['Requestor First Name', marriageTransaction.reqf_name],
+                ['Requestor Middle Name', marriageTransaction.reqm_name],
+                ['Requestor Suffix', marriageTransaction.reqsuffix],
+                ['Requestors Relationship to the Owner', marriageTransaction.owner_rel],
+                ['Requestor Mobile No', marriageTransaction.mobile_no],
+              
+                ['Requestor Region', marriageTransaction.reqregion],
+                ['Requestor Province', marriageTransaction.reqprovince],
+                ['Requestor Municipality', marriageTransaction.reqcity],
+                ['Barangat', marriageTransaction.brgy_dist],
+                ['House No. / UNit Floor', marriageTransaction.house_floor],
+                ['Street / Building Name', marriageTransaction.bldg_name],
+                ['Zip Code', marriageTransaction.zip_code],
+                ['No. of Copies', marriageTransaction.copies],
+                ['What to Print', marriageTransaction.print_type],
+                ['Purpose', marriageTransaction.purpose_type],
+                ['Number of Copies', marriageTransaction.copies],
+                ['Valid ID to Present Upon Claiming', marriageTransaction.valid_id_type],
+                ['Amount', marriageTransaction.amount],
+
+              ];
+              
+              pdf.autoTable({
+                head: [marriageDetailsHeaders], 
+                body: marriageDetailsData,
+                startY: 40,
+                margin: { horizontal: 10 },
+                theme: 'grid', 
+                headStyles: {
+                    fillColor: [50, 50, 50], // Set the background color of the header row to black
+                    textColor: 255, // Set the text color of the header row to white
+                },
+                styles: {
+                }
+            });
+
+            // Save or send the PDF
+            const pdfBuffer = pdf.output('arraybuffer');
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=marriage_cert_${transaction_id}.pdf`);
+            res.send(Buffer.from(pdfBuffer));
+        } else {
+            res.status(404).json({ error: 'Transaction not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 router.get('/buspermit/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
@@ -534,6 +909,142 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     }    
 });
 
+{/*
+// QR Code Link Download
+router.get('/buspermit/:transaction_id/download', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT  r.region_name AS bus_bregion, p.prov_name AS bus_bprovince, c.city_name AS bus_bcity, \
+    ba.brgy_dist AS bus_bbgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
+    bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin, bp.bus_lessor, bp.bus_rent, bp.owned, \
+    bo.bus_fname, bo.bus_mname, bo.bus_lname, bo.suffix_type AS bus_suffix, st.sex_type AS bus_sex,\
+    ai.email AS bus_email, ai.tel_no AS bus_tel_no, ai.mobile_no AS bus_mobile_no, \
+    bot.bus_floor, bot.bus_emp, bot.bus_male_emp, bot.bus_female_emp, bot.bus_van_no, bot.bus_truck_no, bot.bus_motor_no,\
+    bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
+    bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
+    bbt.bus_type_label AS bus_type, \
+    ti.amount as bus_amount, ti.copies, ptt.print_type, ti.valid_id, pt.purpose_type, \
+    r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
+    ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip  \
+    \
+    FROM bus_permit bp \
+    \
+    LEFT JOIN transaction_info ti ON bp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN address_info ai ON bp.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
+    LEFT JOIN bus_address ba ON bp.transaction_id = ba.transaction_id AND ba.transaction_id IS NOT NULL \
+    LEFT JOIN bus_owner bo ON bp.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \
+    LEFT JOIN bus_images bi ON bp.transaction_id = bi.transaction_id AND bi.transaction_id IS NOT NULL \
+    LEFT JOIN bus_operation bot ON bp.transaction_id = bot.transaction_id AND bot.transaction_id IS NOT NULL \
+    LEFT JOIN region r ON ba.region_id = r.region_id \
+    LEFT JOIN region r1 ON ai.region_id = r1.region_id \
+    LEFT JOIN province p ON ba.prov_id = p.prov_id \
+    LEFT JOIN province p1 ON ai.prov_id = p1.prov_id \
+    LEFT JOIN cities c ON ba.city_id = c.city_id \
+    LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
+    LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
+    LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    LEFT JOIN bus_type bbt ON bp.bus_type = bbt.bus_type \
+    LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
+    LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
+    \
+    WHERE  bp.transaction_id = ?"
+
+    const query1 = "SELECT bus_office, bus_line, bus_psic, bus_products, bus_units_no, bus_total_cap\
+    \
+    FROM bus_activity \
+    \
+    WHERE transaction_id = ?"
+
+     // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
+        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
+
+        try {
+            const result = await queryDatabase(query, [transaction_id]);
+    
+            if (result.length > 0) {
+                const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+                const businessTransaction = {
+                    ...result[0],
+                    birth_date: formattedDate,
+                };
+    
+                const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
+                const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
+    
+                cedulaTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+    
+                const pdf = new jsPDF();
+    
+                pdf.addImage(businessTransaction.logoImage, 'PNG', 128, 5, 70, 35);
+    
+                pdf.setFontSize(16);
+                pdf.setTextColor(255, 255, 255); // Set text color to white
+                pdf.setFillColor(0, 0, 0); // Set background color to black
+
+                pdf.setFontSize(12);
+                pdf.setTextColor(0, 0, 0); // Set text color back to black
+        
+              const busDetailsHeaders = ['Field', 'Value'];
+              const busDetailsData = [
+                ['Transaction ID', businessTransaction.transaction_id],
+                ['Last Name', businessTransaction.l_name],
+                ['First Name', businessTransaction.f_name],
+                ['Middle Name', businessTransaction.m_name],
+                ['Suffix', businessTransaction.suffix_type],
+                ['Sex', businessTransaction.sex_type],
+                ['Region', businessTransaction.region],
+                ['Province', businessTransaction.province],
+                ['Municipal', businessTransaction.municipality],
+                ['Barangay', businessTransaction.brgy_dist],
+                ['House No. / Unit Floor', businessTransaction.house_floor],
+                ['Stret / Building Name', businessTransaction.bldg_name],
+                ['Zip Code', businessTransaction.zip_code],
+                ['Civil Status', businessTransaction.cvl_status],
+                ['Country of Citizenship', businessTransaction.czn_id],
+                ['Height (ft)', businessTransaction.height],
+                ['Weight (kg)', businessTransaction.weight],
+                ['Alien Certificate of Registration No.', businessTransaction.acr_no],
+                ['Employment Status', businessTransaction.emp_status],
+                ['Tax Payer Account No.', businessTransaction.acc_no],
+                ['Residence Tax Due', cedulaTransaction.cedula_date],
+                ['Valid ID to Present Upon Claiming', cedulaTransaction.valid_id_type],
+                ['Profession/Occupation/Business', cedulaTransaction.pob_status],
+                ['Income From Real Property', cedulaTransaction.income_id],
+                ['Earning From Business', cedulaTransaction.salary_id],
+                ['Earning From Profession', cedulaTransaction.gross_id],
+                ['Amount', cedulaTransaction.amount],
+              ];
+              
+              pdf.autoTable({
+                head: [busDetailsHeaders], 
+                body: busDetailsData,
+                startY: 40,
+                margin: { horizontal: 10 },
+                theme: 'grid', 
+                headStyles: {
+                    fillColor: [50, 50, 50], // Set the background color of the header row to black
+                    textColor: 255, // Set the text color of the header row to white
+                },
+                styles: {
+                }
+            });
+
+            // Save or send the PDF
+            const pdfBuffer = pdf.output('arraybuffer');
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=birth_cert_${transaction_id}.pdf`);
+            res.send(Buffer.from(pdfBuffer));
+        } else {
+            res.status(404).json({ error: 'Transaction not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+*/}
+
+
 router.get('/taxpayment/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
@@ -565,6 +1076,95 @@ router.get('/taxpayment/:transaction_id', async (req, res) => {
 });
 
 
+// QR Code Link Download
+router.get('/taxpayment/:transaction_id/download', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT ut.user_id, tt.trans_type, tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
+    y.year_period AS tp_year, tp.period_id AS tp_period, ti.amount \
+    \
+    FROM rptax_payment tp \
+    \
+    LEFT JOIN transaction_info ti ON tp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN user_transaction ut ON tp.transaction_id = ut.transaction_id \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
+    LEFT JOIN year y ON tp.year_id = y.year_id \
+    \
+    WHERE tp.transaction_id = ?";
+     // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
+        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
+
+        try {
+            const result = await queryDatabase(query, [transaction_id]);
+    
+            if (result.length > 0) {
+                const formattedDate = moment(result[0].date).format('MMMM D, YYYY');
+                const taxPaymentTransaction = {
+                    ...result[0],
+                    date: formattedDate,
+                };
+    
+                const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
+                const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
+    
+                taxPaymentTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+    
+                const pdf = new jsPDF();
+    
+                pdf.addImage(taxPaymentTransaction.logoImage, 'PNG', 128, 5, 70, 35);
+    
+                pdf.setFontSize(16);
+                pdf.setTextColor(255, 255, 255); // Set text color to white
+                pdf.setFillColor(0, 0, 0); // Set background color to black
+
+                pdf.setFontSize(12);
+                pdf.setTextColor(0, 0, 0); // Set text color back to black
+        
+              const paymentDetailsHeaders = ['Field', 'Value'];
+              const paymentDetailsData = [
+                ['Transaction ID', taxPaymentTransaction.transaction_id],
+                ['Account Name', taxPaymentTransaction.acc_name],
+                ['Tax Declaration Number (TDN)', taxPaymentTransaction.tc_rp_tdn],
+                ['Property Identification Number (PIN)', taxPaymentTransaction.tc_rp_pin],
+                ['From', taxPaymentTransaction.tp_year,taxPaymentTransaction.tp_period ],
+                ['To', taxPaymentTransaction.tp_year,taxPaymentTransaction.tp_period],
+
+                ['Date Processed', taxPaymentTransaction.date],
+                ['Time Processed', taxPaymentTransaction.time],
+                ['Amount', taxPaymentTransaction.amount],
+            
+              ];
+              
+              pdf.autoTable({
+                head: [paymentDetailsHeaders], 
+                body: paymentDetailsData,
+                startY: 40,
+                margin: { horizontal: 10 },
+                theme: 'grid', 
+                headStyles: {
+                    fillColor: [50, 50, 50], // Set the background color of the header row to black
+                    textColor: 255, // Set the text color of the header row to white
+                },
+                styles: {
+                }
+            });
+
+            // Save or send the PDF
+            const pdfBuffer = pdf.output('arraybuffer');
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=tax_clerance_${transaction_id}.pdf`);
+            res.send(Buffer.from(pdfBuffer));
+        } else {
+            res.status(404).json({ error: 'Transaction not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+
 ////done to paymongo issue new db
 router.get('/taxclearance/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
@@ -593,6 +1193,88 @@ router.get('/taxclearance/:transaction_id', async (req, res) => {
         res.status(500).send('Error retrieving data');
     }    
 });
+
+// QR Code Link Download
+router.get('/taxclearance/:transaction_id/download', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT ut.user_id, tt.trans_type, tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount \
+    \
+    FROM rptax_clearance tc \
+    \
+    LEFT JOIN transaction_info ti ON tc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN user_transaction ut ON tc.transaction_id = ut.transaction_id \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
+    \
+    WHERE tc.transaction_id = ?";
+     // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
+        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
+
+        try {
+            const result = await queryDatabase(query, [transaction_id]);
+    
+            if (result.length > 0) {
+                const formattedDate = moment(result[0].date).format('MMMM D, YYYY');
+                const taxClearanceTransaction = {
+                    ...result[0],
+                    date: formattedDate,
+                };
+    
+                const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
+                const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
+    
+                taxClearanceTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+    
+                const pdf = new jsPDF();
+    
+                pdf.addImage(taxClearanceTransaction.logoImage, 'PNG', 128, 5, 70, 35);
+    
+                pdf.setFontSize(16);
+                pdf.setTextColor(255, 255, 255); // Set text color to white
+                pdf.setFillColor(0, 0, 0); // Set background color to black
+
+                pdf.setFontSize(12);
+                pdf.setTextColor(0, 0, 0); // Set text color back to black
+        
+              const clearanceDetailsHeaders = ['Field', 'Value'];
+                const clearanceDetailsData = [
+                    ['Transaction ID', taxClearanceTransaction.transaction_id],
+                    ['Tax Declaration Number (TDN)', taxClearanceTransaction.tc_rp_tdn], // Fixed alias here
+                    ['Property Identification Number (PIN)', taxClearanceTransaction.tc_rp_pin],
+                    ['Date Processed', taxClearanceTransaction.date],
+                    ['Time Processed', taxClearanceTransaction.time],
+                    ['Amount', taxClearanceTransaction.amount],
+                ];
+    
+              
+              pdf.autoTable({
+                head: [clearanceDetailsHeaders], 
+                body: clearanceDetailsData,
+                startY: 40,
+                margin: { horizontal: 10 },
+                theme: 'grid', 
+                headStyles: {
+                    fillColor: [50, 50, 50], // Set the background color of the header row to black
+                    textColor: 255, // Set the text color of the header row to white
+                },
+                styles: {
+                }
+            });
+
+            // Save or send the PDF
+            const pdfBuffer = pdf.output('arraybuffer');
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=tax_clerance_${transaction_id}.pdf`);
+            res.send(Buffer.from(pdfBuffer));
+        } else {
+            res.status(404).json({ error: 'Transaction not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 
 router.post('/canceltrans/:transaction_id', async (req, res) => {
