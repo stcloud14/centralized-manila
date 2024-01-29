@@ -209,6 +209,8 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
               sex_type: sex_type,
               status_type: statusType,
             };
+
+            console.log(body)
   
             // Proceed with additional logic after updating state
             try {
