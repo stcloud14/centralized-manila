@@ -83,14 +83,13 @@ const router = Router();
     const result6 = await queryDatabase(query6);
     
 
-  
-    
     res.json({rptax_clearance: result4, user_transaction: result5, transaction_info: result6 });
     } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
     }
   });
+  
   
   router.post('/clearance/:user_id', async (req, res) => {
     const user_id = req.params.user_id;

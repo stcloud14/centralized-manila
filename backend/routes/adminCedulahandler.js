@@ -2,6 +2,8 @@ import { Router, response } from 'express';
 import moment from 'moment/moment.js';
 import conn2 from './connection.js';
 
+import auditMiddleware from './auditMiddleware.js';
+
 const router = Router();
 
 router.get('/', async (req, res) => {
@@ -104,7 +106,7 @@ router.get('/processing', async (req, res) => {
 });
 
 
-router.post('/updateprocess/:transaction_id', async (req, res) => {
+router.post('/updateprocess/:transaction_id', auditMiddleware, async (req, res) => {
     const transaction_id = req.params.transaction_id;
     const user_id = req.body.user_id;
     const trans_type = req.body.trans_type;
@@ -136,7 +138,7 @@ router.post('/updateprocess/:transaction_id', async (req, res) => {
 
 
 
-router.post('/updatecomplete/:transaction_id', async (req, res) => {
+router.post('/updatecomplete/:transaction_id', auditMiddleware, async (req, res) => {
     const transaction_id = req.params.transaction_id;
     const user_id = req.body.user_id;
     const trans_type = req.body.trans_type;
@@ -167,7 +169,7 @@ router.post('/updatecomplete/:transaction_id', async (req, res) => {
 });
 
 
-router.post('/updatereject/:transaction_id', async (req, res) => {
+router.post('/updatereject/:transaction_id', auditMiddleware, async (req, res) => {
     const transaction_id = req.params.transaction_id;
     const user_id = req.body.user_id;
     const trans_type = req.body.trans_type;

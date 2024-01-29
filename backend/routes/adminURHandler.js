@@ -2,7 +2,7 @@ import { Router, response } from 'express';
 import moment from 'moment/moment.js';
 import conn2 from './connection.js';
 
-
+import auditMiddleware from './auditMiddleware.js';
 
 const router = Router();
 
@@ -142,7 +142,7 @@ router.get('/', async (req, res) => {
 
 
 
-router.post('/approve/:user_id', async (req, res) => {
+router.post('/approve/:user_id', auditMiddleware, async (req, res) => {
 
     const user_id = req.params.user_id;
     const vStatus = 'Verified';
@@ -178,7 +178,7 @@ router.post('/approve/:user_id', async (req, res) => {
 });
 
 
-router.post('/decline/:user_id', async (req, res) => {
+router.post('/decline/:user_id', auditMiddleware, async (req, res) => {
 
   const user_id = req.params.user_id;
   const vStatus = 'Unverified';
