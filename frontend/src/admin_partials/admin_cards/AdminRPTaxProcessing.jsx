@@ -360,9 +360,7 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
 
               {/* Transaction ID */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                  <span className="hidden sm:block pr-10 text-xs">
-                  Transaction ID:
-                  </span>
+                  <span className="hidden sm:block pr-10 text-xs">Transaction ID:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -375,9 +373,7 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
 
                 {/* TIN */}
                 <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                  <span className="hidden sm:block pr-10 text-xs">
-                  TIN:
-                  </span>
+                  <span className="hidden sm:block pr-10 text-xs">TIN:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -388,11 +384,9 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
                 </div>
               </div>
 
-                {/* Transaction ID Row */}
+                {/* PIN */}
                 <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                  <span className="hidden sm:block pr-10 text-xs">
-                  PIN
-                  </span>
+                  <span className="hidden sm:block pr-10 text-xs">PIN:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
