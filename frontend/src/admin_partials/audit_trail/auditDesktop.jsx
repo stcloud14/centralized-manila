@@ -54,14 +54,17 @@ const AuditDesktop = ({ auditTrail }) => {
       if (days === 1) {
         return 'Yesterday at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
       } else {
-        return `${days} days ago`;
+        return createdAt.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) +
+          ' at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
       }
     } else if (weeks < 4) {
-      return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
+      return createdAt.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) +
+        ' at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     } else if (months < 12) {
-      return `${months} ${months === 1 ? 'month' : 'months'} ago`;
+      return createdAt.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) +
+        ' at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     } else {
-      return createdAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+      return createdAt.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) +
         ' at ' + createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     }
   }
