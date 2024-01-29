@@ -95,7 +95,7 @@ const AuditDesktop = ({ auditTrail }) => {
                 </button>
 
               {isDropdownOpen && (
-              <div className="absolute w-[270px] origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-sm shadow-2xl z-20 md:right-10 sm:w-[405px]">
+              <div className="absolute w-[270px] origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-sm shadow-2xl z-20 md:right-10 top-[9rem] sm:top-7 sm:w-[405px]">
 
               {/* Date Row */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
