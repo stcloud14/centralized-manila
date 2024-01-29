@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Flatpickr from 'react-flatpickr';
+
 import AdminLCRBirthView from '../admin_modals/AdminLCRBirthView';
 import AdminLCRDeathView from '../admin_modals/AdminLCRDeathView';
 import AdminLCRMarriageView from '../admin_modals/AdminLCRMarriageView';
@@ -10,6 +12,10 @@ import LCRTableView from "../admin_lcr/LCRTableView";
 import Loading from '../../partials/Loading';
 
 const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData }) => {
+  
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDatee, setSelectedDatee] = useState('');
+
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState('table'); 
 
@@ -18,6 +24,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
   
   const [isProcessConfirm, setIsProcessConfirm] = useState(false);
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
+  
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -253,8 +260,95 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
               </div>
               )}
 
-            {/* View Toggle */}
-            <div className="flex justify-end items-center text-xs mb-7">
+          {/* Search */}
+          <div className="flex flex-col items-center md:flex-row text-xs pb-5">
+              <div className="relative w-full sm:w-4/5 sm:pr-4 mb-[0.5rem] sm:mb-0">
+                <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+                </span>
+                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+              </div>
+              <div className="flex items-center w-full sm:w-4/5 sm:pr-4 mb-[0.5rem] sm:mb-0">
+                  <span className="pr-1 text-slate-700 dark:text-white">Type:</span>
+                    <select  onChange=""  value=""  name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-2 py-1 rounded-sm peer cursor-pointer w-full">
+                      <option value="SELECTSTATUS" className="dark:bg-[#3d3d3d]">Select Type</option>
+                      <option value="RPTAXPAYMENT" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
+                      <option value="RPTAXCLEARANCE" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
+                      <option value="BUSINESSPERMIT" className="dark:bg-[#3d3d3d]">Business Permit</option>
+                      <option value="CTC" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
+                      <option value="BIRTHC" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
+                      <option value="DEATHC" className="dark:bg-[#3d3d3d]">Death Certificate</option>
+                      <option value="MARRIAGEC" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
+                  </select>
+                </div>
+              <div className="flex w-full items-center sm:pr-4 mb-[0.5rem] sm:mb-0">
+                <p className="pr-1 text-slate-700 dark:text-white">Date:</p>
+                <Flatpickr
+                  value={selectedDate}
+                  onChange={(date) => setSelectedDate(date[0])}
+                  options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                      if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                        if (monthDropdown) {
+                          monthDropdown.style.backgroundColor = '#212121';
+                        }
+                      }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                      const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                      if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                      }
+                    },
+                  }}
+                  placeholder="From"
+                  className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                />
+                <span className="px-1">-</span>
+                <Flatpickr
+                  value={selectedDatee}
+                  onChange={(date) => setSelectedDatee(date[0])}
+                  options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                      if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                        if (monthDropdown) {
+                          monthDropdown.style.backgroundColor = '#212121';
+                        }
+                      }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                      const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                      if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                      }
+                    },
+                  }}
+                  placeholder="To"
+                  className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                />
+              </div> 
+              <div className="flex w-full sm:w-32 items-center justify-center">
+                <button onClick="" className="bg-slate-500 hover:bg-slate-600 text-white px-4 py-1 w-full rounded-sm inline-flex justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  </svg>
+                  <span>&nbsp;Clear</span>
+                </button>
+              </div>
+              {/* View Toggle */}
+            <div className="flex items-center text-xs ml-2">
               <div className="relative flex items-center">
                 {/* Tabular View Toggle */}
                 <button onClick={() => handleToggleView('table')}  className='flex items-center p-1 text-slate-500 hover:text-black dark:text-slate-400 dark:hover:text-white'>
@@ -291,23 +385,82 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                 </button>
               </div>
             </div>
-
+            </div>
             {/* Search */}
-            <div className="flex items-center text-xs mb-7">
-              <div className="relative w-full">
+            {/* <div className="flex flex-col items-center md:flex-row text-xs mx-2 mb-2 sm:mb-7">
+              <div className="relative flex flex-col items-center md:flex-row w-full">
                 <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mb-[0.5rem] sm:mb-0">
                     <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                   </svg>
                 </span>
-                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white mr-0 sm:mr-2 pl-8 py-1 md:py-0.5 rounded-sm mb-2 md:mb-0"/>
               </div>
-            </div>
+              <div className="flex w-full items-center">
+                <p className="pr-1 text-slate-700 dark:text-white">Date:</p>
+                <Flatpickr
+                  value={selectedDate}
+                  onChange={(date) => setSelectedDate(date[0])}
+                  options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                      if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                        if (monthDropdown) {
+                          monthDropdown.style.backgroundColor = '#212121';
+                        }
+                      }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                      const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                      if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                      }
+                    },
+                  }}
+                  placeholder="From"
+                  className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                />
+                <span className="px-1">-</span>
+                <Flatpickr
+                  value={selectedDatee}
+                  onChange={(date) => setSelectedDatee(date[0])}
+                  options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                      if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                        if (monthDropdown) {
+                          monthDropdown.style.backgroundColor = '#212121';
+                        }
+                      }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                      const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                      if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                      }
+                    },
+                  }}
+                  placeholder="To"
+                  className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                />
+              </div>      
+            </div> */}
+
+            
+          
   
             {/* Render Content */}
             {renderContent()}
-            
-            {/* All Modals */}
+          
+
             {/* PROCESS MODAL */}
             {isProcessConfirm && (
               <div className="fixed z-50 inset-0 overflow-y-auto">
@@ -342,7 +495,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                       setIsLoading(true);
                     }}
                     type="button"
-                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                     >
                     Confirm
                     </button>
@@ -385,13 +538,14 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                       <p>Cancel</p>
                     </button>
 
+
                     <button
                     onClick={() => {
                       handleReject();
                       setIsLoading(true);
                     }}
                     type="button"
-                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                     >
                       Confirm
                     </button>
@@ -406,6 +560,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                 </div>
               </div>
             )}
+
 
                 {transType === 'Birth Certificate' && (
                   <AdminLCRBirthView
