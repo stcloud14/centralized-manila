@@ -431,7 +431,7 @@ router.post('/canceltrans/:transaction_id', async (req, res) => {
     const trans_type = req.body.trans_type;
 
     const notif_title = 'Transaction Canceled';
-    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-semibold dark:text-white">${trans_type}: ${transaction_id}</span> has been <span className="font-semibold dark:text-white">CANCELED</span>.</p>`;
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transaction_id}</span> has been <span className="font-medium dark:text-white">CANCELED</span>.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 

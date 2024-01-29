@@ -80,9 +80,11 @@ const AdminVerifyReqsForm =()=>{
 
             const user_email = updatedUserEmail;
 
-            const trans_type = 'Verified Success';
+            const trans_type = 'Verification Success';
 
-            const rowData = { ...transaction, trans_type, formattedDate};
+            const verification = 'Verification'
+
+            const rowData = { ...transaction, trans_type, formattedDate, verification};
 
             const status_type = 'V E R I F I E D';
 
@@ -157,9 +159,11 @@ const AdminVerifyReqsForm =()=>{
 
             const user_email = updatedUserEmail;
 
-            const trans_type = 'Verified Failed';
+            const trans_type = 'Verification Failed';
 
-            const rowData = { ...transaction, trans_type, formattedDate};
+            const verification = 'Verification'
+
+            const rowData = { ...transaction, trans_type, formattedDate, verification};
 
             const status_type = 'R E J E C T E D';
 

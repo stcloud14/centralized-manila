@@ -176,27 +176,40 @@ const handleCheckboxChange = (e) => {
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
+            const transaction_id = res.data.transaction_id;
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
+            const currentDate = new Date();
+                    const formattedDate = currentDate.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    const formattedTime = currentDate.toLocaleTimeString('en-US', {
+                      hour: 'numeric',
+                      minute: 'numeric'
+                  });
+            
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
             const trans_type = 'Real Property Tax Payment';
 
-            const rowData = { ...rptaxPayment, trans_type};
+            const rowData = { ...rptaxPayment, trans_type, formattedDate, formattedTime};
 
             const status_type = 'P E N D I N G';
 
             const body = {
               data: rowData,
               status_type: status_type,
+              transaction_id: transaction_id,
               f_name: f_name,
               l_name: l_name
             };
   
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+              const emailResponse = await axios.post(`http://localhost:8800/email/rptax-mail/send-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');

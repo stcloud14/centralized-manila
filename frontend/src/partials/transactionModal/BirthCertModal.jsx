@@ -217,7 +217,7 @@ const cancelTrans = async (e) => {
             </div>
           )}
 
-          <div className="md:max-h-[16rem] max-h-[9rem] bg-white dark:bg-[#212121] pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">   
+          <div className="md:max-h-[16rem] max-h-[9rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">   
             <div className="mx-auto">
               <div className="sm:mt-0" id="modal-headline">   
                 <div className="mx-auto">
@@ -440,7 +440,7 @@ const cancelTrans = async (e) => {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#212121] mx-auto pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10">
+          <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white mx-auto pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10">
             {transaction_id ? (
             <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
               <span className="font-medium whitespace-nowrap">Date Processed</span>
@@ -487,7 +487,7 @@ const cancelTrans = async (e) => {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
+          <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
             {/* <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/> */}
 
             {status_type !== 'Paid' && (

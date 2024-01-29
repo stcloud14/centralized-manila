@@ -38,7 +38,6 @@ const PaymentSuccessForm = () => {
     try {
       const res = await axios.post(`http://localhost:8800/payment/success/${transactionDetails.transactionId}`, transactionDetails);
       
-      
       try {
         const res = await axios.get(`http://localhost:8800/email/${userId}`);
         
