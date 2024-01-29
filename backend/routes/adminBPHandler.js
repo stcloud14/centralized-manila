@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
     bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
     bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
     bbt.bus_type_label AS bus_type, \
-    ti.amount as bus_amount, ti.copies, ptt.print_type, ti.valid_id, pt.purpose_type, \
+    ti.amount as amount, ti.copies, ptt.print_type, ti.valid_id, tt.trans_type, pt.purpose_type, \
     r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
     ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip  \
     \
@@ -23,6 +23,7 @@ router.get('/', async (req, res) => {
     \
     LEFT JOIN bus_permit bp ON ut.transaction_id = bp.transaction_id AND ut.transaction_id IS NOT NULL \
     LEFT JOIN transaction_info ti ON bp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id AND tt.trans_type_id IS NOT NULL \
     LEFT JOIN address_info ai ON bp.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN bus_address ba ON bp.transaction_id = ba.transaction_id AND ba.transaction_id IS NOT NULL \
     LEFT JOIN bus_owner bo ON bp.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \
@@ -105,7 +106,7 @@ router.get('/processing', async (req, res) => {
     bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
     bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
     bbt.bus_type_label AS bus_type, \
-    ti.amount as bus_amount, ti.copies, ptt.print_type, ti.valid_id, pt.purpose_type, \
+    ti.amount as amount, ti.copies, ptt.print_type, ti.valid_id, tt.trans_type, pt.purpose_type, \
     r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
     ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip  \
     \
@@ -113,6 +114,7 @@ router.get('/processing', async (req, res) => {
     \
     LEFT JOIN bus_permit bp ON ut.transaction_id = bp.transaction_id AND ut.transaction_id IS NOT NULL \
     LEFT JOIN transaction_info ti ON bp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id AND tt.trans_type_id IS NOT NULL \
     LEFT JOIN address_info ai ON bp.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN bus_address ba ON bp.transaction_id = ba.transaction_id AND ba.transaction_id IS NOT NULL \
     LEFT JOIN bus_owner bo ON bp.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \

@@ -23,6 +23,8 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
     const [selectedTransaction, setSelectedTransaction] = useState();
     const [transType, setTransType] = useState();
 
+    console.log(selectedTransaction)
+
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedDatee, setSelectedDatee] = useState('');
 
@@ -108,21 +110,23 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
             const updatedUserEmail = res.data.user_email;
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
             const rowData = { ...selectedTransaction, trans_type};
 
-            const status_type = 'P R O C E S S I N G';
+            const statusType = 'Processing';
 
             const body = {
               data: rowData,
-              status_type: status_type,
               f_name: f_name,
-              l_name: l_name
+              l_name: l_name,
+              sex_type: sex_type,
+              status_type: statusType,
             };
-
+  
             // Proceed with additional logic after updating state
             try {
               const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
@@ -181,19 +185,21 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
             const updatedUserEmail = res.data.user_email;
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
             const rowData = { ...selectedTransaction, trans_type};
 
-            const status_type = 'R E J E C T E D';
+            const statusType = 'Rejected';
 
             const body = {
               data: rowData,
-              status_type: status_type,
               f_name: f_name,
-              l_name: l_name
+              l_name: l_name,
+              sex_type: sex_type,
+              status_type: statusType,
             };
   
             // Proceed with additional logic after updating state
