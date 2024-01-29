@@ -427,8 +427,8 @@ const BirthCertificateForm =()=>{
                  
            
             <form onSubmit={handleSubmit} className={`overflow-y-auto ${isModalVisible ? 'blur' : ''}`}>
-            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Local Civil Registry</h1>
-              <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Birth Certificate</h1>
+            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Birth Certificate Request Form</h1>
+              <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Fill out the necessary information below to process your Birth Certificate</h1>
               <div className="grid md:grid-cols-4 grid-cols-2 gap-3 items-center justify-center text-xs w-full">
                 <div className="flex flex-col items-center text-center">
                   <span className='font-semibold text-blue-500'>Step 1</span>

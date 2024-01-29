@@ -215,8 +215,8 @@ const PersonalInfoForm =()=>{
                  
            
             <form onSubmit={handleSubmit}>
-            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Profile</h1>
-            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Personal Information</h1>
+            <h1 className='font-medium text-center text-slate-700 dark:text-white'>Edit Personal Information</h1>
+            <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>Update your personal details by completing the form below. <br/>Ensure accuracy in your personal information to maintain up-to-date records.</h1>
 
               {isSuccess && (
               <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">

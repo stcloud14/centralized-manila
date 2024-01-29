@@ -846,8 +846,8 @@ const BusinessPermitForm =()=>{
             <div className="px-5 py-5">
 
             <form onSubmit={handleSubmit} className={`overflow-y-auto ${isModalVisible ? 'blur' : ''}`}>
-              <h1 className='font-medium text-center text-slate-700 dark:text-white'>Business</h1>
-              <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 md:mb-3 mb-8'>Business Permit</h1>
+              <h1 className='font-medium text-center text-slate-700 dark:text-white'>Business Permit Application Form</h1>
+              <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 md:mb-3 mb-8'>Fill out the necessary information below to process your Business Permit </h1>
               <div className="grid md:grid-cols-4 grid-cols-2 gap-3 items-center justify-center text-xs w-full">
                 <div className="flex flex-col items-center text-center">
                   <span className='font-semibold text-blue-500'>Step 1</span>

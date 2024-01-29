@@ -330,8 +330,8 @@ const handleCheckboxChange = (e) => {
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 mt-4 mb-2">
             <div className="px-5 py-5">
-              <h1 className='font-medium text-center text-slate-700 dark:text-white'>Real Property Tax</h1>
-              <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 md:mb-3 mb-8'>Tax Payment</h1>
+              <h1 className='font-medium text-center text-slate-700 dark:text-white'>Real Property Tax Payment Application Form</h1>
+              <h1 className='text-sm italic text-center text-slate-700 dark:text-gray-300 md:mb-3 mb-8'>Fill out the necessary information below to process your Real Property Tax Payment</h1>
               <div className="grid md:grid-cols-4 grid-cols-2 gap-3 items-center justify-center text-xs w-full">
                 <div className="flex flex-col items-center text-center">
                   <span className='font-semibold text-blue-500'>Step 1</span>
