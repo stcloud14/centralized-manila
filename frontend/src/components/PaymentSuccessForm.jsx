@@ -20,26 +20,56 @@ const PaymentSuccessForm = () => {
 
   const getTransactionDetails = () => {
     const searchParams = new URLSearchParams(location.search);
-    const transactionId = searchParams.get('transaction_id');
+    const transaction_id = searchParams.get('transaction_id');
     const amount = searchParams.get('amount');
-    const userId = searchParams.get('user_id');
+    const user_id = searchParams.get('user_id');
     const trans_type = searchParams.get('trans_type');
     
-    return { transactionId, amount, userId, trans_type };
+    return { transaction_id, amount, user_id, trans_type };
   };
-  
-  // Example usage
+
   const transactionDetails = getTransactionDetails();
 
-  console.log(transactionDetails)
+  let transType;
+
+  switch (transactionDetails.trans_type) {
+    case 'Real Property Tax Payment':
+      transType = 'taxpayment';
+      break;
+    case 'Real Property Tax Clearance':
+      transType = 'taxclearance';
+      break;
+    case 'Business Permit':
+      transType = 'buspermit';
+      break;
+    case 'Community Tax Certificate':
+      transType = 'cedulacert';
+      break;
+    case 'Birth Certificate':
+      transType = 'birthcert';
+      break;
+    case 'Death Certificate':
+      transType = 'deathcert';
+      break;
+    case 'Marriage Certificate':
+      transType = 'marriagecert';
+      break;
+  }
+
+  
+
+  const { transaction_id, user_id } = transactionDetails;
 
 
   const handleReturn = async () => {
     try {
-      const res = await axios.post(`http://localhost:8800/payment/success/${transactionDetails.transactionId}`, transactionDetails);
+      const res = await axios.post(`http://localhost:8800/payment/success/${transaction_id}`, transactionDetails);
       
       try {
-        const res = await axios.get(`http://localhost:8800/email/${userId}`);
+        const res1 = await axios.get(`http://localhost:8800/transachistory/${transType}/${transaction_id}`);
+        const transaction_details = res1.data;
+
+        const res = await axios.get(`http://localhost:8800/email/${user_id}`);
         
         if (res.data.user_email) {
           const updatedUserEmail = res.data.user_email;
@@ -49,10 +79,25 @@ const PaymentSuccessForm = () => {
 
           const user_email = updatedUserEmail;
 
-          const status_type = 'P A I D';
+          const status_type = 'Paid';
 
+          const date = new Date(); // Current date and time
+          const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+          const formattedTime = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+          const rawData = {
+            transaction_id: transaction_id,
+            acc_name: transaction_details.tp_acc_name,
+            rp_tdn: transaction_details.tp_rp_tdn,
+            rp_pin: transaction_details.tp_rp_pin,
+            trans_type: transaction_details.trans_type,
+            amount: transaction_details.amount,
+            date: formattedDate,
+            time: formattedTime,
+          }
+          
           const body = {
-            data: transactionDetails,
+            data: rawData,
             f_name: f_name,
             l_name: l_name,
             status_type: status_type

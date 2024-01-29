@@ -1,7 +1,14 @@
-import { Router, response } from 'express';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { Router } from 'express';
 import moment from 'moment/moment.js';
 import conn2 from './connection.js';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import fs from 'fs';
+import path from 'path';
 
+// import { logoImage } from '../../../frontend/src/images/mnl_header_pdf.png';
 
 
 const router = Router();
@@ -212,6 +219,149 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
         console.error(err);
         res.status(500).send('Error retrieving data');
     }    
+});
+
+// const jsPDF = require('jspdf');
+// const fs = require('fs');
+
+// QR Code Link Download
+router.get('/birthcert/:transaction_id/download', async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+
+    const query = "SELECT bi.user_id, r.region_name AS region, p.prov_name AS province, c.city_name AS municipal, bc.transaction_id, bi.birth_date, \
+        bo.l_name, bo.f_name, bo.m_name, bo.suffix_type, st.sex_type, bo.hospital_name, bo.country, bo.birth_reg_no, \
+        br.l_name AS reql_name, br.f_name AS reqf_name, br.m_name AS reqm_name, br.suffix_type AS reqsuffix, br.owner_relation, br.requestor_tin, br.tel_no, br.mobile_no, \
+        fi.father_fname, fi.father_mname, fi.father_lname, fi.suffix_type AS fathersuffix, \
+        mi.mother_fname, mi.mother_mname, mi.mother_lname, mi.suffix_type AS mothersuffix, \
+        ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
+        ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
+        ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+        FROM birth_cert bc \
+        JOIN birth_info bi ON bc.transaction_id = bi.transaction_id \
+        LEFT JOIN transaction_info ti ON bc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+        LEFT JOIN address_info ai ON bc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
+        LEFT JOIN birth_doc_owner bo ON bc.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \
+        LEFT JOIN birth_requestor br ON bc.transaction_id = br.transaction_id AND br.transaction_id IS NOT NULL \
+        LEFT JOIN father_info fi ON bi.transaction_id = fi.transaction_id AND fi.transaction_id IS NOT NULL \
+        LEFT JOIN mother_info mi ON bi.transaction_id = mi.transaction_id AND mi.transaction_id IS NOT NULL \
+        LEFT JOIN region r ON bc.region_id = r.region_id \
+        LEFT JOIN region r1 ON ai.region_id = r1.region_id \
+        LEFT JOIN province p ON bc.prov_id = p.prov_id \
+        LEFT JOIN province p1 ON ai.prov_id = p1.prov_id \
+        LEFT JOIN cities c ON bc.city_id = c.city_id \
+        LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
+        LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
+        LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+        LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
+        LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
+        WHERE  bc.transaction_id = ?";
+
+        // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
+        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
+
+        try {
+            const result = await queryDatabase(query, [transaction_id]);
+    
+            if (result.length > 0) {
+                const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+                const birthTransaction = {
+                    ...result[0],
+                    birth_date: formattedDate,
+                };
+    
+                // Read the image file and convert it to base64
+                const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
+                const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
+    
+                // Assuming birthTransaction.logoImage is a base64-encoded data URI
+                birthTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+    
+                // Generate PDF
+                const pdf = new jsPDF();
+    
+                // Add logo at the upper right corner
+                pdf.addImage(birthTransaction.logoImage, 'PNG', 128, 5, 70, 35);
+    
+                // Set font size and style for the header
+                pdf.setFontSize(16);
+                pdf.setTextColor(255, 255, 255); // Set text color to white
+                pdf.setFillColor(0, 0, 0); // Set background color to black
+
+                // Set font size and style for the rest of the document
+                pdf.setFontSize(12);
+                pdf.setTextColor(0, 0, 0); // Set text color back to black
+        
+              // Add birth details using autotable plugin
+              const birthDetailsHeaders = ['Field', 'Value'];
+              const birthDetailsData = [
+                ['Transaction ID', birthTransaction.transaction_id],
+                ['Last Name', birthTransaction.l_name],
+                ['First Name', birthTransaction.f_name],
+                ['Middle Name', birthTransaction.m_name],
+                ['Suffix', birthTransaction.suffix_type],
+                ['Sex', birthTransaction.sex_type],
+                ['Birth Date', birthTransaction.birth_date],
+                ['Hospital Name', birthTransaction.hospital_name],
+                ['Country', birthTransaction.country],
+                ['Birth Registration No', birthTransaction.birth_reg_no],
+                ['Requestor Last Name', birthTransaction.reql_name],
+                ['Requestor First Name', birthTransaction.reqf_name],
+                ['Requestor Middle Name', birthTransaction.reqm_name],
+                ['Requestor Suffix', birthTransaction.reqsuffix],
+                ['Requestor Owner Relation', birthTransaction.owner_relation],
+                ['Requestor TIN', birthTransaction.requestor_tin],
+                ['Requestor Telephone No', birthTransaction.tel_no],
+                ['Requestor Mobile No', birthTransaction.mobile_no],
+                ['Father First Name', birthTransaction.father_fname],
+                ['Father Middle Name', birthTransaction.father_mname],
+                ['Father Last Name', birthTransaction.father_lname],
+                ['Father Suffix', birthTransaction.fathersuffix],
+                ['Mother First Name', birthTransaction.mother_fname],
+                ['Mother Middle Name', birthTransaction.mother_mname],
+                ['Mother Last Name', birthTransaction.mother_lname],
+                ['Mother Suffix', birthTransaction.mothersuffix],
+                ['Amount', birthTransaction.amount],
+                ['Number of Copies', birthTransaction.copies],
+                ['Valid ID Type', birthTransaction.valid_id_type],
+                ['Purpose Type', birthTransaction.purpose_type],
+                ['Email', birthTransaction.email],
+                ['Mobile No', birthTransaction.mobile_no],
+                ['Telephone No', birthTransaction.tel_no],
+                ['Region for Birth', birthTransaction.region],
+                ['Province for Birth', birthTransaction.province],
+                ['Municipality for Birth', birthTransaction.municipal],
+                ['Brgy District for Birth', birthTransaction.brgy_dist],
+                ['House Floor for Birth', birthTransaction.house_floor],
+                ['Building Name for Birth', birthTransaction.bldg_name],
+                ['ZIP Code for Birth', birthTransaction.zip_code],
+              ];
+              
+              pdf.autoTable({
+                head: [birthDetailsHeaders], 
+                body: birthDetailsData,
+                startY: 40,
+                margin: { horizontal: 10 },
+                theme: 'grid', 
+                headStyles: {
+                    fillColor: [50, 50, 50], // Set the background color of the header row to black
+                    textColor: 255, // Set the text color of the header row to white
+                },
+                styles: {
+                }
+            });
+
+            // Save or send the PDF
+            const pdfBuffer = pdf.output('arraybuffer');
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=birth_cert_${transaction_id}.pdf`);
+            res.send(Buffer.from(pdfBuffer));
+        } else {
+            res.status(404).json({ error: 'Transaction not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 router.get('/deathcert/:transaction_id', async (req, res) => {
