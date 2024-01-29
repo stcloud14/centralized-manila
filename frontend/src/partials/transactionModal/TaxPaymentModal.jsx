@@ -325,7 +325,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                   </div> */}
                   
                   <div className="flex items-center space-x-2 ml-auto">
-                    {status_type === 'Paid' && transaction_id ? (
+                    {status_type === 'Pending' && transaction_id ? (
                     <button
                         onClick={handleOpenConfirm}
                         type="button"

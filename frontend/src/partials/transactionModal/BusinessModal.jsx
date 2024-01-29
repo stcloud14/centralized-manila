@@ -758,7 +758,7 @@ const handleCloseConfirm = () => {
                   </div> */}
 
             <div className="flex items-center space-x-2 ml-auto">
-                    {status_type === 'Paid' && transaction_id ? (
+                    {status_type === 'Pending' && transaction_id ? (
                     <button
                         onClick={handleOpenConfirm}
                         type="button"
