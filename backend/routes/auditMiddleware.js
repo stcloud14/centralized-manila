@@ -45,6 +45,11 @@ function auditMiddleware(req, res, next) {
           activity = 'Declined Verification';
           changes ='Updated Status - Unverified/Declined';
         break;
+
+        case path.includes('updateuser'):
+          activity = 'Updated Information';
+          changes ='Updated User Information';
+        break;
           
     }
       
@@ -70,8 +75,12 @@ function auditMiddleware(req, res, next) {
     case 'Marriage Certificate':
         admin = 'LCR ADMIN';
         break;
+        
+    case 'User Registry':
+        admin = 'UR ADMIN';
+        break;
     }
-
+            
     
     const sql = "INSERT INTO audit_trail (`time_stamp`, `activity`, `admin`, `date`, `time`, `id_no`, `changes`) VALUES (?, ?, ?, ?, ?, ?, ?)";
     const values = [timeStamp, activity, admin, formattedDate, formattedTime, id_no, changes];
