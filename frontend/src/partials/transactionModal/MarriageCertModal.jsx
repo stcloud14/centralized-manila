@@ -247,7 +247,7 @@ const cancelTrans = async (e) => {
           )}
 
           <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-t-lg">
-            <div className="mb-6">
+            <div className="md:mb-6">
             <span className="font-bold md:text-lg text-sm">Marriage Certificate Transaction Details</span>
             </div>
           </div>
@@ -258,7 +258,7 @@ const cancelTrans = async (e) => {
             </div>
           )}
           
-          <div className="md:max-h-[11.5rem] max-h-[9rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
+          <div className="md:max-h-[11.5rem] max-h-[5.5rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
             <div className="mx-auto">
               <div className="sm:mt-0" id="modal-headline">   
                 <div className="mx-auto">
@@ -476,68 +476,64 @@ const cancelTrans = async (e) => {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
-            {/* <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/> */}
-            
-            {status_type === 'Pending' && transaction_id ? (
-              <button
-                onClick={makePayment}
-                type="button"
-                className="text-slate-500 text-xs text-center px-5 py-2 mb-0 mr-auto md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-              >
-                <span className="font-semibold whitespace-nowrap ml-2"> PAY: {marriageTransaction.amount ? marriageTransaction.amount + '.00' : '-'}</span>
-              </button>
-            ): null}
-
-                     
-                  {/* QR Code Section */}
-                  <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
-                      <div className="whitespace-nowrap md:mb-0 mb-1">
-                          {marriageTransaction ? (
-                              // Display the QR code without the anchor tag
-                              <QRCode value={generateDownloadLink(marriageTransaction)} size={100} />
-                          ) : (
-                              <Loading />
-                          )}
-                      </div>
-                  </div>
-            
-            <div className="flex items-center space-x-2 ml-auto">
-                    {status_type === 'Pending' && transaction_id ? (
-                    <button
-                        onClick={handleOpenConfirm}
-                        type="button"
-                        className="text-red-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
-                        <p>Cancel Transaction</p>
-                    </button>
-                    ): null}
-                
-                {isloading ? (
-                            <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
-                              <Loading />
-                            </div>
-                          ) : (
-                      <>
-                            <button
-                              onClick={onClose}
-                              type="button"
-                              className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                            >
-                              <p>Close</p>
-                            </button>
-
-                        {transaction_id ? null : (
-                            <button
-                              onClick={submitHandler}
-                              type="button"
-                              className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                              >
-                              <p>Submit</p>
-                            </button>
-                        )}
-                      </>
-                        )}
+          <div className="flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white p-4 rounded-b-lg gap-4 items-end">
+            <div className="whitespace-nowrap">
+              {marriageTransaction ? (
+                  // Display the QR code without the anchor tag
+                  <QRCode value={generateDownloadLink(marriageTransaction)} size={100} />
+              ) : (
+                  <Loading />
+              )}
             </div>
+
+            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 mt-2 sm:mt-0 ml-auto">
+              {status_type === 'Pending' && transaction_id ? (
+                <button
+                  onClick={makePayment}
+                  type="button"
+                  className="text-emerald-500 text-xs md:w-auto w-full text-center px-5 py-2 md:text-sm hover:text-white border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-emerald-500 dark:text-emerald-500 dark:hover:text-white dark:hover:bg-emerald-500 dark:focus:ring-emerald-800"
+                >
+                  <span className="font-semibold">PAY: {marriageTransaction.amount ? marriageTransaction.amount + '.00' : '-'}</span>
+                </button>
+              ) : null}
+
+              {status_type === 'Pending' && transaction_id ? (
+                <button
+                  onClick={handleOpenConfirm}
+                  type="button"
+                  className="text-red-500 text-[0.60rem] md:w-auto w-full px-5 py-2 md:text-sm hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800"
+                >
+                  <p>Cancel Transaction</p>
+                </button>
+              ) : null}
+
+              {isloading ? (
+                <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg">
+                  <Loading />
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={onClose}
+                    type="button"
+                    className="text-slate-500 text-[0.60rem] md:w-auto w-full px-5 py-2 md:text-sm hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                  >
+                    <p>Close</p>
+                  </button>
+
+                  {transaction_id ? null : (
+                    <button
+                      onClick={submitHandler}
+                      type="button"
+                      className="text-white text-xs md:w-auto w-full md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                      <p>Submit</p>
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          
           </div>
 
         </div>
