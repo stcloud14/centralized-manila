@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import Loading from '../partials/Loading'
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from '../partials/ThemeToggle';
 import auth from '../../firebase.config';  // Updated import statement
@@ -358,8 +359,8 @@ const LandingPageForm = () => {
                 {/* Verify Button */}
                 <div className="text-center">
                   {loading ? (
-                    <div className="spinner-border text-blue-500" role="status">
-                      <span className="visually-hidden">Verifying...</span>
+                    <div className="bg-white text-slate-700 px-1 pb-1 rounded-b-lg mt-[10px]">
+                      <Loading />
                     </div>
                   ) : (
                     <button
