@@ -251,6 +251,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
                 ['Earning From Business', cedulaTransaction.salary_id],
                 ['Earning From Profession', cedulaTransaction.gross_id],
                 ['Amount', cedulaTransaction.amount],
+                ['Date Processed', moment(cedulaTransaction.date_processed).format('MMMM D, YYYY')],
               ];
               
               pdf.autoTable({
