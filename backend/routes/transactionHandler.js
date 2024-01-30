@@ -193,17 +193,14 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
     \
     WHERE  cc.transaction_id = ?"
 
-     // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
-        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
-
         try {
             const result = await queryDatabase(query, [transaction_id]);
     
             if (result.length > 0) {
-                const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+                const formattedDate = moment(result[0].date).format('MMMM D, YYYY');
                 const cedulaTransaction = {
                     ...result[0],
-                    birth_date: formattedDate,
+                    date: formattedDate,
                 };
     
                 const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
@@ -270,7 +267,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
             // Save or send the PDF
             const pdfBuffer = pdf.output('arraybuffer');
             res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename=birth_cert_${transaction_id}.pdf`);
+            res.setHeader('Content-Disposition', `attachment; filename=cedula_cert_${transaction_id}.pdf`);
             res.send(Buffer.from(pdfBuffer));
         } else {
             res.status(404).json({ error: 'Transaction not found' });
@@ -320,7 +317,6 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
     
         if (result.length > 0) {
             const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
-    
             const birthTransaction = {
                 ...result[0],
                 birth_date: formattedDate,
@@ -335,9 +331,6 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
         res.status(500).send('Error retrieving data');
     }    
 });
-
-// const jsPDF = require('jspdf');
-// const fs = require('fs');
 
 // QR Code Link Download
 router.get('/birthcert/:transaction_id/download', async (req, res) => {
@@ -370,9 +363,6 @@ router.get('/birthcert/:transaction_id/download', async (req, res) => {
         LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
         LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
         WHERE  bc.transaction_id = ?";
-
-        // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
-        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
 
         try {
             const result = await queryDatabase(query, [transaction_id]);
@@ -468,7 +458,7 @@ router.get('/birthcert/:transaction_id/download', async (req, res) => {
             // Save or send the PDF
             const pdfBuffer = pdf.output('arraybuffer');
             res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename=cedula_cert_${transaction_id}.pdf`);
+            res.setHeader('Content-Disposition', `attachment; filename=birth_cert_${transaction_id}.pdf`);
             res.send(Buffer.from(pdfBuffer));
         } else {
             res.status(404).json({ error: 'Transaction not found' });
@@ -561,24 +551,21 @@ router.get('/deathcert/:transaction_id/download', async (req, res) => {
     \
     WHERE dc.transaction_id = ?";
 
-        // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
-        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
-
         try {
             const result = await queryDatabase(query, [transaction_id]);
     
             if (result.length > 0) {
-                const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+                const formattedDate = moment(result[0].death_date).format('MMMM D, YYYY');
                 const deathTransaction = {
                     ...result[0],
-                    birth_date: formattedDate,
+                    death_date: formattedDate,
                 };
     
                 // Read the image file and convert it to base64
                 const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
                 const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
     
-                // Assuming birthTransaction.logoImage is a base64-encoded data URI
+                // Assuming deathTransaction.logoImage is a base64-encoded data URI
                 deathTransaction.logoImage = `data:image/png;base64,${logoImage}`;
     
                 // Generate PDF
@@ -646,7 +633,7 @@ router.get('/deathcert/:transaction_id/download', async (req, res) => {
             // Save or send the PDF
             const pdfBuffer = pdf.output('arraybuffer');
             res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename=dearh_cert_${transaction_id}.pdf`);
+            res.setHeader('Content-Disposition', `attachment; filename=death_cert_${transaction_id}.pdf`);
             res.send(Buffer.from(pdfBuffer));
         } else {
             res.status(404).json({ error: 'Transaction not found' });
@@ -739,17 +726,15 @@ router.get('/marriagecert/:transaction_id/download', async (req, res) => {
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
     WHERE  mc.transaction_id = ?"
-        // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
-        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
 
         try {
             const result = await queryDatabase(query, [transaction_id]);
     
             if (result.length > 0) {
-                const formattedDate = moment(result[0].birth_date).format('MMMM D, YYYY');
+                const formattedDate = moment(result[0].marriage_date).format('MMMM D, YYYY');
                 const marriageTransaction = {
                     ...result[0],
-                    birth_date: formattedDate,
+                    marriage_date: formattedDate,
                 };
     
                 // Read the image file and convert it to base64
@@ -788,14 +773,12 @@ router.get('/marriagecert/:transaction_id/download', async (req, res) => {
                 ['Province of Marriage', marriageTransaction.province],
                 ['Municipal of Marriage', marriageTransaction.city],
                 ['Marriage Date', marriageTransaction.marriage_date],
-
                 ['Requestor Last Name', marriageTransaction.reql_name],
                 ['Requestor First Name', marriageTransaction.reqf_name],
                 ['Requestor Middle Name', marriageTransaction.reqm_name],
                 ['Requestor Suffix', marriageTransaction.reqsuffix],
                 ['Requestors Relationship to the Owner', marriageTransaction.owner_rel],
                 ['Requestor Mobile No', marriageTransaction.mobile_no],
-              
                 ['Requestor Region', marriageTransaction.reqregion],
                 ['Requestor Province', marriageTransaction.reqprovince],
                 ['Requestor Municipality', marriageTransaction.reqcity],
@@ -809,7 +792,6 @@ router.get('/marriagecert/:transaction_id/download', async (req, res) => {
                 ['Number of Copies', marriageTransaction.copies],
                 ['Valid ID to Present Upon Claiming', marriageTransaction.valid_id_type],
                 ['Amount', marriageTransaction.amount],
-
               ];
               
               pdf.autoTable({
@@ -884,7 +866,6 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     FROM bus_activity \
     \
     WHERE transaction_id = ?"
-    
 
     try {
         const result = await queryDatabase(query, [transaction_id]);
@@ -1032,7 +1013,7 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
             // Save or send the PDF
             const pdfBuffer = pdf.output('arraybuffer');
             res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename=birth_cert_${transaction_id}.pdf`);
+            res.setHeader('Content-Disposition', `attachment; filename=bus_cert_${transaction_id}.pdf`);
             res.send(Buffer.from(pdfBuffer));
         } else {
             res.status(404).json({ error: 'Transaction not found' });
@@ -1043,7 +1024,6 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
     }
 });
 */}
-
 
 router.get('/taxpayment/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
@@ -1078,82 +1058,82 @@ router.get('/taxpayment/:transaction_id', async (req, res) => {
 
 // QR Code Link Download
 router.get('/taxpayment/:transaction_id/download', async (req, res) => {
-    const transaction_id = req.params.transaction_id;
+    try {
+        const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT ut.user_id, tt.trans_type, tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
-    y.year_period AS tp_year, tp.period_id AS tp_period, ti.amount \
-    \
-    FROM rptax_payment tp \
-    \
-    LEFT JOIN transaction_info ti ON tp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
-    LEFT JOIN user_transaction ut ON tp.transaction_id = ut.transaction_id \
-    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
-    LEFT JOIN year y ON tp.year_id = y.year_id \
-    \
-    WHERE tp.transaction_id = ?";
-     // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
-        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
+        if (!transaction_id) {
+            return res.status(400).json({ error: 'Transaction ID is required' });
+        }
 
-        try {
-            const result = await queryDatabase(query, [transaction_id]);
-    
-            if (result.length > 0) {
-                const formattedDate = moment(result[0].date).format('MMMM D, YYYY');
-                const taxPaymentTransaction = {
-                    ...result[0],
-                    date: formattedDate,
-                };
-    
-                const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
-                const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
-    
-                taxPaymentTransaction.logoImage = `data:image/png;base64,${logoImage}`;
-    
-                const pdf = new jsPDF();
-    
-                pdf.addImage(taxPaymentTransaction.logoImage, 'PNG', 128, 5, 70, 35);
-    
-                pdf.setFontSize(16);
-                pdf.setTextColor(255, 255, 255); // Set text color to white
-                pdf.setFillColor(0, 0, 0); // Set background color to black
+        console.log('Transaction ID:', transaction_id);
 
-                pdf.setFontSize(12);
-                pdf.setTextColor(0, 0, 0); // Set text color back to black
-        
-              const paymentDetailsHeaders = ['Field', 'Value'];
-              const paymentDetailsData = [
-                ['Transaction ID', taxPaymentTransaction.transaction_id],
-                ['Account Name', taxPaymentTransaction.acc_name],
-                ['Tax Declaration Number (TDN)', taxPaymentTransaction.tc_rp_tdn],
-                ['Property Identification Number (PIN)', taxPaymentTransaction.tc_rp_pin],
-                ['From', taxPaymentTransaction.tp_year,taxPaymentTransaction.tp_period ],
-                ['To', taxPaymentTransaction.tp_year,taxPaymentTransaction.tp_period],
+        const query = "SELECT ut.user_id, tt.trans_type, tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
+            y.year_period AS tp_year, tp.period_id AS tp_period, ti.amount \
+            \
+            FROM rptax_payment tp \
+            \
+            LEFT JOIN transaction_info ti ON tp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+            LEFT JOIN user_transaction ut ON tp.transaction_id = ut.transaction_id \
+            LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
+            LEFT JOIN year y ON tp.year_id = y.year_id \
+            \
+            WHERE tp.transaction_id = ?";
 
+        const result = await queryDatabase(query, [transaction_id]);
+
+        if (result.length > 0) {
+            const formattedDate = moment(result[0].date).format('MMMM D, YYYY');
+            const taxPaymentTransaction = {
+                ...result[0],
+                date: formattedDate,
+            };
+
+            const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
+            const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
+
+            taxPaymentTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+
+            const pdf = new jsPDF();
+
+            pdf.addImage(taxPaymentTransaction.logoImage, 'PNG', 128, 5, 70, 35);
+
+            pdf.setFontSize(16);
+            pdf.setTextColor(255, 255, 255); // Set text color to white
+            pdf.setFillColor(0, 0, 0); // Set background color to black
+
+            pdf.setFontSize(12);
+            pdf.setTextColor(0, 0, 0); // Set text color back to black
+
+            const paymentDetailsHeaders = ['Field', 'Value'];
+            const paymentDetailsData = [
+                ['Transaction ID', taxPaymentTransaction.tp_transaction_id],
+                ['Account Name', taxPaymentTransaction.tp_acc_name],
+                ['Tax Declaration Number (TDN)', taxPaymentTransaction.tp_rp_tdn],
+                ['Property Identification Number (PIN)', taxPaymentTransaction.tp_rp_pin],
+                ['From', `${taxPaymentTransaction.tp_year} - ${taxPaymentTransaction.tp_period}`],
+                ['To', `${taxPaymentTransaction.tp_year} - ${taxPaymentTransaction.tp_period}`],
                 ['Date Processed', taxPaymentTransaction.date],
-                ['Time Processed', taxPaymentTransaction.time],
                 ['Amount', taxPaymentTransaction.amount],
-            
-              ];
-              
-              pdf.autoTable({
-                head: [paymentDetailsHeaders], 
+            ];
+
+            pdf.autoTable({
+                head: [paymentDetailsHeaders],
                 body: paymentDetailsData,
                 startY: 40,
                 margin: { horizontal: 10 },
-                theme: 'grid', 
+                theme: 'grid',
                 headStyles: {
                     fillColor: [50, 50, 50], // Set the background color of the header row to black
                     textColor: 255, // Set the text color of the header row to white
                 },
-                styles: {
-                }
+                styles: {},
             });
 
             // Save or send the PDF
-            const pdfBuffer = pdf.output('arraybuffer');
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename=tax_clerance_${transaction_id}.pdf`);
-            res.send(Buffer.from(pdfBuffer));
+            //const pdfBuffer = pdf.output('arraybuffer');
+            //const downloadLink = `http://localhost:8800/transachistory/taxpayment/${transaction_id}/download`;
+
+            //res.json({ downloadLink }); // Include download link in the response
         } else {
             res.status(404).json({ error: 'Transaction not found' });
         }
@@ -1162,8 +1142,6 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-
-
 
 ////done to paymongo issue new db
 router.get('/taxclearance/:transaction_id', async (req, res) => {
@@ -1207,8 +1185,6 @@ router.get('/taxclearance/:transaction_id/download', async (req, res) => {
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     \
     WHERE tc.transaction_id = ?";
-     // const logoImagePath = path.join(__dirname, '../../../frontend/src/images/mnl_header_pdf.png');
-        // const logoImage = fs.readFileSync(logoImagePath, 'base64');
 
         try {
             const result = await queryDatabase(query, [transaction_id]);
@@ -1239,14 +1215,13 @@ router.get('/taxclearance/:transaction_id/download', async (req, res) => {
               const clearanceDetailsHeaders = ['Field', 'Value'];
                 const clearanceDetailsData = [
                     ['Transaction ID', taxClearanceTransaction.transaction_id],
-                    ['Tax Declaration Number (TDN)', taxClearanceTransaction.tc_rp_tdn], // Fixed alias here
+                    ['Tax Declaration Number (TDN)', taxClearanceTransaction.tc_rp_tdn],
                     ['Property Identification Number (PIN)', taxClearanceTransaction.tc_rp_pin],
                     ['Date Processed', taxClearanceTransaction.date],
                     ['Time Processed', taxClearanceTransaction.time],
                     ['Amount', taxClearanceTransaction.amount],
                 ];
     
-              
               pdf.autoTable({
                 head: [clearanceDetailsHeaders], 
                 body: clearanceDetailsData,
@@ -1264,7 +1239,7 @@ router.get('/taxclearance/:transaction_id/download', async (req, res) => {
             // Save or send the PDF
             const pdfBuffer = pdf.output('arraybuffer');
             res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename=tax_clerance_${transaction_id}.pdf`);
+            res.setHeader('Content-Disposition', `attachment; filename=tax_clearance_${transaction_id}.pdf`);
             res.send(Buffer.from(pdfBuffer));
         } else {
             res.status(404).json({ error: 'Transaction not found' });
@@ -1274,8 +1249,6 @@ router.get('/taxclearance/:transaction_id/download', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-
-
 
 router.post('/canceltrans/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
