@@ -106,7 +106,7 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
     
       try {
         const response = await axios.post(`http://localhost:8800/adminbp/updatecomplete/${transaction_id}`, selectedTransaction);
-    
+        setIsLoading(true);
         // Check the response status before proceeding
         if (response.status === 200) {
   
@@ -182,7 +182,7 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
     
       try {
         const response = await axios.post(`http://localhost:8800/adminbp/updatereject/${transaction_id}`, selectedTransaction);
-    
+        setIsLoading(true);
         // Check the response status before proceeding
         if (response.status === 200) {
   
@@ -464,6 +464,15 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
                         </span>
                       </div>
                     </div>
+
+
+                    
+                    {isLoading ? (
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                        <Loading />
+                      </div>
+                    ) : (
+                      <>
                     <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
                       <button
                         onClick={handleConfirmClose}
@@ -481,10 +490,8 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
                       Confirm
                     </button>
                     </div>
-
-                    {isLoading ? (
-                      <Loading />
-                    ) : null}
+                    </>
+                    )}
 
                   </div>
                 </div>
@@ -509,6 +516,14 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
                         </span>
                       </div>
                     </div>
+
+                    {isLoading ? (
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                        <Loading />
+                      </div>
+                    ) : (
+                      <>
+
                     <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
                       <button
                         onClick={handleConfirmClose}
@@ -526,10 +541,8 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
                         Confirm
                       </button>
                       </div>
-
-                    {isLoading ? (
-                      <Loading />
-                    ) : null}
+                      </>
+                    )}
                     
                   </div>
                 </div>
