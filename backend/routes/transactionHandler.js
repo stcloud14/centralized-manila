@@ -893,7 +893,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     }    
 });
 
-{/*
+
 // QR Code Link Download
 router.get('/buspermit/:transaction_id/download', async (req, res) => {
     const transaction_id = req.params.transaction_id;
@@ -955,7 +955,7 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
                 const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
                 const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
     
-                cedulaTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+                businessTransaction.logoImage = `data:image/png;base64,${logoImage}`;
     
                 const pdf = new jsPDF();
     
@@ -971,32 +971,79 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
               const busDetailsHeaders = ['Field', 'Value'];
               const busDetailsData = [
                 ['Transaction ID', businessTransaction.transaction_id],
-                ['Last Name', businessTransaction.l_name],
-                ['First Name', businessTransaction.f_name],
-                ['Middle Name', businessTransaction.m_name],
-                ['Suffix', businessTransaction.suffix_type],
-                ['Sex', businessTransaction.sex_type],
-                ['Region', businessTransaction.region],
-                ['Province', businessTransaction.province],
-                ['Municipal', businessTransaction.municipality],
-                ['Barangay', businessTransaction.brgy_dist],
-                ['House No. / Unit Floor', businessTransaction.house_floor],
-                ['Stret / Building Name', businessTransaction.bldg_name],
-                ['Zip Code', businessTransaction.zip_code],
-                ['Civil Status', businessTransaction.cvl_status],
-                ['Country of Citizenship', businessTransaction.czn_id],
-                ['Height (ft)', businessTransaction.height],
-                ['Weight (kg)', businessTransaction.weight],
-                ['Alien Certificate of Registration No.', businessTransaction.acr_no],
-                ['Employment Status', businessTransaction.emp_status],
-                ['Tax Payer Account No.', businessTransaction.acc_no],
-                ['Residence Tax Due', cedulaTransaction.cedula_date],
-                ['Valid ID to Present Upon Claiming', cedulaTransaction.valid_id_type],
-                ['Profession/Occupation/Business', cedulaTransaction.pob_status],
-                ['Income From Real Property', cedulaTransaction.income_id],
-                ['Earning From Business', cedulaTransaction.salary_id],
-                ['Earning From Profession', cedulaTransaction.gross_id],
-                ['Amount', cedulaTransaction.amount],
+                ['Business Type', businessTransaction.bus_type],
+                ['Business Name', businessTransaction.bus_name],
+                ['Trade Name / Franchise', businessTransaction.bus_franchise],
+                ['DTI / SEC / CDA Registration No.', businessTransaction.bus_reg_no],
+                ['Tax Identification Number', businessTransaction.bus_tin],
+
+
+                ['Last Name', businessTransaction.bus_lname],
+                ['First Name', businessTransaction.bus_fname],
+                ['Middle Name', businessTransaction.bus_mname],
+                ['Suffix', businessTransaction.bus_suffix],
+                ['Sex', businessTransaction.bus_sex],
+                
+                ['Email Address', businessTransaction.bus_email],
+                ['Telephone Number', businessTransaction.bus_tel_no],
+                ['Mobile Number', businessTransaction.bus_mobile_no],
+
+                ['Region', businessTransaction.bus_bregion],
+                ['Province', businessTransaction.bus_bprovince],
+                ['Municipal', businessTransaction.bus_bcity],
+                ['Barangay', businessTransaction.bus_bbrgy],
+                ['House No. / Unit Floor', businessTransaction.bus_bhnum],
+                ['Stret / Building Name', businessTransaction.bus_bstreet],
+                ['Zip Code', businessTransaction.bus_bzip],
+
+                ['Business Area / Total Floor Area (sq.m)', businessTransaction.bus_floor],
+                ['No. of Employees Residing Within Manila', businessTransaction.bus_emp],
+                ['Total No. of Male Employees', businessTransaction.bus_male_emp],
+                ['Total No. of Female Employees', businessTransaction.bus_female_emp],
+                ['No. of Van Delivery Vehicles', businessTransaction.bus_van_no],
+                ['No. of Truck Delivery Vehicles', businessTransaction.bus_truck_no],
+                ['No. of MOtorcycle Delivery Vehicles', businessTransaction.bus_motor_no],
+
+                ['Payers Region', businessTransaction.bus_bregion],
+                ['Payers Province', businessTransaction.bus_bprovince],
+                ['Payers Municipal', businessTransaction.bus_bcity],
+                ['Payers Barangay', businessTransaction.bus_bbrgy],
+                ['Payers House No. / Unit Floor', businessTransaction.bus_bhnum],
+                ['Payers Stret / Building Name', businessTransaction.bus_bstreet],
+                ['Payers Zip Code', businessTransaction.bus_bzip],
+
+                ['Ownership', businessTransaction.owned],
+                ['Lessor Name', businessTransaction.owned === 'RENTAL' ? businessTransaction.bus_lessor || '-' : null],
+                ['Monthly Rental ', businessTransaction.owned === 'RENTAL' ? businessTransaction.bus_rent || '-' : null],
+
+                ['Business Office', businessTransaction.bus_office],
+                ['Line of Business', businessTransaction.bus_line],
+                ['PSIC', businessTransaction.bus_psic],
+                ['Products/Services', businessTransaction.bus_products],
+                ['No. of Units', businessTransaction.bus_units_no],
+                ['Total Capitalization', businessTransaction.bus_total_cap],
+
+                ['DTI Registration', businessTransaction.bus_lname],
+                ['R.P. Tax Declaration for Building', businessTransaction.bus_lname],
+                ['Paid-up and Subscribed Page', businessTransaction.bus_lname],
+                ['Articles of Primary and Secondary Purpose', businessTransaction.bus_lname],
+                ['Products/Services', businessTransaction.bus_lname],
+                ['NGA-Contract of Lease', businessTransaction.bus_lname],
+                ['SEC Registration', businessTransaction.bus_lname],
+                ['R.P. Tax Declaration for Land', businessTransaction.bus_lname],
+                ['Fire Safety Inspection Certificate', businessTransaction.bus_lname],
+                ['Page 2 Document', businessTransaction.bus_lname],
+                ['Page 3 Document', businessTransaction.bus_lname],
+                ['Page 4 Document', businessTransaction.bus_lname],
+                ['Page 5 Document', businessTransaction.bus_lname],
+
+                ['No. of Copies', businessTransaction.copies],
+                ['What to Print', businessTransaction.print_type],
+                ['Purpose', businessTransaction.purpose_type],
+                ['Number of Copies', businessTransaction.copies],
+                ['Valid ID to Present Upon Claiming', businessTransaction.valid_id_type],
+                ['Amount', businessTransaction.amount],
+                ['Date Processed', moment(businessTransaction.date_processed).format('MMMM D, YYYY')],
               ];
               
               pdf.autoTable({
@@ -1026,7 +1073,7 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-*/}
+
 
 router.get('/taxpayment/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
