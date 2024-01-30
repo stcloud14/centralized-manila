@@ -125,7 +125,7 @@ const ForgotPasswordForm = () => {
 
   const onSignup = async (recaptchaToken) => {
     const appVerifier = window.recaptchaVerifier;
-    // const phoneNumber = `+63${userReg.mobile_no}`;
+    const phoneNumber = `+63${userReg.mobile_no}`;
   
     try {
       // Only proceed with SMS verification if reCAPTCHA verification is successful
