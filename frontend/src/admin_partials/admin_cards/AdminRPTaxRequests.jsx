@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import Flatpickr from 'react-flatpickr';
 
 import AdminRPView from '../admin_modals/AdminRPView';
@@ -7,19 +7,17 @@ import RPCardView from '../admin_rptax/RPCardView';
 import RPTableView from '../admin_rptax/RPTableView';
 import Loading from '../../partials/Loading';
 
-
-
 const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedDatee, setSelectedDatee] = useState('');
-
-  const [searchQuery, setSearchQuery] = useState('');
-  const [viewMode, setViewMode] = useState('table'); 
-
-  const [modalView, setModalView] = useState(false); 
-  const [isSuccess, setIsSuccess] = useState(false);
   
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState('table');
+
+  const [modalView, setModalView] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const [isProcessConfirm, setIsProcessConfirm] = useState(false);
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
 
@@ -28,20 +26,54 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
   const [selectedTransaction, setSelectedTransaction] = useState();
   const [transType, setTransType] = useState();
 
-  console.log(selectedTransaction)
+  const [lastSelectedDate, setLastSelectedDate] = useState(null);
+  const [filterApplied, setFilterApplied] = useState(false);
+
+  console.log(selectedTransaction);
 
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
     const query = searchQuery.toUpperCase();
-    return transactionId.includes(query);
+
+    // Check if the transaction ID includes the search query
+    const isTransactionMatch = transactionId.includes(query);
+
+    // Check if the transaction date is within the selected date range only if the filter is applied
+    const isDateInRange =
+      !filterApplied ||
+      (!lastSelectedDate || new Date(transaction.date) >= new Date(lastSelectedDate)) &&
+      (!selectedDatee || new Date(transaction.date) <= new Date(selectedDatee));
+
+    return isTransactionMatch && isDateInRange;
   };
 
-  const filteredTaxClearance = taxClearance.filter(handleSearch);
+  const filteredTaxClearance = taxClearance ? taxClearance.filter(handleSearch) : [];
+  const filteredTaxPayment = taxPayment ? taxPayment.filter(handleSearch) : [];
 
-  const filteredTaxPayment = taxPayment.filter(handleSearch);
+  const handleFilterClick = () => {
+    // Only set the filter and update lastSelectedDate if the selected date has changed
+    if (selectedDate !== lastSelectedDate) {
+      setFilterApplied(true);
+      setLastSelectedDate(selectedDate);
+    }
+  };
+
+  useEffect(() => {
+    // Reset filter when taxClearance or taxPayment changes
+    setFilterApplied(false);
+  }, [taxClearance, taxPayment]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleClearClick = () => {
+    // Clear all filters
+    setFilterApplied(false);
+    setSelectedDate('');
+    setSelectedDatee('');
+    setSelectedType('All');
+    setSearchQuery('');
   };
 
   const handleToggleView = (mode) => {
@@ -73,8 +105,16 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
     setIsRejectConfirm(false);
   };
 
-
   const renderContent = () => {
+    const hasRecords = filteredTaxClearance.length > 0 || filteredTaxPayment.length > 0;
+  
+    if (!hasRecords) {
+      return (
+        <div className="flex items-center justify-center text-slate-400 dark:text-white text-lg h-32">
+          No records found.
+        </div>
+      );
+    }
     if (viewMode === 'table') {
       return (
         <RPTableView
@@ -375,6 +415,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
               </div>
 
                 {/* TIN */}
+                {/* 
                 <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block pr-10 text-xs">TIN:</span>
                 <div className="relative flex items-center">
@@ -385,9 +426,10 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                   </span>
                   <input value="" onChange="" id="searchInput" type="text" placeholder="Search TIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
-              </div>
+              </div>*/}
 
                 {/* PIN */}
+                {/* 
                 <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block pr-10 text-xs">PIN:</span>
                 <div className="relative flex items-center">
@@ -398,9 +440,9 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                   </span>
                   <input value="" onChange="" id="searchInput" type="text" placeholder="Search PIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
-              </div>
+              </div>*/}
 
-              <button type="button" onClick="" className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+              <button type="button" onClick={handleFilterClick} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
               </div>
@@ -409,7 +451,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
 
             {/* Clear Button */}
             <div className="w-full sm:w-20 ml-2">
-            <button type="button" onClick="" className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
+            <button type="button" onClick={handleClearClick} className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
               </svg>
