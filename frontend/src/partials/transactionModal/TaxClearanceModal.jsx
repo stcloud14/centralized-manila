@@ -331,11 +331,11 @@ const cancelTrans = async (e) => {
               
               <div className="flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white p-4 rounded-b-lg gap-4 items-end">
                 <div className="whitespace-nowrap">
-                  {taxClearanceTransaction ? (
+                    {taxClearanceTransaction && taxClearanceTransaction.transaction_id ? (
                       <QRCode value={generateDownloadLink(taxClearanceTransaction)} size={100} />
-                  ) : (
-                      <Loading />
-                  )}
+                    ) : (
+                      <p>No transaction ID available</p>
+                    )}
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 mt-2 sm:mt-0 ml-auto">

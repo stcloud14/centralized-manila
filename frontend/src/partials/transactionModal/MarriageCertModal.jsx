@@ -478,11 +478,10 @@ const cancelTrans = async (e) => {
 
           <div className="flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white p-4 rounded-b-lg gap-4 items-end">
             <div className="whitespace-nowrap">
-              {marriageTransaction ? (
-                  // Display the QR code without the anchor tag
-                  <QRCode value={generateDownloadLink(marriageTransaction)} size={100} />
+              {marriageTransaction && marriageTransaction.transaction_id ? (
+                <QRCode value={generateDownloadLink(marriageTransaction)} size={100} />
               ) : (
-                  <Loading />
+                <p></p>
               )}
             </div>
 

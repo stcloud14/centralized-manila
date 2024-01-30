@@ -350,11 +350,11 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
 
           <div className="flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white p-4 rounded-b-lg gap-4 items-end">
             <div className="whitespace-nowrap">
-              {taxPaymentTransaction ? (
+                {taxPaymentTransaction && taxPaymentTransaction.transaction_id ? (
                   <QRCode value={generateDownloadLink(taxPaymentTransaction)} size={100} />
-              ) : (
-                  <Loading />
-              )}
+                ) : (
+                  <p></p>
+                )}
             </div>
 
             <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 mt-2 sm:mt-0 ml-auto">

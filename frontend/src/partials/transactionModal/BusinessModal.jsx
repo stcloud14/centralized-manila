@@ -784,10 +784,10 @@ const handleCloseConfirm = () => {
 
           <div className="flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white p-4 rounded-b-lg gap-4 items-end">
             <div className="whitespace-nowrap">
-                {businessTransaction ? (
-                    <QRCode value={generateDownloadLink(businessTransaction)} size={100} />
+              {businessTransaction && businessTransaction.transaction_id ? (
+                  <QRCode value={generateDownloadLink(businessTransaction)} size={100} />
                 ) : (
-                    <Loading />
+                  <p></p>
                 )}
             </div>
 
