@@ -497,9 +497,24 @@ const router = Router();
     const dynamicAmountTitle = (statusType === 'Pending') ? 'Amount to pay:' : 'Amount:';
 
   
-    if (!user_email) {
-    return res.status(400).json({ error: "user_email is missing or empty!" });
-    }
+    const rp_tdn = body.data.rp_tdn;
+    const rp_pin = body.data.rp_tdn; // Note: Should this be body.data.rp_pin?
+    const bus_reg_no = body.data.bus_reg_no;
+    const bus_tin = body.data.bus_tin;
+
+
+    const hashValue = (value) => {
+      if (value !== undefined && value !== null) {
+        return value.slice(0, -3).replace(/./g, '*') + value.slice(-3);
+      }
+      return value;
+    };
+
+    const hashedTdn = hashValue(rp_tdn);
+    const hashedPin = hashValue(rp_pin);
+    const hashedRegNo = hashValue(bus_reg_no);
+    const hashedTin = hashValue(bus_tin);
+
 
 
     let htmlContent;
@@ -509,16 +524,16 @@ const router = Router();
       case "Real Property Tax Payment":
         typeInfo = `
         <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Account Name: </span>${body.data.acc_name}</p>
-        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>${body.data.rp_tdn}</p>
-        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>${body.data.rp_pin}</p>
+        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>${hashedTdn}</p>
+        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>${hashedPin}</p>
         `
         htmlContent = FormatMail(user_email, typeInfo, body, amount, dynamicSex, dynamicMessage, dynamicAmountTitle);
         break;
       
       case "Real Property Tax Clearance":
         typeInfo = `
-        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>${body.data.rp_tdn}</p>
-        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>${body.data.rp_pin}</p>
+        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TDN: </span>${hashedTdn}</p>
+        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">PIN: </span>${hashedPin}</p>
         `
         htmlContent = FormatMail(user_email, typeInfo, body, amount, dynamicSex, dynamicMessage, dynamicAmountTitle);
         break;
@@ -526,8 +541,8 @@ const router = Router();
       case "Business Permit":
         typeInfo = `
         <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Business Name: </span>${body.data.bus_name}</p>
-        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Registration No.: </span>${body.data.bus_reg_no}</p>
-        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TIN: </span>${body.data.bus_tin}</p>
+        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Registration No.: </span>${hashedRegNo}</p>
+        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">TIN: </span>${hashedTin}</p>
         `
         htmlContent = FormatMail(user_email, typeInfo, body, amount, dynamicSex, dynamicMessage, dynamicAmountTitle);
         break;
@@ -548,6 +563,10 @@ const router = Router();
         `
         htmlContent = FormatMail(user_email, typeInfo, body, amount, dynamicSex, dynamicMessage, dynamicAmountTitle);
     }
+
+    if (!user_email) {
+      return res.status(400).json({ error: "user_email is missing or empty!" });
+      }
 
     try {
       const result = await transporter.sendMail({
