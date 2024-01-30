@@ -63,7 +63,7 @@ function auditMiddleware(req, res, next) {
         break;
 
     case 'Business Permit':
-        admin = 'BUS ADMIN';
+        admin = 'BUSINESS ADMIN';
         break;
 
     case 'Community Tax Certificate':
