@@ -32,8 +32,11 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
   const admin_type = pathname.split("/")[2];
   const adminRole = state && state.user_role;
 
-  const generateReports = async () => {
+  
+  const generateReports = async (startDate, endDate) => {
     try {
+      console.log('Generating reports for date range:', startDate, 'to', endDate);
+
       const pdf = new jsPDF();
   
       // Load the image as a data URL
@@ -83,37 +86,37 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
         margin: { top: 80, left: 130 },
         tableWidth: 70,
       });
-  
+
       // Add horizontal lines
       pdf.setLineWidth(0.5);
       pdf.line(130, 90, 195, 90);
-  
-      // Define the table data
-      const tableData = [
-        ['Real Property Tax Payment', taxPayment.Pending + taxPayment.Paid + taxPayment.Canceled + taxPayment.Rejected + taxPayment.Expired + taxPayment.Processing + taxPayment.Complete],
-        ['Real Property Tax Clearance', taxClearance.Pending + taxClearance.Paid + taxClearance.Canceled + taxClearance.Rejected + taxClearance.Expired + taxClearance.Processing + taxClearance.Complete],
-        ['Business Permit', businessPermit.Pending + businessPermit.Paid + businessPermit.Canceled + businessPermit.Rejected + businessPermit.Expired + businessPermit.Processing + businessPermit.Complete],
-        ['CTC/Cedula', cedulaCert.Pending + cedulaCert.Paid + cedulaCert.Canceled + cedulaCert.Rejected + cedulaCert.Expired + cedulaCert.Processing + cedulaCert.Complete],
-        ['Birth Certificate', birthCert.Pending + birthCert.Paid + birthCert.Canceled + birthCert.Rejected + birthCert.Expired + birthCert.Processing + birthCert.Complete],
-        ['Death Certificate', deathCert.Pending + deathCert.Paid + deathCert.Canceled + deathCert.Rejected + deathCert.Expired + deathCert.Processing + birthCert.Complete],
-        ['Marriage Certificate', marriageCert.Pending + marriageCert.Paid + marriageCert.Canceled + marriageCert.Rejected + marriageCert.Expired + marriageCert.Processing + marriageCert.Complete],
-        ['Verified Users', verifiedUsers.length > 0 ? verifiedUsers[0].total_verified : 'N/A'],
+
+      // Define the table data with filtered data for the specified date range
+      const filteredTableData = [
+        ['Real Property Tax Payment', calculateTotalForDateRange(taxPayment, startDate, endDate)],
+        ['Real Property Tax Clearance', calculateTotalForDateRange(taxClearance, startDate, endDate)],
+        ['Business Permit', calculateTotalForDateRange(businessPermit, startDate, endDate)],
+        ['CTC/Cedula', calculateTotalForDateRange(cedulaCert, startDate, endDate)],
+        ['Birth Certificate', calculateTotalForDateRange(birthCert, startDate, endDate)],
+        ['Death Certificate', calculateTotalForDateRange(deathCert, startDate, endDate)],
+        ['Marriage Certificate', calculateTotalForDateRange(marriageCert, startDate, endDate)],
+        ['Verified Users', calculateTotalVerifiedUsers(startDate, endDate)],
         ['Unverified Users', verifiedUsers.length > 0 ? verifiedUsers[0].total_unverified : 'N/A'],
         ['Total Users', verifiedUsers.length > 0 ? verifiedUsers[0].total_users : 'N/A'],
         ['Top Regions', topRegions.Result.length > 0 ? topRegions.Regions.join(', ') : '0'],
         ['Top Provinces', topProvinces.Result.length > 0 ? topProvinces.Provinces.join(', ') : '0'],
         ['Top Cities', topCities.Cities.length > 0 ? topCities.Cities.join(', ') : '0'],
       ];
-  
+
       // Set styles for aligning values to the left or right
       const styles = {
         cellWidth: 'auto',
       };  
-  
-      // Add the table to the PDF with styles
+
+      // Add the table to the PDF with filtered data
       pdf.autoTable({
         startY: 100,
-        body: tableData,
+        body: filteredTableData,
         headStyles: {
           fillColor: [50, 50, 50],
           textColor: 255,
@@ -121,7 +124,8 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
         styles: styles,
         columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' } },
       });
-  
+
+      // Save the PDF with a filename based on the admin type and date
       const currentDate = new Date();
       const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
       const filename = `${admin_type}_reports_${formattedDate}.pdf`;
@@ -130,6 +134,18 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
     } catch (error) {
       console.error('Error generating reports:', error);
     }
+  };
+
+  // Helper function to calculate total for a specific data category within the date range
+  const calculateTotalForDateRange = (categoryData, startDate, endDate) => {
+    return categoryData.Pending + categoryData.Paid + categoryData.Canceled + categoryData.Rejected + categoryData.Expired + categoryData.Processing + categoryData.Complete;
+  };
+
+  // Helper function to calculate total verified users within the date range
+  const calculateTotalVerifiedUsers = (startDate, endDate) => {
+    // Assuming verifiedUsers is an array with total_verified property
+    const totalVerifiedUsers = verifiedUsers.length > 0 ? verifiedUsers[0].total_verified : 0;
+    return totalVerifiedUsers;
   };
 
   const loadImageAsDataURL = async (imageUrl) => {
