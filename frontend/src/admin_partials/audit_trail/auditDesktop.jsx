@@ -84,7 +84,7 @@ const AuditDesktop = ({ auditTrail }) => {
     switch (admin) {
       case 'RPTAX ADMIN':
         return RPTAX;
-      case 'BUS ADMIN':
+      case 'BUSINESS ADMIN':
         return BP;
       case 'CTC ADMIN':
         return CTC;
