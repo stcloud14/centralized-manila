@@ -201,16 +201,14 @@ const AuditDesktop = ({ auditTrail }) => {
 
              {/* Type */}
              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                <span className="hidden sm:block text-xs">Type:</span>
+                <span className="hidden sm:block text-xs">Admin:</span>
                   <select  value={selectedType} onChange={handleInputChange} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
-                      <option value="All" className="dark:bg-[#3d3d3d]">Select Type</option>
-                      <option value="Real Property Tax Payment" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
-                      <option value="Real Property Tax Clearance" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
+                      <option value="All" className="dark:bg-[#3d3d3d]">Select Admin</option>
+                      <option value="Real Property Tax Payment" className="dark:bg-[#3d3d3d]">Real Property Tax</option>
                       <option value="Business Permit" className="dark:bg-[#3d3d3d]">Business Permit</option>
                       <option value="Community Tax Certificate" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
-                      <option value="Birth Certificate" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
-                      <option value="Death Certificate" className="dark:bg-[#3d3d3d]">Death Certificate</option>
-                      <option value="Marriage Certificate" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
+                      <option value="Birth Certificate" className="dark:bg-[#3d3d3d]">Local Civil Registry</option>
+                      <option value="Birth Certificate" className="dark:bg-[#3d3d3d]">User Registry</option>
                   </select>
               </div>
 

@@ -401,7 +401,7 @@ router.get('/regis/:user_id', async (req, res) => {
       const body = req.body;
       const transType = req.body.data.trans_type;
       const rawAmount = req.body.data.amount;
-      const amount = typeof rawAmount === 'string' ? parseInt(rawAmount.replace(/,/g, ''), 10) : null;
+      const amount = typeof rawAmount === 'string' ? parseInt(rawAmount.replace(/,/g, ''), 10) : rawAmount;
       const statusType = req.body.status_type;
       const sexType = req.body.sex_type;
      
@@ -527,7 +527,7 @@ router.get('/regis/:user_id', async (req, res) => {
 
         case "Community Tax Certificate":
           typeInfo = `
-          <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Full Name: </span>${body.data.f_name} ${body.data.l_name}</p>
+          <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Full Name: </span>${body.f_name} ${body.l_name}</p>
           <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">City: </span>${body.data.city_name}</p>
           `
           htmlContent = FormatMail(user_email, typeInfo, body, amount, dynamicSex, dynamicMessage, dynamicAmountTitle);
