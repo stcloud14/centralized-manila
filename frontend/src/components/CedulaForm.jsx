@@ -41,6 +41,12 @@ const CedulaForm =()=>{
     ctc_interest: 0,
     amount: 0,
     ctc_residencetaxdue: '',
+    ctc_sexLabel: '',
+    ctc_regionLabel: '',
+    ctc_provinceLabel: '',
+    ctc_municipalLabel: '',
+    ctc_valididLabel: '',
+    ctc_cvlLabel: '',
   }));
 
   console.log(CtcCedula)
@@ -200,7 +206,30 @@ const handleInputChange = (e) => {
       };
     }
 
-    if (name === 'ctc_grossta') {
+    if (id ==='ctc_reqzip') {
+      const formattedValue = value.replace(/\D/g, '');
+
+      let maxLength;
+    if (id === 'ctc_reqzip') {
+      maxLength = 4;
+    } 
+    
+      if (formattedValue.length > maxLength) {
+        const truncatedValue = formattedValue.slice(0, maxLength);
+
+        return {
+          ...prevData,
+          [id]: truncatedValue,
+        };
+      }
+
+        return {
+          ...prevData,
+          [id]: formattedValue,
+        };
+      }
+
+    if (id === 'ctc_grossta') {
 
       const grossCedAmount = equivalentAmount({ value });
       const incomeCedAmount = prevData.ctc_cedamount || 0;
@@ -222,7 +251,7 @@ const handleInputChange = (e) => {
       };
     }
 
-    if (name === 'ctc_salariesta') {
+    if (id === 'ctc_salariesta') {
 
       const salariesCedAmount = equivalentAmount({ value });
       const incomeCedAmount = prevData.ctc_cedamount || 0;
@@ -244,6 +273,71 @@ const handleInputChange = (e) => {
       };
     }
     
+    if (id === 'ctc_sex') {
+
+      const label = e.target.options[e.target.selectedIndex].text;
+      
+      return {
+        ...prevData,
+        [id]: value,
+        ctc_sexLabel: label,
+      };
+    }
+
+    if (id === 'ctc_civilstatus') {
+
+      const label = e.target.options[e.target.selectedIndex].text;
+      
+      return {
+        ...prevData,
+        [id]: value,
+        ctc_cvlLabel: label,
+      };
+    }
+
+    if (id === 'ctc_validid') {
+
+      const label = e.target.options[e.target.selectedIndex].text;
+      
+      return {
+        ...prevData,
+        [id]: value,
+        ctc_valididLabel: label,
+      };
+    }
+
+    if (id === 'ctc_region') {
+
+      const label = e.target.options[e.target.selectedIndex].text;
+      
+      return {
+        ...prevData,
+        [id]: value,
+        ctc_regionLabel: label,
+      };
+    }
+
+    if (id === 'ctc_province') {
+
+      const label = e.target.options[e.target.selectedIndex].text;
+      
+      return {
+        ...prevData,
+        [id]: value,
+        ctc_provinceLabel: label,
+      };
+    }
+
+    if (id === 'ctc_municipal') {
+
+      const label = e.target.options[e.target.selectedIndex].text;
+      
+      return {
+        ...prevData,
+        [id]: value,
+        ctc_municipalLabel: label,
+      };
+    }
 
     if (id === 'ctc_region') {
       return {

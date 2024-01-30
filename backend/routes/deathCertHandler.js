@@ -88,7 +88,7 @@ router.get('/', async (req, res) => {
     const query2 = "INSERT INTO death_cert (`transaction_id`, `region_id`, `prov_id`, `city_id`, `death_date`) VALUES (?, ?, ?, ?, ?)";
     const values2 = [transID, deathc_region, deathc_province, deathc_municipal, deathc_date];
 
-    const query3 = "INSERT INTO death_doc_owner (`transaction_id`, `l_name`, `f_name`, `m_name`, `suffix_type`, `sex_type`) VALUES (?, ?, ?, ?, ?, ?)";
+    const query3 = "INSERT INTO death_doc_owner (`transaction_id`, `l_name`, `f_name`, `m_name`, `suffix_type`, `sex_id`) VALUES (?, ?, ?, ?, ?, ?)";
     const values3 = [transID, deathc_lname, deathc_fname, deathc_mname, deathc_suffix, deathc_sex];
 
     const query4 = "INSERT INTO death_requestor (`transaction_id`, `l_name`, `f_name`, `m_name`, `suffix_type`, `owner_rel`, `mobile_no`, `tel_no`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

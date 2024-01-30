@@ -94,7 +94,7 @@ const purpose = parseInt(req.body.ctc_purpose, 10) || null;
     const query2 = "INSERT INTO cedula_cert (`transaction_id`, `region_id`, `prov_id`, `city_id`, `cedula_date`) VALUES (?, ?, ?, ?, ?)";
     const values2 = [transID, ctc_region || null, ctc_province || null, ctc_municipal || null, ctc_residencetaxdue || null ];
 
-    const query3 = "INSERT INTO cedula_doc_owner (`transaction_id`, `l_name`, `f_name`, `m_name`, `suffix_type`, `sex_type`) VALUES (?, ?, ?, ?, ?, ?)";
+    const query3 = "INSERT INTO cedula_doc_owner (`transaction_id`, `l_name`, `f_name`, `m_name`, `suffix_type`, `sex_id`) VALUES (?, ?, ?, ?, ?, ?)";
     const values3 = [transID, ctc_lname, ctc_fname, ctc_mname, ctc_suffix, ctc_sex];
    
     const query4 = "INSERT INTO cedula_other_info (`transaction_id`, `cvl_id`, `czn_id`, `height`, `weight`, `acr_no`) VALUES (?, ?, ?, ?, ?, ?)";

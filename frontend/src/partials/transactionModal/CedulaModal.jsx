@@ -298,7 +298,7 @@ const cancelTrans = async (e) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Sex</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_sex || cedulaTransaction.sex_type || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_sexLabel || cedulaTransaction.sex_type || '-'}</span>
                           </div>
 
                           <br/>
@@ -308,15 +308,15 @@ const cancelTrans = async (e) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Region</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_region || cedulaTransaction.region || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_regionLabel || cedulaTransaction.region || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Province</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_province || cedulaTransaction.province || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_provinceLabel || cedulaTransaction.province || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_municipal || cedulaTransaction.municipality || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_municipalLabel || cedulaTransaction.municipality || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Barangay</span>
@@ -342,7 +342,7 @@ const cancelTrans = async (e) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Civil Status</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_civilstatus || cedulaTransaction.cvl_id || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_cvlLabel || cedulaTransaction.cvl_status || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Country of Citizenship</span>
@@ -377,7 +377,7 @@ const cancelTrans = async (e) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_validid || cedulaTransaction.valid_id || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_valididLabel || cedulaTransaction.valid_id || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Profession/Occupation/Business</span>

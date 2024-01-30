@@ -46,6 +46,7 @@ const DeathCertificateForm =()=>{
     deathc_reqmunicipalLabel: '',
     deathc_purposeLabel: '',
     deathc_valididLabel: '',
+    deathc_sexLabel: '',
   }));
 
   
@@ -235,6 +236,17 @@ const DeathCertificateForm =()=>{
           initialPrint: displayValue,
           printDisplay: product,
           deathc_printLabel: label,
+        };
+      }
+
+      if (id === 'deathc_sex') {
+
+        const label = e.target.options[e.target.selectedIndex].text;
+        
+        return {
+          ...prevData,
+          [id]: value,
+          deathc_sexLabel: label,
         };
       }
 

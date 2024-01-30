@@ -124,8 +124,8 @@ router.get('/cedula/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
     const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS municipality, cc.transaction_id, cc.cedula_date, \
-    co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_type, \
-    ci.cvl_id, ci.czn_id, ci.height, ci.weight, ci.acr_no, \
+    co.l_name, co.f_name, co.m_name, co.suffix_type, st.sex_type, \
+    cv.cvl_status, ci.czn_id, ci.height, ci.weight, ci.acr_no, \
     ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
     ti.amount, ti.copies, ti.print_id, vt.valid_id_type, pt.purpose_type, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
@@ -142,6 +142,8 @@ router.get('/cedula/:transaction_id', async (req, res) => {
     LEFT JOIN cities c ON cc.city_id = c.city_id \
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
+    LEFT JOIN cvl_status cv ON ci.cvl_id = cv.cvl_id \
+    LEFT JOIN sex_type st ON co.sex_id = st.sex_id \
     \
     WHERE  cc.transaction_id = ?"
 
@@ -171,8 +173,8 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
     const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS municipality, cc.transaction_id, cc.cedula_date, \
-    co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_type, \
-    ci.cvl_id, ci.czn_id, ci.height, ci.weight, ci.acr_no, cv.cvl_status, \
+    co.l_name, co.f_name, co.m_name, co.suffix_type, st.sex_type, \
+    cv.cvl_status, ci.czn_id, ci.height, ci.weight, ci.acr_no, cv.cvl_status, \
     ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
     ti.amount, ti.copies, ti.print_id, vt.valid_id_type, pt.purpose_type, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
@@ -190,6 +192,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN cvl_status cv ON ci.cvl_id = cv.cvl_id \
+    LEFT JOIN sex_type st ON co.sex_id = st.sex_id \
     \
     WHERE  cc.transaction_id = ?"
 
@@ -474,7 +477,7 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
     const query = "SELECT r.region_name AS region, p.prov_name AS province, c.city_name AS city, dc.transaction_id, dc.death_date, \
-    do.l_name, do.f_name, do.m_name, do.suffix_type, do.sex_type, \
+    do.l_name, do.f_name, do.m_name, do.suffix_type, st.sex_type, \
     dr.l_name AS reql_name, dr.f_name AS reqf_name, dr.m_name AS reqm_name, dr.suffix_type AS reqsuffix, \
     dr.owner_rel, dr.mobile_no, dr.tel_no, \
     ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
@@ -496,6 +499,7 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
+    LEFT JOIN sex_type st ON do.sex_id = st.sex_id \
     \
     WHERE dc.transaction_id = ?";
 
@@ -527,7 +531,7 @@ router.get('/deathcert/:transaction_id/download', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
     const query = "SELECT r.region_name AS region, p.prov_name AS province, c.city_name AS city, dc.transaction_id, dc.death_date, \
-    do.l_name, do.f_name, do.m_name, do.suffix_type, do.sex_type, \
+    do.l_name, do.f_name, do.m_name, do.suffix_type, st.sex_type, \
     dr.l_name AS reql_name, dr.f_name AS reqf_name, dr.m_name AS reqm_name, dr.suffix_type AS reqsuffix, \
     dr.owner_rel, dr.mobile_no, dr.tel_no, \
     ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
@@ -549,6 +553,7 @@ router.get('/deathcert/:transaction_id/download', async (req, res) => {
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
+    LEFT JOIN sex_type st ON do.sex_id = st.sex_id \
     \
     WHERE dc.transaction_id = ?";
 
