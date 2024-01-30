@@ -23,18 +23,51 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
-  };
+  }
+  const [filterApplied, setFilterApplied] = useState(false);
+  const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
+  const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
   
   const handleSearch = (transaction) => {
     const transactionId = transaction.transaction_id.toUpperCase();
     const query = searchQuery.toUpperCase();
-    return transactionId.includes(query);
+    
+    // Check if the transaction ID includes the search query
+    const isTransactionMatch = transactionId.includes(query);
+    
+    // Check if the transaction date is within the selected date range only if filter is applied
+    const isDateInRange =
+      !filterApplied ||
+      (!lastSelectedFromDate || new Date(transaction.date) >= new Date(lastSelectedFromDate)) &&
+      (!lastSelectedToDate || new Date(transaction.date) <= new Date(lastSelectedToDate));
+    
+    return isTransactionMatch && isDateInRange;
   };
   
-  const filteredctcCedula = ctcCedula ? ctcCedula.filter(handleSearch): [];
-
+  const filteredctcCedula = ctcCedula ? ctcCedula.filter(handleSearch) : [];
+  
+  const handleFilterClick = () => {
+    // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date has changed
+    if (selectedDate !== lastSelectedFromDate || selectedDatee !== lastSelectedToDate) {
+      setFilterApplied(true);
+      setLastSelectedFromDate(selectedDate);
+      setLastSelectedToDate(selectedDatee);
+    }
+  };
+  
   useEffect(() => {
+    // Reset filter when ctcCedula changes
+    setFilterApplied(false);
   }, [ctcCedula]);
+  
+  const handleClearClick = () => {
+    // Clear the selected dates and other modal-related data
+    setSelectedDate(null);
+    setSelectedDatee(null);
+    setSearchQuery('');
+    // ... (other modal-related state variables you want to clear)
+    setFilterApplied(false);
+  };
   
   const handleToggleView = (mode) => {
     setViewMode(mode);
@@ -378,7 +411,7 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
                 </div>
               </div>
 
-              <button type="button" onClick="" className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+              <button type="button" onClick={handleFilterClick} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
               </div>
@@ -387,7 +420,7 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
 
             {/* Clear Button */}
             <div className="w-full sm:w-20 ml-2">
-            <button type="button" onClick="" className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
+            <button type="button" onClick={handleClearClick} className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
               </svg>
