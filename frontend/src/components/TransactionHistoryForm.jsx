@@ -91,47 +91,49 @@ const TransactionHistoryForm = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+const handleSearch = (e) => {
+  const filteredTransactions = userTransaction
+    .filter((transaction) => {
+      const transactionId = transaction.transaction_id.toString().toUpperCase();
 
-  // Filter for selected date range, type, status of transaction
-  const handleSearch = (e) => {
-    const filteredTransactions = userTransaction
-      .filter((transaction) => {
-        const transactionId = transaction.transaction_id.toString().toUpperCase();
-  
-        const isDateInRange = (() => {
-          if (!selectedDate || !selectedDatee) {
-            return true; // No date range selected, include all transactions
-          }
-        
-          const transactionDate = new Date(transaction.date_processed);
-          const startDate = new Date(selectedDate);
-          const endDate = new Date(selectedDatee);
-          endDate.setHours(23, 59, 59, 999);
-        
-          return startDate <= transactionDate && transactionDate <= endDate;
-        });
-        
-  
-        return (
-          transactionId.includes(searchInput) &&
-          isSubsequence(searchInput, transactionId) &&
-          isDateInRange() && // Call the function to check date range
-          (!selectedType || selectedType === '0' || transaction.trans_type === selectedType) &&
-          (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase())
-        );
-      })
-      .sort((a, b) => {
-        // Sort the transactions based on the selected option and order
-        const valueA = a[sortOption];
-        const valueB = b[sortOption];
-  
-        if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
-        if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
-        return 0;
+      const isDateInRange = (() => {
+        if (!selectedDate || !selectedDatee) {
+          return true; // No date range selected, include all transactions
+        }
+
+        const transactionDate = new Date(transaction.date_processed);
+        const startDate = new Date(selectedDate);
+        const endDate = new Date(selectedDatee);
+        endDate.setHours(23, 59, 59, 999);
+
+        return startDate <= transactionDate && transactionDate <= endDate;
       });
-  
-    setFilteredTransactions(() => filteredTransactions);
-  };  
+
+      return (
+        transactionId.includes(searchInput) &&
+        isSubsequence(searchInput, transactionId) &&
+        isDateInRange() && // Call the function to check date range
+        (!selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || (transaction.trans_type) === (selectedType)) &&
+        (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase())
+      );
+    })
+    .filter((transaction) => {
+      // Exclude records with trans_type as null or 'default'
+      return transaction.trans_type !== null && transaction.trans_type.toLowerCase() !== 'default';
+    })
+    .sort((a, b) => {
+      // Sort the transactions based on the selected option and order
+      const valueA = a[sortOption];
+      const valueB = b[sortOption];
+
+      if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
+      if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+  setFilteredTransactions(filteredTransactions);
+};
+
      
   // Make sure that the transaction searching is the same order in terms of characters
   const isSubsequence = (search, str) => {
