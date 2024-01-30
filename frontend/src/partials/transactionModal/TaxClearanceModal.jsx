@@ -25,24 +25,19 @@ const TaxClearanceModal = ({ user_id, selectedTransaction, onClose, onSubmit, ha
 
   const submitHandler = async (e) => {
     try {
-      // Set loading to true
+
       setIsLoading(true);
-  
-      // Perform your asynchronous operation (e.g., submitting data)
-      await onSubmit(e);
-  
-      // Set loading back to false after the operation is complete
+      
       setTimeout(() => {
         setIsLoading(false);
-      }, 3000); // 5000 milliseconds = 5 seconds
-  
-      // Optionally, you can trigger additional actions after the loading is complete
-      // For example, closing the modal
+      }, 5000); 
+
+      await onSubmit(e);
+
       onClose();
     } catch (error) {
-      // Handle errors if needed
       console.error('Error:', error);
-      setIsLoading(false); // Make sure to set loading to false in case of an error
+      setIsLoading(false); 
     }
   };
 
