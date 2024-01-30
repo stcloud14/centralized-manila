@@ -167,6 +167,7 @@ const PersonalInfoForm =()=>{
       if (isAnyFieldEdited || isIncompleteBirth) {
         scrollToTop();
         setShowWarning(true);
+        setIsModalOpen(false);
         setTimeout(() => {
           setShowWarning(false);
         }, 3000);
@@ -179,6 +180,7 @@ const PersonalInfoForm =()=>{
       if (isIncompletePersonal || isIncompleteBirth) {
         scrollToTop();
         setShowWarning(true);
+        setIsModalOpen(false);
         setTimeout(() => {
           setShowWarning(false);
         }, 3000);
