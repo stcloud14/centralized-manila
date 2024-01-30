@@ -88,8 +88,8 @@ const PaymentSuccessForm = () => {
           const rawData = {
             transaction_id: transaction_id,
             acc_name: transaction_details.tp_acc_name,
-            rp_tdn: transaction_details.tp_rp_tdn,
-            rp_pin: transaction_details.tp_rp_pin,
+            rp_tdn: transaction_details.tp_rp_tdn || transaction_details.tc_rp_tdn,
+            rp_pin: transaction_details.tp_rp_pin || transaction_details.tc_rp_pin,
             trans_type: transaction_details.trans_type,
             amount: transaction_details.amount,
             date: formattedDate,
