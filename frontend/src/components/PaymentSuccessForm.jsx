@@ -241,7 +241,7 @@ const PaymentSuccessForm = () => {
                   </div>
 
                   {isloading ? (
-                            <div className="font-medium flex  dark:bg-[#2b2b2b] text-slate-700 dark:text-white pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
+                            <div className="pt-3 font-medium flex  dark:bg-[#2b2b2b] text-slate-700 dark:text-white pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
                             <svg
                             aria-hidden="true"
                             className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
