@@ -20,6 +20,28 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
   
   const [isCancelConfirmed, setIsCancelConfirmed] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
+
+  
+  const [isloading, setIsLoading] = useState(false)
+  
+  const submitHandler = async (e) => {
+    try {
+
+      setIsLoading(true);
+      
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 5000); 
+
+      await onSubmit(e);
+
+      onClose();
+    } catch (error) {
+      console.error('Error:', error);
+      setIsLoading(false); 
+    }
+  };
   
   const makePayment = async () => {
     try {
@@ -799,30 +821,36 @@ const handleCloseConfirm = () => {
                     </button>
                     ): null}
 
-                <button
-                    onClick={onClose}
-                    type="button"
-                    className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                >
-                    <p>Close</p>
-                </button>
 
-                {businessTransaction.transaction_id ? null : (
-                <button
-                    onClick={onSubmit}
-                    type="button"
-                    className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                    <p>Submit</p>
-              </button>
-              )}
+                      {isloading ? (
+                            <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                              <Loading />
+                            </div>
+                          ) : (
+                          <>
+                            <button
+                              onClick={onClose}
+                              type="button"
+                              className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                            >
+                              <p>Close</p>
+                            </button>
+
+                        {transaction_id ? null : (
+                            <button
+                              onClick={submitHandler}
+                              type="button"
+                              className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                              >
+                              <p>Submit</p>
+                            </button>
+                        )}
+                           </>
+                            )}
+
+
             </div>
           </div>
-          {/* LOADING ANIMATION */}
-          <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
-            <Loading/>
-          </div>
-          {/* LOADING ANIMATION */}
         </div>
 
         {isCancelConfirmed && (
