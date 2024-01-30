@@ -360,7 +360,39 @@ router.get('/:user_id', async (req, res) => {
       console.error(err);
       res.status(500).send('Error retrieving data');
   }
+  });
+
+  
+router.get('/regis/:user_id', async (req, res) => {
+  const user_id = req.params.user_id;
+
+  const query = `
+      SELECT uc.user_email, up.f_name, up.l_name 
+      FROM user_contact uc
+      JOIN user_personal up ON uc.user_id = up.user_id
+      WHERE uc.user_id = ?`;
+
+  try {
+      const result = await queryDatabase(query, [user_id]);
+
+      if (result.length > 0) {
+          const { user_email, f_name, l_name, transaction_id } = result[0];
+          if (user_email) {
+              res.json({ user_email, f_name, l_name, transaction_id });
+          } else {
+              console.error("Missing user_email in the database");
+              res.status(500).json({ error: "Internal Server Error" });
+          }
+      } else {
+          console.error("User not found");
+          res.status(404).json({ error: "User not found" });
+      }
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error retrieving data');
+  }
 });
+
 
 
     router.post('/send-email/:user_email', async (req, res) => {

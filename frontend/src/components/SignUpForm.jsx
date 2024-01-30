@@ -112,7 +112,7 @@ const handleClick = async (e) => {
         if (response.status === 200) {
           const user_id = response.data.user_id;
           try {
-            const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+            const res = await axios.get(`http://localhost:8800/email/regis/${user_id}`);
             
             // const date = new Date();
             // const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
