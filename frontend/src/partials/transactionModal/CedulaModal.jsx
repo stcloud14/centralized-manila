@@ -156,14 +156,27 @@ const cancelTrans = async (e) => {
   };
   
   
+  // QR Download 
   const generateDownloadLink = (data) => {
     console.log('Generating download link:', data.transaction_id);
-    return `http://localhost:8800/transachistory/cedula/${data.transaction_id}`;
-  };
+    return `http://localhost:8800/transachistory/cedula/${data.transaction_id}/download`;
+};
 
   const downloadLink = isScanned ? generateDownloadLink(cedulaTransaction) : null;
   console.log('Download link:', downloadLink);
 
+  const handleDownload = async () => {
+      try {
+          const pdfRes = await axios.get(downloadLink, { responseType: 'blob' });
+          const pdfBlob = new Blob([pdfRes.data], { type: 'application/pdf' });
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+
+          // Open the PDF in a new window
+          window.open(pdfUrl, '_blank');
+      } catch (err) {
+          console.error(err);
+      }
+  };
  
   return (
     <div className="fixed z-50 inset-0 ">
@@ -419,11 +432,14 @@ const cancelTrans = async (e) => {
                     </button>
                   ): null}
                  
-                 {/* QR Code Section */}
+                {/* QR Code Section */}
             <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
                 <div className="whitespace-nowrap md:mb-0 mb-1">
                     {cedulaTransaction ? (
-                        <QRCode value={downloadLink || ''} size={100} />
+                        // Automatically redirect to the download link when the QR code is clicked
+                        <a href={generateDownloadLink(cedulaTransaction)} target="_blank" rel="noreferrer">
+                            <QRCode value={generateDownloadLink(cedulaTransaction)} size={100} />
+                        </a>
                     ) : (
                         <Loading />
                     )}

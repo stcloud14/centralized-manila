@@ -8,7 +8,7 @@ function FilterButton({ selectedDate, setSelectedDate, selectedDatee, setSelecte
 
   return (
     <>
-        <div className="absolute w-[270px] origin-top-right py-2 px-3 mt-[32px] sm:mt-2 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20 md:right-10 sm:w-[405px]">
+        <div className="absolute w-[270px] origin-top-right py-2 px-3 mt-[32px] sm:mt-2 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20 md:right-10 top-[9rem] sm:top-5 sm:w-[405px]">
 
         {/* Date Row */}
         <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
