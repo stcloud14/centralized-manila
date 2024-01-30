@@ -430,7 +430,7 @@ const cancelTrans = async (e) => {
                 </div>
                 ) : null}
 
-                <hr className='mt-7 mb-1'/>
+                <hr className='mb-1'/>
                 <div className="flex justify-between">
                   <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
                   <span className="font-semibold whitespace-nowrap ml-4">  {cedulaTransaction && (
