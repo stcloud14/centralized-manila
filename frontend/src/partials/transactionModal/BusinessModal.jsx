@@ -170,8 +170,9 @@ const cancelTrans = async (e) => {
   
         setTimeout(() => {
           setIsSuccess(false);
-          onClose();
-        }, 2100);
+          // onClose();
+          window.location.href = `http://localhost:5173/transachistory/${user_id}`;
+        }, 1000);
         
       } else {
         console.error('Transaction error:', response.statusText);
@@ -279,7 +280,7 @@ const handleCloseConfirm = () => {
             </div>
           )}
 
-          <div className="md:max-h-[16rem] max-h-[9rem] bg-white dark:bg-[#212121] dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
+          <div className="md:max-h-[11.5rem] max-h-[9rem] bg-white dark:bg-[#212121] dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
             <div className="mx-auto">
               <div className="sm:mt-0" id="modal-headline">   
                 <div className="mx-auto">

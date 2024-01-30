@@ -8,24 +8,12 @@ const CancelTransactionModal = ({ onClose, onCancel }) => {
   
   const submitHandler = async (e) => {
     try {
-      // Set loading to true
       setIsLoading(true);
-  
-      // Perform your asynchronous operation (e.g., submitting data)
       await onCancel(e);
-  
-      // Set loading back to false after the operation is complete
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 5000); // 5000 milliseconds = 5 seconds
-  
-      // Optionally, you can trigger additional actions after the loading is complete
-      // For example, closing the modal
-      onClose();
+      setIsLoading(false);
     } catch (error) {
-      // Handle errors if needed
       console.error('Error:', error);
-      setIsLoading(false); // Make sure to set loading to false in case of an error
+      setIsLoading(false); 
     }
   };
 
