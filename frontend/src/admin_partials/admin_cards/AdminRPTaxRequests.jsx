@@ -109,7 +109,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
   
     try {
       const response = await axios.post(`http://localhost:8800/adminrptax/updateprocess/${transaction_id}`, selectedTransaction);
-  
+      setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {
 
@@ -185,7 +185,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
   
     try {
       const response = await axios.post(`http://localhost:8800/adminrptax/updatereject/${transaction_id}`, selectedTransaction);
-  
+      setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {
 
@@ -553,6 +553,13 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                       </div>
                     </div>
 
+
+                    {isLoading ? (
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                        <Loading />
+                      </div>
+                    ) : (
+                      <>
                     <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
                     <button
                       onClick={handleConfirmClose}
@@ -563,20 +570,16 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                     </button>
 
                     <button
-                    onClick={() => {
-                      handleProcess();
-                      setIsLoading(true);
-                    }}
+                    onClick={handleProcess}
                     type="button"
                     className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                     >
                     Confirm
                     </button>
                     </div>
+                    </>
+                    )}
 
-                    {isLoading ? (
-                      <Loading />
-                    ) : null}
 
                   </div>
                 </div>
@@ -602,6 +605,13 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                       </div>
                     </div>
                   
+
+                    {isLoading ? (
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                        <Loading />
+                      </div>
+                    ) : (
+                      <>
                   <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
                     <button
                       onClick={handleConfirmClose}
@@ -613,10 +623,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
 
 
                     <button
-                    onClick={() => {
-                      handleReject();
-                      setIsLoading(true);
-                    }}
+                    onClick={handleReject}
                     type="button"
                     className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                     >
@@ -624,10 +631,10 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                     </button>
 
                   </div>
+                  </>
+                  )}
 
-                  {isLoading ? (
-                      <Loading />
-                    ) : null}
+
 
                   </div>
                 </div>
