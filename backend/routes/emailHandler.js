@@ -41,7 +41,7 @@ const FormatMail = (user_email, typeInfo, body, amount, dynamicSex, dynamicMessa
                     <tbody>
                       <tr>
                         <td>
-                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                          <img src="https://i.ibb.co/KhkptHZ/email-thanks-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
                         </td>
                       </tr>
                     </tbody>
@@ -95,43 +95,86 @@ const FormatMail = (user_email, typeInfo, body, amount, dynamicSex, dynamicMessa
 
 const RegisteredAccountEmail = (user_email, body) => {
   return `
-  <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
-    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
-      <tbody>
-        <tr style="width:100%">
-          <td><img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" width="40%" height="auto" />
-            <p style="font-size:16px;line-height:26px;margin:16px 0">Greetings Mr./Ms./Mrs. ${body.l_name}!</p>
-            <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Centralized Manila, your portal to an amazing new world filled with efficient digital services.</p>
-            <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align:center">
-              <tbody>
-                <tr>
-                  <td><a href="http://localhost:5173/" style="background-color:#3E7DEC;border-radius:3px;color:white;font-size:16px;text-decoration:none;text-align:center;display:inline-block;padding:12px 12px 12px 12px;line-height:100%;max-width:100%" target="_blank"><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">Get started</span><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a></td>
-                </tr>
-              </tbody>
-            </table>
-            <p style="font-size:16px;line-height:26px;margin:16px 0">Best regards,<br />Centralized Manila Team</p>
-            <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
-            <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">© 2024 Centralized Manila. All rights reserved.</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </body>
+  <body style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif; color: black !important;">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 42rem;">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td style="padding:3px">
+                  <img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: 55px;" />
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid rgb(0,0,0, 0.1); border-radius: 3px">
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="overflow: hidden">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="https://i.ibb.co/KFwBVLn/email-welcome-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-bottom:0">
+                      <tbody style="width:100%">
+                        <tr style="width:100%; color:black !important;">
+                          <td style="padding:0px 20px 10px 20px">
 
+                            
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Greetings Mr./Ms./Mrs. ${body.l_name}!</h1>
+                            <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Centralized Manila, your portal to an amazing new world filled with efficient digital services. We are thrilled to have you as part of our community. Your journey with us begins now, and we're here to guide you every step of the way.</p>
+                            <p style="font-size:16px;line-height:26px;margin:16px 0"> Feel free to explore our platform, and should you have any questions or need assistance, our team is here to help. Just drop us a line at centralizedmanila@gmail.com.</p>
+                            <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align:center">
+                              <tbody>
+                                <tr style="margin-top:18px;">
+                                  <td><a href="http://localhost:5173/" style="background-color:#3E7DEC;border-radius:3px;color:white;font-size:16px;text-decoration:none;text-align:center;display:inline-block;padding:12px 12px 12px 12px;line-height:100%;max-width:100%" target="_blank"><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">Get started</span><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
+                            <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila Team</p>
+
+
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 45px 0px 0px 0px">
+                  <img src="https://react-email-demo-7s5r0trkn-resend.vercel.app/static/yelp-footer.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 20px; text-align: center; color: rgb(0,0,0, 0.7); font-size: 12px; line-height: 24px;">
+                © 2024 Centralized Manila. All rights reserved.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
     `;
 };
 
 const ResetPassMail = (user_email, body, amount) => {
   return `
-  <body style="background-color:#efeef1;font-family:HelveticaNeue,Helvetica,Arial,sans-serif">
+  <body style="font-family:HelveticaNeue,Helvetica,Arial,sans-serif; background-color: #e5e5f7; opacity: 0.8; background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px); background-size: 10px 10px;">
   <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:580px;margin:30px auto;background-color:#ffffff">
     <tbody>
       <tr style="width:100%">
         <td>
-          <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="display:flex;justify-content:center;aling-items:center;padding:30px">
+          <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align: center; padding: 20px">
             <tbody>
               <tr>
-                <td><img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display:block;outline:none;border:none;text-decoration:none" width="114" /></td>
+                <td><img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display:block; outline:none; border:none; text-decoration:none; margin:auto;" width="120" /></td>
               </tr>
             </tbody>
           </table>
@@ -143,7 +186,7 @@ const ResetPassMail = (user_email, body, amount) => {
                     <tbody style="width:100%">
                       <tr style="width:100%">
                         <td data-id="__react-email-column" style="border-bottom:1px solid rgb(238,238,238);width:249px"></td>
-                        <td data-id="__react-email-column" style="border-bottom:1px solid rgb(145,71,255);width:102px"></td>
+                        <td data-id="__react-email-column" style="border-bottom:1px solid rgb(0, 94, 255);width:102px"></td>
                         <td data-id="__react-email-column" style="border-bottom:1px solid rgb(238,238,238);width:249px"></td>
                       </tr>
                     </tbody>
@@ -210,7 +253,7 @@ const FormatExpiredMail = (transaction) => {
                     <tbody>
                       <tr>
                         <td>
-                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                          <img src="https://i.ibb.co/KhkptHZ/email-thanks-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
                         </td>
                       </tr>
                     </tbody>
@@ -278,7 +321,7 @@ const VerificationMail = (user_email, body, amount) => {
                     <tbody>
                       <tr>
                         <td>
-                          <img src="https://i.ibb.co/wS7kBf2/email-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                          <img src="https://i.ibb.co/KhkptHZ/email-thanks-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
                         </td>
                       </tr>
                     </tbody>
