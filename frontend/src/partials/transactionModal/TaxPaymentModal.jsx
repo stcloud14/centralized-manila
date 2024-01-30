@@ -142,7 +142,8 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
   
         setTimeout(() => {
           setIsSuccess(false);
-          onClose();
+          // onClose();
+          window.location.href = `http://localhost:5173/transachistory/${user_id}`;
         }, 1000);
         
       } else {

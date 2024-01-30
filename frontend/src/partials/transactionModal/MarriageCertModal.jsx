@@ -135,8 +135,9 @@ const cancelTrans = async (e) => {
   
         setTimeout(() => {
           setIsSuccess(false);
-          onClose();
-        }, 2100);
+          // onClose();
+          window.location.href = `http://localhost:5173/transachistory/${user_id}`;
+        }, 1000);
         
       } else {
         console.error('Transaction error:', response.statusText);
