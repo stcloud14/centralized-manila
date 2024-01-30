@@ -278,26 +278,26 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                     </div>
                   ) : null}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                          <span className="font-medium whitespace-nowrap">Account Name</span>
+                        <span className="font-medium whitespace-nowrap">Account Name</span>
                         <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.acc_name || taxPaymentTransaction.tp_acc_name || '-'}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                          <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
+                        <span className="font-medium whitespace-nowrap">Tax Declaration Number (TDN)</span>
                         <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.rp_tdn || taxPaymentTransaction.tp_rp_tdn || '-'}</span>
-                      </div>
+                    </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                          <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
+                        <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
                         <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.rp_pin || taxPaymentTransaction.tp_rp_pin || '-'}</span>
                     </div>
                     
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                          <span className="font-medium whitespace-nowrap">From</span>
-                        <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.year_label? `${taxPaymentTransaction.year_label} - 1st Quarter`: taxPaymentTransaction.tp_year? `${taxPaymentTransaction.tp_year} - 1st Quarter`: '-'}
+                      <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                        <span className="font-medium whitespace-nowrap">From</span>
+                          <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.year_label? `${taxPaymentTransaction.year_label} - 1st Quarter`: taxPaymentTransaction.tp_year? `${taxPaymentTransaction.tp_year} - 1st Quarter`: '-'}
                         </span>
                       </div>
 
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                          <span className="font-medium whitespace-nowrap">To</span>
+                      <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                        <span className="font-medium whitespace-nowrap">To</span>
                         <span className="whitespace-nowrap md:mb-0 mb-1">{taxPaymentTransaction.year_label? `${taxPaymentTransaction.year_label} - ${taxPaymentTransaction.period}`: taxPaymentTransaction.tp_year? `${taxPaymentTransaction.tp_year} - ${taxPaymentTransaction.tp_period}`: '-'}
                         </span>
                       </div>
@@ -307,7 +307,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                     </div> */}
                     {transaction_id ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                          <span className="font-medium whitespace-nowrap">Date Processed</span>
+                      <span className="font-medium whitespace-nowrap">Date Processed</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
                     </div>
                     ) : null}
@@ -337,52 +337,46 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                     </div>
                     ) : null}
 
-                          <hr className='mt-7 mb-1'/>
-                          <div className="flex justify-between">
-                            <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">P {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00': '-'} </span>
-                          </div>
-                        </div>
-                      </div>
+                    <hr className='mt-7 mb-1'/>
+                    <div className="flex justify-between">
+                      <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
+                      <span className="font-semibold whitespace-nowrap ml-4">P {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00': '-'} </span>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
-                  {/* <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/> */}
+              </div>
+            </div>
+          </div>
 
-                  {status_type === 'Pending' && transaction_id ? (
-                    <button
-                      onClick={makePayment}
-      
-                      type="button"
-                      className="text-slate-500 text-xs text-center px-5 py-2 mb-0 mr-auto md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                    >
-                      <span className="font-semibold whitespace-nowrap ml-2"> PAY: P {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00' : '-'}</span>
-                    </button>
-                  ): null}
+          <div className="flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white p-4 rounded-b-lg gap-4 items-end">
+            <div className="whitespace-nowrap">
+              {taxPaymentTransaction ? (
+                  <QRCode value={generateDownloadLink(taxPaymentTransaction)} size={100} />
+              ) : (
+                  <Loading />
+              )}
+            </div>
 
+            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 mt-2 sm:mt-0 ml-auto">
+              {status_type === 'Pending' && transaction_id ? (
+                <button
+                  onClick={makePayment}
+                  type="button"
+                  className="text-emerald-500 text-xs md:w-auto w-full text-center px-5 py-2 md:text-sm hover:text-white border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-emerald-500 dark:text-emerald-500 dark:hover:text-white dark:hover:bg-emerald-500 dark:focus:ring-emerald-800"
+                >
+                  <span className="font-semibold">PAY: P {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00' : '-'}</span>
+                </button>
+              ) : null}
 
-                  {/* QR Code Section */}
-                  <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
-                      <div className="whitespace-nowrap md:mb-0 mb-1">
-                          {taxPaymentTransaction ? (
-                              // Display the QR code without the anchor tag
-                              <QRCode value={generateDownloadLink(taxPaymentTransaction)} size={100} />
-                          ) : (
-                              <Loading />
-                          )}
-                      </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2 ml-auto">
-                    {status_type === 'Pending' && transaction_id ? (
-                    <button
-                        onClick={handleOpenConfirm}
-                        type="button"
-                        className="text-red-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
-                        <p>Cancel Transaction</p>
-                    </button>
-                    ): null}
+              {status_type === 'Pending' && transaction_id ? (
+                <button
+                  onClick={handleOpenConfirm}
+                  type="button"
+                  className="text-red-500 text-[0.60rem] md:w-auto w-full px-5 py-2 md:text-sm hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800"
+                >
+                  <p>Cancel Transaction</p>
+                </button>
+              ) : null}
 
               {isloading ? (
                 <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg">
