@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import confetti from 'canvas-confetti';
+import Loading from '../../src/partials/Loading';
 
 let duration = 15 * 1000;
 let animationEnd = Date.now() + duration;
@@ -12,7 +13,11 @@ function randomInRange(min, max) {
 }
 
 
+
 const PaymentSuccessForm = () => {
+  const [isloading, setIsLoading] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true);
+
   const currentUrl = window.location.href;
   const startIndex = currentUrl.indexOf("/paymentsuccess/") + "/paymentsuccess/".length;
   const userId = currentUrl.substr(startIndex, 6);
@@ -64,7 +69,7 @@ const PaymentSuccessForm = () => {
   const handleReturn = async () => {
     try {
       const res = await axios.post(`http://localhost:8800/payment/success/${transaction_id}`, transactionDetails);
-      
+      setIsLoading(true);
       try {
         const res1 = await axios.get(`http://localhost:8800/transachistory/${transType}/${transaction_id}`);
         const transaction_details = res1.data;
@@ -125,6 +130,8 @@ const PaymentSuccessForm = () => {
         console.error(fetchError);
       }
 
+      setIsLoading(false);
+      setButtonVisible(false);
       // setTimeout(() => {
       window.location.href = `http://localhost:5173/transachistory/${userId}`;
       // }, 1000);
@@ -232,15 +239,29 @@ const PaymentSuccessForm = () => {
                       <span className='text-red-500'>a</span>!
                     </span>
                   </div>
-                  <div className="flex items-center justify-center mt-6">
-                    <button
-                      onClick={handleReturn}
-                      type="button"
-                      className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-12 py-2 text-center dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      Back to Centralized Manila
-                    </button>
-                  </div>
+
+                  {isloading ? (
+                            <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[10px]">
+                              <Loading />
+                            </div>
+                          ) : (
+                        <>
+                          {buttonVisible && (
+                                  <div className="flex items-center justify-center mt-6">
+                                  <button
+                                  onClick={handleReturn}
+                                  type="button"
+                                  className="text-white text-xs md:text-sm bg-blue-500 border border-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-12 py-2 text-center dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                  >
+                                  Back to Centralized Manila
+                              </button>
+                          </div>
+                          )}
+
+                        </>
+                  )}
+
+
                 </>
               )}
               
