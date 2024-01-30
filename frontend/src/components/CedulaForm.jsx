@@ -42,6 +42,8 @@ const CedulaForm =()=>{
     amount: 0,
     ctc_residencetaxdue: '',
   }));
+
+  console.log(CtcCedula)
   
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -83,7 +85,9 @@ const CedulaForm =()=>{
 
             const trans_type = 'Community Tax Certificate';
 
-            const rowData = { ...CtcCedula, transaction_id, trans_type, date, time};
+            const city_name = CtcCedula.ctc_municipal;
+
+            const rowData = { ...CtcCedula, city_name, transaction_id, trans_type, date, time};
 
             const status_type = 'Pending';
 
