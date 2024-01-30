@@ -105,15 +105,80 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
     e.preventDefault();
   
     try {
-      const response = await axios.post(`http://localhost:8800/adminur/approve/${user_id}`);
+      const trans_type = 'User Registry';
+
+      const body1 = {
+        trans_type,
+      }
+
+      const response = await axios.post(`http://localhost:8800/adminur/decline/${user_id}`, body1);
   
       if (response.status === 200) {
-        setIsApproved(true);
 
-        console.log('Verification successful');
+        try {
+          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
+            const currentDate = new Date();
+                    const date = currentDate.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    const time = currentDate.toLocaleTimeString('en-US', {
+                      hour: 'numeric',
+                      minute: 'numeric'
+                  });
+
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const trans_type = 'Verification Success';
+
+            const type = 'Account Verification'
+
+            const rowData = { ...transaction, trans_type, type, date, time};
+
+            const status_type = 'V E R I F I E D';
+
+            const body = {
+              data: rowData,
+              status_type: status_type,
+              f_name: f_name,
+              l_name: l_name,
+              sex_type: sex_type,
+            };
+  
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/status-verified-email/${user_email}`, body);
+  
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+                // alert(emailResponse.data.message);
+              } else {
+                console.log("Failed to send email.");
+              }
+            } catch (emailError) {
+              //
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
+        }
+
+        setIsDeclined(true);
   
         setTimeout(() => {
-          setIsApproved(false);
+          setIsDeclined(false);
           handleClose();
           handleRemoveTransaction(selectedTransaction.transaction_id)
         }, 1500);
@@ -130,12 +195,77 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
     e.preventDefault();
   
     try {
-      const response = await axios.post(`http://localhost:8800/adminur/decline/${user_id}`);
+      const trans_type = 'User Registry';
+
+      const body1 = {
+        trans_type,
+      }
+
+      const response = await axios.post(`http://localhost:8800/adminur/decline/${user_id}`, body1);
   
       if (response.status === 200) {
-        setIsDeclined(true);
 
-        console.log('Verification Declined');
+        try {
+          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
+            const currentDate = new Date();
+                    const date = currentDate.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    const time = currentDate.toLocaleTimeString('en-US', {
+                      hour: 'numeric',
+                      minute: 'numeric'
+                  });
+
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const trans_type = 'Verification Failed';
+
+            const type = 'Account Verification'
+
+            const rowData = { ...transaction, trans_type, type, date, time};
+
+            const status_type = 'D E C L I N E D';
+
+            const body = {
+              data: rowData,
+              status_type: status_type,
+              f_name: f_name,
+              l_name: l_name,
+              sex_type: sex_type,
+            };
+  
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/status-verified-email/${user_email}`, body);
+  
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+                // alert(emailResponse.data.message);
+              } else {
+                console.log("Failed to send email.");
+              }
+            } catch (emailError) {
+              //
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
+        }
+
+        setIsDeclined(true);
   
         setTimeout(() => {
           setIsDeclined(false);
