@@ -436,7 +436,7 @@ const cancelTrans = async (e) => {
           <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
               {/* <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/> */}
               
-              {status_type !== 'Paid' && (
+              {status_type === 'Pending' && transaction_id ? (
                 <button
                   onClick={makePayment}
                   type="button"
@@ -444,7 +444,7 @@ const cancelTrans = async (e) => {
                 >
                   <span className="font-semibold whitespace-nowrap ml-2"> PAY: {deathTransaction.amount ? deathTransaction.amount + '.00' : '-'}</span>
                 </button>
-              )}
+              ): null}
 
                   {/* QR Code Section */}
             <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
