@@ -357,7 +357,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                       type="button"
                       className="text-slate-500 text-xs text-center px-5 py-2 mb-0 mr-auto md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                     >
-                      <span className="font-semibold whitespace-nowrap ml-2"> PAY: {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00' : '-'}</span>
+                      <span className="font-semibold whitespace-nowrap ml-2"> PAY: P {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00' : '-'}</span>
                     </button>
                   ): null}
 
