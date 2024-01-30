@@ -265,7 +265,7 @@ const cancelTrans = async (e) => {
                 </div>
               )}
 
-              <div className="md:max-h-[16rem] max-h-[9rem] bg-white dark:bg-[#212121] dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
+              <div className="md:max-h-[16rem] max-h-[9rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
             <div className="mx-auto">
                   <div className="sm:mt-0" id="modal-headline">   
                     <div className="mx-auto">
@@ -447,7 +447,7 @@ const cancelTrans = async (e) => {
                     <button
                       onClick={makePayment}
                       type="button"
-                      className="text-slate-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                      className="text-slate-500 text-xs text-center px-5 py-2 mb-0 mr-auto md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                     >
                       <span className="font-semibold whitespace-nowrap ml-2"> PAY: {cedulaTransaction.amount ? cedulaTransaction.amount + '.00' : '-'}</span>
                     </button>
