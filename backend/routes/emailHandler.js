@@ -498,7 +498,7 @@ const RegisteredAccountEmail = (user_email, body) => {
 
   
     const rp_tdn = body.data.rp_tdn;
-    const rp_pin = body.data.rp_tdn; // Note: Should this be body.data.rp_pin?
+    const rp_pin = body.data.rp_pin;
     const bus_reg_no = body.data.bus_reg_no;
     const bus_tin = body.data.bus_tin;
 
