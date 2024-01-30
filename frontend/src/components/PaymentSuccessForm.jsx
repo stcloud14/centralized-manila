@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import confetti from 'canvas-confetti';
-import Loading from '../../src/partials/Loading';
+
 
 let duration = 15 * 1000;
 let animationEnd = Date.now() + duration;
