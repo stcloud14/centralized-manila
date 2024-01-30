@@ -117,7 +117,7 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
   
     try {
       const response = await axios.post(`http://localhost:8800/adminlcr/updatecomplete/${transaction_id}`, selectedTransaction);
-  
+      setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {
 
@@ -199,7 +199,7 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
 
         try {
           const res = await axios.get(`http://localhost:8800/email/${user_id}`);
-          
+          setIsLoading(true);
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
             const f_name = res.data.f_name;
@@ -487,6 +487,14 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
                         </span>
                       </div>
                     </div>
+
+                    {isLoading ? (
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                        <Loading />
+                      </div>
+                    ) : (
+                      <>
+
                     <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
                       <button
                         onClick={handleConfirmClose}
@@ -504,10 +512,8 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
                       Confirm
                     </button>
                     </div>
-
-                    {isLoading ? (
-                      <Loading />
-                    ) : null}
+                    </>
+                    )}
 
                   </div>
                 </div>
@@ -532,6 +538,14 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
                         </span>
                       </div>
                     </div>
+
+
+                    {isLoading ? (
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                        <Loading />
+                      </div>
+                    ) : (
+                      <>
                     <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
                       <button
                         onClick={handleConfirmClose}
@@ -549,10 +563,8 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
                         Confirm
                       </button>
                       </div>
-
-                      {isLoading ? (
-                      <Loading />
-                    ) : null}
+                      </>
+                    )}
                     
                   </div>
                 </div>

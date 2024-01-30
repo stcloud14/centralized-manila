@@ -12,18 +12,17 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   
   const [userImage, setUserImage] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [isOpenDelete, setIsOpenDelete] = useState(false);
+  // const [isOpenDelete, setIsOpenDelete] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false);
+  // const [isDeleted, setIsDeleted] = useState(false);
 
   const [userInfo, setUserInfo] = useState(() => {
     // Initialize userInfo with the values of selectedTransaction
     return selectedTransaction || {};
   });
 
-  console.log(userInfo)
 
   const handleChangeData = (e) => {
     const { name, value } = e.target;
@@ -92,10 +91,9 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   
       try {
         const imagePath = '../uploads/profileImage/';
-        const imageName = selectedTransaction.user_image;
+        const imageName = selectedTransaction?.user_image ?? undefined;
   
         if (imageName === undefined || imageName === null) {
-          console.log('User image name is undefined or null.');
           setIsLoading(false);
           setUserImage(null);
           return;
@@ -169,14 +167,83 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   };
 
 
-
   const handleSaveChanges = async (e) => {
     e.preventDefault();
   
     try {
-      const response = await axios.put(`http://localhost:8800/adminur/update/${selectedTransaction.user_id}`, userInfo);
+
+      const trans_type = 'User Registry';
+
+      const body1 = {
+        ...userInfo,
+        trans_type,
+      }
+
+      const response = await axios.put(`http://localhost:8800/adminur/updateuser/${selectedTransaction.user_id}`, body1);
   
       if (response.status === 200) {
+
+        try {
+          const res = await axios.get(`http://localhost:8800/email/${selectedTransaction.user_id}`);
+          
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
+            const currentDate = new Date();
+                    const date = currentDate.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    const time = currentDate.toLocaleTimeString('en-US', {
+                      hour: 'numeric',
+                      minute: 'numeric'
+                  });
+
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const trans_type = 'Updated User Information';
+
+            const type = 'Account Information'
+
+            const rowData = { ...userInfo, trans_type, type, date, time};
+
+            const status_type = 'U P D A T E D';
+
+            const body = {
+              data: rowData,
+              status_type: status_type,
+              f_name: f_name,
+              l_name: l_name,
+              sex_type: sex_type,
+            };
+  
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/status-updated-email/${user_email}`, body);
+  
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+                // alert(emailResponse.data.message);
+              } else {
+                console.log("Failed to send email.");
+              }
+            } catch (emailError) {
+              //
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
+        }
+
+
         setIsSuccess(true);
         setEditMode(false);
         setUserInfo('');
@@ -194,28 +261,28 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   };
 
 
-  const handleDeleteUser = async (e) => {
-    e.preventDefault();
+  // const handleDeleteUser = async (e) => {
+  //   e.preventDefault();
   
-    try {
-      const response = await axios.delete(`http://localhost:8800/adminur/update/${selectedTransaction.user_id}`);
+  //   try {
+  //     const response = await axios.delete(`http://localhost:8800/adminur/updateuser/${selectedTransaction.user_id}`);
   
-      if (response.status === 200) {
-        setIsDeleted(true);
-        setEditMode(false);
-        setUserInfo('');
+  //     if (response.status === 200) {
+  //       setIsDeleted(true);
+  //       setEditMode(false);
+  //       setUserInfo('');
   
-        setTimeout(() => {
-          setIsDeleted(false);
-          handleClose();
-        }, 1500);
-      } else {
-        console.error('Transaction error:', response.statusText);
-      }
-    } catch (err) {
-      console.error('Transaction error:', err);
-    }
-  };
+  //       setTimeout(() => {
+  //         setIsDeleted(false);
+  //         handleClose();
+  //       }, 1500);
+  //     } else {
+  //       console.error('Transaction error:', response.statusText);
+  //     }
+  //   } catch (err) {
+  //     console.error('Transaction error:', err);
+  //   }
+  // };
 
 
   const handleEditClick = () => {
@@ -228,9 +295,9 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
     setEditMode(false);
   };
 
-  const handleDeleteClick = () => {
-    setIsOpenDelete(!isOpenDelete);
-  };
+  // const handleDeleteClick = () => {
+  //   setIsOpenDelete(!isOpenDelete);
+  // };
 
 
 
@@ -287,7 +354,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                       </button>
                     )}
                   </div>
-                  <div className="flex items-center text-xs">
+                  {/* <div className="flex items-center text-xs">
                     <button
                       className="text-white font-medium dark:text-white dark:bg-red-500 dark:hover:bg-red-600 flex items-center bg-red-500 hover:bg-red-600 hover:border-red-600 rounded-sm px-2 py-1.5"
                       onClick={handleDeleteClick}
@@ -297,7 +364,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                       </svg>
                       <span>Delete User</span>
                     </button>
-                  </div>
+                  </div> */}
                 </div>
 
                   {isSuccess && (
@@ -306,11 +373,11 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                     </div>
                   )} 
 
-                  {isDeleted && (
+                  {/* {isDeleted && (
                     <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
                       User deleted successfully!
                     </div>
-                  )} 
+                  )}  */}
 
                 {isLoading && (
                   <div className="mb-5 inline-flex items-center justify-center md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1">
@@ -351,11 +418,11 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
             </div>
           </div>
         </div>
-        <AdminUserDeleteModal
+        {/* <AdminUserDeleteModal
         isOpenDelete={isOpenDelete}
         handleDeleteClick={handleDeleteClick}
         handleDeleteUser={handleDeleteUser}
-        />
+        /> */}
       </div>
       
     )

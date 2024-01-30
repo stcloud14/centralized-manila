@@ -283,7 +283,7 @@ router.post('/decline/:user_id', auditMiddleware, async (req, res) => {
 
 
 
-router.put('/update/:user_id', async (req, res) => {
+router.put('/updateuser/:user_id', auditMiddleware, async (req, res) => {
   const user_id = req.params.user_id;
 
   const {

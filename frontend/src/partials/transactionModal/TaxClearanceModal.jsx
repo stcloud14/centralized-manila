@@ -175,7 +175,7 @@ const cancelTrans = async (e) => {
 
   // QR Download 
   const generateDownloadLink = (data) => {
-    console.log('Generating download link:', data); // Check the value of data
+    console.log('Generating download link:', data.transaction_id); // Check the value of data
     return `http://localhost:8800/transachistory/taxclearance/${data.transaction_id}/download`;
 };
 
@@ -340,18 +340,17 @@ const cancelTrans = async (e) => {
                         </button>
                       ): null}
 
-               {/* QR Code Section */}
-            <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
-                <div className="whitespace-nowrap md:mb-0 mb-1">
-                {taxClearanceTransaction ? (
-                        <a href={generateDownloadLink(taxClearanceTransaction)} target="_blank" rel="noreferrer">
-                            <QRCode value={generateDownloadLink(taxClearanceTransaction)} size={100} />
-                        </a>
-                    ) : (
-                        <Loading />
-                    )}
-             </div>
-            </div>
+                      {/* QR Code Section */}
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
+                          <div className="whitespace-nowrap md:mb-0 mb-1">
+                              {taxClearanceTransaction ? (
+                                  // Display the QR code without the anchor tag
+                                  <QRCode value={generateDownloadLink(taxClearanceTransaction)} size={100} />
+                              ) : (
+                                  <Loading />
+                              )}
+                          </div>
+                      </div>
                       
                       <div className="flex items-center space-x-2 ml-auto">
                         {status_type === 'Pending' && transaction_id ? (

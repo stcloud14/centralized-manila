@@ -105,7 +105,7 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
 
       try {
         const response = await axios.post(`http://localhost:8800/adminbp/updateprocess/${transaction_id}`, selectedTransaction);
-
+        setIsLoading(true);
       if (response.status === 200) {
 
         try {
@@ -179,7 +179,7 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
   
     try {
       const response = await axios.post(`http://localhost:8800/adminrptax/updatereject/${transaction_id}`, selectedTransaction);
-  
+      setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {
 
@@ -461,30 +461,34 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
                       </div>
                     </div>
 
-                    <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
-                    <button
-                      onClick={handleConfirmClose}
-                      type="button"
-                      className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                    >
-                      <p>Cancel</p>
-                    </button>
 
-                    <button
-                    onClick={() => {
-                      handleProcess();
-                      setIsLoading(true);
-                    }}
-                    type="button"
-                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                    Confirm
-                    </button>
-                    </div>
 
                     {isLoading ? (
-                      <Loading />
-                    ) : null}
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                        <Loading />
+                      </div>
+                    ) : (
+                      <>
+                        <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                        <button
+                          onClick={handleConfirmClose}
+                          type="button"
+                          className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                        >
+                          <p>Cancel</p>
+                        </button>
+
+                        <button
+                        onClick={handleProcess}
+                        type="button"
+                        className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        >
+                        Confirm
+                        </button>
+                        </div>
+                      </>
+                    )}
+
 
                   </div>
                 </div>
@@ -510,6 +514,13 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
                       </div>
                     </div>
                   
+
+                    {isLoading ? (
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                        <Loading />
+                      </div>
+                    ) : (
+                      <>
                   <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
                     <button
                       onClick={handleConfirmClose}
@@ -520,21 +531,15 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
                     </button>
 
                     <button
-                    onClick={() => {
-                      handleReject();
-                      setIsLoading(true);
-                    }}
+                    onClick={handleReject}
                     type="button"
                     className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       Confirm
                     </button>
-
                   </div>
-
-                  {isLoading ? (
-                      <Loading />
-                    ) : null}
+                  </>
+                    )}
 
                   </div>
                 </div>

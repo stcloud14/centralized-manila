@@ -59,23 +59,33 @@ const AdminVerifyReqsForm =()=>{
 
   const handleApprove = async (transaction) => {
     try {
+      const trans_type = 'User Registry';
+
       const response = await axios.post(`http://localhost:8800/adminur/approve/${transaction.user_id}`, {
         user_id: transaction.user_id,
+        trans_type: trans_type,
       });
   
       if (response.status === 200) {
 
         try {
           const res = await axios.get(`http://localhost:8800/email/${transaction.user_id}`);
-          
-          // const date = new Date();
-          // const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-
+        
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
-            // const f_name = res.data.f_name;
+            const f_name = res.data.f_name;
             const l_name = res.data.l_name;
-
+            const sex_type = res.data.sex_type;
+            const currentDate = new Date();
+                    const date = currentDate.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    const time = currentDate.toLocaleTimeString('en-US', {
+                      hour: 'numeric',
+                      minute: 'numeric'
+                  });
 
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
@@ -83,18 +93,18 @@ const AdminVerifyReqsForm =()=>{
 
             const trans_type = 'Verification Success';
 
-            const verification = 'Verification'
+            const type = 'Account Verification'
 
-            const rowData = { ...transaction, trans_type, verification};
+            const rowData = { ...transaction, trans_type, type, date, time};
 
             const status_type = 'V E R I F I E D';
 
             const body = {
               data: rowData,
-              // formattedDate: formattedDate,
               status_type: status_type,
-              // f_name: f_name,
-              l_name: l_name
+              f_name: f_name,
+              l_name: l_name,
+              sex_type: sex_type,
             };
   
             // Proceed with additional logic after updating state
@@ -140,21 +150,34 @@ const AdminVerifyReqsForm =()=>{
   const handleDecline = async (transaction) => {
   
     try {
-      const response = await axios.post(`http://localhost:8800/adminur/decline/${transaction.user_id}`);
+      const trans_type = 'User Registry';
+
+      const body1 = {
+        trans_type,
+      }
+
+      const response = await axios.post(`http://localhost:8800/adminur/decline/${transaction.user_id}`, body1);
   
       if (response.status === 200) {
 
         try {
           const res = await axios.get(`http://localhost:8800/email/${transaction.user_id}`);
           
-          const date = new Date();
-          const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
-
+            const sex_type = res.data.sex_type;
+            const currentDate = new Date();
+                    const date = currentDate.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    const time = currentDate.toLocaleTimeString('en-US', {
+                      hour: 'numeric',
+                      minute: 'numeric'
+                  });
 
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
@@ -162,18 +185,18 @@ const AdminVerifyReqsForm =()=>{
 
             const trans_type = 'Verification Failed';
 
-            const verification = 'Verification'
+            const type = 'Account Verification'
 
-            const rowData = { ...transaction, trans_type, formattedDate, verification};
+            const rowData = { ...transaction, trans_type, type, date, time};
 
-            const status_type = 'R E J E C T E D';
+            const status_type = 'D E C L I N E D';
 
             const body = {
               data: rowData,
-              formattedDate: formattedDate,
               status_type: status_type,
-              // f_name: f_name,
-              l_name: l_name
+              f_name: f_name,
+              l_name: l_name,
+              sex_type: sex_type,
             };
   
             // Proceed with additional logic after updating state

@@ -439,6 +439,7 @@ router.get('/birthcert/:transaction_id/download', async (req, res) => {
                 ['House Floor for Birth', birthTransaction.house_floor],
                 ['Building Name for Birth', birthTransaction.bldg_name],
                 ['ZIP Code for Birth', birthTransaction.zip_code],
+                ['Date Processed', moment(birthTransaction.date_processed).format('MMMM D, YYYY')],
               ];
               
               pdf.autoTable({
@@ -614,6 +615,7 @@ router.get('/deathcert/:transaction_id/download', async (req, res) => {
                 ['Number of Copies', deathTransaction.copies],
                 ['Valid ID to Present Upon Claiming', deathTransaction.valid_id_type],
                 ['Amount', deathTransaction.amount],
+                ['Date Processed', moment(deathTransaction.date_processed).format('MMMM D, YYYY')],
               ];
               
               pdf.autoTable({
@@ -792,6 +794,7 @@ router.get('/marriagecert/:transaction_id/download', async (req, res) => {
                 ['Number of Copies', marriageTransaction.copies],
                 ['Valid ID to Present Upon Claiming', marriageTransaction.valid_id_type],
                 ['Amount', marriageTransaction.amount],
+                ['Date Processed', moment(marriageTransaction.date_processed).format('MMMM D, YYYY')],
               ];
               
               pdf.autoTable({
@@ -890,7 +893,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     }    
 });
 
-{/*
+
 // QR Code Link Download
 router.get('/buspermit/:transaction_id/download', async (req, res) => {
     const transaction_id = req.params.transaction_id;
@@ -952,7 +955,7 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
                 const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
                 const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
     
-                cedulaTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+                businessTransaction.logoImage = `data:image/png;base64,${logoImage}`;
     
                 const pdf = new jsPDF();
     
@@ -968,32 +971,79 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
               const busDetailsHeaders = ['Field', 'Value'];
               const busDetailsData = [
                 ['Transaction ID', businessTransaction.transaction_id],
-                ['Last Name', businessTransaction.l_name],
-                ['First Name', businessTransaction.f_name],
-                ['Middle Name', businessTransaction.m_name],
-                ['Suffix', businessTransaction.suffix_type],
-                ['Sex', businessTransaction.sex_type],
-                ['Region', businessTransaction.region],
-                ['Province', businessTransaction.province],
-                ['Municipal', businessTransaction.municipality],
-                ['Barangay', businessTransaction.brgy_dist],
-                ['House No. / Unit Floor', businessTransaction.house_floor],
-                ['Stret / Building Name', businessTransaction.bldg_name],
-                ['Zip Code', businessTransaction.zip_code],
-                ['Civil Status', businessTransaction.cvl_status],
-                ['Country of Citizenship', businessTransaction.czn_id],
-                ['Height (ft)', businessTransaction.height],
-                ['Weight (kg)', businessTransaction.weight],
-                ['Alien Certificate of Registration No.', businessTransaction.acr_no],
-                ['Employment Status', businessTransaction.emp_status],
-                ['Tax Payer Account No.', businessTransaction.acc_no],
-                ['Residence Tax Due', cedulaTransaction.cedula_date],
-                ['Valid ID to Present Upon Claiming', cedulaTransaction.valid_id_type],
-                ['Profession/Occupation/Business', cedulaTransaction.pob_status],
-                ['Income From Real Property', cedulaTransaction.income_id],
-                ['Earning From Business', cedulaTransaction.salary_id],
-                ['Earning From Profession', cedulaTransaction.gross_id],
-                ['Amount', cedulaTransaction.amount],
+                ['Business Type', businessTransaction.bus_type],
+                ['Business Name', businessTransaction.bus_name],
+                ['Trade Name / Franchise', businessTransaction.bus_franchise],
+                ['DTI / SEC / CDA Registration No.', businessTransaction.bus_reg_no],
+                ['Tax Identification Number', businessTransaction.bus_tin],
+
+
+                ['Last Name', businessTransaction.bus_lname],
+                ['First Name', businessTransaction.bus_fname],
+                ['Middle Name', businessTransaction.bus_mname],
+                ['Suffix', businessTransaction.bus_suffix],
+                ['Sex', businessTransaction.bus_sex],
+                
+                ['Email Address', businessTransaction.bus_email],
+                ['Telephone Number', businessTransaction.bus_tel_no],
+                ['Mobile Number', businessTransaction.bus_mobile_no],
+
+                ['Region', businessTransaction.bus_bregion],
+                ['Province', businessTransaction.bus_bprovince],
+                ['Municipal', businessTransaction.bus_bcity],
+                ['Barangay', businessTransaction.bus_bbrgy],
+                ['House No. / Unit Floor', businessTransaction.bus_bhnum],
+                ['Stret / Building Name', businessTransaction.bus_bstreet],
+                ['Zip Code', businessTransaction.bus_bzip],
+
+                ['Business Area / Total Floor Area (sq.m)', businessTransaction.bus_floor],
+                ['No. of Employees Residing Within Manila', businessTransaction.bus_emp],
+                ['Total No. of Male Employees', businessTransaction.bus_male_emp],
+                ['Total No. of Female Employees', businessTransaction.bus_female_emp],
+                ['No. of Van Delivery Vehicles', businessTransaction.bus_van_no],
+                ['No. of Truck Delivery Vehicles', businessTransaction.bus_truck_no],
+                ['No. of MOtorcycle Delivery Vehicles', businessTransaction.bus_motor_no],
+
+                ['Payers Region', businessTransaction.bus_bregion],
+                ['Payers Province', businessTransaction.bus_bprovince],
+                ['Payers Municipal', businessTransaction.bus_bcity],
+                ['Payers Barangay', businessTransaction.bus_bbrgy],
+                ['Payers House No. / Unit Floor', businessTransaction.bus_bhnum],
+                ['Payers Stret / Building Name', businessTransaction.bus_bstreet],
+                ['Payers Zip Code', businessTransaction.bus_bzip],
+
+                ['Ownership', businessTransaction.owned],
+                ['Lessor Name', businessTransaction.owned === 'RENTAL' ? businessTransaction.bus_lessor || '-' : null],
+                ['Monthly Rental ', businessTransaction.owned === 'RENTAL' ? businessTransaction.bus_rent || '-' : null],
+
+                ['Business Office', businessTransaction.bus_office],
+                ['Line of Business', businessTransaction.bus_line],
+                ['PSIC', businessTransaction.bus_psic],
+                ['Products/Services', businessTransaction.bus_products],
+                ['No. of Units', businessTransaction.bus_units_no],
+                ['Total Capitalization', businessTransaction.bus_total_cap],
+
+                ['DTI Registration', businessTransaction.bus_lname],
+                ['R.P. Tax Declaration for Building', businessTransaction.bus_lname],
+                ['Paid-up and Subscribed Page', businessTransaction.bus_lname],
+                ['Articles of Primary and Secondary Purpose', businessTransaction.bus_lname],
+                ['Products/Services', businessTransaction.bus_lname],
+                ['NGA-Contract of Lease', businessTransaction.bus_lname],
+                ['SEC Registration', businessTransaction.bus_lname],
+                ['R.P. Tax Declaration for Land', businessTransaction.bus_lname],
+                ['Fire Safety Inspection Certificate', businessTransaction.bus_lname],
+                ['Page 2 Document', businessTransaction.bus_lname],
+                ['Page 3 Document', businessTransaction.bus_lname],
+                ['Page 4 Document', businessTransaction.bus_lname],
+                ['Page 5 Document', businessTransaction.bus_lname],
+
+                ['No. of Copies', businessTransaction.copies],
+                ['What to Print', businessTransaction.print_type],
+                ['Purpose', businessTransaction.purpose_type],
+                ['Number of Copies', businessTransaction.copies],
+                ['Valid ID to Present Upon Claiming', businessTransaction.valid_id_type],
+                ['Amount', businessTransaction.amount],
+                ['Date Processed', moment(businessTransaction.date_processed).format('MMMM D, YYYY')],
               ];
               
               pdf.autoTable({
@@ -1023,12 +1073,12 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-*/}
+
 
 router.get('/taxpayment/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT ut.user_id, tt.trans_type, tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
+    const query = "SELECT ut.user_id, tt.trans_type, tp.transaction_id, tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
     y.year_period AS tp_year, tp.period_id AS tp_period, ti.amount \
     \
     FROM rptax_payment tp \
@@ -1039,7 +1089,6 @@ router.get('/taxpayment/:transaction_id', async (req, res) => {
     LEFT JOIN year y ON tp.year_id = y.year_id \
     \
     WHERE tp.transaction_id = ?";
-
 
     try {
         const result = await queryDatabase(query, [transaction_id]);
@@ -1067,7 +1116,7 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
 
         console.log('Transaction ID:', transaction_id);
 
-        const query = "SELECT ut.user_id, tt.trans_type, tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
+        const query = "SELECT ut.user_id, tt.trans_type, tp.transaction_id, tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
             y.year_period AS tp_year, tp.period_id AS tp_period, ti.amount \
             \
             FROM rptax_payment tp \
@@ -1081,9 +1130,13 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
 
         const result = await queryDatabase(query, [transaction_id]);
 
+        // console.log('SQL Query Result:', result);
         if (result.length > 0) {
-            const formattedDate = moment(result[0].date).format('MMMM D, YYYY');
+            const formattedDate = result[0].date ? moment(result[0].date).format('MMMM D, YYYY') : 'N/A';
+            const transactionId = result[0].transaction_id || 'N/A';
+
             const taxPaymentTransaction = {
+                transaction_id: transactionId,
                 ...result[0],
                 date: formattedDate,
             };
@@ -1106,7 +1159,7 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
 
             const paymentDetailsHeaders = ['Field', 'Value'];
             const paymentDetailsData = [
-                ['Transaction ID', taxPaymentTransaction.tp_transaction_id],
+                ['Transaction ID', taxPaymentTransaction.transaction_id],
                 ['Account Name', taxPaymentTransaction.tp_acc_name],
                 ['Tax Declaration Number (TDN)', taxPaymentTransaction.tp_rp_tdn],
                 ['Property Identification Number (PIN)', taxPaymentTransaction.tp_rp_pin],
@@ -1114,6 +1167,7 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
                 ['To', `${taxPaymentTransaction.tp_year} - ${taxPaymentTransaction.tp_period}`],
                 ['Date Processed', taxPaymentTransaction.date],
                 ['Amount', taxPaymentTransaction.amount],
+                ['Date Processed', moment(taxPaymentTransaction.date_processed).format('MMMM D, YYYY')],
             ];
 
             pdf.autoTable({
@@ -1130,12 +1184,13 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
             });
 
             // Save or send the PDF
-            //const pdfBuffer = pdf.output('arraybuffer');
-            //const downloadLink = `http://localhost:8800/transachistory/taxpayment/${transaction_id}/download`;
-
-            //res.json({ downloadLink }); // Include download link in the response
+            const pdfBuffer = pdf.output('arraybuffer');
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=tax_payment_${transaction_id}.pdf`);
+            res.send(Buffer.from(pdfBuffer));
         } else {
             res.status(404).json({ error: 'Transaction not found' });
+            // console.log('Request Parameters:', req.params);
         }
     } catch (error) {
         console.error(error);
@@ -1144,9 +1199,9 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
 });
 
 ////done to paymongo issue new db
-router.get('/taxclearance/:transaction_id', async (req, res) => {
+{/*router.get('/taxclearance/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
- 
+
     const query = "SELECT ut.user_id, tt.trans_type, tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount \
     \
     FROM rptax_clearance tc \
@@ -1170,13 +1225,12 @@ router.get('/taxclearance/:transaction_id', async (req, res) => {
         console.error(err);
         res.status(500).send('Error retrieving data');
     }    
-});
+});*/}
 
-// QR Code Link Download
-router.get('/taxclearance/:transaction_id/download', async (req, res) => {
+router.get('/taxclearance/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT ut.user_id, tt.trans_type, tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount \
+    const query = "SELECT ut.user_id, tt.trans_type, tc.transaction_id, tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount \
     \
     FROM rptax_clearance tc \
     \
@@ -1186,54 +1240,92 @@ router.get('/taxclearance/:transaction_id/download', async (req, res) => {
     \
     WHERE tc.transaction_id = ?";
 
-        try {
-            const result = await queryDatabase(query, [transaction_id]);
-    
-            if (result.length > 0) {
-                const formattedDate = moment(result[0].date).format('MMMM D, YYYY');
-                const taxClearanceTransaction = {
-                    ...result[0],
-                    date: formattedDate,
-                };
-    
-                const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
-                const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
-    
-                taxClearanceTransaction.logoImage = `data:image/png;base64,${logoImage}`;
-    
-                const pdf = new jsPDF();
-    
-                pdf.addImage(taxClearanceTransaction.logoImage, 'PNG', 128, 5, 70, 35);
-    
-                pdf.setFontSize(16);
-                pdf.setTextColor(255, 255, 255); // Set text color to white
-                pdf.setFillColor(0, 0, 0); // Set background color to black
+    try {
+        const result = await queryDatabase(query, [transaction_id]);
 
-                pdf.setFontSize(12);
-                pdf.setTextColor(0, 0, 0); // Set text color back to black
-        
-              const clearanceDetailsHeaders = ['Field', 'Value'];
-                const clearanceDetailsData = [
-                    ['Transaction ID', taxClearanceTransaction.transaction_id],
-                    ['Tax Declaration Number (TDN)', taxClearanceTransaction.tc_rp_tdn],
-                    ['Property Identification Number (PIN)', taxClearanceTransaction.tc_rp_pin],
-                    ['Date Processed', taxClearanceTransaction.date],
-                    ['Time Processed', taxClearanceTransaction.time],
-                    ['Amount', taxClearanceTransaction.amount],
-                ];
-    
-              pdf.autoTable({
-                head: [clearanceDetailsHeaders], 
+        if (result.length > 0) {
+            res.json(result[0]);
+        } else {
+            res.status(404).send('No records found for the specified transaction_id');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving data');
+    }
+});
+
+// QR
+router.get('/taxclearance/:transaction_id/download', async (req, res) => {
+    try {
+        // Use the correct way to get the transaction_id from the request parameters
+        const transaction_id = req.params.transaction_id;
+
+        // Check if transaction_id is undefined or empty
+        if (!transaction_id || transaction_id === 'undefined') {
+            return res.status(400).json({ error: 'Invalid or missing Transaction ID' });
+        }
+
+        console.log('Transaction ID:', transaction_id);
+
+        const query = "SELECT ut.user_id, tt.trans_type, tc.transaction_id, tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount \
+        \
+        FROM rptax_clearance tc \
+        \
+        LEFT JOIN transaction_info ti ON tc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+        LEFT JOIN user_transaction ut ON tc.transaction_id = ut.transaction_id \
+        LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
+        \
+        WHERE tc.transaction_id = ?";
+
+        // Await the result of the database query
+        const result = await queryDatabase(query, [transaction_id]);
+
+        console.log('SQL Query Result:', result);
+
+        if (result.length > 0) {
+            const transactionId = result[0].transaction_id || 'N/A';
+
+            const taxClearanceTransaction = {
+                transaction_id: transactionId,
+                ...result[0],
+            };
+
+            const logoImagePath = path.join(fileURLToPath(import.meta.url), '../../../frontend/src/images/mnl_header_pdf.png');
+            const logoImage = fs.readFileSync(logoImagePath, { encoding: 'base64' });
+
+            taxClearanceTransaction.logoImage = `data:image/png;base64,${logoImage}`;
+
+            const pdf = new jsPDF();
+
+            pdf.addImage(taxClearanceTransaction.logoImage, 'PNG', 128, 5, 70, 35);
+
+            pdf.setFontSize(16);
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFillColor(0, 0, 0);
+
+            pdf.setFontSize(12);
+            pdf.setTextColor(0, 0, 0);
+
+            const clearanceDetailsHeaders = ['Field', 'Value'];
+            const clearanceDetailsData = [
+                ['Transaction ID', taxClearanceTransaction.transaction_id],
+                ['Tax Declaration Number (TDN)', taxClearanceTransaction.tc_rp_tdn],
+                ['Property Identification Number (PIN)', taxClearanceTransaction.tc_rp_pin],
+                ['Amount', taxClearanceTransaction.amount],
+                ['Date Processed', moment(taxClearanceTransaction.date_processed).format('MMMM D, YYYY')],
+            ];
+
+            pdf.autoTable({
+                head: [clearanceDetailsHeaders],
                 body: clearanceDetailsData,
                 startY: 40,
                 margin: { horizontal: 10 },
-                theme: 'grid', 
+                theme: 'grid',
                 headStyles: {
-                    fillColor: [50, 50, 50], // Set the background color of the header row to black
-                    textColor: 255, // Set the text color of the header row to white
+                    fillColor: [50, 50, 50],
+                    textColor: 255,
                 },
-                styles: {
-                }
+                styles: {},
             });
 
             // Save or send the PDF
@@ -1243,12 +1335,15 @@ router.get('/taxclearance/:transaction_id/download', async (req, res) => {
             res.send(Buffer.from(pdfBuffer));
         } else {
             res.status(404).json({ error: 'Transaction not found' });
+            console.log('Request Parameters:', req.params);
         }
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+
 
 router.post('/canceltrans/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
