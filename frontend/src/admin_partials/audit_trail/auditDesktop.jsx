@@ -285,7 +285,7 @@ const AuditDesktop = ({ auditTrail }) => {
 
                 {auditTrail && auditTrail.map((audit) => (
                   
-                <tr key={audit.time_stamp} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+                <tr key={audit.time_stamp} className=' bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                   <td className="pl-6 pr-3 py-4 whitespace-nowrap">
                     <div className="font-medium text-gray-500 whitespace-nowrap dark:text-white">
                     {formatTimeAgo(audit.time_stamp)}
@@ -294,13 +294,13 @@ const AuditDesktop = ({ auditTrail }) => {
                   <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                     {audit.activity}
                   </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                    {audit.admin} 
-                    <img
-                      name="userImage" 
-                      className="inline-block h-10 w-10 rounded-full object-cover object-center"
-                      src={getImage(audit.admin)}
-                    />
+                  <td className="px-3 py-4 flex items-center justify-between whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                  <span>{audit.admin}</span>
+                  <img
+                    name="userImage" 
+                    className="inline-block h-10 w-10 rounded-full object-cover object-center"
+                    src={getImage(audit.admin)}
+                  />
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                     {audit.date}
