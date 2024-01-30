@@ -493,7 +493,7 @@ const cancelTrans = async (e) => {
                   type="button"
                   className="text-emerald-500 text-xs md:w-auto w-full text-center px-5 py-2 md:text-sm hover:text-white border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full dark:border-emerald-500 dark:text-emerald-500 dark:hover:text-white dark:hover:bg-emerald-500 dark:focus:ring-emerald-800"
                 >
-                  <span className="font-semibold">PAY: {marriageTransaction.amount ? marriageTransaction.amount + '.00' : '-'}</span>
+                  <span className="font-semibold">PAY: P {marriageTransaction.amount ? marriageTransaction.amount + '.00' : '-'}</span>
                 </button>
               ) : null}
 
