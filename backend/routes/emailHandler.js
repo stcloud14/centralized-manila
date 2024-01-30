@@ -282,7 +282,7 @@ const router = Router();
                       <tbody>
                         <tr>
                           <td>
-                            <img src="https://i.ibb.co/KhkptHZ/email-thanks-banner.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
+                            <img src="https://i.ibb.co/6sPV2BW/email-verified.png" style="display: block; outline: none; border: none; text-decoration: none; max-width: 100%; height: auto;" width="100%" />
                           </td>
                         </tr>
                       </tbody>
@@ -296,7 +296,11 @@ const router = Router();
                               <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi ${dynamicSex} ${body.f_name} ${body.l_name}!</h1>
                               <h2 style="font-size:26px;font-weight:bold;text-align:center">We received a request to process your ${body.data.type} through your email address <span style="font-weight: 700;">${user_email}</span>.</h2>
                               <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
-                              <h1 style="font-size:32px;font-weight:bold;text-align:center;padding:3px;border:2px dashed black;">${body.status_type}</h1>
+                              <div style="border: 3px dashed #38bdf8; padding: 3px; border-radius: 3px;">
+                                  <div style="background-color: #38bdf8; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #1e40af;">
+                                  ${body.status_type}
+                                  </div>
+                              </div>
                               <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>${body.data.date}</p>
                               <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>${body.data.time}</p>
 
