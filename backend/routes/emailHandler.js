@@ -95,33 +95,33 @@ const router = Router();
   };
 
 
-const RegisteredAccountEmail = (user_email, body) => {
-  return `
-  <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
-    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
-      <tbody>
-        <tr style="width:100%">
-          <td><img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" width="40%" height="auto" />
-            <p style="font-size:16px;line-height:26px;margin:16px 0">Greetings Mr./Ms./Mrs. ${body.l_name}!</p>
-            <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Centralized Manila, your portal to an amazing new world filled with efficient digital services.</p>
-            <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align:center">
-              <tbody>
-                <tr>
-                  <td><a href="http://localhost:5173/" style="background-color:#3E7DEC;border-radius:3px;color:white;font-size:16px;text-decoration:none;text-align:center;display:inline-block;padding:12px 12px 12px 12px;line-height:100%;max-width:100%" target="_blank"><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">Get started</span><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a></td>
-                </tr>
-              </tbody>
-            </table>
-            <p style="font-size:16px;line-height:26px;margin:16px 0">Best regards,<br />Centralized Manila Team</p>
-            <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
-            <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">© 2024 Centralized Manila. All rights reserved.</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </body>
+  const RegisteredAccountEmail = (user_email, body) => {
+    return `
+    <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
+      <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
+        <tbody>
+          <tr style="width:100%">
+            <td><img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" width="40%" height="auto" />
+              <p style="font-size:16px;line-height:26px;margin:16px 0">Greetings Mr./Ms./Mrs. ${body.l_name}!</p>
+              <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Centralized Manila, your portal to an amazing new world filled with efficient digital services.</p>
+              <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align:center">
+                <tbody>
+                  <tr>
+                    <td><a href="http://localhost:5173/" style="background-color:#3E7DEC;border-radius:3px;color:white;font-size:16px;text-decoration:none;text-align:center;display:inline-block;padding:12px 12px 12px 12px;line-height:100%;max-width:100%" target="_blank"><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">Get started</span><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p style="font-size:16px;line-height:26px;margin:16px 0">Best regards,<br />Centralized Manila Team</p>
+              <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
+              <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">© 2024 Centralized Manila. All rights reserved.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </body>
 
-    `;
-};
+      `;
+  };
 
 
   const ResetPassMail = (user_email, body) => {
