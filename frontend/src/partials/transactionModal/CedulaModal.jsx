@@ -453,19 +453,17 @@ const cancelTrans = async (e) => {
                     </button>
                   ): null}
                  
-                {/* QR Code Section */}
-            <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
-                <div className="whitespace-nowrap md:mb-0 mb-1">
-                    {cedulaTransaction ? (
-                        // Automatically redirect to the download link when the QR code is clicked
-                        <a href={generateDownloadLink(cedulaTransaction)} target="_blank" rel="noreferrer">
-                            <QRCode value={generateDownloadLink(cedulaTransaction)} size={100} />
-                        </a>
-                    ) : (
-                        <Loading />
-                    )}
-                </div>
-            </div>
+                  {/* QR Code Section */}
+                  <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between rounded-b-lg">
+                      <div className="whitespace-nowrap md:mb-0 mb-1">
+                          {cedulaTransaction ? (
+                              // Display the QR code without the anchor tag
+                              <QRCode value={generateDownloadLink(cedulaTransaction)} size={100} />
+                          ) : (
+                              <Loading />
+                          )}
+                      </div>
+                  </div>
                  
                   <div className="flex items-center space-x-2 ml-auto">
                       {status_type === 'Pending' && transaction_id ? (
