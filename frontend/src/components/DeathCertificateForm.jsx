@@ -147,24 +147,24 @@ const DeathCertificateForm =()=>{
       e.preventDefault();
       
       // Please fill up the necessary forms
-    const requiredFields = ['deathc_lname', /*'deathc_fname', 'deathc_sex', 'deathc_region', 'deathc_province',
-    'deathc_municipal', 'deathc_date', 'deathc_reqlname', 'deathc_reqfname',
-    'deathc_reqrelation', 'deathc_mobileno', 'deathc_reqregion', 'deathc_reqprovince',
-    'deathc_reqmunicipal', 'deathc_reqbrgy', 'deathc_reqhnum', 'deathc_reqstreet', 'deathc_reqzip',
-    'deathc_nocopies', 'deathc_print', 'deathc_purpose', 'deathc_validid'*/]; //The input fields that is required
-    const isIncomplete = requiredFields.some((field) => !deathCert[field]);
+    // const requiredFields = ['deathc_lname', /*'deathc_fname', 'deathc_sex', 'deathc_region', 'deathc_province',
+    // 'deathc_municipal', 'deathc_date', 'deathc_reqlname', 'deathc_reqfname',
+    // 'deathc_reqrelation', 'deathc_mobileno', 'deathc_reqregion', 'deathc_reqprovince',
+    // 'deathc_reqmunicipal', 'deathc_reqbrgy', 'deathc_reqhnum', 'deathc_reqstreet', 'deathc_reqzip',
+    // 'deathc_nocopies', 'deathc_print', 'deathc_purpose', 'deathc_validid'*/]; //The input fields that is required
+    // const isIncomplete = requiredFields.some((field) => !deathCert[field]);
 
-    if (isIncomplete) {
-      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
-      setShowWarning(true); // Show warning message and prevent opening the modal
+    // if (isIncomplete) {
+    //   contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
+    //   setShowWarning(true); // Show warning message and prevent opening the modal
      
-      setTimeout(() => {
-        setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
-      }, 4000);
-    } else {
+    //   setTimeout(() => {
+    //     setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
+    //   }, 4000);
+    // } else {
       
       setIsModalOpen(true);// Proceed to open the modal
-    }
+    // }
     };
   
     const handleCloseModal = () => {

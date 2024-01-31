@@ -111,7 +111,7 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
         trans_type,
       }
 
-      const response = await axios.post(`http://localhost:8800/adminur/decline/${user_id}`, body1);
+      const response = await axios.post(`http://localhost:8800/adminur/approve/${user_id}`, body1);
   
       if (response.status === 200) {
 
@@ -142,7 +142,7 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
 
             const type = 'Account Verification'
 
-            const rowData = { ...transaction, trans_type, type, date, time};
+            const rowData = { ...selectedTransaction, trans_type, type, date, time};
 
             const status_type = 'V E R I F I E D';
 
@@ -160,6 +160,13 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
+                setIsApproved(true);
+  
+                setTimeout(() => {
+                  setIsApproved(false);
+                  handleClose();
+                  handleRemoveTransaction(selectedTransaction.transaction_id)
+                }, 1500);
                 // alert(emailResponse.data.message);
               } else {
                 console.log("Failed to send email.");
@@ -175,13 +182,6 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
           console.error(fetchError);
         }
 
-        setIsDeclined(true);
-  
-        setTimeout(() => {
-          setIsDeclined(false);
-          handleClose();
-          handleRemoveTransaction(selectedTransaction.transaction_id)
-        }, 1500);
       } else {
         console.error('Transaction error:', response.statusText);
       }
@@ -232,7 +232,7 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
 
             const type = 'Account Verification'
 
-            const rowData = { ...transaction, trans_type, type, date, time};
+            const rowData = { ...selectedTransaction, trans_type, type, date, time};
 
             const status_type = 'D E C L I N E D';
 
@@ -250,6 +250,13 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
+                setIsDeclined(true);
+  
+                setTimeout(() => {
+                  setIsDeclined(false);
+                  handleClose();
+                  handleRemoveTransaction(selectedTransaction.transaction_id)
+                }, 1500);
                 // alert(emailResponse.data.message);
               } else {
                 console.log("Failed to send email.");
@@ -265,13 +272,6 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
           console.error(fetchError);
         }
 
-        setIsDeclined(true);
-  
-        setTimeout(() => {
-          setIsDeclined(false);
-          handleClose();
-          handleRemoveTransaction(selectedTransaction.transaction_id)
-        }, 1500);
       } else {
         console.error('Transaction error:', response.statusText);
       }

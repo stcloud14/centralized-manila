@@ -48,7 +48,7 @@ const PaymentSuccessForm = () => {
       transType = 'buspermit';
       break;
     case 'Community Tax Certificate':
-      transType = 'cedulacert';
+      transType = 'cedula';
       break;
     case 'Birth Certificate':
       transType = 'birthcert';
@@ -68,11 +68,12 @@ const PaymentSuccessForm = () => {
 
   const handleReturn = async () => {
     try {
-      const res = await axios.post(`http://localhost:8800/payment/success/${transaction_id}`, transactionDetails);
       setIsLoading(true);
+      const res = await axios.post(`http://localhost:8800/payment/success/${transaction_id}`, transactionDetails);
       try {
         const res1 = await axios.get(`http://localhost:8800/transachistory/${transType}/${transaction_id}`);
         const transaction_details = res1.data;
+        console.log(transaction_details)
 
         const res = await axios.get(`http://localhost:8800/email/${user_id}`);
         
@@ -91,6 +92,7 @@ const PaymentSuccessForm = () => {
           const formattedTime = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
           const rawData = {
+            ...transaction_details,
             transaction_id: transaction_id,
             acc_name: transaction_details.tp_acc_name,
             rp_tdn: transaction_details.tp_rp_tdn || transaction_details.tc_rp_tdn,
@@ -133,7 +135,7 @@ const PaymentSuccessForm = () => {
       setIsLoading(false);
       setButtonVisible(false);
       // setTimeout(() => {
-      window.location.href = `http://localhost:5173/transachistory/${userId}`;
+      // window.location.href = `http://localhost:5173/transachistory/${userId}`;
       // }, 1000);
 
     } 
