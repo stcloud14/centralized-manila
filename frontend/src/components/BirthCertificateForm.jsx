@@ -47,6 +47,8 @@ const BirthCertificateForm =()=>{
     birthc_valididLabel: '',
   }));
 
+  console.log(birthCert);
+
   const [isSuccess, setIsSuccess] = useState(false);
 
   const contentRef = useRef(null);
