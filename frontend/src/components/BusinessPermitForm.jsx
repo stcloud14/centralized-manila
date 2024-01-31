@@ -750,19 +750,19 @@ const BusinessPermitForm =()=>{
     // 'bus_amount',
   ];
 
-  const isIncomplete = requiredFields.some((field) => !busPermit[field]);
+  // const isIncomplete = requiredFields.some((field) => !busPermit[field]);
 
-  if (isIncomplete) {
-    contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
-    setShowWarning(true); // Show warning message and prevent opening the modal
+  // if (isIncomplete) {
+  //   contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
+  //   setShowWarning(true); // Show warning message and prevent opening the modal
     
-    setTimeout(() => {
-      setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
-    }, 4000);
-  } else {
+  //   setTimeout(() => {
+  //     setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
+  //   }, 4000);
+  // } else {
     
     setIsModalOpen(true);// Proceed to open the modal
-  }
+  // }
   };
 
   const handleCloseModal = () => {
