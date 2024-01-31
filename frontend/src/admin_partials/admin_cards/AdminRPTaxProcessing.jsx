@@ -19,39 +19,51 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState();
-  const [transType, setTransType] = useState();
+  const [transType, setTransType] = useState('');
+  const [searchTIN, setSearchTIN] = useState('');
+  const [searchPIN, setSearchPIN] = useState('');
   const [lastSelectedDate, setLastSelectedDate] = useState(null);
-  const [filterApplied, setFilterApplied] = useState(false); // Added missing state
+  const [filterApplied, setFilterApplied] = useState(false);
 
-  // Function to handle searching based on transaction and date
-  const handleSearch = (transaction) => {
-    const transactionId = transaction.transaction_id.toUpperCase();
+  const handleSearch = (transaction) => { 
+    const transactionId = (transaction.transaction_id || '').toUpperCase();
     const query = searchQuery.toUpperCase();
-
+    
     // Check if the transaction ID includes the search query
     const isTransactionMatch = transactionId.includes(query);
-
+    
+    // Combine TIN and PIN for searching
+    const tin = transaction.rp_tin?.toUpperCase() || '';
+    const pin = transaction.rp_pin?.toUpperCase() || '';
+    const tinAndPin = `${tin} ${pin}`.toUpperCase();
+  
     // Check if the transaction date is within the selected date range only if the filter is applied
     const isDateInRange =
       !filterApplied ||
       (!lastSelectedDate || new Date(transaction.date) >= new Date(lastSelectedDate)) &&
       (!selectedDatee || new Date(transaction.date) <= new Date(selectedDatee));
-
-    return isTransactionMatch && isDateInRange;
+  
+    // Check if the transaction type matches the selected type
+    const isTypeMatch =
+      !transType ||
+      transaction.trans_type === transType ||
+      transaction.type === transType;
+  
+    // Include type and PIN in the search query check
+    const isQueryMatch =
+      query === '' ||
+      transactionId.includes(query) ||
+      tin.includes(query) || pin.includes(query) ||
+      transaction.type.toUpperCase().includes(query) ||
+      (query === 'REAL PROPERTY TAX PAYMENT' && transaction.type === 'Real Property Tax Payment') ||
+      (query === 'REAL PROPERTY TAX CLEARANCE' && transaction.type === 'Real Property Tax Clearance');
+  
+    return isTransactionMatch && tinAndPin && isDateInRange && isTypeMatch && isQueryMatch;
   };
-
+  
   // Filter taxClearance and taxPayment based on search and date
   const filteredTaxClearance = taxClearance ? taxClearance.filter(handleSearch) : [];
   const filteredTaxPayment = taxPayment ? taxPayment.filter(handleSearch) : [];
-
-  // Function to handle the filter click
-  const handleFilterClick = () => {
-    // Only set the filter and update lastSelectedDate if the selected date has changed
-    if (selectedDate !== lastSelectedDate) {
-      setFilterApplied(true);
-      setLastSelectedDate(selectedDate);
-    }
-  };
 
   useEffect(() => {
     // Reset filter when taxClearance or taxPayment changes
@@ -67,10 +79,12 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
     setFilterApplied(false);
     setSelectedDate('');
     setSelectedDatee('');
-    setSelectedType('All');
+    setTransType('');
     setSearchQuery('');
-  };
-
+    setSearchTIN('');
+    setSearchPIN('');
+  };  
+  
   const handleToggleView = (mode) => {
     setViewMode(mode);
   };
@@ -101,15 +115,15 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
   };
 
   const renderContent = () => {
-    const hasRecords = filteredTaxClearance.length > 0 || filteredTaxPayment.length > 0;
+    // const hasRecords = filteredTaxClearance.length > 0 || filteredTaxPayment.length > 0;
   
-    if (!hasRecords) {
-      return (
-        <div className="flex items-center justify-center text-slate-400 dark:text-white text-lg h-32">
-          No records found.
-        </div>
-      );
-    }
+    // if (!hasRecords) {
+      // return (
+      //   <div className="flex items-center justify-center text-slate-400 dark:text-white text-lg h-32">
+      //     No records found.
+      //   </div>
+      // );
+    // }
     if (viewMode === 'table') {
       return (
         <RPTableView
@@ -395,14 +409,19 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
 
               {/* Type Row */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                  <span className="hidden sm:block text-xs">Type:</span>
-                  <select  value="" onChange="" name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
-                    <option value="All" className="dark:bg-[#3d3d3d]">Select Type</option>
-                    <option value="Real Property Tax Payment" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
-                    <option value="Real Property Tax Clearance" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
-                  </select>
+                <span className="hidden sm:block text-xs">Type:</span>
+                <select
+                  value={transType}
+                  onChange={(e) => setTransType(e.target.value)}
+                  name="typeDropdown"
+                  id="typeDropdown"
+                  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]"
+                >
+                  <option value="" className="dark:bg-[#3d3d3d]">Select Type</option>
+                  <option value="Real Property Tax Payment" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
+                  <option value="Real Property Tax Clearance" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
+                </select>
               </div>
-
 
               {/* Transaction ID */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
@@ -418,34 +437,44 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
               </div>
 
                 {/* TIN */}
-                {/*
-                <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                  <span className="hidden sm:block pr-10 text-xs">TIN:</span>
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                <span className="hidden sm:block pr-10 text-xs">TIN:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
+                    </svg>
                   </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search TIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input
+                    value={searchTIN} onChange={(e) => setSearchTIN(e.target.value.toUpperCase())}
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search TIN..."
+                    className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
+                  />
                 </div>
-                    </div>*/}
+              </div>
 
-                {/* PIN */}
-                {/*
-                <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                  <span className="hidden sm:block pr-10 text-xs">PIN:</span>
+              {/* PIN */}
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                <span className="hidden sm:block pr-10 text-xs">PIN:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
+                    </svg>
                   </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search PIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input
+                    value={searchPIN} onChange={(e) => setSearchPIN(e.target.value.toUpperCase())}
+                    id="searchInput" 
+                    type="text"
+                    placeholder="Search PIN..."
+                    className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
+                  />
                 </div>
-                  </div>*/}
+              </div>
 
-              <button type="button" onClick={handleFilterClick} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+              <button type="button" onClick="" className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
               </div>
