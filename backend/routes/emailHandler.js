@@ -562,7 +562,7 @@ const router = Router();
 
       default:
         typeInfo = `
-        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Full Name: </span>${body.data.f_name} ${body.data.l_name}</p>
+        <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Full Name: </span>${body.f_name} ${body.l_name}</p>
         <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">City: </span>${body.data.reqcity}</p>
         <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Purpose: </span>${body.data.purpose_type}</p>
         `
