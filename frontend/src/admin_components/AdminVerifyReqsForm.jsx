@@ -113,6 +113,15 @@ const AdminVerifyReqsForm =()=>{
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
+                setIsApproved(true);
+                setIsPlaceholder(transaction.l_name)
+          
+                console.log('Verification successful');
+          
+                setTimeout(() => {
+                  setIsApproved(false);
+                  handleRemoveTransaction(transaction.transaction_id);
+                }, 1500);
                 // alert(emailResponse.data.message);
               } else {
                 console.log("Failed to send email.");
@@ -128,15 +137,6 @@ const AdminVerifyReqsForm =()=>{
           console.error(fetchError);
         }
 
-        setIsApproved(true);
-        setIsPlaceholder(transaction.l_name)
-  
-        console.log('Verification successful');
-  
-        setTimeout(() => {
-          setIsApproved(false);
-          handleRemoveTransaction(transaction.transaction_id);
-        }, 1500);
       } else {
         console.error('Transaction error:', response.statusText);
       }
@@ -205,6 +205,15 @@ const AdminVerifyReqsForm =()=>{
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
+                setIsDeclined(true);
+                setIsPlaceholder(transaction.l_name)
+
+                console.log('Verification Declined');
+          
+                setTimeout(() => {
+                  setIsDeclined(false);
+                  handleRemoveTransaction(transaction.transaction_id)
+                }, 1500);
                 // alert(emailResponse.data.message);
               } else {
                 console.log("Failed to send email.");
@@ -220,17 +229,6 @@ const AdminVerifyReqsForm =()=>{
           console.error(fetchError);
         }
 
-
-
-        setIsDeclined(true);
-        setIsPlaceholder(transaction.l_name)
-
-        console.log('Verification Declined');
-  
-        setTimeout(() => {
-          setIsDeclined(false);
-          handleRemoveTransaction(transaction.transaction_id)
-        }, 1500);
       } else {
         console.error('Transaction error:', response.statusText);
       }
