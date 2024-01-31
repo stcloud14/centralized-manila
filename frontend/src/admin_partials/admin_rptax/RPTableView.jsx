@@ -2,6 +2,7 @@ import React from 'react';
 
 const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen, handleRejectConfirm, handleProcessConfirm, handleCompleteConfirm, section }) => {
 
+
   return (
   <div className="relative overflow-x-auto shadow-md rounded-sm">
     <table className="w-full text-left text-xs md:text-sm rtl:text-right text-gray-500 dark:text-gray-400">
@@ -41,7 +42,15 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
       </thead>
       <tbody>
 
-        {filteredTaxClearance && filteredTaxClearance.map((transaction) => (
+      {filteredTaxClearance.length <= 0 && filteredTaxPayment.length <= 0 && (
+      <tr className="text-center py-4">
+              <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
+                No records found.
+              </div>
+      </tr>
+      )}
+
+        {filteredTaxClearance && filteredTaxClearance.length > 0 && filteredTaxClearance.map((transaction) => (
           <tr onClick={() => handleModalOpen(transaction, 'Tax Clearance')} key={transaction.transaction_id} className=' cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
             <td className="px-1 py-2 border-l-4 border-l-blue-500 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
               <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
@@ -92,7 +101,7 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
           </tr>
         ))}
 
-        {filteredTaxPayment && filteredTaxPayment.map((transaction) => (
+        {filteredTaxPayment && filteredTaxPayment.length > 0 && filteredTaxPayment.map((transaction) => (
           <tr onClick={() => handleModalOpen(transaction, 'Tax Payment')} key={transaction.transaction_id} className=' cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
             <td className="px-1 py-2 whitespace-nowrap border-l-4 border-l-[#0057e7] text-xs md:text-sm text-slate-500 dark:text-slate-400">
               <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">

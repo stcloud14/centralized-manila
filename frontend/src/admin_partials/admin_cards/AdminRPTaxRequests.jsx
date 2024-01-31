@@ -106,15 +106,16 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
   };
 
   const renderContent = () => {
-    const hasRecords = filteredTaxClearance.length > 0 || filteredTaxPayment.length > 0;
+    // const hasRecords = filteredTaxClearance.length > 0 || filteredTaxPayment.length > 0;
   
-    if (!hasRecords) {
-      return (
-        <div className="flex items-center justify-center text-slate-400 dark:text-white text-lg h-32">
-          No records found.
-        </div>
-      );
-    }
+    // if (!hasRecords) {
+    //   return (
+    //     <div className="flex items-center justify-center text-slate-400 dark:text-white text-lg h-32">
+    //       No records found.
+    //     </div>
+    //   );
+    // }
+
     if (viewMode === 'table') {
       return (
         <RPTableView
