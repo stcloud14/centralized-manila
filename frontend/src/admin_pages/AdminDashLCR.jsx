@@ -2,10 +2,11 @@ import AdminDashLCRForm from "../admin_components/AdminDashLCRForm";
 import { useDashboard } from '../DashboardContext';
 
 function AdminDashLCR() {
-  const { birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities, revenue, totalLCR } = useDashboard();
+  const { transStats, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities, revenue, totalLCR } = useDashboard();
 
   return (
     <AdminDashLCRForm 
+    transStats={transStats}
     revenue={revenue}
     totalLCR={totalLCR}
     birthCert={birthCert}

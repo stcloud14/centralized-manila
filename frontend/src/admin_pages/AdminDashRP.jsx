@@ -2,10 +2,11 @@ import AdminDashRPForm from "../admin_components/AdminDashRPForm";
 import { useDashboard } from '../DashboardContext';
 
 function AdminDashRP() {
-  const { taxPayment, taxClearance, topRegions, topProvinces, topCities, revenue, totalRP } = useDashboard();
+  const { transStats, taxPayment, taxClearance, topRegions, topProvinces, topCities, revenue, totalRP } = useDashboard();
 
   return (
     <AdminDashRPForm 
+    transStats={transStats}
     revenue={revenue}
     totalRP={totalRP}
     taxPayment={taxPayment}

@@ -146,17 +146,17 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
       });
 
       const certificateTypeMapping = {
-        'RP Tax': 'taxpayment',
-        'RP Clearance': 'taxclearance',
+        'Real Property Tax': 'taxpayment',
+        'Real Property Clearance': 'taxclearance',
         'Business Permit': 'buspermit',
-        'CTC': 'cedulacert',
-        'Birth Cert': 'birthcert',
-        'Death Cert': 'deathcert',
-        'Marriage Cert': 'marriagecert',
+        'Community Tax Certificate': 'cedulacert',
+        'Birth Certificate': 'birthcert',
+        'Death Certificate': 'deathcert',
+        'Marriage Certificate': 'marriagecert',
         'Revenue': 'revenue',
       };
       
-      const certificateTypes = ['RP Tax', 'RP Clearance', 'Business Permit', 'CTC', 'Birth Cert', 'Death Cert', 'Marriage Cert', 'Revenue'];
+      const certificateTypes = ['Real Property Tax', 'Real Property Clearance', 'Business Permit', 'Community Tax Certificate', 'Birth Certificate', 'Death Certificate', 'Marriage Certificate', 'Revenue'];
       
       // Array of month names
       const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

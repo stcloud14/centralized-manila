@@ -19,7 +19,7 @@ import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 import logoImage from '../images/mnl_header_pdf.png';
 
-const AdminDashLCRForm =({ birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities, revenue, totalLCR })=>{
+const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities, revenue, totalLCR })=>{
 
   const location = useLocation();
   const { pathname, state } = location;
@@ -27,29 +27,25 @@ const AdminDashLCRForm =({ birthCert, deathCert, marriageCert, topRegions, topPr
   const adminRole = state && state.user_role;
 
   const generateReports = async () => {
-    try {  
+    try {
+      const { latestmonths, birthcert, deathcert, marriagecert } = transStats;
+
+      console.log('TransStats:', transStats);
       const pdf = new jsPDF();
-  
-      // Load the image as a data URL
+
       const imageDataURL = await loadImageAsDataURL(logoImage);
-  
-      // Add image to the PDF
       pdf.addImage(imageDataURL, 'PNG', 128, 5, 70, 35);
-  
-      // Add horizontal lines
+
       pdf.setLineWidth(0.5);
       pdf.line(130, 35, 195, 35);
       pdf.line(130, 42, 195, 42);
-  
-      // Set font size before displaying the date
       pdf.setFontSize(10);
       pdf.text('  Date as of now         ' + moment().format('MMMM D, YYYY'), 130, 40);
       pdf.line(130, 50, 195, 50);
-  
-      // Add the header for the report with month details
+
       pdf.autoTable({
-        startY: 43, // Adjust the starting Y-coordinate for the table
-        head: [['RPTax Admin Reports', '']],
+        startY: 43,
+        head: [['RP Admin Reports', '']],
         body: [
           ['Total Local Civil Registry', `P ${revenue.totalLCR.toLocaleString()}`],
         ],
@@ -75,47 +71,95 @@ const AdminDashLCRForm =({ birthCert, deathCert, marriageCert, topRegions, topPr
         margin: { top: 80, left: 130 },
         tableWidth: 70,
       });
-  
-      // Add 3rd horizontal lines
+
       pdf.setLineWidth(0.5);
-      pdf.line(130, 60, 195, 60);
+      pdf.line(130, 50, 195, 50);
 
-      // Define the table data with optional chaining
-      const tableData = [
-        ['Birth Certificate Last', birthCert.bc_last || 0],
-        ['Birth Certificate Second Last', birthCert.bc_second_last || 0],
-        ['Birth Certificate Previous', birthCert.bc_previous || 0],
-        ['Birth Certificate Current', birthCert.bc_current || 0],
-        ['Death Certificate Last', deathCert.dc_last || 0],
-        ['Death Certificate Second Last', deathCert.dc_second_last || 0],
-        ['Death Certificate Previous', deathCert.dc_previous || 0],
-        ['Death Certificate Current', deathCert.dc_current || 0],
-        ['Marriage Certificate Last', marriageCert.mc_last || 0],
-        ['Marriage Certificate Second Last', marriageCert.mc_second_last || 0],
-        ['Marriage Certificate Previous', marriageCert.mc_previous || 0],
-        ['Marriage Certificate Current', marriageCert.mc_current || 0],
-      ];    
-  
-      console.log('table data', tableData);
-
-      // Set styles for aligning values to the left or right
-      const styles = {
-        cellWidth: 'auto',
-      };
-  
-      // Add the table to the PDF with styles
       pdf.autoTable({
-        startY: 100,
-        body: tableData,
+        startY: 70,
+        head: [['Monthly Reports', '']],
+        body: [],
+        headStyles: {
+          fillColor: false,
+          lineColor: 0,
+          textColor: 0,
+          fontSize: 10,
+          fontStyle: 'bold',
+          lineWidthTop: 1,
+          lineWidthBottom: 1,
+        },
+        bodyStyles: {
+          fillColor: false,
+          textColor: 0,
+          fontSize: 10,
+        },
+        alternateRowStyles: {
+          fillColor: false,
+          textColor: 0,
+          fontSize: 10,
+        },
+        margin: { top: 80, left: 130 },
+        tableWidth: 70,
+      });
+
+      const certificateTypeMapping = {
+        'Birth Certificate': 'birthcert',
+        'Death Certificate': 'deathcert',
+        'Marriage Certificate': 'marriagecert',
+
+      };
+      
+      const certificateTypes = ['Birth Certificate', 'Death Certificate', 'Marriage Certificate'];
+      
+      // Array of month names
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      
+      const monthlyReportsTableData = [
+        ['Month', ...latestmonths.map(month => monthNames[new Date(month).getMonth()])],
+        ...certificateTypes.map((type) => {
+          const actualType = certificateTypeMapping[type];
+          const values = latestmonths.map((month, index) => {
+            if (actualType === 'revenue') {
+              // Check if transStats[actualType] is defined
+              if (transStats[actualType]) {
+                // Calculate total revenue based on paymentsPaid
+                const totalPaymentsPaid = transStats[actualType].reduce((acc, payment) => {
+                  const paymentMonth = new Date(payment.date).getMonth();
+                  return acc + (paymentMonth === index ? payment.paymentsPaid : 0);
+                }, 0);
+                // Assuming 'Paid' status is available in transStats[actualType]
+                const totalPaid = transStats[actualType].reduce((acc, payment) => {
+                  const paymentMonth = new Date(payment.date).getMonth();
+                  return acc + (paymentMonth === index && payment.status === 'Paid' ? 1 : 0);
+                }, 0);
+                return `${totalPaymentsPaid} (Paid: ${totalPaid})`;
+              } else {
+                return 0; // '0 (Paid: 0)', Set to 0 if transStats[actualType] is undefined
+              }
+            } else {
+              const typeArray = transStats[actualType] || [];
+              return typeArray[index] !== undefined ? typeArray[index] : 0;
+            }
+          });
+          return [type, ...values];
+        }),
+      ];
+      
+      pdf.autoTable({
+        startY: 80,
+        body: monthlyReportsTableData,
         headStyles: {
           fillColor: [50, 50, 50],
           textColor: 255,
         },
-        styles: styles,
-        columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' } },
-      });
-  
-      pdf.save(`${admin_type}_generate_reports.pdf`);
+        columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' }, 2: { halign: 'right' }, 3: { halign: 'right' }, 4: { halign: 'right' }, 5: { halign: 'right' }, 6: { halign: 'right' }, 7: { halign: 'right' } },
+      });        
+
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+      const filename = `${admin_type}_reports_${formattedDate}.pdf`;
+
+      pdf.save(filename);
     } catch (error) {
       console.error('Error generating reports:', error);
     }
@@ -141,7 +185,7 @@ const AdminDashLCRForm =({ birthCert, deathCert, marriageCert, topRegions, topPr
 
 
   useEffect(() => {
-    if (birthCert && deathCert && marriageCert && topRegions && topProvinces && topCities && revenue) {
+    if (transStats && birthCert && deathCert && marriageCert && topRegions && topProvinces && topCities && revenue) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);

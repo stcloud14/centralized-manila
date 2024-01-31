@@ -2,10 +2,11 @@ import AdminDashCTCForm from "../admin_components/AdminDashCTCForm";
 import { useDashboard } from '../DashboardContext';
 
 function AdminDashCTC() {
-  const { cedulaCert, topRegions, topProvinces, topCities, revenue, totalCC } = useDashboard();
+  const { transStats, cedulaCert, topRegions, topProvinces, topCities, revenue, totalCC } = useDashboard();
 
   return (
     <AdminDashCTCForm 
+    transStats={transStats}
     revenue={revenue}
     totalCC={totalCC}
     cedulaCert={cedulaCert}
