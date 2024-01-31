@@ -4,6 +4,11 @@ import moment from 'moment/moment.js';
 
 const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType }) => {
 
+  // Check if selectedTransaction is defined
+  if (!selectedTransaction) {
+    return <div></div>;
+  }
+
   const { transaction_id, status_type } = selectedTransaction;
   console.log(selectedTransaction)
 

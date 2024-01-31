@@ -3,8 +3,14 @@ import moment from 'moment';
 
 const AdminLCRMarriageView = ({ selectedTransaction, isOpen, handleClose, transType }) => {
 
+  // Check if selectedTransaction is defined
+  if (!selectedTransaction) {
+    return <div></div>;
+  }
+
+  // Destructure properties from selectedTransaction
   const { transaction_id, status_type, marriage_date } = selectedTransaction;
-  console.log(selectedTransaction)
+  console.log(selectedTransaction);
   const formattedMarriageDate = moment(marriage_date).format('MMMM D, YYYY');
 
   return (

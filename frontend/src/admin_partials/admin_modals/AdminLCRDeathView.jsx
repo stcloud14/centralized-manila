@@ -3,7 +3,11 @@ import moment from 'moment';
 
 const AdminLCRDeathView = ({ selectedTransaction, isOpen, handleClose, transType }) => {
 
-
+  // Check if selectedTransaction is defined
+  if (!selectedTransaction) {
+    return <div></div>;
+  }
+  
   const { transaction_id, status_type, death_date } = selectedTransaction;
   console.log(selectedTransaction)
   const formattedDeathDate = moment(death_date).format('MMMM D, YYYY');

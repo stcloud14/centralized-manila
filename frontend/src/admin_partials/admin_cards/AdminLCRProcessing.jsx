@@ -15,47 +15,58 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedDatee, setSelectedDatee] = useState('');
-
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState('table'); 
-
   const [modalView, setModalView] = useState(false); 
   const [isSuccess, setIsSuccess] = useState(false);
-  
   const [isCompleteConfirm, setIsCompleteConfirm] = useState(false);
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
-  const [isProcessConfirm, setIsProcessConfirm] = useState(false);
-
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [selectedTransaction, setSelectedTransaction] = useState();
   const [transType, setTransType] = useState();
+  const [filterApplied, setFilterApplied] = useState(false);
+  const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
+  const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
-
-  const [filterApplied, setFilterApplied] = useState(false);
-  const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
-  const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
   
   const handleSearch = (transaction) => {
-    const transactionId = transaction.transaction_id.toUpperCase();
-    const query = searchQuery.toUpperCase();
+    // Check if selectedTransaction is defined
+    if (!transaction) {
+      return false;
+    }
+  
+    const transactionId = transaction.transaction_id?.toUpperCase();
+    const query = searchQuery?.toUpperCase();
     
     // Check if the transaction ID includes the search query
-    const isTransactionMatch = transactionId.includes(query);
+    const isTransactionMatch = transactionId?.includes(query);
     
     // Check if the transaction date is within the selected date range only if filter is applied
     const isDateInRange =
       !filterApplied ||
       (!lastSelectedFromDate || new Date(transaction.date) >= new Date(lastSelectedFromDate)) &&
       (!lastSelectedToDate || new Date(transaction.date) <= new Date(lastSelectedToDate));
-    
-    return isTransactionMatch && isDateInRange;
-  };
   
+    // Check if the transaction type matches the selected type
+    const isTypeMatch =
+      !transType ||
+      transaction?.trans_type === transType ||
+      transaction?.type === transType;
+  
+    // Include type and PIN in the search query check
+    const isQueryMatch =
+      query === '' ||
+      transactionId?.includes(query) ||
+      transaction?.type?.toUpperCase()?.includes(query) ||
+      (query === 'BIRTH CERTIFICATE' && transaction?.type === 'Birth Certificate') ||
+      (query === 'DEATH CERTIFICATE' && transaction?.type === 'Death Certificate') ||
+      (query === 'MARRIAGE CERTIFICATE' && transaction?.type === 'Marriage Certificate');
+  
+    return isTransactionMatch && isDateInRange && isTypeMatch && isQueryMatch;
+  };  
 
   const filteredBirthCert = birthCert ? birthCert.filter(handleSearch) : [];
   const filteredDeathCert = deathCert ? deathCert.filter(handleSearch) : [];
@@ -76,12 +87,11 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
   }, [birthCert, deathCert, marriageCert]);
   
   const handleClearClick = () => {
-    // Clear the selected dates and other modal-related data
     setSelectedDate(null);
     setSelectedDatee(null);
     setSearchQuery('');
-    // ... (other modal-related state variables you want to clear)
     setFilterApplied(false);
+    setTransType('All');
   };
 
   const handleToggleView = (mode) => {
@@ -398,7 +408,7 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
               {/* Type Row */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block text-xs">Type:</span>
-                  <select  value="" onChange="" name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                  <select  value={transType} onChange={(e) => setTransType(e.target.value)} name="" id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
                     <option value="All" className="dark:bg-[#3d3d3d]">Select Type</option>
                     <option value="Birth Certificate" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
                     <option value="Marriage Certificate" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
@@ -421,6 +431,7 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
               </div>
 
                 {/* TIN */}
+                {/*
                 <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block pr-10 text-xs">TIN:</span>
                 <div className="relative flex items-center">
@@ -431,9 +442,10 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
                   </span>
                   <input value="" onChange="" id="searchInput" type="text" placeholder="Search TIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
-              </div>
+              </div>* */}
 
                 {/* PIN */}
+                {/*
                 <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block pr-10 text-xs">PIN:</span>
                 <div className="relative flex items-center">
@@ -444,7 +456,7 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
                   </span>
                   <input value="" onChange="" id="searchInput" type="text" placeholder="Search PIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
-              </div>
+              </div>* */}
 
               <button type="button" onClick={handleFilterClick} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>

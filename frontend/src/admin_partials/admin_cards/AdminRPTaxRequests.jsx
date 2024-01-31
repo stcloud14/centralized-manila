@@ -31,21 +31,36 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
 
   console.log(selectedTransaction);
 
-  const handleSearch = (transaction) => {
-    const transactionId = transaction.transaction_id.toUpperCase();
-    const query = searchQuery.toUpperCase();
-
-    // Check if the transaction ID includes the search query
-    const isTransactionMatch = transactionId.includes(query);
-
-    // Check if the transaction date is within the selected date range only if the filter is applied
-    const isDateInRange =
-      !filterApplied ||
-      (!lastSelectedDate || new Date(transaction.date) >= new Date(lastSelectedDate)) &&
-      (!selectedDatee || new Date(transaction.date) <= new Date(selectedDatee));
-
-    return isTransactionMatch && isDateInRange;
-  };
+    // Function to handle searching based on transaction and date
+    const handleSearch = (transaction) => {
+      const transactionId = transaction?.transaction_id?.toUpperCase();
+      const query = searchQuery?.toUpperCase();
+  
+      // Check if the transaction ID includes the search query
+      const isTransactionMatch = transactionId?.includes(query);
+  
+      // Check if the transaction date is within the selected date range only if the filter is applied
+      const isDateInRange =
+        !filterApplied ||
+        (!lastSelectedDate || new Date(transaction.date) >= new Date(lastSelectedDate)) &&
+        (!selectedDatee || new Date(transaction.date) <= new Date(selectedDatee));
+  
+      // Check if the transaction type matches the selected type
+      const isTypeMatch =
+        !transType ||
+        transaction?.trans_type === transType ||
+        transaction?.type === transType;
+  
+      // Include type and PIN in the search query check
+      const isQueryMatch =
+        query === '' ||
+        transactionId?.includes(query) ||
+        transaction?.type?.toUpperCase()?.includes(query) ||
+        (query === 'REAL PROPERTY TAX PAYMENT' && transaction?.type === 'Real Property Tax Payment') ||
+        (query === 'REAL PROPERTY TAX CLEARANCE' && transaction?.type === 'Real Property Tax Clearance');
+  
+      return isTransactionMatch && isDateInRange && isTypeMatch && isQueryMatch;
+    };
 
   const filteredTaxClearance = taxClearance ? taxClearance.filter(handleSearch) : [];
   const filteredTaxPayment = taxPayment ? taxPayment.filter(handleSearch) : [];
@@ -72,8 +87,8 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
     setFilterApplied(false);
     setSelectedDate('');
     setSelectedDatee('');
-    setSelectedType('All');
     setSearchQuery('');
+    setTransType('All');
   };
 
   const handleToggleView = (mode) => {
@@ -394,7 +409,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
               {/* Type Row */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block text-xs">Type:</span>
-                  <select  value="" onChange="" name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                  <select  value={transType} onChange={(e) => setTransType(e.target.value)} name="typeDropdown"  id="typeDropdown"  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
                     <option value="All" className="dark:bg-[#3d3d3d]">Select Type</option>
                     <option value="Real Property Tax Payment" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
                     <option value="Real Property Tax Clearance" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
