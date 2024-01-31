@@ -39,8 +39,18 @@ const LCRTableView = ({ filteredBirthCert, filteredDeathCert, filteredMarriageCe
           </tr>
       </thead>
       <tbody>
+
+          {filteredBirthCert.length <= 0 && (
+          <tr className="text-center py-4">
+                  <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
+                    No records found.
+                  </div>
+          </tr>
+          )}
+
+
         {/* Birth Certificate */}
-        {filteredBirthCert && filteredBirthCert.map((transaction) => (
+        {filteredBirthCert && filteredBirthCert.length > 0 && filteredBirthCert.map((transaction) => (
           <tr onClick={() => handleModalOpen(transaction, 'Birth Certificate')} key={transaction.transaction_id}  className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
             <td className="px-1 py-2 border-l-4 border-l-[#008744] whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
               <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">

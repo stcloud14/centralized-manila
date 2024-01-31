@@ -3,7 +3,17 @@ import React from 'react';
 const BPCardView = ({filteredBusinessPermit, handleModalOpen, handleRejectConfirm, handleProcessConfirm, handleCompleteConfirm, section }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
-        {filteredBusinessPermit.map((transaction) => (
+
+        {filteredBusinessPermit.length <= 0 && (
+        <tr className="text-center py-4">
+                <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
+                  No records found.
+                </div>
+        </tr>
+        )}
+
+
+        {filteredBusinessPermit && filteredBusinessPermit.length > 0 && filteredBusinessPermit.map((transaction) => (
               
           <div onClick={(e) => handleModalOpen(transaction, 'Business Permit', e)} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
             <div className="text-xs font-semibold border-t-4 border-[#d62d20] text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">

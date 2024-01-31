@@ -42,7 +42,15 @@ return (
       </thead>
       <tbody> 
 
-      {filteredctcCedula && filteredctcCedula.map((transaction) => (
+          {filteredctcCedula.length <= 0 && (
+          <tr className="text-center py-4">
+                  <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
+                    No records found.
+                  </div>
+          </tr>
+          )}
+
+      {filteredctcCedula && filteredctcCedula.length > 0 && filteredctcCedula.map((transaction) => (
 
         <tr onClick={() => handleModalOpen(transaction, 'Tax Clearance')} key={transaction.transaction_id} className=' cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
           <td className="px-1 py-2 border-l-4 border-l-[#ffa700] whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">

@@ -3,9 +3,17 @@ import React from 'react';
 const RPCardView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen, handleRejectConfirm, handleProcessConfirm, handleCompleteConfirm, section }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
+
+          {filteredTaxClearance.length <= 0 && filteredTaxPayment.length <= 0 && (
+          <tr className="text-center py-4">
+                  <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
+                    No records found.
+                  </div>
+          </tr>
+          )}
               
           {/* ITO NAMAN YUNG MAPPING, LAHAT NG LAMAN NG LINE 40, IDIDISPLAY NITO, SINCE ANG INITIAL AY WALA PA NAMANG VALUE ANG SEARCH QUERY, LAHAT IDIDISPLAY DITO AND MAG FIFILTER LANG KAPAG MAY NILAGAY NA SA SEARCH, AND MADIDISPLAY LANG YUNG MATCHED TRANSACTION */}
-          {filteredTaxClearance.map((transaction) => (
+          {filteredTaxClearance && filteredTaxClearance.length > 0 && filteredTaxClearance.map((transaction) => (
 
           // ITO YUNG KAPAG PININDOT YUNG BUONG CARD, MAG OOPEN YUNG MODAL, IPAPASA YUNG DETAILS NG TRANSACTION NA PININDOT, AND ISESET SA PARAMETER NG LINE 19 NA ANG TYPE AY TAX CLEARANCE
           <div onClick={(e) => handleModalOpen(transaction, 'Tax Clearance', e)} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
@@ -56,7 +64,7 @@ const RPCardView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen,
 
           {/* SAME LANG TO SA TAAS */}
           {/* Tax Payment Sample */}
-          {filteredTaxPayment.map((transaction) => (
+          {filteredTaxPayment && filteredTaxPayment.length > 0 && filteredTaxPayment.map((transaction) => (
           <div onClick={() => handleModalOpen(transaction, 'Tax Payment')} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
             <div className="text-xs font-semibold text-slate-60 border-t-4 border-[#0057e7] bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
               Transaction ID: {transaction.transaction_id}

@@ -4,9 +4,17 @@ const LCRCardView = ({ filteredBirthCert, filteredDeathCert, filteredMarriageCer
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
+
+          {filteredBirthCert.length <= 0 && (
+          <tr className="text-center py-4">
+                  <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
+                    No records found.
+                  </div>
+          </tr>
+          )}
     
     {/* Birth Certificate */}
-    {filteredBirthCert.map((transaction) => (
+    {filteredBirthCert && filteredBirthCert.length > 0 && filteredBirthCert.map((transaction) => (
 
       <div onClick={(e) => handleModalOpen(transaction, 'Birth Certificate', e)} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
         <div className="text-xs font-semibold border-t-4 border-[#008744] text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
