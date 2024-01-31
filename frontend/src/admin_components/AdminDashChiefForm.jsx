@@ -119,7 +119,7 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
       });
 
       pdf.autoTable({
-        startY: 210,
+        startY: 200,
         head: [['Monthly Reports', '']],
         body: [],
         headStyles: {
@@ -145,26 +145,63 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
         tableWidth: 70,
       });
 
+      const certificateTypeMapping = {
+        'RP Tax': 'taxpayment',
+        'RP Clearance': 'taxclearance',
+        'Business Permit': 'buspermit',
+        'CTC': 'cedulacert',
+        'Birth Cert': 'birthcert',
+        'Death Cert': 'deathcert',
+        'Marriage Cert': 'marriagecert',
+        'Revenue': 'revenue',
+      };
+      
+      const certificateTypes = ['RP Tax', 'RP Clearance', 'Business Permit', 'CTC', 'Birth Cert', 'Death Cert', 'Marriage Cert', 'Revenue'];
+      
+      // Array of month names
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      
       const monthlyReportsTableData = [
-        ['RP Tax Payment', transStats.taxpayment || 0],
-        ['RP Tax Clearance', transStats.taxclearance || 0],
-        ['Business Permit', transStats.buspermit || 0],
-        ['Cedula / CTC', transStats.cedulacert || 0],
-        ['Birth Certificate', transStats.birthcert || 0],
-        ['Death Certificate', transStats.deathcert || 0],
-        ['Marriage Certificate', transStats.marriagecert || 0],
+        ['Month', ...latestmonths.map(month => monthNames[new Date(month).getMonth()])],
+        ...certificateTypes.map((type) => {
+          const actualType = certificateTypeMapping[type];
+          const values = latestmonths.map((month, index) => {
+            if (actualType === 'revenue') {
+              // Check if transStats[actualType] is defined
+              if (transStats[actualType]) {
+                // Calculate total revenue based on paymentsPaid
+                const totalPaymentsPaid = transStats[actualType].reduce((acc, payment) => {
+                  const paymentMonth = new Date(payment.date).getMonth();
+                  return acc + (paymentMonth === index ? payment.paymentsPaid : 0);
+                }, 0);
+                // Assuming 'Paid' status is available in transStats[actualType]
+                const totalPaid = transStats[actualType].reduce((acc, payment) => {
+                  const paymentMonth = new Date(payment.date).getMonth();
+                  return acc + (paymentMonth === index && payment.status === 'Paid' ? 1 : 0);
+                }, 0);
+                return `${totalPaymentsPaid} (Paid: ${totalPaid})`;
+              } else {
+                return 0; // '0 (Paid: 0)', Set to 0 if transStats[actualType] is undefined
+              }
+            } else {
+              const typeArray = transStats[actualType] || [];
+              return typeArray[index] !== undefined ? typeArray[index] : 0;
+            }
+          });
+          return [type, ...values];
+        }),
       ];
-
+      
       pdf.autoTable({
-        startY: 220,
+        startY: 210,
         body: monthlyReportsTableData,
         headStyles: {
           fillColor: [50, 50, 50],
           textColor: 255,
         },
         styles: styles,
-        columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' } },
-      });
+        columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' }, 2: { halign: 'right' }, 3: { halign: 'right' }, 4: { halign: 'right' }, 5: { halign: 'right' }, 6: { halign: 'right' }, 7: { halign: 'right' } },
+      });            
 
       const currentDate = new Date();
       const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
