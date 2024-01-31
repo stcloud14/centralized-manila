@@ -62,7 +62,7 @@ const LCRCardView = ({ filteredBirthCert, filteredDeathCert, filteredMarriageCer
     ))} 
 
     {/* Death Certificate */}
-    {filteredDeathCert.map((transaction) => (
+    {filteredDeathCert && filteredDeathCert.length > 0 && filteredDeathCert.map((transaction) => (
       <div onClick={(e) => handleModalOpen(transaction, 'Death Certificate', e)} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
         <div className="text-xs font-semibold border-t-4 border-[#17bf6c] text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
           Transaction ID: {transaction.transaction_id}
@@ -109,7 +109,7 @@ const LCRCardView = ({ filteredBirthCert, filteredDeathCert, filteredMarriageCer
     ))}
 
     {/* Marriage Certificate */}
-    {filteredMarriageCert.map((transaction) => (
+    {filteredMarriageCert && filteredMarriageCert.length > 0 && filteredMarriageCert.map((transaction) => (
       <div onClick={(e) => handleModalOpen(transaction, 'Marriage Certificate', e)} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
         <div className="text-xs font-semibold border-t-4 border-[#78ffbc] text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
           Transaction ID: {transaction.transaction_id}

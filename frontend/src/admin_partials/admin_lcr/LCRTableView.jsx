@@ -102,7 +102,7 @@ const LCRTableView = ({ filteredBirthCert, filteredDeathCert, filteredMarriageCe
         ))}
 
         {/* Death Certificate */}
-        {filteredDeathCert && filteredDeathCert.map((transaction) => (
+        {filteredDeathCert && filteredDeathCert.length > 0 && filteredDeathCert.map((transaction) => (
           <tr onClick={() => handleModalOpen(transaction, 'Death Certificate')} key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
             <td className="px-1 py-2 border-l-4 border-l-[#17bf6c] whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
               <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
@@ -154,7 +154,7 @@ const LCRTableView = ({ filteredBirthCert, filteredDeathCert, filteredMarriageCe
         ))}
 
         {/* Marriage Certificate */}
-        {filteredMarriageCert && filteredMarriageCert.map((transaction) => (
+        {filteredMarriageCert && filteredMarriageCert.length > 0 && filteredMarriageCert.map((transaction) => (
           <tr onClick={() => handleModalOpen(transaction, 'Marriage Certificate')} key={transaction.transaction_id} className='bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
             <td className="px-1 py-2 border-l-4 border-l-[#78ffbc] whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
               <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
