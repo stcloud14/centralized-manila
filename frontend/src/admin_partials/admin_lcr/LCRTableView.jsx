@@ -40,7 +40,7 @@ const LCRTableView = ({ filteredBirthCert, filteredDeathCert, filteredMarriageCe
       </thead>
       <tbody>
 
-          {filteredBirthCert.length <= 0 && (
+          {filteredBirthCert.length <= 0 && filteredDeathCert.length <= 0 && filteredMarriageCert.length <= 0 && (
           <tr className="text-center py-4">
                   <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                     No records found.
