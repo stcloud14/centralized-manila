@@ -7,8 +7,8 @@ import auditMiddleware from './auditMiddleware.js';
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const query = "SELECT ut.transaction_id, tt.trans_type, ut.user_id, ut.status_type, ut.date_processed, co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_type, cc.cedula_date, cc.prov_id, cc.city_id, cc.region_id, \
-    ai.brgy_dist, ai.house_floor, ai.bldg_name, ci.czn_id, ci.cvl_id, p.prov_name, c.city_name, r.region_name, cv.cvl_status, vp.valid_id_type, ct.acc_no, \
+    const query = "SELECT ut.transaction_id, tt.trans_type, ut.user_id, ut.status_type, ut.date_processed, co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_id, cc.cedula_date, cc.prov_id, cc.city_id, cc.region_id, \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ci.czn_id, ci.cvl_id, p.prov_name, c.city_name, r.region_name, cv.cvl_status, vp.valid_id_type, ct.acc_no, st.sex_type, \
     ci.height, ci.weight, ci.acr_no, ct.income_id, ct.salary_id, ct.gross_id, ct.emp_status, ct.pob_status, ti.amount, ti.valid_id, ti.purpose_id\
     \
     FROM user_transaction ut \
@@ -24,8 +24,10 @@ router.get('/', async (req, res) => {
     LEFT JOIN province p ON cc.prov_id = p.prov_id \
     LEFT JOIN cvl_status cv ON ci.cvl_id = cv.cvl_id \
     LEFT JOIN valid_id_type vp ON ti.valid_id = vp.valid_id \
+    LEFT JOIN sex_type st ON co.sex_id = st.sex_id \
     \
     WHERE ut.trans_type_id = 4 AND ut.status_type = 'Paid'";
+    
 
     try {
         const result = await queryDatabase(query);
@@ -56,8 +58,8 @@ router.get('/', async (req, res) => {
 
 
 router.get('/processing', async (req, res) => {
-    const query = "SELECT ut.transaction_id, tt.trans_type, ut.user_id, ut.status_type, ut.date_processed, co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_type, cc.cedula_date, cc.prov_id, cc.city_id, cc.region_id, \
-    ai.brgy_dist, ai.house_floor, ai.bldg_name, ci.czn_id, ci.cvl_id, p.prov_name, c.city_name, r.region_name, cv.cvl_status, vp.valid_id_type, ct.acc_no, \
+    const query = "SELECT ut.transaction_id, tt.trans_type, ut.user_id, ut.status_type, ut.date_processed, co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_id, cc.cedula_date, cc.prov_id, cc.city_id, cc.region_id, \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ci.czn_id, ci.cvl_id, p.prov_name, c.city_name, r.region_name, cv.cvl_status, vp.valid_id_type, ct.acc_no, st.sex_type, \
     ci.height, ci.weight, ci.acr_no, ct.income_id, ct.salary_id, ct.gross_id, ct.emp_status, ct.pob_status, ti.amount, ti.valid_id, ti.purpose_id\
     \
     FROM user_transaction ut \
@@ -73,6 +75,7 @@ router.get('/processing', async (req, res) => {
     LEFT JOIN province p ON cc.prov_id = p.prov_id \
     LEFT JOIN cvl_status cv ON ci.cvl_id = cv.cvl_id \
     LEFT JOIN valid_id_type vp ON ti.valid_id = vp.valid_id \
+    LEFT JOIN sex_type st ON co.sex_id = st.sex_id \
     \
     WHERE ut.trans_type_id = 4 AND ut.status_type = 'Processing'";
     

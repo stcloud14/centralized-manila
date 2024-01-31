@@ -393,32 +393,6 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
                 </div>
               </div>
 
-                {/* TIN */}
-                <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                  <span className="hidden sm:block pr-10 text-xs">TIN:</span>
-                <div className="relative flex items-center">
-                  <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
-                  </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search TIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-                </div>
-              </div>
-
-                {/* PIN */}
-                <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                  <span className="hidden sm:block pr-10 text-xs">PIN:</span>
-                <div className="relative flex items-center">
-                  <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
-                  </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search PIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-                </div>
-              </div>
-
               <button type="button" onClick={handleFilterClick} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
