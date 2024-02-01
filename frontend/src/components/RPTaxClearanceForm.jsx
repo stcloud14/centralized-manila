@@ -188,13 +188,10 @@ const RPTaxClearanceForm =()=>{
         handleCloseModal();
         contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
         console.log('User credentials updated successfully');
-
-        setTimeout(() => {
-          window.location.href = `/transachistory/${user_id}`;
-        }, 2000); 
-
+        
         setTimeout(() => {
           setIsSuccess(false);
+          window.location.href = `/transachistory/${user_id}`;
         }, 2100);
 
       } else {

@@ -235,13 +235,11 @@ const handleCheckboxChange = (e) => {
         contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
         console.log('Transaction successful');
 
-        setTimeout(() => {
-          window.location.href = `/transachistory/${user_id}`
-        }, 2100);
-  
+        
         // Set a timeout for isSuccess to false after 2.1 seconds
         setTimeout(() => {
           setIsSuccess(false);
+          window.location.href = `/transachistory/${user_id}`
         }, 2100);
         
       } else {

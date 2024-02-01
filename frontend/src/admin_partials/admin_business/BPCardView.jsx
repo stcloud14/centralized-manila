@@ -28,7 +28,7 @@ const BPCardView = ({filteredBusinessPermit, handleModalOpen, handleRejectConfir
               <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
                 <span>Status: {transaction.status_type}</span>
               </div>
-              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P {transaction.bus_amount}</div>
+              <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P {transaction.amount}</div>
             </div>
 
             <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">

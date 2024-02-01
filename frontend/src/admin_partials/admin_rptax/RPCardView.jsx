@@ -3,14 +3,6 @@ import React from 'react';
 const RPCardView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen, handleRejectConfirm, handleProcessConfirm, handleCompleteConfirm, section }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
-
-          {filteredTaxClearance.length <= 0 && filteredTaxPayment.length <= 0 && (
-          <tr className="text-center py-4">
-                  <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
-                    No records found.
-                  </div>
-          </tr>
-          )}
               
           {/* ITO NAMAN YUNG MAPPING, LAHAT NG LAMAN NG LINE 40, IDIDISPLAY NITO, SINCE ANG INITIAL AY WALA PA NAMANG VALUE ANG SEARCH QUERY, LAHAT IDIDISPLAY DITO AND MAG FIFILTER LANG KAPAG MAY NILAGAY NA SA SEARCH, AND MADIDISPLAY LANG YUNG MATCHED TRANSACTION */}
           {filteredTaxClearance && filteredTaxClearance.length > 0 && filteredTaxClearance.map((transaction) => (
@@ -112,8 +104,15 @@ const RPCardView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen,
             </div>
           </div>
           ))} 
-      
+                {filteredTaxClearance.length <= 0 && filteredTaxPayment.length <= 0 && (
+                  
+                  <div className="font-medium col-span-full text-center text-slate-600 whitespace-nowrap dark:text-white py-[6.5rem]">
+                    No records found.
+                  </div>
+          
+          )}
         </div>
+
   );
 };
 

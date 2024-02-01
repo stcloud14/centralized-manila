@@ -14,20 +14,20 @@ const HomeForm = () => {
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
-  // useEffect(() => {
-  //   window.watsonAssistantChatOptions = {
-  //     integrationID: "de2fe5df-48e1-4da9-8410-d789a72fe146",
-  //     region: "jp-tok",
-  //     serviceInstanceID: "e50214bf-cd1a-4ede-bc0c-52e7e8ff8c9e",
-  //     onLoad: async (instance) => { await instance.render(); }
-  //   };
+  useEffect(() => {
+    window.watsonAssistantChatOptions = {
+      integrationID: "de2fe5df-48e1-4da9-8410-d789a72fe146",
+      region: "jp-tok",
+      serviceInstanceID: "e50214bf-cd1a-4ede-bc0c-52e7e8ff8c9e",
+      onLoad: async (instance) => { await instance.render(); console.log('Chatbot rendered') }
+    };
 
-  //   setTimeout(function () {
-  //     const t = document.createElement('script');
-  //     t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
-  //     document.head.appendChild(t);
-  //   });
-  // }, []); // Run only once on component mount
+    setTimeout(function () {
+      const t = document.createElement('script');
+      t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+      document.head.appendChild(t);
+    });
+  }, []); // Run only once on component mount
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

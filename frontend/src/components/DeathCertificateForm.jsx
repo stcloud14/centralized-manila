@@ -124,13 +124,10 @@ const DeathCertificateForm =()=>{
           handleCloseModal(); // Close the modal
           contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
           console.log('Transaction successful');
-
-          setTimeout(() => {
-            window.location.href = `/transachistory/${user_id}`;
-          }, 2000); 
-  
+          
           setTimeout(() => {
             setIsSuccess(false);
+            window.location.href = `/transachistory/${user_id}`;
           }, 2100);
         } else {
           console.error('Transaction error:', response.statusText);

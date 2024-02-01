@@ -661,13 +661,10 @@ const BusinessPermitForm =()=>{
             handleCloseModal();
             contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
             console.log('Transaction successful');
-
-            setTimeout(() => {
-              window.location.href = `/transachistory/${user_id}`;
-            }, 2000); 
-    
+            
             setTimeout(() => {
               setIsSuccess(false);
+              window.location.href = `/transachistory/${user_id}`;
             }, 2100);
         } else {
             console.log('THIS IS THE ERROR IN API')

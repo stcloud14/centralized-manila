@@ -71,12 +71,30 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
       setFilterApplied(true);
       setLastSelectedDate(selectedDate);
     }
+
+    // if (
+    //   // selectedDate === null ||
+    //   // selectedDate === undefined ||
+    //   selectedDate === '' && 
+    //   // lastSelectedDate === null ||
+    //   // lastSelectedDate === undefined ||
+    //   lastSelectedDate === '' && 
+    //   // searchQuery === null ||
+    //   // searchQuery === undefined ||
+    //   searchQuery === '' && 
+    //   transType === '') {
+    //     setFilterApplied(false);
+    //     setSelectedDate('');
+    //     setSelectedDatee('');
+    //     setSearchQuery('');
+    //     setTransType('All');
+    //   }
   };
 
-  useEffect(() => {
-    // Reset filter when taxClearance or taxPayment changes
-    setFilterApplied(false);
-  }, [taxClearance, taxPayment]);
+  // useEffect(() => {
+  //   // Reset filter when taxClearance or taxPayment changes
+  //   setFilterApplied(false);
+  // }, [taxClearance, taxPayment]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
