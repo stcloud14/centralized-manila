@@ -378,6 +378,19 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
                   </span>
               </div>
 
+              {/* Business Type Row */}
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                <span className="hidden sm:block text-xs">Business Type:</span>
+                <select  value={transType} onChange={(e) => setTransType(e.target.value)} name="typeDropdown"  id="typeDropdown"  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                  <option value="All" className="dark:bg-[#3d3d3d]">Select Business Type</option>
+                  <option value="Sole Proprietorship" className="dark:bg-[#3d3d3d]">Sole Proprietorship</option>
+                  <option value="One Person Corporation" className="dark:bg-[#3d3d3d]">One Person Corporation</option>
+                  <option value="Partnership" className="dark:bg-[#3d3d3d]">Partnership</option>
+                  <option value="Corporation" className="dark:bg-[#3d3d3d]">Corporation</option>
+                  <option value="Cooperation" className="dark:bg-[#3d3d3d]">Cooperation</option>
+                </select>
+              </div>
+
               {/* Transaction ID */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block pr-10 text-xs">Transaction ID:</span>
@@ -388,6 +401,19 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
                       </svg>
                   </span>
                   <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                </div>
+              </div>
+
+              {/* TIN */}
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                <span className="hidden sm:block pr-10 text-xs">TIN:</span>
+                <div className="relative flex items-center">
+                  <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                      <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                      </svg>
+                  </span>
+                  <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search TIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 

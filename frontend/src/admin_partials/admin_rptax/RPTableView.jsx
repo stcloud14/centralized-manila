@@ -35,7 +35,8 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
           </th>
           <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
             <div className="flex justify-center items-center">
-              Process
+            {console.log('Section:', section)}
+            {(section === undefined || section.trim() === 'Request') ? 'Complete' : 'Process'}
             </div>
           </th>
         </tr>
