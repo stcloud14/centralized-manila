@@ -9,6 +9,8 @@ import Loading from '../../partials/Loading';
 
 const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [searchLName, setSearchLName] = useState('');
+
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedDatee, setSelectedDatee] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -30,19 +32,24 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
   const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
   
   const handleSearch = (transaction) => {
+    const lName = transaction.l_name.toUpperCase();
+    const fName = transaction.f_name.toUpperCase();
+  
     const transactionId = transaction.transaction_id.toUpperCase();
-    const query = searchQuery.toUpperCase();
+    const query = searchQuery.toUpperCase() || searchLName.toUpperCase(); // Use searchLName here
+  
+    const combinedNames = (lName + ' ' + fName).toUpperCase();
     
-    // Check if the transaction ID includes the search query
+    const isLNameMatch = combinedNames.includes(query);
     const isTransactionMatch = transactionId.includes(query);
-    
+  
     // Check if the transaction date is within the selected date range only if filter is applied
     const isDateInRange =
       !filterApplied ||
       (!lastSelectedFromDate || new Date(transaction.date) >= new Date(lastSelectedFromDate)) &&
       (!lastSelectedToDate || new Date(transaction.date) <= new Date(lastSelectedToDate));
     
-    return isTransactionMatch && isDateInRange;
+    return (isTransactionMatch || isLNameMatch) && isDateInRange;
   };
   
   const filteredctcCedula = ctcCedula ? ctcCedula.filter(handleSearch) : [];
@@ -393,29 +400,16 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                 </div>
               </div>
 
-              {/* Last Name */}
+              {/* Search Name */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                <span className="hidden sm:block pr-10 text-xs">Last Name:</span>
+                <span className="hidden sm:block pr-10 text-xs">Owner's Name:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search Last Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-                </div>
-              </div>
-
-              {/* First Name */}
-              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                <span className="hidden sm:block pr-10 text-xs">First Name:</span>
-                <div className="relative flex items-center">
-                  <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
-                  </span>
-                  <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search First Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchLName} onChange={(e) => setSearchLName(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search Owner's Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 

@@ -31,82 +31,81 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
 
   console.log(selectedTransaction);
 
-    // Function to handle searching based on transaction and date
-    const handleSearch = (transaction) => {
-      const transactionId = transaction?.transaction_id?.toUpperCase();
-      const query = searchQuery?.toUpperCase();
-  
-      // Check if the transaction ID includes the search query
-      const isTransactionMatch = transactionId?.includes(query);
-  
-      // Check if the transaction date is within the selected date range only if the filter is applied
-      const isDateInRange =
-        !filterApplied ||
-        (!lastSelectedDate || new Date(transaction.date) >= new Date(lastSelectedDate)) &&
-        (!selectedDatee || new Date(transaction.date) <= new Date(selectedDatee));
-  
-      // Check if the transaction type matches the selected type
-      const isTypeMatch =
-        !transType ||
-        transaction?.trans_type === transType ||
-        transaction?.type === transType;
-  
-      // Include type and PIN in the search query check
-      const isQueryMatch =
-        query === '' ||
-        transactionId?.includes(query) ||
-        transaction?.type?.toUpperCase()?.includes(query) ||
-        (query === 'REAL PROPERTY TAX PAYMENT' && transaction?.type === 'Real Property Tax Payment') ||
-        (query === 'REAL PROPERTY TAX CLEARANCE' && transaction?.type === 'Real Property Tax Clearance');
-  
-      return isTransactionMatch && isDateInRange && isTypeMatch && isQueryMatch;
-    };
+  const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
+  const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
+  const [lastSelectedTransType, setlastSelectedTransType] = useState(null);
+  const [searchTDN, setSearchTDN] = useState('');
+  const [searchPIN, setSearchPIN] = useState('');
+  const [selectType, setSelectType] = useState('');
 
+  const handleSearch = (transaction) => {
+    const transactionId = (transaction?.transaction_id || '').toUpperCase();
+    const tdnId = (transaction?.rp_tdn || '').toUpperCase();
+    const pinId = (transaction?.rp_pin || '').toUpperCase();
+    const transacType = (transaction?.trans_type || '').toUpperCase();
+  
+    const query = (searchQuery || searchTDN || searchPIN || '').toUpperCase();
+  
+    const isTDNMatch = tdnId.includes(query);
+    const isPINMatch = pinId.includes(query);
+    const isTransactionMatch = transactionId.includes(query);
+  
+    // Check if the transaction date is within the selected date range only if the filter is applied
+    const isDateInRange =
+      !filterApplied ||
+      (!lastSelectedFromDate || new Date(transaction?.date) >= new Date(lastSelectedFromDate)) &&
+      (!lastSelectedToDate || new Date(transaction?.date) <= new Date(lastSelectedToDate));
+  
+    // Check if business type filtering should be applied
+    const isTransTypeMatch =
+      !filterApplied ||
+      !selectType ||
+      selectType === 'All' ||
+      (lastSelectedTransType && transacType.includes(lastSelectedTransType.toUpperCase()));
+  
+    return (isTransactionMatch || isTDNMatch || isPINMatch) && isTransTypeMatch && isDateInRange;
+  };
+  
+  
   const filteredTaxClearance = taxClearance ? taxClearance.filter(handleSearch) : [];
   const filteredTaxPayment = taxPayment ? taxPayment.filter(handleSearch) : [];
 
   const handleFilterClick = () => {
-    // Only set the filter and update lastSelectedDate if the selected date has changed
-    if (selectedDate !== lastSelectedDate) {
+    // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date or business type has changed
+    if (
+      selectedDate !== lastSelectedFromDate ||
+      selectedDatee !== lastSelectedToDate ||
+      selectType !== lastSelectedTransType
+    ) {
       setFilterApplied(true);
-      setLastSelectedDate(selectedDate);
+      setLastSelectedFromDate(selectedDate);
+      setLastSelectedToDate(selectedDatee);
+      setlastSelectedTransType(selectType);
+    } else {
+      // Reset filter when no changes are made
+      setFilterApplied(false);
     }
-
-    // if (
-    //   // selectedDate === null ||
-    //   // selectedDate === undefined ||
-    //   selectedDate === '' && 
-    //   // lastSelectedDate === null ||
-    //   // lastSelectedDate === undefined ||
-    //   lastSelectedDate === '' && 
-    //   // searchQuery === null ||
-    //   // searchQuery === undefined ||
-    //   searchQuery === '' && 
-    //   transType === '') {
-    //     setFilterApplied(false);
-    //     setSelectedDate('');
-    //     setSelectedDatee('');
-    //     setSearchQuery('');
-    //     setTransType('All');
-    //   }
   };
-
-  // useEffect(() => {
-  //   // Reset filter when taxClearance or taxPayment changes
-  //   setFilterApplied(false);
-  // }, [taxClearance, taxPayment]);
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
+  
+  useEffect(() => {
+    // Reset filter when businessPermit changes
+    setFilterApplied(false);
+  }, [taxClearance, taxPayment]);
 
   const handleClearClick = () => {
-    // Clear all filters
-    setFilterApplied(false);
-    setSelectedDate('');
-    setSelectedDatee('');
+    // Clear the selected dates, business type, and other modal-related data
+    setSelectedDate(null);
+    setSelectedDatee(null);
     setSearchQuery('');
-    setTransType('All');
+    setSelectType('All'); // Reset selectType to 'All'
+    // ... (other modal-related state variables you want to clear)
+    setFilterApplied(false);
+    setSearchTDN('');
+    setSearchTDN('');
+  };
+  const toggleDropdown = () => {
+    console.log('Toggling dropdown state');
+    setDropdownOpen(!isDropdownOpen);
   };
 
   const handleToggleView = (mode) => {
@@ -427,7 +426,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
               {/* Type Row */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block text-xs">Type:</span>
-                  <select  value={transType} onChange={(e) => setTransType(e.target.value)} name="typeDropdown"  id="typeDropdown"  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                  <select  value={selectType} onChange={(e) => setSelectType(e.target.value)} name="typeDropdown"  id="typeDropdown"  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
                     <option value="All" className="dark:bg-[#3d3d3d]">Select Type</option>
                     <option value="Real Property Tax Payment" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
                     <option value="Real Property Tax Clearance" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
@@ -457,7 +456,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search TDN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchTDN} onChange={(e) => setSearchTDN(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search TDN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
@@ -470,7 +469,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search PIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchPIN} onChange={(e) => setSearchPIN(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search PIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
