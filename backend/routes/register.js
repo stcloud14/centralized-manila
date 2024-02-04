@@ -26,27 +26,6 @@ router.post('/check-existence', async (req, res) => {
     }
   });
 
-  router.post('/check-existence/email', async (req, res) => {
-    const { email } = req.body;
-  
-    const query = "SELECT user_id FROM user_google WHERE email = ?";
-    const values = [email];
-  
-    try {
-      const result = await queryDatabase(query, values);
-      if (result.length > 0) {
-        const user_id = result[0].user_id;
-        res.json({ exists: true, user_id, message: "email already exists. Please use another or proceed to login." });
-      } else {
-        res.json({ exists: false, message: "User does not exist. Proceed to register." });
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Error checking user existence" });
-    }
-  });
-
-
 
 router.post('/', async (req, res) => {
     const mobile_no = req.body.mobile_no;
@@ -132,8 +111,29 @@ router.post('/', async (req, res) => {
 
 
 
+router.post('/check-existence/email', async (req, res) => {
+  const { email } = req.body;
+
+  const query = "SELECT user_id FROM user_google WHERE email = ?";
+  const values = [email];
+
+  try {
+    const result = await queryDatabase(query, values);
+    if (result.length > 0) {
+      const user_id = result[0].user_id;
+      res.json({ exists: true, user_id, message: "email already exists. Please use another or proceed to login." });
+    } else {
+      res.json({ exists: false, message: "User does not exist. Proceed to register." });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error checking user existence" });
+  }
+});
+
 router.post('/regis', async (req, res) => {
   const email = req.body.email;
+  const displayName = req.body.displayName;
   // const user_pass = String(req.body.user_pass);
   
 
@@ -156,8 +156,8 @@ router.post('/regis', async (req, res) => {
   const query = "INSERT INTO user_reg (`user_id`) VALUES (?)";
   const values = [primaryKey];
 
-  const query1 = "INSERT INTO user_google (`user_id`) VALUES (?)";
-  const values1 = [primaryKey];
+  const query1 = "INSERT INTO user_google (`user_id`, `email`) VALUES (?, ?)";
+  const values1 = [primaryKey, email];
 
   const query2 = "INSERT INTO user_personal (`user_id`, `f_name`) VALUES (?, ?)";
   const values2 = [primaryKey, displayName];
