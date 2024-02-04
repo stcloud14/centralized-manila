@@ -148,12 +148,34 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
           textColor: 255,
         },
         columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' }, 2: { halign: 'right' }, 3: { halign: 'right' }, 4: { halign: 'right' }, 5: { halign: 'right' }, 6: { halign: 'right' }, 7: { halign: 'right' } },
-      });        
+      });
+  
+      // Add signature on the right side at the bottom of the table
+      const signatureXPosition = pdf.internal.pageSize.width - 58;
+      const signatureYPosition = pdf.autoTable.previous.finalY + 130;
+  
+      const fontSize = 12;
+      pdf.setFontSize(fontSize);
 
+      const admin_types = "Real Property Admin";
+  
+      pdf.text("Approved by:", signatureXPosition, signatureYPosition);
+      pdf.text("Juan Dela Cruz", signatureXPosition + 8, signatureYPosition + 7);
+  
+      pdf.text("Endorsed by:", signatureXPosition, signatureYPosition + 15);
+      pdf.text("Angelica Dela Cruz", signatureXPosition + 5, signatureYPosition + 23);
+
+      pdf.text("Name:", signatureXPosition, signatureYPosition + 33);
+      pdf.text(admin_types, signatureXPosition + 3, signatureYPosition + 40);
+  
+      pdf.line(signatureXPosition, signatureYPosition + 9, signatureXPosition + 45, signatureYPosition + 9);
+      pdf.line(signatureXPosition, signatureYPosition + 25, signatureXPosition + 45, signatureYPosition + 25);
+      pdf.line(signatureXPosition, signatureYPosition + 43, signatureXPosition + 45, signatureYPosition + 43);
+  
       const currentDate = new Date();
       const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
       const filename = `${admin_type}_reports_${formattedDate}.pdf`;
-
+  
       pdf.save(filename);
     } catch (error) {
       console.error('Error generating reports:', error);
