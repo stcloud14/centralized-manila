@@ -10,6 +10,9 @@ import Loading from '../../partials/Loading';
 const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
 
     const [searchQuery, setSearchQuery] = useState('');
+    const [searchTIN, setSearchTIN] = useState('');
+    const [selectType, setSelectType] = useState('');
+
     const [viewMode, setViewMode] = useState('table'); 
 
     const [modalView, setModalView] = useState(false); 
@@ -30,55 +33,77 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
     const [selectedDatee, setSelectedDatee] = useState('');
 
     const toggleDropdown = () => {
+      console.log('Toggling dropdown state');
       setDropdownOpen(!isDropdownOpen);
     };
+    
+    const [filterApplied, setFilterApplied] = useState(false);
+    const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
+    const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
+    const [lastSelectedBusinessType, setLastSelectedBusinessType] = useState(null);
 
+    const handleSearch = (transaction) => {
+      const transactionId = (transaction?.transaction_id || '').toUpperCase();
+      const tinId = (transaction?.bus_tin || '').toUpperCase();
+      const businessType = (transaction?.bus_type || '').toUpperCase();
     
-   
-  const [filterApplied, setFilterApplied] = useState(false);
-  const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
-  const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
-  
-  const handleSearch = (transaction) => {
-    const transactionId = transaction.transaction_id.toUpperCase();
-    const query = searchQuery.toUpperCase();
+      const query = (searchQuery || searchTIN || '').toUpperCase();
     
-    // Check if the transaction ID includes the search query
-    const isTransactionMatch = transactionId.includes(query);
+      const isTINMatch = tinId.includes(query);
+      const isTransactionMatch = transactionId.includes(query);
     
-    // Check if the transaction date is within the selected date range only if filter is applied
-    const isDateInRange =
-      !filterApplied ||
-      (!lastSelectedFromDate || new Date(transaction.date) >= new Date(lastSelectedFromDate)) &&
-      (!lastSelectedToDate || new Date(transaction.date) <= new Date(lastSelectedToDate));
+      // Check if the transaction date is within the selected date range only if the filter is applied
+      const isDateInRange =
+        !filterApplied ||
+        (!lastSelectedFromDate || new Date(transaction?.date) >= new Date(lastSelectedFromDate)) &&
+        (!lastSelectedToDate || new Date(transaction?.date) <= new Date(lastSelectedToDate));
     
-    return isTransactionMatch && isDateInRange;
-  };
+      // Check if business type filtering should be applied
+      const isBusinessTypeMatch =
+        !filterApplied ||
+        !selectType ||
+        selectType === 'All' ||
+        (lastSelectedBusinessType && businessType.includes(lastSelectedBusinessType.toUpperCase()));
+    
+      return (isTransactionMatch || isTINMatch) && isBusinessTypeMatch && isDateInRange;
+    };
+    
   
-  const filteredBusinessPermit = businessPermit ? businessPermit.filter(handleSearch): [];
+    const filteredBusinessPermit = businessPermit ? businessPermit.filter(handleSearch) : [];
   
-  const handleFilterClick = () => {
-    // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date has changed
-    if (selectedDate !== lastSelectedFromDate || selectedDatee !== lastSelectedToDate) {
-      setFilterApplied(true);
-      setLastSelectedFromDate(selectedDate);
-      setLastSelectedToDate(selectedDatee);
-    }
-  };
+    const handleFilterClick = () => {
+      // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date or business type has changed
+      if (
+        selectedDate !== lastSelectedFromDate ||
+        selectedDatee !== lastSelectedToDate ||
+        selectType !== lastSelectedBusinessType
+      ) {
+        setFilterApplied(true);
+        setLastSelectedFromDate(selectedDate);
+        setLastSelectedToDate(selectedDatee);
+        setLastSelectedBusinessType(selectType);
+      } else {
+        // Reset filter when no changes are made
+        setFilterApplied(false);
+      }
+    };
+    
+    useEffect(() => {
+      // Reset filter when businessPermit changes
+      setFilterApplied(false);
+    }, [businessPermit]);
   
-  useEffect(() => {
-    // Reset filter when ctcCedula changes
-    setFilterApplied(false);
-  }, [businessPermit]);
+    const handleClearClick = () => {
+      // Clear the selected dates, business type, and other modal-related data
+      setSelectedDate(null);
+      setSelectedDatee(null);
+      setSearchQuery('');
+      setSelectType('All'); // Reset selectType to 'All'
+      // ... (other modal-related state variables you want to clear)
+      setFilterApplied(false);
+    };
   
-  const handleClearClick = () => {
-    // Clear the selected dates and other modal-related data
-    setSelectedDate(null);
-    setSelectedDatee(null);
-    setSearchQuery('');
-    // ... (other modal-related state variables you want to clear)
-    setFilterApplied(false);
-  };
+    
 
     const handleToggleView = (mode) => {
       setViewMode(mode);
@@ -381,7 +406,7 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
               {/* Business Type Row */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                 <span className="hidden sm:block text-xs">Business Type:</span>
-                <select  value={transType} onChange={(e) => setTransType(e.target.value)} name="typeDropdown"  id="typeDropdown"  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                <select  value={selectType} onChange={(e) => setSelectType(e.target.value)} name="typeDropdown"  id="typeDropdown"  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
                   <option value="All" className="dark:bg-[#3d3d3d]">Select Business Type</option>
                   <option value="Sole Proprietorship" className="dark:bg-[#3d3d3d]">Sole Proprietorship</option>
                   <option value="One Person Corporation" className="dark:bg-[#3d3d3d]">One Person Corporation</option>
@@ -413,7 +438,7 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search TIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchTIN} onChange={(e) => setSearchTIN(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search TIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
