@@ -241,10 +241,10 @@ function generatePrimaryGoogle(email) {
   // Get the current date and time
   const date = new Date();
   const twoDigitDate = date.getDate().toString().padStart(2, '0');
-  const twoDigitMinutes = date.getMinutes().toString().padStart(2, '0');
+  const twoDigitSeconds = date.getSeconds().toString().padStart(2, '0');
 
   // Concatenate the components to create the primary key
-  const primaryKey = `${firstTwoLettersEmail}${twoDigitDate}${twoDigitMinutes}`;
+  const primaryKey = `${firstTwoLettersEmail}${twoDigitDate}${twoDigitSeconds}`;
 
   console.log(primaryKey);
   return primaryKey;
