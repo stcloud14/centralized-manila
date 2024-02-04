@@ -42,6 +42,8 @@ const LandingPageForm = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
+        const {displayName, email} = result.user;
+        console.log(displayName, email);
         const user = result.user;
         console.log(user);
         window.location.href = "../home/RL1741";
