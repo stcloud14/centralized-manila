@@ -103,9 +103,12 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
         margin: { top: 60, left: 130 },
         tableWidth: 'auto',
       });
+
+      // Get the current Y position after adding content
+      const currentYPosition = pdf.autoTable.previous.finalY || 0;
   
       // Adjust the starting y-coordinate for the table
-      const tableStartY = 74;
+      const tableStartY = currentYPosition + 20;
   
       // Define styles for the table header
       const headerStyles = {
@@ -151,7 +154,21 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
           ];
         }),
         headStyles: headerStyles,
+        theme: 'plain', 
       });
+
+      // Add signature on the right side at the bottom of the table
+      const signatureXPosition = pdf.internal.pageSize.width - 70; // Adjust the X position as needed
+      const signatureYPosition = pdf.autoTable.previous.finalY + 70; // Adjust the Y position as needed
+
+      pdf.text("Signed by:", signatureXPosition, signatureYPosition);
+      pdf.text(userPersonal.l_name + ", " + userPersonal.f_name, signatureXPosition, signatureYPosition + 8);
+      pdf.text("Endorsed by:", signatureXPosition, signatureYPosition + 20);
+      pdf.text(userPersonal.l_name + ", " + userPersonal.f_name, signatureXPosition, signatureYPosition + 28);
+
+      // Add signature lines
+      pdf.line(signatureXPosition, signatureYPosition + 10, signatureXPosition + 60, signatureYPosition + 10);
+      pdf.line(signatureXPosition, signatureYPosition + 30, signatureXPosition + 60, signatureYPosition + 30);
   
       pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
     } catch (error) {
