@@ -103,12 +103,12 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
         margin: { top: 60, left: 130 },
         tableWidth: 'auto',
       });
-
+  
       // Get the current Y position after adding content
       const currentYPosition = pdf.autoTable.previous.finalY || 0;
   
       // Adjust the starting y-coordinate for the table
-      const tableStartY = currentYPosition + 20;
+      const tableStartY = currentYPosition + 15;
   
       // Define styles for the table header
       const headerStyles = {
@@ -123,27 +123,22 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
         body: filteredTransactions.map((transaction, index) => {
           const amount = parseFloat(transaction.amount) || 0;
           const payment = parseFloat(transaction.payment) || 0;
-      
-          // Validate that both amount and payment are valid numbers
+  
           if (isNaN(amount) || isNaN(payment)) {
-            // Handle non-numeric values, such as displaying an error message or setting them to 0
             console.error(`Invalid amount or payment for transaction ID ${transaction.transaction_id}`);
           }
-      
-          // Declare rowBalance outside the map function
+  
           let rowBalance = 0;
-      
-          // Calculate balance for each row independently
+  
           if (transaction.status_type === 'Pending') {
             rowBalance = amount - payment;
-            rowBalance = Math.max(rowBalance, 0); // Ensure balance is not negative
+            rowBalance = Math.max(rowBalance, 0);
           }
-      
-          // Format numeric values to have two decimal places
+  
           const formattedAmount = `P ${amount.toFixed(2)}`;
           const formattedPayment = `P ${payment.toFixed(2)}`;
           const displayBalance = `P ${rowBalance < 0 ? '-' : ''}${Math.abs(rowBalance).toFixed(2)}`;
-      
+  
           return [
             new Date(transaction.date_processed).toLocaleDateString('en-GB'),
             transaction.transaction_id,
@@ -154,27 +149,30 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
           ];
         }),
         headStyles: headerStyles,
-        theme: 'plain', 
+        theme: 'plain',
       });
-
-      // Add signature on the right side at the bottom of the table
-      const signatureXPosition = pdf.internal.pageSize.width - 70; // Adjust the X position as needed
-      const signatureYPosition = pdf.autoTable.previous.finalY + 70; // Adjust the Y position as needed
-
-      pdf.text("Signed by:", signatureXPosition, signatureYPosition);
-      pdf.text(userPersonal.l_name + ", " + userPersonal.f_name, signatureXPosition, signatureYPosition + 8);
-      pdf.text("Endorsed by:", signatureXPosition, signatureYPosition + 20);
-      pdf.text(userPersonal.l_name + ", " + userPersonal.f_name, signatureXPosition, signatureYPosition + 28);
-
-      // Add signature lines
-      pdf.line(signatureXPosition, signatureYPosition + 10, signatureXPosition + 60, signatureYPosition + 10);
-      pdf.line(signatureXPosition, signatureYPosition + 30, signatureXPosition + 60, signatureYPosition + 30);
   
+        // Add signature on the right side at the bottom of the table
+        const signatureXPosition = pdf.internal.pageSize.width - 58;
+        const signatureYPosition = pdf.autoTable.previous.finalY + 65;
+  
+        const fontSize = 12;
+        pdf.setFontSize(fontSize);
+  
+        pdf.text("Approved by:", signatureXPosition, signatureYPosition);
+        pdf.text(userPersonal.l_name + ", " + userPersonal.f_name, signatureXPosition, signatureYPosition + 7);
+        pdf.text("Endorsed by:", signatureXPosition, signatureYPosition + 18);
+        pdf.text(userPersonal.l_name + ", " + userPersonal.f_name, signatureXPosition, signatureYPosition + 25);
+  
+        pdf.line(signatureXPosition, signatureYPosition + 9, signatureXPosition + 45, signatureYPosition + 9);
+        pdf.line(signatureXPosition, signatureYPosition + 27, signatureXPosition + 45, signatureYPosition + 27);
+  
+      // Save the PDF
       pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
     } catch (error) {
       console.error('Error generating transaction history:', error);
     }
-  };
+  }; 
 
   const loadImageAsDataURL = async (imageUrl) => {
     const response = await fetch(imageUrl);
