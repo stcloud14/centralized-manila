@@ -59,10 +59,23 @@ const  AdminAuditTrailForm = () => {
     const filteredAuditTrails = originalAuditTrail.filter((transaction) => {
       const transactionId = transaction.id_no?.toString().toUpperCase();
   
+      const isDateInRange = (() => {
+        if (!selectedDate || !selectedDatee) {
+          return true; // No date range selected, include all transactions
+        }
+  
+        const transactionDate = new Date(transaction.time_stamp);
+        const startDate = new Date(selectedDate);
+        const endDate = new Date(selectedDatee);
+        endDate.setHours(23, 59, 59, 999);
+  
+        return startDate <= transactionDate && transactionDate <= endDate;
+      });
+  
       return (
         transactionId &&
         transactionId.includes(searchInput) &&
-        (!selectedDate || !selectedDatee) &&
+        isDateInRange() &&
         (!selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || transaction.admin === selectedType) &&
         (!selectedStatus || selectedStatus === 'All' || transaction.activity.toLowerCase() === selectedStatus.toLowerCase())
       );
