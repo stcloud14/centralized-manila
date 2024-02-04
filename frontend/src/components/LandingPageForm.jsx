@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from '../partials/ThemeToggle';
+import { getAuth, signInWithPhoneNumber, RecaptchaVerifier, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import auth from '../../firebase.config';  // Updated import statement
-import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 
 
@@ -36,6 +36,25 @@ const LandingPageForm = () => {
     }
   }, []);
 
+  
+  const handleGoogleLogin = () => {
+    const provider = new GoogleAuthProvider();  // Declare the provider
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const {displayName, email} = result.user;
+        console.log(displayName, email);
+        const user = result.user;
+        console.log(user);
+        window.location.href = "../home/RL1741";
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(errorCode, errorMessage);
+      });
+  };
+
   const handleOtpInputChange = (index, value) => {
     const newOtpDigits = [...otpDigits];
   
@@ -56,6 +75,7 @@ const LandingPageForm = () => {
     const newVerificationCode = newOtpDigits.join('');
     setVerificationCode(newVerificationCode);
   };
+
 
   const handleKeyDown = (index, e) => {
     // Handle Backspace key to prevent browser navigation
@@ -292,6 +312,11 @@ const LandingPageForm = () => {
           Login
         </button>
             )}
+
+          
+                  
+                
+
           {!authenticated && loginError && (
             <p className="text-red-600 p-2 text-xs rounded-full mt-5">{loginError}</p>
           )}
@@ -386,13 +411,28 @@ const LandingPageForm = () => {
                     >
                       Verify
                     </button>
+                    
                   )}
+                  
                 </div>
+                
               </div>
+              
             </>
           )}
 
             </form>
+            {!authenticated && (
+            <div>
+                    <button
+                     id="google-login-btn"
+                      className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 uppercase"
+                      onClick={handleGoogleLogin}
+                    >
+                      Login with Google
+                    </button>
+                  </div>
+            )}
 
             <div className="absolute top-4 right-4">
               <ThemeToggle />
