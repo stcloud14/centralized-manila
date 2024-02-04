@@ -26,6 +26,27 @@ router.post('/check-existence', async (req, res) => {
     }
   });
 
+  router.post('/check-existence/email', async (req, res) => {
+    const { email } = req.body;
+  
+    const query = "SELECT user_id FROM user_google WHERE email = ?";
+    const values = [email];
+  
+    try {
+      const result = await queryDatabase(query, values);
+      if (result.length > 0) {
+        const user_id = result[0].user_id;
+        res.json({ exists: true, user_id, message: "email already exists. Please use another or proceed to login." });
+      } else {
+        res.json({ exists: false, message: "User does not exist. Proceed to register." });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Error checking user existence" });
+    }
+  });
+
+
 
 router.post('/', async (req, res) => {
     const mobile_no = req.body.mobile_no;
@@ -110,6 +131,89 @@ router.post('/', async (req, res) => {
 });
 
 
+
+router.post('/regis', async (req, res) => {
+  const email = req.body.email;
+  // const user_pass = String(req.body.user_pass);
+  
+
+  // const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
+  // const saltRounds = 10;
+
+
+  const notif_title = `Welcome`;
+
+  const notif_message = `</span> Congratulations! Your registration with Centralized Manila was successful, and we're glad to welcome you to our platform. <span className="font-medium dark:text-white"></span>.</p>`;
+  const date = new Date();
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
+
+  const verification_status = 'Unverified';
+  const application_status = 'New';
+
+  const primaryKey = generatePrimaryGoogle(email);
+
+  const query = "INSERT INTO user_reg (`user_id`) VALUES (?)";
+  const values = [primaryKey];
+
+  const query1 = "INSERT INTO user_google (`user_id`) VALUES (?)";
+  const values1 = [primaryKey];
+
+  const query2 = "INSERT INTO user_personal (`user_id`, `f_name`) VALUES (?, ?)";
+  const values2 = [primaryKey, displayName];
+
+  const query3 = "INSERT INTO user_contact (`user_id`) VALUES (?)";
+  const values3 = [primaryKey];
+
+  const query4 = "INSERT INTO user_gov_id (`user_id`) VALUES (?)";
+  const values4 = [primaryKey];
+
+  const query5 = "INSERT INTO user_birth (`user_id`) VALUES (?)";
+  const values5 = [primaryKey];
+
+  const query6 = "INSERT INTO user_image (`user_id`) VALUES (?)";
+  const values6 = [primaryKey];
+
+  const query7 = "INSERT INTO user_verification (`user_id`, `verification_status`, `application_status`) VALUES (?, ?, ?)";
+  const values7 = [primaryKey, verification_status, application_status];
+
+  const query8 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+  const values8 = [primaryKey, formattedDate, notif_title, notif_message];
+
+
+
+  try {
+  const result = await queryDatabase(query, values);
+  const result1 = await queryDatabase(query1, values1);
+  const result2 = await queryDatabase(query2, values2);
+  const result3 = await queryDatabase(query3, values3);
+  const result4 = await queryDatabase(query4, values4);
+  const result5 = await queryDatabase(query5, values5);
+  const result6 = await queryDatabase(query6, values6);
+  const result7 = await queryDatabase(query7, values7);
+  const result8 = await queryDatabase(query8, values8);
+
+
+  res.json({
+      message: "Successfully executed",
+      user_id: primaryKey,
+      user_reg_result: result,
+      user_auth_result: result1,
+      user_personal_result: result2,
+      user_contact_result: result3,
+      user_gov_id_result: result4,
+      user_birth_result: result5,
+      user_image_result: result6,
+      user_verification_result: result7,
+      notif_result: result8,
+  });
+  } catch (err) {
+  console.error(err);
+  res.status(500).json({ error: "Error executing queries" });
+  }
+});
+
+
 function queryDatabase(query, values) {
     return new Promise((resolve, reject) => {
     conn2.query(query, values, (err, data) => {
@@ -122,12 +226,28 @@ function queryDatabase(query, values) {
     });
 }
 
-function generateTransactionID() {
-  const timestamp = new Date().getTime().toString().slice(0, 8);
-  const uniqueID = uuidv4().split('-').join('').substring(0, 9); // Use a portion of UUID
-  const transactionID = `${timestamp}-${uniqueID}`;
+// function generateTransactionID() {
+//   const timestamp = new Date().getTime().toString().slice(0, 8);
+//   const uniqueID = uuidv4().split('-').join('').substring(0, 9); // Use a portion of UUID
+//   const transactionID = `${timestamp}-${uniqueID}`;
 
-  return transactionID.toUpperCase();
+//   return transactionID.toUpperCase();
+// }
+
+function generatePrimaryGoogle(email) {
+  // Extract the first two letters of the email and convert them to uppercase
+  const firstTwoLettersEmail = email.slice(0, 2).toUpperCase();
+
+  // Get the current date and time
+  const date = new Date();
+  const twoDigitDate = date.getDate().toString().padStart(2, '0');
+  const twoDigitMinutes = date.getMinutes().toString().padStart(2, '0');
+
+  // Concatenate the components to create the primary key
+  const primaryKey = `${firstTwoLettersEmail}${twoDigitDate}${twoDigitMinutes}`;
+
+  console.log(primaryKey);
+  return primaryKey;
 }
 
     

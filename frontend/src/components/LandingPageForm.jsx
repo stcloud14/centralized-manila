@@ -8,6 +8,10 @@ import auth from '../../firebase.config';  // Updated import statement
 
 
 const LandingPageForm = () => {
+  const [userReg, setUserReg] = useState({
+    email: "",
+    displayName: "",
+  });
   const [userAuth, setUserAuth] = useState({
     mobile_no: "",
     user_pass: "",
@@ -20,6 +24,7 @@ const LandingPageForm = () => {
   const [Many_Request, setManyRequest] = useState(false);
   const [wrong_otp, setWrongOtp] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isetUserdata, setUserdata] = useState("")
 
   const [verification_code, setVerificationCode] = useState(""); // Added state for verification code
   const [otpDigits, setOtpDigits] = useState(["", "", "", "", "", ""]);
@@ -35,24 +40,44 @@ const LandingPageForm = () => {
       otpInputRefs.current[0].current.focus();
     }
   }, []);
-
   
-  const handleGoogleLogin = () => {
-    const provider = new GoogleAuthProvider();  // Declare the provider
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const {displayName, email} = result.user;
-        console.log(displayName, email);
-        const user = result.user;
-        console.log(user);
-        window.location.href = "../home/RL1741";
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorCode, errorMessage);
+  const handleGoogleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();  // Declare the provider
+  
+      const result = await signInWithPopup(auth, provider);
+      const { displayName, email } = result.user;
+      console.log("User:", displayName, email);
+      setUserdata({ displayName, email });
+  
+      const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence/email", {
+        email: email,  
       });
+      if (existenceCheckResponse.data.exists) {
+        // User exists, retrieve user_id from the response and redirect
+        const user_id = existenceCheckResponse.data.user_id; // Replace with the actual property name
+        console.log(existenceCheckResponse);
+        window.location.href = `/home/${user_id}`;
+      } else {
+        console.log("User does not exist. Proceed with registration");
+        const userReg = {
+          displayName: displayName,
+          email: email,
+        };
+        try {
+          const registrationResponse = await axios.post("http://localhost:8800/register/regis", userReg);
+          console.log("Registration Result:", registrationResponse.data);
+  
+          const user_id = registrationResponse.data.user_id; 
+          window.location.href = `/home/${user_id}`;
+        } catch (registrationError) {
+          console.error("Registration Error:", registrationError.message);
+        }
+      }
+    } catch (error) {
+      // Handle any unexpected errors
+      console.error("Google Login Error:", error.message);
+    }
   };
 
   const handleOtpInputChange = (index, value) => {
