@@ -3,27 +3,42 @@ import React, { useState } from 'react';
 import AuditDropdownFilter from './auditDropdownFilter';
 import Flatpickr from 'react-flatpickr';
 
-const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortedTransactions }) => {
+import RPTAX from '../../images/RPTAX.png';
+import BP from '../../images/BP.png';
+import CTC from '../../images/CTC.png';
+import LCR from '../../images/LCR.png';
+import UR from '../../images/UR.png';
+
+const AuditMobile = ({ auditTrail, searchInput, setSearchInput, handleSearch, handleClearFilter, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedDatee, setSelectedDatee] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [selectedType, setSelectedType] = useState('');
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
-  const handleInputChange = (e) => {
-    const selectedValue = e.target.value;
+  function formatTimeAgo(time_stamp) {
+    const createdAt = new Date(time_stamp);
 
-    setSelectedType(selectedValue);
-  };
+    const day = createdAt.toLocaleDateString('en-US', { day: 'numeric' });
+    const month = createdAt.toLocaleDateString('en-US', { month: 'short' });
+    const time = createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
-  const handleInputChange2 = (e) => {
-    const selectedValue = e.target.value;
+    return `${day} ${month} at ${time}`;
+  }
 
-    setSelectedStatus(selectedValue);
+  const getImage = (admin) => {
+    switch (admin) {
+      case 'RPTAX ADMIN':
+        return RPTAX;
+      case 'BUSINESS ADMIN':
+        return BP;
+      case 'CTC ADMIN':
+        return CTC;
+      case 'LCR ADMIN':
+        return LCR;
+      case 'UR ADMIN':
+        return UR;
+    }
   };
 
     return (
@@ -45,7 +60,7 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
           <div className="absolute w-[270px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
 
               {/* Date Row */}
-              <div className="flex justify-center pb-1.5">
+              {/*<div className="flex justify-center pb-1.5">
                   <span>
                           <Flatpickr
                             id=""
@@ -89,10 +104,9 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                             className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[110px]"
                           />
                     </span>
-                 </div>
-              
+                  </div>*/}
 
-              {/* Transaction ID Row */}
+              {/* ID Row */}
               <div className="flex justify-center">
 
                   <div className="relative flex items-center">
@@ -116,52 +130,29 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                 {/* Type Row */}
                 <div className="flex justify-center py-1.5">
                     <select  onChange={handleInputChange}  value={selectedType}  name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer h-[33.5px] w-[235px]">
-                      <option value="SELECTSTATUS" className="dark:bg-[#3d3d3d]">Select Type</option>
-                      <option value="RPTAXPAYMENT" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
-                      <option value="RPTAXCLEARANCE" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
-                      <option value="BUSINESSPERMIT" className="dark:bg-[#3d3d3d]">Business Permit</option>
-                      <option value="CTC" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
-                      <option value="BIRTHC" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
-                      <option value="DEATHC" className="dark:bg-[#3d3d3d]">Death Certificate</option>
-                      <option value="MARRIAGEC" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
+                      <option value="All" className="dark:bg-[#3d3d3d]">Select Admin</option>
+                      <option value="RPTAX ADMIN" className="dark:bg-[#3d3d3d]">Real Property Tax</option>
+                      <option value="BUS ADMIN" className="dark:bg-[#3d3d3d]">Business Permit</option>
+                      <option value="CTC ADMIN" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
+                      <option value="LCR ADMIN" className="dark:bg-[#3d3d3d]">Local Civil Registry</option>
+                      <option value="UR ADMIN" className="dark:bg-[#3d3d3d]">User Registry</option>
                   </select>
                 </div>
 
                 {/* Status Row */}
                 <div className="flex justify-center ">
-                    <select onChange={handleInputChange2} value={selectedStatus} name="" id="" className={` px-0 text-xs border bg-transparent border-slate-300 pl-4 rounded-sm peer cursor-pointer`}
-                      style={{
-                        width: "235px",
-                        height: "33.5px",
-                        backgroundColor:
-                          selectedStatus === "PENDING" ? "#fef08a" :
-                          selectedStatus === "PAID" ? "#bbf7d0" :
-                          selectedStatus === "PROCESSING" ? "#bfdbfe" :
-                          selectedStatus === "COMPLETE" ? "#fbcfe8" :
-                          selectedStatus === "REJECTED" ? "#fecaca" :
-                          selectedStatus === "CANCELED" ? "#e2e8f0" : 
-                          selectedStatus === "EXPIRED" ? "#fed7aa" : "transparent",
-                        color:
-                          selectedStatus === "PENDING" ? "#a86728" :
-                          selectedStatus === "PAID" ? "#247256" :
-                          selectedStatus === "PROCESSING" ? "#1565C0" :
-                          selectedStatus === "COMPLETE" ? "#a12863" :
-                          selectedStatus === "REJECTED" ? "#a22b34" :
-                          selectedStatus === "CANCELED" ? "#000000" : 
-                          selectedStatus === "EXPIRED" ? "#a23d1e" : "#718096"
-                      }}>
-                      <option value="SELECTSTATUS" className="text-slate-700 bg-white dark:text-slate-200 dark:bg-[#3d3d3d]">Select Status</option>
-                      <option value="PENDING" className="bg-yellow-200 text-yellow-800">Pending</option>
-                      <option value="PAID" className="bg-green-200 text-green-800">Paid</option>
-                      <option value="PROCESSING" className="bg-blue-200 text-blue-800">Processing</option>
-                      <option value="COMPLETE" className="bg-pink-200 text-pink-800">Complete</option>
-                      <option value="REJECTED" className="text-red-800 bg-red-200">Rejected</option>
-                      <option value="CANCELED" className="bg-slate-200 text-slate-800">Canceled</option>
-                      <option value="EXPIRED" className="bg-orange-200 text-orange-800">Expired</option>
+                    <select onChange={handleInputChange2} value={selectedStatus} name="" id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer h-[33.5px] w-[235px]">
+                    <option value="All" className="dark:bg-[#3d3d3d]">Select Activity</option>
+                      <option value="Processing Transaction" className="dark:bg-[#3d3d3d]">Processing Transaction</option>
+                      <option value="Completed Transaction" className="dark:bg-[#3d3d3d]">Completed Transaction</option>
+                      <option value="Rejected Transaction" className="dark:bg-[#3d3d3d]">Rejected Transaction</option>
+                      <option value="Updated Information" className="dark:bg-[#3d3d3d]">Updated Information</option>
+                      <option value="Approved Verification" className="dark:bg-[#3d3d3d]">Approved Verification</option>
+                      <option value="Declined Verification" className="dark:bg-[#3d3d3d]">Declined Verification</option>
                     </select>
                 </div>
 
-                <button type="button" onClick={toggleDropdown} className="bg-blue-500 hover:bg-blue-600 text-white mr-1.5 px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+                <button type="button" onClick={() => { handleSearch(); toggleDropdown(); }} className="bg-blue-500 hover:bg-blue-600 text-white mr-1.5 px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                     <span>Filter</span>
                   </button>
           </div>
@@ -209,57 +200,44 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                 </div> */}
                 {/* {filteredTransactions.length > 0 ? filteredTransactions.map((transaction) => ( */}
                 
+                {auditTrail && auditTrail.length > 0 ? (
+                auditTrail.map((audit) => (
 
                   <div key="" className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
                     <div className=" text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                      Transaction ID:
+                      Audit Trail Details:
                     </div>
                     <div className="px-4 py-5">
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time: </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: </div>
-                      <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
-                        <span>Status:</span>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time Stamp: {formatTimeAgo(audit.time_stamp)} </div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Activity: {audit.activity} </div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">
+                        Admin: <span>{audit.admin}</span>
+                        <img
+                          name="userImage" 
+                          className="inline-block h-10 w-10 rounded-full object-cover object-center"
+                          src={getImage(audit.admin)}
+                        />
                       </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P </div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: {audit.date} </div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Identification Number: {audit.id_no} </div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Changes: {audit.changes} </div>
                       <div className="mt-5 group">
-                        <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-sm mt-2">
+                        {/*<div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-sm mt-2">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
                             <path className="stroke-blue-500" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                             <path className="stroke-blue-500" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
                           <span className="text-xs font-normal">&nbsp;View Details</span>
-                        </div>
+                        </div>*/}
                       </div>
                     </div>  
                   </div>
-               
-                {/* )) : userTransaction.map((transaction) => (
-                    
-                    <div key={transaction.transaction_id} className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
-                    <div className=" text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                        Transaction ID: {transaction.transaction_id}
-                    </div>
-                    <div className="px-4 py-5">
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: {transaction.date}</div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time: {transaction.time}</div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
-                        <div className="whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 my-1">
-                        Status: <StatusBadgeMobile statusType={transaction.status_type} />
-                        </div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P {transaction.amount}</div>
-                        <div className="mt-5 group">
-                        <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-sm mt-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
-                            <path className="stroke-blue-500" strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                            <path className="stroke-blue-500" strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            <span className="text-xs font-normal">&nbsp;View Details</span>
-                        </div>
-                        </div>
-                    </div>  
-                    </div>
-                ))} */}
+                ))
+                ) : (
+                  <div className="text-center text-slate-500 dark:text-slate-400">
+                    No records found.
+                  </div>
+                )}
               </div>
         </div>
         </>
