@@ -72,8 +72,8 @@ const UserSettings =()=>{
   };
   
 
-  // Apply for Verification Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleApplyModal = () => {
       setIsModalOpen(true);
     }

@@ -1,14 +1,37 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 import logo from '../images/mnl.svg';
 import AdminSidebarLinkGroup from './AdminSidebarLinkGroup';
 
 function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
+
+  const { admin_type } = useParams(); 
+
   const location = useLocation();
-  const { pathname, state } = location;
-  const admin_type = pathname.split("/")[2];
+  const pathname = location.pathname;
+
   const trigger = useRef(null);
   const sidebar = useRef(null);
+
+
+  const getAdminDashLink = (admin_type) => {
+    switch (admin_type) {
+      case 'chief_admin':
+        return `/admin_dash_chief/${admin_type}`;
+      case 'rptax_admin':
+        return `/admin_dash_rp/${admin_type}`;
+      case 'business_admin':
+        return `/admin_dash_bp/${admin_type}`;
+      case 'cedula_admin':
+        return `/admin_dash_ctc/${admin_type}`;
+      case 'lcr_admin':
+        return `/admin_dash_lcr/${admin_type}`;
+      case 'registry_admin':
+        return `/admin_dash_ur/${admin_type}`;
+      default:
+        return '/';
+    }
+  };
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true');
@@ -78,7 +101,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
           </button>
 
           {/* Logo */}
-          <NavLink end to={`/indexadmin/${admin_type}`} className="block">
+          <NavLink end to={getAdminDashLink(admin_type)} className="block">
               <img src={logo} width="32" height="32" viewBox="0 0 50 50"/>
           </NavLink>
           

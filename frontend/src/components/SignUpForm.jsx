@@ -10,6 +10,7 @@ import SuffixDropdown from '../partials/profile/SuffixDropdown';
 import CitizenshipDropdown from '../partials/profile/CitizenshipDropdown';
 import CivilStatusDropdown from '../partials/profile/CivilStatusDropdown';
 import ResidencyDropdown from '../partials/profile/ResidencyDropdown';
+import ApplyVerificationModal from '../partials/business/ApplyVerificationModal';
 
 const SignUpForm =()=>{
     const [userReg, setUserReg] = useState({
@@ -26,9 +27,16 @@ const SignUpForm =()=>{
         user_email:"",
         mobile_no:"",
         user_pass:"",
+        user_valid_id_name:"",
+        user_valid_id_short:"",
     });
 
+    const [selectedFiles, setSelectedFiles] = useState([
+      { fieldName: 'user_valid_id', value: null },
+    ]);
+
   const [isChecked, setIsChecked] = useState(false);
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -77,6 +85,39 @@ useEffect(() => {
 }, [userReg.user_pass]);
 
 
+const handleUploadFile = (file) => {
+  
+  setUserReg((prevUserReg) => ({
+    ...prevUserReg,
+    user_valid_id_name: file.name, 
+    user_valid_id_short: getShortName(file.name, 25) 
+  }));
+
+  setSelectedFiles([
+    {
+      fieldName: 'user_valid_id',
+      value: file,
+    },
+  ]);
+}
+
+
+function getShortName(longName, maxCharacters) {
+  if (!longName) {
+      return '-';
+  }
+
+  const fileNameWithoutExtension = longName.split('.').slice(0, -1).join('.');
+  const extension = longName.split('.').pop();
+
+  const truncatedName = fileNameWithoutExtension.length > maxCharacters - extension.length - 5
+      ? fileNameWithoutExtension.substring(0, maxCharacters - extension.length - 5) + '..'
+      : fileNameWithoutExtension;
+
+  return extension ? truncatedName + '.' + extension : truncatedName;
+}
+
+
 const handleChange = (e) => {
   const { name, value } = e.target;
 
@@ -108,6 +149,7 @@ const handleChange = (e) => {
 
 const [showWarning, setShowWarning] = useState(false);
 
+
 const handleClick = async (e) => {
   e.preventDefault();
 
@@ -128,7 +170,7 @@ const handleClick = async (e) => {
       setTimeout(() => {
         setShowWarning(false);
       }, 4000);
-      return; // Prevent registration if fields are incomplete
+      return;
     }
 
     try {
@@ -145,9 +187,26 @@ const handleClick = async (e) => {
         
         navigate("/register");
       } else {
-        // User does not exist, proceed with registration
+
+        const formData = new FormData();
+
+        selectedFiles.forEach((fileInfo) => {
+          const { fieldName, value } = fileInfo;
+          formData.append(fieldName, value);
+        });
+
+
         const response = await axios.post("http://localhost:8800/register", userReg);
-        if (response.status === 200) {
+
+        const user_id = response.data.user_id;
+
+        const response1 = await fetch(`http://localhost:8800/register/valid-id/${user_id}`, {
+          method: 'POST',
+          body: formData,
+        });
+
+
+        if (response.status === 200 || response1.status === 200) {
           const user_id = response.data.user_id;
           try {
             const res = await axios.get(`http://localhost:8800/email/regis/${user_id}`);
@@ -206,7 +265,7 @@ const handleClick = async (e) => {
         setTimeout(() => {
           setIsSuccess(false);
         }, 3000);
-        navigate("/register");
+        navigate(`/home/${user_id}`);
       }
     } catch (err) {
       console.log(err);
@@ -215,6 +274,8 @@ const handleClick = async (e) => {
 };
 
 console.log(userReg)
+console.log(selectedFiles)
+
   return (
     <div className='bg-white'>
       <div className='flex justify-center'>
@@ -275,9 +336,9 @@ console.log(userReg)
                           return originalDate.toISOString().split('T')[0];
                         })() : '';
                         
-                        setBirthCert((prevData) => ({
+                        setUserReg((prevData) => ({
                           ...prevData,
-                          birthc_date: formattedDate,
+                          birth_date: formattedDate,
                         }))
                       }}
                       options={{
@@ -405,13 +466,15 @@ console.log(userReg)
                     onChange={handleCheckboxChange}
                   />
                 </p>
+                {isChecked && (
                 <button
-                  onClick={handleClick}
-                  type="submit"
-                  className="ml-auto text-slate-500 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full text-sm w-auto px-6 sm:w-[200px] sm:px-0 py-2 text-center dark:border-slate-500 dark:text-slate-500 dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                  onClick={handleApplyModal}
+                  type="button"
+                  className="ml-auto text-slate-500 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full text-sm w-auto px-4 sm:w-[200px] sm:px-0 py-1 text-center dark:border-slate-500 dark:text-slate-500 dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                 >
-                  Verify Account
+                  Upload Valid ID
                 </button>
+                )}
               </div>
                 </div>
    
@@ -453,12 +516,12 @@ console.log(userReg)
             </div>
             
             {/* APPLY FOR VERIFICATION MODAL */}
-            {/* <ApplyVerificationModal
-          isOpen={isModalOpen}
-          handleClose={handleCloseModal}
-          setIsSuccessUpload={setIsSuccessUpload}
-          userID={user_id}
-        /> */}
+            <ApplyVerificationModal
+            isOpen={isModalOpen}
+            onFileSelect={handleUploadFile}
+            handleClose={handleCloseModal}
+            buttonType={'register'}
+        />
     </div>
   );
 }

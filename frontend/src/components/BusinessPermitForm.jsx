@@ -118,6 +118,9 @@ const BusinessPermitForm =()=>{
     bus_page4: '',
     bus_page5: '',
   });
+
+  console.log(selectedFiles)
+  console.log(fileNames)
   
 
   const handleFileSelect = (file, target) => {

@@ -1,5 +1,9 @@
 import { Router } from 'express';
 import conn2 from './connection.js';
+import multer from "multer";
+import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 
@@ -55,8 +59,8 @@ router.post('/', async (req, res) => {
     const hashedPassword = await bcrypt.hash(user_pass, saltRounds);
     const values1 = [plainMobileNo, hashedPassword, primaryKey];
 
-    const query2 = "INSERT INTO user_personal (`user_id`, `f_name`, `l_name`) VALUES ( ?, ?, ?)";
-    const values2 = [primaryKey, req.body.f_name, req.body.l_name];
+    const query2 = "INSERT INTO user_personal (`user_id`, `f_name`, `m_name`, `l_name`, `suffix_type`, `sex_id`, `cvl_id`, `res_id`, `czn_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const values2 = [primaryKey, req.body.f_name, req.body.m_name, req.body.l_name, req.body.suffix_type, req.body.sex_type, req.body.cvl_status, req.body.res_status, req.body.czn_status];
 
     const query3 = "INSERT INTO user_contact (`user_id`, `mobile_no`, `user_email`) VALUES (?, ?, ?)";
     const values3 = [primaryKey, req.body.mobile_no, req.body.user_email];
@@ -64,14 +68,14 @@ router.post('/', async (req, res) => {
     const query4 = "INSERT INTO user_gov_id (`user_id`) VALUES (?)";
     const values4 = [primaryKey];
 
-    const query5 = "INSERT INTO user_birth (`user_id`) VALUES (?)";
-    const values5 = [primaryKey];
+    const query5 = "INSERT INTO user_birth (`user_id`, `birth_date`, `birth_place`) VALUES (?, ?, ?)";
+    const values5 = [primaryKey, req.body.birth_date, req.body.birth_place];
 
     const query6 = "INSERT INTO user_image (`user_id`) VALUES (?)";
     const values6 = [primaryKey];
 
-    const query7 = "INSERT INTO user_verification (`user_id`, `verification_status`, `application_status`) VALUES (?, ?, ?)";
-    const values7 = [primaryKey, verification_status, application_status];
+    const query7 = "INSERT INTO user_verification (`user_id`, `verification_status`, `application_status`, `user_valid_id`) VALUES (?, ?, ?, ?)";
+    const values7 = [primaryKey, verification_status, application_status, req.body.user_valid_id_name];
 
     const query8 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
     const values8 = [primaryKey, formattedDate, notif_title, notif_message];
@@ -108,6 +112,75 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: "Error executing queries" });
     }
 });
+
+
+
+const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+
+  const storage1 = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, path.join(__dirname, '../../frontend/uploads/verification'));
+    },
+    filename: function (req, file, cb) {
+      const originalName = path.parse(file.originalname);
+      req.uniqueFileName = `${originalName.name}_${req.user_id}${originalName.ext}`;
+      cb(null, req.uniqueFileName);
+    },
+  });
+
+
+  const upload1 = multer({
+    storage: storage1,
+    fileFilter: function (req, file, cb) {
+      const allowedFormats = ['.jpg', '.jpeg', '.png'];
+      const extname = path.extname(file.originalname).toLowerCase();
+      if (allowedFormats.includes(extname)) {
+        return cb(null, true);
+      } else {
+        return cb(new Error('Invalid file format. Please upload a JPEG or PNG image.'));
+      }
+    },
+  });
+
+  const setUserMiddleware = (req, res, next) => {
+    req.user_id = req.params.user_id;
+    next();
+  };
+
+
+  router.post('/valid-id/:user_id', setUserMiddleware, upload1.single('user_valid_id'), async (req, res) => {
+    const user_id = req.params.user_id;
+    const uniqueFileName = req.uniqueFileName;
+
+    const status = 'Applying';
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded.' });
+    }
+
+    try {
+      // Check if the user already has a verification image in the database
+      const existingVerification = await queryDatabase("SELECT user_valid_id FROM user_verification WHERE user_id = ?", [user_id]);
+
+      if (existingVerification && existingVerification.length > 0) {
+        // If a verification image exists, update the record
+        await queryDatabase("UPDATE user_verification SET `user_valid_id` = ?, `application_status` = ? WHERE `user_id` = ?", [uniqueFileName, status, user_id]);
+      } else {
+        // If no verification image exists, insert a new record
+        await queryDatabase("INSERT INTO user_verification (`user_id`, `user_valid_id`, `application_status`) VALUES (?, ?, ?)", [user_id, uniqueFileName, status]);
+      }
+
+      res.json({
+        success: true,
+        message: "File uploaded successfully",
+      });
+
+    } catch (error) {
+      console.error('Error during file upload:', error);
+      res.status(500).json({ success: false, message: 'File upload failed' });
+    }
+  });
 
 
 
