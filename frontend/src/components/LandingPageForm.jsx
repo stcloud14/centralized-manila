@@ -201,12 +201,16 @@ const LandingPageForm = () => {
         // Resend verification code or take appropriate action
         console.log("Resending verification code...");
         console.log(verification_code);
-        // Implement code resend logic here
+        setLoading(false);
+        console.log("Verification process completed.");
+        setWrongOtp(true);
+        setTimeout(() => {
+          setWrongOtp(false);
+        }, 4000);
       }
     }finally {
       setLoading(false);
       console.log("Verification process completed.");
-      setWrongOtp(true);
     }
   };
 
