@@ -11,12 +11,56 @@ import AdminUserViewModal from '../admin_partials/admin_modals/AdminUserViewModa
 
 const AdminUserListForm = () => {
 
+  const location = useLocation();
+  const { pathname } = location;
+  const user_id = pathname.split("/")[2];
+
   const [userApplications, setUserApplications] = useState();
+  const [filteredUserApplications, setFilteredUserApplications] = useState([]);
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
   const [isModalOpen, setIsModalOpen] = useState(false);  
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+
+  const [searchInput, setSearchInput] = useState('');
+  const [searchFname, setSearchFname] = useState('');
+  const [searchLname, setSearchLname] = useState('');
+  const [searchEmail, setSearchEmail] = useState('');
+  const [selectedType, setSelectedType] = useState('All');
+  const [selectedStatus, setSelectedStatus] = useState('All');
+
+  useEffect(()=>{
+    const fetchUserApplications= async()=>{
+        try{
+            const res= await axios.get(`http://localhost:8800/adminur/`)
+            const { userlist } = res.data;
+            setUserApplications(userlist);
+            setFilteredUserApplications(userlist);
+        }catch(err){
+            console.log(err)
+        }
+    }
+    fetchUserApplications()
+  },[user_id])
+
+  const handleSearch = () => {
+    const filteredURRegistry = userApplications.filter((transaction) => {
+      const { mobile_no, f_name, l_name, user_email, sex_type, verification_status } = transaction || {};
+      
+      const transactionId = mobile_no?.toString()?.toUpperCase();
+      const isFNameMatch = !searchFname || f_name?.toString()?.toUpperCase().includes(searchFname);
+      const isLNameMatch = !searchLname || l_name?.toString()?.toUpperCase().includes(searchLname);
+      const isEmailMatch = !searchEmail || user_email?.toString()?.toUpperCase().includes(searchEmail);
+      const isIdMatch = transactionId && transactionId.includes(searchInput);
+      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || sex_type === selectedType;
+      const isStatusMatch = !selectedStatus || selectedStatus === 'All' || verification_status === selectedStatus;
+  
+      return isFNameMatch && isLNameMatch && isEmailMatch && isIdMatch && isTypeMatch && isStatusMatch;
+    });
+  
+    setFilteredUserApplications(filteredURRegistry);
+  };
 
   const handleOpenModal = (transaction) => {
     setIsModalOpen(true);
@@ -27,20 +71,26 @@ const AdminUserListForm = () => {
     setIsModalOpen(false);
     setSelectedTransaction(null);
   };
+
+  const handleInputChange = (e) => {
+    const selectedType = e.target.value;
+    setSelectedType(selectedType);
+  };
   
-  useEffect(()=>{
-    const fetchUserApplications= async()=>{
-        try{
-            const res= await axios.get(`http://localhost:8800/adminur/`)
-            const { userlist } = res.data;
-            setUserApplications(userlist);
-            
-        }catch(err){
-            console.log(err)
-        }
-    }
-    fetchUserApplications()
-  },[userApplications])
+  const handleInputChange2 = (e) => {
+    const selectedStatus = e.target.value;
+    setSelectedStatus(selectedStatus);
+  };
+
+  const handleClearFilter = () => {
+    setSearchInput('');
+    setSearchFname('');
+    setSearchLname('');
+    setSearchEmail('');
+    setFilteredUserApplications(userApplications);
+    setSelectedStatus('');
+    setSelectedType('');
+  };
 
 
   const handleRemoveTransaction = (transaction) => {
@@ -85,10 +135,44 @@ const AdminUserListForm = () => {
             
             {isMobileView ? (           
               // For Mobile View
-              <UserListMobile handleOpenModal={handleOpenModal} userApplications={userApplications} />
+              <UserListMobile 
+              handleOpenModal={handleOpenModal} 
+              userApplications={filteredUserApplications}
+              handleSearch={handleSearch}
+              handleClearFilter={handleClearFilter}
+              handleInputChange={handleInputChange}
+              handleInputChange2={handleInputChange2}
+              searchInput={searchInput}
+              setSearchInput={setSearchInput}
+              searchFname={searchFname}
+              setSearchFname={setSearchFname}
+              searchLname={searchLname}
+              setSearchLname={setSearchLname}
+              searchEmail={searchEmail}
+              setSearchEmail={setSearchEmail}
+              selectedType={selectedType}
+              selectedStatus={selectedStatus}
+              />
             ) : (
               // For Desktop View
-              <UserListDesktop handleOpenModal={handleOpenModal} userApplications={userApplications} />
+              <UserListDesktop 
+              handleOpenModal={handleOpenModal} 
+              userApplications={filteredUserApplications}
+              handleSearch={handleSearch}
+              handleClearFilter={handleClearFilter}
+              handleInputChange={handleInputChange}
+              handleInputChange2={handleInputChange2}
+              searchInput={searchInput}
+              setSearchInput={setSearchInput}
+              searchFname={searchFname}
+              setSearchFname={setSearchFname}
+              searchLname={searchLname}
+              setSearchLname={setSearchLname}
+              searchEmail={searchEmail}
+              setSearchEmail={setSearchEmail}
+              selectedType={selectedType}
+              selectedStatus={selectedStatus}
+              />
             )}
           </div>
           <AdminFooter logo={logoSrc} />

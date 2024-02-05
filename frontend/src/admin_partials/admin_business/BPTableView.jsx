@@ -32,7 +32,8 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleRejectConf
               </th>
               <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                 <div className="flex justify-center items-center">
-                  Process
+                {console.log('Section:', section)}
+                {(section === undefined || section.trim() === 'Request') ? 'Complete' : 'Process'}
                 </div>
               </th>
           </tr>
@@ -40,10 +41,10 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleRejectConf
       <tbody> 
 
       {filteredBusinessPermit.length <= 0 && (
-      <tr className="text-center py-4">
-              <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
-                No records found.
-              </div>
+      <tr>
+        <td colSpan="6" className="font-medium text-slate-600 items-center text-center py-4 justify-center dark:text-white">
+          No records found.
+        </td>
       </tr>
       )}
 
@@ -87,8 +88,7 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleRejectConf
               <div className="flex justify-center gap-4 px-1">
                 <div onClick={(e) => { e.stopPropagation(); handleCompleteConfirm(transaction); }} className="group cursor-pointer flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-500 hover:text-green-600">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                   </svg>
                 </div>
               </div>

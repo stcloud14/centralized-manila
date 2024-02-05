@@ -4,14 +4,6 @@ const LCRCardView = ({ filteredBirthCert, filteredDeathCert, filteredMarriageCer
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
-
-          {filteredBirthCert.length <= 0 && filteredDeathCert.length <= 0 && filteredMarriageCert.length <= 0 && (
-          <tr className="text-center py-4">
-                  <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
-                    No records found.
-                  </div>
-          </tr>
-          )}
     
     {/* Birth Certificate */}
     {filteredBirthCert && filteredBirthCert.length > 0 && filteredBirthCert.map((transaction) => (
@@ -154,6 +146,12 @@ const LCRCardView = ({ filteredBirthCert, filteredDeathCert, filteredMarriageCer
         </div>
     </div>
     ))}
+
+        {filteredBirthCert.length <= 0 && filteredDeathCert.length <= 0 && filteredMarriageCert.length <= 0 && (
+                  <div className="font-medium col-span-full text-center text-slate-600 whitespace-nowrap dark:text-white py-[6.5rem]">
+                    No records found.
+                  </div>
+          )}
 
   </div>
   );

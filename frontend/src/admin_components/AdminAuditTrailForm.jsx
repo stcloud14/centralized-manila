@@ -19,6 +19,13 @@ const  AdminAuditTrailForm = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [auditTrail, setAuditTrail] = useState();
+  const [originalAuditTrail, setOriginalAuditTrail] = useState([]);
+
+  const [searchInput, setSearchInput] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDatee, setSelectedDatee] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('All');
+  const [selectedType, setSelectedType] = useState('All');
 
 
   useEffect(() => {
@@ -26,14 +33,13 @@ const  AdminAuditTrailForm = () => {
       try {
         const res = await axios.get(`http://localhost:8800/audittrail/`);
         setAuditTrail(res.data);
+        setOriginalAuditTrail(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchAuditTrail();
   }, [user_id]);
-
-  
 
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
 
@@ -49,10 +55,64 @@ const  AdminAuditTrailForm = () => {
     };
   }, []);
 
+  const handleSearch = () => {
+    const filteredAuditTrails = originalAuditTrail.filter((transaction) => {
+      const transactionId = transaction.id_no?.toString().toUpperCase();
+  
+      const isDateInRange = (() => {
+        if (!selectedDate || !selectedDatee) {
+          return true; // No date range selected, include all transactions
+        }
+  
+        const transactionDate = new Date(transaction.time_stamp);
+        const startDate = new Date(selectedDate);
+        const endDate = new Date(selectedDatee);
+        endDate.setHours(23, 59, 59, 999);
+  
+        return startDate <= transactionDate && transactionDate <= endDate;
+      });
+  
+      return (
+        transactionId &&
+        transactionId.includes(searchInput) &&
+        isDateInRange() &&
+        (!selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || transaction.admin === selectedType) &&
+        (!selectedStatus || selectedStatus === 'All' || transaction.activity.toLowerCase() === selectedStatus.toLowerCase())
+      );
+    });
+  
+    setAuditTrail([...filteredAuditTrails]);
+  };
+   
+  const handleClearFilter = () => {
+    setSearchInput('');
+    setAuditTrail(originalAuditTrail);
+    setSelectedDate('');
+    setSelectedDatee('');
+    setSelectedStatus('');
+    setSelectedType('');
+    setSelectedStatus('');
+    setSelectedType('');
+  };
+
+  // For handle sorting and filtering
+  // useEffect(() => {
+  // }, [auditTrail, selectedDate, selectedDatee, selectedType, selectedStatus]);
+
+
+  const handleInputChange = (e) => {
+    const selectedType = e.target.value;
+    console.log("Dropdown Value Changed:", selectedType);
+    setSelectedType(selectedType);
+  };
+  
+  const handleInputChange2 = (e) => {
+    const selectedStatus = e.target.value;
+    console.log("Dropdown Value Changed:", selectedStatus);
+    setSelectedStatus(selectedStatus);
+  };
 
   const logoSrc = '../src/images/mnl_footer.svg';
-
-
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -71,10 +131,38 @@ const  AdminAuditTrailForm = () => {
                  
             {isMobileView ? (           
               // For Mobile View
-              <AuditMobile  />
+              <AuditMobile
+              auditTrail={auditTrail} 
+              searchInput={searchInput}   
+              setSearchInput={setSearchInput}
+              handleSearch={handleSearch} 
+              handleClearFilter={handleClearFilter}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              selectedDatee={selectedDatee}
+              setSelectedDatee={setSelectedDatee}
+              selectedStatus={selectedStatus}
+              handleInputChange={handleInputChange}
+              handleInputChange2={handleInputChange2}
+              selectedType={selectedType}
+              />
             ) : (
               // For Desktop View
-              <AuditDesktop auditTrail={auditTrail} />
+              <AuditDesktop 
+              auditTrail={auditTrail} 
+              searchInput={searchInput}   
+              setSearchInput={setSearchInput}
+              handleSearch={handleSearch} 
+              handleClearFilter={handleClearFilter}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              selectedDatee={selectedDatee}
+              setSelectedDatee={setSelectedDatee}
+              selectedStatus={selectedStatus}
+              handleInputChange={handleInputChange}
+              handleInputChange2={handleInputChange2}
+              selectedType={selectedType}
+              />
             )}
           </div>
           <AdminFooter logo={logoSrc} />

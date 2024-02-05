@@ -24,74 +24,79 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState();
   const [transType, setTransType] = useState();
-  const [filterApplied, setFilterApplied] = useState(false);
-  const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
-  const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
+  const [selectType, setSelectType] = useState('');
+  const [searchLName, setSearchLName] = useState('');
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
-  
+
+  const [filterApplied, setFilterApplied] = useState(false);
+  const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
+  const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
+  const [lastSelectedBusinessType, setLastSelectedBusinessType] = useState(null);
+
   const handleSearch = (transaction) => {
-    // Check if selectedTransaction is defined
-    if (!transaction) {
-      return false;
-    }
+    const transactionId = (transaction?.transaction_id || '').toUpperCase();
+    const tinId = (transaction?.bus_tin || '').toUpperCase();
+    const businessType = (transaction?.trans_type || '').toUpperCase();
   
-    const transactionId = transaction.transaction_id?.toUpperCase();
-    const query = searchQuery?.toUpperCase();
-    
-    // Check if the transaction ID includes the search query
-    const isTransactionMatch = transactionId?.includes(query);
-    
-    // Check if the transaction date is within the selected date range only if filter is applied
+    const query = (searchQuery || searchTIN || '').toUpperCase();
+  
+    const isTINMatch = tinId.includes(query);
+    const isTransactionMatch = transactionId.includes(query);
+  
+    // Check if the transaction date is within the selected date range only if the filter is applied
     const isDateInRange =
       !filterApplied ||
-      (!lastSelectedFromDate || new Date(transaction.date) >= new Date(lastSelectedFromDate)) &&
-      (!lastSelectedToDate || new Date(transaction.date) <= new Date(lastSelectedToDate));
+      (!lastSelectedFromDate || new Date(transaction?.date) >= new Date(lastSelectedFromDate)) &&
+      (!lastSelectedToDate || new Date(transaction?.date) <= new Date(lastSelectedToDate));
   
-    // Check if the transaction type matches the selected type
-    const isTypeMatch =
-      !transType ||
-      transaction?.trans_type === transType ||
-      transaction?.type === transType;
+    // Check if business type filtering should be applied
+    const isBusinessTypeMatch =
+      !filterApplied ||
+      !selectType ||
+      selectType === 'All' ||
+      (lastSelectedBusinessType && businessType.includes(lastSelectedBusinessType.toUpperCase()));
   
-    // Include type and PIN in the search query check
-    const isQueryMatch =
-      query === '' ||
-      transactionId?.includes(query) ||
-      transaction?.type?.toUpperCase()?.includes(query) ||
-      (query === 'BIRTH CERTIFICATE' && transaction?.type === 'Birth Certificate') ||
-      (query === 'DEATH CERTIFICATE' && transaction?.type === 'Death Certificate') ||
-      (query === 'MARRIAGE CERTIFICATE' && transaction?.type === 'Marriage Certificate');
+    return (isTransactionMatch || isTINMatch) && isBusinessTypeMatch && isDateInRange;
+  };
   
-    return isTransactionMatch && isDateInRange && isTypeMatch && isQueryMatch;
-  };  
 
   const filteredBirthCert = birthCert ? birthCert.filter(handleSearch) : [];
   const filteredDeathCert = deathCert ? deathCert.filter(handleSearch) : [];
   const filteredMarriageCert = marriageCert ? marriageCert.filter(handleSearch) : [];
-    
+
   const handleFilterClick = () => {
-    // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date has changed
-    if (selectedDate !== lastSelectedFromDate || selectedDatee !== lastSelectedToDate) {
+    // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date or business type has changed
+    if (
+      selectedDate !== lastSelectedFromDate ||
+      selectedDatee !== lastSelectedToDate ||
+      selectType !== lastSelectedBusinessType
+    ) {
       setFilterApplied(true);
       setLastSelectedFromDate(selectedDate);
       setLastSelectedToDate(selectedDatee);
+      setLastSelectedBusinessType(selectType);
+    } else {
+      // Reset filter when no changes are made
+      setFilterApplied(false);
     }
   };
   
   useEffect(() => {
-    // Reset filter when ctcCedula changes
+    // Reset filter when businessPermit changes
     setFilterApplied(false);
   }, [birthCert, deathCert, marriageCert]);
-  
+
   const handleClearClick = () => {
+    // Clear the selected dates, business type, and other modal-related data
     setSelectedDate(null);
     setSelectedDatee(null);
     setSearchQuery('');
+    setSelectType('All'); // Reset selectType to 'All'
+    // ... (other modal-related state variables you want to clear)
     setFilterApplied(false);
-    setTransType('All');
   };
 
   const handleToggleView = (mode) => {
@@ -313,7 +318,7 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
         {/* Requests Area */}
         <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200">
           <div className="px-5 py-5">
-            <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>Processing Section</h1>
+            <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>Local Civil Registry Processing</h1>
 
             {isSuccess && (                
             <div className="my-5 text-center">
@@ -408,7 +413,7 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
               {/* Type Row */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block text-xs">Type:</span>
-                  <select  value={transType} onChange={(e) => setTransType(e.target.value)} name="" id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                  <select  value={selectType} onChange={(e) => setSelectType(e.target.value)} name="" id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
                     <option value="All" className="dark:bg-[#3d3d3d]">Select Type</option>
                     <option value="Birth Certificate" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
                     <option value="Marriage Certificate" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
@@ -430,33 +435,18 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
                 </div>
               </div>
 
-                {/* TIN */}
-                {/*
-                <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                  <span className="hidden sm:block pr-10 text-xs">TIN:</span>
+              {/* Last Name */}
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                <span className="hidden sm:block pr-10 text-xs">Last Name:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search TIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchLName} onChange={(e) => setSearchLName(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search Last Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
-              </div>* */}
-
-                {/* PIN */}
-                {/*
-                <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                  <span className="hidden sm:block pr-10 text-xs">PIN:</span>
-                <div className="relative flex items-center">
-                  <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
-                  </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search PIN..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-                </div>
-              </div>* */}
+              </div>
 
               <button type="button" onClick={handleFilterClick} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>

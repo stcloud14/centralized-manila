@@ -4,15 +4,6 @@ const BPCardView = ({filteredBusinessPermit, handleModalOpen, handleRejectConfir
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
 
-        {filteredBusinessPermit.length <= 0 && (
-        <tr className="text-center py-4">
-                <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
-                  No records found.
-                </div>
-        </tr>
-        )}
-
-
         {filteredBusinessPermit && filteredBusinessPermit.length > 0 && filteredBusinessPermit.map((transaction) => (
               
           <div onClick={(e) => handleModalOpen(transaction, 'Business Permit', e)} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm flex flex-col">
@@ -44,7 +35,8 @@ const BPCardView = ({filteredBusinessPermit, handleModalOpen, handleRejectConfir
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
               </svg>
-              <span className="text-xs font-normal">&nbsp;Process</span>
+              <span className="text-xs font-normal">&nbsp;                {console.log('Section:', section)}
+                {(section === undefined || section.trim() === 'Request') ? 'Complete' : 'Process'}</span>
             </div>
             ) : ( 
               <div onClick={(e) => { e.stopPropagation(); handleCompleteConfirm(transaction); }}  className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
@@ -58,6 +50,12 @@ const BPCardView = ({filteredBusinessPermit, handleModalOpen, handleRejectConfir
             </div>
           </div>
         ))}
+
+        {filteredBusinessPermit.length <= 0 && (
+                <div className="font-medium col-span-full text-center text-slate-600 whitespace-nowrap dark:text-white py-[6.5rem]">
+                  No records found.
+                </div>
+        )}
   
       
         </div>
