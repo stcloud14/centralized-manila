@@ -216,18 +216,18 @@ const handleClick = async (e) => {
 
 console.log(userReg)
   return (
-    <div className='bg-white'>
-      <div className='flex justify-center'>
-        <div className='flex flex-col items-center'>
-          <img src='./src/images/mnl.svg' width="100" height="100" className='mt-10' />
-          <h1 className='font-normal mb-16 text-slate-500'>Centralized Manila</h1>
-        </div>
-      </div>
+          <div className='bg-white'>
+            <div className='flex justify-center'>
+              <div className='flex flex-col items-center'>
+                <img src='./src/images/mnl.svg' width="100" height="100" className='mt-10' />
+                <h1 className='font-normal mb-16 text-slate-500'>Centralized Manila</h1>
+              </div>
+            </div>
    
             <div className='form px-6 sm:px-6 md:px-12 lg:px-64'>
             {isSuccess && (
               <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
-                Successful Register!
+                Registration successful!
               </div>
             )}
             {showWarning && (
@@ -235,19 +235,19 @@ console.log(userReg)
                 Please fill in all required fields before proceeding.
               </div>
             )}
-            <div className="grid md:grid-cols-3 md:gap-6 sm:grid-cols-1">
-                    <div className="relative z-0 w-full mb-6 group">
+                <div className="grid md:grid-cols-3 md:gap-6 sm:grid-cols-1">
+                  <div className="relative z-0 w-full mb-6 group">
                     <input onChange={handleChange} value={userReg.f_name} type="text" name="f_name" id="f_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
                     <label htmlFor="f_name" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
                     <input onChange={handleChange} value={userReg.m_name} type="text" name="m_name" id="m_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
                     <label htmlFor="m_name" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
                     <input onChange={handleChange} value={userReg.l_name} type="text" name="l_name" id="l_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
                     <label htmlFor="l_name" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
-                    </div>
+                  </div>
                 </div>
 
                 <div className="grid md:grid-cols-6 md:gap-6 gap-x-4 sm:grid-cols-1">
@@ -443,8 +443,6 @@ console.log(userReg)
                 </div>
                  )}
                  </div>
-
-
             </div>
 
             <div className="pt-2 pb-16 text-sm text-slate-500 text-center">
