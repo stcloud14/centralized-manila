@@ -40,21 +40,27 @@ const ComingSoon = () => {
 
         {/*  Content Area of 3rd Button */}
         <main ref={contentRef} className="overflow-y-auto">
-          <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#181818] dark:border-[#181818] shadow-lg rounded-sm border border-slate-200 mx-4 my-4" data-aos="zoom-in" data-aos-duration="1500">
-            <div className="px-7 mx-0 md:px-20 md:mx-10 py-5 items-center text-center">
-                <div className='animate-bounce motion-safe font-medium md:text-5xl text-xl text-slate-700 dark:text-white mt-10'>
-                    Coming Soon
-                </div>
+        <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#181818] dark:border-[#181818] shadow-lg rounded-sm border border-slate-200 mx-4 my-4" data-aos="zoom-in" data-aos-duration="1500">
+    <div className="px-7 mx-0 md:px-20 md:mx-10 py-5 items-center text-center">
+        <div className='animate-bounce motion-safe font-medium md:text-5xl text-xl text-slate-700 dark:text-white mt-10'>
+            Coming Soon
+        </div>
 
-                <div className='text-sm pt-1'>
-                    Stay tuned for more updates!
-                </div>
+        <div className='md:text-sm text-xs pt-1 md:mx-44'>
+            Exciting news – soon, you'll also be able to obtain your Health Certificate seamlessly here at Centralized <span className='text-blue-600 font-medium'> M</span>
+                    <span className='text-red-500 font-medium'>a</span>
+                    <span className='text-yellow-500 font-medium'>n</span>
+                    <span className='text-green-500 font-medium'>i</span>
+                    <span className='text-blue-600 font-medium'>l</span>
+                    <span className='text-red-500 font-medium'>a</span>. Keep an eye out for further details.
+        </div>
 
-                <div className='py-10'>
-                    <img src={comingsoon} className='h-72 w-auto mx-auto' />
-                </div>
-            </div>
-          </div>
+        <div className='py-10'>
+            <img src={comingsoon} className='h-72 w-auto md:pr-0 pr-4 mx-auto object-cover object-fit' />
+        </div>
+    </div>
+</div>
+
 
           <Footer logo={logoSrc} />
         </main>
