@@ -536,9 +536,9 @@ const LandingPageForm = () => {
                         onClick={ResendOTP}
                         disabled={isButtonDisabled}
                       >
-                        Resend-OTP <span className='font-bold'>{countdown}</span>
+                        Resend-OTP Seconds: <span className='font-bold'>{countdown}</span>
                       </button>
-                            )}
+                )}
 
                   {/* Verify Button */}
                   <div className="text-center">
