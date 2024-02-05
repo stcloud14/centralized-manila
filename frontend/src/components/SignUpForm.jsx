@@ -14,7 +14,15 @@ import ResidencyDropdown from '../partials/profile/ResidencyDropdown';
 const SignUpForm =()=>{
     const [userReg, setUserReg] = useState({
         f_name:"",
+        m_name:"",
         l_name:"",
+        birth_date:"",
+        birth_place:"",
+        sex_type:"",
+        suffix_type:"",
+        cvl_status:"",
+        czn_status:"",
+        res_status:"",
         user_email:"",
         mobile_no:"",
         user_pass:"",
@@ -72,9 +80,9 @@ useEffect(() => {
 const handleChange = (e) => {
   const { name, value } = e.target;
 
-  if (name === 'f_name' || name === 'l_name') {
+  if (name === 'f_name' || name === 'm_name' || name === 'l_name' || name === 'birth_place') {
 
-    const uppercasedValue = (name === 'f_name' || name === 'l_name') ? value.toUpperCase() : value;
+    const uppercasedValue = (name === 'f_name' || name === 'm_name' || name === 'l_name' || name === 'birth_place') ? value.toUpperCase() : value;
 
     setUserReg((prev) => ({ ...prev, [name]: uppercasedValue }));
 
@@ -94,7 +102,7 @@ const handleChange = (e) => {
     }
 
   } else {
-    setUserReg((prev) => ({ ...prev, [name]: [value] }));
+    setUserReg((prev) => ({ ...prev, [name]: value }));
   }
 };
 
@@ -233,7 +241,7 @@ console.log(userReg)
                     <label htmlFor="f_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
-                    <input onChange="" value="" type="text" name="f_name" id="f_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
+                    <input onChange={handleChange} value={userReg.m_name} type="text" name="m_name" id="m_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
                     <label htmlFor="m_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
@@ -244,13 +252,13 @@ console.log(userReg)
 
                 <div className="grid md:grid-cols-4 md:gap-6 sm:grid-cols-1">
                     <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleChange} value="" name="suffix" id="suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
+                    <select onChange={handleChange} value={userReg.suffix_type} defaultValue={0} name="suffix_type" id="suffix_type" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
                       <SuffixDropdown/>
                     </select>
                     <label htmlFor="suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
-                    <select onChange={handleChange} value="" name="sex" id="sex"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
+                    <select onChange={handleChange} value={userReg.sex_type} defaultValue={0} name="sex_type" id="sex_type"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
                       <SexDropdown/>
                     </select>
                     <label htmlFor="sex" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
@@ -306,26 +314,26 @@ console.log(userReg)
                     </label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleChange} value="" type="text" name="birth_place" id="birth_place" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
+                    <input onChange={handleChange} value={userReg.birth_place} type="text" name="birth_place" id="birth_place" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
                     <label htmlFor="birth_place" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Place of Birth</label>
                     </div>
                 </div>
 
                 <div className="grid md:grid-cols-3 md:gap-6 sm:grid-cols-1">
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChange} value="" defaultValue={0} name="civil_status" id="civil_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
+                  <select onChange={handleChange} value={userReg.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer" >
                   <CivilStatusDropdown/>
                   </select>
-                  <label htmlFor="civil_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
+                  <label htmlFor="cvl_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChange} value="" defaultValue={0} name="czn_status" id="czn_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer">
+                  <select onChange={handleChange} value={userReg.czn_status} defaultValue={0} name="czn_status" id="czn_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
                     <CitizenshipDropdown />
                   </select> 
                   <label htmlFor="czn_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChange} value="" defaultValue={0} name="res_status" id="res_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer">
+                  <select onChange={handleChange} value={userReg.res_status} defaultValue={0} name="res_status" id="res_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
                     <ResidencyDropdown />
                   </select> 
                   <label htmlFor="res_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>

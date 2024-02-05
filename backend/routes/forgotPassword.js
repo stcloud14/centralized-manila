@@ -10,7 +10,7 @@ const router = Router();
 
     const sql = "SELECT * FROM user_auth WHERE mobile_no = ?";
 
-    const sql1 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+    const sql1 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)"
 
     conn2.query(sql, [mobile_no], async (err, results) => {
         if (err) {
