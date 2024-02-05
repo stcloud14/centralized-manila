@@ -22,6 +22,8 @@ const LandingPageForm = () => {
   const [isSuccess, setIsSuccess] = useState(false); 
   const successTimeoutRef = useRef(null);
   const FailedTimeoutRef = useRef(null);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [countdown, setCountdown] = useState(false);
   const [Many_Request, setManyRequest] = useState(false);
   const [Acc_Exist, setAccExist] = useState(false);
   const [wrong_otp, setWrongOtp] = useState(false);
@@ -179,6 +181,7 @@ const LandingPageForm = () => {
       setUserAuth((prev) => ({ ...prev, [name]: value }));
     }
   };
+
   const handleVerificationSubmit = async () => {
     try {
       setLoading(true);
@@ -186,6 +189,9 @@ const LandingPageForm = () => {
       // Assuming confirmationResult is declared and set elsewhere in your component
       const codeConfirmation = await confirmationResult.confirm(verification_code);
       console.log("User signed in successfully:", codeConfirmation.user);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
       navigate(`/home/${userAuth.user_id}`);
       console.log(verification_code);
       // Now you can update the state or perform any other actions as needed
@@ -201,6 +207,59 @@ const LandingPageForm = () => {
       setLoading(false);
       console.log("Verification process completed.");
       setWrongOtp(true);
+    }
+  };
+
+  const ResendOTP = async () => {
+    setLoading(true);
+    try {
+      const phoneNumber = `+63${userAuth.mobile_no}`;
+      const appVerifier = window.recaptchaVerifier;
+  
+      // Resend OTP logic
+      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+      window.confirmationResult = confirmationResult;
+      
+
+      const countdownInterval = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+
+      setIsSuccess(true);
+
+      setTimeout(() => {
+        setIsSuccess(false);
+        setIsButtonDisabled(true)
+        setCountdown(60);
+      }, 2000);
+
+      setTimeout(() => {
+
+      setLoading(false);
+    }, 500);
+    setTimeout(() => {
+      clearInterval(countdownInterval);
+      setIsButtonDisabled(false)
+    }, 62000);
+
+
+    } catch (error) {
+      console.error('Error resending OTP:', error);
+  
+      if (error.code === 'auth/too-many-requests') {
+        console.log('Too many requests');
+        setManyRequest(true);
+        setTimeout(() => {
+        setLoading(false);
+        setManyRequest(false);
+      }, 3000);
+      setIsButtonDisabled(true)
+      setTimeout(() => {
+        setIsButtonDisabled(false)
+      }, 60000);
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -236,11 +295,13 @@ const LandingPageForm = () => {
       if (error.code === 'auth/too-many-requests') {
         console.log('Too many requests');
         setManyRequest(true);
+        setIsButtonDisabled(true)
+        setTimeout(() => {
+          setManyRequest(false);
+        }, 3000);
       }
     }
   };
-
-  
 
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -453,6 +514,16 @@ const LandingPageForm = () => {
                     />
                   ))}
                 </div>
+                  
+                {authenticated && (
+                    <button
+                        className="w-full  focus:ring-4 focus:outline-none  font-normal rounded-full text-sm px-10 py-2 text-center  dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 uppercase"
+                        onClick={ResendOTP}
+                        disabled={isButtonDisabled}
+                      >
+                        Resend-OTP <span className='font-bold'>{countdown}</span>
+                      </button>
+                            )}
 
                   {/* Verify Button */}
                   <div className="text-center">
@@ -482,6 +553,7 @@ const LandingPageForm = () => {
                       <button
                         className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 uppercase"
                         onClick={handleVerificationSubmit}
+                        disabled={isButtonDisabled}
                       >
                         Verify
                       </button>
