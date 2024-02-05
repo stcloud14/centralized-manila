@@ -13,8 +13,9 @@ const ForgotPasswordForm = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   /////UPDATE
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false); // New state for loading indicator
-  // const [loadingOTP, setLoadingOTP] = useState(false); // New state for loading indicator
+  const [loadingOTP, setLoadingOTP] = useState(false); // New state for loading indicator
   const [userReg, setUserReg] = useState({
     mobile_no: "",
     user_pass:"",
@@ -24,6 +25,7 @@ const ForgotPasswordForm = () => {
   const [isSuccess, setIsSuccess] = useState(false); 
   const [isSuccess1, setIsSuccess1] = useState(false); 
   const [countdown, setCountdown] = useState(false);
+  const [countdown1, setCountdown1] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [wrong_otp, setWrongOtp] = useState(false);
@@ -88,6 +90,7 @@ const ForgotPasswordForm = () => {
       const codeConfirmation = await confirmationResult.confirm(verification_code);
       console.log("User signed in successfully:", codeConfirmation.user);
       setSendOTP(false)
+        setLoading(false);
       setResetPassword(true)
       console.log(verification_code);
       // Now you can update the state or perform any other actions as needed
@@ -111,58 +114,52 @@ const ForgotPasswordForm = () => {
   };
 
   
-  // const ResendOTP = async () => {
-  //   try {
-  //     const phoneNumber = `+63${userAuth.mobile_no}`;
-  //     const appVerifier = window.recaptchaVerifier;
+  const ResendOTP = async () => {
+    try {
+      const phoneNumber = `+63${userReg.mobile_no}`;
+      const appVerifier = window.recaptchaVerifier;
+      setIsSuccess(true);
   
-  //     // Resend OTP logic
-  //     const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
-  //     window.confirmationResult = confirmationResult;
-      
+      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+      window.confirmationResult = confirmationResult;
 
-  //     const countdownInterval = setInterval(() => {
-  //       setCountdown((prevCountdown) => prevCountdown - 1);
-  //     }, 1000);
+        const countdownInterval1 = setInterval(() => {
+          setCountdown1((prevCountdown1) => prevCountdown1 - 1);
+        }, 1000);
 
-  //     setTimeout (() => {
-  //       setLoadingOTP(true);
-  //       setIsSuccess(true);
-  //     }, 3000);
-
-  //     setTimeout(() => {
-  //       setIsSuccess(false);
-  //       setLoadingOTP(false);
-  //       setIsButtonDisabled(true)
-  //       setCountdown(60);
-  //     }, 2000);
+      setTimeout(() => {
+        setLoadingOTP(false);
+        setIsButtonDisabled(true)
+        setCountdown1(60);
+        setIsSuccess(false);
+      }, 1000);
 
 
-  //   setTimeout(() => {
-  //     clearInterval(countdownInterval);
-  //     setIsButtonDisabled(false)
-  //   }, 62000);
+    setTimeout(() => {
+      clearInterval(countdownInterval1);
+      setIsButtonDisabled(false)
+    }, 61000);
 
 
-  //   } catch (error) {
-  //     console.error('Error resending OTP:', error);
+    } catch (error) {
+      console.error('Error resending OTP:', error);
   
-  //     if (error.code === 'auth/too-many-requests') {
-  //       console.log('Too many requests');
-  //       setManyRequest(true);
-  //       setTimeout(() => {
-  //       setLoadingOTP(false);
-  //       setManyRequest(false);
-  //     }, 3000);
-  //     setIsButtonDisabled(true)
-  //     setTimeout(() => {
-  //       setIsButtonDisabled(false)
-  //     }, 60000);
-  //     }
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
+      if (error.code === 'auth/too-many-requests') {
+        console.log('Too many requests');
+        setManyRequest(true);
+        setTimeout(() => {
+        setLoadingOTP(false);
+        setManyRequest(false);
+      }, 3000);
+      setIsButtonDisabled(true)
+      setTimeout(() => {
+        setIsButtonDisabled(false)
+      }, 60000);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const onCaptchaVerify = () => {
     if (!window.recaptchaVerifier) {
@@ -183,20 +180,37 @@ const ForgotPasswordForm = () => {
   const onSignup = async (recaptchaToken) => {
     const appVerifier = window.recaptchaVerifier;
     const phoneNumber = `+63${userReg.mobile_no}`;
-  
+    setIsSuccess(true);
     try {
       // Only proceed with SMS verification if reCAPTCHA verification is successful
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
       window.confirmationResult = confirmationResult;
-      setIsSuccess(true);
-      successTimeoutRef.current = setTimeout(() => {
+        const countdownInterval1 = setInterval(() => {
+          setCountdown1((prevCountdown1) => prevCountdown1 - 1);
+        }, 1000);
+
+      setTimeout(() => {
+        setIsButtonDisabled(true)
+        setLoadingOTP(true)
+        setCountdown1(60);
         setIsSuccess(false);
-      }, 4000);
+      }, 1000);
+      setTimeout(() => {
+        clearInterval(countdownInterval1);
+        setIsButtonDisabled(false)
+        setLoadingOTP(false)
+      }, 61000);
+
+
     } catch (error) {
       console.error('Error signing in:', error);
       if (error.code === 'auth/too-many-requests') {
         console.log('Too many requests');
         setManyRequest(true);
+        setIsButtonDisabled(true)
+        setTimeout(() => {
+          setManyRequest(false);
+        }, 3000);
       }
     }
   };
@@ -508,7 +522,7 @@ const navigate = useNavigate();
                 ))}
                 </div>
 
-                {/* {loadingOTP ? (
+                {loadingOTP ? (
                       <div className="pt-3 font-medium flex  dark:text-black pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
                       <svg
                       aria-hidden="true"
@@ -527,7 +541,7 @@ const navigate = useNavigate();
                       />
                     </svg>
                     <span className="pl-2">
-                    Resend OTP in: <span className='font-bold'>{countdown} seconds</span>
+                    Resend OTP in: <span className='font-bold'>{countdown1} seconds</span>
                     </span>
                     </div>
                     ) : (
@@ -538,7 +552,7 @@ const navigate = useNavigate();
                       >
                         Resend OTP
                       </button>
-                      )} */}
+                      )}
 
                 <div className="text-center">
                 {loading ? (

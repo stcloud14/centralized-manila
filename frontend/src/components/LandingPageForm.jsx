@@ -218,33 +218,28 @@ const LandingPageForm = () => {
     try {
       const phoneNumber = `+63${userAuth.mobile_no}`;
       const appVerifier = window.recaptchaVerifier;
-  
-      // Resend OTP logic
+      setIsSuccess(true);
+
+      
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
       window.confirmationResult = confirmationResult;
-      
 
       const countdownInterval = setInterval(() => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
 
-      setTimeout (() => {
-        setLoadingOTP(true);
-        setIsSuccess(true);
-      }, 3000);
+      setTimeout(() => {
+        setIsButtonDisabled(true)
+        setLoadingOTP(true)
+        setCountdown(15);
+        setIsSuccess(false);
+      }, 1000);
 
       setTimeout(() => {
-        setIsSuccess(false);
-        setLoadingOTP(false);
-        setIsButtonDisabled(true)
-        setCountdown(60);
-      }, 2000);
-
-
-    setTimeout(() => {
-      clearInterval(countdownInterval);
-      setIsButtonDisabled(false)
-    }, 62000);
+        clearInterval(countdownInterval);
+        setIsButtonDisabled(false)
+        setLoadingOTP(false)
+      }, 16000);
 
 
     } catch (error) {
@@ -258,34 +253,16 @@ const LandingPageForm = () => {
         setManyRequest(false);
       }, 3000);
       setIsButtonDisabled(true)
-      setTimeout(() => {
-        setIsButtonDisabled(false)
-      }, 60000);
       }
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const onCaptchaVerify = () => {
-    if (!window.recaptchaVerifier) {
-      const recaptchaOptions = {
-        size: 'invisible',
-        callback: (response) => onSignup(response),
-        expiredCallback: () => console.log('Recaptcha expired'),
-      };
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', recaptchaOptions);
-    }
-    window.recaptchaVerifier.verify().catch((error) => {
-      console.error('Error verifying reCAPTCHA:', error);
-    });
-  };
-
-
   const onSignup = async (recaptchaToken) => {
     const appVerifier = window.recaptchaVerifier;
     const phoneNumber = `+63${userAuth.mobile_no}`;
-  
+    setIsSuccess(true);
     try {
       // Only proceed with SMS verification if reCAPTCHA verification is successful
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
@@ -295,23 +272,18 @@ const LandingPageForm = () => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
 
-      setTimeout (() => {
-      setIsSuccess(true);
-      }, 3000);
-
       setTimeout(() => {
-        setIsSuccess(false);
         setIsButtonDisabled(true)
         setLoadingOTP(true)
-        setCountdown(60);
-      }, 2000);
+        setCountdown(15);
+        setIsSuccess(false);
+      }, 1000);
 
       setTimeout(() => {
-        setIsSuccess(false);
         clearInterval(countdownInterval);
         setIsButtonDisabled(false)
         setLoadingOTP(false)
-      }, 62000);
+      }, 16000);
 
 
     } catch (error) {
@@ -325,6 +297,21 @@ const LandingPageForm = () => {
         }, 3000);
       }
     }
+  };
+
+  
+  const onCaptchaVerify = () => {
+    if (!window.recaptchaVerifier) {
+      const recaptchaOptions = {
+        size: 'invisible',
+        callback: (response) => onSignup(response),
+        expiredCallback: () => console.log('Recaptcha expired'),
+      };
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', recaptchaOptions);
+    }
+    window.recaptchaVerifier.verify().catch((error) => {
+      console.error('Error verifying reCAPTCHA:', error);
+    });
   };
 
       const handleSubmit = async (e) => {
