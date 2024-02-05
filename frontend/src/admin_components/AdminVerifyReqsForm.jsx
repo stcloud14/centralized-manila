@@ -411,7 +411,7 @@ const AdminVerifyReqsForm =()=>{
                     },
                     }}
                     placeholder="Birthdate..."
-                    className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[110px] sm:w-[150px]"
+                    className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[235px] sm:w-[210px]"
                 />
                 {/*
                 <span> - </span>
