@@ -78,7 +78,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
           </button>
 
           {/* Logo */}
-          <NavLink end to={`/indexadmin/${admin_type}`} className="block">
+          <NavLink end to={`/admin_dash_chief/${admin_type}`} className="block">
               <img src={logo} width="32" height="32" viewBox="0 0 50 50"/>
           </NavLink>
           

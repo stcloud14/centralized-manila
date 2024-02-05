@@ -231,7 +231,7 @@ const LandingPageForm = () => {
       setTimeout(() => {
         setIsButtonDisabled(true)
         setLoadingOTP(true)
-        setCountdown(15);
+        setCountdown(30);
         setIsSuccess(false);
       }, 1000);
 
@@ -239,7 +239,7 @@ const LandingPageForm = () => {
         clearInterval(countdownInterval);
         setIsButtonDisabled(false)
         setLoadingOTP(false)
-      }, 16000);
+      }, 31000);
 
 
     } catch (error) {
@@ -275,7 +275,7 @@ const LandingPageForm = () => {
       setTimeout(() => {
         setIsButtonDisabled(true)
         setLoadingOTP(true)
-        setCountdown(15);
+        setCountdown(30);
         setIsSuccess(false);
       }, 1000);
 
@@ -283,7 +283,7 @@ const LandingPageForm = () => {
         clearInterval(countdownInterval);
         setIsButtonDisabled(false)
         setLoadingOTP(false)
-      }, 16000);
+      }, 31000);
 
 
     } catch (error) {
