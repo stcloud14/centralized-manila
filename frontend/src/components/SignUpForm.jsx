@@ -395,7 +395,7 @@ console.log(userReg)
                 <p className="flex mt-0.5 ml-auto">
                   
                 <p className="ml-auto mb-2 text-xs sm:text-sm text-slate-700 text-justify pointer-events-none">
-                  <span className="font-medium">Yes</span>
+                  <span className="font-sm">Yes</span>
                   </p>
                   <input
                     id="bus_terms"
