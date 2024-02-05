@@ -41,16 +41,15 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
     const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
     const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
     const [lastSelectedBusinessType, setLastSelectedBusinessType] = useState(null);
-
+    const [filteredSearchQuery, setFilteredSearchQuery] = useState(''); // Store the filtered search query
+    const [filteredSearchTIN, setFilteredSearchTIN] = useState(''); // Store the filtered search TIN
+    
     const handleSearch = (transaction) => {
       const transactionId = (transaction?.transaction_id || '').toUpperCase();
       const tinId = (transaction?.bus_tin || '').toUpperCase();
-      const businessType = (transaction?.bus_type || '').toUpperCase();
     
-      const query = (searchQuery || searchTIN || '').toUpperCase();
-    
-      const isTINMatch = tinId.includes(query);
-      const isTransactionMatch = transactionId.includes(query);
+      const isTINMatch = tinId.includes(filteredSearchTIN.toUpperCase()); // Use the stored filtered TIN
+      const isTransactionMatch = transactionId.includes(filteredSearchQuery.toUpperCase()); // Use the stored filtered query
     
       // Check if the transaction date is within the selected date range only if the filter is applied
       const isDateInRange =
@@ -63,14 +62,13 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
         !filterApplied ||
         !selectType ||
         selectType === 'All' ||
-        (lastSelectedBusinessType && businessType.includes(lastSelectedBusinessType.toUpperCase()));
+        (lastSelectedBusinessType && transaction?.bus_type.includes(lastSelectedBusinessType.toUpperCase()));
     
-      return (isTransactionMatch || isTINMatch) && isBusinessTypeMatch && isDateInRange;
+      return isTransactionMatch && isTINMatch && isBusinessTypeMatch && isDateInRange;
     };
     
-  
     const filteredBusinessPermit = businessPermit ? businessPermit.filter(handleSearch) : [];
-  
+    
     const handleFilterClick = () => {
       // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date or business type has changed
       if (
@@ -86,23 +84,33 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
         // Reset filter when no changes are made
         setFilterApplied(false);
       }
+    
+      // Store the search values when the filter button is clicked
+      setFilteredSearchQuery(searchQuery);
+      setFilteredSearchTIN(searchTIN);
     };
     
     useEffect(() => {
       // Reset filter when businessPermit changes
       setFilterApplied(false);
+      // Reset stored search values when businessPermit changes
+      setFilteredSearchQuery('');
+      setFilteredSearchTIN('');
     }, [businessPermit]);
-  
+    
     const handleClearClick = () => {
       // Clear the selected dates, business type, and other modal-related data
       setSelectedDate(null);
       setSelectedDatee(null);
       setSearchQuery('');
+      setSearchTIN('');
       setSelectType('All'); // Reset selectType to 'All'
       // ... (other modal-related state variables you want to clear)
       setFilterApplied(false);
+      // Reset stored search values when clear button is clicked
+      setFilteredSearchQuery('');
+      setFilteredSearchTIN('');
     };
-  
     
 
     const handleToggleView = (mode) => {

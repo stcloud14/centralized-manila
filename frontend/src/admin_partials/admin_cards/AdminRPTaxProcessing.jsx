@@ -28,21 +28,22 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
   const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
   const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
   const [lastSelectedTransType, setlastSelectedTransType] = useState(null);
-  const [searchTDN, setSearchTDN] = useState('');
-  const [searchPIN, setSearchPIN] = useState('');
+  const [searchTDN, setFilteredSearchTDN] = useState(''); // Store the filtered search TIN
+  const [searchPIN, setFilteredSearchPIN] = useState(''); // Store the filtered search PIN
   const [selectType, setSelectType] = useState('');
-
+  const [filteredSearchQuery, setFilteredSearchQuery] = useState(''); // Store the filtered search query
+  const [filterTDN, setfilteredTDN] = useState('');
+  const [filterPIN, setfilteredPIN] = useState('');
+  
   const handleSearch = (transaction) => {
     const transactionId = (transaction?.transaction_id || '').toUpperCase();
     const tdnId = (transaction?.rp_tdn || '').toUpperCase();
     const pinId = (transaction?.rp_pin || '').toUpperCase();
     const transacType = (transaction?.trans_type || '').toUpperCase();
   
-    const query = (searchQuery || searchTDN || searchPIN || '').toUpperCase();
-  
-    const isTDNMatch = tdnId.includes(query);
-    const isPINMatch = pinId.includes(query);
-    const isTransactionMatch = transactionId.includes(query);
+    const isTDNMatch = tdnId.includes(filterTDN.toUpperCase());
+  const isPINMatch = pinId.includes(filterPIN.toUpperCase());
+    const isTransactionMatch = transactionId.includes(filteredSearchQuery.toUpperCase());
   
     // Check if the transaction date is within the selected date range only if the filter is applied
     const isDateInRange =
@@ -57,13 +58,12 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
       selectType === 'All' ||
       (lastSelectedTransType && transacType.includes(lastSelectedTransType.toUpperCase()));
   
-    return (isTransactionMatch || isTDNMatch || isPINMatch) && isTransTypeMatch && isDateInRange;
+    return isTransactionMatch && isTDNMatch && isPINMatch && isTransTypeMatch && isDateInRange;
   };
-  
   
   const filteredTaxClearance = taxClearance ? taxClearance.filter(handleSearch) : [];
   const filteredTaxPayment = taxPayment ? taxPayment.filter(handleSearch) : [];
-
+  
   const handleFilterClick = () => {
     // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date or business type has changed
     if (
@@ -79,13 +79,18 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
       // Reset filter when no changes are made
       setFilterApplied(false);
     }
+  
+    // Store the search values when the filter button is clicked
+    setFilteredSearchQuery(searchQuery);
+    setfilteredTDN(searchTDN);
+    setfilteredPIN(searchPIN);
   };
   
   useEffect(() => {
     // Reset filter when businessPermit changes
     setFilterApplied(false);
   }, [taxClearance, taxPayment]);
-
+  
   const handleClearClick = () => {
     // Clear the selected dates, business type, and other modal-related data
     setSelectedDate(null);
@@ -94,9 +99,10 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
     setSelectType('All'); // Reset selectType to 'All'
     // ... (other modal-related state variables you want to clear)
     setFilterApplied(false);
-    setSearchTDN('');
-    setSearchTDN('');
+    setfilteredTDN('');
+    setfilteredPIN('');
   };
+  
   const toggleDropdown = () => {
     console.log('Toggling dropdown state');
     setDropdownOpen(!isDropdownOpen);
