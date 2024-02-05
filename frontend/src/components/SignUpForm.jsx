@@ -230,32 +230,32 @@ console.log(userReg)
             <div className="grid md:grid-cols-3 md:gap-6 sm:grid-cols-1">
                     <div className="relative z-0 w-full mb-6 group">
                     <input onChange={handleChange} value={userReg.f_name} type="text" name="f_name" id="f_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
-                    <label htmlFor="f_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
+                    <label htmlFor="f_name" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
                     <input onChange="" value="" type="text" name="f_name" id="f_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
-                    <label htmlFor="m_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
+                    <label htmlFor="m_name" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Name</label>
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
                     <input onChange={handleChange} value={userReg.l_name} type="text" name="l_name" id="l_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
-                    <label htmlFor="l_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
+                    <label htmlFor="l_name" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
                     </div>
                 </div>
 
-                <div className="grid md:grid-cols-4 md:gap-6 sm:grid-cols-1">
-                    <div className="relative z-0 w-full mb-6 group">
+                <div className="grid md:grid-cols-6 md:gap-6 gap-x-4 sm:grid-cols-1">
+                  <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleChange} value="" name="suffix" id="suffix" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
                       <SuffixDropdown/>
                     </select>
-                    <label htmlFor="suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
+                    <label htmlFor="suffix" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>  
+                  </div>
+                  <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleChange} value="" name="sex" id="sex"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
                       <SexDropdown/>
                     </select>
-                    <label htmlFor="sex" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
+                    <label htmlFor="sex" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
+                  </div>
+                  <div className="relative z-0 w-full col-span-2 mb-6 group">
                     <Flatpickr
                       id='birth_date'
                       name='birth_date'
@@ -300,119 +300,119 @@ console.log(userReg)
                     />
                     <label
                       htmlFor="birth_date"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >
                       Date of Birth
                     </label>
-                    </div>
-                    <div className="relative z-0 w-full mb-6 group">
+                  </div>
+                  <div className="relative z-0 w-full col-span-2 mb-6 group">
                     <input onChange={handleChange} value="" type="text" name="birth_place" id="birth_place" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
-                    <label htmlFor="birth_place" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Place of Birth</label>
-                    </div>
+                    <label htmlFor="birth_place" className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Place of Birth</label>     
+                  </div>
                 </div>
 
                 <div className="grid md:grid-cols-3 md:gap-6 sm:grid-cols-1">
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChange} value="" defaultValue={0} name="civil_status" id="civil_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
+                  <select onChange={handleChange} value="" defaultValue={0} name="civil_status" id="civil_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" >
                   <CivilStatusDropdown/>
                   </select>
-                  <label htmlFor="civil_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
+                  <label htmlFor="civil_status" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChange} value="" defaultValue={0} name="czn_status" id="czn_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer">
+                  <select onChange={handleChange} value="" defaultValue={0} name="czn_status" id="czn_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer">
                     <CitizenshipDropdown />
                   </select> 
-                  <label htmlFor="czn_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
+                  <label htmlFor="czn_status" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                  <select onChange={handleChange} value="" defaultValue={0} name="res_status" id="res_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer">
+                  <select onChange={handleChange} value="" defaultValue={0} name="res_status" id="res_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer">
                     <ResidencyDropdown />
                   </select> 
-                  <label htmlFor="res_status" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
+                  <label htmlFor="res_status" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
                 </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 md:gap-6 sm:grid-cols-1">
                 <div className="relative z-0 w-full mb-6 group ">
                     <input onChange={handleChange} value={userReg.user_email} type="email" name="user_email" id="user_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
-                    <label htmlFor="user_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email Address</label>
+                    <label htmlFor="user_email" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email Address</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group ">
                     <input onChange={handleChange} value={userReg.mobile_no ? `+63 - ${userReg.mobile_no}` : '+63 - '} maxLength={16} type="text" name="mobile_no" id="mobile_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
-                    <label htmlFor="mobile_no" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile Number (+63)</label>
+                    <label htmlFor="mobile_no" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile Number (+63)</label>
                 </div>
                 </div>
 
                 <div className="relative z-0 w-full mb-6 group">
                     <input onChange={handleChange} value={userReg.user_pass} type="password" name="user_pass" id="user_pass" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
-                    <label htmlFor="user_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                    <label htmlFor="user_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                 </div>
 
                 {passwordError && <h3 className="text-red-500 text-xs md:text-sm">{passwordError}</h3>}
 
                 {/* <div class="relative z-0 w-full mb-6 group">
                     <input type="password" name="user_pass1" id="user_pass1" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
-                    <label for="user_pass1" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm Password</label>
+                    <label for="user_pass1" class="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm Password</label>
                 </div> */}
 
-                <div className="grid grid-cols-2 gap-3 md:gap-6 ">
-                <div className="relative z-0 w-full group">
-                  <h1 className="italic text-xs text-slate-400">Password must be:</h1>
-                  
-                  <div className="flex items-center">
-                    <PasswordRuleIcon isValid={passwordCriteria.length} />
-                    <h1 className="italic text-xs">Minimum of 8 Characters</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+                  <div className="relative z-0 w-full group">
+                    <h1 className="italic text-xs text-slate-400">Password must be:</h1>
+                    
+                    <div className="flex items-center">
+                      <PasswordRuleIcon isValid={passwordCriteria.length} />
+                      <h1 className="italic text-xs">Minimum of 8 Characters</h1>
+                    </div>
+
+                    <div className="flex items-center">
+                      <PasswordRuleIcon isValid={passwordCriteria.uppercase && passwordCriteria.lowercase} />
+                      <h1 className="italic text-xs">At Least one uppercase and lowercase letter</h1>
+                    </div>
+
+                    <div className="flex items-center">
+                      <PasswordRuleIcon isValid={passwordCriteria.symbol} />
+                      <h1 className="italic text-xs">At least one symbol (ex. !@#$%^&*.,-=)</h1>
+                    </div>
+
+                    <div className="flex items-center">
+                      <PasswordRuleIcon isValid={passwordCriteria.number} />
+                      <h1 className="italic text-xs">At least one number</h1>
+                    </div>
                   </div>
 
-                  <div className="flex items-center">
-                    <PasswordRuleIcon isValid={passwordCriteria.uppercase && passwordCriteria.lowercase} />
-                    <h1 className="italic text-xs">At Least one uppercase and lowercase letter</h1>
-                  </div>
-
-                  <div className="flex items-center">
-                    <PasswordRuleIcon isValid={passwordCriteria.symbol} />
-                    <h1 className="italic text-xs">At least one symbol (ex. !@#$%^&*.,-=)</h1>
-                  </div>
-
-                  <div className="flex items-center">
-                    <PasswordRuleIcon isValid={passwordCriteria.number} />
-                    <h1 className="italic text-xs">At least one number</h1>
+                  <div className="relative z-0 w-full group flex flex-col items-start">         
+                    <p className="md:ml-auto md:mr-0 mr-auto mb-2.5 text-xs sm:text-sm text-slate-700 pointer-events-none">
+                      Would you like to speed up the verification process?
+                    </p>
+                    <p className="flex mt-0.5 md:ml-auto md:mr-0 mr-auto mb-3">
+                      <p className="ml-auto text-xs sm:text-sm text-slate-600 text-justify pointer-events-none">
+                        <span className="font-medium">Yes</span>
+                      </p>
+                        <input
+                          id="bus_terms"
+                          className="ml-1 mt-0.5 w-4 h-4 border-2 border-gray-400 rounded bg-transparent text-emerald-500 focus:ring-emerald-500 cursor-pointer"
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={handleCheckboxChange}
+                        />
+                    </p>
+                    <button
+                      onClick={handleClick}
+                      type="submit"
+                      className="md:ml-auto md:mr-0 mr-auto text-emerald-500 md:text-sm text-xs md:w-[200px] w-full py-1 text-center hover:text-white border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full"
+                    >
+                      Verify Account
+                    </button>
                   </div>
                 </div>
-                <div className="relative z-0 w-full group flex flex-col items-start">
-                  
-                <p className="ml-auto text-xs sm:text-sm text-slate-700 dark:text-white text-justify pointer-events-none">
-                  Would you like to speed up the verification process?
-                  </p>
-                <p className="flex mt-0.5 ml-auto">
-                  
-                <p className="ml-auto mb-2 text-xs sm:text-sm text-slate-700 dark:text-white text-justify pointer-events-none">
-                  <span className="font-medium">Yes</span>
-                  </p>
-                  <input
-                    id="bus_terms"
-                    className="ml-1 mt-0.5 w-4 h-4 border-2 border-gray-400 rounded bg-transparent text-emerald-500 focus:ring-emerald-500 cursor-pointer"
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={handleCheckboxChange}
-                  />
-                </p>
-                <button
-                  onClick={handleClick}
-                  type="submit"
-                  className="ml-auto text-slate-500 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full text-sm w-auto px-6 sm:w-[200px] sm:px-0 py-2 text-center dark:border-slate-500 dark:text-slate-500 dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                >
-                  Verify Account
-                </button>
-              </div>
-                </div>
+
    
                 <div className="text-center">
                   {loading ? (
-                    <div className="pt-3 font-medium flex  dark:text-black pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
+                    <div className="pt-3 font-medium flex pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
                     <svg
                     aria-hidden="true"
-                    className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    className="w-5 h-5 text-gray-200 animate-spin fill-blue-600"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -431,8 +431,8 @@ console.log(userReg)
                   </span>
                   </div>
                   ) : (
-                <div className="flex flex-col items-center mt-4">
-                  <button onClick={handleClick} type="submit" className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Register</button>
+                <div className="flex flex-col items-center mt-8">
+                  <button onClick={handleClick} type="submit" className="text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 md:py-2.5 py-2 text-center mb-5">Register</button>
                 </div>
                  )}
                  </div>
@@ -440,7 +440,7 @@ console.log(userReg)
 
             </div>
 
-            <div className="mt-4 text-sm text-slate-500 text-center">
+            <div className="pt-2 pb-16 text-sm text-slate-500 text-center">
                 Already have an account? <a className="text-emerald-500 font-bold hover:text-emerald-700" href="../">Login Here</a>
             </div>
             

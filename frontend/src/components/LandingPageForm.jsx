@@ -456,7 +456,7 @@ const LandingPageForm = () => {
             <div className="text-center">
               {!authenticated && (
               <button
-              className="text-blue-500 md:w-3/4 w-full hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+              className="text-blue-500 w-full hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm py-2 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
               type="submit"
               disabled={isSubmitting}  // Disable the button if submitting
               >
@@ -586,7 +586,7 @@ const LandingPageForm = () => {
               <div className='flex justify-center items-center'>
                   <button
                     id="google-login-btn"
-                    className="flex justify-center items-center text-slate-900 md:w-3/4 w-full hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full md:text-sm text-xs px-10 py-2 text-center mb-2 mt-3 dark:focus:ring-slate-300"
+                    className="flex justify-center items-center text-slate-900 w-full hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full md:text-sm text-xs md:mx-6 py-2 text-center mb-2 mt-3 dark:focus:ring-slate-300"
                     type="submit"
                     onClick={handleGoogleLogin}
                   >
@@ -600,18 +600,19 @@ const LandingPageForm = () => {
 
             {!authenticated && (
               <div className='flex justify-center items-center'>
-                  <button
-                    id="google-login-btn"
-                    className="flex justify-center items-center text-slate-900 md:w-3/4 w-full hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full md:text-sm text-xs px-10 py-2 text-center mb-2 mt-3 dark:focus:ring-slate-300"
-                    type="submit"
-                    onClick={handleFacebookLogin}
-                  >
-                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className='w-5 h-5 mr-2' viewBox="0 0 48 48">
-                  <path fill="#1877f2" d="M24 4C12.955 4 4 12.955 4 24c0 11.045 8.955 20 20 20 11.045 0 20-8.955 20-20 0-11.045-8.955-20-20-20zm3.84 24.64h-3.072v14.4H21.12V28.64H18V24h3.12v-2.88c0-3.072 1.824-4.8 4.656-4.8 1.344 0 2.496.096 2.832.144v3.264H27.36c-1.536 0-1.824.72-1.824 1.8V24h3.648L28.8 28.64z"/>
-                  </svg>
-                  Continue with Facebook
-                </button>
-              </div>
+              <button
+                id="google-login-btn"
+                className="flex group justify-center items-center text-slate-900 w-full hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full md:text-sm text-xs md:mx-6 py-2 text-center mb-2 mt-3 dark:focus:ring-slate-300"
+                type="submit"
+                onClick={handleFacebookLogin}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className='w-5 h-5 mr-2 fill-blue-600 group-hover:fill-white' viewBox="0 0 50 50">
+                  <path d="M25,3C12.85,3,3,12.85,3,25c0,11.03,8.125,20.137,18.712,21.728V30.831h-5.443v-5.783h5.443v-3.848 c0-6.371,3.104-9.168,8.399-9.168c2.536,0,3.877,0.188,4.512,0.274v5.048h-3.612c-2.248,0-3.033,2.131-3.033,4.533v3.161h6.588 l-0.894,5.783h-5.694v15.944C38.716,45.318,47,36.137,47,25C47,12.85,37.15,3,25,3z"></path>
+                </svg>
+                Continue with Facebook
+              </button>
+            </div>
+            
             )}
 
             {!authenticated && (
