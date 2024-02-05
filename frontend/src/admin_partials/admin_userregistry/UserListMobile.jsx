@@ -1,20 +1,7 @@
 import React, { useState } from 'react';
 
-const UserListMobile = ({ handleOpenModal, userApplications }) => {
+const UserListMobile = ({ handleOpenModal, userApplications, searchInput, setSearchInput, searchEmail, setSearchEmail, searchFname, setSearchFname, searchLname, setSearchLname, handleClearFilter, handleSearch, handleInputChange, handleInputChange2, selectedType, selectedStatus }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState('');
-
-  const handleInputChange = (e) => {
-    const selectedValue = e.target.value;
-
-    setSelectedType(selectedValue);
-  };
-
-  const handleInputChange2 = (e) => {
-    const selectedValue = e.target.value;
-
-    setSelectedStatus(selectedValue);
-  };
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -54,7 +41,7 @@ const UserListMobile = ({ handleOpenModal, userApplications }) => {
             {isDropdownOpen && (
             <div className="absolute w-[270px] origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-sm shadow-2xl z-20 md:right-10 sm:w-[405px]">
 
-            {/* Last Name */}
+            {/* First Name */}
             <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                 <span className="hidden sm:block pr-10 text-xs">First Name:</span>
               <div className="relative flex items-center">
@@ -63,28 +50,28 @@ const UserListMobile = ({ handleOpenModal, userApplications }) => {
                     <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </span>
-                <input value="" onChange="" id="searchInput" type="text" placeholder="Search First Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                <input value={searchFname} onChange={(e) => setSearchFname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search First Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
               </div>
             </div>
 
-            {/* First Name */}
+            {/* Last Name */}
             <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-              <span className="hidden sm:block pr-10 text-xs">Transaction ID:</span>
+              <span className="hidden sm:block pr-10 text-xs">Last Name:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search Last Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchLname} onChange={(e) => setSearchLname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Last Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
               {/* Activity */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                 <span className="hidden sm:block text-xs">Sex:</span>
-                  <select  value={selectedStatus} onChange={handleInputChange2} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px] sm:w-[210px]">
-                      <option value="All" className="dark:bg-[#3d3d3d]">Select Activity</option>
+                  <select  value={selectedStatus} onChange={handleInputChange} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px] sm:w-[210px]">
+                      <option value="All" className="dark:bg-[#3d3d3d]">Select Sex</option>
                       <option value="Male" className="dark:bg-[#3d3d3d]">Male</option>
                       <option value="Female" className="dark:bg-[#3d3d3d]">Female</option>
                   </select>
@@ -99,7 +86,7 @@ const UserListMobile = ({ handleOpenModal, userApplications }) => {
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search Mobile Number..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchInput} onChange={(e) => setSearchInput(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Mobile Number..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
@@ -112,7 +99,7 @@ const UserListMobile = ({ handleOpenModal, userApplications }) => {
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search Email..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchEmail} onChange={(e) => setSearchEmail(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Email..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
@@ -121,12 +108,12 @@ const UserListMobile = ({ handleOpenModal, userApplications }) => {
                 <span className="hidden sm:block text-xs">Status:</span>
                   <select  value={selectedStatus} onChange={handleInputChange2} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px] sm:w-[210px]">
                       <option value="All" className="dark:bg-[#3d3d3d]">Select Status</option>
-                      <option value="Male" className="dark:bg-[#3d3d3d]">Verified</option>
-                      <option value="Female" className="dark:bg-[#3d3d3d]">Unverified</option>
+                      <option value="Verified" className="dark:bg-[#3d3d3d]">Verified</option>
+                      <option value="Unverified" className="dark:bg-[#3d3d3d]">Unverified</option>
                   </select>
               </div>
 
-              <button type="button" onClick="" className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+              <button type="button" onClick={() => { handleSearch(); toggleDropdown(); }} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
               </div>
@@ -135,7 +122,7 @@ const UserListMobile = ({ handleOpenModal, userApplications }) => {
 
   {/* Clear Button */}
   <div className="w-full sm:w-20 ml-2">
-      <button type="button" onClick="" className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
+      <button type="button" onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
               </svg>
@@ -146,7 +133,9 @@ const UserListMobile = ({ handleOpenModal, userApplications }) => {
             </div>
             </div>
 
-            {userApplications?.map((transaction) => ( 
+            {userApplications?.length > 0 ? (
+            userApplications.map((transaction) => (
+
               <div key={transaction.transaction_id} className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
                 <div className=" text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                   Name: {transaction.l_name}, {transaction.f_name} {transaction.m_name}
@@ -169,7 +158,12 @@ const UserListMobile = ({ handleOpenModal, userApplications }) => {
                   </div>
                 </div>  
               </div>
-              ))}
+              ))
+              ) : (
+                <div className="text-center text-slate-500 dark:text-slate-400">
+                  No records found.
+                </div>
+              )}
           </div>
         </div>
         </>
