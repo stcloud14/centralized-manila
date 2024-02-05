@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DoughnutChart from '../../charts/DoughnutChart';
 import { tailwindConfig } from '../../utils/Utils';
 
-function TopRegions({ topRegions }) {
+  const TopRegions = React.memo(({ topRegions }) => {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -53,6 +53,6 @@ function TopRegions({ topRegions }) {
         </div>
     )
 
-}
+});
 
 export default TopRegions

@@ -4,7 +4,7 @@ import BarChart from '../../charts/BarChart03';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function URstats({ verifiedUsers }) {
+  const URstats = React.memo(({ verifiedUsers }) => {
 
   const totalUsers = verifiedUsers && verifiedUsers.length > 0 ? verifiedUsers[0].total_users : 0;
   const totalUnverified = verifiedUsers && verifiedUsers.length > 0 ? verifiedUsers[0].total_unverified : 0;
@@ -51,6 +51,6 @@ function URstats({ verifiedUsers }) {
         </div>
     )
 
-}
+});
 
 export default URstats

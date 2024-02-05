@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BarChart from '../../charts/BarChart01';
 import { tailwindConfig } from '../../utils/Utils';
 
-function MainCard({ transStats }) {
+const MainCard = React.memo(({ transStats }) => {
 
   const formatDateArray = (dateArray) => {
     return dateArray.map((date) => {
@@ -110,6 +110,6 @@ function MainCard({ transStats }) {
     </div>
     )
 
-}
+});
 
 export default MainCard

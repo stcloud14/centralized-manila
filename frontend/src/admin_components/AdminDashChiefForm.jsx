@@ -25,7 +25,23 @@ import TopCities from '../admin_partials/misc/TopCities';
 import Revenue from '../admin_partials/misc/Revenue';
 import logoImage from '../images/mnl_header_pdf.png';
 
-const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxPayment, taxClearance, businessPermit, cedulaCert, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities })=>{
+const AdminDashChiefForm = React.memo(
+  ({
+    transStats,
+    revenue,
+    verifiedUsers,
+    totalPaid,
+    taxPayment,
+    taxClearance,
+    businessPermit,
+    cedulaCert,
+    birthCert,
+    deathCert,
+    marriageCert,
+    topRegions,
+    topProvinces,
+    topCities
+  }) => {
   
   const location = useLocation();
   const { pathname, state } = location;
@@ -240,7 +256,7 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
   useEffect(() => {
     if (
       transStats &&
-      revenue && 
+      revenue &&
       verifiedUsers &&
       taxPayment &&
       taxClearance &&
@@ -252,12 +268,32 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
       topRegions &&
       topProvinces &&
       topCities
-      ) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+    ) {
+      setIsLoading(true);
     }
-  }, []);
+  }, [
+    transStats,
+    revenue,
+    verifiedUsers,
+    taxPayment,
+    taxClearance,
+    businessPermit,
+    cedulaCert,
+    birthCert,
+    deathCert,
+    marriageCert,
+    topRegions,
+    topProvinces,
+    topCities
+  ]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
+  }, [isLoading]);
 
 
   return (
@@ -327,6 +363,6 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
       </div>
     </div>
   );  
-}
+});
 
 export default AdminDashChiefForm;

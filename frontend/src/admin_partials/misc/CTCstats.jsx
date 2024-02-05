@@ -4,7 +4,7 @@ import BarChart from '../../charts/BarChart03';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function CTCstats({ cedulaCert }) {
+  const CTCstats = React.memo(({ cedulaCert }) => {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -122,6 +122,6 @@ function CTCstats({ cedulaCert }) {
         </div>
     )
 
-}
+});
 
 export default CTCstats

@@ -4,7 +4,7 @@ import BarChart from '../../charts/BarChart03';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function RCstats({ taxClearance }) {
+  const RCstats = React.memo(({ taxClearance }) => {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -122,6 +122,6 @@ function RCstats({ taxClearance }) {
         </div>
     )
 
-}
+});
 
 export default RCstats

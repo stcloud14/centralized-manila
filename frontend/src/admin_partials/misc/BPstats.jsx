@@ -4,7 +4,7 @@ import BarChart from '../../charts/BarChart03';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function BPstats({ businessPermit }) {
+  const BPstats = React.memo(({ businessPermit }) => {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -122,6 +122,6 @@ function BPstats({ businessPermit }) {
         </div>
     )
 
-}
+});
 
 export default BPstats

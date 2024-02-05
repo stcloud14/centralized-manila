@@ -4,7 +4,7 @@ import BarChart from '../../charts/BarChart03';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function DCstats({ deathCert }) {
+  const DCstats = React.memo(({ deathCert }) => {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -122,6 +122,6 @@ function DCstats({ deathCert }) {
         </div>
     )
 
-}
+});
 
 export default DCstats

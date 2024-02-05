@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import LineChart from '../../charts/LineChart02';
 import { tailwindConfig } from '../../utils/Utils';
 
-function Revenue({ revenue, totalAmount, adminType }) {
+  const Revenue = React.memo(({ revenue, totalAmount, adminType }) => {
   const formatDateArray = (dateArray) => {
     return dateArray.map((date) => {
       const [year, month, day] = date.split('-');
@@ -295,6 +295,6 @@ function Revenue({ revenue, totalAmount, adminType }) {
     </div>
     )
 
-}
+});
 
 export default Revenue

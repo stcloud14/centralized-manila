@@ -4,7 +4,7 @@ import BarChart from '../../charts/BarChart03';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function BCstats({ birthCert }) {
+  const BCstats = React.memo(({ birthCert }) => {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -99,6 +99,6 @@ function BCstats({ birthCert }) {
         </div>
     )
 
-}
+});
 
 export default BCstats

@@ -4,7 +4,7 @@ import BarChart from '../../charts/BarChart03';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function MCstats({ marriageCert }) {
+  const MCstats = React.memo(({ marriageCert }) => {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -122,6 +122,6 @@ function MCstats({ marriageCert }) {
         </div>
     )
 
-}
+});
 
 export default MCstats
