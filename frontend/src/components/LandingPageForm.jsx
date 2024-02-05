@@ -229,14 +229,12 @@ const LandingPageForm = () => {
 
       setTimeout(() => {
         setIsSuccess(false);
+        setLoading(false);
         setIsButtonDisabled(true)
         setCountdown(60);
       }, 2000);
 
-      setTimeout(() => {
 
-      setLoading(false);
-    }, 500);
     setTimeout(() => {
       clearInterval(countdownInterval);
       setIsButtonDisabled(false)
@@ -286,10 +284,27 @@ const LandingPageForm = () => {
       // Only proceed with SMS verification if reCAPTCHA verification is successful
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
       window.confirmationResult = confirmationResult;
+
+      const countdownInterval = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+
       setIsSuccess(true);
-      successTimeoutRef.current = setTimeout(() => {
+
+      setTimeout(() => {
         setIsSuccess(false);
-      }, 4000);
+        setIsButtonDisabled(true)
+        setCountdown(60);
+      }, 2000);
+
+      setTimeout(() => {
+        clearInterval(countdownInterval);
+        setIsButtonDisabled(false)
+      }, 62000);
+
+
+
+
     } catch (error) {
       console.error('Error signing in:', error);
       if (error.code === 'auth/too-many-requests') {
@@ -553,7 +568,6 @@ const LandingPageForm = () => {
                       <button
                         className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 uppercase"
                         onClick={handleVerificationSubmit}
-                        disabled={isButtonDisabled}
                       >
                         Verify
                       </button>
