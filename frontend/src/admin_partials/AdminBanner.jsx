@@ -25,6 +25,8 @@ function AdminBanner({ adminType, generateReports}) {
         return 'CTC / Cedula Admin';
       case 'LCR':
         return 'Local Civil Registry Admin';
+      case 'UR':
+        return 'Registry Admin';
       default:
         return 0;
     }

@@ -130,13 +130,13 @@ const LoginAdminForm = () => {
               </div>
             )}
 
-            <div className="mt-4 flex justify-between font-semibold text-sm">
+            {/* <div className="mt-4 flex justify-between font-semibold text-sm">
               <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
                 <input className="mr-2 mt-0.5" type="checkbox" />
                 <span className='lg:text-sm text-xs'>Remember Me</span>
               </label>
               <a className="text-yellow-500 hover:text-blue-700 hover:text-yellow-600 lg:text-sm text-xs" href="#">Forgot Password?</a>
-            </div>
+            </div> */}
 
             <div className="text-center my-5">
               <button

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 
+import { useLocation } from 'react-router-dom';
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -11,21 +12,83 @@ import Flatpickr from 'react-flatpickr';
 
 const AdminVerifyReqsForm =()=>{
 
+  const location = useLocation();
+  const { pathname } = location;
+  const user_id = pathname.split("/")[2];
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
   const [userApplications, setUserApplications] = useState();
+  const [filteredUserApplications, setFilteredUserApplications] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);  
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [isApproved, setIsApproved] = useState(false);
   const [isDeclined, setIsDeclined] = useState(false);
   const [isPlaceholder, setIsPlaceholder] = useState();
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedDatee, setSelectedDatee] = useState('');
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [searchName, setSearchName] = useState('');
+  const [selectedType, setSelectedType] = useState('');
+  const [searchBirthPlace, setSearchBirthPlace] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [searchMobile, setSearchMobile] = useState('');
+  const [searchEmail, setSearchEmail] = useState('');
+  
+  // const [selectedDatee, setSelectedDatee] = useState('');
+  
+
+  useEffect(()=>{
+    const fetchUserApplications= async()=>{
+        try{
+            const res= await axios.get(`http://localhost:8800/adminur/`)
+            const { verify } = res.data;
+            setUserApplications(verify);
+            setFilteredUserApplications(verify);
+        }catch(err){
+            console.log(err)
+        }
+    }
+    fetchUserApplications()
+  },[user_id])
+
+  const handleSearch = () => {
+    const filteredUVRegistry = userApplications.filter((transaction) => {
+      const { f_name, l_name, sex_type,  birth_place, birth_date, user_email, mobile_no} = transaction || {};
+      
+      const transactionId = mobile_no?.toString()?.toUpperCase();
+      const isNameMatch = !searchName || `${f_name} ${l_name}`.toString()?.toUpperCase().includes(searchName);
+      const isEmailMatch = !searchEmail || user_email?.toString()?.toUpperCase().includes(searchEmail);
+      const isBirthPlaceMatch = !searchBirthPlace || birth_place?.toString()?.toUpperCase().includes(searchBirthPlace);
+      const isIdMatch = transactionId && transactionId.includes(searchMobile);
+      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || sex_type === selectedType;
+      const isBirthdateMatch = !selectedDate || (
+        new Date(birth_date).toDateString() === new Date(selectedDate).toDateString()
+      );      
+  
+      return isNameMatch &&  isEmailMatch && isBirthPlaceMatch && isIdMatch && isTypeMatch && isBirthdateMatch;
+    });
+  
+    setFilteredUserApplications(filteredUVRegistry);
+  };
+
+  const handleClearFilter = () => {
+    setFilteredUserApplications(userApplications);
+    setSearchName('');
+    setSelectedType('');
+    setSearchBirthPlace('');
+    setSelectedDate('');  
+    setSearchMobile('');
+    setSearchEmail('');
+  }
+
+  const handleInputChange = (e) => {
+    const selectedType = e.target.value;
+    console.log("Sex Value Changed:", selectedType);
+    setSelectedType(selectedType);
+  };
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -41,20 +104,6 @@ const AdminVerifyReqsForm =()=>{
     setIsModalOpen(false);
     setSelectedTransaction(null);
   };
-  
-  useEffect(()=>{
-    const fetchUserApplications= async()=>{
-        try{
-            const res= await axios.get(`http://localhost:8800/adminur/`)
-            const { verify } = res.data;
-            setUserApplications(verify);
-            
-        }catch(err){
-            console.log(err)
-        }
-    }
-    fetchUserApplications()
-  },[userApplications])
 
 
   const handleRemoveTransaction = (transaction) => {
@@ -303,14 +352,14 @@ const AdminVerifyReqsForm =()=>{
                     <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </span>
-                <input value="" onChange=""  onKeyDown="" id="searchInput" type="text" placeholder="Search Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                <input value={searchName} onChange={(e) => setSearchName(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
               </div>
             </div>
 
               {/* Activity */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                 <span className="hidden sm:block text-xs">Sex:</span>
-                  <select  value="" onChange="" name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px] sm:w-[210px]">
+                  <select value={selectedType} onChange={handleInputChange} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px] sm:w-[210px]">
                       <option value="All" className="dark:bg-[#3d3d3d]">Select Sex</option>
                       <option value="Male" className="dark:bg-[#3d3d3d]">Male</option>
                       <option value="Female" className="dark:bg-[#3d3d3d]">Female</option>
@@ -326,7 +375,7 @@ const AdminVerifyReqsForm =()=>{
                     <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </span>
-                <input value="" onChange=""  onKeyDown="" id="searchInput" type="text" placeholder="Search Birthplace..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                <input value={searchBirthPlace} onChange={(e) => setSearchBirthPlace(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Birthplace..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
               </div>
             </div>
 
@@ -361,9 +410,10 @@ const AdminVerifyReqsForm =()=>{
                         }
                     },
                     }}
-                    placeholder="From"
-                    className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[110px] sm:w-[150px]"
+                    placeholder="Birthdate..."
+                    className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[235px] sm:w-[210px]"
                 />
+                {/*
                 <span> - </span>
                 <Flatpickr
                     value={selectedDatee}
@@ -394,7 +444,7 @@ const AdminVerifyReqsForm =()=>{
                     }}
                     placeholder="To"
                     className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[110px] sm:w-[150px]"
-                />
+                  />*/}
                 </span>
               </div>
 
@@ -407,7 +457,7 @@ const AdminVerifyReqsForm =()=>{
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input  value="" onChange=""  onKeyDown="" id="searchInput" type="text" placeholder="Search Mobile Number..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input  value={searchMobile} onChange={(e) => setSearchMobile(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Mobile Number..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
@@ -420,11 +470,11 @@ const AdminVerifyReqsForm =()=>{
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value="" onChange="" onKeyDown="" id="searchInput" type="text" placeholder="Search Email..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchEmail} onChange={(e) => setSearchEmail(e.target.value.toUpperCase())} onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Email..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
-              <button type="button" onClick="" className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+              <button type="button" onClick={() => { handleSearch(); toggleDropdown(); }} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
               </div>
@@ -433,7 +483,7 @@ const AdminVerifyReqsForm =()=>{
 
             {/* Clear Button */}
             <div className="w-full sm:w-20 ml-2">
-            <button type="button" onClick="" className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
+            <button type="button" onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
               </svg>
@@ -446,7 +496,8 @@ const AdminVerifyReqsForm =()=>{
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:gap-6 gap-2">
 
                 {/* Card Sample */}
-                {userApplications?.map((transaction) => (
+                {filteredUserApplications?.length > 0 ? (
+                filteredUserApplications.map((transaction) => (
                 <div onClick={() => handleOpenModal(transaction)} key={transaction.transaction_id} className="cursor-pointer bg-white dark:bg-[#333333] shadow-[0_4px_10px_-1px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_10px_-1px_rgba(0,0,0,0.2)] rounded-sm mb-4 flex flex-col">
                   <div className="text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                     Name: {transaction.l_name}, {transaction.f_name} {transaction.m_name} 
@@ -484,7 +535,12 @@ const AdminVerifyReqsForm =()=>{
                     </div>
                   </div>
                 </div>
-                ))} 
+                ))
+                ) : (
+                  <div className="text-center text-gray-500 mt-4">
+                    No records found.
+                  </div>
+                )}
 
             {isModalOpen && selectedTransaction && (
               <AdminURApplications selectedTransaction={selectedTransaction} handleRemoveTransaction={handleRemoveTransaction} isOpen={isModalOpen} handleClose={handleCloseModal} />

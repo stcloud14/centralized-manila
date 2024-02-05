@@ -18,7 +18,7 @@ const LandingPageForm = () => {
     user_pass: "",
   });
   const [loading, setLoading] = useState(false); // New state for loading indicator
-
+  const [loadingOTP, setLoadingOTP] = useState(false); // New state for loading indicator
   const [isSuccess, setIsSuccess] = useState(false); 
   const successTimeoutRef = useRef(null);
   const FailedTimeoutRef = useRef(null);
@@ -201,44 +201,45 @@ const LandingPageForm = () => {
         // Resend verification code or take appropriate action
         console.log("Resending verification code...");
         console.log(verification_code);
-        // Implement code resend logic here
+        setLoading(false);
+        console.log("Verification process completed.");
+        setWrongOtp(true);
+        setTimeout(() => {
+          setWrongOtp(false);
+        }, 4000);
       }
     }finally {
       setLoading(false);
       console.log("Verification process completed.");
-      setWrongOtp(true);
     }
   };
 
   const ResendOTP = async () => {
-    setLoading(true);
     try {
       const phoneNumber = `+63${userAuth.mobile_no}`;
       const appVerifier = window.recaptchaVerifier;
-  
-      // Resend OTP logic
+      setIsSuccess(true);
+
+      
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
       window.confirmationResult = confirmationResult;
-      
 
       const countdownInterval = setInterval(() => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
 
-      setIsSuccess(true);
+      setTimeout(() => {
+        setIsButtonDisabled(true)
+        setLoadingOTP(true)
+        setCountdown(30);
+        setIsSuccess(false);
+      }, 1000);
 
       setTimeout(() => {
-        setIsSuccess(false);
-        setLoading(false);
-        setIsButtonDisabled(true)
-        setCountdown(60);
-      }, 2000);
-
-
-    setTimeout(() => {
-      clearInterval(countdownInterval);
-      setIsButtonDisabled(false)
-    }, 62000);
+        clearInterval(countdownInterval);
+        setIsButtonDisabled(false)
+        setLoadingOTP(false)
+      }, 31000);
 
 
     } catch (error) {
@@ -248,38 +249,20 @@ const LandingPageForm = () => {
         console.log('Too many requests');
         setManyRequest(true);
         setTimeout(() => {
-        setLoading(false);
+        setLoadingOTP(false);
         setManyRequest(false);
       }, 3000);
       setIsButtonDisabled(true)
-      setTimeout(() => {
-        setIsButtonDisabled(false)
-      }, 60000);
       }
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const onCaptchaVerify = () => {
-    if (!window.recaptchaVerifier) {
-      const recaptchaOptions = {
-        size: 'invisible',
-        callback: (response) => onSignup(response),
-        expiredCallback: () => console.log('Recaptcha expired'),
-      };
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', recaptchaOptions);
-    }
-    window.recaptchaVerifier.verify().catch((error) => {
-      console.error('Error verifying reCAPTCHA:', error);
-    });
-  };
-
-
   const onSignup = async (recaptchaToken) => {
     const appVerifier = window.recaptchaVerifier;
     const phoneNumber = `+63${userAuth.mobile_no}`;
-  
+    setIsSuccess(true);
     try {
       // Only proceed with SMS verification if reCAPTCHA verification is successful
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier, recaptchaToken);
@@ -289,20 +272,18 @@ const LandingPageForm = () => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
 
-      setIsSuccess(true);
-
       setTimeout(() => {
-        setIsSuccess(false);
         setIsButtonDisabled(true)
-        setCountdown(60);
-      }, 2000);
+        setLoadingOTP(true)
+        setCountdown(30);
+        setIsSuccess(false);
+      }, 1000);
 
       setTimeout(() => {
         clearInterval(countdownInterval);
         setIsButtonDisabled(false)
-      }, 62000);
-
-
+        setLoadingOTP(false)
+      }, 31000);
 
 
     } catch (error) {
@@ -316,6 +297,21 @@ const LandingPageForm = () => {
         }, 3000);
       }
     }
+  };
+
+  
+  const onCaptchaVerify = () => {
+    if (!window.recaptchaVerifier) {
+      const recaptchaOptions = {
+        size: 'invisible',
+        callback: (response) => onSignup(response),
+        expiredCallback: () => console.log('Recaptcha expired'),
+      };
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', recaptchaOptions);
+    }
+    window.recaptchaVerifier.verify().catch((error) => {
+      console.error('Error verifying reCAPTCHA:', error);
+    });
   };
 
       const handleSubmit = async (e) => {
@@ -456,7 +452,7 @@ const LandingPageForm = () => {
             <div className="text-center">
               {!authenticated && (
               <button
-              className="text-blue-500 md:w-3/4 w-full hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+              className="text-blue-500 w-full hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm py-2 text-center mb-2 mt-5 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
               type="submit"
               disabled={isSubmitting}  // Disable the button if submitting
               >
@@ -530,15 +526,38 @@ const LandingPageForm = () => {
                   ))}
                 </div>
                   
-                {authenticated && (
+                {loadingOTP ? (
+                      <div className="pt-3 font-medium flex  dark:text-black pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
+                      <svg
+                      aria-hidden="true"
+                      className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                    <span className="pl-2">
+                    Resend OTP in: <span className='font-bold'>{countdown} seconds</span>
+                    </span>
+                    </div>
+                    ) : (
                     <button
-                        className="w-full  focus:ring-4 focus:outline-none  font-normal rounded-full text-sm px-10 py-2 text-center  dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 uppercase"
+                        className="w-full focus:ring-4 focus:outline-none font-normal rounded-full text-sm px-5  dark:text-slate-700"
                         onClick={ResendOTP}
                         disabled={isButtonDisabled}
                       >
-                        Resend-OTP Seconds: <span className='font-bold'>{countdown}</span>
+                        Resend OTP
                       </button>
-                )}
+                      )}
+                
 
                   {/* Verify Button */}
                   <div className="text-center">
@@ -586,7 +605,7 @@ const LandingPageForm = () => {
               <div className='flex justify-center items-center'>
                   <button
                     id="google-login-btn"
-                    className="flex justify-center items-center text-slate-900 md:w-3/4 w-full hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full md:text-sm text-xs px-10 py-2 text-center mb-2 mt-3 dark:focus:ring-slate-300"
+                    className="flex justify-center items-center text-slate-900 w-full hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full md:text-sm text-xs md:mx-6 py-2 text-center mb-2 mt-3 dark:focus:ring-slate-300"
                     type="submit"
                     onClick={handleGoogleLogin}
                   >
@@ -600,18 +619,19 @@ const LandingPageForm = () => {
 
             {!authenticated && (
               <div className='flex justify-center items-center'>
-                  <button
-                    id="google-login-btn"
-                    className="flex justify-center items-center text-slate-900 md:w-3/4 w-full hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full md:text-sm text-xs px-10 py-2 text-center mb-2 mt-3 dark:focus:ring-slate-300"
-                    type="submit"
-                    onClick={handleFacebookLogin}
-                  >
-                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className='w-5 h-5 mr-2' viewBox="0 0 48 48">
-                  <path fill="#1877f2" d="M24 4C12.955 4 4 12.955 4 24c0 11.045 8.955 20 20 20 11.045 0 20-8.955 20-20 0-11.045-8.955-20-20-20zm3.84 24.64h-3.072v14.4H21.12V28.64H18V24h3.12v-2.88c0-3.072 1.824-4.8 4.656-4.8 1.344 0 2.496.096 2.832.144v3.264H27.36c-1.536 0-1.824.72-1.824 1.8V24h3.648L28.8 28.64z"/>
-                  </svg>
-                  Continue with Facebook
-                </button>
-              </div>
+              <button
+                id="google-login-btn"
+                className="flex group justify-center items-center text-slate-900 w-full hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full md:text-sm text-xs md:mx-6 py-2 text-center mb-2 mt-3 dark:focus:ring-slate-300"
+                type="submit"
+                onClick={handleFacebookLogin}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className='w-5 h-5 mr-2 fill-blue-600 group-hover:fill-white' viewBox="0 0 50 50">
+                  <path d="M25,3C12.85,3,3,12.85,3,25c0,11.03,8.125,20.137,18.712,21.728V30.831h-5.443v-5.783h5.443v-3.848 c0-6.371,3.104-9.168,8.399-9.168c2.536,0,3.877,0.188,4.512,0.274v5.048h-3.612c-2.248,0-3.033,2.131-3.033,4.533v3.161h6.588 l-0.894,5.783h-5.694v15.944C38.716,45.318,47,36.137,47,25C47,12.85,37.15,3,25,3z"></path>
+                </svg>
+                Continue with Facebook
+              </button>
+            </div>
+            
             )}
 
             {!authenticated && (

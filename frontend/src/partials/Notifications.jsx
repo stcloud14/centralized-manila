@@ -69,8 +69,8 @@ function Notifications({ notifications }) {
                   </span>
 
                   {notif.is_read === 0 ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="#0866ff" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0866ff" class="w-3 h-3 mr-1.5" style={{ flexShrink: 0 }}>
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#0866ff" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#0866ff" className="w-3 h-3 ml-2" style={{ flexShrink: 0 }}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                   ) : null}
                 </div>
