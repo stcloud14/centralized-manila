@@ -130,7 +130,7 @@ const ForgotPasswordForm = () => {
       setTimeout(() => {
         setLoadingOTP(false);
         setIsButtonDisabled(true)
-        setCountdown(30);
+        setCountdown1(30);
         setIsSuccess(false);
       }, 1000);
 
@@ -192,7 +192,7 @@ const ForgotPasswordForm = () => {
       setTimeout(() => {
         setIsButtonDisabled(true)
         setLoadingOTP(true)
-        setCountdown(30);
+        setCountdown1(30);
         setIsSuccess(false);
       }, 1000);
       setTimeout(() => {
