@@ -208,20 +208,20 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                   </button>
                 </div> */}
                 {/* {filteredTransactions.length > 0 ? filteredTransactions.map((transaction) => ( */}
-                {sortedTransactions.map((transaction) => (
+                
 
-                  <div key={transaction.transaction_id} className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
+                  <div key="" className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
                     <div className=" text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                      Transaction ID: {transaction.transaction_id}
+                      Transaction ID:
                     </div>
                     <div className="px-4 py-5">
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: {transaction.date}</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time: {transaction.time}</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: {transaction.trans_type}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date: </div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Time: </div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Type: </div>
                       <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
-                        <span>Status:</span> <StatusBadgeMobile statusType={transaction.status_type} />
+                        <span>Status:</span>
                       </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P {transaction.amount}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P </div>
                       <div className="mt-5 group">
                         <div onClick={() => handleOpenModal(transaction)} className="flex justify-center items-center text-center p-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-sm mt-2">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
@@ -233,7 +233,7 @@ const AuditMobile = ({ searchInput, handleSearch, handleSearchInputChange, handl
                       </div>
                     </div>  
                   </div>
-                ))} 
+               
                 {/* )) : userTransaction.map((transaction) => (
                     
                     <div key={transaction.transaction_id} className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
