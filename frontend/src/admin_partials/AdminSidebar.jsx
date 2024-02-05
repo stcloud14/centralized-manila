@@ -78,8 +78,27 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
           </button>
 
           {/* Logo */}
-          <NavLink end to={`/admin_dash_chief/${admin_type}`} className="block">
-              <img src={logo} width="32" height="32" viewBox="0 0 50 50"/>
+          <NavLink end to={
+                (() => {
+                  switch (admin_type) {
+                    case "chief_admin":
+                      return `/admin_dash_chief/${admin_type}`;
+                    case "rptax_admin":
+                      return `/admin_dash_rp/${admin_type}`;
+                    case 'business_admin':
+                      return `/admin_dash_bp/${admin_type}`;
+                    case 'cedula_admin':
+                      return `/admin_dash_ctc/${admin_type}`;
+                    case 'lcr_admin':
+                      return `/admin_dash_lcr/${admin_type}`;
+                    case 'registry_admin':
+                      return `/admin_dash_ur/${admin_type}`;
+                    default:
+                        setLoginError("Unknown or unsupported role");
+                    }
+                })()
+              } className="block">
+                <img src={logo} width="32" height="32" viewBox="0 0 50 50"/>
           </NavLink>
           
         </div>
