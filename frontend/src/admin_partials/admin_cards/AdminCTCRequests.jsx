@@ -29,52 +29,69 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
   const [filterApplied, setFilterApplied] = useState(false);
   const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
   const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
-
+  const [filterClicked, setFilterClicked] = useState(false);
+  const [showAllTransactions, setShowAllTransactions] = useState(true);
+  const [searchInteracted, setSearchInteracted] = useState(false);
+  const [filteredSearchQuery, setFilteredSearchQuery] = useState(''); // Store the filtered search query
+  const [filteredSearchLName, setFilteredSearchLName] = useState(''); // Store the filtered search last name
+  
   const handleSearch = (transaction) => {
     const lName = transaction.l_name.toUpperCase();
     const fName = transaction.f_name.toUpperCase();
-  
     const transactionId = transaction.transaction_id.toUpperCase();
-    const query = searchQuery.toUpperCase() || searchLName.toUpperCase(); // Use searchLName here
   
-    const combinedNames = (lName + ' ' + fName).toUpperCase();
-    
-    const isLNameMatch = combinedNames.includes(query);
-    const isTransactionMatch = transactionId.includes(query);
+    const isLNameMatch = (lName + ' ' + fName).includes(filteredSearchLName.toUpperCase()); // Use the stored filtered last name
+    const isTransactionMatch = transactionId.includes(filteredSearchQuery.toUpperCase()); // Use the stored filtered query
   
-    // Check if the transaction date is within the selected date range only if filter is applied
     const isDateInRange =
-      !filterApplied ||
+      (!filterApplied || filterClicked) &&
       (!lastSelectedFromDate || new Date(transaction.date) >= new Date(lastSelectedFromDate)) &&
       (!lastSelectedToDate || new Date(transaction.date) <= new Date(lastSelectedToDate));
-    
-    return (isTransactionMatch || isLNameMatch) && isDateInRange;
-  };
   
+    return (filterClicked && isTransactionMatch && isLNameMatch && isDateInRange) || showAllTransactions;
+  };
   
   const filteredctcCedula = ctcCedula ? ctcCedula.filter(handleSearch) : [];
   
   const handleFilterClick = () => {
-    // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date has changed
     if (selectedDate !== lastSelectedFromDate || selectedDatee !== lastSelectedToDate) {
       setFilterApplied(true);
       setLastSelectedFromDate(selectedDate);
       setLastSelectedToDate(selectedDatee);
     }
+    setFilterClicked(true);
+    setShowAllTransactions(false);
+    setSearchInteracted(false);
+  
+    // Store the search values when the filter button is clicked
+    setFilteredSearchQuery(searchQuery);
+    setFilteredSearchLName(searchLName);
   };
   
   useEffect(() => {
-    // Reset filter when ctcCedula changes
+    if (!filterClicked && searchInteracted) {
+      setShowAllTransactions(true);
+    }
     setFilterApplied(false);
-  }, [ctcCedula]);
+  
+    // Reset stored search values when ctcCedula changes
+    setFilteredSearchQuery('');
+    setFilteredSearchLName('');
+  }, [ctcCedula, filterClicked, searchInteracted]);
   
   const handleClearClick = () => {
-    // Clear the selected dates and other modal-related data
     setSelectedDate(null);
     setSelectedDatee(null);
     setSearchQuery('');
-    // ... (other modal-related state variables you want to clear)
+    setSearchLName('');
     setFilterApplied(false);
+    setFilterClicked(false);
+    setShowAllTransactions(true);
+    setSearchInteracted(false);
+  
+    // Reset stored search values when clear button is clicked
+    setFilteredSearchQuery('');
+    setFilteredSearchLName('');
   };
   
   const handleToggleView = (mode) => {
