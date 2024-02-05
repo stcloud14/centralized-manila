@@ -389,12 +389,12 @@ console.log(userReg)
                 </div>
                 <div className="relative z-0 w-full group flex flex-col items-start">
                   
-                <p className="ml-auto text-xs sm:text-sm text-slate-700 dark:text-white text-justify pointer-events-none">
+                <p className="ml-auto text-xs sm:text-sm text-slate-700 text-justify pointer-events-none">
                   Would you like to speed up the verification process?
                   </p>
                 <p className="flex mt-0.5 ml-auto">
                   
-                <p className="ml-auto mb-2 text-xs sm:text-sm text-slate-700 dark:text-white text-justify pointer-events-none">
+                <p className="ml-auto mb-2 text-xs sm:text-sm text-slate-700 text-justify pointer-events-none">
                   <span className="font-medium">Yes</span>
                   </p>
                   <input
