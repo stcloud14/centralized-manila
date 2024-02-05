@@ -214,7 +214,7 @@ const AuditMobile = ({ auditTrail, searchInput, setSearchInput, handleSearch, ha
                         Admin: <span>{audit.admin}</span>
                         <img
                           name="userImage" 
-                          className="inline-block h-10 w-10 rounded-full object-cover object-center"
+                          className="inline-block h-10 w-10 rounded-full object-cover object-center ml-2"
                           src={getImage(audit.admin)}
                         />
                       </div>
