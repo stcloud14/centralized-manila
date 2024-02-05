@@ -273,11 +273,11 @@ const LandingPageForm = () => {
           {!authenticated && (
           <div className="mt-4 flex justify-between font-semibold text-sm">
             <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
-              <input
+              {/* <input
                 className="mr-1.5 shrink-0 mt-0.5 border-2 border-gray-300 dark:border-gray-400 rounded bg-transparent text-emerald-600 pointer-events-none focus:ring-emerald-500"
                 type="checkbox"
-              />
-              <span>Remember Me</span>
+              /> */}
+              {/* <span>Remember Me</span> */}
             </label>
             <a className="text-yellow-500 hover:text-blue-700 hover:text-yellow-600" href="/forgotpass">Forgot Password?</a>
           </div>

@@ -22,10 +22,10 @@ const router = Router();
         }
         // Assuming you have a user_id in the results (change accordingly based on your database schema)
         const user_id = results[0].user_id;
-        const notif_title = 'Successfully change your password!';
+        const notif_title = 'Successfully changed your password!';
         const date = new Date();
         const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-        const notif_message = `</span> Congratulations! Your password change request has been successfully processed. </p>`;
+        const notif_message = `</span> Congratulations! Your password has been successfully changed. </p>`;
 
         const value1 = [user_id, formattedDate, notif_title, notif_message];
 
