@@ -35,16 +35,18 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
   const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
   const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
   const [lastSelectedBusinessType, setLastSelectedBusinessType] = useState(null);
-
+  const [filteredSearchQuery, setFilteredSearchQuery] = useState(''); // Store the filtered search query
+  const [filteredSearchLName, setFilteredSearchLName] = useState(''); // Store the filtered search last name
+  
   const handleSearch = (transaction) => {
+    const lName = (transaction.l_name || '').toUpperCase();
+    const fName = (transaction.f_name || '').toUpperCase();
+  
     const transactionId = (transaction?.transaction_id || '').toUpperCase();
-    const tinId = (transaction?.bus_tin || '').toUpperCase();
     const businessType = (transaction?.trans_type || '').toUpperCase();
-  
-    const query = (searchQuery || searchTIN || '').toUpperCase();
-  
-    const isTINMatch = tinId.includes(query);
-    const isTransactionMatch = transactionId.includes(query);
+    
+    const isLNameMatch = (lName + ' ' + fName).includes(filteredSearchLName.toUpperCase()); // Use the stored filtered last name
+    const isTransactionMatch = transactionId.includes(filteredSearchQuery.toUpperCase()); // Use the stored filtered query
   
     // Check if the transaction date is within the selected date range only if the filter is applied
     const isDateInRange =
@@ -59,14 +61,13 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
       selectType === 'All' ||
       (lastSelectedBusinessType && businessType.includes(lastSelectedBusinessType.toUpperCase()));
   
-    return (isTransactionMatch || isTINMatch) && isBusinessTypeMatch && isDateInRange;
+    return isTransactionMatch && isLNameMatch && isBusinessTypeMatch && isDateInRange;
   };
   
-
   const filteredBirthCert = birthCert ? birthCert.filter(handleSearch) : [];
   const filteredDeathCert = deathCert ? deathCert.filter(handleSearch) : [];
   const filteredMarriageCert = marriageCert ? marriageCert.filter(handleSearch) : [];
-
+  
   const handleFilterClick = () => {
     // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date or business type has changed
     if (
@@ -82,13 +83,17 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
       // Reset filter when no changes are made
       setFilterApplied(false);
     }
+  
+    // Store the search values when the filter button is clicked
+    setFilteredSearchQuery(searchQuery);
+    setFilteredSearchLName(searchLName);
   };
   
   useEffect(() => {
     // Reset filter when businessPermit changes
     setFilterApplied(false);
   }, [birthCert, deathCert, marriageCert]);
-
+  
   const handleClearClick = () => {
     // Clear the selected dates, business type, and other modal-related data
     setSelectedDate(null);
@@ -97,7 +102,13 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
     setSelectType('All'); // Reset selectType to 'All'
     // ... (other modal-related state variables you want to clear)
     setFilterApplied(false);
+    setSearchLName('');
+  
+    // Reset stored search values when clear button is clicked
+    setFilteredSearchQuery('');
+    setFilteredSearchLName('');
   };
+  
 
   const handleToggleView = (mode) => {
     setViewMode(mode);
