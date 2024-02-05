@@ -225,7 +225,9 @@ const LandingPageForm = () => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
 
-      setIsSuccess(true);
+      setTimeout (() => {
+        setIsSuccess(true);
+      }, 3000);
 
       setTimeout(() => {
         setIsSuccess(false);
@@ -289,7 +291,9 @@ const LandingPageForm = () => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
 
+      setTimeout (() => {
       setIsSuccess(true);
+      }, 3000);
 
       setTimeout(() => {
         setIsSuccess(false);
@@ -532,11 +536,11 @@ const LandingPageForm = () => {
                   
                 {authenticated && (
                     <button
-                        className="w-full  focus:ring-4 focus:outline-none  font-normal rounded-full text-sm px-10 py-2 text-center  dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 uppercase"
+                        className="w-full focus:ring-4 focus:outline-none font-normal rounded-full text-sm px-5  dark:text-slate-700"
                         onClick={ResendOTP}
                         disabled={isButtonDisabled}
                       >
-                        Resend-OTP Seconds: <span className='font-bold'>{countdown}</span>
+                        Resend OTP in: <span className='font-bold'>{countdown} secs</span>
                       </button>
                 )}
 
