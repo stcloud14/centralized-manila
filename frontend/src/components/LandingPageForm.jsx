@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from '../partials/ThemeToggle';
-import { getAuth, signInWithPhoneNumber, RecaptchaVerifier, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {signInWithPhoneNumber, RecaptchaVerifier, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 import auth from '../../firebase.config';  // Updated import statement
 
 
@@ -23,6 +23,7 @@ const LandingPageForm = () => {
   const successTimeoutRef = useRef(null);
   const FailedTimeoutRef = useRef(null);
   const [Many_Request, setManyRequest] = useState(false);
+  const [Acc_Exist, setAccExist] = useState(false);
   const [wrong_otp, setWrongOtp] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isetUserdata, setUserdata] = useState("")
@@ -82,6 +83,52 @@ const LandingPageForm = () => {
       console.error("Google Login Error:", error.message);
     }
   };
+
+  
+  const handleFacebookLogin = async () => {
+    try {
+      const provider = new FacebookAuthProvider(); // Declare the provider
+  
+      const result = await signInWithPopup(auth, provider);
+      const { displayName, email } = result.user;
+      console.log("User:", displayName, email);
+      setUserReg({ displayName, email });
+      const userReg = {
+        displayName: displayName,
+        email: email,
+      };
+
+      const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence/email", {
+        email: email,
+      });
+  
+      if (existenceCheckResponse.data.exists) {
+        // User exists, retrieve user_id from the response and redirect
+        const user_id = existenceCheckResponse.data.user_id; // Replace with the actual property name
+        console.log(existenceCheckResponse);
+        window.location.href = `/home/${user_id}`;
+      } else {
+        console.log("User does not exist. Proceed with registration");
+        
+        try {
+          const registrationResponse = await axios.post("http://localhost:8800/register/regis", userReg);
+          console.log("Registration Result:", registrationResponse.data);
+  
+          const user_id = registrationResponse.data.user_id;
+          window.location.href = `/home/${user_id}`;
+        } catch (registrationError) {
+          console.error("Registration Error:", registrationError.message);
+        }
+      }
+    } catch (error) {
+      setAccExist(true);
+      setTimeout(() => {
+        setAccExist(false);
+      }, 5000);
+    }
+  };
+
+
 
   const handleOtpInputChange = (index, value) => {
     const newOtpDigits = [...otpDigits];
@@ -364,7 +411,13 @@ const LandingPageForm = () => {
               <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
                 Too many request, please try again later.
               </div>
-            )}  
+            )}
+
+            {Acc_Exist && (
+              <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
+                Email Address was already use in Google.
+              </div>
+            )}    
             
             {wrong_otp && (
               <div className="text-red-700 md:text-sm text-xs bg-red-200 text-center rounded-full px-1.5 py-1.5 mb-5">
@@ -455,6 +508,22 @@ const LandingPageForm = () => {
                     <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
                   </svg>
                   Continue with Google
+                </button>
+              </div>
+            )}
+
+            {!authenticated && (
+              <div className='flex justify-center items-center'>
+                  <button
+                    id="google-login-btn"
+                    className="flex justify-center items-center text-slate-900 md:w-3/4 w-full hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-full md:text-sm text-xs px-10 py-2 text-center mb-2 mt-3 dark:focus:ring-slate-300"
+                    type="submit"
+                    onClick={handleFacebookLogin}
+                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className='w-5 h-5 mr-2' viewBox="0 0 48 48">
+                  <path fill="#1877f2" d="M24 4C12.955 4 4 12.955 4 24c0 11.045 8.955 20 20 20 11.045 0 20-8.955 20-20 0-11.045-8.955-20-20-20zm3.84 24.64h-3.072v14.4H21.12V28.64H18V24h3.12v-2.88c0-3.072 1.824-4.8 4.656-4.8 1.344 0 2.496.096 2.832.144v3.264H27.36c-1.536 0-1.824.72-1.824 1.8V24h3.648L28.8 28.64z"/>
+                  </svg>
+                  Continue with Facebook
                 </button>
               </div>
             )}

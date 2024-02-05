@@ -10,24 +10,8 @@ import UR from '../../images/UR.png';
 
   
 
-const AuditDesktop = ({ auditTrail }) => {
+const AuditDesktop = ({ auditTrail, searchInput, setSearchInput, handleSearch, handleClearFilter, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedDatee, setSelectedDatee] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [selectedType, setSelectedType] = useState('');
-
-  const handleInputChange = (e) => {
-    const selectedValue = e.target.value;
-
-    setSelectedType(selectedValue);
-  };
-
-  const handleInputChange2 = (e) => {
-    const selectedValue = e.target.value;
-
-    setSelectedStatus(selectedValue);
-  };
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -203,11 +187,11 @@ const AuditDesktop = ({ auditTrail }) => {
                 <span className="hidden sm:block text-xs">Admin:</span>
                   <select  value={selectedType} onChange={handleInputChange} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
                       <option value="All" className="dark:bg-[#3d3d3d]">Select Admin</option>
-                      <option value="Real Property Tax Payment" className="dark:bg-[#3d3d3d]">Real Property Tax</option>
-                      <option value="Business Permit" className="dark:bg-[#3d3d3d]">Business Permit</option>
-                      <option value="Community Tax Certificate" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
-                      <option value="Birth Certificate" className="dark:bg-[#3d3d3d]">Local Civil Registry</option>
-                      <option value="Birth Certificate" className="dark:bg-[#3d3d3d]">User Registry</option>
+                      <option value="RPTAX ADMIN" className="dark:bg-[#3d3d3d]">Real Property Tax</option>
+                      <option value="BUS ADMIN" className="dark:bg-[#3d3d3d]">Business Permit</option>
+                      <option value="CTC ADMIN" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
+                      <option value="LCR ADMIN" className="dark:bg-[#3d3d3d]">Local Civil Registry</option>
+                      <option value="UR ADMIN" className="dark:bg-[#3d3d3d]">User Registry</option>
                   </select>
               </div>
 
@@ -220,11 +204,11 @@ const AuditDesktop = ({ auditTrail }) => {
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value="" onChange="" id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchInput} onChange={(e) => setSearchInput(e.target.value.toUpperCase())} id="searchInput" onKeyDown={(e) => e.key === 'Enter' && handleSearch()} type="text" placeholder="Search ID..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
-              <button type="button" onClick="" className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+              <button type="button" onClick={() => { handleSearch(); toggleDropdown(); }} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
               </div>
@@ -233,7 +217,7 @@ const AuditDesktop = ({ auditTrail }) => {
 
             {/* Clear Button */}
             <div className="w-full sm:w-20 ml-2">
-            <button type="button" onClick="" className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
+            <button type="button" onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
               </svg>
@@ -282,7 +266,8 @@ const AuditDesktop = ({ auditTrail }) => {
                 </thead>
                 <tbody>
 
-                {auditTrail && auditTrail.map((audit) => (
+                {auditTrail && auditTrail.length > 0 ? (
+                auditTrail.map((audit) => (
                   
                 <tr key={audit.time_stamp} className=' bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
                   <td className="pl-6 pr-3 py-4 whitespace-nowrap">
@@ -311,7 +296,14 @@ const AuditDesktop = ({ auditTrail }) => {
                     {audit.changes}
                   </td>
                 </tr>
-              ))} 
+                 ))
+                 ) : (
+                  <tr>
+                      <td colSpan="7" className="text-center py-4 text-slate-500 dark:text-slate-400">
+                        No records found.
+                      </td>
+                  </tr>
+                )}
 
               </tbody>
               </table>

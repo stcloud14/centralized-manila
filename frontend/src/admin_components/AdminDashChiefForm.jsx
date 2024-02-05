@@ -203,6 +203,14 @@ const AdminDashChiefForm =({ transStats, revenue, verifiedUsers, totalPaid, taxP
         columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' }, 2: { halign: 'right' }, 3: { halign: 'right' }, 4: { halign: 'right' }, 5: { halign: 'right' }, 6: { halign: 'right' }, 7: { halign: 'right' } },
       });            
 
+      // Add signature on the right side at the bottom of the table
+      const signatureXPosition = pdf.internal.pageSize.width - 58;
+      const signatureYPosition = pdf.internal.pageSize.height - 10;
+
+      pdf.text("Name:", signatureXPosition, signatureYPosition);
+      pdf.text("Chief Admin", signatureXPosition + 13, signatureYPosition + 7);
+      pdf.line(signatureXPosition, signatureYPosition + 9, signatureXPosition + 45, signatureYPosition + 9);
+
       const currentDate = new Date();
       const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
       const filename = `${admin_type}_reports_${formattedDate}.pdf`;
