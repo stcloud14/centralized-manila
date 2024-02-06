@@ -51,7 +51,7 @@ const AdminUserListForm = () => {
       const transactionId = mobile_no?.toString()?.toUpperCase();
       const isFNameMatch = !searchFname || f_name?.toString()?.toUpperCase().includes(searchFname);
       const isLNameMatch = !searchLname || l_name?.toString()?.toUpperCase().includes(searchLname);
-      const isEmailMatch = !searchEmail || user_email?.toString()?.toUpperCase().includes(searchEmail);
+      const isEmailMatch = !searchEmail || user_email?.toString()?.includes(searchEmail);
       const isIdMatch = transactionId && transactionId.includes(searchInput);
       const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || sex_type === selectedType;
       const isStatusMatch = !selectedStatus || selectedStatus === 'All' || verification_status === selectedStatus;

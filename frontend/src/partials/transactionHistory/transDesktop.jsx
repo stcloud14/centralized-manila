@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import StatusBadgeDesktop from '../StatusBadgeDesktop';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import moment from 'moment';
 import logoImage from '../../images/mnl_header_pdf.png';
 import Flatpickr from 'react-flatpickr';
 
@@ -42,6 +43,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
       pdf.line(130, 40, 195, 40);
       pdf.line(130, 47, 195, 47);
       pdf.line(130, 64, 195, 64);
+      
   
       // Filter transactions based on start and end dates, type, and status
       const filteredTransactions = sortedTransactions.filter((transaction) => {
@@ -78,7 +80,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
         startY: 40,
         head: [['Account Summary', '']],
         body: [
-          ['', ''],
+          ['Date as of now', moment().format('MMMM D, YYYY')],
           ['Total Balance', `P ${totalAllBalances.toFixed(2)}`],
         ],
         headStyles: {
