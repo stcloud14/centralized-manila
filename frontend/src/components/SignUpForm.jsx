@@ -319,7 +319,7 @@ console.log(selectedFiles)
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-6 md:gap-6 gap-x-4 sm:grid-cols-1">
+                <div className="grid md:grid-cols-4 md:gap-6 gap-x-4 sm:grid-cols-1">
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleChange} value={userReg.suffix_type} defaultValue={0} name="suffix_type" id="suffix_type" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
                       <SuffixDropdown/>
@@ -332,7 +332,7 @@ console.log(selectedFiles)
                     </select>
                     <label htmlFor="sex" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sex</label>
                   </div>
-                  <div className="relative z-0 w-full col-span-2 mb-6 group">
+                  <div className="relative z-0 w-full mb-6 group">
                     <Flatpickr
                       id='birth_date'
                       name='birth_date'
@@ -382,7 +382,7 @@ console.log(selectedFiles)
                       Date of Birth
                     </label>
                   </div>
-                  <div className="relative z-0 w-full col-span-2 mb-6 group">
+                  <div className="relative z-0 w-full mb-6 group">
                     <input onChange={handleChange} value={userReg.birth_place} type="text" name="birth_place" id="birth_place" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
                     <label htmlFor="birth_place" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Place of Birth</label>
                   </div>
