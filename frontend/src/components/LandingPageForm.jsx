@@ -337,8 +337,8 @@ const LandingPageForm = () => {
       const isEdge = window.navigator.userAgent.includes('Edg');
       
   return (
-    <div className="relative lg:h-screen md:h-screen min-h-screen bg-[url('./src/images/manila-v5.jpg')] dark:bg-[url('./src/images/manila-v4.jpg')] bg-cover bg-no-repeat bg-top">
-      <div className="flex flex-col md:flex-row h-full">
+    <div className="relative min-h-screen bg-[url('./src/images/manila-v5.jpg')] dark:bg-[url('./src/images/manila-v4.jpg')] bg-cover bg-no-repeat bg-top flex md:flex-row flex-col justify-center items-center">
+
         
         {/* Left Section */}
         <div className="md:w-1/2 flex items-center justify-center lg:mb-0 mb-5">
@@ -648,7 +648,7 @@ const LandingPageForm = () => {
             <span className="hover:font-medium hover:text-red-500">B</span>
           </a>
         </div>
-      </div>
+
     </div>
   );
 }
