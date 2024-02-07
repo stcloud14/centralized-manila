@@ -60,7 +60,17 @@ router.post('/', async (req, res) => {
     const values1 = [plainMobileNo, hashedPassword, primaryKey];
 
     const query2 = "INSERT INTO user_personal (`user_id`, `f_name`, `m_name`, `l_name`, `suffix_type`, `sex_id`, `cvl_id`, `res_id`, `czn_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    const values2 = [primaryKey, req.body.f_name, req.body.m_name, req.body.l_name, req.body.suffix_type, req.body.sex_type, req.body.cvl_status, req.body.res_status, req.body.czn_status];
+    const values2 = [
+      primaryKey,
+      req.body.f_name || null,
+      req.body.m_name || null,
+      req.body.l_name || null,
+      req.body.suffix_type || null,
+      req.body.sex_type || null,
+      req.body.cvl_status || null,
+      req.body.res_status || null,
+      req.body.czn_status || null
+    ];
 
     const query3 = "INSERT INTO user_contact (`user_id`, `mobile_no`, `user_email`) VALUES (?, ?, ?)";
     const values3 = [primaryKey, req.body.mobile_no, req.body.user_email];
