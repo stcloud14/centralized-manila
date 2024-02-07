@@ -4,7 +4,7 @@ import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import { useParams } from 'react-router-dom';
 
-const PrivacyPolicyForm =()=>{
+const TermsConditionsForm =()=>{
 
   const { user_id } = useParams();
 
@@ -28,7 +28,7 @@ const PrivacyPolicyForm =()=>{
         <main ref={contentRef} className="overflow-y-auto">
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-10 py-5">
-              <h1 className="font-medium text-center text-slate-700 dark:text-white">Privacy Policy</h1>
+              <h1 className="font-medium text-center text-slate-700 dark:text-white">Terms & Conditions</h1>
                 <br/>
                   <h1 className="text-slate-800 dark:text-slate-100 font-medium">
                      Welcome to Centralized
@@ -255,4 +255,4 @@ const PrivacyPolicyForm =()=>{
   );
 }
 
-export default PrivacyPolicyForm;
+export default TermsConditionsForm;

@@ -59,6 +59,7 @@ import AdminUserList from './admin_pages/AdminUserList';
 import AdminVerifyReqs from './admin_pages/AdminVerifyReqs';
 import AdminAuditTrail from './admin_pages/AdminAuditTrail';
 import AdminSettings from './admin_components/AdminSettings';
+import TermsConditions from './pages/TermsConditions';
 
 
 function App() {
@@ -77,6 +78,8 @@ function App() {
         {/* Client Pages */}
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/register" element={<Register />} />
+        <Route exact path="/privacypolicy" element={<PrivacyPolicy/>} />
+        <Route exact path="/termsconditions" element={<TermsConditions/>} />
         <Route exact path="/home/:user_id" element={<Home />} />
         <Route exact path="/personalinfo/:user_id" element={<PersonalInfo />} />
         <Route exact path="/contact/:user_id" element={<ContactInfo />} />

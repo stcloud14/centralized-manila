@@ -84,13 +84,33 @@ const UserSettings =()=>{
 
   useEffect(()=>{
     const fetchUserImage= async()=>{
-        try{
-            const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
-            setStoredImage(res.data[0].user_image)
-            setIsVerifiedStatus(res.data[0].verification_status)
-        }catch(err){
-            console.log(err)
+      try {
+        const res = await axios.get(`http://localhost:8800/usersettings/${user_id}`);
+        const fetchedUserImage = res.data[0].user_image;
+        const fetchedImageURL = res.data[0].image_url;
+        const verificationStatus = res.data[0].verification_status;
+
+        console.log(fetchedImageURL)
+  
+        if (fetchedImageURL !== null && fetchedImageURL !== undefined && fetchedImageURL !== '') {
+          fetch(fetchedImageURL)
+            .then(response => response.blob())
+            .then(blob => {
+              setUserImage(URL.createObjectURL(blob));
+            })
+            .catch(error => {
+              console.error('Error fetching image:', error);
+
+            });
+        } else 
+        if (fetchedUserImage !== null && fetchedUserImage !== undefined && fetchedUserImage !== '') {
+          setStoredImage(fetchedUserImage);
         }
+  
+        setIsVerifiedStatus(verificationStatus);
+      } catch (err) {
+        console.log(err);
+      }
     }
     fetchUserImage()
   },[])

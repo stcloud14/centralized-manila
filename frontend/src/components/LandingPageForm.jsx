@@ -50,84 +50,62 @@ const LandingPageForm = () => {
       const provider = new GoogleAuthProvider(); // Declare the provider
   
       const result = await signInWithPopup(auth, provider);
-      const { displayName, email } = result.user;
-      console.log("User:", displayName, email);
-      setUserReg({ displayName, email });
-      const userReg = {
-        displayName: displayName,
-        email: email,
-      };
+      const { email, photoURL } = result.user;
 
-      const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence/email", {
-        email: email,
-      });
+        const body = {
+          email,
+          photoURL
+        }
+        
+        const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence/email", body);
   
       if (existenceCheckResponse.data.exists) {
-        // User exists, retrieve user_id from the response and redirect
-        const user_id = existenceCheckResponse.data.user_id; // Replace with the actual property name
-        console.log(existenceCheckResponse);
+        
+        const user_id = existenceCheckResponse.data.user_id;
         window.location.href = `/home/${user_id}`;
+
       } else {
         console.log("User does not exist. Proceed with registration");
-        
-        try {
-          const registrationResponse = await axios.post("http://localhost:8800/register/regis", userReg);
-          console.log("Registration Result:", registrationResponse.data);
-  
-          const user_id = registrationResponse.data.user_id;
-          window.location.href = `/home/${user_id}`;
-        } catch (registrationError) {
-          console.error("Registration Error:", registrationError.message);
-        }
+        window.location.href = `/register`;
+
       }
     } catch (error) {
-      // Handle any unexpected errors
+  
       console.error("Google Login Error:", error.message);
     }
   };
 
   
   const handleFacebookLogin = async () => {
-    try {
-      const provider = new FacebookAuthProvider(); // Declare the provider
-  
-      const result = await signInWithPopup(auth, provider);
-      const { displayName, email } = result.user;
-      console.log("User:", displayName, email);
-      setUserReg({ displayName, email });
-      const userReg = {
-        displayName: displayName,
-        email: email,
-      };
 
-      const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence/email", {
-        email: email,
-      });
-  
-      if (existenceCheckResponse.data.exists) {
-        // User exists, retrieve user_id from the response and redirect
-        const user_id = existenceCheckResponse.data.user_id; // Replace with the actual property name
-        console.log(existenceCheckResponse);
-        window.location.href = `/home/${user_id}`;
-      } else {
-        console.log("User does not exist. Proceed with registration");
-        
-        try {
-          const registrationResponse = await axios.post("http://localhost:8800/register/regis", userReg);
-          console.log("Registration Result:", registrationResponse.data);
-  
-          const user_id = registrationResponse.data.user_id;
-          window.location.href = `/home/${user_id}`;
-        } catch (registrationError) {
-          console.error("Registration Error:", registrationError.message);
+      try {
+        const provider = new FacebookAuthProvider(); 
+    
+        const result = await signInWithPopup(auth, provider);
+        console.log(result.user)
+        const { email, photoURL } = result.user;
+
+        const body = {
+          email,
+          photoURL
         }
+        
+        const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence/email", body);
+    
+        if (existenceCheckResponse.data.exists) {
+          
+          const user_id = existenceCheckResponse.data.user_id;
+          // window.location.href = `/home/${user_id}`;
+  
+        } else {
+          console.log("User does not exist. Proceed with registration");
+          window.location.href = `/register`;
+
+        }
+      } catch (error) {
+    
+        console.error("Google Login Error:", error.message);
       }
-    } catch (error) {
-      setAccExist(true);
-      setTimeout(() => {
-        setAccExist(false);
-      }, 5000);
-    }
   };
 
 
