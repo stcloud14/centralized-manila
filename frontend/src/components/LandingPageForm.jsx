@@ -509,7 +509,7 @@ const LandingPageForm = () => {
                 </div>
                   
                 {loadingOTP ? (
-                      <div className="pt-3 font-medium flex  dark:text-black pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
+                      <div className="pt-3 font-medium flex dark:text-slate-700 pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
                       <svg
                       aria-hidden="true"
                       className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -527,24 +527,31 @@ const LandingPageForm = () => {
                       />
                     </svg>
                     <span className="pl-2">
-                    Resend OTP in: <span className='font-bold'>{countdown} seconds</span>
+                    Resend OTP in <span className='font-bold'>00:{countdown} </span>seconds
                     </span>
                     </div>
                     ) : (
                     <button
-                        className="w-full focus:ring-4 focus:outline-none font-normal rounded-full text-sm px-5  dark:text-slate-700"
-                        onClick={ResendOTP}
-                        disabled={isButtonDisabled}
-                      >
+                      className="flex items-center justify-center w-full text-teal-500 hover:text-teal-600 focus:ring-4 focus:outline-none font-normal rounded-full text-sm"
+                      onClick={ResendOTP}
+                      disabled={isButtonDisabled}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-1">
+                        <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+                        <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+                      </svg>
+                      <span className='font-semibold'>
                         Resend OTP
-                      </button>
+                      </span>
+                    </button>
+                    
                       )}
                 
 
                   {/* Verify Button */}
                   <div className="text-center">
                     {loading ? (
-                      <div className="pt-3 font-medium flex  dark:text-black pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
+                      <div className="pt-3 font-medium flex dark:text-black pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
                       <svg
                       aria-hidden="true"
                       className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -567,7 +574,7 @@ const LandingPageForm = () => {
                     </div>
                     ) : (
                       <button
-                        className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 uppercase"
+                        className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-20 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                         onClick={handleVerificationSubmit}
                       >
                         Verify
