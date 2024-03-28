@@ -162,8 +162,8 @@ const AdminDashChiefForm = React.memo(
       });
 
       const certificateTypeMapping = {
-        'Real Property Tax': 'taxpayment',
-        'Real Property Clearance': 'taxclearance',
+        'Real Property Tax Payment': 'taxpayment',
+        'Real Property Tax Clearance': 'taxclearance',
         'Business Permit': 'buspermit',
         'Community Tax Certificate': 'cedulacert',
         'Birth Certificate': 'birthcert',
@@ -172,7 +172,7 @@ const AdminDashChiefForm = React.memo(
         'Revenue': 'revenue',
       };
       
-      const certificateTypes = ['Real Property Tax', 'Real Property Clearance', 'Business Permit', 'Community Tax Certificate', 'Birth Certificate', 'Death Certificate', 'Marriage Certificate', 'Revenue'];
+      const certificateTypes = ['Real Property Tax Payment', 'Real Property Tax Clearance', 'Business Permit', 'Community Tax Certificate', 'Birth Certificate', 'Death Certificate', 'Marriage Certificate', 'Revenue'];
       
       // Array of month names
       const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

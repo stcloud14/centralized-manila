@@ -39,7 +39,8 @@ router.get('/', async (req, res) => {
     ug.user_sss_id, \
     ug.user_gsis_id, \
     ug.user_natl_id, \
-    ui.user_image \
+    ui.user_image, \
+    ui.image_url \
   FROM \
     user_verification uv \
   LEFT JOIN \
@@ -99,6 +100,7 @@ router.get('/', async (req, res) => {
     ug.user_gsis_id, \
     ug.user_natl_id, \
     ui.user_image, \
+    ui.image_url, \
     uv.verification_status, \
     uv.application_status \
   FROM \

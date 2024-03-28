@@ -54,8 +54,6 @@ const DropdownProfile = ({ align }) => {
           const fetchedUserImage = res.data[0].user_image;
           const fetchedImageURL = res.data[0].image_url;
           const verificationStatus = res.data[0].verification_status;
-
-          console.log(fetchedImageURL)
     
           if (fetchedImageURL !== null && fetchedImageURL !== undefined && fetchedImageURL !== '') {
             fetch(fetchedImageURL)

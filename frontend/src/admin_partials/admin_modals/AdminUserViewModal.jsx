@@ -11,6 +11,7 @@ import AdminUserDeleteModal from '../admin_modals/AdminUserDeleteModal';
 const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   
   const [userImage, setUserImage] = useState(null);
+  const [storedImage, setStoredImage] = useState(null);
   const [editMode, setEditMode] = useState(false);
   // const [isOpenDelete, setIsOpenDelete] = useState(false);
 
@@ -85,39 +86,173 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
     });
   };
 
+
+  // useEffect(() => {
+  //   const fetchUserImage = async () => {
+  //     // setIsLoading(true);
+      
+  //     try {
+  //       const fetchedUserImage = selectedTransaction.user_image;
+  //       const fetchedImageURL = selectedTransaction.image_url;
+        
+  
+  //       if (fetchedImageURL !== null && fetchedImageURL !== undefined && fetchedImageURL !== '') {
+  //         fetch(fetchedImageURL)
+  //           .then(response => response.blob())
+  //           .then(blob => {
+  //             setUserImage(URL.createObjectURL(blob));
+  //           })
+  //           .catch(error => {
+  //             console.error('Error fetching image:', error);
+
+  //           });
+  //       } else 
+  //       if (fetchedUserImage !== null && fetchedUserImage !== undefined && fetchedUserImage !== '') {
+  //         setStoredImage(fetchedUserImage);
+  //       }
+  
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //     // finally {
+  //     //   setIsLoading(false);
+  //     // }
+  //   };
+  
+  //   fetchUserImage();
+  // }, []);
+  
+
+
+  // const checkUserImage = async () => {
+  //   // setIsLoading(true);
+  //   try {
+  //     const imagePath = '../uploads/profileImage/';
+  //     const imageName = storedImage;
+  
+  //     if (imageName === undefined || imageName === null) {
+  //       // console.log('User image name is undefined or null.');
+  //       return;
+  //     }
+  
+  //     const isFileExists = await checkFileExists(imagePath, imageName);
+  
+  //     if (isFileExists !== null && isFileExists !== undefined) {
+  //       if (isFileExists) {
+  //         const fileData = await fetchFileData(`${imagePath}${imageName}`);
+  //         if (fileData) {
+  //           setUserImage(fileData);
+  //           // console.log(`File ${imageName} exists.`);
+  //         } else {
+  //           // console.log(`File data for ${imageName} is empty or undefined.`);
+  //         }
+  //       } else {
+  //         // console.log(`File: ${imageName} does not exist.`);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error checking user image path:', error);
+  //   }
+  //   // finally {
+  //   //   setIsLoading(false);
+  //   // }
+  // };
+
+  // useEffect(() => {
+  //   checkUserImage();
+  // }, [storedImage]);
+
+  // const checkFileExists = async (folderPath, fileName) => {
+  //   try {
+  //     const filePath = `${folderPath}/${fileName}`;
+  //     const response = await fetch(filePath);
+
+  //     return response.ok;
+  //   } catch (error) {
+  //     console.error('Error checking file existence:', error);
+  //     return false;
+  //   }
+  // };
+
+  // const fetchFileData = async (filePath) => {
+  //   try {
+  //     const response = await fetch(filePath);
+  
+  //     if (!response.ok) {
+  //       if (response.status === 404) {
+  //         console.log('File not found.');
+  //       } else {
+  //         throw new Error(`Failed to fetch file from ${filePath}`);
+  //       }
+  //       return null;
+  //     }
+  
+  //     const fileData = await response.blob();
+  
+  //     if (!fileData || fileData.size === 0) {
+  //       console.log('File data is empty or undefined.');
+  //       return null;
+  //     }
+  
+  //     const dataUrl = URL.createObjectURL(fileData);
+  
+  //     return dataUrl;
+  //   } catch (error) {
+  //     console.error('Error fetching file data:', error);
+  //     return null;
+  //   }
+  // };
+
   useEffect(() => {
     const fetchImage = async () => {
-      setIsLoading(true);
-  
+      
       try {
         const imagePath = '../uploads/profileImage/';
+        const imageURL = selectedTransaction?.image_url ?? undefined;
         const imageName = selectedTransaction?.user_image ?? undefined;
+
+        console.log(selectedTransaction)
   
-        if (imageName === undefined || imageName === null) {
-          setIsLoading(false);
-          setUserImage(null);
-          return;
-        }
-  
-        const isFileExists = await checkFileExists(imagePath, imageName);
-  
-        if (isFileExists) {
-          const fileData = await fetchFileData(`${imagePath}${imageName}`);
-          if (fileData) {
-            setUserImage(fileData);
+        // if (imageName === undefined || imageName === null) {
+        //   setIsLoading(false);
+        //   setUserImage(null);
+        //   return;
+        // }
+
+        if (imageURL !== null && imageURL !== undefined && imageURL !== '') {
+          fetch(imageURL)
+            .then(response => response.blob())
+            .then(blob => {
+              setUserImage(URL.createObjectURL(blob));
+            })
+            .catch(error => {
+              console.error('Error fetching image:', error);
+
+            });
+        } else if (imageName !== null && imageName !== undefined && imageName !== '') {
+          setUserImage(imageName);
+        
+          const isFileExists = await checkFileExists(imagePath, imageName);
+    
+          if (isFileExists) {
+            const fileData = await fetchFileData(`${imagePath}${imageName}`);
+            if (fileData) {
+              setUserImage(fileData);
+            } else {
+              console.log(`File data for ${imageName} is empty or undefined.`);
+              setUserImage(null);
+            }
           } else {
-            console.log(`File data for ${imageName} is empty or undefined.`);
+            console.log(`File: ${imageName} does not exist.`);
             setUserImage(null);
           }
-        } else {
-          console.log(`File: ${imageName} does not exist.`);
-          setUserImage(null);
         }
       } catch (error) {
         console.error('Error checking user image path:', error);
       } finally {
         setIsLoading(false);
       }
+      
     };
   
     fetchImage();
@@ -291,6 +426,8 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   };
 
   const handleCLoseClick = () => {
+    setStoredImage(null);
+    setUserImage(null);
     handleClose();
     setEditMode(false);
   };
@@ -406,7 +543,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                   <img
                     name="userImage"
                     className="inline-block md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center"
-                    src={userImage || defaultImage}
+                    src={userImage ? userImage : defaultImage}
                   />
                 </div>
                 )}
