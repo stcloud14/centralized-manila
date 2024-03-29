@@ -193,8 +193,7 @@ const AdminSettings =()=>{
 
 
   const handleUploadImage = async (e) => {
-    e.preventDefault();
-
+   
     try {
       const formData = new FormData();
       formData.append('user_img', selectedFile);
