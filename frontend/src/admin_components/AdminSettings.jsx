@@ -55,214 +55,214 @@ const AdminSettings =()=>{
       break;
   }
 
-  // const [isSuccess, setIsSuccess] = useState(false);
-  // const [isRemove, setIsRemove] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isRemove, setIsRemove] = useState(false);
 
   
 
-  // const [defaultImg, setDefaultImg] = useState(defaultImage);
+  const [defaultImg, setDefaultImg] = useState(defaultImage);
 
-  // const [storedImage, setStoredImage] = useState('');
-  // const [userImage, setUserImage] = useState('');
+  const [storedImage, setStoredImage] = useState('');
+  const [userImage, setUserImage] = useState('');
 
-  // const [selectedFile, setSelectedFile] = useState();
-  // const [preSelectedFile, setPreSelectedFile] = useState();
+  const [selectedFile, setSelectedFile] = useState();
+  const [preSelectedFile, setPreSelectedFile] = useState();
 
-  // const [isInputVisible, setIsInputVisible] = useState(false);
-  // const [isButtonVisible, setIsButtonVisible] = useState(true);
+  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [isButtonVisible, setIsButtonVisible] = useState(true);
 
-  // const handleButtonClick = () => {
-  //   setIsInputVisible(true);
-  //   setIsButtonVisible(false);
-  // };
+  const handleButtonClick = () => {
+    setIsInputVisible(true);
+    setIsButtonVisible(false);
+  };
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
 
-  //   if (!file) {
-  //     setSelectedFile(null);
-  //     setError('Please select a file.');
-  //     return;
-  //   }
+    if (!file) {
+      setSelectedFile(null);
+      setError('Please select a file.');
+      return;
+    }
 
-  //   const allowedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
-  //   if (!allowedFormats.includes(file.type)) {
-  //     setSelectedFile(null);
-  //     setError('Please select a valid image file (JPEG or PNG).');
-  //     return;
-  //   }
+    const allowedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (!allowedFormats.includes(file.type)) {
+      setSelectedFile(null);
+      setError('Please select a valid image file (JPEG or PNG).');
+      return;
+    }
 
-  //   // setUserImage(null);
-  //   setSelectedFile(file);
+    // setUserImage(null);
+    setSelectedFile(file);
 
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //     setPreSelectedFile(reader.result);
-  //   };
-  //   reader.readAsDataURL(file);
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreSelectedFile(reader.result);
+    };
+    reader.readAsDataURL(file);
    
-  // };
+  };
 
 
-  // console.log(preSelectedFile)
-  // console.log(userImage)
+  console.log(preSelectedFile)
+  console.log(userImage)
 
 
-  // useEffect(()=>{
-  //   const fetchUserImage= async()=>{
-  //       try{
-  //           const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
-  //           setStoredImage(res.data[0])
+  useEffect(()=>{
+    const fetchUserImage= async()=>{
+        try{
+            const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
+            setStoredImage(res.data[0])
 
-  //       }catch(err){
-  //           console.log(err)
-  //       }
-  //   }
-  //   fetchUserImage()
-  // },[])
+        }catch(err){
+            console.log(err)
+        }
+    }
+    fetchUserImage()
+  },[])
 
 
-  // const checkUserImage = async () => {
-  //   try {
-  //     const imagePath = '../uploads/profileImage/';
-  //     const imageName = storedImage.user_image;
+  const checkUserImage = async () => {
+    try {
+      const imagePath = '../uploads/profileImage/';
+      const imageName = storedImage.user_image;
   
-  //     if (imageName === undefined || imageName === null) {
-  //       console.log('User image name is undefined or null.');
-  //       return;
-  //     }
+      if (imageName === undefined || imageName === null) {
+        console.log('User image name is undefined or null.');
+        return;
+      }
   
-  //     const isFileExists = await checkFileExists(imagePath, imageName);
+      const isFileExists = await checkFileExists(imagePath, imageName);
   
-  //     if (isFileExists !== null && isFileExists !== undefined) {
-  //       if (isFileExists) {
-  //         const fileData = await fetchFileData(`${imagePath}${imageName}`);
-  //         if (fileData) {
-  //           setUserImage(fileData);
-  //           console.log(`File ${imageName} exists.`);
-  //         } else {
-  //           console.log(`File data for ${imageName} is empty or undefined.`);
-  //         }
-  //       } else {
-  //         console.log(`File: ${imageName} does not exist.`);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('Error checking user image path:', error);
-  //   }
-  // };
+      if (isFileExists !== null && isFileExists !== undefined) {
+        if (isFileExists) {
+          const fileData = await fetchFileData(`${imagePath}${imageName}`);
+          if (fileData) {
+            setUserImage(fileData);
+            console.log(`File ${imageName} exists.`);
+          } else {
+            console.log(`File data for ${imageName} is empty or undefined.`);
+          }
+        } else {
+          console.log(`File: ${imageName} does not exist.`);
+        }
+      }
+    } catch (error) {
+      console.error('Error checking user image path:', error);
+    }
+  };
 
-  // useEffect(() => {
-  //   checkUserImage();
-  // }, [storedImage]);
+  useEffect(() => {
+    checkUserImage();
+  }, [storedImage]);
 
-  // const checkFileExists = async (folderPath, fileName) => {
-  //   try {
-  //     const filePath = `${folderPath}/${fileName}`;
-  //     const response = await fetch(filePath);
+  const checkFileExists = async (folderPath, fileName) => {
+    try {
+      const filePath = `${folderPath}/${fileName}`;
+      const response = await fetch(filePath);
 
-  //     return response.ok;
-  //   } catch (error) {
-  //     console.error('Error checking file existence:', error);
-  //     return false;
-  //   }
-  // };
+      return response.ok;
+    } catch (error) {
+      console.error('Error checking file existence:', error);
+      return false;
+    }
+  };
 
-  // const fetchFileData = async (filePath) => {
-  //   try {
-  //     const response = await fetch(filePath);
+  const fetchFileData = async (filePath) => {
+    try {
+      const response = await fetch(filePath);
   
-  //     if (!response.ok) {
-  //       if (response.status === 404) {
-  //         console.log('File not found.');
-  //       } else {
-  //         throw new Error(`Failed to fetch file from ${filePath}`);
-  //       }
-  //       return null;
-  //     }
+      if (!response.ok) {
+        if (response.status === 404) {
+          console.log('File not found.');
+        } else {
+          throw new Error(`Failed to fetch file from ${filePath}`);
+        }
+        return null;
+      }
   
-  //     const fileData = await response.blob();
+      const fileData = await response.blob();
   
-  //     if (!fileData || fileData.size === 0) {
-  //       console.log('File data is empty or undefined.');
-  //       return null;
-  //     }
+      if (!fileData || fileData.size === 0) {
+        console.log('File data is empty or undefined.');
+        return null;
+      }
   
-  //     const dataUrl = URL.createObjectURL(fileData);
+      const dataUrl = URL.createObjectURL(fileData);
   
-  //     return dataUrl;
-  //   } catch (error) {
-  //     console.error('Error fetching file data:', error);
-  //     return null;
-  //   }
-  // };
+      return dataUrl;
+    } catch (error) {
+      console.error('Error fetching file data:', error);
+      return null;
+    }
+  };
 
 
-  // const handleUploadImage = async (e) => {
-  //   e.preventDefault();
+  const handleUploadImage = async (e) => {
+    e.preventDefault();
 
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('user_img', selectedFile);
+    try {
+      const formData = new FormData();
+      formData.append('user_img', selectedFile);
 
-  //     const response = await axios.post(`http://localhost:8800/usersettings/uploadimage/${user_id}`, formData);
+      const response = await axios.post(`http://localhost:8800/usersettings/uploadimage/${user_id}`, formData);
 
-  //     if (response.status === 200) {
-  //         setIsSuccess(true);
-  //         setSelectedFile(null);
-  //         setIsButtonVisible(true);
-  //         setIsInputVisible(false);
-  //         contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-  //         console.log('Upload successful');
+      if (response.status === 200) {
+          setIsSuccess(true);
+          setSelectedFile(null);
+          setIsButtonVisible(true);
+          setIsInputVisible(false);
+          contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+          console.log('Upload successful');
 
-  //         setTimeout(() => {
-  //             setIsSuccess(false);
-  //         }, 3000);
-  //     } else {
-  //         console.error('Transaction error:', response.statusText);
-  //     }
+          setTimeout(() => {
+              setIsSuccess(false);
+          }, 3000);
+      } else {
+          console.error('Transaction error:', response.statusText);
+      }
         
-  //   } catch (error) {
-  //       console.error('Error Uploading Image:', error.message);
-  //   }
-  // };
+    } catch (error) {
+        console.error('Error Uploading Image:', error.message);
+    }
+  };
 
 
-  // const handleRemoveImage = async (e) => {
-  //   e.preventDefault();
+  const handleRemoveImage = async (e) => {
+    e.preventDefault();
 
-  //   try {
+    try {
 
-  //     const response = await axios.delete(`http://localhost:8800/usersettings/removeimage/${user_id}`);
+      const response = await axios.delete(`http://localhost:8800/usersettings/removeimage/${user_id}`);
 
-  //     if (response.status === 200) {
-  //         const fileInput = document.getElementById('user_img');
-  //         if (fileInput) {
-  //           fileInput.value = '';
-  //         }
+      if (response.status === 200) {
+          const fileInput = document.getElementById('user_img');
+          if (fileInput) {
+            fileInput.value = '';
+          }
           
-  //         setSelectedFile(null);
-  //         setPreSelectedFile(null);
-  //         setStoredImage(null);
+          setSelectedFile(null);
+          setPreSelectedFile(null);
+          setStoredImage(null);
 
-  //         setIsRemove(true);
-  //         setIsButtonVisible(true);
-  //         setIsInputVisible(false);
-  //         contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-  //         console.log('Remove successful');
+          setIsRemove(true);
+          setIsButtonVisible(true);
+          setIsInputVisible(false);
+          contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+          console.log('Remove successful');
 
-  //         setTimeout(() => {
-  //             setIsRemove(false);
-  //         }, 3000);
-  //     } else {
-  //         console.error('Transaction error:', response.statusText);
-  //     }
+          setTimeout(() => {
+              setIsRemove(false);
+          }, 3000);
+      } else {
+          console.error('Transaction error:', response.statusText);
+      }
         
-  //   } catch (error) {
-  //       console.error('Error Removing Image:', error.message);
-  //   }
+    } catch (error) {
+        console.error('Error Removing Image:', error.message);
+    }
 
-  // }
+  }
 
   
 
@@ -314,7 +314,7 @@ const AdminSettings =()=>{
             <div className="px-5 py-5">
                 <form className="max-w-md mx-auto">
                   
-                  {/* {isSuccess && (
+                  {isSuccess && (
                     <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
                       Upload Successful!
                     </div>
@@ -324,7 +324,7 @@ const AdminSettings =()=>{
                     <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
                       Remove Successful!
                     </div>
-                  )}   */}
+                  )}  
 
                   <div className="grid gap-6">
                     <h1 className='font-medium text-center text-slate-700 dark:text-white'>Avatar</h1>
@@ -341,7 +341,7 @@ const AdminSettings =()=>{
 
                       <div className="flex flex-col items-center w-full mb-4">
 
-{/*                       
+                                            
                       {isButtonVisible ? (
                       <button
                         type="button"
@@ -354,10 +354,10 @@ const AdminSettings =()=>{
                         </svg>
                         { (preSelectedFile || userImage || defaultImg) === defaultImg ? 'Upload Profile Photo' : 'Change Profile Photo' }
                       </button>
-                      ) : null} */}
+                      ) : null}
 
 
-                      {/* {isInputVisible ? (
+                      {isInputVisible ? (
                         <input
                           className="w-full border-gray-500 border rounded-full text-sm file:px-4 file:py-1.5 text-black dark:text-white file:cursor-pointer file:border-none file:text-white file:bg-[#212121] file:hover:bg-zinc-700 file:dark:bg-white file:dark:text-black file:dark:hover:bg-slate-400"
                           id="user_img"
@@ -366,9 +366,9 @@ const AdminSettings =()=>{
                           onChange={handleFileChange}
                         />
                       ) : null}
-             */}
+                     
                           
-                          {/* {selectedFile ? (
+                          {selectedFile ? (
                             <button
                               type="button"
                               onClick={handleUploadImage}
@@ -376,9 +376,9 @@ const AdminSettings =()=>{
                             >
                               Save Changes
                             </button>
-                          ) : null} */}
+                          ) : null}
 
-                          {/* { (preSelectedFile || userImage || defaultImg) !== defaultImg && isButtonVisible ? (
+                          { (preSelectedFile || userImage || defaultImg) !== defaultImg && isButtonVisible ? (
                             <button
                               type="button"
                               onClick={handleRemoveImage}
@@ -389,7 +389,7 @@ const AdminSettings =()=>{
                               </svg>
                               Remove Profile Photo
                             </button>
-                          ) : null} */}
+                          ) : null}
 
                       </div>
                     </div>
