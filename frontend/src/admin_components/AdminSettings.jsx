@@ -103,15 +103,10 @@ const AdminSettings =()=>{
    
   };
 
-
-  console.log(preSelectedFile)
-  console.log(userImage)
-
-
   useEffect(()=>{
     const fetchUserImage= async()=>{
         try{
-            const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
+            const res= await axios.get(`http://localhost:8800/adminprofile/${admin_type}`)
             setStoredImage(res.data[0])
 
         }catch(err){
@@ -124,11 +119,10 @@ const AdminSettings =()=>{
 
   const checkUserImage = async () => {
     try {
-      const imagePath = '../uploads/profileImage/';
-      const imageName = storedImage.user_image;
+      const imagePath = '../uploads/adminImages/';
+      const imageName = storedImage?.admin_image;
   
       if (imageName === undefined || imageName === null) {
-        console.log('User image name is undefined or null.');
         return;
       }
   
@@ -139,9 +133,9 @@ const AdminSettings =()=>{
           const fileData = await fetchFileData(`${imagePath}${imageName}`);
           if (fileData) {
             setUserImage(fileData);
-            console.log(`File ${imageName} exists.`);
+            // console.log(`File ${imageName} exists.`);
           } else {
-            console.log(`File data for ${imageName} is empty or undefined.`);
+            // console.log(`File data for ${imageName} is empty or undefined.`);
           }
         } else {
           console.log(`File: ${imageName} does not exist.`);
@@ -205,7 +199,7 @@ const AdminSettings =()=>{
       const formData = new FormData();
       formData.append('user_img', selectedFile);
 
-      const response = await axios.post(`http://localhost:8800/usersettings/uploadimage/${user_id}`, formData);
+      const response = await axios.post(`http://localhost:8800/adminprofile/uploadimage/${admin_type}`, formData);
 
       if (response.status === 200) {
           setIsSuccess(true);
@@ -229,11 +223,10 @@ const AdminSettings =()=>{
 
 
   const handleRemoveImage = async (e) => {
-    e.preventDefault();
 
     try {
 
-      const response = await axios.delete(`http://localhost:8800/usersettings/removeimage/${user_id}`);
+      const response = await axios.delete(`http://localhost:8800/adminprofile/removeimage/${admin_type}`);
 
       if (response.status === 200) {
           const fileInput = document.getElementById('user_img');
@@ -266,22 +259,6 @@ const AdminSettings =()=>{
 
   
 
-
-
-  // const handleDelete = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //       const confirmDelete = window.confirm('Are you sure you want to delete your account?');
-  //       if (confirmDelete) {
-  //           await axios.delete(`http://localhost:8800/usersettings/accdelete/${user_id}`);
-  //           // Set the new URL using window.location.href
-  //           window.location.href = '/';
-  //       }
-  //       console.log(confirmDelete);
-  //   } catch (error) {
-  //       console.error('Error deleting account:', error.message);
-  //   }
-  // };
   
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -333,7 +310,7 @@ const AdminSettings =()=>{
                       <img
                         name='userImage' 
                         className="inline-block h-72 w-72 rounded-full border-2 border-black dark:border-white p-1 object-cover object-center relative z-1"
-                        src={imageUrl}
+                        src={preSelectedFile || userImage || imageUrl}
                         // src={preSelectedFile || userImage || defaultImg}
                         // onError={(e) => console.error('Error loading image:', e)}
                       />

@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Transition from '../utils/Transition';
-import axios from 'axios';
-import { useLocation } from 'react-router-dom';
 import defaultImage from '../images/default_img.png';
 import chiefImg from '../images/CHIEF.png'
 import rptaxImg from '../images/RPTAX.png'
@@ -12,47 +9,42 @@ import cedulaImg from '../images/CTC.png'
 import lcrImg from '../images/LCR.png'
 import urImg from '../images/UR.png'
 
-const AdminDropdownProfile = ({ align }) => {
-
-  const { admin_type } = useParams();
+const AdminDropdownProfile = ({ align, admin_type, userImage }) => {
 
   let imageUrl;
   let userName;
 
   switch (admin_type) {
     case 'chief_admin':
-      imageUrl = chiefImg;
+      imageUrl = userImage ? userImage : chiefImg;
       userName = 'CHIEF ADMIN';
-    break;
+      break;
     case 'rptax_admin':
-      imageUrl = rptaxImg;
-      userName = 'RPTAX ADMIN';
-      break;
+        imageUrl = userImage ? userImage : rptaxImg;
+        userName = 'RPTAX ADMIN';
+        break;
     case 'business_admin':
-      imageUrl = businessImg;
-      userName = 'BUSINESS PERMIT ADMIN';
-      break;
+        imageUrl = userImage ? userImage : businessImg;
+        userName = 'BUSINESS PERMIT ADMIN';
+        break;
     case 'cedula_admin':
-      imageUrl = cedulaImg;
-      userName = 'CTC/CEDULA ADMIN';
-      break;
+        imageUrl = userImage ? userImage : cedulaImg;
+        userName = 'CTC/CEDULA ADMIN';
+        break;
     case 'lcr_admin':
-      imageUrl = lcrImg;
-      userName = 'LOCAL CIVIL REGISTRY ADMIN';
-      break;
+        imageUrl = userImage ? userImage : lcrImg;
+        userName = 'LOCAL CIVIL REGISTRY ADMIN';
+        break;
     case 'registry_admin':
-      imageUrl = urImg;
-      userName = 'REGISTRY ADMIN';
-      break;
+        imageUrl = userImage ? userImage : urImg;
+        userName = 'REGISTRY ADMIN';
+        break;
     default:
-      imageUrl = defaultImage;
-      break;
-  }
+        imageUrl = defaultImage;
+        userName = 'UNKNOWN';
+        break;
+}
 
-  
-  // const location = useLocation();
-  // const { pathname, state } = location;
-  // const admin_type = pathname.split("/")[2];
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef(null);
@@ -79,6 +71,8 @@ const AdminDropdownProfile = ({ align }) => {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
+
+
 
   return (
     <div className="relative inline-flex">

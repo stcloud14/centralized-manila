@@ -4,7 +4,7 @@ import moment from 'moment';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import AdminSidebar from '../admin_partials/AdminSidebar';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation, useParams } from 'react-router-dom'; 
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
@@ -43,10 +43,11 @@ const AdminDashChiefForm = React.memo(
     topCities
   }) => {
   
-  const location = useLocation();
-  const { pathname, state } = location;
-  const admin_type = pathname.split("/")[2];
-  const adminRole = state && state.user_role;
+  // const location = useLocation();
+  // const { pathname, state } = location;
+  // const admin_type = pathname.split("/")[2];
+  const { admin_type } = useParams();
+  // const adminRole = state && state.user_role;
 
   const generateReports = async () => {
     try {

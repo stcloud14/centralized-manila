@@ -18,6 +18,7 @@ import forgotPassword from './routes/forgotPassword.js'
 import emailHandler from './routes/emailHandler.js'
 
 
+import adminProfileHandler from './routes/adminProfileHandler.js'
 import adminRptaxHandler from './routes/adminRptaxHandler.js'
 import adminBPHandler from './routes/adminBPHandler.js'
 import adminURHandler from './routes/adminURHandler.js'
@@ -49,6 +50,7 @@ app.use('/email', emailHandler)
 
 
 
+app.use('/adminprofile', adminProfileHandler);
 app.use('/adminrptax', adminRptaxHandler);
 app.use('/adminbp', adminBPHandler);
 app.use('/adminlcr', adminLcrHandler);
