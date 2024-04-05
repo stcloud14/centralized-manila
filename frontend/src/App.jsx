@@ -60,6 +60,7 @@ import AdminVerifyReqs from './admin_pages/AdminVerifyReqs';
 import AdminAuditTrail from './admin_pages/AdminAuditTrail';
 import AdminSettings from './admin_components/AdminSettings';
 import TermsConditions from './pages/TermsConditions';
+import AdminContacts from './admin_pages/AdminContacts';
 
 
 function App() {
@@ -116,6 +117,7 @@ function App() {
         <Route exact path="/admin_userlist/:admin_type" element={<AdminUserList />} />
         <Route exact path="/admin_verifyreqs/:admin_type" element={<AdminVerifyReqs />} />
         <Route exact path="/admin_audittrail/:admin_type" element={<AdminAuditTrail />} />
+        <Route exact path="/admin_contacts/:admin_type" element={<AdminContacts />} />
       </Routes>
 
       <DashboardProvider>

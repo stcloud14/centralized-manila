@@ -20,7 +20,7 @@ const AdminFooter = ({ logo }) => {
         <div className="flex flex-col items-center sm:flex-row sm:ml-auto">
           {/* <Link to={`/home/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">News</Link> */}
           {/* <Link to={`/about/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">About</Link> */}
-          <Link to={`/contacts/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">Contact</Link>
+          <Link to={`/admin_contacts/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">Contact</Link>
           {/* <Link to={`/faqs/${user_id}`} className="sm:ml-0 sm:mr-8 md:mb-0 mb-2">FAQs</Link> */}
           {/* <Link to={`/privacypolicy/${user_id}`} className="mb-2 sm:mb-0 sm:ml-0 sm:mr-8">Privacy Policy</Link> */}
         </div>
