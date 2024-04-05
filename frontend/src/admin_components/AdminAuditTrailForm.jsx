@@ -12,7 +12,7 @@ import AuditDesktop from '../admin_partials/audit_trail/auditDesktop';
 
 const  AdminAuditTrailForm = () => {
   
-  const { admin_type } = useParams();
+  const { user_id} = useParams();
 
   // const location = useLocation();
   // const { pathname } = location;
