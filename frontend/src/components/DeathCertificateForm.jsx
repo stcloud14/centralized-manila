@@ -3,7 +3,7 @@ import axios from 'axios'
 import {Link} from "react-router-dom"
 
 
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
@@ -27,10 +27,11 @@ import VerifyModal from '../partials/business/VerifyModal';
 
 
 const DeathCertificateForm =()=>{
-
-  const location = useLocation();
-  const { pathname } = location;
-  const user_id = pathname.split("/")[2];
+  
+  const { user_id } = useParams();
+  // const location = useLocation();
+  // const { pathname } = location;
+  // const user_id = pathname.split("/")[2];
 
   const [deathCert, setDeathCert] = useState((prevData) => ({
     ...prevData,
