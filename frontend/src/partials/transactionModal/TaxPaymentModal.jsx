@@ -349,16 +349,14 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
           </div>
 
           <div className="flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white p-4 rounded-b-lg gap-4 items-end">
-
-
               <div className="flex">
                 <div className="relative inline-block text-left">
                   <button type="button" onClick={() => document.getElementById('popover-click').classList.toggle('hidden')} className="">
                   {taxPaymentTransaction && taxPaymentTransaction.transaction_id ? (
                   <QRCode value={generateDownloadLink(taxPaymentTransaction)} size={100} />
-                ) : (
-                  <p></p>
-                )}
+                  ) : (
+                    <p></p>
+                  )}
                   </button>
 
                   {/* POPOVER */}
