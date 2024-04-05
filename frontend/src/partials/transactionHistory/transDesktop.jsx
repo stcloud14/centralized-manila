@@ -192,7 +192,20 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
         <>
         <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
           <div className="px-5 py-5">
-            <h1 className='font-medium text-center text-slate-700 dark:text-white mb-7 md:mb-3'>Transaction History</h1>
+              <div className="grid grid-cols-5 items-center">
+                {/* Description */}
+                <div className="flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 flex-shrink-0">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                  </svg>
+                    <h1 className="text-[0.50rem] flex text-gray-500 dark:text-gray-400 pl-1 mt-0.5">Scan the QR Code in your transaction details to easily save your information.</h1>
+                </div>
+
+                {/* FORMS TITLE */}
+                <div className="flex flex-col col-span-3">
+                  <h1 className="font-medium text-center mb-7 md:mb-3 text-slate-700 dark:text-white">Transaction History</h1>
+                </div>
+              </div>
               <div className="flex items-center justify-end mb-2 md:px-0 md:pr-0.5 px-0.5 text-xs">
                 {/* <div className="relative mr-2">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">

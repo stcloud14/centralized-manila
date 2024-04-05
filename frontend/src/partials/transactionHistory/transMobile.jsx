@@ -188,7 +188,29 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
         <>
         <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
               <div className="px-5 py-5">
-                <h1 className='font-medium text-center text-slate-700 dark:text-white mb-5'>Transaction History</h1>
+              <div className="grid grid-cols-5 items-center">
+              {/* Description */}
+              <div className="flex">
+                <div className="relative inline-block text-left mb-3.5">
+                  <button type="button" onClick={() => document.getElementById('popover-click').classList.toggle('hidden')} className="">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                    </svg>
+                  </button>
+
+                  {/* POPOVER */}
+                  <div id="popover-click" className="text-xs hidden absolute z-10 w-64 px-3 py-3 transition-opacity duration-300 rounded-sm shadow-2xl bg-white dark:bg-[#212121]">
+                      <p>Scan the QR Code in your transaction details to easily save your information.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* FORMS TITLE */}
+              <div className="flex flex-col col-span-3">
+                <h1 className="font-medium text-center mb-5 text-slate-700 dark:text-white">Transaction History</h1>
+              </div>
+              </div>
+                {/* <h1 className='font-medium text-center text-slate-700 dark:text-white mb-5'>Transaction History</h1> */}
                 <div className="flex flex-col items-center mb-3 md:flex-row md:px-0 md:pr-0.5 px-0.5 text-xs">
                   <div className="flex w-full items-center">
                     <button
