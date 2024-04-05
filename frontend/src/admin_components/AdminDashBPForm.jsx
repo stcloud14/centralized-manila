@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import jsPDF from 'jspdf';
-import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
+import { useParams } from 'react-router-dom'; // Import useLocation from react-router-dom
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -17,11 +17,11 @@ import logoImage from '../images/mnl_header_pdf.png';
 
 const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, topCities, revenue, totalBP })=>{
 
-  
-  const location = useLocation();
-  const { pathname, state } = location;
+  const { admin_type } = useParams();
+ // const location = useLocation();
+ // const { pathname, state } = location;
   // console.log("pathname", pathname);
-  const admin_type = pathname.split("/")[2];
+ // const admin_type = pathname.split("/")[2];
   
   // console.log("userrole", admin_type)
 

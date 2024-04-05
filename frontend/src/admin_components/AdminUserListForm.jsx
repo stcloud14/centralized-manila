@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
@@ -11,9 +11,10 @@ import AdminUserViewModal from '../admin_partials/admin_modals/AdminUserViewModa
 
 const AdminUserListForm = () => {
 
-  const location = useLocation();
-  const { pathname } = location;
-  const user_id = pathname.split("/")[2];
+  const { user_id } = useParams();
+  // const location = useLocation();
+ //  const { pathname } = location;
+ //  const user_id = pathname.split("/")[2];
 
   const [userApplications, setUserApplications] = useState();
   const [filteredUserApplications, setFilteredUserApplications] = useState([]);
