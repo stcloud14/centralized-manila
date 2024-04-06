@@ -432,8 +432,9 @@ const cancelTrans = async (e) => {
 
                 <hr className='mb-1'/>
                 <div className="flex justify-between">
-                  <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-                  <span className="font-semibold whitespace-nowrap ml-4">  {cedulaTransaction && (
+                <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : status_type === "Pending" ? "Amount to Pay" : "Amount"}</span>
+                  <span className="font-semibold whitespace-nowrap ml-4"> 
+                   {cedulaTransaction && (
                     `P ${cedulaTransaction.ctc_amountpayable !== undefined ? cedulaTransaction.ctc_amountpayable + '.00' : 
                     cedulaTransaction.amount !== undefined ? cedulaTransaction.amount + '.00' : '-'}`
                   )}</span>

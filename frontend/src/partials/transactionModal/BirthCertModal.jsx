@@ -516,23 +516,28 @@ const cancelTrans = async (e) => {
             </div>
             ) : null} */}
 
-            {transaction_id ? (
-            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-              <span className="font-medium whitespace-nowrap">Status</span>
-              <StatusBadgeModal statusType={status_type} />
-            </div>
-            ) : null}
 
-            <hr className='mb-1'/>
-            <div className="flex justify-between">
-              <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
-              <span className="font-semibold whitespace-nowrap ml-4">                            
-                {birthTransaction && (
+        {transaction_id ? (
+          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+            <span className="font-medium whitespace-nowrap">Status</span>
+            <StatusBadgeModal statusType={status_type} />
+          </div>
+        ) : null}
+
+          <hr className='mb-1'/>
+          <div className="flex justify-between">
+          <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : status_type === "Pending" ? "Amount to Pay" : "Amount"}</span>
+            <span className="font-semibold whitespace-nowrap ml-4">                            
+              {birthTransaction && (
                 `P ${birthTransaction.birthc_amount !== undefined ? birthTransaction.birthc_amount + '.00' : 
                 birthTransaction.amount !== undefined ? birthTransaction.amount + '.00' : '-'}`
-              )}</span>
-            </div>
+              )}
+            </span>
           </div>
+          </div>
+
+
+   
           
           <div className="flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white p-4 rounded-b-lg gap-4 items-end">
             <div className="flex">

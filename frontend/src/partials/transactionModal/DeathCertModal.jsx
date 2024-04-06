@@ -459,7 +459,7 @@ const cancelTrans = async (e) => {
             ) : null}
             <hr className='mb-1'/>
             <div className="flex justify-between">
-              <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
+            <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : status_type === "Pending" ? "Amount to Pay" : "Amount"}</span>
               <span className="font-semibold whitespace-nowrap ml-4">
               {deathTransaction && (
                 `P ${deathTransaction.deathc_amount !== undefined ? deathTransaction.deathc_amount + '.00' : 
