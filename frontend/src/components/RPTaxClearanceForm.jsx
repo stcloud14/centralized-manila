@@ -210,21 +210,21 @@ const RPTaxClearanceForm =()=>{
   const handleProceed = (e) => {
     e.preventDefault();
 
-    // // Please fill up the necessary forms
-    // const requiredFields = ['rp_tdn', 'rp_pin']; //The input fields that is required
-    // const isIncomplete = requiredFields.some((field) => !rptaxClearance[field]);
+     // Please fill up the necessary forms
+    const requiredFields = ['rp_tdn', 'rp_pin']; //The input fields that is required
+    const isIncomplete = requiredFields.some((field) => !rptaxClearance[field]);
 
-    // if (isIncomplete) {
-    //   contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
-    //   setShowWarning(true); // Show warning message and prevent opening the modal
+    if (isIncomplete) {
+      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
+      setShowWarning(true); // Show warning message and prevent opening the modal
      
-    //   setTimeout(() => {
-    //     setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
-    //   }, 4000);
-    // } else {
+       setTimeout(() => {
+         setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
+     }, 4000);
+     } else {
       
       setIsModalOpen(true);// Proceed to open the modal
-    // }
+    }
   };
 
   const handleCloseModal = () => {

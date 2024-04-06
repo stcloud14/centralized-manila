@@ -143,25 +143,25 @@ const MarriageCertificateForm =()=>{
       e.preventDefault();
   
       // Please fill up the necessary forms
-    //   const requiredFields = ['marriagec_hlname', /* 'marriagec_hfname', 'marriagec_wlname', 'marriagec_wfname',
-    //   'marriagec_region', 'marriagec_province', 'marriagec_municipal', 'marriagec_date',
-    //   'marriagec_reqlname', 'marriagec_reqfname', 'marriagec_reqrelation',
-    //   'marriagec_mobileno', 'marriagec_reqregion', 'marriagec_reqprovince',
-    //   'marriagec_reqmunicipal', 'marriagec_reqbrgy', 'marriagec_reqhnum', 'marriagec_reqstreet',
-    // 'marriagec_reqzip', 'marriagec_nocopies', 'marriagec_print', 'marriagec_purpose', 'marriagec_validid'*/]; //The input fields that is required
-    //   const isIncomplete = requiredFields.some((field) => !marriageCert[field]);
+     const requiredFields = ['marriagec_hlname', 'marriagec_hfname', 'marriagec_wlname', 'marriagec_wfname',
+       'marriagec_region', 'marriagec_province', 'marriagec_municipal', 'marriagec_date',
+       'marriagec_reqlname', 'marriagec_reqfname', 'marriagec_reqrelation',
+       'marriagec_mobileno', 'marriagec_reqregion', 'marriagec_reqprovince',
+       'marriagec_reqmunicipal', 'marriagec_reqbrgy', 'marriagec_reqhnum', 'marriagec_reqstreet',
+       'marriagec_reqzip', 'marriagec_nocopies', 'marriagec_print', 'marriagec_purpose', 'marriagec_validid']; //The input fields that is required
+      const isIncomplete = requiredFields.some((field) => !marriageCert[field]);
   
-    //   if (isIncomplete) {
-    //     contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
-    //     setShowWarning(true); // Show warning message and prevent opening the modal
+      if (isIncomplete) {
+        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
+         setShowWarning(true); // Show warning message and prevent opening the modal
        
-    //     setTimeout(() => {
-    //       setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
-    //     }, 4000);
-    //   } else {
+        setTimeout(() => {
+           setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
+         }, 4000);
+       } else {
         
         setIsModalOpen(true);// Proceed to open the modal
-    //   }
+       }
     };
   
     const handleCloseModal = () => {
