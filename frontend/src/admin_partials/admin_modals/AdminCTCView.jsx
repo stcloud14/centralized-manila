@@ -188,7 +188,7 @@ const AdminCTCView = ({ selectedTransaction, isOpen, handleClose }) => {
 
                           <hr className='mt-7 mb-1'/>
                           <div className="flex justify-between">
-                            <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
+                          <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : "Amount to Pay"}</span>
                             <span className="font-semibold whitespace-nowrap ml-4">P {selectedTransaction.amount + '.00' }</span>
                           </div>
                         </div>
