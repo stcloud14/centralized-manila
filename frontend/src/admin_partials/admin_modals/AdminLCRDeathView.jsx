@@ -215,7 +215,7 @@ const AdminLCRDeathView = ({ selectedTransaction, isOpen, handleClose, transType
                           {transType === 'Death Certificate' ? 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <span className="font-semibold whitespace-nowrap ml-4">{status_type}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>
                           </div>
                           :null }
                           
@@ -223,7 +223,7 @@ const AdminLCRDeathView = ({ selectedTransaction, isOpen, handleClose, transType
                           <hr className='mt-7 mb-1'/>
                           {transType === 'Death Certificate' ? 
                           <div className="flex justify-between">
-                            <span className="font-semibold whitespace-nowrap">Amount to Pay</span>
+                          <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : "Amount to Pay"}</span>
                             <span className="font-semibold whitespace-nowrap ml-4">P {selectedTransaction.amount}</span>
                           </div>
                           :null }
