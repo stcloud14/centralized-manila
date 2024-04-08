@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import AdminSidebar from '../admin_partials/AdminSidebar';

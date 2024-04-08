@@ -60,7 +60,7 @@ const AuditMobile = ({ auditTrail, searchInput, setSearchInput, handleSearch, ha
           <div className="absolute w-[270px] mt-2 origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-md shadow-2xl z-20">
 
               {/* Date Row */}
-              {/*<div className="flex justify-center pb-1.5">
+              <div className="flex justify-center pb-1.5">
                   <span>
                           <Flatpickr
                             id=""
@@ -104,7 +104,7 @@ const AuditMobile = ({ auditTrail, searchInput, setSearchInput, handleSearch, ha
                             className="bg-transparent text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-[110px]"
                           />
                     </span>
-                  </div>*/}
+                  </div>
 
               {/* ID Row */}
               <div className="flex justify-center">

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 
 
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
@@ -12,12 +12,13 @@ import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 
 const ContactInfoForm =()=>{
 
-  const location = useLocation();
-  const { pathname } = location;
-  console.log(pathname);
-  const user_id = pathname.split("/")[2];
-  const [editMode, setEditMode] = useState(false);
+  const { user_id } = useParams();
+  // const location = useLocation();
+  // const { pathname } = location;
+  // console.log(pathname);
+  // const user_id = pathname.split("/")[2];
 
+  const [editMode, setEditMode] = useState(false);
   const [userContact, setUserContact]=useState({})
 
   console.log(userContact);
