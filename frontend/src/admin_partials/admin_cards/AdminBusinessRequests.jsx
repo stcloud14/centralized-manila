@@ -7,88 +7,88 @@ import BPCardView from '../admin_business/BPCardView';
 import BPTableView from '../admin_business/BPTableView';
 import Loading from '../../partials/Loading';
 
-const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
+const AdminBusinessRequests = ({businessPermit, handleUpdateData}) => {
 
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchTIN, setSearchTIN] = useState('');
-    const [selectType, setSelectType] = useState('');
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDatee, setSelectedDatee] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState('table'); 
+  const [isProcessConfirm, setIsProcessConfirm] = useState(false);
 
-    const [viewMode, setViewMode] = useState('table'); 
+  const [modalView, setModalView] = useState(false); 
+  const [isSuccess, setIsSuccess] = useState(false);
+  
+  const [isCompleteConfirm, setIsCompleteConfirm] = useState(false);
+  const [isRejectConfirm, setIsRejectConfirm] = useState(false);
 
-    const [modalView, setModalView] = useState(false); 
-    const [isSuccess, setIsSuccess] = useState(false);
-    
-    const [isProcessConfirm, setIsProcessConfirm] = useState(false);
-    const [isRejectConfirm, setIsRejectConfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const [isLoading, setIsLoading] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState();
+  const [transType, setTransType] = useState();
+  
+  const [searchTIN, setSearchTIN] = useState('');
+  const [selectType, setSelectType] = useState('All'); // Default to 'All' initially
 
-    const [selectedTransaction, setSelectedTransaction] = useState();
-    const [transType, setTransType] = useState();
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
 
-    console.log(selectedTransaction)
+  const [filterApplied, setFilterApplied] = useState(false);
+  const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
+  const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
+  const [lastSelectedBusinessType, setLastSelectedBusinessType] = useState(null);
+  const [filteredSearchQuery, setFilteredSearchQuery] = useState(''); // Store the filtered search query
+  const [filteredSearchTIN, setFilteredSearchTIN] = useState(''); // Store the filtered search TIN
+  
+  const handleSearch = (transaction) => {
+    const transactionId = (transaction?.transaction_id || '').toUpperCase();
+    const tinId = (transaction?.bus_tin || '').toUpperCase();
+  
+    const isTINMatch = tinId.includes(filteredSearchTIN.toUpperCase()); // Use the stored filtered TIN
+    const isTransactionMatch = transactionId.includes(filteredSearchQuery.toUpperCase()); // Use the stored filtered query
+  
+    // Check if the transaction date is within the selected date range only if the filter is applied
+    const isDateInRange =
+      !filterApplied ||
+      (!lastSelectedFromDate || new Date(transaction?.date) >= new Date(lastSelectedFromDate)) &&
+      (!lastSelectedToDate || new Date(transaction?.date) <= new Date(lastSelectedToDate));
+  
+    // Check if business type filtering should be applied
+    const isBusinessTypeMatch =
+      !filterApplied ||
+      selectType === 'All' ||
+      (lastSelectedBusinessType && transaction?.bus_type === lastSelectedBusinessType);
 
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [selectedDate, setSelectedDate] = useState('');
-    const [selectedDatee, setSelectedDatee] = useState('');
+    return isTransactionMatch && isTINMatch && isBusinessTypeMatch && isDateInRange;
+  };
+  
+  const filteredBusinessPermit = businessPermit ? businessPermit.filter(handleSearch) : [];
 
-    const toggleDropdown = () => {
-      console.log('Toggling dropdown state');
-      setDropdownOpen(!isDropdownOpen);
-    };
-    
-    const [filterApplied, setFilterApplied] = useState(false);
-    const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
-    const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
-    const [lastSelectedBusinessType, setLastSelectedBusinessType] = useState(null);
-    const [filteredSearchQuery, setFilteredSearchQuery] = useState(''); // Store the filtered search query
-    const [filteredSearchTIN, setFilteredSearchTIN] = useState(''); // Store the filtered search TIN
-    
-    const handleSearch = (transaction) => {
-      const transactionId = (transaction?.transaction_id || '').toUpperCase();
-      const tinId = (transaction?.bus_tin || '').toUpperCase();
-    
-      const isTINMatch = tinId.includes(filteredSearchTIN.toUpperCase()); // Use the stored filtered TIN
-      const isTransactionMatch = transactionId.includes(filteredSearchQuery.toUpperCase()); // Use the stored filtered query
-    
-      // Check if the transaction date is within the selected date range only if the filter is applied
-      const isDateInRange =
-        !filterApplied ||
-        (!lastSelectedFromDate || new Date(transaction?.date) >= new Date(lastSelectedFromDate)) &&
-        (!lastSelectedToDate || new Date(transaction?.date) <= new Date(lastSelectedToDate));
-    
-      // Check if business type filtering should be applied
-      const isBusinessTypeMatch =
-        !filterApplied ||
-        !selectType ||
-        selectType === 'All' ||
-        (lastSelectedBusinessType && transaction?.bus_type.includes(lastSelectedBusinessType.toUpperCase()));
-    
-      return isTransactionMatch && isTINMatch && isBusinessTypeMatch && isDateInRange;
-    };
-    
-    const filteredBusinessPermit = businessPermit ? businessPermit.filter(handleSearch) : [];
-    
-    const handleFilterClick = () => {
-      // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date or business type has changed
-      if (
-        selectedDate !== lastSelectedFromDate ||
-        selectedDatee !== lastSelectedToDate ||
-        selectType !== lastSelectedBusinessType
-      ) {
-        setFilterApplied(true);
-        setLastSelectedFromDate(selectedDate);
-        setLastSelectedToDate(selectedDatee);
-        setLastSelectedBusinessType(selectType);
-      } else {
-        // Reset filter when no changes are made
-        setFilterApplied(false);
-      }
-    
-      // Store the search values when the filter button is clicked
-      setFilteredSearchQuery(searchQuery);
-      setFilteredSearchTIN(searchTIN);
-    };
+  const handleSelectTypeChange = (event) => {
+    setSelectType(event.target.value);
+  };
+
+  const handleFilterClick = () => {
+    // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date or business type has changed
+    if (
+      selectedDate !== lastSelectedFromDate ||
+      selectedDatee !== lastSelectedToDate ||
+      selectType !== lastSelectedBusinessType
+    ) {
+      setFilterApplied(true);
+      setLastSelectedFromDate(selectedDate);
+      setLastSelectedToDate(selectedDatee);
+      setLastSelectedBusinessType(selectType);
+    } else {
+      // Reset filter when no changes are made
+      setFilterApplied(false);
+    }
+  
+    // Store the search values when the filter button is clicked
+    setFilteredSearchQuery(searchQuery);
+    setFilteredSearchTIN(searchTIN);
+  };
     
     useEffect(() => {
       // Reset filter when businessPermit changes
@@ -411,18 +411,24 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
                   </span>
               </div>
 
-              {/* Business Type Row */}
-              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                <span className="hidden sm:block text-xs">Business Type:</span>
-                <select  value={selectType} onChange={(e) => setSelectType(e.target.value)} name="typeDropdown"  id="typeDropdown"  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
-                  <option value="All" className="dark:bg-[#3d3d3d]">Select Business Type</option>
-                  <option value="Sole Proprietorship" className="dark:bg-[#3d3d3d]">Sole Proprietorship</option>
-                  <option value="One Person Corporation" className="dark:bg-[#3d3d3d]">One Person Corporation</option>
-                  <option value="Partnership" className="dark:bg-[#3d3d3d]">Partnership</option>
-                  <option value="Corporation" className="dark:bg-[#3d3d3d]">Corporation</option>
-                  <option value="Cooperation" className="dark:bg-[#3d3d3d]">Cooperation</option>
-                </select>
-              </div>
+            {/* Business Type Row */}
+            <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+              <span className="hidden sm:block text-xs">Business Type:</span>
+              <select  
+                value={selectType} 
+                onChange={(e) => setSelectType(e.target.value)} 
+                name="typeDropdown"  
+                id="typeDropdown"  
+                className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]"
+              >
+                <option value="All" className="dark:bg-[#3d3d3d]">Select Business Type</option>
+                <option value="Sole Proprietorship" className="dark:bg-[#3d3d3d]">Sole Proprietorship</option>
+                <option value="One Person Corporation" className="dark:bg-[#3d3d3d]">One Person Corporation</option>
+                <option value="Partnership" className="dark:bg-[#3d3d3d]">Partnership</option>
+                <option value="Corporation" className="dark:bg-[#3d3d3d]">Corporation</option>
+                <option value="Cooperation" className="dark:bg-[#3d3d3d]">Cooperation</option>
+              </select>
+            </div>
 
               {/* Transaction ID */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
