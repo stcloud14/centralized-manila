@@ -29,152 +29,244 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
     setDropdownOpen(!isDropdownOpen);
   };
 
+
+  console.log(filteredTransactions)
+  
+
   const generatePDF = async () => {
     try {
-      const pdf = new jsPDF();
-  
-      // Load the image as a data URL
-      const imageDataURL = await loadImageAsDataURL(logoImage);
-  
-      // Add image to the PDF
-      pdf.addImage(imageDataURL, 'PNG', 128, 5, 70, 35);
-  
-      pdf.setLineWidth(0.5);
-      pdf.line(130, 40, 195, 40);
-      pdf.line(130, 47, 195, 47);
-      pdf.line(130, 64, 195, 64);
-      
-  
-      // Filter transactions based on start and end dates, type, and status
-      const filteredTransactions = sortedTransactions.filter((transaction) => {
-        const transactionDate = new Date(transaction.date_processed);
-        const isDateInRange =
-          (!selectedDate || transactionDate >= new Date(selectedDate)) &&
-          (!selectedDatee || transactionDate <= new Date(selectedDatee));
-  
-        const isTypeMatching =
-          !selectedType || selectedType === '0' || transaction.trans_type === selectedType;
-  
-        const isStatusMatching =
-          !selectedStatus ||
-          selectedStatus === 'All' ||
-          transaction.status_type.toLowerCase() === selectedStatus.toLowerCase();
-  
-        return isDateInRange && isTypeMatching && isStatusMatching;
-      });
-  
-      // Account Summary table
-      const totalAllBalances = filteredTransactions.reduce((total, transaction) => {
-        const amount = transaction.status_type === 'Pending' ? parseFloat(transaction.amount) : 0;
-        const payment = transaction.status_type === 'Paid' ? parseFloat(transaction.payment) : 0;
-  
-        if (!isNaN(amount) && !isNaN(payment)) {
-          total += amount - payment;
-          total = Math.max(total, 0);
-        }
-  
-        return total;
-      }, 0);
-  
-      pdf.autoTable({
-        startY: 40,
-        head: [['Account Summary', '']],
-        body: [
-          ['Date as of now', moment().format('MMMM D, YYYY')],
-          ['Total Balance', `P ${totalAllBalances.toFixed(2)}`],
-        ],
-        headStyles: {
-          fillColor: false,
-          lineColor: 0,
-          textColor: 0,
-          fontSize: 10,
-          fontStyle: 'bold',
-          lineWidthTop: 1,
-          lineWidthBottom: 1,
-        },
-        bodyStyles: {
-          fillColor: false,
-          textColor: 0,
-          fontSize: 10,
-        },
-        alternateRowStyles: {
-          fillColor: false,
-          textColor: 0,
-          fontSize: 10,
-        },
-        margin: { top: 60, left: 130 },
-        tableWidth: 'auto',
-      });
-  
-      // Get the current Y position after adding content
-      const currentYPosition = pdf.autoTable.previous.finalY || 0;
-  
-      // Adjust the starting y-coordinate for the table
-      const tableStartY = currentYPosition + 15;
-  
-      // Define styles for the table header
-      const headerStyles = {
-        fillColor: [50, 50, 50],
-        textColor: 255,
-      };
-  
-      // Transaction Details table
-      pdf.autoTable({
-        startY: tableStartY,
-        head: [['Date', 'Transaction ID', 'Transaction', 'Amount', 'Payment', 'Balance']],
-        body: filteredTransactions.map((transaction, index) => {
-          const amount = parseFloat(transaction.amount) || 0;
-          const payment = parseFloat(transaction.payment) || 0;
-  
-          if (isNaN(amount) || isNaN(payment)) {
-            console.error(`Invalid amount or payment for transaction ID ${transaction.transaction_id}`);
-          }
-  
-          let rowBalance = 0;
-  
-          if (transaction.status_type === 'Pending') {
-            rowBalance = amount - payment;
-            rowBalance = Math.max(rowBalance, 0);
-          }
-  
-          const formattedAmount = `P ${amount.toFixed(2)}`;
-          const formattedPayment = `P ${payment.toFixed(2)}`;
-          const displayBalance = `P ${rowBalance < 0 ? '-' : ''}${Math.abs(rowBalance).toFixed(2)}`;
-  
-          return [
-            new Date(transaction.date_processed).toLocaleDateString('en-GB'),
-            transaction.transaction_id,
-            transaction.trans_type,
-            transaction.status_type === 'Pending' && transaction.amount ? formattedAmount : '',
-            transaction.status_type === 'Paid' ? formattedAmount : '',
-            displayBalance,
+        const totalPages = filteredTransactions.length;
+
+        const pdf = new jsPDF();
+
+        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+
+          const arrayBase = pageNum - 1;
+
+          const transaction = filteredTransactions[arrayBase];
+            
+          pdf.setFont("helvetica", "bold");
+          pdf.setFontSize(12);
+          pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+          pdf.setFont("helvetica", "normal");
+          pdf.setFontSize(10);
+          pdf.text(transaction.trans_type, 15, 19);
+          pdf.text("Electronic Statement of Account", 15, 23);
+
+          // Additional text to be placed on the right
+          const additionalText = [
+            { text: "Billing Date", bold: true },
+            "September 20, 2024"
           ];
-        }),
-        headStyles: headerStyles,
-        theme: 'plain',
-      });
-  
-        // Add signature on the right side at the bottom of the table
-        const signatureXPosition = pdf.internal.pageSize.width - 58;
-        const signatureYPosition = pdf.autoTable.previous.finalY + 65;
-  
-        const fontSize = 12;
-        pdf.setFontSize(fontSize);
-  
-        pdf.text("Approved by:", signatureXPosition, signatureYPosition);
-        pdf.text(userPersonal.l_name + ", " + userPersonal.f_name, signatureXPosition, signatureYPosition + 7);
-        pdf.text("Endorsed by:", signatureXPosition, signatureYPosition + 18);
-        pdf.text(userPersonal.l_name + ", " + userPersonal.f_name, signatureXPosition, signatureYPosition + 25);
-  
-        pdf.line(signatureXPosition, signatureYPosition + 9, signatureXPosition + 45, signatureYPosition + 9);
-        pdf.line(signatureXPosition, signatureYPosition + 27, signatureXPosition + 45, signatureYPosition + 27);
-  
-      // Save the PDF
-      pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
+          
+          if (transaction.trans_type === 'Business Permit') {
+              additionalText.push(
+                  { text: "Business Type", bold: true },
+                  transaction.bus_type
+              );
+          }
+        
+          const additionalTextX = pdf.internal.pageSize.width - 50;
+          const additionalTextY = 35;
+
+          additionalText.forEach((item, index) => {
+              const text = typeof item === 'string' ? item : item.text;
+              const isBold = typeof item === 'object' && item.bold;
+              pdf.setFont(isBold ? "helvetica" : "helvetica", isBold ? "bold" : "normal");
+              pdf.text(text, additionalTextX, additionalTextY + (index * 4));
+          });
+
+          // Display labels and their corresponding text
+          const labelSets = {
+            'Real Property Tax Payment': ["SOA No.", "Account Name:", "Tax Declaration Number:", "Transaction ID:"],
+            'Real Property Tax Clearance': ["SOA No.", "Tax Declaration Number:", "Transaction ID:"],
+            'Business Permit': ["SOA No.", "Name of Business:", "Name of Owner:", "Transaction ID:"],
+            'Community Tax Certificate': ["SOA No.", "Name of Owner:", "Transaction ID:"],
+            default: ["SOA No.", "Name of Requestor:", "Transaction ID:"]
+        };
+        
+        const colonWidth = pdf.getStringUnitWidth(":") * 1;
+        
+        const labels = labelSets[transaction.trans_type] || labelSets.default;
+        
+        labels.forEach((label, index) => {
+            const labelWidth = pdf.getStringUnitWidth(label) * 3.9;
+            const textStartX = 15 + labelWidth + colonWidth;
+            let text;
+        
+            switch (index) {
+                case 0:
+                    text = "000-120-920";
+                    break;
+                case 1:
+                    text = transaction.acc_name || transaction.rp_tdn || transaction.bus_name || "name";
+                    break;
+                case 2:
+                    text = transaction.rp_tdn || transaction.bus_owner || transaction.transaction_id || "name";
+                    break;
+                case 3:
+                    text = transaction.transaction_id;
+                    break;
+                default:
+                    text = "Unknown";
+            }
+        
+            pdf.setFont("helvetica", "bold");
+            pdf.text(label, 15, 35 + index * 4);
+            pdf.setFont("helvetica", "normal");
+            pdf.text(text, textStartX, 35 + index * 4);
+        });
+        
+
+          // Spacing between the text above and the table below
+          const textHeight = (labels.length + 1) * 4; 
+          const marginTop = 1;
+
+          // Adjust the starting y-coordinate for the first table
+          const firstTableStartY = 35 + textHeight + marginTop;
+
+          // Define styles for the first table header
+          const firstTableHeaderStyles = {
+              fillColor: [50, 50, 50],
+              textColor: 255,
+          };
+
+          // Transaction Details table
+          const { trans_type, tp_pin, tc_pin, amount, year_period, period_id, date, bus_reg_no, bus_tin } = transaction;
+
+          let head, body;
+
+          switch (trans_type) {
+              case 'Real Property Tax Payment':
+                  head = [['PIN', 'Total Amount', 'Year', 'Quarter']];
+                  body = [[tp_pin, 'P ' + amount, year_period, period_id]];
+                  break;
+              case 'Real Property Tax Clearance':
+                  head = [['PIN', 'Total Amount', 'Date Processed']];
+                  body = [[tc_pin, 'P ' + amount, date]];
+                  break;
+              case 'Business Permit':
+                  head = [['DTI/SEC/CDA Registration No.', 'Tax Identification Number', 'Total Amount', 'Date Processed']];
+                  body = [[bus_reg_no, bus_tin, 'P ' + amount, date]];
+                  break;
+              case 'Community Tax Certificate':
+                  head = [['Tax Payer Account No.', 'Total Amount', 'Date Processed']];
+                  body = [['12345678','BB-12345','P 1500.00','April 12, 2024']];
+                  break;
+              default:
+                  head = [['No. of Copies', 'Total Amount', 'Date Processed']];
+                  body = [['Default Body Data 1','Default Body Data 2','Default Body Data 3','Default Body Data 4']];
+          }
+
+          pdf.autoTable({
+              startY: firstTableStartY,
+              head: head,
+              body: body,
+              headStyles: firstTableHeaderStyles,
+              theme: 'plain',
+          });
+
+
+
+          // Function to repeat a symbol to form a line
+          function repeatSymbol(symbol, count) {
+            return symbol.repeat(count);
+          }
+
+          // Define the symbol and the number of repetitions
+          const symbol = "\u2022"; // Unicode for a bullet point symbol
+          const repetitions = 146; // Adjust the number of repetitions as needed
+
+          // Generate the line of symbols
+          const lineOfSymbols = repeatSymbol(symbol, repetitions);
+
+          // Add the line of symbols below the first table
+          const textXPosition = 15; // Adjust the X position
+          const textYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
+
+          pdf.setFont("helvetica", "normal");
+          pdf.setFontSize(10);
+          pdf.text(lineOfSymbols, textXPosition, textYPosition);
+
+
+          // Second Table Title
+          const titleText = "Last Payment";
+          const titleXPosition = 15; // Adjust as needed
+          const titleYPosition = pdf.autoTable.previous.finalY + 20;
+
+          pdf.setFont("helvetica", "bold");
+          pdf.setFontSize(10);
+          pdf.text(titleText, titleXPosition, titleYPosition);
+
+          // Second Table
+          const secondTableStartY = titleYPosition + 2; // Adjust spacing from title
+
+          pdf.autoTable({
+              startY: secondTableStartY,
+              head: [['Payment Date', 'Total Amount']],
+              body:  [["1/14/2023", "P 1200.00"]],
+              theme: 'plain',
+              columnStyles: {
+                  0: { cellWidth: 40, cellPadding: 1, halign: 'center'}, // Adjust the width and height of the first column
+                  1: { cellWidth: 40, cellPadding: 1, halign: 'center'}  // Adjust the width and height of the second column
+              },
+              headStyles: {
+                  fontStyle: 'normal',
+                  halign: 'center'
+              }
+          });
+
+          // Add note text below the second table
+          const noteText = [
+              "Note:",
+              "1. Please present this Statement to the Teller when paying the fee for your Business Permit.",
+              "2. This SOA can also be paid through 'Online Payment'. Just visit the website www.centralizedmanila.ph.",
+              "3. This eSOA is valid until April 12, 2024, 11:59 P.M."
+          ];
+          const noteXPosition = 15; // Adjust as needed
+          const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
+
+          pdf.setFont("helvetica", "normal");
+          pdf.setFontSize(10);
+          noteText.forEach((text, index) => {
+              pdf.text(text, noteXPosition, noteYPosition + (index * 4)); // Adjust spacing here
+          });
+
+          // Add signature on the right side at the bottom of the first table
+          const signatureXPosition = pdf.internal.pageSize.width - 58;
+          const signatureYPosition = pdf.autoTable.previous.finalY + 65;
+
+          const fontSize = 10;
+          pdf.setFontSize(fontSize);
+          pdf.setFont("helvetica", "normal");
+
+          pdf.text("City Treasurer", signatureXPosition + 12, signatureYPosition + 9);
+
+          pdf.line(signatureXPosition, signatureYPosition + 5, signatureXPosition + 45, signatureYPosition + 5);
+
+          
+          // Add footer text after the City Treasurer text
+          const footerText = "Generated on Tuesday, April 02, 2024, at 8:00 a.m. by Anna Mae Garcia.";
+
+            // Add page number
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text(`Page ${pageNum} of ${totalPages}`, 15, pdf.internal.pageSize.height - 10);
+
+            // Add new page if not the last page
+            if (pageNum !== totalPages) {
+                pdf.addPage();
+            }
+        }
+
+        // Save the PDF
+        pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
     } catch (error) {
-      console.error('Error generating transaction history:', error);
+        console.error('Error generating transaction history:', error);
     }
-  };    
+  };
+
+
 
   const loadImageAsDataURL = async (imageUrl) => {
     const response = await fetch(imageUrl);

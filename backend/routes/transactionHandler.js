@@ -63,7 +63,11 @@ router.get('/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
 
     const query = "SELECT ut.user_id, ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, \
-    ti.amount, ti.copies, ti.print_id, ti.valid_id, ti.purpose_id \
+    ti.amount, ti.copies, ti.print_id, ti.valid_id, ti.purpose_id, \
+    tp.acc_name, tp.rp_tdn AS tp_tdn, tp.rp_pin AS tp_pin, tp.period_id, y.year_period, \
+    tc.rp_tdn AS tc_tdn, tc.rp_pin AS tc_pin, \
+    bp.bus_name, bp.bus_reg_no, bp.bus_tin, bt.bus_type_label AS bus_type, \
+    CONCAT(bo.bus_fname, ' ', bo.bus_mname, ' ', bo.bus_lname) AS bus_owner \
     \
     FROM user_transaction ut \
     \
@@ -71,7 +75,20 @@ router.get('/:user_id', async (req, res) => {
     \
     LEFT JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     \
+    LEFT JOIN rptax_payment tp ON ut.transaction_id = tp.transaction_id AND tp.transaction_id IS NOT NULL \
+    \
+    LEFT JOIN rptax_clearance tc ON ut.transaction_id = tc.transaction_id AND tc.transaction_id IS NOT NULL \
+    \
+    LEFT JOIN bus_permit bp ON ut.transaction_id = bp.transaction_id AND bp.transaction_id IS NOT NULL \
+    \
+    LEFT JOIN bus_owner bo ON ut.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \
+    \
+    LEFT JOIN year y ON tp.year_id = y.year_id AND y.year_id IS NOT NULL \
+    \
+    LEFT JOIN bus_type bt ON bp.bus_type = bt.bus_type AND bt.bus_type IS NOT NULL \
+    \
     WHERE ut.user_id = ?";
+
 
 
     try {
