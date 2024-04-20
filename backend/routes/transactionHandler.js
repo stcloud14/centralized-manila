@@ -7,7 +7,7 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import fs from 'fs';
 import path from 'path';
-const moment = require('moment');
+
 // import { logoImage } from '../../../frontend/src/images/mnl_header_pdf.png';
 
 
