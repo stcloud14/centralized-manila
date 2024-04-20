@@ -76,47 +76,75 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
               pdf.text(text, additionalTextX, additionalTextY + (index * 4));
           });
 
-          // Display labels and their corresponding text
-          const labelSets = {
-            'Real Property Tax Payment': ["SOA No.", "Account Name:", "Tax Declaration Number:", "Transaction ID:"],
-            'Real Property Tax Clearance': ["SOA No.", "Tax Declaration Number:", "Transaction ID:"],
-            'Business Permit': ["SOA No.", "Name of Business:", "Name of Owner:", "Transaction ID:"],
-            'Community Tax Certificate': ["SOA No.", "Name of Owner:", "Transaction ID:"],
-            default: ["SOA No.", "Name of Requestor:", "Transaction ID:"]
+          console.log("Transaction Type:", transaction.trans_type);
+          console.log("Marriage Requestor:", transaction.consent_info);
+
+
+         // Display labels and their corresponding text
+        const labelSets = {
+          'Real Property Tax Payment': ["SOA No.", "Account Name:", "Tax Declaration Number:", "Transaction ID:"],
+          'Real Property Tax Clearance': ["SOA No.", "Tax Declaration Number:", "Transaction ID:"],
+          'Business Permit': ["SOA No.", "Name of Business:", "Name of Owner:", "Transaction ID:"],
+          'Community Tax Certificate': ["SOA No.", "Name of Owner:", "Transaction ID:"],
+          'Birth Certificate': ["SOA No.", "Name of Requestor:", "Transaction ID:"],
+          'Death Certificate': ["SOA No.", "Name of Requestor:", "Transaction ID:"], 
+          'Marriage Certificate': ["SOA No.", "Name of Requestor:", "Transaction ID:"], 
+          default: ["SOA No.", "Name of Requestor:", "Transaction ID:"],
         };
-        
+
         const colonWidth = pdf.getStringUnitWidth(":") * 1;
-        
+
         const labels = labelSets[transaction.trans_type] || labelSets.default;
-        
+
         labels.forEach((label, index) => {
-            const labelWidth = pdf.getStringUnitWidth(label) * 3.9;
-            const textStartX = 15 + labelWidth + colonWidth;
-            let text;
-        
-            switch (index) {
-                case 0:
-                    text = "000-120-920";
-                    break;
-                case 1:
-                    text = transaction.acc_name || transaction.rp_tdn || transaction.bus_name || "name";
-                    break;
-                case 2:
-                    text = transaction.rp_tdn || transaction.bus_owner || transaction.transaction_id || "name";
-                    break;
-                case 3:
-                    text = transaction.transaction_id;
-                    break;
-                default:
-                    text = "Unknown";
-            }
-        
-            pdf.setFont("helvetica", "bold");
-            pdf.text(label, 15, 35 + index * 4);
-            pdf.setFont("helvetica", "normal");
-            pdf.text(text, textStartX, 35 + index * 4);
-        });
-        
+          const labelWidth = pdf.getStringUnitWidth(label) * 3.9;
+          const textStartX = 15 + labelWidth + colonWidth;
+          let text;
+
+          switch (index) {
+              case 0:
+                  text = "000-120-000"; // Put the SOA NUMBER HERE
+                  break;
+              case 1:
+                  if (transaction.trans_type === 'Community Tax Certificate') {
+                      text = transaction.cedula_doc_owner || "Unknown Owner";
+                  } else if (transaction.trans_type === 'Birth Certificate') {
+                      text = transaction.birth_requestor || "Unknown Requestor";
+                  } else if (transaction.trans_type === 'Death Certificate') { 
+                      text = transaction.death_requestor || "Unknown Requestor";
+                  } else if (transaction.trans_type === 'Marriage Certificate') {
+                      text = transaction.consent_info || "Unknown Requestor";
+                  } else {
+                      text = transaction.acc_name || transaction.rp_tdn || transaction.bus_name || "Unknown Owner";
+                  }
+                  break;
+              case 2:
+                  if (transaction.trans_type === 'Business Permit') {
+                      text = transaction.bus_owner || "Unknown Owner";
+                  } else if (transaction.type === 'Real Property Tax Payment') {
+                      text = transaction.tp_tdn || "Unknown TDN";
+                  } else {
+                    text = transaction.transaction_id || "Transaction ID";
+                  }
+                  break;
+              case 3:
+                  if (transaction.trans_type === 'Business Permit') {
+                      text = transaction.transaction_id || "Transaction ID";
+                  } else if (transaction.trans_type === 'Community Tax Certificate') {
+                      text = ""; 
+                  } else {
+                      text = transaction.transaction_id || "Transaction ID";
+                  }
+                  break;
+              default:
+                  text = "Unknown";
+          }
+
+          pdf.setFont("helvetica", "bold");
+          pdf.text(label, 15, 35 + index * 4);
+          pdf.setFont("helvetica", "normal");
+          pdf.text(text, textStartX, 35 + index * 4);
+        });   
 
           // Spacing between the text above and the table below
           const textHeight = (labels.length + 1) * 4; 
@@ -132,7 +160,8 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
           };
 
           // Transaction Details table
-          const { trans_type, tp_pin, tc_pin, amount, year_period, period_id, date, bus_reg_no, bus_tin } = transaction;
+          const { trans_type, tp_pin, tc_pin, amount, year_period, period_id, date, bus_reg_no, bus_tin, ci_acc_no, copies } = transaction;
+          console.log('acc_no:', transaction.ci_acc_no);
 
           let head, body;
 
@@ -151,11 +180,11 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
                   break;
               case 'Community Tax Certificate':
                   head = [['Tax Payer Account No.', 'Total Amount', 'Date Processed']];
-                  body = [['12345678','BB-12345','P 1500.00','April 12, 2024']];
+                  body = [[ci_acc_no, 'P ' + amount, date]];
                   break;
-              default:
+              default:  
                   head = [['No. of Copies', 'Total Amount', 'Date Processed']];
-                  body = [['Default Body Data 1','Default Body Data 2','Default Body Data 3','Default Body Data 4']];
+                  body = [[copies, 'P ' + amount, date]];
           }
 
           pdf.autoTable({
@@ -165,8 +194,6 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
               headStyles: firstTableHeaderStyles,
               theme: 'plain',
           });
-
-
 
           // Function to repeat a symbol to form a line
           function repeatSymbol(symbol, count) {
@@ -219,7 +246,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
           // Add note text below the second table
           const noteText = [
               "Note:",
-              "1. Please present this Statement to the Teller when paying the fee for your Business Permit.",
+              "1. Please present this Statement to the Teller when paying the fee for your " + selectedType + ".",
               "2. This SOA can also be paid through 'Online Payment'. Just visit the website www.centralizedmanila.ph.",
               "3. This eSOA is valid until April 12, 2024, 11:59 P.M."
           ];
@@ -245,12 +272,27 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
           pdf.line(signatureXPosition, signatureYPosition + 5, signatureXPosition + 45, signatureYPosition + 5);
 
           
-          // Add footer text after the City Treasurer text
-          const footerText = "Generated on Tuesday, April 02, 2024, at 8:00 a.m. by Anna Mae Garcia.";
+          // Get the current date and time
+            const currentDate = new Date();
+            const formattedDate = currentDate.toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+            });
+            const formattedTime = currentDate.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true,
+            });
 
-            // Add page number
+            // Construct the footer text with the dynamic date and time
+            const footerText = `Generated on ${formattedDate}, at ${formattedTime} by Anna Mae Garcia.`;
+
+            // Add footer text after the City Treasurer text
             pdf.setFont("helvetica", "normal");
             pdf.setFontSize(10);
+            pdf.text(footerText, 15, pdf.internal.pageSize.height - 15);
             pdf.text(`Page ${pageNum} of ${totalPages}`, 15, pdf.internal.pageSize.height - 10);
 
             // Add new page if not the last page
@@ -265,19 +307,6 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
         console.error('Error generating transaction history:', error);
     }
   };
-
-
-
-  const loadImageAsDataURL = async (imageUrl) => {
-    const response = await fetch(imageUrl);
-    const blob = await response.blob();
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.readAsDataURL(blob);
-    });
-  };
-    
     
   
     return (

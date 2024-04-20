@@ -7,7 +7,7 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import fs from 'fs';
 import path from 'path';
-
+const moment = require('moment');
 // import { logoImage } from '../../../frontend/src/images/mnl_header_pdf.png';
 
 
@@ -67,7 +67,12 @@ router.get('/:user_id', async (req, res) => {
     tp.acc_name, tp.rp_tdn AS tp_tdn, tp.rp_pin AS tp_pin, tp.period_id, y.year_period, \
     tc.rp_tdn AS tc_tdn, tc.rp_pin AS tc_pin, \
     bp.bus_name, bp.bus_reg_no, bp.bus_tin, bt.bus_type_label AS bus_type, \
-    CONCAT(bo.bus_fname, ' ', bo.bus_mname, ' ', bo.bus_lname) AS bus_owner \
+    ci.acc_no AS ci_acc_no, \
+    CONCAT(bo.bus_fname, ' ', bo.bus_mname, ' ', bo.bus_lname) AS bus_owner, \
+    CONCAT(co.f_name, ' ', co.m_name, ' ', co.l_name) AS cedula_doc_owner, \
+    CONCAT(br.f_name, ' ', br.m_name, ' ', br.l_name) AS birth_requestor, \
+    CONCAT(dr.f_name, ' ', dr.m_name, ' ', dr.l_name) AS death_requestor, \
+    CONCAT(ci1.consent_fname, ' ', ci1.consent_mname, ' ', ci1.consent_lname) AS consent_info \
     \
     FROM user_transaction ut \
     \
@@ -83,13 +88,21 @@ router.get('/:user_id', async (req, res) => {
     \
     LEFT JOIN bus_owner bo ON ut.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \
     \
+    LEFT JOIN birth_requestor br ON ut.transaction_id = br.transaction_id AND br.transaction_id IS NOT NULL \
+    \
+    LEFT JOIN cedula_doc_owner co ON ut.transaction_id = co.transaction_id AND co.transaction_id IS NOT NULL \
+    \
+    LEFT JOIN cedula_transaction_info ci ON ut.transaction_id = ci.transaction_id AND ci.transaction_id IS NOT NULL \
+    \
+    LEFT JOIN death_requestor dr ON ut.transaction_id = dr.transaction_id AND dr.transaction_id IS NOT NULL \
+    \
+    LEFT JOIN consent_info ci1 ON ut.transaction_id = ci1.transaction_id AND ci1.transaction_id IS NOT NULL \
+    \
     LEFT JOIN year y ON tp.year_id = y.year_id AND y.year_id IS NOT NULL \
     \
     LEFT JOIN bus_type bt ON bp.bus_type = bt.bus_type AND bt.bus_type IS NOT NULL \
     \
     WHERE ut.user_id = ?";
-
-
 
     try {
         const result = await queryDatabase(query, [user_id]);
@@ -109,6 +122,7 @@ router.get('/:user_id', async (req, res) => {
             res.json(userTransactions);
         } else {
             // Handle case where no rows were returned
+            console.log("No records found for user_id:", user_id);
             res.status(404).send('No records found for the specified user_id');
         }
         } catch (err) {
@@ -116,6 +130,7 @@ router.get('/:user_id', async (req, res) => {
         res.status(500).send('Error retrieving data');
     }
 });
+
 
 
 router.get('/transId/:user_id', async (req, res) => {
