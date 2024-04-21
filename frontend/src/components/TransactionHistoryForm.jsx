@@ -28,7 +28,8 @@ const TransactionHistoryForm = () => {
   const [selectedDatee, setSelectedDatee] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedType, setSelectedType] = useState('');
-  const [userPersonal, setUserPersonal]=useState({})
+  const [userPersonal, setUserPersonal]=useState({});
+  const [soaData, setSoaData]=useState();
 
   console.log(userTransaction)
 
@@ -66,6 +67,20 @@ const TransactionHistoryForm = () => {
 
     fetchUserTransaction();
   }, [user_id]);
+
+  useEffect(() => {
+    const fetchSOAdata = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/soa/${user_id}`);
+        setSoaData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchSOAdata();
+  }, [user_id]);
+
+  console.log(soaData)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -270,6 +285,7 @@ const logoSrc = '../src/images/mnl_footer.svg';
                 selectedType={selectedType}
                 filteredTransactions={filteredTransactions}
                 userPersonal={userPersonal}
+                soaData={soaData}
               />
             ) : (
               // For Desktop View
@@ -294,6 +310,7 @@ const logoSrc = '../src/images/mnl_footer.svg';
                 selectedType={selectedType}
                 filteredTransactions={filteredTransactions}
                 userPersonal={userPersonal}
+                soaData={soaData}
               />
             )}
           </div>

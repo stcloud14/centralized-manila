@@ -24,9 +24,6 @@ const DropdownProfile = ({ align }) => {
   const [storedImage, setStoredImage] = useState(null);
   const [userImage, setUserImage] = useState(null);
 
-  console.log(userImage)
-  console.log(storedImage)
-
 
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
