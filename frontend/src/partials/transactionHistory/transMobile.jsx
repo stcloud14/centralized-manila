@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import StatusBadgeDesktop from '../StatusBadgeDesktop';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import axios from 'axios'
+import moment from 'moment';
 import logoImage from '../../images/mnl_header_pdf.png';
 import Flatpickr from 'react-flatpickr';
+import { v4 as uuidv4 } from 'uuid';
 
 import TransTypeDropdown from '../transDropdown/TransTypeDropdown';
 import StatusTypeDropdown from '../transDropdown/StatusTypeDropdown';
 import FilterButton from '../FilterButton';
 
-const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal }) => {
+const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal, soaData }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const formatAmount = (amount) => {
@@ -28,18 +31,118 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
     setDropdownOpen(!isDropdownOpen);
   };
 
+  const generateUniqueSOA = (type, user) => {
+
+    // This will be the SOA numbering system: 
+
+    // 000-1111-2222-3333-4444
+    // 000 - Trans Type
+    // 1111 - Last four digits of user ID
+    // 2222 - Current Month+Day
+    // 3333 - Generated UUID
+    // 4444 - Generated UUID
+
+    // The two generated UUID alone will cater for 100 million possibilities
+
+    let code;
+
+      switch (type) {
+          case 'Real Property Tax Payment':
+              code = `010`;
+              break;
+          case 'Real Property Tax Clearance':
+              code = `011`;
+              break;
+          case 'Business Permit':
+              code = `020`;
+              break;
+          case 'Community Tax Certificate':
+              code = `030`;
+              break;
+          case 'Birth Certificate':
+              code = `040`;
+              break;
+          case 'Death Certificate':
+              code = `041`;
+              break;
+          case 'Marriage Certificate':
+              code = `042`;
+              break;
+          default:  
+              code = `000`;
+      }
+
+    const userCode = user.slice(-4);
+
+    const currentDate = new Date();
+  
+    let month = currentDate.getMonth() + 1;
+    let day = currentDate.getDate();
+    
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+    
+    const MDcode = month.toString() + day.toString();
+    
+    const uuid1 = uuidv4();
+    const uuid2 = uuidv4();
+
+    const uuidInt1 = parseInt(uuid1.replace(/-/g, '').substring(0, 4), 16);
+    const uuidInt2 = parseInt(uuid2.replace(/-/g, '').substring(0, 4), 16);
+
+    const uuid1Code = (uuidInt1 % 10000).toString().padStart(4, '0');
+    const uuid2Code = (uuidInt2 % 10000).toString().padStart(4, '0');
+
+    return `${code}-${userCode}-${MDcode}-${uuid1Code}-${uuid2Code}`;
+  };
+
+
   const generatePDF = async () => {
     try {
         const totalPages = filteredTransactions.length;
 
         const pdf = new jsPDF();
-
+        
+        const generatedSOAObjects = [];
+        
         for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
 
           const arrayBase = pageNum - 1;
 
           const transaction = filteredTransactions[arrayBase];
-            
+
+          let soaNumber, expiry_date;
+
+          if (soaData && soaData.length > 0) {
+
+          const matchedSoa = soaData.find(soa => soa.transaction_id === transaction.transaction_id);
+
+          if (matchedSoa) {
+
+              soaNumber = matchedSoa.soa_no;
+
+              const expiryDateStr = matchedSoa.expiry_date;
+              const expiryDate = moment(expiryDateStr);
+              const formattedExpiryDate = expiryDate.format('MMMM DD, YYYY, hh:mm A');
+
+              expiry_date = formattedExpiryDate;
+
+          }} else {
+              soaNumber = generateUniqueSOA(transaction.trans_type, transaction.user_id);
+
+              const expiryDate = moment().add(10, 'days');
+              const formattedExpiryDate = expiryDate.format('MMMM DD, YYYY, 11:59 A');
+
+              expiry_date = formattedExpiryDate;
+          }
+
+          const soaObject = {
+            soa_no: soaNumber,
+            transaction_id: transaction.transaction_id
+          };
+          
+          generatedSOAObjects.push(soaObject);
+      
           pdf.setFont("helvetica", "bold");
           pdf.setFontSize(12);
           pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
@@ -71,9 +174,6 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
               pdf.text(text, additionalTextX, additionalTextY + (index * 4));
           });
 
-          console.log("Transaction Type:", transaction.trans_type);
-          console.log("Marriage Requestor:", transaction.consent_info);
-
 
          // Display labels and their corresponding text
         const labelSets = {
@@ -98,7 +198,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
 
           switch (index) {
               case 0:
-                  text = "000-120-000"; // Put the SOA NUMBER HERE
+                  text = soaNumber; // Put the SOA NUMBER HERE
                   break;
               case 1:
                   if (transaction.trans_type === 'Community Tax Certificate') {
@@ -156,7 +256,6 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
 
           // Transaction Details table
           const { trans_type, tp_pin, tc_pin, amount, year_period, period_id, date, bus_reg_no, bus_tin, ci_acc_no, copies } = transaction;
-          console.log('acc_no:', transaction.ci_acc_no);
 
           let head, body;
 
@@ -241,9 +340,9 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
           // Add note text below the second table
           const noteText = [
               "Note:",
-              "1. Please present this Statement to the Teller when paying the fee for your " + selectedType + ".",
+              "1. Please present this Statement to the Teller when paying the fee for your " + transaction.trans_type + ".",
               "2. This SOA can also be paid through 'Online Payment'. Just visit the website www.centralizedmanila.ph.",
-              "3. This eSOA is valid until April 12, 2024, 11:59 P.M."
+              "3. This eSOA is valid until " + expiry_date + "."
           ];
           const noteXPosition = 15; // Adjust as needed
           const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
@@ -282,13 +381,37 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
             });
 
             // Construct the footer text with the dynamic date and time
-            const footerText = `Generated on ${formattedDate}, at ${formattedTime} by Anna Mae Garcia.`;
+            let f_name = userPersonal.f_name;
+            let l_name = userPersonal.l_name;
 
+            f_name = f_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+            l_name = l_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+
+            const footerText = `Generated on ${formattedDate}, at ${formattedTime} by ${f_name} ${l_name}`;
+
+            // Calculate the position for footer text
+            const footerTextX = 15;
+            const footerTextY = pdf.internal.pageSize.height - 15;
+            
+            // Calculate the width of the page number text
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            const pageNumberText = `Page ${pageNum} of ${totalPages}`;
+            const pageNumberTextWidth = pdf.getStringUnitWidth(pageNumberText) * pdf.internal.getFontSize();
+            
+            // Calculate the position for page number
+            const pageNumberTextX = pdf.internal.pageSize.width - (-19) - pageNumberTextWidth;
+            const pageNumberTextY = pdf.internal.pageSize.height - 15;
+            
             // Add footer text after the City Treasurer text
             pdf.setFont("helvetica", "normal");
             pdf.setFontSize(10);
-            pdf.text(footerText, 15, pdf.internal.pageSize.height - 15);
-            pdf.text(`Page ${pageNum} of ${totalPages}`, 15, pdf.internal.pageSize.height - 10);
+            
+            // Add footer text
+            pdf.text(footerText, footerTextX, footerTextY);
+            
+            // Add page number
+            pdf.text(pageNumberText, pageNumberTextX, pageNumberTextY);            
 
             // Add new page if not the last page
             if (pageNum !== totalPages) {
@@ -296,12 +419,26 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
             }
         }
 
+        const body = generatedSOAObjects;
+
+        try {
+          const storeSOAnumbers = await axios.post(`http://localhost:8800/soa/store/${userPersonal.user_id}`, body);
+
+          if (storeSOAnumbers.status === 200) {
+            console.log('Successfully Generated SOA');
+          } else {
+            console.log("Failed to store SOA info into database.");
+          }
+        } catch (emailError) {
+          alert(emailError);
+        }
+
         // Save the PDF
         pdf.save(`${userPersonal.l_name}_Transaction_History.pdf`);
     } catch (error) {
         console.error('Error generating transaction history:', error);
     }
-  }; 
+  };
 
     return (
         <>

@@ -393,12 +393,29 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
 
             const footerText = `Generated on ${formattedDate}, at ${formattedTime} by ${f_name} ${l_name}`;
 
-
+            // Calculate the position for footer text
+            const footerTextX = 15;
+            const footerTextY = pdf.internal.pageSize.height - 15;
+            
+            // Calculate the width of the page number text
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            const pageNumberText = `Page ${pageNum} of ${totalPages}`;
+            const pageNumberTextWidth = pdf.getStringUnitWidth(pageNumberText) * pdf.internal.getFontSize();
+            
+            // Calculate the position for page number
+            const pageNumberTextX = pdf.internal.pageSize.width - (-19) - pageNumberTextWidth;
+            const pageNumberTextY = pdf.internal.pageSize.height - 15;
+            
             // Add footer text after the City Treasurer text
             pdf.setFont("helvetica", "normal");
             pdf.setFontSize(10);
-            pdf.text(footerText, 15, pdf.internal.pageSize.height - 15);
-            pdf.text(`Page ${pageNum} of ${totalPages}`, 15, pdf.internal.pageSize.height - 10);
+            
+            // Add footer text
+            pdf.text(footerText, footerTextX, footerTextY);
+            
+            // Add page number
+            pdf.text(pageNumberText, pageNumberTextX, pageNumberTextY);            
 
             // Add new page if not the last page
             if (pageNum !== totalPages) {
