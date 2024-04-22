@@ -145,6 +145,12 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
     setModalView(false);
   };
 
+  const [rejectCause, setRejectCause] = useState('');
+
+  const handleOptionChange = (e) => {
+    setRejectCause(e.target.value);
+  };
+
   const renderContent = () => {
     if (viewMode === 'table') {
       return (
@@ -255,8 +261,13 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
     const trans_type = selectedTransaction.trans_type;
     const user_id = selectedTransaction.user_id;
   
+    const body = {
+      selectedTransaction,
+      rejectCause
+    }
+  
     try {
-      const response = await axios.post(`http://localhost:8800/adminlcr/updatereject/${transaction_id}`, selectedTransaction);
+      const response = await axios.post(`http://localhost:8800/adminlcr/updatereject/${transaction_id}`, body);
   
       // Check the response status before proceeding
       if (response.status === 200) {
@@ -583,11 +594,27 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
                   </span>
                   <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                     <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                      <div className="mx-auto mt-4">
-                        <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                          Are you sure you would like to REJECT this transaction? This is irreversible.
-                        </span>
-                      </div>
+                    <div className="mx-auto mt-4">
+                      <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                        Are you sure you would like to REJECT this transaction? This is irreversible.
+                      </span>
+
+                      <br />
+
+                      <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                        Please select the cause of rejection.
+                      </span>
+                      
+                      <select value={rejectCause} onChange={handleOptionChange} className="block w-full mt-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-gray-800 dark:border-gray-600 dark:focus:border-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                        <option value="">Select Cause</option>
+                        <option value="1">Incorrect or incomplete documentation submitted</option>
+                        <option value="2">Failure to adhere to specific procedural requirements</option>
+                        <option value="3">Inconsistent or conflicting details in the submitted paperwork</option>
+                        <option value="4">Non-compliance with City Hall regulations</option>
+                        <option value="5">No records found</option>
+                      </select>
+
+                    </div>
                     </div>
 
 

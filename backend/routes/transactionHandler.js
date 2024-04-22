@@ -160,10 +160,11 @@ router.get('/cedula/:transaction_id', async (req, res) => {
     cv.cvl_status, ci.czn_id, ci.height, ci.weight, ci.acr_no, \
     ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
     ti.amount, ti.copies, ti.print_id, vt.valid_id_type, pt.purpose_type, \
-    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code, rc.reject_cause \
     \
     FROM cedula_cert cc \
     \
+    LEFT JOIN user_transaction ut ON cc.transaction_id = ut.transaction_id \
     LEFT JOIN transaction_info ti ON cc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN address_info ai ON cc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN cedula_doc_owner co ON cc.transaction_id = co.transaction_id AND co.transaction_id IS NOT NULL \
@@ -176,6 +177,7 @@ router.get('/cedula/:transaction_id', async (req, res) => {
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN cvl_status cv ON ci.cvl_id = cv.cvl_id \
     LEFT JOIN sex_type st ON co.sex_id = st.sex_id \
+    LEFT JOIN reject_cause rc ON ut.rejected_id = rc.rejected_id AND ut.rejected_id IS NOT NULL \
     \
     WHERE  cc.transaction_id = ?"
 
@@ -324,11 +326,12 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
     mi.mother_fname, mi.mother_mname, mi.mother_lname, mi.suffix_type AS mothersuffix, \
     ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
     ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
-    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code, rc.reject_cause \
     \
     FROM birth_cert bc \
     JOIN birth_info bi ON bc.transaction_id = bi.transaction_id \
     \
+    LEFT JOIN user_transaction ut ON bc.transaction_id = ut.transaction_id \
     LEFT JOIN transaction_info ti ON bc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN address_info ai ON bc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN birth_doc_owner bo ON bc.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \
@@ -345,6 +348,7 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
+    LEFT JOIN reject_cause rc ON ut.rejected_id = rc.rejected_id AND ut.rejected_id IS NOT NULL \
     \
     WHERE  bc.transaction_id = ?"
 
@@ -515,10 +519,11 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
     dr.owner_rel, dr.mobile_no, dr.tel_no, \
     ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
     ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
-    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code, rc.reject_cause \
     \
     FROM death_cert dc \
     \
+    LEFT JOIN user_transaction ut ON dc.transaction_id = ut.transaction_id \
     LEFT JOIN transaction_info ti ON dc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN address_info ai ON dc.transaction_id = ai.transaction_id IS NOT NULL \
     LEFT JOIN death_doc_owner do ON dc.transaction_id = do.transaction_id AND do.transaction_id IS NOT NULL \
@@ -533,6 +538,7 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     LEFT JOIN sex_type st ON do.sex_id = st.sex_id \
+    LEFT JOIN reject_cause rc ON ut.rejected_id = rc.rejected_id AND ut.rejected_id IS NOT NULL \
     \
     WHERE dc.transaction_id = ?";
 
@@ -693,10 +699,11 @@ router.get('/marriagecert/:transaction_id', async (req, res) => {
     ci.consent_lname AS reql_name, ci.consent_fname AS reqf_name, ci.consent_mname AS reqm_name, ci.suffix_type AS reqsuffix, ci.owner_rel, ci.tel_no, ci.mobile_no, \
     ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
     ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
-    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code, rc.reject_cause \
     \
     FROM marriage_cert mc \
     \
+    LEFT JOIN user_transaction ut ON mc.transaction_id = ut.transaction_id \
     LEFT JOIN transaction_info ti ON mc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN address_info ai ON mc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN husband_info hi ON mc.transaction_id = hi.transaction_id AND hi.transaction_id IS NOT NULL \
@@ -711,6 +718,7 @@ router.get('/marriagecert/:transaction_id', async (req, res) => {
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
+    LEFT JOIN reject_cause rc ON ut.rejected_id = rc.rejected_id AND ut.rejected_id IS NOT NULL \
     \
     WHERE  mc.transaction_id = ?"
 
@@ -878,10 +886,11 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     bbt.bus_type_label AS bus_type, \
     ti.amount as bus_amount, ti.copies, ptt.print_type, ti.valid_id, pt.purpose_type, \
     r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
-    ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip  \
+    ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip, rc.reject_cause \
     \
     FROM bus_permit bp \
     \
+    LEFT JOIN user_transaction ut ON bp.transaction_id = ut.transaction_id \
     LEFT JOIN transaction_info ti ON bp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN address_info ai ON bp.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN bus_address ba ON bp.transaction_id = ba.transaction_id AND ba.transaction_id IS NOT NULL \
@@ -899,6 +908,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     LEFT JOIN bus_type bbt ON bp.bus_type = bbt.bus_type \
     LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
+    LEFT JOIN reject_cause rc ON ut.rejected_id = rc.rejected_id AND ut.rejected_id IS NOT NULL \
     \
     WHERE  bp.transaction_id = ?"
 
@@ -1117,14 +1127,15 @@ router.get('/taxpayment/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
     const query = "SELECT ut.user_id, tt.trans_type, tp.transaction_id, tp.acc_name AS tp_acc_name, tp.rp_tdn AS tp_rp_tdn, tp.rp_pin AS tp_rp_pin, \
-    y.year_period AS tp_year, tp.period_id AS tp_period, ti.amount \
+    y.year_period AS tp_year, tp.period_id AS tp_period, ti.amount, rc.reject_cause \
     \
     FROM rptax_payment tp \
     \
-    LEFT JOIN transaction_info ti ON tp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN user_transaction ut ON tp.transaction_id = ut.transaction_id \
+    LEFT JOIN transaction_info ti ON tp.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN year y ON tp.year_id = y.year_id \
+    LEFT JOIN reject_cause rc ON ut.rejected_id = rc.rejected_id AND ut.rejected_id IS NOT NULL \
     \
     WHERE tp.transaction_id = ?";
 
@@ -1268,13 +1279,14 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
 router.get('/taxclearance/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT ut.user_id, tt.trans_type, tc.transaction_id, tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount \
+    const query = "SELECT ut.user_id, tt.trans_type, tc.transaction_id, tc.rp_tdn AS tc_rp_tdn, tc.rp_pin AS tc_rp_pin, ti.amount, rc.reject_cause \
     \
     FROM rptax_clearance tc \
     \
-    LEFT JOIN transaction_info ti ON tc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN user_transaction ut ON tc.transaction_id = ut.transaction_id \
+    LEFT JOIN transaction_info ti ON tc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
+    LEFT JOIN reject_cause rc ON ut.rejected_id = rc.rejected_id AND ut.rejected_id IS NOT NULL \
     \
     WHERE tc.transaction_id = ?";
 

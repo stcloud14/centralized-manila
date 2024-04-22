@@ -518,10 +518,17 @@ const cancelTrans = async (e) => {
 
 
         {transaction_id ? (
+          <>
           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
             <span className="font-medium whitespace-nowrap">Status</span>
             <StatusBadgeModal statusType={status_type} />
           </div>
+
+          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+            <span className="font-medium whitespace-nowrap">Remarks</span>
+            <span className="whitespace-nowrap md:mb-0 mb-1 text-red-500">{birthTransaction.reject_cause}</span>
+          </div>
+        </>
         ) : null}
 
           <hr className='mb-1'/>

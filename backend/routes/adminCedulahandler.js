@@ -174,22 +174,24 @@ router.post('/updatecomplete/:transaction_id', auditMiddleware, async (req, res)
 
 router.post('/updatereject/:transaction_id', auditMiddleware, async (req, res) => {
     const transaction_id = req.params.transaction_id;
-    const user_id = req.body.user_id;
-    const trans_type = req.body.trans_type;
+    const user_id = req.body.selectedTransaction.user_id;
+    const trans_type = req.body.selectedTransaction.trans_type;
+    const reject_cause = req.body.rejectCause;
 
     const notif_title = 'Transaction Rejected';
     const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transaction_id}</span> has been <span className="font-medium dark:text-white">REJECTED</span>. Kindly view the transaction for possible causes of rejection.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
-    const updateQuery = `UPDATE user_transaction SET status_type = 'Rejected' WHERE transaction_id = ?;`;
+    const updateQuery = `UPDATE user_transaction SET status_type = 'Rejected', rejected_id = ? WHERE transaction_id = ?;`;
+    const values = [reject_cause, transaction_id];
 
     const query = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
-    const values = [user_id, formattedDate, notif_title, notif_message];
+    const values1 = [user_id, formattedDate, notif_title, notif_message];
 
     try {
-        const result = await queryDatabase(updateQuery, [transaction_id]);
-        const result1 = await queryDatabase(query,values);
+        const result = await queryDatabase(updateQuery, values);
+        const result1 = await queryDatabase(query, values1);
 
         res.json({
             message: "Updated transaction!",

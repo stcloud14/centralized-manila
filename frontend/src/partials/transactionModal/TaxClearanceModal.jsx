@@ -23,6 +23,8 @@ const TaxClearanceModal = ({ user_id, selectedTransaction, onClose, onSubmit, ha
 
   const [isloading, setIsLoading] = useState(false)
 
+  console.log(taxClearanceTransaction)
+
   const submitHandler = async (e) => {
     try {
 
@@ -195,6 +197,8 @@ const cancelTrans = async (e) => {
           console.error(err);
       }
   };
+
+  console.log(taxClearanceTransaction)
  
     return (
         <div className="fixed z-50 inset-0 overflow-y-auto">
@@ -312,10 +316,17 @@ const cancelTrans = async (e) => {
                           <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
                         </div> */}
                         {status_type ? (
-                        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                          <span className="font-medium whitespace-nowrap">Status</span>
-                          <StatusBadgeModal statusType={status_type} />
-                        </div>
+                        <>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Status</span>
+                            <StatusBadgeModal statusType={status_type} />
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Remarks</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1 text-red-500">{taxClearanceTransaction.reject_cause}</span>
+                          </div>
+                        </>
                         ) : null}
 
                         <hr className='mt-7 mb-1'/>
