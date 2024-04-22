@@ -134,8 +134,9 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
           }} else {
               soaNumber = generateUniqueSOA(transaction.trans_type, transaction.user_id);
 
-              const expiryDate = moment().add(10, 'days');
-              const formattedExpiryDate = expiryDate.format('MMMM DD, YYYY, 11:59 A');
+              const currentDate = moment();
+              const lastDayOfMonth = moment(currentDate).endOf('month');
+              const formattedExpiryDate = lastDayOfMonth.format('MMMM DD, YYYY, 11:59 A');
 
               expiry_date = formattedExpiryDate;
           }
@@ -156,10 +157,21 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
           pdf.text("Electronic Statement of Account", 15, 23);
 
           // Additional text to be placed on the right
-          const additionalText = [
-            { text: "Billing Date", bold: true },
-            "September 20, 2024"
+          const currentDate1 = new Date();
+          const currentMonth = currentDate1.getMonth();
+          const currentYear = currentDate1.getFullYear();
+          const billingDate = new Date(currentYear, currentMonth, 6);
+
+          const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
           ];
+
+          const additionalText = [
+              { text: "Billing Date", bold: true },
+              `${monthNames[billingDate.getMonth()]} 6, ${billingDate.getFullYear()}`
+          ];
+
           
           if (transaction.trans_type === 'Business Permit') {
               additionalText.push(

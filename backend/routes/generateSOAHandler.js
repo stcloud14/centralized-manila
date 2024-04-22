@@ -38,11 +38,12 @@ router.post('/store/:user_id', async (req, res) => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
 
-    const expiryDate = moment(currentDate).add(10, 'days').endOf('day');
+    // const expiryDate = moment(currentDate).add(10, 'days').endOf('day');
+    // const formattedExpiryDate = expiryDate.format('YYYY-MM-DD HH:mm:ss');
 
+    const lastDayOfMonth = moment(currentDate).endOf('month');
+    const expiryDate = lastDayOfMonth.endOf('day');
     const formattedExpiryDate = expiryDate.format('YYYY-MM-DD HH:mm:ss');
-
-    // const formattedExpiryDate = expiryDate.toISOString().slice(0, 19).replace('T', ' ');
 
     let query = "SELECT * FROM soa_data WHERE user_id = ?";
     let values = [user_id];
