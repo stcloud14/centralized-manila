@@ -356,22 +356,25 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
           </div>
 
           <div className="flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white p-4 rounded-b-lg gap-4 items-end">
-              <div className="flex">
-                <div className="relative inline-block text-left">
-                  <button type="button" onClick={() => document.getElementById('popover-click').classList.toggle('hidden')} className="">
+            <div className="flex">
+              <div className="relative inline-block text-left">
+                <button 
+                  onMouseEnter={() => document.getElementById('popover-click').classList.remove('hidden')} 
+                  onMouseLeave={() => document.getElementById('popover-click').classList.add('hidden')} 
+                  className="cursor-auto"
+                >
                   {taxPaymentTransaction && taxPaymentTransaction.transaction_id ? (
-                  <QRCode value={generateDownloadLink(taxPaymentTransaction)} size={100} />
+                    <QRCode value={generateDownloadLink(taxPaymentTransaction)} size={100} />
                   ) : (
                     <p></p>
                   )}
-                  </button>
-
-                  {/* POPOVER */}
-                  <div id="popover-click" className="text-xs hidden absolute z-10 w-[12rem] p-3 transition-opacity duration-300 rounded-lg shadow-2xl bg-[#fffffffc] dark:bg-[#333333] text-slate-700 dark:text-white border-gray-200 dark:border-gray-800 top-3.5 mt-2 ml-12">
-                    <p>Scan this QR code to save this transaction's details.</p>
-                  </div>
+                </button>
+                {/* POPOVER */}
+                <div id="popover-click" className="text-xs hidden absolute z-10 w-[12rem] p-3 transition-opacity duration-300 rounded-lg shadow-2xl bg-[#fffffffc] dark:bg-[#333333] text-slate-700 dark:text-white border-gray-200 dark:border-gray-800 top-3.5 mt-2 ml-12">
+                  <p>Scan this QR code to save this transaction's details.</p>
                 </div>
               </div>
+            </div>
             {/* <div className="whitespace-nowrap">
                 {taxPaymentTransaction && taxPaymentTransaction.transaction_id ? (
                   <QRCode value={generateDownloadLink(taxPaymentTransaction)} size={100} />

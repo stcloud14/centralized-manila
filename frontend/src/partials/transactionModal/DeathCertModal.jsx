@@ -452,17 +452,10 @@ const cancelTrans = async (e) => {
               <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
             </div> */}
             {transaction_id ? (
-            <>
             <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
               <span className="font-medium whitespace-nowrap">Status</span>
               <StatusBadgeModal statusType={status_type} />
             </div>
-
-            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-              <span className="font-medium whitespace-nowrap">Remarks</span>
-              <span className="whitespace-nowrap md:mb-0 mb-1 text-red-500">{deathTransaction.reject_cause}</span>
-            </div>
-          </>
             ) : null}
             <hr className='mb-1'/>
             <div className="flex justify-between">
@@ -479,12 +472,16 @@ const cancelTrans = async (e) => {
           <div className="flex bg-white dark:bg-[#212121] text-slate-700 dark:text-white p-4 rounded-b-lg gap-4 items-end">
             <div className="flex">
               <div className="relative inline-block text-left">
-                <button type="button" onClick={() => document.getElementById('popover-click').classList.toggle('hidden')} className="">
-                {deathTransaction && deathTransaction.transaction_id ? (
-                <QRCode value={generateDownloadLink(deathTransaction)} size={100} />
-                ) : (
-                  <p></p>
-                )}
+                <button 
+                  onMouseEnter={() => document.getElementById('popover-click').classList.remove('hidden')} 
+                  onMouseLeave={() => document.getElementById('popover-click').classList.add('hidden')} 
+                  className="cursor-auto"
+                >
+                  {deathTransaction && deathTransaction.transaction_id ? (
+                    <QRCode value={generateDownloadLink(deathTransaction)} size={100} />
+                  ) : (
+                    <p></p>
+                  )}
                 </button>
                 {/* POPOVER */}
                 <div id="popover-click" className="text-xs hidden absolute z-10 w-[12rem] p-3 transition-opacity duration-300 rounded-lg shadow-2xl bg-[#fffffffc] dark:bg-[#333333] text-slate-700 dark:text-white border-gray-200 dark:border-gray-800 top-3.5 mt-2 ml-12">
