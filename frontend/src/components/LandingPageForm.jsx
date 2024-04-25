@@ -6,8 +6,36 @@ import {signInWithPhoneNumber, RecaptchaVerifier, signInWithPopup, GoogleAuthPro
 import auth from '../../firebase.config';  // Updated import statement
 
 
-
 const LandingPageForm = () => {
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      // Token exists, attempt to automatically log in
+      authenticateWithToken(token);
+    }
+  }, []);
+  
+  const authenticateWithToken = async (token) => {
+    try {
+      const response = await axios.get("http://localhost:8800/login/protected-route", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.status === 200) {
+        // Token is valid, user is authenticated
+        setAuthenticated(true);
+        navigate(`/home/${response.data.user_id}`); // Redirect to home page
+      }
+    } catch (error) {
+      // Token is invalid or expired, remove it from localStorage
+      localStorage.removeItem('token');
+    }
+  };
+
   const [userReg, setUserReg] = useState({
     email: "",
     displayName: "",
@@ -171,6 +199,7 @@ const LandingPageForm = () => {
         setLoading(false);
       }, 3000);
       navigate(`/home/${userAuth.user_id}`);
+      console.log(userAuth)
       console.log(verification_code);
       // Now you can update the state or perform any other actions as needed
     } catch (error) {
@@ -292,25 +321,30 @@ const LandingPageForm = () => {
     });
   };
 
-      const handleSubmit = async (e) => {
+ 
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
       
         try {
     
           const response = await axios.post(`http://localhost:8800/login/compare-password/${userAuth.mobile_no}/${userAuth.user_pass}`);
-      
+          console.log("Response data:", response.data);
           if (response.status === 200) {
 
             if (isSubmitting) {
               return;
             }
 
+            const token = response.data.token;
+            localStorage.setItem('token', token); 
+            setAuthenticated(true);
             setAuthenticated(true);
       
-            const user_id = response.data[0].user_id;
+            const user_id = response.data.user.user_id;
             
             setUserAuth((prev) => ({ ...prev, user_id }));
-      
+            
             if (!authenticated) {
               setIsSubmitting(true); 
               onCaptchaVerify();
