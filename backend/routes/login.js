@@ -29,12 +29,9 @@ router.post('/compare-password/:mobile_no/:user_pass', async (req, res) => {
           const passwordMatch = await bcrypt.compare(userEnteredPassword, hashedUserPass);
 
           if (passwordMatch) {
-            const user_id = results[0].user_id;
-            const token = jwt.sign({ user_id: user_id }, process.env.JWTTOKEN, { expiresIn: '1h' });
-            // Send JWT to client
-            res.status(200).json({ token: token, user: results[0] });
-            console.log("Results:", results[0]);
+            console.log("Results:", results);
 
+            return res.status(200).json(results);
           } else {
             return res.status(401).json({ message: "Authentication failed" });
           }
@@ -50,6 +47,18 @@ router.post('/compare-password/:mobile_no/:user_pass', async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error." });
+  }
+});
+
+
+router.post('/generate-token', (req, res) => {
+  try {
+    const { user_id } = req.body;
+    const token = jwt.sign({ user_id }, process.env.JWTTOKEN, { expiresIn: '1h' });
+    return res.status(200).json({ token });
+  } catch (error) {
+    console.error('Error generating token:', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 });
 

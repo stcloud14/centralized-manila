@@ -195,6 +195,14 @@ const LandingPageForm = () => {
       // Assuming confirmationResult is declared and set elsewhere in your component
       const codeConfirmation = await confirmationResult.confirm(verification_code);
       console.log("User signed in successfully:", codeConfirmation.user);
+
+      
+      const response = await axios.post('http://localhost:8800/login/generate-token', { user_id: userAuth.user_id });
+      const { token } = response.data;
+  
+      // Store the token in localStorage or handle it as needed
+      localStorage.setItem('token', token);
+
       setTimeout(() => {
         setLoading(false);
       }, 3000);
@@ -336,12 +344,9 @@ const LandingPageForm = () => {
               return;
             }
 
-            const token = response.data.token;
-            localStorage.setItem('token', token); 
-            setAuthenticated(true);
             setAuthenticated(true);
       
-            const user_id = response.data.user.user_id;
+            const user_id = response.data[0].user_id;
             
             setUserAuth((prev) => ({ ...prev, user_id }));
             
