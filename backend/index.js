@@ -17,6 +17,7 @@ import notifications from './routes/notifications.js'
 import forgotPassword from './routes/forgotPassword.js'
 import emailHandler from './routes/emailHandler.js'
 import generateSOAHandler from './routes/generateSOAHandler.js'
+import jwttoken from './routes/token.js'
 
 
 import adminProfileHandler from './routes/adminProfileHandler.js'
@@ -49,6 +50,7 @@ app.use('/notifications', notifications);
 app.use('/forgotpass', forgotPassword);
 app.use('/email', emailHandler)
 app.use('/soa', generateSOAHandler)
+app.use('/token', jwttoken);
 
 
 

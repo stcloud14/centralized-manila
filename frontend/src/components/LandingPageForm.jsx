@@ -19,7 +19,7 @@ const LandingPageForm = () => {
   
   const authenticateWithToken = async (token) => {
     try {
-      const response = await axios.get("http://localhost:8800/login/protected-route", {
+      const response = await axios.get("http://localhost:8800/token/protected-route", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -197,7 +197,7 @@ const LandingPageForm = () => {
       console.log("User signed in successfully:", codeConfirmation.user);
 
       
-      const response = await axios.post('http://localhost:8800/login/generate-token', { user_id: userAuth.user_id });
+      const response = await axios.post('http://localhost:8800/token/generate-token', { user_id: userAuth.user_id });
       const { token } = response.data;
   
       // Store the token in localStorage or handle it as needed
