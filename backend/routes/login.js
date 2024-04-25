@@ -2,7 +2,6 @@ import { Router } from 'express';
 import conn2 from './connection.js'
 import conn1 from './connection1.js'
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 const router = Router();
 
