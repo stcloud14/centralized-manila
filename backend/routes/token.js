@@ -7,7 +7,7 @@ const router = Router();
     router.post('/generate-token', (req, res) => {
         try {
         const { user_id } = req.body;
-        const token = jwt.sign({ user_id }, process.env.JWTTOKEN, { expiresIn: '2m' });
+        const token = jwt.sign({ user_id }, process.env.JWTTOKEN, { expiresIn: '1h' });
         return res.status(200).json({ token });
         } catch (error) {
         console.error('Error generating token:', error);
