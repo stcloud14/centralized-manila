@@ -6,8 +6,36 @@ import {signInWithPhoneNumber, RecaptchaVerifier, signInWithPopup, GoogleAuthPro
 import auth from '../../firebase.config';  // Updated import statement
 
 
-
 const LandingPageForm = () => {
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      // Token exists, attempt to automatically log in
+      authenticateWithToken(token);
+    }
+  }, []);
+  
+  const authenticateWithToken = async (token) => {
+    try {
+      const response = await axios.get("http://localhost:8800/token/protected-route", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.status === 200) {
+        // Token is valid, user is authenticated
+        setAuthenticated(true);
+        navigate(`/home/${response.data.user_id}`); // Redirect to home page
+      }
+    } catch (error) {
+      // Token is invalid or expired, remove it from localStorage
+      localStorage.removeItem('token');
+    }
+  };
+
   const [userReg, setUserReg] = useState({
     email: "",
     displayName: "",
@@ -167,10 +195,19 @@ const LandingPageForm = () => {
       // Assuming confirmationResult is declared and set elsewhere in your component
       const codeConfirmation = await confirmationResult.confirm(verification_code);
       console.log("User signed in successfully:", codeConfirmation.user);
+
+      
+      const response = await axios.post('http://localhost:8800/token/generate-token', { user_id: userAuth.user_id });
+      const { token } = response.data;
+  
+      // Store the token in localStorage or handle it as needed
+      localStorage.setItem('token', token);
+
       setTimeout(() => {
         setLoading(false);
       }, 3000);
       navigate(`/home/${userAuth.user_id}`);
+      console.log(userAuth)
       console.log(verification_code);
       // Now you can update the state or perform any other actions as needed
     } catch (error) {
@@ -292,13 +329,15 @@ const LandingPageForm = () => {
     });
   };
 
-      const handleSubmit = async (e) => {
+ 
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
       
         try {
     
           const response = await axios.post(`http://localhost:8800/login/compare-password/${userAuth.mobile_no}/${userAuth.user_pass}`);
-      
+          console.log("Response data:", response.data);
           if (response.status === 200) {
 
             if (isSubmitting) {
@@ -310,7 +349,7 @@ const LandingPageForm = () => {
             const user_id = response.data[0].user_id;
             
             setUserAuth((prev) => ({ ...prev, user_id }));
-      
+            
             if (!authenticated) {
               setIsSubmitting(true); 
               onCaptchaVerify();

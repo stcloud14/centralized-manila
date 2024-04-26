@@ -5,52 +5,49 @@ import bcrypt from 'bcrypt';
 
 const router = Router();
 
-  router.post('/compare-password/:mobile_no/:user_pass', async (req, res) => {
-    try {
-      const mobile_no = req.params.mobile_no;
-      const userEnteredPassword = req.params.user_pass;
+router.post('/compare-password/:mobile_no/:user_pass', async (req, res) => {
+  try {
+    const mobile_no = req.params.mobile_no;
+    const userEnteredPassword = req.params.user_pass;
 
-      console.log(userEnteredPassword)
-  
-      let hashedUserPass = '';
-  
-      const sql = "SELECT * FROM user_auth WHERE mobile_no = ?";
-      conn2.query(sql, [mobile_no], async (err, results) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ message: "Error occurred while authenticating." });
-        }
+    console.log(userEnteredPassword)
 
-        if (results.length > 0) {
-          hashedUserPass = results[0].user_pass;
-  
-          try {
-            const passwordMatch = await bcrypt.compare(userEnteredPassword, hashedUserPass);
-  
-            if (passwordMatch) {
+    let hashedUserPass = '';
 
-              return res.status(200).json(results);
-            } else {
+    const sql = "SELECT * FROM user_auth WHERE mobile_no = ?";
+    conn2.query(sql, [mobile_no], async (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Error occurred while authenticating." });
+      }
 
-              return res.status(401).json({ message: "Authentication failed" });
-            }
-          } catch (bcryptError) {
-            console.error(bcryptError);
-            return res.status(500).json({ message: "Error comparing passwords." });
+      if (results.length > 0) {
+        hashedUserPass = results[0].user_pass;
+
+        try {
+          const passwordMatch = await bcrypt.compare(userEnteredPassword, hashedUserPass);
+
+          if (passwordMatch) {
+            console.log("Results:", results);
+
+            return res.status(200).json(results);
+          } else {
+            return res.status(401).json({ message: "Authentication failed" });
           }
-        } else {
-
-          return res.status(404).json({ message: "User not found" });
+        } catch (bcryptError) {
+          console.error(bcryptError);
+          return res.status(500).json({ message: "Error comparing passwords." });
         }
-      });
+      } else {
+        return res.status(404).json({ message: "User not found" });
+      }
+    });
 
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: "Internal server error." });
-    }
-  });
-
-
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error." });
+  }
+});
 
   router.post("/admin", (req, res) => {
     const { admin_name, admin_pass } = req.body;
@@ -80,49 +77,4 @@ const router = Router();
       });
     });
   });
-  // router.get("/:user_id", (req, res) => {
-    
-  //   console.log(user_id)
-  
-  
-  //   conn2.query(sql, [mobile_no, user_pass], (err, results) => {
-  //     if (err) {
-  //       console.error(err);
-  //       return res.status(500).json({ message: "Error occurred while authenticating." });
-  //     }
-  //     return res.status(200).json(results)
-  //   });
-  // });
-
-//   router.delete('/accdelete/:user_id', async (req, res) => {
-//     const user_id = req.params.user_id;
-//     // SQL query to delete user account
-//     const sql1 = "DELETE FROM user_auth WHERE user_id = ?";
-
-//     try {
-//         // Pass user_id as a parameter to the queryDatabase function
-//         const result = await queryDatabase(sql1, [user_id]);
-//         res.json({
-//             message: "Successfully executed",
-//             user_auth_result: result,
-//         });
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ error: "Error executing queries" });
-//     }
-// });
-
-// function queryDatabase(query, values) {
-//     return new Promise((resolve, reject) => {
-//         // Pass values as parameters to the query function
-//         conn2.query(query, values, (err, data) => {
-//             if (err) {
-//                 reject(err);
-//             } else {
-//                 resolve(data);
-//             }
-//         });
-//     });
-// }
-
   export default router;
