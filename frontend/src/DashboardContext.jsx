@@ -10,6 +10,7 @@ export const DashboardProvider = ({ children }) => {
     const [fetchCount, setFetchCount] = useState(0);
 
     const [transStats, setTransStats] = useState({});
+    const [transReport, setTransReport] = useState({});
     const [taxPayment, setTaxPayment] = useState({});
     const [taxClearance, setTaxClearance] = useState({});
     const [businessPermit, setBusinessPermit] = useState({});
@@ -45,6 +46,7 @@ export const DashboardProvider = ({ children }) => {
 
       useEffect(() => {
         fetchData('transstats', setTransStats, handleEffectCompletion);
+        fetchData('transreport', setTransReport, handleEffectCompletion);
         fetchData('taxpayment', setTaxPayment, handleEffectCompletion);
         fetchData('taxclearance', setTaxClearance, handleEffectCompletion);
         fetchData('businesspermit', setBusinessPermit, handleEffectCompletion);
@@ -76,6 +78,7 @@ export const DashboardProvider = ({ children }) => {
     <DashboardContext.Provider 
     value={{
         transStats,
+        transReport,
         revenue,
         verifiedUsers,
         totalPaid,

@@ -6,59 +6,59 @@ const router = Router();
 
 router.get('/transstats/', async (req, res) => {
 
-    const query = "SELECT \
-    subquery.earliest_month, \
-    subquery.second_last_month, \
-    subquery.previous_month, \
-    subquery.latest_month, \
-    \
-    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS tp_last, \
-    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS tp_second_last, \
-    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS tp_previous, \
-    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS tp_current, \
-    \
-    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS tc_last, \
-    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS tc_second_last, \
-    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS tc_previous, \
-    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS tc_current, \
-    \
-    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS bp_last, \
-    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS bp_second_last, \
-    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS bp_previous, \
-    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS bp_current, \
-    \
-    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS cc_last, \
-    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS cc_second_last, \
-    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS cc_previous, \
-    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS cc_current, \
-    \
-    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS bc_last, \
-    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS bc_second_last, \
-    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS bc_previous, \
-    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS bc_current, \
-    \
-    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS dc_last, \
-    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS dc_second_last, \
-    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS dc_previous, \
-    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS dc_current, \
-    \
-    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND LAST_DAY(subquery.earliest_month) THEN 1 END) AS mc_last, \
-    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND LAST_DAY(subquery.second_last_month) THEN 1 END) AS mc_second_last, \
-    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND LAST_DAY(subquery.previous_month) THEN 1 END) AS mc_previous, \
-    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS mc_current\
-    \
-    FROM ( \
-        SELECT \
-            DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 3 MONTH), '%Y-%m-01') AS earliest_month, \
-            DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 2 MONTH), '%Y-%m-01') AS second_last_month, \
-            DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 1 MONTH), '%Y-%m-01') AS previous_month, \
-            DATE_FORMAT(MAX(date_processed), '%Y-%m-01') AS latest_month \
-        FROM \
-            user_transaction \
-    ) AS subquery \
-    \
-    JOIN user_transaction ON 1=1 \
-    GROUP BY subquery.earliest_month, subquery.second_last_month, subquery.previous_month, subquery.latest_month;";
+    const query = `SELECT 
+    subquery.earliest_month, 
+    subquery.second_last_month, 
+    subquery.previous_month, 
+    subquery.latest_month, 
+    
+    COUNT(CASE WHEN trans_type_id = 1 AND date_processed >= DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') THEN 1 END) AS tp_last,
+    COUNT(CASE WHEN trans_type_id = 1 AND date_processed >= DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.previous_month, '%Y-%m-01') THEN 1 END) AS tp_second_last,
+    COUNT(CASE WHEN trans_type_id = 1 AND date_processed >= DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.latest_month, '%Y-%m-01') THEN 1 END) AS tp_previous,
+    COUNT(CASE WHEN trans_type_id = 1 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS tp_current, 
+    
+    COUNT(CASE WHEN trans_type_id = 2 AND date_processed >= DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') THEN 1 END) AS tc_last,
+    COUNT(CASE WHEN trans_type_id = 2 AND date_processed >= DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.previous_month, '%Y-%m-01') THEN 1 END) AS tc_second_last, 
+    COUNT(CASE WHEN trans_type_id = 2 AND date_processed >= DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.latest_month, '%Y-%m-01') THEN 1 END) AS tc_previous, 
+    COUNT(CASE WHEN trans_type_id = 2 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS tc_current, 
+    
+    COUNT(CASE WHEN trans_type_id = 3 AND date_processed >= DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') THEN 1 END) AS bp_last, 
+    COUNT(CASE WHEN trans_type_id = 3 AND date_processed >= DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.previous_month, '%Y-%m-01') THEN 1 END) AS bp_second_last, 
+    COUNT(CASE WHEN trans_type_id = 3 AND date_processed >= DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.latest_month, '%Y-%m-01') THEN 1 END) AS bp_previous, 
+    COUNT(CASE WHEN trans_type_id = 3 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS bp_current, 
+    
+    COUNT(CASE WHEN trans_type_id = 4 AND date_processed >= DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') THEN 1 END) AS cc_last, 
+    COUNT(CASE WHEN trans_type_id = 4 AND date_processed >= DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.previous_month, '%Y-%m-01') THEN 1 END) AS cc_second_last, 
+    COUNT(CASE WHEN trans_type_id = 4 AND date_processed >= DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.latest_month, '%Y-%m-01') THEN 1 END) AS cc_previous, 
+    COUNT(CASE WHEN trans_type_id = 4 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS cc_current, 
+
+    COUNT(CASE WHEN trans_type_id = 5 AND date_processed >= DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') THEN 1 END) AS bc_last, 
+    COUNT(CASE WHEN trans_type_id = 5 AND date_processed >= DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.previous_month, '%Y-%m-01') THEN 1 END) AS bc_second_last, 
+    COUNT(CASE WHEN trans_type_id = 5 AND date_processed >= DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.latest_month, '%Y-%m-01') THEN 1 END) AS bc_previous, 
+    COUNT(CASE WHEN trans_type_id = 5 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS bc_current, 
+    
+    COUNT(CASE WHEN trans_type_id = 6 AND date_processed >= DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') THEN 1 END) AS dc_last, 
+    COUNT(CASE WHEN trans_type_id = 6 AND date_processed >= DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.previous_month, '%Y-%m-01') THEN 1 END) AS dc_second_last, 
+    COUNT(CASE WHEN trans_type_id = 6 AND date_processed >= DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.latest_month, '%Y-%m-01') THEN 1 END) AS dc_previous, 
+    COUNT(CASE WHEN trans_type_id = 6 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS dc_current, 
+    
+    COUNT(CASE WHEN trans_type_id = 7 AND date_processed >= DATE_FORMAT(subquery.earliest_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') THEN 1 END) AS mc_last, 
+    COUNT(CASE WHEN trans_type_id = 7 AND date_processed >= DATE_FORMAT(subquery.second_last_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.previous_month, '%Y-%m-01') THEN 1 END) AS mc_second_last, 
+    COUNT(CASE WHEN trans_type_id = 7 AND date_processed >= DATE_FORMAT(subquery.previous_month, '%Y-%m-01') AND date_processed < DATE_FORMAT(subquery.latest_month, '%Y-%m-01') THEN 1 END) AS mc_previous, 
+    COUNT(CASE WHEN trans_type_id = 7 AND date_processed BETWEEN DATE_FORMAT(subquery.latest_month, '%Y-%m-01') AND LAST_DAY(subquery.latest_month) THEN 1 END) AS mc_current
+    
+    FROM ( 
+        SELECT 
+            DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 3 MONTH), '%Y-%m-01') AS earliest_month, 
+            DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 2 MONTH), '%Y-%m-01') AS second_last_month, 
+            DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 1 MONTH), '%Y-%m-01') AS previous_month, 
+            DATE_FORMAT(MAX(date_processed), '%Y-%m-01') AS latest_month 
+        FROM 
+            user_transaction 
+    ) AS subquery 
+    
+    JOIN user_transaction ON 1=1 
+    GROUP BY subquery.earliest_month, subquery.second_last_month, subquery.previous_month, subquery.latest_month;`;
 
 
   
@@ -123,14 +123,69 @@ router.get('/transstats/', async (req, res) => {
 }
 });
 
-// SELECT \
-//             (SELECT DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 3 MONTH), '%Y-%m-01') FROM user_transaction) AS earliest_month, \
-//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
-//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
-//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction))) AS second_last_month, \
-//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
-//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction)) AS previous_month, \
-//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction) AS latest_month\
+
+router.get('/transreport/', async (req, res) => {
+
+    const query = `SELECT 
+    subquery.month, 
+    trans_types.trans_type_id, 
+    COUNT(CASE WHEN DATE_FORMAT(user_transaction.date_processed, '%Y-%m') = subquery.month AND user_transaction.trans_type_id = trans_types.trans_type_id THEN 1 END) AS trans_count 
+    FROM 
+        (SELECT '2024-01' AS month 
+        UNION SELECT '2024-02' 
+        UNION SELECT '2024-03' 
+        UNION SELECT '2024-04' 
+        UNION SELECT '2024-05' 
+        UNION SELECT '2024-06' 
+        UNION SELECT '2024-07' 
+        UNION SELECT '2024-08' 
+        UNION SELECT '2024-09' 
+        UNION SELECT '2024-10' 
+        UNION SELECT '2024-11' 
+        UNION SELECT '2024-12') AS subquery 
+    CROSS JOIN 
+        (SELECT DISTINCT trans_type_id FROM user_transaction) AS trans_types 
+    LEFT JOIN user_transaction 
+        ON DATE_FORMAT(user_transaction.date_processed, '%Y-%m') = subquery.month 
+    GROUP BY subquery.month, trans_types.trans_type_id 
+    ORDER BY subquery.month, trans_types.trans_type_id;`; 
+
+
+  
+    try {
+        const result = await queryDatabase(query);
+    
+        const monthlyCounts = {};
+        let index = 0;
+        result.forEach(row => {
+            const month = row.month;
+            const transTypeId = row.trans_type_id;
+            const transCount = row.trans_count;
+    
+            // Extract the year and month indices from the month string
+            const [year, monthIndex] = month.split('-').map(Number); // Parse monthIndex as integer
+    
+            // If the month index doesn't exist, create it
+            if (!monthlyCounts[monthIndex]) {
+                monthlyCounts[monthIndex] = [];
+            }
+    
+            // Populate the transTypeId count for the month index
+            monthlyCounts[monthIndex][transTypeId] = transCount;
+        });
+    
+        const responseObj = {
+            transReport: monthlyCounts
+        };
+    
+        res.json(responseObj);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving data');
+    }
+
+});
+
 
 router.get('/taxpayment/', async (req, res) => {
 

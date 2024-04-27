@@ -28,6 +28,7 @@ import logoImage from '../images/mnl_header_pdf.png';
 const AdminDashChiefForm = React.memo(
   ({
     transStats,
+    transReport,
     revenue,
     verifiedUsers,
     totalPaid,
@@ -48,6 +49,7 @@ const AdminDashChiefForm = React.memo(
   // const admin_type = pathname.split("/")[2];
   const { admin_type } = useParams();
 
+  console.log(transReport)
   console.log(transStats)
   // const adminRole = state && state.user_role;
 
@@ -102,19 +104,45 @@ const AdminDashChiefForm = React.memo(
       pdf.text("Months", 15, 42);
       
       // Create data for the table
+      // const abbreviatedMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      
       const tableData = [];
-      const abbreviatedMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      
+      const monthLabels = {
+          "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun",
+          "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+      };
+
+      const transReportData = transReport.transReport;
+
+      for (const month in transReportData) {
+          const monthIndex = parseInt(month, 10) - 1; // Adjust for zero-indexing
+          const monthLabel = monthLabels[month];
+          const dataArray = transReportData[month];
+          if (Array.isArray(dataArray)) {
+              tableData[monthIndex] = [monthLabel, ...dataArray.slice(1)]; // Skip null value at index 0
+          } else {
+              console.error(`Data for ${monthLabel} is not an array.`);
+          }
+      }
+
+      console.log(tableData);
+
+
+
+  
+  
       // Populate the table data with sample values, you can replace it with your data
-      abbreviatedMonths.forEach((month, index) => {
-        const taxPaymentValue = taxpayment[index] || 0;
-        const taxClearanceValue = taxclearance[index] || 0;
-        const businessPermitValue = buspermit[index] || 0;
-        const cedulaCertValue = cedulacert[index] || 0;
-        const birthCertValue = birthcert[index] || 0; 
-        const deathCertValue = deathcert[index] || 0; 
-        const marriageCertValue = marriagecert[index] || 0;
-        tableData.push([month, taxPaymentValue, taxClearanceValue, businessPermitValue, cedulaCertValue, birthCertValue, deathCertValue, marriageCertValue]);
-      }); 
+      // abbreviatedMonths.forEach((month, index) => {
+      //   const taxPaymentValue = taxpayment[index] || 0;
+      //   const taxClearanceValue = taxclearance[index] || 0;
+      //   const businessPermitValue = buspermit[index] || 0;
+      //   const cedulaCertValue = cedulacert[index] || 0;
+      //   const birthCertValue = birthcert[index] || 0; 
+      //   const deathCertValue = deathcert[index] || 0; 
+      //   const marriageCertValue = marriagecert[index] || 0;
+      //   tableData1.push([month, taxPaymentValue, taxClearanceValue, businessPermitValue, cedulaCertValue, birthCertValue, deathCertValue, marriageCertValue]);
+      // }); 
 
       // Add the table
       pdf.autoTable({

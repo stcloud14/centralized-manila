@@ -5,6 +5,7 @@ import { useDashboard } from "../DashboardContext";
 function AdminDashChief() {
   const { 
     transStats,
+    transReport,
     revenue,
     verifiedUsers,
     totalPaid,
@@ -23,6 +24,7 @@ function AdminDashChief() {
   return (
     <AdminDashChiefForm 
     transStats={transStats}
+    transReport={transReport}
     revenue={revenue}
     verifiedUsers={verifiedUsers}
     totalPaid={totalPaid}
