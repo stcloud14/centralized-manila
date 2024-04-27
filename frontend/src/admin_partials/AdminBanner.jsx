@@ -71,7 +71,7 @@ function AdminBanner({ adminType, generateReports}) {
           <div className="flex w-full items-center justify-end mb-1 sm:mb-0">
             <span className="hidden sm:block text-xs mr-2">Year:</span>
           
-              <select onChange={handleFilterChange} className="bg-white dark:bg-[#2b2b2b] text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-full sm:w-[150px]">
+              <select value={selectedYear} onChange={handleFilterChange} className="bg-white dark:bg-[#2b2b2b] text-xs border border-slate-300 text-slate-700 dark:text-white py-1 md:py-0.5 rounded-sm w-full sm:w-[150px]">
                 {generateYearOptions()}
               </select>
             

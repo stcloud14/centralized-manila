@@ -65,6 +65,7 @@ const AdminDashChiefForm = React.memo(
 
 
   console.log(taxPayment)
+  console.log(verifiedUsers)
   // console.log(taxClearance)
   // console.log(businessPermit)
   
@@ -156,34 +157,38 @@ const AdminDashChiefForm = React.memo(
 
           const monthLabels = {
               "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun",
-              "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+              "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec", 
+              "13": "Total Count"
           };
 
           // const reportData = transReport.transReport;
 
+          // Populate tableData with data for each month
           for (const month in reportData) {
-              const monthIndex = parseInt(month, 10) - 1;
-              const monthLabel = monthLabels[month];
-              const dataArray = reportData[month];
-              if (Array.isArray(dataArray)) {
-                  tableData[monthIndex] = [monthLabel, ...dataArray.slice(1)];
-              } else {
-                  console.error(`Data for ${monthLabel} is not an array.`);
-              }
+            const monthIndex = parseInt(month, 10) - 1;
+            const monthLabel = monthLabels[month];
+            const dataArray = reportData[month];
+            if (Array.isArray(dataArray)) {
+                tableData[monthIndex] = [monthLabel, ...dataArray.slice(1)];
+            } else {
+                console.error(`Data for ${monthLabel} is not an array.`);
+            }
           }
 
+          // Add "Total Count" row to tableData
+          tableData.push(['Total', TPData.Total, TCData.Total, BPData.Total,  CTCData.Total, BCData.Total, DCData.Total, MCData.Total ]);
 
           // Add the table
           pdf.autoTable({
               startY: 38, // Start the table below the "Transaction Type" text
-              head: [['', 'TP', 'TC', 'BP', 'CTC', 'BC', 'DC', 'MC']], // Header for every column
+              head: [['', 'TP', 'TC', 'BP', 'CTC', 'BC', 'DC', 'MC', 'Total Count']], // Header for every column
               body: tableData,
               theme: 'plain',
               headStyles: {
                 fontStyle: 'normal',
             },
             styles: {
-              cellPadding: 1,
+              cellPadding: 0.5,
             }
           });
 
@@ -244,7 +249,7 @@ const AdminDashChiefForm = React.memo(
                     1: { cellWidth: pdf.internal.pageSize.width * 0.5 },// Set the width of the second column to 50% of the page width
                 },
                 styles: {
-                  cellPadding: 1,
+                  cellPadding: 0.5,
                 }
             });
             
@@ -274,7 +279,7 @@ const AdminDashChiefForm = React.memo(
                       1: { cellWidth: pdf.internal.pageSize.width * 0.5, align: 'right'},// Set the width of the second column to 50% of the page width
                   },
                   styles: {
-                    cellPadding: 1,
+                    cellPadding: 0.5,
                   }
               });
 
@@ -284,6 +289,35 @@ const AdminDashChiefForm = React.memo(
               pdf.setFont("helvetica", "normal");
               pdf.setFontSize(10);
               pdf.text(lineOfSymbols3, textXPosition3, textYPosition3);
+
+              const fourthTableData = [
+                ['Verifiend User', verifiedUsers.length > 0 ? verifiedUsers[0].total_verified : 'N/A',],
+                ['Unverified User',  verifiedUsers.length > 0 ? verifiedUsers[0].total_unverified : 'N/A', ],
+                ['Total Users', verifiedUsers.length > 0 ? verifiedUsers[0].total_users : 'N/A',]]
+
+              pdf.autoTable({
+                startY: pdf.autoTable.previous.finalY + 9, // Start the second table below the line of symbols
+                head: [['User Demographics', 'Total Count']], // Header for the second table
+                body: fourthTableData,
+                theme: 'plain',
+                headStyles: {
+                    fontStyle: 'bold',
+                },
+                columnStyles: {
+                    0: { cellWidth: pdf.internal.pageSize.width * 0.5 }, // Set the width of the first column to 50% of the page width
+                    1: { cellWidth: pdf.internal.pageSize.width * 0.5, align: 'right'},// Set the width of the second column to 50% of the page width
+                },
+                styles: {
+                  cellPadding: 0.5,
+                }
+            });
+
+            const lineOfSymbols4 = repeatSymbol(symbol, repetitions);
+            const textXPosition4 = 15; // Adjust the X position
+            const textYPosition4 = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text(lineOfSymbols3, textXPosition4, textYPosition4);
           
               const noteText = [
                 "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
@@ -306,7 +340,7 @@ const AdminDashChiefForm = React.memo(
             
             const signatureData = [['City Treasurer']];
             pdf.autoTable({
-                startY: pdf.autoTable.previous.finalY + 45,
+                startY: pdf.autoTable.previous.finalY + 40,
                 head: [['Anne Mae Garcia']],
                 body: signatureData,
                 theme: 'plain',
