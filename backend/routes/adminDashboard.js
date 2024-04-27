@@ -124,34 +124,29 @@ router.get('/transstats/', async (req, res) => {
 });
 
 
-router.get('/transreport/', async (req, res) => {
+router.get('/transreport', async (req, res) => {
 
-    const query = `SELECT 
-    subquery.month, 
-    trans_types.trans_type_id, 
-    COUNT(CASE WHEN DATE_FORMAT(user_transaction.date_processed, '%Y-%m') = subquery.month AND user_transaction.trans_type_id = trans_types.trans_type_id THEN 1 END) AS trans_count 
-    FROM 
-        (SELECT '2024-01' AS month 
-        UNION SELECT '2024-02' 
-        UNION SELECT '2024-03' 
-        UNION SELECT '2024-04' 
-        UNION SELECT '2024-05' 
-        UNION SELECT '2024-06' 
-        UNION SELECT '2024-07' 
-        UNION SELECT '2024-08' 
-        UNION SELECT '2024-09' 
-        UNION SELECT '2024-10' 
-        UNION SELECT '2024-11' 
-        UNION SELECT '2024-12') AS subquery 
-    CROSS JOIN 
-        (SELECT DISTINCT trans_type_id FROM user_transaction) AS trans_types 
-    LEFT JOIN user_transaction 
-        ON DATE_FORMAT(user_transaction.date_processed, '%Y-%m') = subquery.month 
-    GROUP BY subquery.month, trans_types.trans_type_id 
-    ORDER BY subquery.month, trans_types.trans_type_id;`; 
+    const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
 
+    const query = `
+        SELECT 
+            calendar.month,
+            trans_types.trans_type_id, 
+            COALESCE(COUNT(user_transaction.date_processed), 0) AS trans_count 
+        FROM 
+            (SELECT 
+                DATE_FORMAT('${selectedYear}-01-01' + INTERVAL (a.n-1) MONTH, '%Y-%m') AS month
+            FROM 
+                (SELECT 1 AS n UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12) AS a) AS calendar
+        CROSS JOIN 
+            (SELECT DISTINCT trans_type_id FROM user_transaction) AS trans_types 
+        LEFT JOIN user_transaction 
+            ON DATE_FORMAT(user_transaction.date_processed, '%Y-%m') = calendar.month 
+            AND user_transaction.trans_type_id = trans_types.trans_type_id
+        GROUP BY calendar.month, trans_types.trans_type_id 
+        ORDER BY calendar.month, trans_types.trans_type_id;
+    `;
 
-  
     try {
         const result = await queryDatabase(query);
     
@@ -189,20 +184,23 @@ router.get('/transreport/', async (req, res) => {
 
 router.get('/taxpayment/', async (req, res) => {
 
-    const query = "SELECT \
-    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, \
-    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, \
-    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
-    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
-    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
-    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
-    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
-    COUNT(CASE WHEN trans_type_id = '1' THEN 1 END) AS Total \
-    FROM user_transaction \
-    WHERE trans_type_id = '1' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
+    const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
+
+    const query = `SELECT 
+    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, 
+    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, 
+    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, 
+    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, 
+    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, 
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, 
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, 
+    COUNT(CASE WHEN trans_type_id = '1' THEN 1 END) AS Total 
+    FROM user_transaction 
+    WHERE trans_type_id = '1' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete') 
+    AND YEAR(date_processed) = ?;`
   
   try {
-    const result = await queryDatabase(query);
+    const result = await queryDatabase(query, [selectedYear]);
 
     const responseObj = {
         Pending: result[0].Pending || 0,
@@ -225,19 +223,22 @@ router.get('/taxpayment/', async (req, res) => {
 
 router.get('/taxclearance/', async (req, res) => {
 
-    const query = "SELECT \
-    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, \
-    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, \
-    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
-    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
-    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
-    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
-    COUNT(CASE WHEN trans_type_id = '2' THEN 1 END) AS Total \
-    FROM user_transaction \
-    WHERE trans_type_id = '2' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
+    const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
+
+    const query = `SELECT 
+    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, 
+    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, 
+    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, 
+    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, 
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, 
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, 
+    COUNT(CASE WHEN trans_type_id = '2' THEN 1 END) AS Total 
+    FROM user_transaction 
+    WHERE trans_type_id = '2' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete') 
+    AND YEAR(date_processed) = ?;`
   
   try {
-    const result = await queryDatabase(query);
+    const result = await queryDatabase(query, [selectedYear]);
 
     const responseObj = {
         Pending: result[0].Pending || 0,
@@ -260,19 +261,22 @@ router.get('/taxclearance/', async (req, res) => {
 
 router.get('/businesspermit/', async (req, res) => {
 
-    const query = "SELECT \
-    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, \
-    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, \
-    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
-    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
-    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
-    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
-    COUNT(CASE WHEN trans_type_id = '3' THEN 1 END) AS Total \
-    FROM user_transaction \
-    WHERE trans_type_id = '3' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
+    const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
+
+    const query = `SELECT 
+    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, 
+    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, 
+    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, 
+    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, 
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, 
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, 
+    COUNT(CASE WHEN trans_type_id = '3' THEN 1 END) AS Total 
+    FROM user_transaction 
+    WHERE trans_type_id = '3' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete') 
+    AND YEAR(date_processed) = ?;`
   
   try {
-    const result = await queryDatabase(query);
+    const result = await queryDatabase(query, [selectedYear]);
 
     const responseObj = {
         Pending: result[0].Pending || 0,
@@ -295,20 +299,23 @@ router.get('/businesspermit/', async (req, res) => {
 
 router.get('/cedulacert/', async (req, res) => {
 
-    const query = "SELECT \
-    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, \
-    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, \
-    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
-    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
-    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
-    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
-    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
-    COUNT(CASE WHEN trans_type_id = '4' THEN 1 END) AS Total \
-    FROM user_transaction \
-    WHERE trans_type_id = '4' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
+    const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
+
+    const query = `SELECT 
+    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, 
+    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, 
+    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, 
+    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, 
+    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, 
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, 
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, 
+    COUNT(CASE WHEN trans_type_id = '4' THEN 1 END) AS Total 
+    FROM user_transaction 
+    WHERE trans_type_id = '4' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete') 
+    AND YEAR(date_processed) = ?;`
   
   try {
-    const result = await queryDatabase(query);
+    const result = await queryDatabase(query, [selectedYear]);
 
     const responseObj = {
         Pending: result[0].Pending || 0,
@@ -331,20 +338,23 @@ router.get('/cedulacert/', async (req, res) => {
 
 router.get('/birthcert/', async (req, res) => {
 
-    const query = "SELECT \
-    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, \
-    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, \
-    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
-    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
-    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
-    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
-    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
-    COUNT(CASE WHEN trans_type_id = '5' THEN 1 END) AS Total \
-    FROM user_transaction \
-    WHERE trans_type_id = '5' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
+    const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
+
+    const query = `SELECT 
+    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, 
+    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, 
+    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, 
+    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, 
+    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, 
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, 
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, 
+    COUNT(CASE WHEN trans_type_id = '5' THEN 1 END) AS Total 
+    FROM user_transaction 
+    WHERE trans_type_id = '5' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete') 
+    AND YEAR(date_processed) = ?;`
   
   try {
-    const result = await queryDatabase(query);
+    const result = await queryDatabase(query, [selectedYear]);
 
     const responseObj = {
         Pending: result[0].Pending || 0,
@@ -367,20 +377,23 @@ router.get('/birthcert/', async (req, res) => {
 
 router.get('/deathcert/', async (req, res) => {
 
-    const query = "SELECT \
-    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, \
-    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, \
-    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
-    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
-    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
-    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
-    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
-    COUNT(CASE WHEN trans_type_id = '6' THEN 1 END) AS Total \
-    FROM user_transaction \
-    WHERE trans_type_id = '6' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
+    const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
+
+    const query = `SELECT 
+    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, 
+    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, 
+    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, 
+    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, 
+    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, 
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, 
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, 
+    COUNT(CASE WHEN trans_type_id = '6' THEN 1 END) AS Total 
+    FROM user_transaction 
+    WHERE trans_type_id = '6' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete') 
+    AND YEAR(date_processed) = ?;`
   
   try {
-    const result = await queryDatabase(query);
+    const result = await queryDatabase(query, [selectedYear]);
 
     const responseObj = {
         Pending: result[0].Pending || 0,
@@ -403,20 +416,23 @@ router.get('/deathcert/', async (req, res) => {
 
 router.get('/marriagecert/', async (req, res) => {
 
-    const query = "SELECT \
-    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending, \
-    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, \
-    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, \
-    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, \
-    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, \
-    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, \
-    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, \
-    COUNT(CASE WHEN trans_type_id = '7' THEN 1 END) AS Total \
-    FROM user_transaction \
-    WHERE trans_type_id = '7' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete');"
+    const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
+
+    const query = `SELECT 
+    COUNT(CASE WHEN status_type = 'Pending' THEN 1 END) AS Pending,
+    COUNT(CASE WHEN status_type = 'Paid' THEN 1 END) AS Paid, 
+    COUNT(CASE WHEN status_type = 'Canceled' THEN 1 END) AS Canceled, 
+    COUNT(CASE WHEN status_type = 'Rejected' THEN 1 END) AS Rejected, 
+    COUNT(CASE WHEN status_type = 'Expired' THEN 1 END) AS Expired, 
+    COUNT(CASE WHEN status_type = 'Processing' THEN 1 END) AS Processing, 
+    COUNT(CASE WHEN status_type = 'Complete' THEN 1 END) AS Complete, 
+    COUNT(CASE WHEN trans_type_id = '7' THEN 1 END) AS Total 
+    FROM user_transaction 
+    WHERE trans_type_id = '7' AND status_type IN ('Pending', 'Paid', 'Canceled', 'Rejected', 'Expired', 'Processing', 'Complete') 
+    AND YEAR(date_processed) = ?;`
   
   try {
-    const result = await queryDatabase(query);
+    const result = await queryDatabase(query, [selectedYear]);
 
     const responseObj = {
         Pending: result[0].Pending || 0,
@@ -525,6 +541,8 @@ router.get('/topcities/', async (req, res) => {
 
 
 router.get('/revenue/', async (req, res) => {
+
+    const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
 
     const query = "SELECT \
     SUM(ti.amount) AS total_paid_amount, \
@@ -640,12 +658,12 @@ router.get('/revenue/', async (req, res) => {
     JOIN \
         transaction_info ti ON ut.transaction_id = ti.transaction_id \
     WHERE \
-        ut.status_type = 'Paid';";
+        ut.status_type = 'Paid' AND YEAR(date_processed) = ?;"
 
 
   
   try {
-    const result = await queryDatabase(query);
+    const result = await queryDatabase(query, [selectedYear]);
 
     const responseObj = {
         totalPaid: result[0].total_paid_amount || 0,
