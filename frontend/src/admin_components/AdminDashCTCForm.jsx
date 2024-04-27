@@ -29,167 +29,229 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
       const { latestmonths, cedulacert } = transStats;
 
       console.log('TransStats:', transStats);
+
+      // Calculation for the revenue
+      const averageMonthlyRevenue = revenue.totalCC ? revenue.totalCC / 12 : 0;
+      const totalRefundAmount = 0;
+      const totalRefundIssued = 0;
+
       const pdf = new jsPDF();
 
-      const imageDataURL = await loadImageAsDataURL(logoImage);
-      pdf.addImage(imageDataURL, 'PNG', 128, 5, 70, 35);
+      // Date of Report
+      const currentDate1 = new Date();
+      const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
 
-      pdf.setLineWidth(0.5);
-      pdf.line(130, 35, 195, 35);
-      pdf.line(130, 42, 195, 42);
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(12);
+      pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+      pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
-      pdf.text('  Date as of now         ' + moment().format('MMMM D, YYYY'), 130, 40);
-      pdf.line(130, 50, 195, 50);
+      pdf.text("Community Tax Administrative Report", 15, 19);
+      pdf.text("Report No.", 15, 23);
 
-      pdf.autoTable({
-        startY: 43,
-        head: [['CTC Admin Reports', '']],
-        body: [
-          ['Total Community Tax', `P ${revenue.totalCC.toLocaleString()}`],
-        ],
-        headStyles: {
-          fillColor: false,
-          lineColor: 0,
-          textColor: 0,
-          fontSize: 10,
-          fontStyle: 'bold',
-          lineWidthTop: 1,
-          lineWidthBottom: 1,
-        },
-        bodyStyles: {
-          fillColor: false,
-          textColor: 0,
-          fontSize: 10,
-        },
-        alternateRowStyles: {
-          fillColor: false,
-          textColor: 0,
-          fontSize: 10,
-        },
-        margin: { top: 80, left: 130 },
-        tableWidth: 70,
-      });
-
-      pdf.setLineWidth(0.5);
-      pdf.line(130, 50, 195, 50);
-
-      pdf.autoTable({
-        startY: 70,
-        head: [['Monthly Reports', '']],
-        body: [],
-        headStyles: {
-          fillColor: false,
-          lineColor: 0,
-          textColor: 0,
-          fontSize: 10,
-          fontStyle: 'bold',
-          lineWidthTop: 1,
-          lineWidthBottom: 1,
-        },
-        bodyStyles: {
-          fillColor: false,
-          textColor: 0,
-          fontSize: 10,
-        },
-        alternateRowStyles: {
-          fillColor: false,
-          textColor: 0,
-          fontSize: 10,
-        },
-        margin: { top: 80, left: 130 },
-        tableWidth: 70,
-      });
-
-      const certificateTypeMapping = {
-        'Community Tax Certificate': 'cedulacert',
-      };
-      
-      const certificateTypes = ['Community Tax Certificate'];
-      
-      // Array of month names
-      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      
-      const monthlyReportsTableData = [
-        ['Month', ...latestmonths.map(month => monthNames[new Date(month).getMonth()])],
-        ...certificateTypes.map((type) => {
-          const actualType = certificateTypeMapping[type];
-          const values = latestmonths.map((month, index) => {
-            if (actualType === 'revenue') {
-              // Check if transStats[actualType] is defined
-              if (transStats[actualType]) {
-                // Calculate total revenue based on paymentsPaid
-                const totalPaymentsPaid = transStats[actualType].reduce((acc, payment) => {
-                  const paymentMonth = new Date(payment.date).getMonth();
-                  return acc + (paymentMonth === index ? payment.paymentsPaid : 0);
-                }, 0);
-                // Assuming 'Paid' status is available in transStats[actualType]
-                const totalPaid = transStats[actualType].reduce((acc, payment) => {
-                  const paymentMonth = new Date(payment.date).getMonth();
-                  return acc + (paymentMonth === index && payment.status === 'Paid' ? 1 : 0);
-                }, 0);
-                return `${totalPaymentsPaid} (Paid: ${totalPaid})`;
-              } else {
-                return 0; // '0 (Paid: 0)', Set to 0 if transStats[actualType] is undefined
-              }
-            } else {
-              const typeArray = transStats[actualType] || [];
-              return typeArray[index] !== undefined ? typeArray[index] : 0;
-            }
-          });
-          return [type, ...values];
-        }),
+      const additionalTextX = pdf.internal.pageSize.width - 50;
+      const additionalTextY = 15;
+      const additionalText = [
+        { text: "Date of Report", bold: true },
+          formattedDate1
       ];
+
+      additionalText.forEach((item, index) => {
+        const text = typeof item === 'string' ? item : item.text;
+        const isBold = typeof item === 'object' && item.bold;
+        pdf.setFont(isBold ? "helvetica" : "helvetica", isBold ? "bold" : "normal");
+        pdf.text(text, additionalTextX, additionalTextY + (index * 4));
+      });
+
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(10);
+      const transactionTypeText = "Transaction Type";
+      const textWidth = pdf.getStringUnitWidth(transactionTypeText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+      const centeredTextX = (pdf.internal.pageSize.width - textWidth) / 2;
+      pdf.text(transactionTypeText, centeredTextX, 34);
+
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(10);
+      pdf.text("Months", 15, 42);
       
+      // Create data for the table
+      const tableData = [];
+      const abbreviatedMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      // Populate the table data with sample values, you can replace it with your data
+      abbreviatedMonths.forEach((month, index) => {
+        const cedulaCertValue = cedulacert[index] || 0; 
+        tableData.push([month, cedulaCertValue]);
+      }); 
+
+      // Add the table
       pdf.autoTable({
-        startY: 80,
-        body: monthlyReportsTableData,
-        headStyles: {
-          fillColor: [50, 50, 50],
-          textColor: 255,
+          startY: 38, // Start the table below the "Transaction Type" text
+          head: [['', 'Community Tax Certificate']], // No header for the first column
+          body: tableData,
+          theme: 'plain',
+          headStyles: {
+            fontStyle: 'normal',
         },
-        columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' }, 2: { halign: 'right' }, 3: { halign: 'right' }, 4: { halign: 'right' }, 5: { halign: 'right' }, 6: { halign: 'right' }, 7: { halign: 'right' } },
-      });        
+        styles: {
+          cellPadding: 1,
+        }
+      });
 
-      // Add signature on the right side at the bottom of the table
-      const signatureXPosition = pdf.internal.pageSize.width - 58;
-      const signatureYPosition = pdf.autoTable.previous.finalY + 130;
+      // Function to repeat a symbol to form a line
+      function repeatSymbol(symbol, count) {
+        return symbol.repeat(count);
+      }
 
-      const fontSize = 12;
-      pdf.setFontSize(fontSize);
+      // Define the symbol and the number of repetitions
+      const symbol = "\u2022"; // Unicode for a bullet point symbol
+      const repetitions = 146; // Adjust the number of repetitions as needed
 
-      const admin_types = "Community Tax Admin";
-  
-      pdf.text("Approved by:", signatureXPosition, signatureYPosition);
-      pdf.text("Juan Dela Cruz", signatureXPosition + 8, signatureYPosition + 7);
-  
-      pdf.text("Endorsed by:", signatureXPosition, signatureYPosition + 15);
-      pdf.text("Angelica Dela Cruz", signatureXPosition + 5, signatureYPosition + 23);
+      // Generate the line of symbols
+      const lineOfSymbols = repeatSymbol(symbol, repetitions);
 
-      pdf.text("Name:", signatureXPosition, signatureYPosition + 33);
-      pdf.text(admin_types, signatureXPosition + 1, signatureYPosition + 40);
-  
-      pdf.line(signatureXPosition, signatureYPosition + 9, signatureXPosition + 45, signatureYPosition + 9);
-      pdf.line(signatureXPosition, signatureYPosition + 25, signatureXPosition + 45, signatureYPosition + 25);
-      pdf.line(signatureXPosition, signatureYPosition + 43, signatureXPosition + 45, signatureYPosition + 43);
-  
+      // Add the line of symbols below the first table
+      const textXPosition = 15; // Adjust the X position
+      const textYPosition = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(10);
+      pdf.text(lineOfSymbols, textXPosition, textYPosition);
+
+      const secondTableData = [
+        ['Pending',  cedulaCert.Pending],
+        ['Paid', cedulaCert.Paid],
+        ['Processing', cedulaCert.Processing],
+        ['Complete', cedulaCert.Complete],
+        ['Rejected', cedulaCert.Rejected],
+        ['Canceled', cedulaCert.Canceled],
+        ['Expired', cedulaCert.Expired]
+      ]; // Sample data for the second table
+        pdf.autoTable({
+            startY: pdf.autoTable.previous.finalY + 8, // Start the second table below the line of symbols
+            head: [['Transaction Status', 'Total Count']], // Header for the second table
+            body: secondTableData,
+            theme: 'plain',
+            headStyles: {
+                fontStyle: 'bold',
+            },
+            columnStyles: {
+                0: { cellWidth: pdf.internal.pageSize.width * 0.5}, // Set the width of the first column to 50% of the page width
+                1: { cellWidth: pdf.internal.pageSize.width * 0.5 },// Set the width of the second column to 50% of the page width
+            },
+            styles: {
+              cellPadding: 1,
+            }
+        });
+        
+          const lineOfSymbols2 = repeatSymbol(symbol, repetitions);
+          const textXPosition2 = 15; // Adjust the X position
+          const textYPosition2 = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
+          pdf.setFont("helvetica", "normal");
+          pdf.setFontSize(10);
+          pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
+
+          const thirdTableData = [
+            ['Total Gross Revenue', revenue.totalCC ? `P ${revenue.totalCC.toLocaleString()}` : ''],
+            ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
+            ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
+            ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
+        ]; // Sample data for the second table
+          pdf.autoTable({
+              startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols
+              head: [['Financial Status', 'Amount']], // Header for the second table
+              body: thirdTableData,
+              theme: 'plain',
+              headStyles: {
+                  fontStyle: 'bold',
+              },
+              columnStyles: {
+                  0: { cellWidth: pdf.internal.pageSize.width * 0.5 }, // Set the width of the first column to 50% of the page width
+                  1: { cellWidth: pdf.internal.pageSize.width * 0.5, align: 'right'},// Set the width of the second column to 50% of the page width
+              },
+              styles: {
+                cellPadding: 1,
+              }
+          });
+
+          const lineOfSymbols3 = repeatSymbol(symbol, repetitions);
+          const textXPosition3 = 15; // Adjust the X position
+          const textYPosition3 = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
+          pdf.setFont("helvetica", "normal");
+          pdf.setFontSize(10);
+          pdf.text(lineOfSymbols3, textXPosition3, textYPosition3);
+      
+          const noteText = [
+            "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
+            "financial and operational performance of Community Tax Transactions as of [reporting period]. Any identified",
+            "discrepancies or errors should be reported promptly for correction."
+        ];
+        const noteXPosition = 15; // Adjust as needed
+        const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
+
+        pdf.setFont("helvetica", "normal");
+          pdf.setFontSize(10);
+          noteText.forEach((text, index) => {
+              pdf.text(text, noteXPosition, noteYPosition + (index * 4)); // Adjust spacing here
+          });
+
+         // Add a signature
+         const pageWidth = pdf.internal.pageSize.width;
+         const tableWidth = 80; // Adjust the width according to your requirement
+         const margin = (pageWidth - tableWidth) - 10; // Adjust the margin as needed
+         
+         const signatureData = [['City Treasurer']];
+         pdf.autoTable({
+             startY: pdf.autoTable.previous.finalY + 45,
+             head: [['Anne Mae Garcia']],
+             body: signatureData,
+             theme: 'plain',
+             styles: {
+                 cellPadding: 2,
+                 fontSize: 10,
+                 fontStyle: 'normal',
+                 halign: 'center'
+             },
+             headStyles: {
+                 fontStyle: 'normal',
+             },
+             margin: { left: margin },
+         });
+         pdf.setLineWidth(0.5); // Set line width
+         pdf.line(120, pdf.autoTable.previous.finalY - 8, pdf.internal.pageSize.width - 14, pdf.autoTable.previous.finalY - 8);
+
+         // Add a signature
+         const pageWidth2 = pdf.internal.pageSize.width;
+         const tableWidth2 = 80; // Adjust the width according to your requirement
+         const margin2 = (pageWidth - tableWidth) - 10; // Adjust the margin as needed
+         
+         const signatureData2 = [['Community Tax Certificate Admin']];
+         pdf.autoTable({
+             startY: pdf.autoTable.previous.finalY - 16,
+             head: [['Community Tax Certificate Administrative']],
+             body: signatureData2,
+             theme: 'plain',
+             styles: {
+                 cellPadding: 2,
+                 fontSize: 10,
+                 fontStyle: 'normal',
+                 halign: 'center'
+             },
+             headStyles: {
+                 fontStyle: 'normal',
+             },
+             margin: { right: margin },
+         });
+         pdf.setLineWidth(0.5); // Set line width
+         pdf.line(15, pdf.autoTable.previous.finalY - 8, pdf.internal.pageSize.width - 118, pdf.autoTable.previous.finalY - 8);
+
+         
       const currentDate = new Date();
       const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
       const filename = `${admin_type}_reports_${formattedDate}.pdf`;
-  
+
       pdf.save(filename);
     } catch (error) {
       console.error('Error generating reports:', error);
     }
-  };
-
-  const loadImageAsDataURL = async (imageUrl) => {
-    const response = await fetch(imageUrl);
-    const blob = await response.blob();
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.readAsDataURL(blob);
-    });
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);

@@ -49,13 +49,12 @@ router.get('/transstats/', async (req, res) => {
     \
     FROM ( \
         SELECT \
-            (SELECT DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 3 MONTH), '%Y-%m-01') FROM user_transaction) AS earliest_month, \
-            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
-            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
-            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction))) AS second_last_month, \
-            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
-            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction)) AS previous_month, \
-            (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction) AS latest_month\
+            DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 3 MONTH), '%Y-%m-01') AS earliest_month, \
+            DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 2 MONTH), '%Y-%m-01') AS second_last_month, \
+            DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 1 MONTH), '%Y-%m-01') AS previous_month, \
+            DATE_FORMAT(MAX(date_processed), '%Y-%m-01') AS latest_month \
+        FROM \
+            user_transaction \
     ) AS subquery \
     \
     JOIN user_transaction ON 1=1 \
@@ -124,6 +123,14 @@ router.get('/transstats/', async (req, res) => {
 }
 });
 
+// SELECT \
+//             (SELECT DATE_FORMAT(DATE_SUB(MAX(date_processed), INTERVAL 3 MONTH), '%Y-%m-01') FROM user_transaction) AS earliest_month, \
+//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
+//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
+//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction))) AS second_last_month, \
+//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction WHERE DATE_FORMAT(date_processed, '%Y-%m-01') < \
+//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction)) AS previous_month, \
+//             (SELECT MAX(DATE_FORMAT(date_processed, '%Y-%m-01')) FROM user_transaction) AS latest_month\
 
 router.get('/taxpayment/', async (req, res) => {
 
