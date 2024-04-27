@@ -47,6 +47,8 @@ const AdminDashChiefForm = React.memo(
   // const { pathname, state } = location;
   // const admin_type = pathname.split("/")[2];
   const { admin_type } = useParams();
+
+  console.log(transStats)
   // const adminRole = state && state.user_role;
 
   const generateReports = async () => {
