@@ -199,7 +199,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
             fontStyle: 'normal',
         },
         styles: {
-            cellPadding: 1,
+            cellPadding: 0.5,
         },
         didDrawCell: (data) => {
             if (data.section === 'body' && data.column.index === columnHeaders.length - 1) {
@@ -251,7 +251,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
                 1: { cellWidth: pdf.internal.pageSize.width * 0.5 },// Set the width of the second column to 50% of the page width
             },
             styles: {
-              cellPadding: 1,
+              cellPadding: 0.5,
             }
         });
         
@@ -281,7 +281,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
                   1: { cellWidth: pdf.internal.pageSize.width * 0.5, align: 'right'},// Set the width of the second column to 50% of the page width
               },
               styles: {
-                cellPadding: 1,
+                cellPadding: 0.5,
               }
           });
 
