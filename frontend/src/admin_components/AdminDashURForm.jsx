@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-
+import axios from 'axios';
+import jsPDF from 'jspdf';
+import { useParams } from 'react-router-dom'; 
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
-
+import { v4 as uuidv4 } from 'uuid';
 import URstats from '../admin_partials/misc/URstats';
 import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
@@ -12,6 +14,228 @@ import TopCities from '../admin_partials/misc/TopCities';
 
 
 const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>{
+
+  const { admin_type } = useParams();
+
+  const [reportData, setReportData]=useState();
+
+  useEffect(() => {
+    const fetchREPORTData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/report/${admin_type}`);
+        setReportData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchREPORTData();
+  }, [admin_type]);
+
+  async function fetchData(endpoint, selectedYear) {
+    try {
+      const response = await axios.get(`http://localhost:8800/admin/${endpoint}/`, {
+        params: {
+          selectedYear: selectedYear
+        }
+      });
+      return response.data;
+    } catch (error) {
+      // Handle error
+      console.error('Error fetching data:', error);
+      throw error; // Optionally re-throw the error for the caller to handle
+    }
+  }
+
+  console.log(verifiedUsers);
+
+
+  const generateReportNumber = (admin_type) => {
+
+    const correctedAdminType = admin_type === 'registry_admin' ? 'RA' : registry_admin ;
+
+    const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const formattedDate = `${month}${day}`;
+
+    const uuid1 = uuidv4();
+    const uuidInt1 = parseInt(uuid1.replace(/-/g, '').substring(0, 4), 16);
+    const uuid1Code = (uuidInt1 % 10000).toString().padStart(4, '0');
+
+    return `${correctedAdminType}-${formattedDate}-${uuid1Code}`;
+};
+
+  console.log(admin_type);
+
+  const generateReports = async (selectedYear) => {
+
+    const fetchPromises = [
+      fetchData('transreport', selectedYear),
+      fetchData('verifiedusers', selectedYear)
+    ];
+
+    try {
+
+      const [
+        setYearData,
+        VerifiedData,
+      ] = await Promise.all(fetchPromises);
+
+      if (setYearData) {
+        
+        const reportNo = generateReportNumber(admin_type); 
+
+        const reportNum = {
+            report_no: reportNo,
+            admin_type: admin_type,
+            date_processed: new Date().toISOString(),
+        };
+
+        await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
+
+        console.log('Report stored successfully');
+
+        const pdf = new jsPDF();
+
+          pdf.setFont("helvetica", "bold");
+          pdf.setFontSize(12);
+          pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+          pdf.setFont("helvetica", "normal");
+          pdf.setFontSize(10);
+          pdf.text("Unified Departmental Administrative Report", 15, 19);
+          pdf.text("Report No.: " + reportNo, 15, 23);
+
+          const additionalTextX = pdf.internal.pageSize.width - 50;
+          const additionalTextY = 15;
+          const additionalText = [
+            { text: "As of Year:", bold: true },
+              selectedYear
+          ];
+
+          additionalText.forEach((item, index) => {
+            const text = typeof item === 'string' ? item : item.text;
+            const isBold = typeof item === 'object' && item.bold;
+            pdf.setFont(isBold ? "helvetica" : "helvetica", isBold ? "bold" : "normal");
+            pdf.text(text, additionalTextX, additionalTextY + (index * 4));
+          });
+
+          // Function to repeat a symbol to form a line
+          function repeatSymbol(symbol, count) {
+            return symbol.repeat(count);
+          }
+
+          // Define the symbol and the number of repetitions
+          const symbol = "\u2022"; // Unicode for a bullet point symbol
+          const repetitions = 146; // Adjust the number of repetitions as needed
+
+          const firstTableData = [
+            ['Verified User', verifiedUsers.length > 0 ? verifiedUsers[0].total_verified : '0',],
+            ['Unverified User',  verifiedUsers.length > 0 ? verifiedUsers[0].total_unverified : '0', ],
+            ['Total Users', verifiedUsers.length > 0 ? verifiedUsers[0].total_users : '0',]]
+
+          // Sample data for the first table
+          pdf.autoTable({
+          startY: 38, // Start the first table below the line of symbols
+          head: [['User Demographics', 'Total Count']], // Header for the first table
+          body: firstTableData,
+          theme: 'plain',
+          headStyles: {
+              fontStyle: 'bold',
+          },
+          columnStyles: {
+              0: { cellWidth: pdf.internal.pageSize.width * 0.5}, // Set the width of the first column to 50% of the page width
+              1: { cellWidth: pdf.internal.pageSize.width * 0.5 },// Set the width of the second column to 50% of the page width
+          },
+          styles: {
+            cellPadding: 1,
+          }
+      });
+
+        const lineOfSymbols2 = repeatSymbol(symbol, repetitions);
+        const textXPosition2 = 15; // Adjust the X position
+        const textYPosition2 = pdf.autoTable.previous.finalY + 126; // Adjust the Y position
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(10);
+        pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
+          
+          const noteText = [
+            "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
+            "financial and operational performance of Registry as of [reporting period]. Any identified",
+            "discrepancies or errors should be reported promptly for correction."
+        ];
+        const noteXPosition = 15; // Adjust as needed
+        const noteYPosition = pdf.autoTable.previous.finalY + 130; // Adjust the Y position
+
+        pdf.setFont("helvetica", "normal");
+          pdf.setFontSize(10);
+          noteText.forEach((text, index) => {
+              pdf.text(text, noteXPosition, noteYPosition + (index * 4)); // Adjust spacing here
+          });
+
+        // Add a signature
+        const pageWidth = pdf.internal.pageSize.width;
+        const tableWidth = 80; // Adjust the width according to your requirement
+        const margin = (pageWidth - tableWidth) - 10; // Adjust the margin as needed
+            
+        const signatureData = [['City Treasurer']];
+        pdf.autoTable({
+            startY: pdf.autoTable.previous.finalY + 170,
+            head: [['Anne Mae Garcia']],
+            body: signatureData,
+            theme: 'plain',
+            styles: {
+                cellPadding: 2,
+                fontSize: 10,
+                fontStyle: 'normal',
+                halign: 'center'
+            },
+            headStyles: {
+                fontStyle: 'normal',
+            },
+            margin: { left: margin },
+        });
+        pdf.setLineWidth(0.5); // Set line width
+        pdf.line(120, pdf.autoTable.previous.finalY - 8, pdf.internal.pageSize.width - 14, pdf.autoTable.previous.finalY - 8);
+
+        // Add a signature
+        const pageWidth2 = pdf.internal.pageSize.width;
+        const tableWidth2 = 80; // Adjust the width according to your requirement
+        const margin2 = (pageWidth - tableWidth) - 10; // Adjust the margin as needed
+            
+        const signatureData2 = [['Registry Admin']];
+        pdf.autoTable({
+            startY: pdf.autoTable.previous.finalY - 16,
+            head: [['Registry Administrative']],
+            body: signatureData2,
+            theme: 'plain',
+            styles: {
+                cellPadding: 2,
+                fontSize: 10,
+                fontStyle: 'normal',
+                halign: 'center'
+            },
+            headStyles: {
+                fontStyle: 'normal',
+            },
+            margin: { right: margin },
+        });
+        pdf.setLineWidth(0.5); // Set line width
+        pdf.line(15, pdf.autoTable.previous.finalY - 8, pdf.internal.pageSize.width - 118, pdf.autoTable.previous.finalY - 8);
+
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+        const filename = `${admin_type}_reports_${formattedDate}.pdf`;
+  
+        pdf.save(filename);
+        
+      } else {
+        console.log("Failed to fetch report year period.");
+      }
+  
+      } catch (error) {
+        console.error('Error generating reports:', error);
+      }
+    };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -76,7 +300,7 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner adminType={'UR'} />
+                <AdminBanner adminType={'UR'} generateReports={generateReports} />
   
                 <div className="grid grid-cols-12 gap-6">
                   <URstats verifiedUsers={verifiedUsers}/>
