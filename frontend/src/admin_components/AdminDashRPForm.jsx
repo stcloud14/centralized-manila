@@ -203,7 +203,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                     fontStyle: 'normal',
                 },
                 styles: {
-                    cellPadding: 1,
+                    cellPadding: 0.5,
                 },
                 didDrawCell: (data) => {
                     if (data.section === 'body' && data.column.index === columnHeaders.length - 1) {
@@ -234,13 +234,14 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
               pdf.text(lineOfSymbols, textXPosition, textYPosition);
 
               const secondTableData = [
-                ['Pending', taxPayment.Pending + taxClearance.Pending],
-                ['Paid', taxPayment.Paid + taxClearance.Paid],
-                ['Processing', taxPayment.Processing + taxClearance.Processing],
-                ['Complete', taxPayment.Complete + taxClearance.Complete],
-                ['Rejected', taxPayment.Rejected + taxClearance.Rejected],
-                ['Canceled', taxPayment.Canceled + taxClearance.Canceled],
-                ['Expired', taxPayment.Expired + taxClearance.Expired]
+                ['Pending', TPData.Pending + TCData.Pending],
+                ['Paid', TPData.Paid + TCData.Paid],
+                ['Processing', TPData.Processing + TCData.Processing],
+                ['Complete', TPData.Complete + TCData.Complete],
+                ['Rejected', TPData.Rejected + TCData.Rejected],
+                ['Canceled', TPData.Canceled + TCData.Canceled],
+                ['Expired', TPData.Expired + TCData.Expired],
+                ['Total', TPData.Total + TCData.Total]
               ]; // Sample data for the second table
                 pdf.autoTable({
                     startY: pdf.autoTable.previous.finalY + 8, // Start the second table below the line of symbols
@@ -255,7 +256,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                         1: { cellWidth: pdf.internal.pageSize.width * 0.5 },// Set the width of the second column to 50% of the page width
                     },
                     styles: {
-                      cellPadding: 1,
+                      cellPadding: 0.5,
                     }
                 });
                 
