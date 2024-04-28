@@ -7,7 +7,7 @@ import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
-
+import { v4 as uuidv4 } from 'uuid';
 import RPstats from '../admin_partials/misc/RPstats';
 import RCstats from '../admin_partials/misc/RCstats';
 import TopRegions from '../admin_partials/misc/TopRegions';
@@ -23,246 +23,358 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
   // const admin_type = pathname.split("/")[2];
   // const adminRole = state && state.user_role;
 
-  const generateReports = async () => {
-    try {
-      const { taxpayment, taxclearance } = transStats;
+  const [reportData, setReportData]=useState();
 
-      console.log('TransStats:', transStats);
-
-      // Calculation for the revenue
-      const averageMonthlyRevenue = revenue.totalRP ? revenue.totalRP / 12 : 0;
-      const totalRefundAmount = 0;
-      const totalRefundIssued = 0;
-
-      const pdf = new jsPDF();
-
-      // Date of Report
-      const currentDate1 = new Date();
-      const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
-
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(12);
-      pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(10);
-      pdf.text("Real Property Tax Administrative Report", 15, 19);
-      pdf.text("Report No.", 15, 23);
-
-      const additionalTextX = pdf.internal.pageSize.width - 50;
-      const additionalTextY = 15;
-      const additionalText = [
-        { text: "Date of Report", bold: true },
-          formattedDate1
-      ];
-
-      additionalText.forEach((item, index) => {
-        const text = typeof item === 'string' ? item : item.text;
-        const isBold = typeof item === 'object' && item.bold;
-        pdf.setFont(isBold ? "helvetica" : "helvetica", isBold ? "bold" : "normal");
-        pdf.text(text, additionalTextX, additionalTextY + (index * 4));
-      });
-
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(10);
-      const transactionTypeText = "Transaction Type";
-      const textWidth = pdf.getStringUnitWidth(transactionTypeText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
-      const centeredTextX = (pdf.internal.pageSize.width - textWidth) / 2;
-      pdf.text(transactionTypeText, centeredTextX, 34);
-
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(10);
-      pdf.text("Months", 15, 42);
-      
-      // Create data for the table
-      const tableData = [];
-      const abbreviatedMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      // Populate the table data with sample values, you can replace it with your data
-      abbreviatedMonths.forEach((month, index) => {
-        const monthData = [month];
-  
-        // Add tax clearance and tax payment data for each month
-        if (taxclearance && taxclearance[index] !== undefined && taxpayment && taxpayment[index] !== undefined) {
-          monthData.push(taxclearance[index]);
-          monthData.push(taxpayment[index]);
-        } else {
-          // If data is not available for a month, add placeholders
-          monthData.push(0);
-          monthData.push(0);
-        }
-  
-        tableData.push(monthData);
-      });
-
-      // Add the table
-      pdf.autoTable({
-          startY: 38, // Start the table below the "Transaction Type" text
-          head: [['', 'Tax Clearance', 'Tax Payment']], // No header for the first column
-          body: tableData,
-          theme: 'plain',
-          headStyles: {
-            fontStyle: 'normal',
-        },
-        styles: {
-          cellPadding: 1,
-        }
-      });
-
-      // Function to repeat a symbol to form a line
-      function repeatSymbol(symbol, count) {
-        return symbol.repeat(count);
+  useEffect(() => {
+    const fetchREPORTData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/report/${admin_type}`);
+        setReportData(res.data);
+      } catch (err) {
+        console.log(err);
       }
+    };
+    fetchREPORTData();
+  }, [admin_type]);
 
-      // Define the symbol and the number of repetitions
-      const symbol = "\u2022"; // Unicode for a bullet point symbol
-      const repetitions = 146; // Adjust the number of repetitions as needed
-
-      // Generate the line of symbols
-      const lineOfSymbols = repeatSymbol(symbol, repetitions);
-
-      // Add the line of symbols below the first table
-      const textXPosition = 15; // Adjust the X position
-      const textYPosition = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(10);
-      pdf.text(lineOfSymbols, textXPosition, textYPosition);
-
-      const secondTableData = [
-        ['Pending', taxPayment.Pending + taxClearance.Pending],
-        ['Paid', taxPayment.Paid + taxClearance.Paid],
-        ['Processing', taxPayment.Processing + taxClearance.Processing],
-        ['Complete', taxPayment.Complete + taxClearance.Complete],
-        ['Rejected', taxPayment.Rejected + taxClearance.Rejected],
-        ['Canceled', taxPayment.Canceled + taxClearance.Canceled],
-        ['Expired', taxPayment.Expired + taxClearance.Expired]
-      ]; // Sample data for the second table
-        pdf.autoTable({
-            startY: pdf.autoTable.previous.finalY + 8, // Start the second table below the line of symbols
-            head: [['Transaction Status', 'Total Count']], // Header for the second table
-            body: secondTableData,
-            theme: 'plain',
-            headStyles: {
-                fontStyle: 'bold',
-            },
-            columnStyles: {
-                0: { cellWidth: pdf.internal.pageSize.width * 0.5}, // Set the width of the first column to 50% of the page width
-                1: { cellWidth: pdf.internal.pageSize.width * 0.5 },// Set the width of the second column to 50% of the page width
-            },
-            styles: {
-              cellPadding: 1,
-            }
-        });
-        
-          const lineOfSymbols2 = repeatSymbol(symbol, repetitions);
-          const textXPosition2 = 15; // Adjust the X position
-          const textYPosition2 = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
-          pdf.setFont("helvetica", "normal");
-          pdf.setFontSize(10);
-          pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
-
-          const thirdTableData = [
-            ['Total Gross Revenue', revenue.totalRP ? `P ${revenue.totalRP.toLocaleString()}` : ''],
-            ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
-            ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
-            ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
-        ]; // Sample data for the second table
-          pdf.autoTable({
-              startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols
-              head: [['Financial Status', 'Amount']], // Header for the second table
-              body: thirdTableData,
-              theme: 'plain',
-              headStyles: {
-                  fontStyle: 'bold',
-              },
-              columnStyles: {
-                  0: { cellWidth: pdf.internal.pageSize.width * 0.5 }, // Set the width of the first column to 50% of the page width
-                  1: { cellWidth: pdf.internal.pageSize.width * 0.5, align: 'right'},// Set the width of the second column to 50% of the page width
-              },
-              styles: {
-                cellPadding: 1,
-              }
-          });
-
-          const lineOfSymbols3 = repeatSymbol(symbol, repetitions);
-          const textXPosition3 = 15; // Adjust the X position
-          const textYPosition3 = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
-          pdf.setFont("helvetica", "normal");
-          pdf.setFontSize(10);
-          pdf.text(lineOfSymbols3, textXPosition3, textYPosition3);
-      
-          const noteText = [
-            "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
-            "financial and operational performance of Real Property Transactions as of [reporting period]. Any identified",
-            "discrepancies or errors should be reported promptly for correction."
-        ];
-        const noteXPosition = 15; // Adjust as needed
-        const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
-
-        pdf.setFont("helvetica", "normal");
-          pdf.setFontSize(10);
-          noteText.forEach((text, index) => {
-              pdf.text(text, noteXPosition, noteYPosition + (index * 4)); // Adjust spacing here
-          });
-
-         // Add a signature
-         const pageWidth = pdf.internal.pageSize.width;
-         const tableWidth = 80; // Adjust the width according to your requirement
-         const margin = (pageWidth - tableWidth) - 10; // Adjust the margin as needed
-         
-         const signatureData = [['City Treasurer']];
-         pdf.autoTable({
-             startY: pdf.autoTable.previous.finalY + 45,
-             head: [['Anne Mae Garcia']],
-             body: signatureData,
-             theme: 'plain',
-             styles: {
-                 cellPadding: 2,
-                 fontSize: 10,
-                 fontStyle: 'normal',
-                 halign: 'center'
-             },
-             headStyles: {
-                 fontStyle: 'normal',
-             },
-             margin: { left: margin },
-         });
-         pdf.setLineWidth(0.5); // Set line width
-         pdf.line(120, pdf.autoTable.previous.finalY - 8, pdf.internal.pageSize.width - 14, pdf.autoTable.previous.finalY - 8);
-
-         // Add a signature
-         const pageWidth2 = pdf.internal.pageSize.width;
-         const tableWidth2 = 80; // Adjust the width according to your requirement
-         const margin2 = (pageWidth - tableWidth) - 10; // Adjust the margin as needed
-         
-         const signatureData2 = [['Real Property Tax Admin']];
-         pdf.autoTable({
-             startY: pdf.autoTable.previous.finalY - 16,
-             head: [['Real Property Tax Administrative']],
-             body: signatureData2,
-             theme: 'plain',
-             styles: {
-                 cellPadding: 2,
-                 fontSize: 10,
-                 fontStyle: 'normal',
-                 halign: 'center'
-             },
-             headStyles: {
-                 fontStyle: 'normal',
-             },
-             margin: { right: margin },
-         });
-         pdf.setLineWidth(0.5); // Set line width
-         pdf.line(15, pdf.autoTable.previous.finalY - 8, pdf.internal.pageSize.width - 118, pdf.autoTable.previous.finalY - 8);
-
-         
-      const currentDate = new Date();
-      const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
-      const filename = `${admin_type}_reports_${formattedDate}.pdf`;
-
-      pdf.save(filename);
+  async function fetchData(endpoint, selectedYear) {
+    try {
+      const response = await axios.get(`http://localhost:8800/admin/${endpoint}/`, {
+        params: {
+          selectedYear: selectedYear
+        }
+      });
+      return response.data;
     } catch (error) {
-      console.error('Error generating reports:', error);
+      // Handle error
+      console.error('Error fetching data:', error);
+      throw error; // Optionally re-throw the error for the caller to handle
     }
-  };
+  }
+
+  console.log(taxPayment)
+
+  const generateReportNumber = (admin_type) => {
+
+    const correctedAdminType = admin_type === 'rptax_admin' ? 'RP' : rptax_admin ;
+
+    const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const formattedDate = `${month}${day}`;
+
+    const uuid1 = uuidv4();
+    const uuidInt1 = parseInt(uuid1.replace(/-/g, '').substring(0, 4), 16);
+    const uuid1Code = (uuidInt1 % 10000).toString().padStart(4, '0');
+
+    return `${correctedAdminType}-${formattedDate}-${uuid1Code}`;
+};
+
+  console.log(admin_type);
+
+      const generateReports = async (selectedYear) => {
+
+          const fetchPromises = [
+            fetchData('transreport', selectedYear),
+            fetchData('taxpayment', selectedYear),
+            fetchData('taxclearance', selectedYear),
+          ];
+
+          try{
+
+            const [
+              setYearData,
+              TPData,
+              TCData,
+            ] = await Promise.all(fetchPromises);
+
+            if (setYearData) {
+
+              const reportData = setYearData.transReport;
+              
+              const reportNo = generateReportNumber(admin_type); 
+
+              const reportNum = {
+                  report_no: reportNo,
+                  admin_type: admin_type,
+                  date_processed: new Date().toISOString(),
+              };
+
+              await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
+
+              console.log('Report stored successfully');
+
+                // const { taxpayment, taxclearance } = transStats;
+
+                // console.log('TransStats:', transStats);
+
+                // Calculation for the revenue
+                const averageMonthlyRevenue = revenue.totalRP ? revenue.totalRP / 12 : 0;
+                const totalRefundAmount = 0;
+                const totalRefundIssued = 0;
+
+                const pdf = new jsPDF();
+
+                // Date of Report
+                // const currentDate1 = new Date();
+                // const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+
+                pdf.setFont("helvetica", "bold");
+                pdf.setFontSize(12);
+                pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(10);
+                pdf.text("Real Property Tax Administrative Report", 15, 19);
+                pdf.text("Report No.: " + reportNo, 15, 23);
+
+                const additionalTextX = pdf.internal.pageSize.width - 50;
+                const additionalTextY = 15;
+                const additionalText = [
+                  { text: "Report for the Year", bold: true },
+                      selectedYear
+                ];
+
+                additionalText.forEach((item, index) => {
+                  const text = typeof item === 'string' ? item : item.text;
+                  const isBold = typeof item === 'object' && item.bold;
+                  pdf.setFont(isBold ? "helvetica" : "helvetica", isBold ? "bold" : "normal");
+                  pdf.text(text, additionalTextX, additionalTextY + (index * 4));
+                });
+
+                pdf.setFont("helvetica", "bold");
+                pdf.setFontSize(10);
+                const transactionTypeText = "Transaction Type";
+                const textWidth = pdf.getStringUnitWidth(transactionTypeText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+                const centeredTextX = (pdf.internal.pageSize.width - textWidth) / 2;
+                pdf.text(transactionTypeText, centeredTextX, 34);
+
+                pdf.setFont("helvetica", "bold");
+                pdf.setFontSize(10);
+                pdf.text("Months", 15, 42);
+      
+                // Create data for the table
+                const tableData = [];
+
+                const monthLabels = {
+                    "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun",
+                    "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec", 
+                    "13": "Total Count"
+                };
+
+                
+                // Populate tableData with data for each month
+              for (const month in reportData) {
+                const monthIndex = parseInt(month, 10) - 1;
+                const monthLabel = monthLabels[month];
+                const dataArray = reportData[month];
+                if (Array.isArray(dataArray)) {
+                    const tp = dataArray[1];
+                    const tc = dataArray[2];
+                    const totalCount = tp + tc; // Calculate the total count
+                    tableData[monthIndex] = [monthLabel, tp, tc, totalCount]; // Populate the tableData array with calculated values
+                } else {
+                    console.error(`Data for ${monthLabel} is not an array.`);
+                }
+              }
+
+              // Calculate totals
+              let totalTP = 0;
+              let totalTC = 0;
+              for (const row of tableData) {
+                if (row) { // Check if the row is defined
+                    totalTP += row[1]; // Add TP value to totalTP
+                    totalTC += row[2]; // Add TC value to totalTC
+                }
+              }
+              const totalTotalCount = totalTP + totalTC;
+
+              // Push total row to tableData
+              tableData.push(['Total', totalTP, totalTC, totalTotalCount]);
+
+              const columnHeaders = ['', 'TP', 'TC', 'Total Count'];
+
+              // Add the table
+              pdf.autoTable({
+                startY: 38, // Start the table below the "Transaction Type" text
+                head: [columnHeaders], // Header for every column
+                body: tableData,
+                theme: 'plain',
+                headStyles: {
+                    fontStyle: 'normal',
+                },
+                styles: {
+                    cellPadding: 1,
+                },
+                didDrawCell: (data) => {
+                    if (data.section === 'body' && data.column.index === columnHeaders.length - 1) {
+                        data.cell.styles.fontStyle = 'normal';
+                        data.cell.styles.halign = 'center';
+                    }
+                }
+              });
+
+
+              // Function to repeat a symbol to form a line
+              function repeatSymbol(symbol, count) {
+                return symbol.repeat(count);
+              }
+
+              // Define the symbol and the number of repetitions
+              const symbol = "\u2022"; // Unicode for a bullet point symbol
+              const repetitions = 146; // Adjust the number of repetitions as needed
+
+              // Generate the line of symbols
+              const lineOfSymbols = repeatSymbol(symbol, repetitions);
+
+              // Add the line of symbols below the first table
+              const textXPosition = 15; // Adjust the X position
+              const textYPosition = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
+              pdf.setFont("helvetica", "normal");
+              pdf.setFontSize(10);
+              pdf.text(lineOfSymbols, textXPosition, textYPosition);
+
+              const secondTableData = [
+                ['Pending', taxPayment.Pending + taxClearance.Pending],
+                ['Paid', taxPayment.Paid + taxClearance.Paid],
+                ['Processing', taxPayment.Processing + taxClearance.Processing],
+                ['Complete', taxPayment.Complete + taxClearance.Complete],
+                ['Rejected', taxPayment.Rejected + taxClearance.Rejected],
+                ['Canceled', taxPayment.Canceled + taxClearance.Canceled],
+                ['Expired', taxPayment.Expired + taxClearance.Expired]
+              ]; // Sample data for the second table
+                pdf.autoTable({
+                    startY: pdf.autoTable.previous.finalY + 8, // Start the second table below the line of symbols
+                    head: [['Transaction Status', 'Total Count']], // Header for the second table
+                    body: secondTableData,
+                    theme: 'plain',
+                    headStyles: {
+                        fontStyle: 'bold',
+                    },
+                    columnStyles: {
+                        0: { cellWidth: pdf.internal.pageSize.width * 0.5}, // Set the width of the first column to 50% of the page width
+                        1: { cellWidth: pdf.internal.pageSize.width * 0.5 },// Set the width of the second column to 50% of the page width
+                    },
+                    styles: {
+                      cellPadding: 1,
+                    }
+                });
+                
+                  const lineOfSymbols2 = repeatSymbol(symbol, repetitions);
+                  const textXPosition2 = 15; // Adjust the X position
+                  const textYPosition2 = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
+                  pdf.setFont("helvetica", "normal");
+                  pdf.setFontSize(10);
+                  pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
+
+                  const thirdTableData = [
+                    ['Total Gross Revenue', revenue.totalRP ? `P ${revenue.totalRP.toLocaleString()}` : ''],
+                    ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
+                    ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
+                    ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
+                ]; // Sample data for the second table
+                  pdf.autoTable({
+                      startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols
+                      head: [['Financial Status', 'Amount']], // Header for the second table
+                      body: thirdTableData,
+                      theme: 'plain',
+                      headStyles: {
+                          fontStyle: 'bold',
+                      },
+                      columnStyles: {
+                          0: { cellWidth: pdf.internal.pageSize.width * 0.5 }, // Set the width of the first column to 50% of the page width
+                          1: { cellWidth: pdf.internal.pageSize.width * 0.5, align: 'right'},// Set the width of the second column to 50% of the page width
+                      },
+                      styles: {
+                        cellPadding: 1,
+                      }
+                  });
+
+                  const lineOfSymbols3 = repeatSymbol(symbol, repetitions);
+                  const textXPosition3 = 15; // Adjust the X position
+                  const textYPosition3 = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
+                  pdf.setFont("helvetica", "normal");
+                  pdf.setFontSize(10);
+                  pdf.text(lineOfSymbols3, textXPosition3, textYPosition3);
+              
+                  const noteText = [
+                    "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
+                    "financial and operational performance of Real Property Transactions as of [reporting period]. Any identified",
+                    "discrepancies or errors should be reported promptly for correction."
+                ];
+                const noteXPosition = 15; // Adjust as needed
+                const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
+
+                pdf.setFont("helvetica", "normal");
+                  pdf.setFontSize(10);
+                  noteText.forEach((text, index) => {
+                      pdf.text(text, noteXPosition, noteYPosition + (index * 4)); // Adjust spacing here
+                  });
+
+                // Add a signature
+                const pageWidth = pdf.internal.pageSize.width;
+                const tableWidth = 80; // Adjust the width according to your requirement
+                const margin = (pageWidth - tableWidth) - 10; // Adjust the margin as needed
+                
+                const signatureData = [['City Treasurer']];
+                pdf.autoTable({
+                    startY: pdf.autoTable.previous.finalY + 45,
+                    head: [['Anne Mae Garcia']],
+                    body: signatureData,
+                    theme: 'plain',
+                    styles: {
+                        cellPadding: 2,
+                        fontSize: 10,
+                        fontStyle: 'normal',
+                        halign: 'center'
+                    },
+                    headStyles: {
+                        fontStyle: 'normal',
+                    },
+                    margin: { left: margin },
+                });
+                pdf.setLineWidth(0.5); // Set line width
+                pdf.line(120, pdf.autoTable.previous.finalY - 8, pdf.internal.pageSize.width - 14, pdf.autoTable.previous.finalY - 8);
+
+                // Add a signature
+                const pageWidth2 = pdf.internal.pageSize.width;
+                const tableWidth2 = 80; // Adjust the width according to your requirement
+                const margin2 = (pageWidth - tableWidth) - 10; // Adjust the margin as needed
+                
+                const signatureData2 = [['Real Property Tax Admin']];
+                pdf.autoTable({
+                    startY: pdf.autoTable.previous.finalY - 16,
+                    head: [['Real Property Tax Administrative']],
+                    body: signatureData2,
+                    theme: 'plain',
+                    styles: {
+                        cellPadding: 2,
+                        fontSize: 10,
+                        fontStyle: 'normal',
+                        halign: 'center'
+                    },
+                    headStyles: {
+                        fontStyle: 'normal',
+                    },
+                    margin: { right: margin },
+                });
+                pdf.setLineWidth(0.5); // Set line width
+                pdf.line(15, pdf.autoTable.previous.finalY - 8, pdf.internal.pageSize.width - 118, pdf.autoTable.previous.finalY - 8);
+
+                
+              const currentDate = new Date();
+              const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+              const filename = `${admin_type}_reports_${formattedDate}.pdf`;
+
+              pdf.save(filename);
+
+            } else {
+              console.log("Failed to fetch report year period.");
+            }
+
+            } catch (error) {
+              console.error('Error generating reports:', error);
+            }
+          };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
