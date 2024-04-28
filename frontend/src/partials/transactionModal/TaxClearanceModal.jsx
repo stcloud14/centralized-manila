@@ -351,7 +351,7 @@ const cancelTrans = async (e) => {
                       {taxClearanceTransaction && taxClearanceTransaction.transaction_id ? (
                         <QRCode value={generateDownloadLink(taxClearanceTransaction)} size={100} />
                       ) : (
-                        <p>No transaction ID available</p>
+                        <p></p>
                       )}
                     </button>
                     {/* POPOVER */}
