@@ -126,7 +126,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
       pdf.text("Community Tax Certificate Administrative Report", 15, 19);
-      pdf.text("Report No.", 15, 23);
+      pdf.text("Report No. " + reportNo, 15, 23);
 
       const additionalTextX = pdf.internal.pageSize.width - 50;
       const additionalTextY = 15;
