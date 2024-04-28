@@ -7,7 +7,7 @@ import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
-
+import { v4 as uuidv4 } from 'uuid';
 import MainCard from '../admin_partials/misc/MainCard';
 
 import BCstats from '../admin_partials/misc/BCstats';
@@ -27,20 +27,103 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
   // const admin_type = pathname.split("/")[2];
   // const adminRole = state && state.user_role;
 
-  const generateReports = async () => {
+  const [reportData, setReportData]=useState();
+
+  useEffect(() => {
+    const fetchREPORTData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/report/${admin_type}`);
+        setReportData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchREPORTData();
+  }, [admin_type]);
+
+  async function fetchData(endpoint, selectedYear) {
     try {
-      const { birthcert, deathcert, marriagecert } = transStats;
+      const response = await axios.get(`http://localhost:8800/admin/${endpoint}/`, {
+        params: {
+          selectedYear: selectedYear
+        }
+      });
+      return response.data;
+    } catch (error) {
+      // Handle error
+      console.error('Error fetching data:', error);
+      throw error; // Optionally re-throw the error for the caller to handle
+    }
+  }
+
+  console.log(birthCert, deathCert, marriageCert);
+
+  const generateReportNumber = (admin_type) => {
+
+    const correctedAdminType = admin_type === 'lcr_admin' ? 'LCR' : lcr_admin ;
+
+    const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const formattedDate = `${month}${day}`;
+
+    const uuid1 = uuidv4();
+    const uuidInt1 = parseInt(uuid1.replace(/-/g, '').substring(0, 4), 16);
+    const uuid1Code = (uuidInt1 % 10000).toString().padStart(4, '0');
+
+    return `${correctedAdminType}-${formattedDate}-${uuid1Code}`;
+};
+
+  console.log(admin_type);
+
+  const generateReports = async (selectedYear) => {
+
+    const fetchPromises = [
+      fetchData('transreport', selectedYear),
+      fetchData('birthcert', selectedYear),
+      fetchData('deathcert', selectedYear),
+      fetchData('marriagecert', selectedYear),
+      fetchData('revenue', selectedYear)
+    ];
+
+    try {
+
+      const [
+        setYearData,
+        BCData,
+        DCData,
+        MCData,
+        RevenueData,
+      ] = await Promise.all(fetchPromises);
+
+      if (setYearData) {
+
+        const reportData = setYearData.transReport;
+        
+        const reportNo = generateReportNumber(admin_type); 
+
+        const reportNum = {
+            report_no: reportNo,
+            admin_type: admin_type,
+            date_processed: new Date().toISOString(),
+        };
+
+        await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
+
+        console.log('Report stored successfully');
+
+      // const { birthcert, deathcert, marriagecert } = transStats;
 
       // Calculation for the revenue
-      const averageMonthlyRevenue = revenue.totalLCR ? revenue.totalLCR / 12 : 0;
+      const averageMonthlyRevenue = RevenueData.totalLCR ? RevenueData.totalLCR / 12 : 0;
       const totalRefundAmount = 0;
       const totalRefundIssued = 0;
 
       const pdf = new jsPDF();
 
       // Date of Report
-      const currentDate1 = new Date();
-      const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+      // const currentDate1 = new Date();
+      // const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
 
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(12);
@@ -48,13 +131,13 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
       pdf.text("Local Civil Registry Administrative Report", 15, 19);
-      pdf.text("Report No.", 15, 23);
+      pdf.text("Report No.: " + reportNo, 15, 23);
 
       const additionalTextX = pdf.internal.pageSize.width - 50;
       const additionalTextY = 15;
       const additionalText = [
-        { text: "Date of Report", bold: true },
-          formattedDate1
+        { text: "Report for the Year", bold: true },
+            selectedYear
       ];
 
       additionalText.forEach((item, index) => {
@@ -77,26 +160,64 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
       
       // Create data for the table
       const tableData = [];
-      const abbreviatedMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      // Populate the table data with counts for all months
-      abbreviatedMonths.forEach((month, index) => {
-        const birthCertValue = birthcert && birthcert[index] !== undefined ? birthcert[index] : 0;
-        const deathCertValue = deathcert && deathcert[index] !== undefined ? deathcert[index] : 0;
-        const marriageCertValue = marriagecert && marriagecert[index] !== undefined ? marriagecert[index] : 0;
-        tableData.push([month, birthCertValue, deathCertValue, marriageCertValue]);
-      });      
+      const monthLabels = {
+        "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun",
+        "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec", 
+        "13": "Total Count"
+    };     
+
+      // Populate tableData with data for each month
+      for (const month in reportData) {
+        const monthIndex = parseInt(month, 10) - 1;
+        const monthLabel = monthLabels[month];
+        const dataArray = reportData[month];
+        if (Array.isArray(dataArray)) {
+            const bc = dataArray[1];
+            const dc = dataArray[2];
+            const mc = dataArray[3];
+            const totalCount = bc + dc + mc;
+            tableData[monthIndex] = [monthLabel, bc, dc, mc, totalCount]; 
+        } else {
+            console.error(`Data for ${monthLabel} is not an array.`);
+        }
+      }
+
+      // Calculate totals
+      let totalBC = 0;
+      let totalDC = 0;
+      let totalMC = 0
+
+      for (const row of tableData) {
+        if (row) { 
+            totalBC += row[1]; 
+            totalDC += row[2];
+            totalMC += row[3];
+        }
+      }
+      const totalTotalCount = totalBC + totalDC + totalMC;
+
+      // Push total row to tableData
+      tableData.push(['Total', totalBC, totalDC, totalMC, totalTotalCount]);
+
+      const columnHeaders = ['', 'BC', 'DC', 'MC', 'Total Count'];
 
       // Add the table
       pdf.autoTable({
-          startY: 38, // Start the table below the "Transaction Type" text
-          head: [['', 'Birth Certificate', 'Death Certificate', 'Marriage Certificate']], 
-          body: tableData,
-          theme: 'plain',
-          headStyles: {
+        startY: 38, // Start the table below the "Transaction Type" text
+        head: [columnHeaders], // Header for every column
+        body: tableData,
+        theme: 'plain',
+        headStyles: {
             fontStyle: 'normal',
         },
         styles: {
-          cellPadding: 1,
+            cellPadding: 0.5,
+        },
+        didDrawCell: (data) => {
+            if (data.section === 'body' && data.column.index === columnHeaders.length - 1) {
+                data.cell.styles.fontStyle = 'normal';
+                data.cell.styles.halign = 'center';
+            }
         }
       });
 
@@ -120,13 +241,14 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
       pdf.text(lineOfSymbols, textXPosition, textYPosition);
 
       const secondTableData = [
-        ['Pending',  birthCert.Pending + deathCert.Pending + marriageCert.Pending],
-        ['Paid', birthCert.Paid + deathCert.Paid + marriageCert.Paid],
-        ['Processing', birthCert.Processing, deathCert.Processing, marriageCert.Processing],
-        ['Complete', birthCert.Complete + deathCert.Complete + marriageCert.Complete],
-        ['Rejected', birthCert.Rejected + deathCert.Rejected + marriageCert.Rejected],
-        ['Canceled', birthCert.Canceled + deathCert.Canceled + marriageCert.Canceled],
-        ['Expired', birthCert.Expired + deathCert.Expired + marriageCert.Expired]
+        ['Pending',  BCData.Pending + DCData.Pending + MCData.Pending],
+        ['Paid', BCData.Paid + DCData.Paid + MCData.Paid],
+        ['Processing', BCData.Processing, DCData.Processing, MCData.Processing],
+        ['Complete', BCData.Complete + DCData.Complete + MCData.Complete],
+        ['Rejected', BCData.Rejected + DCData.Rejected + MCData.Rejected],
+        ['Canceled', BCData.Canceled + DCData.Canceled + MCData.Canceled],
+        ['Expired', BCData.Expired + DCData.Expired + MCData.Expired],
+        ['Total', BCData.Total + DCData.Total + MCData.Total]
       ]; // Sample data for the second table
         pdf.autoTable({
             startY: pdf.autoTable.previous.finalY + 8, // Start the second table below the line of symbols
@@ -141,7 +263,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
                 1: { cellWidth: pdf.internal.pageSize.width * 0.5 },// Set the width of the second column to 50% of the page width
             },
             styles: {
-              cellPadding: 1,
+              cellPadding: 0.5,
             }
         });
         
@@ -153,7 +275,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
           pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
 
           const thirdTableData = [
-            ['Total Gross Revenue', revenue.totalLCR ? `P ${revenue.totalLCR.toLocaleString()}` : ''],
+            ['Total Gross Revenue', RevenueData.totalLCR ? `P ${RevenueData.totalLCR.toLocaleString()}` : ''],
             ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
             ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
             ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
@@ -171,7 +293,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
                   1: { cellWidth: pdf.internal.pageSize.width * 0.5, align: 'right'},// Set the width of the second column to 50% of the page width
               },
               styles: {
-                cellPadding: 1,
+                cellPadding: 0.5,
               }
           });
 
@@ -252,6 +374,11 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
       const filename = `${admin_type}_reports_${formattedDate}.pdf`;
 
       pdf.save(filename);
+      
+    } else {
+      console.log("Failed to fetch report year period.");
+    }
+
     } catch (error) {
       console.error('Error generating reports:', error);
     }
