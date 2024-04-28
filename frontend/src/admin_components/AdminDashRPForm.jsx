@@ -78,6 +78,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
             fetchData('transreport', selectedYear),
             fetchData('taxpayment', selectedYear),
             fetchData('taxclearance', selectedYear),
+            fetchData('revenue', selectedYear)
           ];
 
           try{
@@ -86,6 +87,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
               setYearData,
               TPData,
               TCData,
+              RevenueData,
             ] = await Promise.all(fetchPromises);
 
             if (setYearData) {
@@ -109,7 +111,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                 // console.log('TransStats:', transStats);
 
                 // Calculation for the revenue
-                const averageMonthlyRevenue = revenue.totalRP ? revenue.totalRP / 12 : 0;
+                const averageMonthlyRevenue = RevenueData.totalRP ? RevenueData.totalRP / 12 : 0;
                 const totalRefundAmount = 0;
                 const totalRefundIssued = 0;
 
@@ -268,7 +270,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                   pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
 
                   const thirdTableData = [
-                    ['Total Gross Revenue', revenue.totalRP ? `P ${revenue.totalRP.toLocaleString()}` : ''],
+                    ['Total Gross Revenue', RevenueData.totalRP ? `P ${RevenueData.totalRP.toLocaleString()}` : 'P 0'],
                     ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
                     ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
                     ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
