@@ -392,7 +392,7 @@ const AdminDashChiefForm = React.memo(
             const textYPosition4 = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
             pdf.setFont("helvetica", "normal");
             pdf.setFontSize(10);
-            pdf.text(lineOfSymbols3, textXPosition4, textYPosition4);
+            pdf.text(lineOfSymbols4, textXPosition4, textYPosition4);
           
               const noteText = [
                 "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
