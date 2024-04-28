@@ -3,8 +3,9 @@ import axios from 'axios';
 import moment from 'moment';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { v4 as uuidv4 } from 'uuid';
 import AdminSidebar from '../admin_partials/AdminSidebar';
-import { useLocation, useParams } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom'; 
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
@@ -45,7 +46,19 @@ const AdminDashChiefForm = React.memo(
   }) => {
 
   const { admin_type } = useParams();
+  const [reportData, setReportData]=useState();
 
+  useEffect(() => {
+    const fetchREPORTData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/report/${admin_type}`);
+        setReportData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchREPORTData();
+  }, [admin_type]);
 
   async function fetchData(endpoint, selectedYear) {
     try {
@@ -62,14 +75,30 @@ const AdminDashChiefForm = React.memo(
     }
   }
 
-
-
   console.log(taxPayment)
   console.log(verifiedUsers)
   // console.log(taxClearance)
   // console.log(businessPermit)
   
   // const adminRole = state && state.user_role;
+
+  const generateReportNumber = (admin_type) => {
+
+    const correctedAdminType = admin_type === 'chief_admin' ? 'CA' : admin_type;
+
+    const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const formattedDate = `${month}${day}`;
+
+    const uuid1 = uuidv4();
+    const uuidInt1 = parseInt(uuid1.replace(/-/g, '').substring(0, 4), 16);
+    const uuid1Code = (uuidInt1 % 10000).toString().padStart(4, '0');
+
+    return `${correctedAdminType}-${formattedDate}-${uuid1Code}`;
+};
+
+  console.log(admin_type);
 
   const generateReports = async (selectedYear) => {
 
@@ -104,6 +133,20 @@ const AdminDashChiefForm = React.memo(
 
           const reportData = setYearData.transReport;
           
+          // Generate unique report number based on admin_type
+          const reportNo = generateReportNumber(admin_type); 
+
+          // Send report data to backend
+          const reportNum = {
+              report_no: reportNo,
+              admin_type: admin_type,
+              date_processed: new Date().toISOString(),
+          };
+
+          await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
+
+          console.log('Report stored successfully');
+          
           // const { latestmonths, taxclearance, taxpayment, buspermit, cedulacert, birthcert, deathcert, marriagecert } = transStats;
 
           // console.log('TransStats:', transStats);
@@ -124,8 +167,8 @@ const AdminDashChiefForm = React.memo(
           pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
           pdf.setFont("helvetica", "normal");
           pdf.setFontSize(10);
-          pdf.text("Chief Administrative Report", 15, 19);
-          pdf.text("Report No.", 15, 23);
+          pdf.text("Unified Departmental Administrative Report", 15, 19);
+          pdf.text("Report No.: " + reportNo, 15, 23);
 
           const additionalTextX = pdf.internal.pageSize.width - 50;
           const additionalTextY = 15;
@@ -321,7 +364,7 @@ const AdminDashChiefForm = React.memo(
           
               const noteText = [
                 "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
-                "financial and operational performance of Chief Admin Transactions as of [reporting period]. Any identified",
+                "financial and operational performance of Departmental Transaction as of [reporting period]. Any identified",
                 "discrepancies or errors should be reported promptly for correction."
             ];
             const noteXPosition = 15; // Adjust as needed

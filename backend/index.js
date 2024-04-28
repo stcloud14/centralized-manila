@@ -28,6 +28,7 @@ import adminLcrHandler from './routes/adminLcrHandler.js'
 import adminCedulahandler from './routes/adminCedulahandler.js'
 import adminDashboard from './routes/adminDashboard.js'
 import auditTrailHandler from './routes/auditTrailHandler.js'
+import generateREPHandler from './routes/generateREPHandler.js'
 
 const app = express();
 
@@ -64,6 +65,7 @@ app.use('/adminur', adminURHandler);
 
 app.use('/admin', adminDashboard);
 app.use('/audittrail', auditTrailHandler);
+app.use('/report', generateREPHandler);
 
 
 
