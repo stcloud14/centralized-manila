@@ -82,6 +82,12 @@ const AdminDashChiefForm = React.memo(
   
   // const adminRole = state && state.user_role;
 
+  // CA = Chief Administrator
+
+  // 0000 = Month and Date
+
+  // 0000 = Generate UIID
+
   const generateReportNumber = (admin_type) => {
 
     const correctedAdminType = admin_type === 'chief_admin' ? 'CA' : admin_type;
@@ -133,10 +139,8 @@ const AdminDashChiefForm = React.memo(
 
           const reportData = setYearData.transReport;
           
-          // Generate unique report number based on admin_type
           const reportNo = generateReportNumber(admin_type); 
 
-          // Send report data to backend
           const reportNum = {
               report_no: reportNo,
               admin_type: admin_type,
@@ -218,21 +222,34 @@ const AdminDashChiefForm = React.memo(
             }
           }
 
-          // Add "Total Count" row to tableData
+          // Calculate total count for each row (excluding the first column)
+          tableData.forEach((row, index) => {
+            const totalCount = row.slice(1).reduce((acc, val) => acc + val, 0);
+            tableData[index].push(totalCount);
+          });
+
           tableData.push(['Total', TPData.Total, TCData.Total, BPData.Total,  CTCData.Total, BCData.Total, DCData.Total, MCData.Total ]);
+
+          const columnHeaders = ['', 'TP', 'TC', 'BP', 'CTC', 'BC', 'DC', 'MC', 'Total Count'];
 
           // Add the table
           pdf.autoTable({
               startY: 38, // Start the table below the "Transaction Type" text
-              head: [['', 'TP', 'TC', 'BP', 'CTC', 'BC', 'DC', 'MC', 'Total Count']], // Header for every column
+              head: [columnHeaders], // Header for every column
               body: tableData,
               theme: 'plain',
               headStyles: {
-                fontStyle: 'normal',
-            },
-            styles: {
-              cellPadding: 0.5,
-            }
+                  fontStyle: 'normal',
+              },
+              styles: {
+                  cellPadding: 0.5,
+              },
+              didDrawCell: (data) => {
+                  if (data.section === 'body' && data.column.index === columnHeaders.length - 1) {
+                      data.cell.styles.fontStyle = 'normal';
+                      data.cell.styles.halign = 'center';
+                  }
+              }
           });
 
           // Function to repeat a symbol to form a line
