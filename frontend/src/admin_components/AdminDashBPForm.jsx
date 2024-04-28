@@ -79,6 +79,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
     const fetchPromises = [
       fetchData('transreport', selectedYear),
       fetchData('businesspermit', selectedYear),
+      fetchData('revenue', selectedYear)
     ]
 
     try {
@@ -86,6 +87,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
       const [
         setYearData,
         BPData,
+        RevenueData,
       ] = await Promise.all(fetchPromises);
 
       if (setYearData) {
@@ -109,7 +111,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
       // console.log('TransStats:', transStats);
 
       // Calculation for the revenue
-      const averageMonthlyRevenue = revenue.totalBP ? revenue.totalBP / 12 : 0;
+      const averageMonthlyRevenue = RevenueData.totalBP ? RevenueData.totalBP / 12 : 0;
       const totalRefundAmount = 0;
       const totalRefundIssued = 0;
 
@@ -263,7 +265,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
           pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
 
           const thirdTableData = [
-            ['Total Gross Revenue', revenue.totalRP ? `P ${revenue.totalBP.toLocaleString()}` : ''],
+            ['Total Gross Revenue', RevenueData.totalRP ? `P ${RevenueData.totalBP.toLocaleString()}` : 'P 0'],
             ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
             ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
             ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
