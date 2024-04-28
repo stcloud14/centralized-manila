@@ -228,28 +228,43 @@ const AdminDashChiefForm = React.memo(
             tableData[index].push(totalCount);
           });
 
-          tableData.push(['Total', TPData.Total, TCData.Total, BPData.Total,  CTCData.Total, BCData.Total, DCData.Total, MCData.Total ]);
+          // Calculate totals for each column
+          const columnTotals = tableData.reduce((acc, row) => {
+            row.forEach((val, index) => {
+                if (index !== 0) {
+                    acc[index] = (acc[index] || 0) + val;
+                }
+            });
+            return acc;
+          }, {});
+
+          // Push total row to tableData
+          const totalRow = ['Total'];
+          for (const column in columnTotals) {
+            totalRow.push(columnTotals[column]);
+          }
+          tableData.push(totalRow);
 
           const columnHeaders = ['', 'TP', 'TC', 'BP', 'CTC', 'BC', 'DC', 'MC', 'Total Count'];
 
           // Add the table
           pdf.autoTable({
-              startY: 38, // Start the table below the "Transaction Type" text
-              head: [columnHeaders], // Header for every column
-              body: tableData,
-              theme: 'plain',
-              headStyles: {
-                  fontStyle: 'normal',
-              },
-              styles: {
-                  cellPadding: 0.5,
-              },
-              didDrawCell: (data) => {
-                  if (data.section === 'body' && data.column.index === columnHeaders.length - 1) {
-                      data.cell.styles.fontStyle = 'normal';
-                      data.cell.styles.halign = 'center';
-                  }
-              }
+            startY: 38, // Start the table below the "Transaction Type" text
+            head: [columnHeaders], // Header for every column
+            body: tableData,
+            theme: 'plain',
+            headStyles: {
+                fontStyle: 'normal',
+            },
+            styles: {
+                cellPadding: 0.5,
+            },
+            didDrawCell: (data) => {
+                if (data.section === 'body' && data.column.index === columnHeaders.length - 1) {
+                    data.cell.styles.fontStyle = 'normal';
+                    data.cell.styles.halign = 'center';
+                }
+            }
           });
 
           // Function to repeat a symbol to form a line
