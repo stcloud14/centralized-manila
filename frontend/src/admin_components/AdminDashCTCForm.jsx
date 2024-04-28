@@ -78,6 +78,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
     const fetchPromises = [
       fetchData('transreport', selectedYear),
       fetchData('cedulacert', selectedYear),
+      fetchData('revenue', selectedYear)
     ]
 
     try {
@@ -85,6 +86,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
       const [
         setYearData,
         CTCData,
+        RevenueData,
       ] = await Promise.all(fetchPromises);
 
       if (setYearData) {
@@ -108,7 +110,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
       // console.log('TransStats:', transStats);
 
       // Calculation for the revenue
-      const averageMonthlyRevenue = revenue.totalCC ? revenue.totalCC / 12 : 0;
+      const averageMonthlyRevenue = RevenueData.totalCC ? RevenueData.totalCC / 12 : 0;
       const totalRefundAmount = 0;
       const totalRefundIssued = 0;
 
@@ -261,7 +263,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
           pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
 
           const thirdTableData = [
-            ['Total Gross Revenue', revenue.totalCC ? `P ${revenue.totalCC.toLocaleString()}` : ''],
+            ['Total Gross Revenue', RevenueData.totalCC ? `P ${RevenueData.totalCC.toLocaleString()}` : 'P 0'],
             ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
             ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
             ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
