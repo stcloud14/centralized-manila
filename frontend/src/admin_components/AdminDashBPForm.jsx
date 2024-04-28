@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import jsPDF from 'jspdf';
-import { useParams } from 'react-router-dom'; // Import useLocation from react-router-dom
+import { useParams } from 'react-router-dom'; 
 import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
-
+import { v4 as uuidv4 } from 'uuid';
 import BPstats from '../admin_partials/misc/BPstats';
 import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
@@ -25,11 +25,88 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
   
   // console.log("userrole", admin_type)
 
-  const generateReports = async () => {
-    try {
-      const { latestmonths, buspermit } = transStats;
+  const [reportData, setReportData]=useState();
 
-      console.log('TransStats:', transStats);
+  useEffect(() => {
+    const fetchREPORTData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/report/${admin_type}`);
+        setReportData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchREPORTData();
+  }, [admin_type]);
+
+  async function fetchData(endpoint, selectedYear) {
+    try {
+      const response = await axios.get(`http://localhost:8800/admin/${endpoint}/`, {
+        params: {
+          selectedYear: selectedYear
+        }
+      });
+      return response.data;
+    } catch (error) {
+      // Handle error
+      console.error('Error fetching data:', error);
+      throw error; // Optionally re-throw the error for the caller to handle
+    }
+  }
+
+  console.log(businessPermit);
+
+  const generateReportNumber = (admin_type) => {
+
+    const correctedAdminType = admin_type === 'business_admin' ? 'BP' : business_admin ;
+
+    const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const formattedDate = `${month}${day}`;
+
+    const uuid1 = uuidv4();
+    const uuidInt1 = parseInt(uuid1.replace(/-/g, '').substring(0, 4), 16);
+    const uuid1Code = (uuidInt1 % 10000).toString().padStart(4, '0');
+
+    return `${correctedAdminType}-${formattedDate}-${uuid1Code}`;
+};
+
+  console.log(admin_type);
+
+  const generateReports = async (selectedYear) => {
+
+    const fetchPromises = [
+      fetchData('transreport', selectedYear),
+      fetchData('businesspermit', selectedYear),
+    ]
+
+    try {
+
+      const [
+        setYearData,
+        BPData,
+      ] = await Promise.all(fetchPromises);
+
+      if (setYearData) {
+
+        const reportData = setYearData.transReport;
+        
+        const reportNo = generateReportNumber(admin_type); 
+
+        const reportNum = {
+            report_no: reportNo,
+            admin_type: admin_type,
+            date_processed: new Date().toISOString(),
+        };
+
+        await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
+
+        console.log('Report stored successfully');
+
+      // const { latestmonths, buspermit } = transStats;
+
+      // console.log('TransStats:', transStats);
 
       // Calculation for the revenue
       const averageMonthlyRevenue = revenue.totalBP ? revenue.totalBP / 12 : 0;
@@ -39,8 +116,8 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
       const pdf = new jsPDF();
 
       // Date of Report
-      const currentDate1 = new Date();
-      const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+      // const currentDate1 = new Date();
+      // const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
 
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(12);
@@ -48,13 +125,13 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
       pdf.text("Business Permit Administrative Report", 15, 19);
-      pdf.text("Report No.", 15, 23);
+      pdf.text("Report No.: " + reportNo, 15, 23);
 
       const additionalTextX = pdf.internal.pageSize.width - 50;
       const additionalTextY = 15;
       const additionalText = [
-        { text: "Date of Report", bold: true },
-          formattedDate1
+        { text: "Report for the Year", bold: true },
+            selectedYear
       ];
 
       additionalText.forEach((item, index) => {
@@ -77,24 +154,58 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
       
       // Create data for the table
       const tableData = [];
-      const abbreviatedMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      // Populate the table data with sample values, you can replace it with your data
-      abbreviatedMonths.forEach((month, index) => {
-        const businessPermitValue = buspermit[index] || 0; 
-        tableData.push([month, businessPermitValue]);
-      }); 
+
+      const monthLabels = {
+        "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun",
+        "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec", 
+        "13": "Total Count"
+    };
+
+      // Populate tableData with data for each month
+      for (const month in reportData) {
+        const monthIndex = parseInt(month, 10) - 1;
+        const monthLabel = monthLabels[month];
+        const dataArray = reportData[month];
+        if (Array.isArray(dataArray)) {
+            const bp = dataArray[1];
+            const totalCount = bp;
+            tableData[monthIndex] = [monthLabel, bp, totalCount]; 
+        } else {
+            console.error(`Data for ${monthLabel} is not an array.`);
+        }
+      }
+
+      // Calculate totals
+      let totalBP = 0;
+      for (const row of tableData) {
+        if (row) { 
+            totalBP += row[1]; 
+        }
+      }
+      const totalTotalCount = totalBP;
+
+      // Push total row to tableData
+      tableData.push(['Total', totalBP, totalTotalCount]);
+
+      const columnHeaders = ['', 'BP', 'Total Count'];
 
       // Add the table
       pdf.autoTable({
-          startY: 38, // Start the table below the "Transaction Type" text
-          head: [['', 'Business Permit']], // No header for the first column
-          body: tableData,
-          theme: 'plain',
-          headStyles: {
+        startY: 38, // Start the table below the "Transaction Type" text
+        head: [columnHeaders], // Header for every column
+        body: tableData,
+        theme: 'plain',
+        headStyles: {
             fontStyle: 'normal',
         },
         styles: {
-          cellPadding: 1,
+            cellPadding: 1,
+        },
+        didDrawCell: (data) => {
+            if (data.section === 'body' && data.column.index === columnHeaders.length - 1) {
+                data.cell.styles.fontStyle = 'normal';
+                data.cell.styles.halign = 'center';
+            }
         }
       });
 
@@ -118,13 +229,14 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
       pdf.text(lineOfSymbols, textXPosition, textYPosition);
 
       const secondTableData = [
-        ['Pending',  businessPermit.Pending],
-        ['Paid', businessPermit.Paid],
-        ['Processing', businessPermit.Processing],
-        ['Complete', businessPermit.Complete],
-        ['Rejected', businessPermit.Rejected],
-        ['Canceled', businessPermit.Canceled],
-        ['Expired', businessPermit.Expired]
+        ['Pending',  BPData.Pending],
+        ['Paid', BPData.Paid],
+        ['Processing', BPData.Processing],
+        ['Complete', BPData.Complete],
+        ['Rejected', BPData.Rejected],
+        ['Canceled', BPData.Canceled],
+        ['Expired', BPData.Expired],
+        ['Total', BPData.Total]
       ]; // Sample data for the second table
         pdf.autoTable({
             startY: pdf.autoTable.previous.finalY + 8, // Start the second table below the line of symbols
@@ -250,6 +362,11 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
       const filename = `${admin_type}_reports_${formattedDate}.pdf`;
 
       pdf.save(filename);
+
+      } else {
+        console.log("Failed to fetch report year period.");
+      }
+
     } catch (error) {
       console.error('Error generating reports:', error);
     }
