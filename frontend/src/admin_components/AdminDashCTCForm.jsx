@@ -7,7 +7,7 @@ import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 import AdminBanner from '../admin_partials/AdminBanner';
-
+import { v4 as uuidv4 } from 'uuid';
 import CTCstats from '../admin_partials/misc/CTCstats';
 import TopRegions from '../admin_partials/misc/TopRegions';
 import TopProvinces from '../admin_partials/misc/TopProvinces';
@@ -24,11 +24,88 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
   // const admin_type = pathname.split("/")[2];
   // const adminRole = state && state.user_role;
 
-  const generateReports = async () => {
-    try {
-      const { latestmonths, cedulacert } = transStats;
+  const [reportData, setReportData]=useState();
 
-      console.log('TransStats:', transStats);
+  useEffect(() => {
+    const fetchREPORTData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/report/${admin_type}`);
+        setReportData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchREPORTData();
+  }, [admin_type]);
+
+  async function fetchData(endpoint, selectedYear) {
+    try {
+      const response = await axios.get(`http://localhost:8800/admin/${endpoint}/`, {
+        params: {
+          selectedYear: selectedYear
+        }
+      });
+      return response.data;
+    } catch (error) {
+      // Handle error
+      console.error('Error fetching data:', error);
+      throw error; // Optionally re-throw the error for the caller to handle
+    }
+  }
+
+  console.log(cedulaCert);
+
+  const generateReportNumber = (admin_type) => {
+
+    const correctedAdminType = admin_type === 'cedula_admin' ? 'CTC' : cedula_admin ;
+
+    const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const formattedDate = `${month}${day}`;
+
+    const uuid1 = uuidv4();
+    const uuidInt1 = parseInt(uuid1.replace(/-/g, '').substring(0, 4), 16);
+    const uuid1Code = (uuidInt1 % 10000).toString().padStart(4, '0');
+
+    return `${correctedAdminType}-${formattedDate}-${uuid1Code}`;
+};
+
+  console.log(admin_type);
+
+  const generateReports = async (selectedYear) => {
+
+    const fetchPromises = [
+      fetchData('transreport', selectedYear),
+      fetchData('cedulacert', selectedYear),
+    ]
+
+    try {
+
+      const [
+        setYearData,
+        CTCData,
+      ] = await Promise.all(fetchPromises);
+
+      if (setYearData) {
+
+        const reportData = setYearData.transReport;
+        
+        const reportNo = generateReportNumber(admin_type); 
+
+        const reportNum = {
+            report_no: reportNo,
+            admin_type: admin_type,
+            date_processed: new Date().toISOString(),
+        };
+
+        await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
+
+        console.log('Report stored successfully');
+
+      // const { latestmonths, cedulacert } = transStats;
+
+      // console.log('TransStats:', transStats);
 
       // Calculation for the revenue
       const averageMonthlyRevenue = revenue.totalCC ? revenue.totalCC / 12 : 0;
@@ -38,22 +115,22 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
       const pdf = new jsPDF();
 
       // Date of Report
-      const currentDate1 = new Date();
-      const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+      // const currentDate1 = new Date();
+      // const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
 
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(12);
       pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
-      pdf.text("Community Tax Administrative Report", 15, 19);
+      pdf.text("Community Tax Certificate Administrative Report", 15, 19);
       pdf.text("Report No.", 15, 23);
 
       const additionalTextX = pdf.internal.pageSize.width - 50;
       const additionalTextY = 15;
       const additionalText = [
-        { text: "Date of Report", bold: true },
-          formattedDate1
+        { text: "Report for the Year", bold: true },
+            selectedYear
       ];
 
       additionalText.forEach((item, index) => {
@@ -76,24 +153,57 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
       
       // Create data for the table
       const tableData = [];
-      const abbreviatedMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      // Populate the table data with sample values, you can replace it with your data
-      abbreviatedMonths.forEach((month, index) => {
-        const cedulaCertValue = cedulacert[index] || 0; 
-        tableData.push([month, cedulaCertValue]);
-      }); 
+      const monthLabels = {
+        "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun",
+        "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec", 
+        "13": "Total Count"
+    };
+
+      // Populate tableData with data for each month
+      for (const month in reportData) {
+        const monthIndex = parseInt(month, 10) - 1;
+        const monthLabel = monthLabels[month];
+        const dataArray = reportData[month];
+        if (Array.isArray(dataArray)) {
+            const ctc = dataArray[1];
+            const totalCount = ctc;
+            tableData[monthIndex] = [monthLabel, ctc, totalCount]; 
+        } else {
+            console.error(`Data for ${monthLabel} is not an array.`);
+        }
+      }
+
+      // Calculate totals
+      let totalCTC = 0;
+      for (const row of tableData) {
+        if (row) { 
+            totalCTC += row[1]; 
+        }
+      }
+      const totalTotalCount = totalCTC;
+
+      // Push total row to tableData
+      tableData.push(['Total', totalCTC, totalTotalCount]);
+
+      const columnHeaders = ['', 'CTC', 'Total Count'];
 
       // Add the table
       pdf.autoTable({
-          startY: 38, // Start the table below the "Transaction Type" text
-          head: [['', 'Community Tax Certificate']], // No header for the first column
-          body: tableData,
-          theme: 'plain',
-          headStyles: {
+        startY: 38, // Start the table below the "Transaction Type" text
+        head: [columnHeaders], // Header for every column
+        body: tableData,
+        theme: 'plain',
+        headStyles: {
             fontStyle: 'normal',
         },
         styles: {
-          cellPadding: 1,
+            cellPadding: 0.5,
+        },
+        didDrawCell: (data) => {
+            if (data.section === 'body' && data.column.index === columnHeaders.length - 1) {
+                data.cell.styles.fontStyle = 'normal';
+                data.cell.styles.halign = 'center';
+            }
         }
       });
 
@@ -117,13 +227,14 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
       pdf.text(lineOfSymbols, textXPosition, textYPosition);
 
       const secondTableData = [
-        ['Pending',  cedulaCert.Pending],
-        ['Paid', cedulaCert.Paid],
-        ['Processing', cedulaCert.Processing],
-        ['Complete', cedulaCert.Complete],
-        ['Rejected', cedulaCert.Rejected],
-        ['Canceled', cedulaCert.Canceled],
-        ['Expired', cedulaCert.Expired]
+        ['Pending',  CTCData.Pending],
+        ['Paid', CTCData.Paid],
+        ['Processing', CTCData.Processing],
+        ['Complete', CTCData.Complete],
+        ['Rejected', CTCData.Rejected],
+        ['Canceled', CTCData.Canceled],
+        ['Expired', CTCData.Expired],
+        ['Total', CTCData.Total]
       ]; // Sample data for the second table
         pdf.autoTable({
             startY: pdf.autoTable.previous.finalY + 8, // Start the second table below the line of symbols
@@ -138,7 +249,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
                 1: { cellWidth: pdf.internal.pageSize.width * 0.5 },// Set the width of the second column to 50% of the page width
             },
             styles: {
-              cellPadding: 1,
+              cellPadding: 0.5,
             }
         });
         
@@ -168,7 +279,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
                   1: { cellWidth: pdf.internal.pageSize.width * 0.5, align: 'right'},// Set the width of the second column to 50% of the page width
               },
               styles: {
-                cellPadding: 1,
+                cellPadding: 0.5,
               }
           });
 
@@ -249,6 +360,11 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
       const filename = `${admin_type}_reports_${formattedDate}.pdf`;
 
       pdf.save(filename);
+
+    } else {
+      console.log("Failed to fetch report year period.");
+    }
+
     } catch (error) {
       console.error('Error generating reports:', error);
     }
