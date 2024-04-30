@@ -303,9 +303,9 @@ const handleClearClick = () => {
               status_type: statusType,
             };
   
-            // Proceed with additional logic after updating state
+            // Send email
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, emailBody);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
@@ -313,14 +313,14 @@ const handleClearClick = () => {
                 console.log("Failed to send email.");
               }
             } catch (emailError) {
-              // alert(emailError);
+              console.error('Email sending error:', emailError);
             }
           } else {
             console.error('Transaction error:', res.statusText);
           }
         } catch (fetchError) {
           console.log('NOT FETCHING EMAIL');
-          console.error(fetchError);
+          console.error('Fetch error:', fetchError);
         }
 
         setIsLoading(false);
