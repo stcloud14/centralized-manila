@@ -261,41 +261,45 @@ const handleClearClick = () => {
     }
   };
 
-
-  const handleReject = async () => {  
-
+  const handleReject = async () => {
     const transaction_id = selectedTransaction.transaction_id;
     const trans_type = selectedTransaction.trans_type;
     const user_id = selectedTransaction.user_id;
+   
   
     const body = {
       selectedTransaction,
       rejectCause
-    }
+    };
   
     try {
+      // Make GET request to your server endpoint
+      const retrieveResponse = await axios.get(`http://localhost:8800/payment/create-checkout-retrieve/${transaction_id}`);
+
+      console.log("retrieveResponse" , retrieveResponse.data)
+      
       const response = await axios.post(`http://localhost:8800/adminrptax/updatereject/${transaction_id}`, body);
-      setIsLoading(true);
+  
       // Check the response status before proceeding
       if (response.status === 200) {
-
+  
         try {
           const res = await axios.get(`http://localhost:8800/email/${user_id}`);
-          
+  
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
             const sex_type = res.data.sex_type;
             console.log('FETCHED USER EMAIL:', updatedUserEmail);
-
+  
             const user_email = updatedUserEmail;
-
-            const rowData = { ...selectedTransaction, trans_type};
-
+  
+            const rowData = { ...selectedTransaction, trans_type };
+  
             const statusType = 'Rejected';
-
-            const body = {
+  
+            const emailBody = {
               data: rowData,
               f_name: f_name,
               l_name: l_name,
