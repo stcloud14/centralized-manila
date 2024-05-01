@@ -251,6 +251,10 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
     }
   
     try {
+      const retrieveResponse = await axios.get(`http://localhost:8800/payment/create-checkout-retrieve/${transaction_id}`);
+
+      console.log("retrieveResponse" , retrieveResponse.data)
+      
       const response = await axios.post(`http://localhost:8800/adminctc/updatereject/${transaction_id}`, body);
       setIsLoading(true);
       // Check the response status before proceeding

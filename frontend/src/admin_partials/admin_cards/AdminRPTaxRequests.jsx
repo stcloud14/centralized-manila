@@ -279,7 +279,7 @@ const handleClearClick = () => {
       console.log("retrieveResponse" , retrieveResponse.data)
       
       const response = await axios.post(`http://localhost:8800/adminrptax/updatereject/${transaction_id}`, body);
-  
+      setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {
   

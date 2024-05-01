@@ -267,6 +267,10 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
     }
   
     try {
+      const retrieveResponse = await axios.get(`http://localhost:8800/payment/create-checkout-retrieve/${transaction_id}`);
+
+      console.log("retrieveResponse" , retrieveResponse.data)
+      
       const response = await axios.post(`http://localhost:8800/adminlcr/updatereject/${transaction_id}`, body);
   
       // Check the response status before proceeding
