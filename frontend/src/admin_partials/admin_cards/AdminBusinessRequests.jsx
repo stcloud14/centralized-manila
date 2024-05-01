@@ -600,6 +600,11 @@ const AdminBusinessRequests = ({businessPermit, handleUpdateData}) => {
                   <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                     <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div className="mx-auto mt-4">
+                    {rejectCause === "" && (
+                        <p className="font-medium text-red-500 sm:mt-2 text-xs md:text-sm" id="modal-headline">
+                          Please select specify concern accordingly.
+                        </p>
+                      )}
                       <p className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
                         Are you sure you would like to REJECT this transaction? This is irreversible.
                       </p>

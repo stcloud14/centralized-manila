@@ -682,67 +682,69 @@ const handleClearClick = () => {
 
             {/* REJECT MODAL */}
             {isRejectConfirm && (
-              <div className="fixed z-50 inset-0 overflow-y-auto">
-                <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                  <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                    <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                  </div>
-                  <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                    &#8203;
-                  </span>
-                  <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                    <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div className="mx-auto mt-4">
-                      <p className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                        Are you sure you would like to REJECT this transaction? This is irreversible.
-                      </p>
+  <div className="fixed z-50 inset-0 overflow-y-auto">
+    <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+        <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+      </div>
+      <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+        &#8203;
+      </span>
+      <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div className="mx-auto mt-4">
+          {rejectCause === "" && (
+              <p className="font-medium text-red-500 sm:mt-2 text-xs md:text-sm" id="modal-headline">
+                Please select specify concern accordingly.
+              </p>
+            )}
+            <p className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+              Are you sure you would like to REJECT this transaction? This is irreversible.
+            </p>
+
+            <p className="font-medium text-slate-700 dark:text-white sm:mt-2 text-xs md:text-sm" id="modal-headline">
+              Please select the cause of rejection.
+            </p>
+            <select value={rejectCause} onChange={handleOptionChange} className="block w-full mt-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-[#212121] dark:border-white dark:text-slate-200 dark:focus:border-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+              <option className="dark:bg-[#3d3d3d]" value="">Select Cause</option>
+              <option className="dark:bg-[#3d3d3d]" value="1">Incorrect or incomplete documentation submitted</option>
+              <option className="dark:bg-[#3d3d3d]" value="2">Failure to adhere to specific procedural requirements</option>
+              <option className="dark:bg-[#3d3d3d]" value="3">Inconsistent or conflicting details in the submitted paperwork</option>
+              <option className="dark:bg-[#3d3d3d]" value="4">Non-compliance with City Hall regulations</option>
+              <option className="dark:bg-[#3d3d3d]" value="5">No records found</option>
+            </select>
+
+          </div>
+        </div>
 
 
-
-                      <p className="font-medium text-slate-700 dark:text-white sm:mt-2 text-xs md:text-sm" id="modal-headline">
-                        Please select the cause of rejection.
-                      </p>
-                      
-                      <select value={rejectCause} onChange={handleOptionChange} className="block w-full mt-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-[#212121] dark:border-white dark:text-slate-200 dark:focus:border-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                        <option className="dark:bg-[#3d3d3d]" value="">Select Cause</option>
-                        <option className="dark:bg-[#3d3d3d]" value="1">Incorrect or incomplete documentation submitted</option>
-                        <option className="dark:bg-[#3d3d3d]" value="2">Failure to adhere to specific procedural requirements</option>
-                        <option className="dark:bg-[#3d3d3d]" value="3">Inconsistent or conflicting details in the submitted paperwork</option>
-                        <option className="dark:bg-[#3d3d3d]" value="4">Non-compliance with City Hall regulations</option>
-                        <option className="dark:bg-[#3d3d3d]" value="5">No records found</option>
-                      </select>
-
-                    </div>
-                    </div>
-                  
-
-                    {isLoading ? (
-                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
-                        <Loading />
-                      </div>
-                    ) : (
-                      <>
-                  <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
-                    <button
-                      onClick={handleConfirmClose}
-                      type="button"
-                      className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                    >
-                      <p>Cancel</p>
-                    </button>
+        {isLoading ? (
+          <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+            <Loading />
+          </div>
+        ) : (
+          <>
+            <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+              <button
+                onClick={handleConfirmClose}
+                type="button"
+                className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+              >
+                <p>Cancel</p>
+              </button>
 
 
-                    <button
-                    onClick={handleReject}
-                    type="button"
-                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
-                    >
-                      Confirm
-                    </button>
+              <button
+                onClick={handleReject}
+                type="button"
+                className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
+              >
+                Confirm
+              </button>
 
-                  </div>
-                  </>
-                  )}
+            </div>
+          </>
+        )}
 
 
 
