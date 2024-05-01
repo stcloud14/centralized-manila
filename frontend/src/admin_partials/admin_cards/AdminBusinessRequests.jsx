@@ -143,9 +143,15 @@ const AdminBusinessRequests = ({businessPermit, handleUpdateData}) => {
     };
 
     const [rejectCause, setRejectCause] = useState('');
-
-    const handleOptionChange = (e) => {
-      setRejectCause(e.target.value);
+    const [continueButtonDisabled, setContinueButtonDisabled] = useState(true); // Initialize with true assuming initially "Select Cause" is selected
+  
+  
+    const handleOptionChange = (event) => {
+      const selectedValue = event.target.value;
+      setRejectCause(selectedValue);
+    
+      // Enable the continue button if a valid option is selected, otherwise disable it
+      setContinueButtonDisabled(selectedValue === "");
     };
 
   
@@ -644,12 +650,16 @@ const AdminBusinessRequests = ({businessPermit, handleUpdateData}) => {
                     </button>
 
                     <button
-                    onClick={handleReject}
-                    type="button"
-                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      Confirm
-                    </button>
+                          onClick={handleReject}
+                          type="button"
+                          disabled={continueButtonDisabled}
+                          className={`text-white text-xs md:text-sm border focus:ring-4 focus:outline-none font-normal rounded-full px-5 py-2 text-center mb-2 dark:text-white dark:focus:ring-emerald-800 ${
+                            continueButtonDisabled
+                              ? "bg-gray-400 border-gray-400 cursor-not-allowed"
+                              : "bg-emerald-500 border-emerald-500 hover:bg-emerald-600 dark:hover:bg-emerald-700"
+                          }`}             >
+                          Confirm
+                        </button>
                   </div>
                   </>
                     )}
