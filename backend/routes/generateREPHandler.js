@@ -29,6 +29,7 @@ router.post('/store/:admin_type', async (req, res) => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
 
+    
     try {
         if (!data.report_no || !data.date_processed) {
             return res.status(400).send('Missing required fields');

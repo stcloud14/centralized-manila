@@ -455,13 +455,13 @@ router.get('/marriagecert/', async (req, res) => {
 
 router.get('/topregions/', async (req, res) => {
 
-    const query = "SELECT r.region_name AS Regions, COUNT(*) AS Result \
-    FROM user_contact uc \
-    JOIN region r ON uc.region_id = r.region_id \
-    WHERE uc.region_id IS NOT NULL AND uc.region_id <> '' \
-    GROUP BY uc.region_id \
-    ORDER BY Result DESC \
-    LIMIT 3;";
+    const query = `SELECT r.region_name AS Regions, COUNT(*) AS Result 
+    FROM user_contact uc 
+    JOIN region r ON uc.region_id = r.region_id 
+    WHERE uc.region_id IS NOT NULL AND uc.region_id <> '' 
+    GROUP BY uc.region_id 
+    ORDER BY Result DESC 
+    LIMIT 3;`;
   
   try {
     const result = await queryDatabase(query);
@@ -484,13 +484,13 @@ router.get('/topregions/', async (req, res) => {
 
 router.get('/topprovinces/', async (req, res) => {
 
-    const query = "SELECT p.prov_name AS Provinces, COUNT(*) AS Result \
-    FROM user_contact uc \
-    JOIN province p ON uc.prov_id = p.prov_id \
-    WHERE uc.prov_id IS NOT NULL AND uc.prov_id <> '' \
-    GROUP BY uc.prov_id \
-    ORDER BY Result DESC \
-    LIMIT 3;";
+    const query = `SELECT p.prov_name AS Provinces, COUNT(*) AS Result 
+    FROM user_contact uc 
+    JOIN province p ON uc.prov_id = p.prov_id 
+    WHERE uc.prov_id IS NOT NULL AND uc.prov_id <> '' 
+    GROUP BY uc.prov_id 
+    ORDER BY Result DESC 
+    LIMIT 3;`;
   
   try {
     const result = await queryDatabase(query);
@@ -513,13 +513,13 @@ router.get('/topprovinces/', async (req, res) => {
 
 router.get('/topcities/', async (req, res) => {
 
-    const query = "SELECT c.city_name AS Cities, COUNT(*) AS Result \
-    FROM user_contact uc \
-    JOIN cities c ON uc.city_id = c.city_id \
-    WHERE uc.city_id IS NOT NULL AND uc.city_id <> '' \
-    GROUP BY uc.city_id \
-    ORDER BY Result DESC \
-    LIMIT 3;";
+    const query = `SELECT c.city_name AS Cities, COUNT(*) AS Result 
+    FROM user_contact uc 
+    JOIN cities c ON uc.city_id = c.city_id 
+    WHERE uc.city_id IS NOT NULL AND uc.city_id <> '' 
+    GROUP BY uc.city_id 
+    ORDER BY Result DESC 
+    LIMIT 3;`;
   
   try {
     const result = await queryDatabase(query);
@@ -544,126 +544,126 @@ router.get('/revenue/', async (req, res) => {
 
     const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
 
-    const query = "SELECT \
-    SUM(ti.amount) AS total_paid_amount, \
-    SUM(CASE WHEN ut.trans_type_id = 1 OR ut.trans_type_id = 2 THEN ti.amount ELSE 0 END) AS total_rp, \
-    SUM(CASE WHEN ut.trans_type_id = 3 THEN ti.amount ELSE 0 END) AS total_bp, \
-    SUM(CASE WHEN ut.trans_type_id = 4 THEN ti.amount ELSE 0 END) AS total_cc, \
-    SUM(CASE WHEN ut.trans_type_id = 5 OR ut.trans_type_id = 6 OR ut.trans_type_id = 7 THEN ti.amount ELSE 0 END) AS total_lcr, \
-	DATE_FORMAT(NOW() - INTERVAL 0 MONTH, '%Y-%m-01') AS m1, \
-    DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AS m2, \
-    DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AS m3, \
-    DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AS m4, \
-    DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AS m5, \
-    DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AS m6, \
-    DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AS m7, \
-    DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AS m8, \
-    DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AS m9, \
-    DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AS m10, \
-    DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AS m11, \
-    DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AS m12, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_1, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_2, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_3, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_4, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_5, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_6, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_7, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_8, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_9, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_10, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_11, \
-    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_12, \
-    \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_1, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_2, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_3, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_4, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_5, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_6, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_7, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_8, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_9, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_10, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_11, \
-    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_12, \
-    \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_1, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_2, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_3, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_4, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_5, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_6, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_7, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_8, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_9, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_10, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_11, \
-    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_12, \
-    \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_1, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_2, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_3, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_4, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_5, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_6, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_7, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_8, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_9, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_10, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_11, \
-    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_12, \
-    \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_1, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_2, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_3, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_4, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_5, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_6, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_7, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_8, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_9, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_10, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_11, \
-    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_12, \
-    \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_1, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_2, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_3, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_4, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_5, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_6, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_7, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_8, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_9, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_10, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_11, \
-    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_12, \
-    \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_1, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_2, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_3, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_4, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_5, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_6, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_7, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_8, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_9, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_10, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_11, \
-    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_12 \
-    \
-    FROM \
-        user_transaction ut \
-    JOIN \
-        transaction_info ti ON ut.transaction_id = ti.transaction_id \
-    WHERE \
-        ut.status_type = 'Paid' AND YEAR(date_processed) = ?;"
+    const query = `SELECT 
+    SUM(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_paid_amount, 
+    SUM(CASE WHEN ut.trans_type_id = 1 OR ut.trans_type_id = 2 THEN ti.amount ELSE 0 END) AS total_rp, 
+    SUM(CASE WHEN ut.trans_type_id = 3 THEN ti.amount ELSE 0 END) AS total_bp, 
+    SUM(CASE WHEN ut.trans_type_id = 4 THEN ti.amount ELSE 0 END) AS total_cc, 
+    SUM(CASE WHEN ut.trans_type_id = 5 OR ut.trans_type_id = 6 OR ut.trans_type_id = 7 THEN ti.amount ELSE 0 END) AS total_lcr, 
+	DATE_FORMAT(NOW() - INTERVAL 0 MONTH, '%Y-%m-01') AS m1, 
+    DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AS m2, 
+    DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AS m3, 
+    DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AS m4, 
+    DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AS m5, 
+    DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AS m6, 
+    DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AS m7, 
+    DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AS m8, 
+    DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AS m9, 
+    DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AS m10, 
+    DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AS m11, 
+    DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AS m12, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_1, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_2, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_3, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_4, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_5, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_6, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_7, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_8, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_9, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_10, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_11, 
+    SUM(CASE WHEN ut.trans_type_id = 1 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tp_12, 
+    
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_1, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_2, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_3, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_4, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_5, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_6, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_7, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_8, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_9, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_10, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_11, 
+    SUM(CASE WHEN ut.trans_type_id = 2 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS tc_12, 
+    
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_1, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_2, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_3, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_4, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_5, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_6, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_7, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_8, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_9, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_10, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_11, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bp_12, 
+    
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_1, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_2, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_3, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_4, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_5, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_6, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_7, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_8, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_9, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_10, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_11, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS cc_12, 
+    
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_1, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_2, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_3, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_4, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_5, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_6, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_7, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_8, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_9, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_10, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_11, 
+    SUM(CASE WHEN ut.trans_type_id = 5 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS bc_12, 
+    
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_1, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_2, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_3, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_4, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_5, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_6, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_7, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_8, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_9, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_10, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_11, 
+    SUM(CASE WHEN ut.trans_type_id = 6 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS dc_12, 
+    
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW(), '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() + INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_1, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW(), '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_2, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_3, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_4, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 3 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_5, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 4 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_6, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 5 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_7, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 6 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_8, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 7 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_9, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 8 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_10, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 9 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_11, 
+    SUM(CASE WHEN ut.trans_type_id = 7 AND ut.date_processed >= DATE_FORMAT(NOW() - INTERVAL 11 MONTH, '%Y-%m-01') AND ut.date_processed < DATE_FORMAT(NOW() - INTERVAL 10 MONTH, '%Y-%m-01') THEN ti.amount ELSE 0 END) AS mc_12 
+    
+    FROM 
+        user_transaction ut 
+    JOIN 
+        transaction_info ti ON ut.transaction_id = ti.transaction_id 
+    WHERE 
+        ut.status_type = 'Paid';`
 
 
   
   try {
-    const result = await queryDatabase(query, [selectedYear]);
+    const result = await queryDatabase(query);
 
     const responseObj = {
         totalPaid: result[0].total_paid_amount || 0,
@@ -796,11 +796,11 @@ router.get('/revenue/', async (req, res) => {
 
 router.get('/verifiedusers/', async (req, res) => {
 
-    const query = "SELECT \
-    COUNT(*) AS total_users, \
-    SUM(CASE WHEN verification_status = 'Verified' THEN 1 ELSE 0 END) AS total_verified, \
-    SUM(CASE WHEN verification_status = 'Unverified' THEN 1 ELSE 0 END) AS total_unverified \
-    FROM user_verification;";
+    const query = `SELECT 
+    COUNT(*) AS total_users, 
+    SUM(CASE WHEN verification_status = 'Verified' THEN 1 ELSE 0 END) AS total_verified, 
+    SUM(CASE WHEN verification_status = 'Unverified' THEN 1 ELSE 0 END) AS total_unverified 
+    FROM user_verification;`;
   
   try {
     const result = await queryDatabase(query);

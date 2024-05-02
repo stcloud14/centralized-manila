@@ -104,7 +104,7 @@ const AdminDashChiefForm = React.memo(
     return `${correctedAdminType}-${formattedDate}-${uuid1Code}`;
 };
 
-  console.log(admin_type);
+  console.log(revenue);
 
   const generateReports = async (selectedYear) => {
 
