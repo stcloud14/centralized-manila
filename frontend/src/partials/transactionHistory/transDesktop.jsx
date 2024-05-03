@@ -115,6 +115,11 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
 
           const transaction = filteredTransactions[arrayBase];
 
+            // Check if transaction_id exists
+            if (!transaction.transaction_id) {
+              continue;
+          }
+
           let soaNumber, expiry_date;
 
           if (soaData && soaData.length > 0) {
@@ -214,7 +219,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
 
           switch (index) {
               case 0:
-                  text = soaNumber; // Put the SOA NUMBER HERE
+                  text = soaNumber; 
                   break;
               case 1:
                   if (transaction.trans_type === 'Community Tax Certificate') {
@@ -226,7 +231,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
                   } else if (transaction.trans_type === 'Marriage Certificate') {
                       text = transaction.consent_info || "Unknown Requestor";
                   } else {
-                      text = transaction.acc_name || transaction.rp_tdn || transaction.bus_name || "Unknown Owner";
+                      text = transaction.acc_name || transaction.tc_tdn || transaction.bus_name  || "Unknown Owner";
                   }
                   break;
               case 2:

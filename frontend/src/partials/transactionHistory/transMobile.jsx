@@ -111,6 +111,11 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
 
           const transaction = filteredTransactions[arrayBase];
 
+            // Check if transaction_id exists
+            if (!transaction.transaction_id) {
+              continue;
+          }
+
           let soaNumber, expiry_date;
 
           if (soaData && soaData.length > 0) {
@@ -130,8 +135,9 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
           }} else {
               soaNumber = generateUniqueSOA(transaction.trans_type, transaction.user_id);
 
-              const expiryDate = moment().add(10, 'days');
-              const formattedExpiryDate = expiryDate.format('MMMM DD, YYYY, 11:59 A');
+              const currentDate = moment();
+              const lastDayOfMonth = moment(currentDate).endOf('month');
+              const formattedExpiryDate = lastDayOfMonth.format('MMMM DD, YYYY, 11:59 A');
 
               expiry_date = formattedExpiryDate;
           }
@@ -152,10 +158,21 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
           pdf.text("Electronic Statement of Account", 15, 23);
 
           // Additional text to be placed on the right
-          const additionalText = [
-            { text: "Billing Date", bold: true },
-            "September 20, 2024"
+          const currentDate1 = new Date();
+          const currentMonth = currentDate1.getMonth();
+          const currentYear = currentDate1.getFullYear();
+          const billingDate = new Date(currentYear, currentMonth, 6);
+
+          const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
           ];
+
+          const additionalText = [
+              { text: "Billing Date", bold: true },
+              `${monthNames[billingDate.getMonth()]} 6, ${billingDate.getFullYear()}`
+          ];
+
           
           if (transaction.trans_type === 'Business Permit') {
               additionalText.push(
@@ -198,7 +215,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
 
           switch (index) {
               case 0:
-                  text = soaNumber; // Put the SOA NUMBER HERE
+                  text = soaNumber; 
                   break;
               case 1:
                   if (transaction.trans_type === 'Community Tax Certificate') {
@@ -210,7 +227,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
                   } else if (transaction.trans_type === 'Marriage Certificate') {
                       text = transaction.consent_info || "Unknown Requestor";
                   } else {
-                      text = transaction.acc_name || transaction.rp_tdn || transaction.bus_name || "Unknown Owner";
+                      text = transaction.acc_name || transaction.tc_tdn || transaction.bus_name  || "Unknown Owner";
                   }
                   break;
               case 2:
