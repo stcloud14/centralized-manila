@@ -204,6 +204,13 @@ const router = Router();
                 <tr>
                   <td><img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display:block; outline:none; border:none; text-decoration:none; margin:auto;" width="120" /></td>
                 </tr>
+                <tr>
+                  <td>
+                    <p style="font-size:12px;line-height:1.5;margin:5px 0;font-weight:bold">Centralized Manila</p>
+                    <p style="font-size:12px;line-height:1.5;margin:5px 0">Padre Burgos Ave, Ermita, Manila, 1000 Metro Manila</p>
+                    <p style="font-size:12px;line-height:1.5;margin:5px 0px 0px 0px">${formattedDate}</p>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="width:100%;display:flex">
@@ -226,28 +233,77 @@ const router = Router();
             <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:5px 20px 10px 20px">
               <tbody>
                 <tr>
-                  <td>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0"> Centralized Manila</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0"> REFUND RECEIPT</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0"> Padre Burgos Ave, Ermita, Manila, 1000 Metro Manila</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0"> ${formattedDate}</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">-------------------------------</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Transaction ID ${body.data.transaction_id}</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">-------------------------------</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Customer Name ${body.f_name} ${body.l_name}!</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Service Requested ${body.service_requested}!</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Amount Paid ${body.data.amount},</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Refund Amount ${body.data.amount},</p>
-                  <p style="font-size:16px;line-height:24px;margin:16px 0">Refunded To ${body.formatted_payment_method}</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">-------------------------------</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Total Refunded Amount: ${body.data.amount}</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">-------------------------------</p>
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Thank you for choosing Centralized Manila. PLease retain this copy for your records</p>    
-                  <p style="font-size:14px;line-height:1.5;margin:16px 0">------Customer Copy------</p>       
-                  </td>
+                  <th></th>
+                  <th style="white-space:nowrap;padding:5px 0px 5px 0px;">REFUND RECEIPT</th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td><hr style="border-top: 3px dotted black;"></td>
+                  <td><hr style="border-top: 3px dotted black;"></td>
+                  <td><hr style="border-top: 3px dotted black;"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td style="white-space:nowrap;font-weight:bold;padding:5px 0px 5px 0px;">Transaction ID <span style="font-weight:normal">${body.data.transaction_id}</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><hr style="border-top: 3px dotted black;"></td>
+                  <td><hr style="border-top: 3px dotted black;"></td>
+                  <td><hr style="border-top: 3px dotted black;"></td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0px 0px 0px">Customer Name</td>
+                  <td></td>
+                  <td style="padding:10px 0px 0px 0px; white-space:nowrap;">${body.f_name} ${body.l_name}</td>
+                </tr>
+                <tr>
+                  <td>Service Requested</td>
+                  <td></td>
+                  <td style="white-space:nowrap;">${body.service_requested}</td>
+                </tr>
+                <tr>
+                  <td>Amount Paid</td>
+                  <td></td>
+                  <td style="white-space:nowrap;">${body.data.amount}</td>
+                </tr>
+                <tr>
+                  <td>Refund Amount</td>
+                  <td></td>
+                  <td style="white-space:nowrap;">${body.data.amount}</td>
+                </tr>
+                <tr>
+                  <td>Refunded To</td>
+                  <td></td>
+                  <td style="white-space:nowrap;">${body.formatted_payment_method}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td style="white-space:nowrap;">--------------------</td>
+                </tr>
+                <tr>
+                  <td style="white-space:nowrap;font-weight:bold">Total Refunded Amount</td>
+                  <td></td>
+                  <td style="white-space:nowrap;font-weight:bold">${body.data.amount}</td>
+                </tr>
+                <tr>
+                  <td><hr style="border-top: 3px dotted black;"></td>
+                  <td><hr style="border-top: 3px dotted black;"></td>
+                  <td><hr style="border-top: 3px dotted black;"></td>
                 </tr>
               </tbody>
             </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align: center; padding: 20px">
+      <tbody>
+        <tr>
+          <td>
+            <p style="font-size:12px;line-height:1.5;margin:5px 0;font-weight:bold">Thank you for choosing Centralized Manila. Please retain this copy for your records.</p>
+            <p style="font-size:12px;line-height:1.5;margin:5px 0">------ Customer Copy ------</p>
           </td>
         </tr>
       </tbody>
