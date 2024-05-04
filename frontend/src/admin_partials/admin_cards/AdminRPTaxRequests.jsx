@@ -26,10 +26,10 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
   const [selectedTransaction, setSelectedTransaction] = useState();
   const [transType, setTransType] = useState();
 
-  const [lastSelectedDate, setLastSelectedDate] = useState(null);
+  // const [lastSelectedDate, setLastSelectedDate] = useState(null);
   const [filterApplied, setFilterApplied] = useState(false);
 
-  console.log(selectedTransaction);
+  // console.log(selectedTransaction);
 
   const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
 const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
@@ -212,7 +212,7 @@ const handleClearClick = () => {
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
             const sex_type = res.data.sex_type;
-            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+            // console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
@@ -281,12 +281,12 @@ const handleClearClick = () => {
   
       const retrieveResponse = await axios.get(`http://localhost:8800/payment/create-checkout-retrieve/${transaction_id}`);
 
-      console.log("retrieveResponse" , retrieveResponse.data)
+      // console.log("retrieveResponse" , retrieveResponse.data)
       const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
       const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
-      console.log("payment_method", formatted_payment_method);
+      // console.log("payment_method", formatted_payment_method);
       const service_requested = retrieveResponse.data.data.attributes.description;
-      console.log("Service Requested", service_requested)
+      // console.log("Service Requested", service_requested)
       
       const response = await axios.post(`http://localhost:8800/adminrptax/updatereject/${transaction_id}`, body);
       setIsLoading(true);
@@ -301,7 +301,7 @@ const handleClearClick = () => {
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
             const sex_type = res.data.sex_type;
-            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+            // console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
@@ -345,51 +345,7 @@ const handleClearClick = () => {
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
             const sex_type = res.data.sex_type;
-            console.log('FETCHED USER EMAIL:', updatedUserEmail);
-
-            const user_email = updatedUserEmail;
-
-            const rowData = { ...selectedTransaction, trans_type};
-
-            const statusType = 'Refunded';
-
-            const body = {
-              data: rowData,
-              f_name: f_name,
-              l_name: l_name,
-              sex_type: sex_type,
-              status_type: statusType,
-              formatted_payment_method: formatted_payment_method,
-            };
-  
-            // Proceed with additional logic after updating state
-            try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
-  
-              if (emailResponse.data && emailResponse.data.message) {
-                console.log('SENT EMAIL');
-              } else {
-                console.log("Failed to send email.");
-              }
-            } catch (emailError) {
-              // alert(emailError);
-            }
-          } else {
-            console.error('Transaction error:', res.statusText);
-          }
-        } catch (fetchError) {
-          console.log('NOT FETCHING EMAIL');
-          console.error(fetchError);
-        }
-        try {
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
-          
-          if (res.data.user_email) {
-            const updatedUserEmail = res.data.user_email;
-            const f_name = res.data.f_name;
-            const l_name = res.data.l_name;
-            const sex_type = res.data.sex_type;
-            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+            // console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
@@ -410,9 +366,10 @@ const handleClearClick = () => {
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
-  
-              if (emailResponse.data && emailResponse.data.message) {
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+              const emailrefund = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
+
+              if (emailResponse.data && emailResponse.data.message && emailrefund.data && emailrefund.data.message) {
                 console.log('SENT EMAIL');
               } else {
                 console.log("Failed to send email.");
@@ -427,7 +384,6 @@ const handleClearClick = () => {
           console.log('NOT FETCHING EMAIL');
           console.error(fetchError);
         }
-
         setIsLoading(false);
 
         handleConfirmClose();

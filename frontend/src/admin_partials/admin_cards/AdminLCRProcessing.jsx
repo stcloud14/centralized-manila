@@ -275,13 +275,10 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
 
       const retrieveResponse = await axios.get(`http://localhost:8800/payment/create-checkout-retrieve/${transaction_id}`);
 
-      console.log("retrieveResponse" , retrieveResponse.data)
+
       const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
       const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
-      console.log("payment_method", formatted_payment_method);
-      const reference_no  = retrieveResponse.data.data.attributes.payments[0].attributes.source.id;
       const service_requested = retrieveResponse.data.data.attributes.description;
-      console.log("Service Requested", service_requested)
       
       const response = await axios.post(`http://localhost:8800/adminlcr/updatereject/${transaction_id}`, body);
   
@@ -362,8 +359,9 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
             // Proceed with additional logic after updating state
             try {
               const emailResponse = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
-  
-              if (emailResponse.data && emailResponse.data.message) {
+              const emailrefund = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
+
+              if (emailResponse.data && emailResponse.data.message && emailrefund.data && emailrefund.data.message) {
                 console.log('SENT EMAIL');
               } else {
                 console.log("Failed to send email.");
