@@ -876,7 +876,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
     const query = "SELECT  r.region_name AS bus_bregion, p.prov_name AS bus_bprovince, c.city_name AS bus_bcity, \
-    ba.brgy_dist AS bus_bbgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
+    ba.brgy_dist AS bus_bbrgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
     bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin, bp.bus_lessor, bp.bus_rent, bp.owned, \
     bo.bus_fname, bo.bus_mname, bo.bus_lname, bo.suffix_type AS bus_suffix, st.sex_type AS bus_sex,\
     ai.email AS bus_email, ai.tel_no AS bus_tel_no, ai.mobile_no AS bus_mobile_no, \
@@ -947,7 +947,7 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
     const query = "SELECT  r.region_name AS bus_bregion, p.prov_name AS bus_bprovince, c.city_name AS bus_bcity, \
-    ba.brgy_dist AS bus_bbgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
+    ba.brgy_dist AS bus_bbrgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
     bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin, bp.bus_lessor, bp.bus_rent, bp.owned, \
     bo.bus_fname, bo.bus_mname, bo.bus_lname, bo.suffix_type AS bus_suffix, st.sex_type AS bus_sex,\
     ai.email AS bus_email, ai.tel_no AS bus_tel_no, ai.mobile_no AS bus_mobile_no, \
@@ -1055,7 +1055,7 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
                 ['Payers Region', businessTransaction.bus_bregion],
                 ['Payers Province', businessTransaction.bus_bprovince],
                 ['Payers Municipal', businessTransaction.bus_bcity],
-                ['Payers Barangay', businessTransaction.bus_bbrgy],
+                ['Payers Barangay', businessTransaction.bus_brgy],
                 ['Payers House No. / Unit Floor', businessTransaction.bus_bhnum],
                 ['Payers Stret / Building Name', businessTransaction.bus_bstreet],
                 ['Payers Zip Code', businessTransaction.bus_bzip],
