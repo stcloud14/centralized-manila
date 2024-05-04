@@ -102,7 +102,7 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
             const checkoutSessionUrl = responseData.data.attributes.checkout_url;
             // Trigger fetchSessionData after successful checkout
             const sessionId = responseData.data.id; // Extracting the session ID
-            console.log("Retrieving Id",sessionId )
+            // console.log("Retrieving Id",sessionId )
 
             // Update the database with Paymongo session ID
             const query = `UPDATE user_transaction SET paymongo_id = ? WHERE transaction_id = ?;`;
@@ -165,11 +165,11 @@ router.get('/create-checkout-retrieve/:transaction_id', async (req, res) => {
                 // Process the retrieved data
                 const amount = responseData.data.attributes.payment_intent.attributes.amount;
                 const newAmount = amount / 100;
-                console.log("amount", newAmount)
+                // console.log("amount", newAmount)
                 const payid = responseData.data.attributes.payments[0].id;
-                console.log("payid", payid)
+                // console.log("payid", payid)
                 const sourceType = responseData.data.attributes.payments[0].attributes.source.type;
-                console.log("Payment Method", sourceType)
+                // console.log("Payment Method", sourceType)
 
                 // Construct the refund options object
                 const refundOptions = {
@@ -194,7 +194,7 @@ router.get('/create-checkout-retrieve/:transaction_id', async (req, res) => {
                 const refundResponse = await fetch('https://api.paymongo.com/refunds', refundOptions);
                 const refundData = await refundResponse.json();
 
-                console.log("refundData" , refundData)
+                // console.log("refundData" , refundData)
 
                 // Handle the retrieved data (send it back or process it further)
                 res.status(200).json(responseData);

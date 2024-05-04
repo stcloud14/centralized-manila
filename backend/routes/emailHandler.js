@@ -795,7 +795,7 @@ const router = Router();
     const options = { month: 'long', day: 'numeric', year: 'numeric' };
     const formattedDate = today.toLocaleDateString('en-US', options);
 
-    console.log("Refund/body", body)
+    // console.log("Refund/body", body)
 
 
     // const statType = req.body.status_type;
