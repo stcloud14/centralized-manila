@@ -513,7 +513,7 @@ router.get('/birthcert/:transaction_id/download', async (req, res) => {
 router.get('/deathcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT r.region_name AS region, p.prov_name AS province, c.city_name AS city, dc.transaction_id, dc.death_date, \
+    const query = "SELECT r.region_name AS region, tt.trans_type, p.prov_name AS province, c.city_name AS city, dc.transaction_id, dc.death_date, \
     do.l_name, do.f_name, do.m_name, do.suffix_type, st.sex_type, \
     dr.l_name AS reql_name, dr.f_name AS reqf_name, dr.m_name AS reqm_name, dr.suffix_type AS reqsuffix, \
     dr.owner_rel, dr.mobile_no, dr.tel_no, \
@@ -525,6 +525,7 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
     \
     LEFT JOIN user_transaction ut ON dc.transaction_id = ut.transaction_id \
     LEFT JOIN transaction_info ti ON dc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN address_info ai ON dc.transaction_id = ai.transaction_id IS NOT NULL \
     LEFT JOIN death_doc_owner do ON dc.transaction_id = do.transaction_id AND do.transaction_id IS NOT NULL \
     LEFT JOIN death_requestor dr ON dc.transaction_id = dr.transaction_id AND dr.transaction_id IS NOT NULL \
@@ -875,7 +876,7 @@ router.get('/marriagecert/:transaction_id/download', async (req, res) => {
 router.get('/buspermit/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT  r.region_name AS bus_bregion, p.prov_name AS bus_bprovince, c.city_name AS bus_bcity, \
+    const query = "SELECT  r.region_name AS bus_bregion, tt.trans_type, p.prov_name AS bus_bprovince, c.city_name AS bus_bcity, \
     ba.brgy_dist AS bus_bbrgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
     bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin, bp.bus_lessor, bp.bus_rent, bp.owned, \
     bo.bus_fname, bo.bus_mname, bo.bus_lname, bo.suffix_type AS bus_suffix, st.sex_type AS bus_sex,\
@@ -884,7 +885,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
     bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
     bbt.bus_type_label AS bus_type, \
-    ti.amount as bus_amount, ti.copies, ptt.print_type, ti.valid_id, pt.purpose_type, \
+    ti.amount as amount, ti.copies, ptt.print_type, ti.valid_id, pt.purpose_type, \
     r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
     ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip, rc.reject_cause \
     \
@@ -903,6 +904,7 @@ router.get('/buspermit/:transaction_id', async (req, res) => {
     LEFT JOIN province p1 ON ai.prov_id = p1.prov_id \
     LEFT JOIN cities c ON ba.city_id = c.city_id \
     LEFT JOIN cities c1 ON ai.city_id = c1.city_id \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN valid_id_type vt ON ti.valid_id = vt.valid_id \
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN bus_type bbt ON bp.bus_type = bbt.bus_type \
