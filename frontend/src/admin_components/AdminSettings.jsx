@@ -368,7 +368,7 @@ const AdminSettings =()=>{
 
                       </div>
                     </div>
-
+                    <h1 className='font-medium text-center text-slate-700 dark:text-white'>If you want to change your password, contact the system admin.</h1>
 
                     <h1 className='font-medium text-center text-slate-700 dark:text-white'>Password</h1>
                     <div className='mb-0'>
