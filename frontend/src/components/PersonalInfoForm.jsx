@@ -142,30 +142,29 @@ const PersonalInfoForm =()=>{
     const handleProceed = (e) => {
       e.preventDefault();
       
-      const requiredFields = ['f_name', 'l_name', 'sex_id', 'cvl_id', 'czn_id', 'res_id'];
-      const requiredFields1 = ['birth_date', 'birth_place'];
-
-      const isAnyFieldEdited = requiredFields.some((field) => {
+      const requiredPersonalFields = ['f_name', 'l_name', 'sex_id', 'cvl_id', 'czn_id', 'res_id'];
+      const requiredBirthFields = ['birth_date', 'birth_place'];
+      
+      const isAnyFieldEdited = requiredPersonalFields.some((field) => {
+        const value = userPersonal && userPersonal[field];
+        return value === null || value === '0'; // Check for null or empty string
+    });    
+      
+      const isIncompletePersonal = requiredPersonalFields.some((field) => {
         const value = userPersonal[field];
-        return value !== userPersonal[field]; // Check if the field is different from its initial value
-      });
-
-      const isIncompletePersonal = requiredFields.some((field) => {
-        const value = userPersonal[field];
-        return (value === null);
+        return value === null || value === '0'; // Check for null or empty string
       });
       
-
-      const isIncompleteBirth = requiredFields1.some((field) => {
+      const isIncompleteBirth = requiredBirthFields.some((field) => {
         const value = userBirth[field];
-        return (typeof value !== 'string' || value.trim() === "" || value === null);
+        return typeof value !== 'string' || value.trim() === '' || value === null;
       });
-
+      
       const scrollToTop = () => {
         contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       };
-
-      if (isAnyFieldEdited || isIncompleteBirth) {
+      
+      if (isAnyFieldEdited || isIncompleteBirth || isIncompletePersonal) {
         scrollToTop();
         setShowWarning(true);
         setIsModalOpen(false);
@@ -176,19 +175,7 @@ const PersonalInfoForm =()=>{
         scrollToTop();
         setIsModalOpen(true);
       }
-    
-
-      if (isIncompletePersonal || isIncompleteBirth) {
-        scrollToTop();
-        setShowWarning(true);
-        setIsModalOpen(false);
-        setTimeout(() => {
-          setShowWarning(false);
-        }, 3000);
-      } else {
-        scrollToTop();
-        setIsModalOpen(true);
-      }
+      
 
     };
   
