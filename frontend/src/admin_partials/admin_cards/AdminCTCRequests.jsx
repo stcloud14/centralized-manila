@@ -8,8 +8,6 @@ import CTCTableView from "../admin_cedula/CTCTableView";
 import Loading from '../../partials/Loading';
 
 const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchLName, setSearchLName] = useState('');
 
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
@@ -20,79 +18,61 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
   const [selectedTransaction, setSelectedTransaction] = useState();
   const [transType, setTransType] = useState();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedDatee, setSelectedDatee] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); // for transaction_id
+  const [searchOwner, setSearchOwner] = useState(''); // for owner
+  
+  const handleSearch = (transaction) => {
+    if (!transaction || !transaction.transaction_id) {
+      return false;
+    }
+  
+    const transactionId = transaction.transaction_id.toUpperCase();
+    const query = searchQuery.toUpperCase();
+    const fullName = `${transaction.f_name} ${transaction.l_name}`.toUpperCase(); 
+    
+    const isDateInRange = (() => {
+      if (!selectedDate || !selectedDatee) {
+        return true; // No date range selected, include all transactions
+      }
+  
+      const transactionDate = new Date(transaction.time_stamp);
+      const startDate = new Date(selectedDate);
+      const endDate = new Date(selectedDatee);
+      endDate.setHours(23, 59, 59, 999);
+  
+      return startDate <= transactionDate && transactionDate <= endDate;
+    });
+  
+    // Include a check for searchOwner here
+    const isOwnerMatch = searchOwner === '' || fullName.includes(searchOwner);
+  
+    return (
+      transactionId.includes(query) &&
+      isOwnerMatch &&
+      isDateInRange() 
+    );
+  };
+  
+  
+  const filteredctcCedula = ctcCedula ? ctcCedula.filter(handleSearch) : [];
+  
+  // useEffect(() => {
+  // Any side effects related to ctcCedula or filteredctcCedula
+  // }, [ctcCedula, selectedDate, selectedDatee, searchQuery, searchOwner]);
+
+  const handleClearFilter = () => {
+    setSearchQuery('');
+    setSearchOwner('');
+    setSelectedDate('');
+    setSelectedDatee('');
+  };  
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   }
-  const [filterApplied, setFilterApplied] = useState(false);
-  const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
-  const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
-  const [filterClicked, setFilterClicked] = useState(false);
-  const [showAllTransactions, setShowAllTransactions] = useState(true);
-  const [searchInteracted, setSearchInteracted] = useState(false);
-  const [filteredSearchQuery, setFilteredSearchQuery] = useState(''); // Store the filtered search query
-  const [filteredSearchLName, setFilteredSearchLName] = useState(''); // Store the filtered search last name
-  
-  const handleSearch = (transaction) => {
-    const lName = transaction.l_name.toUpperCase();
-    const fName = transaction.f_name.toUpperCase();
-    const transactionId = transaction.transaction_id.toUpperCase();
-  
-    const isLNameMatch = (lName + ' ' + fName).includes(filteredSearchLName.toUpperCase()); // Use the stored filtered last name
-    const isTransactionMatch = transactionId.includes(filteredSearchQuery.toUpperCase()); // Use the stored filtered query
-  
-    const isDateInRange =
-      (!filterApplied || filterClicked) &&
-      (!lastSelectedFromDate || new Date(transaction.date) >= new Date(lastSelectedFromDate)) &&
-      (!lastSelectedToDate || new Date(transaction.date) <= new Date(lastSelectedToDate));
-  
-    return (filterClicked && isTransactionMatch && isLNameMatch && isDateInRange) || showAllTransactions;
-  };
-  
-  const filteredctcCedula = ctcCedula ? ctcCedula.filter(handleSearch) : [];
-  
-  const handleFilterClick = () => {
-    if (selectedDate !== lastSelectedFromDate || selectedDatee !== lastSelectedToDate) {
-      setFilterApplied(true);
-      setLastSelectedFromDate(selectedDate);
-      setLastSelectedToDate(selectedDatee);
-    }
-    setFilterClicked(true);
-    setShowAllTransactions(false);
-    setSearchInteracted(false);
-  
-    // Store the search values when the filter button is clicked
-    setFilteredSearchQuery(searchQuery);
-    setFilteredSearchLName(searchLName);
-  };
-  
-  useEffect(() => {
-    if (!filterClicked && searchInteracted) {
-      setShowAllTransactions(true);
-    }
-    setFilterApplied(false);
-  
-    // Reset stored search values when ctcCedula changes
-    setFilteredSearchQuery('');
-    setFilteredSearchLName('');
-  }, [ctcCedula, filterClicked, searchInteracted]);
-  
-  const handleClearClick = () => {
-    setSelectedDate(null);
-    setSelectedDatee(null);
-    setSearchQuery('');
-    setSearchLName('');
-    setFilterApplied(false);
-    setFilterClicked(false);
-    setShowAllTransactions(true);
-    setSearchInteracted(false);
-  
-    // Reset stored search values when clear button is clicked
-    setFilteredSearchQuery('');
-    setFilteredSearchLName('');
-  };
   
   const handleToggleView = (mode) => {
     setViewMode(mode);
@@ -535,11 +515,11 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value={searchLName} onChange={(e) => setSearchLName(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search Owner's Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchOwner} onChange={(e) => setSearchOwner(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search Owner's Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
-              <button type="button" onClick={handleFilterClick} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+              <button type="button" onClick={() => { handleSearch(); toggleDropdown(); }} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
               </div>
@@ -548,7 +528,7 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
 
             {/* Clear Button */}
             <div className="w-full sm:w-20 ml-2">
-            <button type="button" onClick={handleClearClick} className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
+            <button type="button" onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
               </svg>
