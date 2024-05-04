@@ -546,10 +546,10 @@ router.get('/revenue/', async (req, res) => {
 
     const query = `SELECT 
     SUM(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_paid_amount, 
-    SUM(CASE WHEN ut.trans_type_id = 1 OR ut.trans_type_id = 2 THEN ti.amount ELSE 0 END) AS total_rp, 
-    SUM(CASE WHEN ut.trans_type_id = 3 THEN ti.amount ELSE 0 END) AS total_bp, 
-    SUM(CASE WHEN ut.trans_type_id = 4 THEN ti.amount ELSE 0 END) AS total_cc, 
-    SUM(CASE WHEN ut.trans_type_id = 5 OR ut.trans_type_id = 6 OR ut.trans_type_id = 7 THEN ti.amount ELSE 0 END) AS total_lcr, 
+    SUM(CASE WHEN ut.trans_type_id = 1 OR ut.trans_type_id = 2 AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_rp, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount  ELSE 0 END) AS total_bp, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_cc, 
+    SUM(CASE WHEN ut.trans_type_id = 5 OR ut.trans_type_id = 6 OR ut.trans_type_id = 7 AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_lcr, 
 	DATE_FORMAT(NOW() - INTERVAL 0 MONTH, '%Y-%m-01') AS m1, 
     DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AS m2, 
     DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AS m3, 
