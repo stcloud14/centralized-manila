@@ -192,6 +192,87 @@ const router = Router();
       `;
   };
 
+  const RefundMail = (user_email, body, amount, formattedDate) => {
+    return `
+    <body style="font-family:HelveticaNeue,Helvetica,Arial,sans-serif; background-color: #e5e5f7; opacity: 0.8; background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px); background-size: 10px 10px;">
+    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:580px;margin:30px auto;background-color:#ffffff">
+      <tbody>
+        <tr style="width:100%">
+          <td>
+            <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align: center; padding: 20px">
+              <tbody>
+                <tr>
+                  <td><img src="https://i.ibb.co/p09dYX5/email-logo.png" style="display:block; outline:none; border:none; text-decoration:none; margin:auto;" width="120" /></td>
+                </tr>
+              </tbody>
+            </table>
+            <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="width:100%;display:flex">
+              <tbody>
+                <tr>
+                  <td>
+                    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation">
+                      <tbody style="width:100%">
+                        <tr style="width:100%">
+                          <td data-id="__react-email-column" style="border-bottom:1px solid rgb(238,238,238);width:249px"></td>
+                          <td data-id="__react-email-column" style="border-bottom:1px solid rgb(0, 94, 255);width:102px"></td>
+                          <td data-id="__react-email-column" style="border-bottom:1px solid rgb(238,238,238);width:249px"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:5px 20px 10px 20px">
+              <tbody>
+                <tr>
+                  <td>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0"> Centralized Manila</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0"> REFUND RECEIPT</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0"> Padre Burgos Ave, Ermita, Manila, 1000 Metro Manila</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0"> ${formattedDate}</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">-------------------------------</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Transaction ID ${body.data.transaction_id}</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">-------------------------------</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Customer Name ${body.f_name} ${body.l_name}!</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Service Requested ${body.service_requested}!</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Amount Paid ${body.data.amount},</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Refund Amount ${body.data.amount},</p>
+                  <p style="font-size:16px;line-height:24px;margin:16px 0">Refunded To ${body.formatted_payment_method}</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">-------------------------------</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Total Refunded Amount: ${body.data.amount}</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">-------------------------------</p>
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">Thank you for choosing Centralized Manila. PLease retain this copy for your records</p>    
+                  <p style="font-size:14px;line-height:1.5;margin:16px 0">------Customer Copy------</p>       
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:580px;margin:0 auto">
+      <tbody>
+        <tr>
+          <td>
+            <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation">
+              <tbody style="width:100%">
+                <tr style="width:100%">
+                  <p style="font-size:14px;line-height:24px;margin:16px 0;text-align:center;color:#706a7b">© 2024 Centralized Manila. All rights reserved.</p>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+
+      `;
+  };
+
+
 
   const FormatExpiredMail = (transaction) => {
     return `
@@ -463,6 +544,7 @@ const router = Router();
       Rejected: `
         <h2 style="font-size:26px;font-weight:bold;text-align:center">We are sorry, but your ${transType} request has been rejected.</h2>
         <p style="font-size:16px;line-height:24px;margin:16px 0">Please review the provided details and make sure all information is accurate.</h2>
+        <p style="font-size:16px;line-height:24px;margin:16px 0; text-align: justify;">We want to assure you that the paid transaction will be automatically refunded in full, with the refund currently being processed.</h2>
         <p style="font-size:16px;line-height:24px;margin:16px 0">If you need further assistance or clarification, feel free to reach out to our customer support team.</h2>
         <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
         <div style="border: 3px dashed #fecaca; padding: 3px; border-radius: 3px;">
@@ -477,11 +559,23 @@ const router = Router();
         <p style="font-size:16px;line-height:24px;margin:16px 0">If you have any questions, don't hesitate to contact our support team for assistance.</h2>
         <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
         <div style="border: 3px dashed #fed7aa; padding: 3px; border-radius: 3px;">
-            <div style="background-color: #fed7aa; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #9a3412;">
+           <div style="background-color: #a7f3d0; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #065f46;">
                 Expired
             </div>
         </div>
         `,
+      Refunded: `
+      <h2 style="font-size:26px;font-weight:bold;text-align:center">We are pleased to inform you that your Rejected ${transType} request has been refunded.</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0; text-align: justify;">We're reaching out to confirm that the refund for your transaction has been successfully processed. By now, you should have received a receipt for this refund via email.</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">If you need further assistance or clarification, feel free to reach out to our customer support team.</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
+      <div style="border: 3px dashed #a7f3d0; padding: 3px; border-radius: 3px;">
+        <div style="background-color: #a7f3d0; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #065f46;">
+          Refunded
+          </div>
+      </div>
+      <p style="font-size:16px;line-height:24px;margin:16px 0"> <span style="font-weight: 600;">Account Name:</span> ${body.f_name} ${body.l_name}  </p>
+      `,
       Complete: `
         <h2 style="font-size:26px;font-weight:bold;text-align:center">Congratulations! Your ${transType} has been successfully processed and is now marked as complete.</h2>
         <p style="font-size:16px;line-height:24px;margin:16px 0">You will receive a confirmation email shortly. If you have any additional questions or need further assistance, feel free to reach out to our customer support team.</h2>
@@ -617,6 +711,49 @@ const router = Router();
         to: user_email,
         subject: transType,
         html: ResetPassMail(user_email, body, amount),
+      });
+    
+      if (!result.response) {
+        return res.status(400).json({ error: "Error sending email" });
+      }
+    
+      res.json({
+        message: "Email has been successfully sent!",
+      });
+    
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  
+  router.post('/refund/:user_email', async (req, res) => {
+
+    const { user_email } = req.params;
+    const body = req.body;
+    const transType = req.body.data.trans_type;
+    const amount = req.body.data.amount / 100;
+
+    const today = new Date();
+    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+    const formattedDate = today.toLocaleDateString('en-US', options);
+
+    console.log("Refund/body", body)
+
+
+    // const statType = req.body.status_type;
+  
+    if (!user_email) {
+    return res.status(400).json({ error: "user_email is missing or empty!" });
+    }
+
+    try {
+      const result = await transporter.sendMail({
+        from: { name: "Centralized Manila", address: process.env.MAIL_USERNAME },
+        to: user_email,
+        subject: transType,
+        html: RefundMail(user_email, body, amount, formattedDate),
       });
     
       if (!result.response) {
