@@ -252,28 +252,28 @@ const router = Router();
                   <td><hr style="border-top: 3px dotted black;"></td>
                   <td><hr style="border-top: 3px dotted black;"></td>
                 </tr>
-                <tr>
-                  <td style="padding:10px 0px 0px 0px">Customer Name</td>
+                <tr style="white-space:nowrap;">
+                  <td style="padding:10px 0px 0px 0px;white-space:nowrap;">Customer Name</td>
                   <td></td>
                   <td style="padding:10px 0px 0px 0px; white-space:nowrap;">${body.f_name} ${body.l_name}</td>
                 </tr>
-                <tr>
-                  <td>Service Requested</td>
+                <tr style="white-space:nowrap;">
+                  <td style="white-space:nowrap;">Service Requested</td>
                   <td></td>
                   <td style="white-space:nowrap;">${body.service_requested}</td>
                 </tr>
-                <tr>
-                  <td>Amount Paid</td>
+                <tr style="white-space:nowrap;">
+                  <td style="white-space:nowrap;">Amount Paid</td>
                   <td></td>
                   <td style="white-space:nowrap;">${body.data.amount}</td>
                 </tr>
-                <tr>
-                  <td>Refund Amount</td>
+                <tr style="white-space:nowrap;">
+                  <td style="white-space:nowrap;">Refund Amount</td>
                   <td></td>
                   <td style="white-space:nowrap;">${body.data.amount}</td>
                 </tr>
-                <tr>
-                  <td>Refunded To</td>
+                <tr style="white-space:nowrap;">
+                  <td style="white-space:nowrap;">Refunded To</td>
                   <td></td>
                   <td style="white-space:nowrap;">${body.formatted_payment_method}</td>
                 </tr>
@@ -282,7 +282,7 @@ const router = Router();
                   <td></td>
                   <td style="white-space:nowrap;">--------------------</td>
                 </tr>
-                <tr>
+                <tr style="white-space:nowrap;">
                   <td style="white-space:nowrap;font-weight:bold">Total Refunded Amount</td>
                   <td></td>
                   <td style="white-space:nowrap;font-weight:bold">${body.data.amount}</td>
