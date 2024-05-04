@@ -10,41 +10,34 @@ import CityDropdown from '../partials/profile/CityDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
 
-const ContactInfoForm =()=>{
-
+const ContactInfoForm = () => {
   const { user_id } = useParams();
-  // const location = useLocation();
-  // const { pathname } = location;
-  // console.log(pathname);
-  // const user_id = pathname.split("/")[2];
-
   const [editMode, setEditMode] = useState(false);
-  const [userContact, setUserContact]=useState({})
+  const [userContact, setUserContact] = useState({});
+  const [originalUserContact, setOriginalUserContact] = useState({});
 
   console.log(userContact);
-    useEffect(()=>{
-        const fetchUserContact= async()=>{
-            try{
-                const res= await axios.get(`http://localhost:8800/profile/contact/${user_id}`)
-                setUserContact(res.data[0])
-            }catch(err){
-                console.log(err)  
-            }
-        }
 
-        fetchUserContact()
-        console.log(userContact);
-  }, [])
+  useEffect(() => {
+    const fetchUserContact = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/profile/contact/${user_id}`);
+        setUserContact(res.data[0]);
+        setOriginalUserContact(res.data[0]); // Set original values
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-
+    fetchUserContact();
+    console.log(userContact);
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-  
+
     setUserContact((prevData) => {
-      
       if (name === 'region_id') {
-        
         return {
           ...prevData,
           region_id: value,
@@ -52,16 +45,15 @@ const ContactInfoForm =()=>{
           city_id: '',
         };
       }
-  
+
       return {
         ...prevData,
         [name]: value,
       };
     });
   };
-  
-  const [isSuccess, setIsSuccess] = useState(false); // New state for success message
 
+  const [isSuccess, setIsSuccess] = useState(false); // New state for success message
   const contentRef = useRef(null);
 
   const handleSubmit = async (e) => {
@@ -92,9 +84,14 @@ const ContactInfoForm =()=>{
   const [showWarning, setShowWarning] = useState(false);
 
   const handleEdit = () => {
-    setEditMode(!editMode);
+    // If already in edit mode, revert changes
+    if (editMode) {
+      setUserContact(originalUserContact);
+      setEditMode(false);
+    } else {
+      setEditMode(true);
+    }
   };
-
   
   const handleProceed = (e) => {
     e.preventDefault();

@@ -6,30 +6,25 @@ import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
 
-const GovernmentInfoForm =()=>{
-  
+const GovernmentInfoForm = () => {
   const { user_id } = useParams();
-  // const location = useLocation();
-  // const { pathname } = location;
-  // console.log(pathname);
-  // const user_id = pathname.split("/")[2];
-
   const [editMode, setEditMode] = useState(false);
-  const [userPersonal, setUserPersonal]=useState({})
-  // const id = 'RL1741';
+  const [userPersonal, setUserPersonal] = useState({});
+  const [originalUserPersonal, setOriginalUserPersonal] = useState({});
 
-    console.log(userPersonal)
-      
-    useEffect(()=>{
-        const fetchUserPersonal= async()=>{
-            try{
-                const res= await axios.get(`http://localhost:8800/profile/govinfo/${user_id}`);
-                setUserPersonal(res.data[0]);
-            }catch(err){
-                console.log(err)
-            }
-        }
-        fetchUserPersonal();
+  console.log(userPersonal);
+
+  useEffect(() => {
+    const fetchUserPersonal = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/profile/govinfo/${user_id}`);
+        setUserPersonal(res.data[0]);
+        setOriginalUserPersonal(res.data[0]); // Set original values
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserPersonal();
   }, []);
 
   const handleInputChange = (e) => {
@@ -42,7 +37,6 @@ const GovernmentInfoForm =()=>{
   };
 
   const [isSuccess, setIsSuccess] = useState(false); // New state for success message
-
   const contentRef = useRef(null);
 
   const handleSubmit = async (e) => {
@@ -72,9 +66,18 @@ const GovernmentInfoForm =()=>{
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
 
+  // Toggle edit mode
   const handleEdit = () => {
-    setEditMode(!editMode);
+    // If already in edit mode, revert changes
+    if (editMode) {
+      setUserPersonal(originalUserPersonal);
+      setEditMode(false);
+    } else {
+      setEditMode(true);
+    }
   };
+  
+
 
   const handleProceed = (e) => {
     e.preventDefault();

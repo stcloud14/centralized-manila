@@ -32,31 +32,40 @@ const PersonalInfoForm =()=>{
     l_name: '',
   });
 
+  const [originalUserPersonal, setOriginalUserPersonal] = useState({});
+  const [originalUserBirth, setOriginalUserBirth] = useState({});
 
   console.log(userName)
   
-    useEffect(()=>{
-        const fetchUserPersonal= async()=>{
-            try{
-                const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
-                setUserPersonal(res.data.user_personal[0])
-                setUserBirth(res.data.birth_info[0])
-                setUserName({
-                  f_name: res.data.user_personal[0].f_name,
-                  l_name: res.data.user_personal[0].l_name,
-                });
-                
-
-            }catch(err){
-                console.log(err)
-            }
-        }
-        fetchUserPersonal()
-    },[])
-    
-    const handleEdit = () => {
-      setEditMode(!editMode);
+    useEffect(() => {
+    const fetchUserPersonal = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/profile/${user_id}`);
+        setUserPersonal(res.data.user_personal[0]);
+        setUserBirth(res.data.birth_info[0]);
+        setOriginalUserPersonal(res.data.user_personal[0]); // Set original values
+        setOriginalUserBirth(res.data.birth_info[0]); // Set original values
+        setUserName({
+          f_name: res.data.user_personal[0].f_name,
+          l_name: res.data.user_personal[0].l_name,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     };
+    fetchUserPersonal();
+  }, []);
+
+   const handleEdit = () => {
+    // If already in edit mode, revert changes
+    if (editMode) {
+      setUserPersonal(originalUserPersonal);
+      setUserBirth(originalUserBirth);
+      setEditMode(false);
+    } else {
+      setEditMode(true);
+    }
+  };
 
   const handleChangePersonal = (e) => {
   const { name, value } = e.target;
