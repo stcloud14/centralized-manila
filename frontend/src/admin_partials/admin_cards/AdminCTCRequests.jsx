@@ -36,7 +36,7 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
           return true; // No date range selected, include all transactions
         }
   
-        const transactionDate = new Date(transaction.time_stamp);
+        const transactionDate = new Date(transaction.date_processed);
         const startDate = new Date(selectedDate);
         const endDate = new Date(selectedDatee);
         endDate.setHours(23, 59, 59, 999);
