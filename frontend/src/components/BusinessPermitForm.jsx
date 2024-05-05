@@ -275,7 +275,7 @@ const BusinessPermitForm =()=>{
         maxLength = 11;
       } else if (id === 'bus_tel_no') {
         maxLength = 8;
-      }else if (id === 'bus_bzip') {
+      }else if (id === 'bus_bzip' , 'bus_zip') {
         maxLength = 4;
       }
 
