@@ -22,6 +22,8 @@ const AdminBusinessForm1 =()=>{
   const [isFetchedData, setIsFetchedData] = useState(false);
 
   const [businessPermit, setBusinessPermit] = useState([]);
+  console.log("userrole", admin_type)
+
 
   const fetchUserTransaction = async () => {
     try {

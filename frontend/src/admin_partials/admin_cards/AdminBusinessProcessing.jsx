@@ -8,110 +8,73 @@ import BPTableView from '../admin_business/BPTableView';
 import Loading from '../../partials/Loading';
 
 const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [selectedDate, setSelectedDate] = useState('');
-    const [selectedDatee, setSelectedDatee] = useState('');
-    const [searchQuery, setSearchQuery] = useState('');
-    const [viewMode, setViewMode] = useState('table'); 
+  const [viewMode, setViewMode] = useState('table');
+  const [modalView, setModalView] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isProcessConfirm, setIsProcessConfirm] = useState(false);
+  const [isRejectConfirm, setIsRejectConfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState();
+  const [transType, setTransType] = useState();
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-    const [modalView, setModalView] = useState(false); 
-    const [isSuccess, setIsSuccess] = useState(false);
-    
-    const [isCompleteConfirm, setIsCompleteConfirm] = useState(false);
-    const [isRejectConfirm, setIsRejectConfirm] = useState(false);
+  // State variables for filtering
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDatee, setSelectedDatee] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchTIN, setSearchTIN] = useState('');
+  const [selectType, setSelectType] = useState('All');
+  const [filteredBusinessPermit, setFilteredBusinessPermit] = useState([]);
 
-    const [isLoading, setIsLoading] = useState(false);
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
 
-    const [selectedTransaction, setSelectedTransaction] = useState();
-    const [transType, setTransType] = useState();
-    
-    const [searchTIN, setSearchTIN] = useState('');
-    const [selectType, setSelectType] = useState('');
+  const handleSearch = () => {
+    const filteredData = businessPermit.filter(transaction => {
+    const transactionId = (transaction?.transaction_id || '').toUpperCase();
+    const query = searchQuery.toUpperCase();
+    const tinId = (transaction?.bus_tin || '').toUpperCase();
 
-    const toggleDropdown = () => {
-      setDropdownOpen(!isDropdownOpen);
-    };
-
-    const [filterApplied, setFilterApplied] = useState(false);
-    const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
-    const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
-    const [lastSelectedBusinessType, setLastSelectedBusinessType] = useState(null);
-    const [filteredSearchQuery, setFilteredSearchQuery] = useState(''); // Store the filtered search query
-    const [filteredSearchTIN, setFilteredSearchTIN] = useState(''); // Store the filtered search TIN
-    
-    const handleSearch = (transaction) => {
-      const transactionId = (transaction?.transaction_id || '').toUpperCase();
-      const tinId = (transaction?.bus_tin || '').toUpperCase();
-    
-      const isTINMatch = tinId.includes(filteredSearchTIN.toUpperCase()); // Use the stored filtered TIN
-      const isTransactionMatch = transactionId.includes(filteredSearchQuery.toUpperCase()); // Use the stored filtered query
-    
-      // Check if the transaction date is within the selected date range only if the filter is applied
-      const isDateInRange =
-        !filterApplied ||
-        (!lastSelectedFromDate || new Date(transaction?.date) >= new Date(lastSelectedFromDate)) &&
-        (!lastSelectedToDate || new Date(transaction?.date) <= new Date(lastSelectedToDate));
-    
-      // Check if business type filtering should be applied
-      const isBusinessTypeMatch =
-        !filterApplied ||
-        !selectType ||
-        selectType === 'All' ||
-        (lastSelectedBusinessType && transaction?.bus_type.includes(lastSelectedBusinessType.toUpperCase()));
-    
-      return isTransactionMatch && isTINMatch && isBusinessTypeMatch && isDateInRange;
-    };
-    
-    const filteredBusinessPermit = businessPermit ? businessPermit.filter(handleSearch) : [];
-    
-    const handleFilterClick = () => {
-      // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date or business type has changed
-      if (
-        selectedDate !== lastSelectedFromDate ||
-        selectedDatee !== lastSelectedToDate ||
-        selectType !== lastSelectedBusinessType
-      ) {
-        setFilterApplied(true);
-        setLastSelectedFromDate(selectedDate);
-        setLastSelectedToDate(selectedDatee);
-        setLastSelectedBusinessType(selectType);
-      } else {
-        // Reset filter when no changes are made
-        setFilterApplied(false);
+    const isDateInRange = () => {
+      if (!selectedDate || !selectedDatee) {
+        return true; // No date range selected, include all transactions
       }
-    
-      // Store the search values when the filter button is clicked
-      setFilteredSearchQuery(searchQuery);
-      setFilteredSearchTIN(searchTIN);
+
+      const transactionDate = new Date(transaction.date_processed);
+      const startDate = new Date(selectedDate);
+      const endDate = new Date(selectedDatee);
+      endDate.setHours(23, 59, 59, 999);
+
+      return startDate <= transactionDate && transactionDate <= endDate;
     };
-    
-    useEffect(() => {
-      // Reset filter when businessPermit changes
-      setFilterApplied(false);
-      // Reset stored search values when businessPermit changes
-      setFilteredSearchQuery('');
-      setFilteredSearchTIN('');
-    }, [businessPermit]);
-    
-    const handleClearClick = () => {
-      // Clear the selected dates, business type, and other modal-related data
-      setSelectedDate(null);
-      setSelectedDatee(null);
-      setSearchQuery('');
-      setSearchTIN('');
-      setSelectType('All'); // Reset selectType to 'All'
-      // ... (other modal-related state variables you want to clear)
-      setFilterApplied(false);
-      // Reset stored search values when clear button is clicked
-      setFilteredSearchQuery('');
-      setFilteredSearchTIN('');
-    };
-    
+
+    const isTINMatch = tinId.includes(searchTIN.toUpperCase());
+    const isBusinessTypeMatch = selectType === 'All' || transaction?.bus_type === selectType;
+
+    return transactionId.includes(query) && isTINMatch && isBusinessTypeMatch && isDateInRange();
+  });
+
+  setFilteredBusinessPermit(filteredData);
+};
+
+useEffect(() => {
+  setFilteredBusinessPermit(businessPermit);
+}, [businessPermit]);
+
+  const handleClearClick = () => {
+    setSelectedDate('');
+    setSelectedDatee('');
+    setSearchQuery('');
+    setSearchTIN('');
+    setSelectType('All');
+    setFilteredBusinessPermit(businessPermit);
+  };
 
     const handleToggleView = (mode) => {
       setViewMode(mode);
     };
-  
+
     const handleModalOpen = (transaction, type) => {
       setSelectedTransaction(transaction);
       setTransType(type);
@@ -133,29 +96,21 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
     };
   
     const handleConfirmClose = () => {
-      setIsCompleteConfirm(false);
+      setIsProcessConfirm(false);
       setIsRejectConfirm(false);
-      setModalView(false);
-  };
+    };
+
+    const [rejectCause, setRejectCause] = useState('');
+    const [continueButtonDisabled, setContinueButtonDisabled] = useState(true); // Initialize with true assuming initially "Select Cause" is selected
   
-
-  const handleCompleteConfirm = (transaction) => {
-    setSelectedTransaction(transaction);
-    setIsCompleteConfirm(true);
-  };
-
-
-  const [rejectCause, setRejectCause] = useState('');
-  const [continueButtonDisabled, setContinueButtonDisabled] = useState(true); // Initialize with true assuming initially "Select Cause" is selected
-
-
-  const handleOptionChange = (event) => {
-    const selectedValue = event.target.value;
-    setRejectCause(selectedValue);
   
-    // Enable the continue button if a valid option is selected, otherwise disable it
-    setContinueButtonDisabled(selectedValue === "");
-  };
+    const handleOptionChange = (event) => {
+      const selectedValue = event.target.value;
+      setRejectCause(selectedValue);
+    
+      // Enable the continue button if a valid option is selected, otherwise disable it
+      setContinueButtonDisabled(selectedValue === "");
+    };
 
     const renderContent = () => {
       if (viewMode === 'table') {
@@ -522,7 +477,7 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
                 </div>
               </div>
 
-              <button type="button" onClick={handleFilterClick} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+              <button type="button" onClick={() => { handleSearch(); toggleDropdown(); }}  className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
               </div>
@@ -585,7 +540,7 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
             {renderContent()}
             
             {/* PROCESS MODAL */}
-          {isCompleteConfirm && (
+          {isProcessConfirm && (
               <div className="fixed z-50 inset-0 overflow-y-auto">
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                   <div className="fixed inset-0 transition-opacity" aria-hidden="true">
