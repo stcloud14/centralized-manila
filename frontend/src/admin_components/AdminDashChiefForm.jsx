@@ -395,10 +395,10 @@ const AdminDashChiefForm = React.memo(
             pdf.text(lineOfSymbols4, textXPosition4, textYPosition4);
           
               const noteText = [
-                "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
-                "financial and operational performance of Departmental Transaction as of [reporting period]. Any identified",
-                "discrepancies or errors should be reported promptly for correction."
-            ];
+                `I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the`,
+                `financial and operational performance of Real Property Transactions as of ${selectedYear}. Any identified`,
+                `discrepancies or errors should be reported promptly for correction.`
+            ];   
             const noteXPosition = 15; // Adjust as needed
             const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
 

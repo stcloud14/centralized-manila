@@ -159,10 +159,10 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
         pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
           
           const noteText = [
-            "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
-            "financial and operational performance of Registry as of [reporting period]. Any identified",
-            "discrepancies or errors should be reported promptly for correction."
-        ];
+            `I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the`,
+            `financial and operational performance of Real Property Transactions as of ${selectedYear}. Any identified`,
+            `discrepancies or errors should be reported promptly for correction.`
+        ];   
         const noteXPosition = 15; // Adjust as needed
         const noteYPosition = pdf.autoTable.previous.finalY + 130; // Adjust the Y position
 
