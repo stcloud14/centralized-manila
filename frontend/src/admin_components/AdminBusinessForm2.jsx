@@ -21,6 +21,7 @@ const AdminBusinessForm2 =()=>{
   const logoSrc = '../src/images/mnl_footer.svg';
 
   const [businessPermit, setBusinessPermit] = useState([]);
+  console.log("userrole", admin_type)
 
   const fetchUserTransaction = async () => {
     try {
