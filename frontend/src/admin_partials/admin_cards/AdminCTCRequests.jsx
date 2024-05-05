@@ -21,53 +21,47 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
 
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedDatee, setSelectedDatee] = useState('');
-  const [searchQuery, setSearchQuery] = useState(''); // for transaction_id
-  const [searchOwner, setSearchOwner] = useState(''); // for owner
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const [searchOwner, setSearchOwner] = useState(''); 
+  const [filteredctcCedula, setFilteredctcCedula] = useState([]);
   
-  const handleSearch = (transaction) => {
-    if (!transaction || !transaction.transaction_id) {
-      return false;
-    }
+  const handleSearch = () => {
+    const filteredData = ctcCedula.filter(transaction => {
+      const transactionId = transaction.transaction_id.toUpperCase();
+      const query = searchQuery.toUpperCase();
+      const fullName = `${transaction.f_name} ${transaction.l_name}`.toUpperCase(); 
+      
+      const isDateInRange = () => {
+        if (!selectedDate || !selectedDatee) {
+          return true; // No date range selected, include all transactions
+        }
   
-    const transactionId = transaction.transaction_id.toUpperCase();
-    const query = searchQuery.toUpperCase();
-    const fullName = `${transaction.f_name} ${transaction.l_name}`.toUpperCase(); 
-    
-    const isDateInRange = (() => {
-      if (!selectedDate || !selectedDatee) {
-        return true; // No date range selected, include all transactions
-      }
+        const transactionDate = new Date(transaction.date_processed);
+        const startDate = new Date(selectedDate);
+        const endDate = new Date(selectedDatee);
+        endDate.setHours(23, 59, 59, 999);
   
-      const transactionDate = new Date(transaction.time_stamp);
-      const startDate = new Date(selectedDate);
-      const endDate = new Date(selectedDatee);
-      endDate.setHours(23, 59, 59, 999);
+        return startDate <= transactionDate && transactionDate <= endDate;
+      };
   
-      return startDate <= transactionDate && transactionDate <= endDate;
+      const isOwnerMatch = searchOwner === '' || fullName.includes(searchOwner);
+      
+      return transactionId.includes(query) && isOwnerMatch && isDateInRange();
     });
   
-    // Include a check for searchOwner here
-    const isOwnerMatch = searchOwner === '' || fullName.includes(searchOwner);
-  
-    return (
-      transactionId.includes(query) &&
-      isOwnerMatch &&
-      isDateInRange() 
-    );
+    setFilteredctcCedula(filteredData);
   };
   
-  
-  const filteredctcCedula = ctcCedula ? ctcCedula.filter(handleSearch) : [];
-  
-  // useEffect(() => {
-  // Any side effects related to ctcCedula or filteredctcCedula
-  // }, [ctcCedula, selectedDate, selectedDatee, searchQuery, searchOwner]);
+  useEffect(() => {
+    setFilteredctcCedula(ctcCedula);
+  }, [ctcCedula]);
 
   const handleClearFilter = () => {
     setSearchQuery('');
     setSearchOwner('');
     setSelectedDate('');
     setSelectedDatee('');
+    setFilteredctcCedula(ctcCedula);
   };  
 
   const toggleDropdown = () => {
