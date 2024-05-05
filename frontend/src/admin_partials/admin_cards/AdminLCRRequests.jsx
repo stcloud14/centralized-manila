@@ -14,108 +14,139 @@ import Loading from '../../partials/Loading';
 const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData }) => {
   
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedDatee, setSelectedDatee] = useState('');
-  const [selectType, setSelectType] = useState('');
-  const [searchLName, setSearchLName] = useState('');
-
-  const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState('table'); 
-
   const [modalView, setModalView] = useState(false); 
   const [isSuccess, setIsSuccess] = useState(false);
-  
   const [isProcessConfirm, setIsProcessConfirm] = useState(false);
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
-  
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [selectedTransaction, setSelectedTransaction] = useState();
   const [transType, setTransType] = useState();
+
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDatee, setSelectedDatee] = useState('');
+  const [selectedType, setSelectedType] = useState('All');
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const [searchOwner, setSearchOwner] = useState(''); 
+  const [filteredBirthCert, setFilteredBirthCert] = useState([]); 
+  const [filteredDeathCert, setFilteredDeathCert] = useState([]); 
+  const [filteredMarriageCert, setFilteredMarriageCert] = useState([]); 
+
+  const handleSearch = () => {
+    const filteredBC = birthCert.filter(transaction => {
+      const transactionId = transaction.transaction_id.toUpperCase();
+      const query = searchQuery.toUpperCase();
+      const Name = ((transaction.f_name || '') + (transaction.m_name || '') + (transaction.l_name || '')).toUpperCase().includes(searchOwner.toUpperCase());
+  
+      const isDateInRange = () => {
+        if (!selectedDate || !selectedDatee) {
+          return true; // No date range selected, include all transactions
+        }
+  
+        const transactionDate = new Date(transaction.date_processed);
+        const startDate = new Date(selectedDate);
+        const endDate = new Date(selectedDatee);
+        endDate.setHours(23, 59, 59, 999);
+  
+        return startDate <= transactionDate && transactionDate <= endDate;
+      };
+  
+      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 ||
+        (selectedType === 'Birth Certificate' && transaction.trans_type === 'Birth Certificate') ||
+        (selectedType === 'Death Certificate' && transaction.trans_type === 'Death Certificate') ||
+        (selectedType === 'Marriage Certificate' && transaction.trans_type === 'Marriage Certificate');
+  
+      return transactionId.includes(query) && Name && isTypeMatch && isDateInRange();
+    });
+  
+    const filteredDC = deathCert.filter(transaction => {
+      const transactionId = transaction.transaction_id.toUpperCase();
+      const query = searchQuery.toUpperCase();
+      const Name = ((transaction.f_name || '') + (transaction.m_name || '') + (transaction.l_name || '')).toUpperCase().includes(searchOwner.toUpperCase());
+  
+      const isDateInRange = () => {
+        if (!selectedDate || !selectedDatee) {
+          return true; // No date range selected, include all transactions
+        }
+  
+        const transactionDate = new Date(transaction.date_processed);
+        const startDate = new Date(selectedDate);
+        const endDate = new Date(selectedDatee);
+        endDate.setHours(23, 59, 59, 999);
+  
+        return startDate <= transactionDate && transactionDate <= endDate;
+      };
+  
+      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 ||
+        (selectedType === 'Birth Certificate' && transaction.trans_type === 'Birth Certificate') ||
+        (selectedType === 'Death Certificate' && transaction.trans_type === 'Death Certificate') ||
+        (selectedType === 'Marriage Certificate' && transaction.trans_type === 'Marriage Certificate');
+  
+      return transactionId.includes(query) && Name && isTypeMatch && isDateInRange();
+    });
+  
+    const filteredMC = marriageCert.filter(transaction => {
+      const transactionId = transaction.transaction_id.toUpperCase();
+      const query = searchQuery.toUpperCase();
+      const Name = ((transaction.f_name || '') + (transaction.m_name || '') + (transaction.l_name || '')).toUpperCase().includes(searchOwner.toUpperCase());
+  
+      const isDateInRange = () => {
+        if (!selectedDate || !selectedDatee) {
+          return true; // No date range selected, include all transactions
+        }
+  
+        const transactionDate = new Date(transaction.date_processed);
+        const startDate = new Date(selectedDate);
+        const endDate = new Date(selectedDatee);
+        endDate.setHours(23, 59, 59, 999);
+  
+        return startDate <= transactionDate && transactionDate <= endDate;
+      };
+  
+      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 ||
+        (selectedType === 'Birth Certificate' && transaction.trans_type === 'Birth Certificate') ||
+        (selectedType === 'Death Certificate' && transaction.trans_type === 'Death Certificate') ||
+        (selectedType === 'Marriage Certificate' && transaction.trans_type === 'Marriage Certificate');
+  
+      return transactionId.includes(query) && Name && isTypeMatch && isDateInRange();
+    });
+  
+    setFilteredBirthCert(filteredBC);
+    setFilteredDeathCert(filteredDC);
+    setFilteredMarriageCert(filteredMC);
+  };  
+
+  useEffect(() => {
+    setFilteredBirthCert(birthCert);
+  }, [birthCert]);
+  
+  useEffect(() => {
+    setFilteredDeathCert(deathCert);
+  }, [deathCert]);
+
+  useEffect(() => {
+    setFilteredMarriageCert(marriageCert);
+  }, [marriageCert]);
+
+  const handleClearFilter = () => {
+    setSearchQuery('');
+    setSearchOwner('');
+    setSelectedDate('');
+    setSelectedDatee('');
+    setSelectedType('All');
+    setFilteredBirthCert(birthCert);
+    setFilteredDeathCert(deathCert);
+    setFilteredMarriageCert(marriageCert);
+  };
+
+  const handleInputChange = (e) => {
+    const selectedType = e.target.value;
+    setSelectedType(selectedType);
+  };
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
- 
-  const [filterApplied, setFilterApplied] = useState(false);
-  const [lastSelectedFromDate, setLastSelectedFromDate] = useState(null);
-  const [lastSelectedToDate, setLastSelectedToDate] = useState(null);
-  const [lastSelectedBusinessType, setLastSelectedBusinessType] = useState(null);
-  const [filteredSearchQuery, setFilteredSearchQuery] = useState(''); // Store the filtered search query
-  const [filteredSearchLName, setFilteredSearchLName] = useState(''); // Store the filtered search last name
-  
-  const handleSearch = (transaction) => {
-    const lName = (transaction.l_name || '').toUpperCase();
-    const fName = (transaction.f_name || '').toUpperCase();
-  
-    const transactionId = (transaction?.transaction_id || '').toUpperCase();
-    const businessType = (transaction?.trans_type || '').toUpperCase();
-    
-    const isLNameMatch = (lName + ' ' + fName).includes(filteredSearchLName.toUpperCase()); // Use the stored filtered last name
-    const isTransactionMatch = transactionId.includes(filteredSearchQuery.toUpperCase()); // Use the stored filtered query
-  
-    // Check if the transaction date is within the selected date range only if the filter is applied
-    const isDateInRange =
-      !filterApplied ||
-      (!lastSelectedFromDate || new Date(transaction?.date) >= new Date(lastSelectedFromDate)) &&
-      (!lastSelectedToDate || new Date(transaction?.date) <= new Date(lastSelectedToDate));
-  
-    // Check if business type filtering should be applied
-    const isBusinessTypeMatch =
-      !filterApplied ||
-      !selectType ||
-      selectType === 'All' ||
-      (lastSelectedBusinessType && businessType.includes(lastSelectedBusinessType.toUpperCase()));
-  
-    return isTransactionMatch && isLNameMatch && isBusinessTypeMatch && isDateInRange;
-  };
-  
-  const filteredBirthCert = birthCert ? birthCert.filter(handleSearch) : [];
-  const filteredDeathCert = deathCert ? deathCert.filter(handleSearch) : [];
-  const filteredMarriageCert = marriageCert ? marriageCert.filter(handleSearch) : [];
-  
-  const handleFilterClick = () => {
-    // Only set the filter and update lastSelectedFromDate/lastSelectedToDate if the selected date or business type has changed
-    if (
-      selectedDate !== lastSelectedFromDate ||
-      selectedDatee !== lastSelectedToDate ||
-      selectType !== lastSelectedBusinessType
-    ) {
-      setFilterApplied(true);
-      setLastSelectedFromDate(selectedDate);
-      setLastSelectedToDate(selectedDatee);
-      setLastSelectedBusinessType(selectType);
-    } else {
-      // Reset filter when no changes are made
-      setFilterApplied(false);
-    }
-  
-    // Store the search values when the filter button is clicked
-    setFilteredSearchQuery(searchQuery);
-    setFilteredSearchLName(searchLName);
-  };
-  
-  useEffect(() => {
-    // Reset filter when businessPermit changes
-    setFilterApplied(false);
-  }, [birthCert, deathCert, marriageCert]);
-  
-  const handleClearClick = () => {
-    // Clear the selected dates, business type, and other modal-related data
-    setSelectedDate(null);
-    setSelectedDatee(null);
-    setSearchQuery('');
-    setSelectType('All'); // Reset selectType to 'All'
-    // ... (other modal-related state variables you want to clear)
-    setFilterApplied(false);
-    setSearchLName('');
-  
-    // Reset stored search values when clear button is clicked
-    setFilteredSearchQuery('');
-    setFilteredSearchLName('');
-  };
-  
 
   const handleToggleView = (mode) => {
     setViewMode(mode);
@@ -504,11 +535,11 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
               {/* Type Row */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block text-xs">Type:</span>
-                  <select  value={selectType} onChange={(e) => setSelectType(e.target.value)} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                  <select value={selectedType} onChange={handleInputChange} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
                     <option value="All" className="dark:bg-[#3d3d3d]">Select Type</option>
                     <option value="Birth Certificate" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
-                    <option value="Marriage Certificate" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
                     <option value="Death Certificate" className="dark:bg-[#3d3d3d]">Death Certificate</option>
+                    <option value="Marriage Certificate" className="dark:bg-[#3d3d3d]">Marriage Certificate</option>
                   </select>
               </div>
 
@@ -535,12 +566,12 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value={searchLName} onChange={(e) => setSearchLName(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search Client's Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input value={searchOwner} onChange={(e) => setSearchOwner(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search Client's Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
                 </div>
               </div>
 
 
-              <button type="button" onClick={handleFilterClick} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+              <button type="button" onClick={() => { handleSearch(); toggleDropdown(); }} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
               </div>
@@ -549,7 +580,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
 
             {/* Clear Button */}
             <div className="w-full sm:w-20 ml-2">
-            <button type="button" onClick={handleClearClick} className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
+            <button type="button" onClick={handleClearFilter} className="bg-slate-500 hover:bg-slate-600 text-white justify-center py-1 w-full rounded-sm inline-flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
               </svg>
