@@ -112,7 +112,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
 
                 // Calculation for the revenue
                 const averageMonthlyRevenue = RevenueData.totalRP ? RevenueData.totalRP / 12 : 0;
-                const totalRefundAmount = 0;
+                const totalRefundAmount = RevenueData.totalRRP || 0;
                 const totalRefundIssued = 0;
 
                 const pdf = new jsPDF();

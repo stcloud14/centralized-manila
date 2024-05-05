@@ -157,7 +157,7 @@ const AdminDashChiefForm = React.memo(
 
           // Calculation for the revenue
           const averageMonthlyRevenue = RevenueData.totalPaid ? RevenueData.totalPaid / 12 : 0;
-          const totalRefundAmount = 0;
+          const totalRefundAmount = RevenueData.totalRPaid || 0;
           const totalRefundIssued = 0;
 
           const pdf = new jsPDF();
@@ -366,7 +366,7 @@ const AdminDashChiefForm = React.memo(
               pdf.text(lineOfSymbols3, textXPosition3, textYPosition3);
 
               const fourthTableData = [
-                ['Verifiend User', verifiedUsers.length > 0 ? verifiedUsers[0].total_verified : 'N/A',],
+                ['Verified User', verifiedUsers.length > 0 ? verifiedUsers[0].total_verified : 'N/A',],
                 ['Unverified User',  verifiedUsers.length > 0 ? verifiedUsers[0].total_unverified : 'N/A', ],
                 ['Total Users', verifiedUsers.length > 0 ? verifiedUsers[0].total_users : 'N/A',]]
 

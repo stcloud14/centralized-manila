@@ -112,7 +112,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
 
       // Calculation for the revenue
       const averageMonthlyRevenue = RevenueData.totalBP ? RevenueData.totalBP / 12 : 0;
-      const totalRefundAmount = 0;
+      const totalRefundAmount = RevenueData.TotalRBP || 0;
       const totalRefundIssued = 0;
 
       const pdf = new jsPDF();
