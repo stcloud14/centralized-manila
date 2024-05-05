@@ -172,13 +172,14 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
         const monthLabel = monthLabels[month];
         const dataArray = reportData[month];
         if (Array.isArray(dataArray)) {
-            const bc = dataArray[1];
-            const dc = dataArray[2];
-            const mc = dataArray[3];
-            const totalCount = bc + dc + mc;
+            const bc = dataArray[5];
+            const dc = dataArray[6];
+            const mc = dataArray[7];
+            const totalCount = bc + dc + mc; 
             tableData[monthIndex] = [monthLabel, bc, dc, mc, totalCount]; 
+            console.log('dataArray for month', monthLabel, ':', dataArray); 
         } else {
-            console.error(`Data for ${monthLabel} is not an array.`);
+            console.error(`Data is not an array.`);
         }
       }
 
@@ -305,10 +306,10 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
           pdf.text(lineOfSymbols3, textXPosition3, textYPosition3);
       
           const noteText = [
-            "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
-            "financial and operational performance of Local Civil Registry Transactions as of [reporting period]. Any identified",
-            "discrepancies or errors should be reported promptly for correction."
-        ];
+            `I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the`,
+            `financial and operational performance of Real Property Transactions as of ${selectedYear}. Any identified`,
+            `discrepancies or errors should be reported promptly for correction.`
+        ];   
         const noteXPosition = 15; // Adjust as needed
         const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
 

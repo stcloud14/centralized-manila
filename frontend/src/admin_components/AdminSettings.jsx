@@ -314,7 +314,7 @@ const AdminSettings =()=>{
                       />
                     </div>
 
-                      <div className="flex flex-col items-center w-full mb-0">
+                      <div className="flex flex-col items-center w-full mb-4">
 
                                             
                       {isButtonVisible ? (
@@ -368,9 +368,11 @@ const AdminSettings =()=>{
 
                       </div>
                     </div>
-                    <h1 className='font-medium text-xs text-center text-slate-700 dark:text-white'>If you want to change your password, contact the system admin.</h1>
-
-                    <h1 className='font-medium text-center text-slate-700 dark:text-white'>Password</h1>
+                    <h1 className='font-medium text-center text-slate-700 dark:text-white'>Change Password</h1>
+                    <div className="flex flex-col items-center w-full  border-blue-500 bg-blue-500 rounded-full py-1.5 text-center mb-2 dark:border-blue-500 dark:bg-blue-500 ">
+                      <h1 className='font-medium text-xs text-center text-white dark:text-white'>If you want to change your password, contact the system admin.</h1>
+                    </div>
+                    {/* <h1 className='font-medium text-center text-slate-700 dark:text-white'>Password</h1>
                     <div className='mb-0'>
                       <h1 className='italic text-xs'>Password must be:</h1>
                       <div className="flex items-center">
@@ -458,17 +460,17 @@ const AdminSettings =()=>{
                           )}
                         </button>
                       )}
-                    </div>
+                    </div> */}
 
                       {/* Submit Button */}
-                    <div className="flex flex-col justify-center mb-4">
+                    {/* <div className="flex flex-col justify-center mb-4">
                       <button 
                           type="submit" 
                           // onClick={handleSubmit}
                           className="w-full sm:w-auto text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
                             Change Password
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 </form>
               </div>

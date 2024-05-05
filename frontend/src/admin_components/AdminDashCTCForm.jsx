@@ -167,11 +167,12 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
         const monthLabel = monthLabels[month];
         const dataArray = reportData[month];
         if (Array.isArray(dataArray)) {
-            const ctc = dataArray[1];
-            const totalCount = ctc;
+            const ctc = dataArray[4];
+            const totalCount = ctc; 
             tableData[monthIndex] = [monthLabel, ctc, totalCount]; 
+            console.log('dataArray for month', monthLabel, ':', dataArray); 
         } else {
-            console.error(`Data for ${monthLabel} is not an array.`);
+            console.error(`Data is not an array.`);
         }
       }
 
@@ -293,10 +294,10 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
           pdf.text(lineOfSymbols3, textXPosition3, textYPosition3);
       
           const noteText = [
-            "I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the",
-            "financial and operational performance of Community Tax Transactions as of [reporting period]. Any identified",
-            "discrepancies or errors should be reported promptly for correction."
-        ];
+            `I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the`,
+            `financial and operational performance of Real Property Transactions as of ${selectedYear}. Any identified`,
+            `discrepancies or errors should be reported promptly for correction.`
+        ];   
         const noteXPosition = 15; // Adjust as needed
         const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
 
