@@ -167,11 +167,12 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
         const monthLabel = monthLabels[month];
         const dataArray = reportData[month];
         if (Array.isArray(dataArray)) {
-            const ctc = dataArray[1];
-            const totalCount = ctc;
+            const ctc = dataArray[4];
+            const totalCount = ctc; 
             tableData[monthIndex] = [monthLabel, ctc, totalCount]; 
+            console.log('dataArray for month', monthLabel, ':', dataArray); 
         } else {
-            console.error(`Data for ${monthLabel} is not an array.`);
+            console.error(`Data is not an array.`);
         }
       }
 

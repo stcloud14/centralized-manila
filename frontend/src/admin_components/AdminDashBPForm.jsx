@@ -169,11 +169,12 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
         const monthLabel = monthLabels[month];
         const dataArray = reportData[month];
         if (Array.isArray(dataArray)) {
-            const bp = dataArray[1];
-            const totalCount = bp;
+            const bp = dataArray[3];
+            const totalCount = bp; 
             tableData[monthIndex] = [monthLabel, bp, totalCount]; 
+            console.log('dataArray for month', monthLabel, ':', dataArray); 
         } else {
-            console.error(`Data for ${monthLabel} is not an array.`);
+            console.error(`Data is not an array.`);
         }
       }
 

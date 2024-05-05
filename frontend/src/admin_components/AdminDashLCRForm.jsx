@@ -172,13 +172,14 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
         const monthLabel = monthLabels[month];
         const dataArray = reportData[month];
         if (Array.isArray(dataArray)) {
-            const bc = dataArray[1];
-            const dc = dataArray[2];
-            const mc = dataArray[3];
-            const totalCount = bc + dc + mc;
+            const bc = dataArray[5];
+            const dc = dataArray[6];
+            const mc = dataArray[7];
+            const totalCount = bc + dc + mc; 
             tableData[monthIndex] = [monthLabel, bc, dc, mc, totalCount]; 
+            console.log('dataArray for month', monthLabel, ':', dataArray); 
         } else {
-            console.error(`Data for ${monthLabel} is not an array.`);
+            console.error(`Data is not an array.`);
         }
       }
 

@@ -70,7 +70,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
     return `${correctedAdminType}-${formattedDate}-${uuid1Code}`;
 };
 
-  console.log(admin_type);
+  console.log(revenue);
 
       const generateReports = async (selectedYear) => {
 
@@ -163,8 +163,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                     "13": "Total Count"
                 };
 
-                
-                // Populate tableData with data for each month
+              // Populate tableData with data for each month
               for (const month in reportData) {
                 const monthIndex = parseInt(month, 10) - 1;
                 const monthLabel = monthLabels[month];
@@ -172,10 +171,11 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                 if (Array.isArray(dataArray)) {
                     const tp = dataArray[1];
                     const tc = dataArray[2];
-                    const totalCount = tp + tc; // Calculate the total count
-                    tableData[monthIndex] = [monthLabel, tp, tc, totalCount]; // Populate the tableData array with calculated values
+                    const totalCount = tp + tc; 
+                    tableData[monthIndex] = [monthLabel, tp, tc, totalCount]; 
+                    console.log('dataArray for month', monthLabel, ':', dataArray); 
                 } else {
-                    console.error(`Data for ${monthLabel} is not an array.`);
+                    console.error(`Data is not an array.`);
                 }
               }
 
