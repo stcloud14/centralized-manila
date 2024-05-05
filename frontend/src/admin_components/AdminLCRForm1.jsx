@@ -23,6 +23,8 @@ const AdminLCRForm1 =()=>{
   const [birthCert, setBirthCert] = useState([]);
   const [deathCert, setDeathCert] = useState([]);
   const [marriageCert, setMarriageCert] = useState([]);
+  console.log("userrole", admin_type)
+
 
   const fetchUserTransaction = async () => {
     try {

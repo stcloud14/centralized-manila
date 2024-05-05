@@ -23,6 +23,7 @@ const AdminRPTaxForm1 = () => {
   const [taxPayment, setTaxPayment] = useState([]);
   const [taxClearance, setTaxClearance] = useState([]);
 
+  console.log("userrole", admin_type)
 
   const fetchUserTransaction = async () => {
     try {
