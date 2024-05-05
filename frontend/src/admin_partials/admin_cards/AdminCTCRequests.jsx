@@ -23,7 +23,7 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
   const [selectedDatee, setSelectedDatee] = useState('');
   const [searchQuery, setSearchQuery] = useState(''); 
   const [searchOwner, setSearchOwner] = useState(''); 
-  const [filteredctcCedula, setFilteredctcCedula] = useState(ctcCedula);
+  const [filteredctcCedula, setFilteredctcCedula] = useState([]);
   
   const handleSearch = () => {
     const filteredData = ctcCedula.filter(transaction => {
@@ -54,7 +54,7 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
   
   useEffect(() => {
     setFilteredctcCedula(ctcCedula);
-  }, []);
+  }, [ctcCedula]);
 
   const handleClearFilter = () => {
     setSearchQuery('');
