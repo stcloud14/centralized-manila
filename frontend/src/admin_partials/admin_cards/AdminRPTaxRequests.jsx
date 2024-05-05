@@ -49,11 +49,11 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
         return startDate <= transactionDate && transactionDate <= endDate;
       };
   
-      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || 
-        (selectedType === 'Real Property Tax Payment' && transaction.trans_type === 'Real Property Tax Payment') || 
-        (selectedType === 'Real Property Tax Clearance' && transaction.trans_type === 'Real Property Tax Clearance'); 
-
-      return transactionId.includes(query) && (TIN.includes(searchTDN.toUpperCase()) || PIN.includes(searchPIN.toUpperCase())) && isTypeMatch && isDateInRange();
+      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 ||
+        (selectedType === 'Real Property Tax Payment' && transaction.trans_type === 'Real Property Tax Payment') ||
+        (selectedType === 'Real Property Tax Clearance' && transaction.trans_type === 'Real Property Tax Clearance');
+  
+      return transactionId.includes(query) && (TIN.includes(searchTDN.toUpperCase()) || searchTDN === '') && (searchPIN === '' || PIN.includes(searchPIN.toUpperCase())) && isTypeMatch && isDateInRange();
     });
   
     const filteredPayment = taxPayment.filter(transaction => {
@@ -75,16 +75,16 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
         return startDate <= transactionDate && transactionDate <= endDate;
       };
   
-      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || 
-        (selectedType === 'Real Property Tax Payment' && transaction.trans_type === 'Real Property Tax Payment') || 
+      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 ||
+        (selectedType === 'Real Property Tax Payment' && transaction.trans_type === 'Real Property Tax Payment') ||
         (selectedType === 'Real Property Tax Clearance' && transaction.trans_type === 'Real Property Tax Clearance');
   
-      return transactionId.includes(query) && (TIN.includes(searchTDN.toUpperCase()) || PIN.includes(searchPIN.toUpperCase())) && isTypeMatch && isDateInRange();
+      return transactionId.includes(query) && (TIN.includes(searchTDN.toUpperCase()) || searchTDN === '') && (searchPIN === '' || PIN.includes(searchPIN.toUpperCase())) && isTypeMatch && isDateInRange();
     });
   
     setFilteredTaxClearance(filteredClearance);
     setFilteredTaxPayment(filteredPayment);
-  };
+  };  
   
   useEffect(() => {
     setFilteredTaxClearance(taxClearance);
