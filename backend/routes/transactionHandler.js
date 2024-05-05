@@ -249,12 +249,13 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
     
                 pdf.addImage(cedulaTransaction.logoImage, 'PNG', 128, 5, 70, 35);
     
-                pdf.setFontSize(16);
-                pdf.setTextColor(255, 255, 255); // Set text color to white
-                pdf.setFillColor(0, 0, 0); // Set background color to black
-
+                pdf.setFont("helvetica", "bold");
                 pdf.setFontSize(12);
-                pdf.setTextColor(0, 0, 0); // Set text color back to black
+                pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(10);
+                pdf.text("CTC/Cedula", 15, 19);
+                pdf.text("Transaction Details", 15, 23);
         
               const cedulaDetailsHeaders = ['Field', 'Value'];
               const cedulaDetailsData = [
@@ -282,9 +283,9 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
                 ['Valid ID to Present Upon Claiming', cedulaTransaction.valid_id_type],
                 ['Profession/Occupation/Business', cedulaTransaction.pob_status],
                 ['Income From Real Property', cedulaTransaction.income_id],
-                ['Earning From Business', cedulaTransaction.salary_id],
-                ['Earning From Profession', cedulaTransaction.gross_id],
-                ['Amount', cedulaTransaction.amount],
+                ['Earning From Business', `P ${cedulaTransaction.salary_id}`],
+                ['Earning From Profession', `P ${cedulaTransaction.gross_id}`],
+                ['Amount', `P ${cedulaTransaction.amount}`],
                 ['Date Processed', moment(cedulaTransaction.date_processed).format('MMMM D, YYYY')],
               ];
               
@@ -293,7 +294,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
                 body: cedulaDetailsData,
                 startY: 40,
                 margin: { horizontal: 10 },
-                theme: 'grid', 
+                theme: 'plain', 
                 headStyles: {
                     fillColor: [50, 50, 50], // Set the background color of the header row to black
                     textColor: 255, // Set the text color of the header row to white
@@ -427,14 +428,13 @@ router.get('/birthcert/:transaction_id/download', async (req, res) => {
                 // Add logo at the upper right corner
                 pdf.addImage(birthTransaction.logoImage, 'PNG', 128, 5, 70, 35);
     
-                // Set font size and style for the header
-                pdf.setFontSize(16);
-                pdf.setTextColor(255, 255, 255); // Set text color to white
-                pdf.setFillColor(0, 0, 0); // Set background color to black
-
-                // Set font size and style for the rest of the document
+                pdf.setFont("helvetica", "bold");
                 pdf.setFontSize(12);
-                pdf.setTextColor(0, 0, 0); // Set text color back to black
+                pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(10);
+                pdf.text("Birth Certificate", 15, 19);
+                pdf.text("Transaction Details", 15, 23);
         
               // Add birth details using autotable plugin
               const birthDetailsHeaders = ['Field', 'Value'];
@@ -465,7 +465,7 @@ router.get('/birthcert/:transaction_id/download', async (req, res) => {
                 ['Mother Middle Name', birthTransaction.mother_mname],
                 ['Mother Last Name', birthTransaction.mother_lname],
                 ['Mother Suffix', birthTransaction.mothersuffix],
-                ['Amount', birthTransaction.amount],
+                ['Amount', `P ${birthTransaction.amount}`],
                 ['Number of Copies', birthTransaction.copies],
                 ['Valid ID Type', birthTransaction.valid_id_type],
                 ['Purpose Type', birthTransaction.purpose_type],
@@ -487,7 +487,7 @@ router.get('/birthcert/:transaction_id/download', async (req, res) => {
                 body: birthDetailsData,
                 startY: 40,
                 margin: { horizontal: 10 },
-                theme: 'grid', 
+                theme: 'plain', 
                 headStyles: {
                     fillColor: [50, 50, 50], // Set the background color of the header row to black
                     textColor: 255, // Set the text color of the header row to white
@@ -620,14 +620,13 @@ router.get('/deathcert/:transaction_id/download', async (req, res) => {
                 // Add logo at the upper right corner
                 pdf.addImage(deathTransaction.logoImage, 'PNG', 128, 5, 70, 35);
     
-                // Set font size and style for the header
-                pdf.setFontSize(16);
-                pdf.setTextColor(255, 255, 255); // Set text color to white
-                pdf.setFillColor(0, 0, 0); // Set background color to black
-
-                // Set font size and style for the rest of the document
+                pdf.setFont("helvetica", "bold");
                 pdf.setFontSize(12);
-                pdf.setTextColor(0, 0, 0); // Set text color back to black
+                pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(10);
+                pdf.text("Death Certificate", 15, 19);
+                pdf.text("Transaction Details", 15, 23);
         
               // Add birth details using autotable plugin
               const deathDetailsHeaders = ['Field', 'Value'];
@@ -659,7 +658,7 @@ router.get('/deathcert/:transaction_id/download', async (req, res) => {
                 ['Purpose', deathTransaction.purpose_type],
                 ['Number of Copies', deathTransaction.copies],
                 ['Valid ID to Present Upon Claiming', deathTransaction.valid_id_type],
-                ['Amount', deathTransaction.amount],
+                ['Amount', `P ${deathTransaction.amount}`],
                 ['Date Processed', moment(deathTransaction.date_processed).format('MMMM D, YYYY')],
               ];
               
@@ -668,7 +667,7 @@ router.get('/deathcert/:transaction_id/download', async (req, res) => {
                 body: deathDetailsData,
                 startY: 40,
                 margin: { horizontal: 10 },
-                theme: 'grid', 
+                theme: 'plain', 
                 headStyles: {
                     fillColor: [50, 50, 50], // Set the background color of the header row to black
                     textColor: 255, // Set the text color of the header row to white
@@ -799,14 +798,13 @@ router.get('/marriagecert/:transaction_id/download', async (req, res) => {
                 // Add logo at the upper right corner
                 pdf.addImage(marriageTransaction.logoImage, 'PNG', 128, 5, 70, 35);
     
-                // Set font size and style for the header
-                pdf.setFontSize(16);
-                pdf.setTextColor(255, 255, 255); // Set text color to white
-                pdf.setFillColor(0, 0, 0); // Set background color to black
-
-                // Set font size and style for the rest of the document
+                pdf.setFont("helvetica", "bold");
                 pdf.setFontSize(12);
-                pdf.setTextColor(0, 0, 0); // Set text color back to black
+                pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(10);
+                pdf.text("Marriage Certificate", 15, 19);
+                pdf.text("Transaction Details", 15, 23);
         
               // Add birth details using autotable plugin
               const marriageDetailsHeaders = ['Field', 'Value'];
@@ -840,7 +838,7 @@ router.get('/marriagecert/:transaction_id/download', async (req, res) => {
                 ['Purpose', marriageTransaction.purpose_type],
                 ['Number of Copies', marriageTransaction.copies],
                 ['Valid ID to Present Upon Claiming', marriageTransaction.valid_id_type],
-                ['Amount', marriageTransaction.amount],
+                ['Amount', `P ${marriageTransaction.amount}`],
                 ['Date Processed', moment(marriageTransaction.date_processed).format('MMMM D, YYYY')],
               ];
               
@@ -849,7 +847,7 @@ router.get('/marriagecert/:transaction_id/download', async (req, res) => {
                 body: marriageDetailsData,
                 startY: 40,
                 margin: { horizontal: 10 },
-                theme: 'grid', 
+                theme: 'plain', 
                 headStyles: {
                     fillColor: [50, 50, 50], // Set the background color of the header row to black
                     textColor: 255, // Set the text color of the header row to white
@@ -1011,12 +1009,13 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
     
                 pdf.addImage(businessTransaction.logoImage, 'PNG', 128, 5, 70, 35);
     
-                pdf.setFontSize(16);
-                pdf.setTextColor(255, 255, 255); // Set text color to white
-                pdf.setFillColor(0, 0, 0); // Set background color to black
-
+                pdf.setFont("helvetica", "bold");
                 pdf.setFontSize(12);
-                pdf.setTextColor(0, 0, 0); // Set text color back to black
+                pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(10);
+                pdf.text("Business Permit", 15, 19);
+                pdf.text("Transaction Details", 15, 23);
         
               const busDetailsHeaders = ['Field', 'Value'];
               const busDetailsData = [
@@ -1052,7 +1051,7 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
                 ['Total No. of Female Employees', businessTransaction.bus_female_emp],
                 ['No. of Van Delivery Vehicles', businessTransaction.bus_van_no],
                 ['No. of Truck Delivery Vehicles', businessTransaction.bus_truck_no],
-                ['No. of MOtorcycle Delivery Vehicles', businessTransaction.bus_motor_no],
+                ['No. of Motorcycle Delivery Vehicles', businessTransaction.bus_motor_no],
 
                 ['Payers Region', businessTransaction.bus_bregion],
                 ['Payers Province', businessTransaction.bus_bprovince],
@@ -1064,14 +1063,14 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
 
                 ['Ownership', businessTransaction.owned],
                 ['Lessor Name', businessTransaction.owned === 'RENTAL' ? businessTransaction.bus_lessor || '-' : null],
-                ['Monthly Rental ', businessTransaction.owned === 'RENTAL' ? businessTransaction.bus_rent || '-' : null],
+                ['Monthly Rental ', businessTransaction.owned === 'RENTAL' ? businessTransaction.bus_rent || '-' : null], //IDK How to Put P Sign here
 
                 ['Business Office', businessTransaction.bus_office],
                 ['Line of Business', businessTransaction.bus_line],
                 ['PSIC', businessTransaction.bus_psic],
                 ['Products/Services', businessTransaction.bus_products],
                 ['No. of Units', businessTransaction.bus_units_no],
-                ['Total Capitalization', businessTransaction.bus_total_cap],
+                ['Total Capitalization', `P ${businessTransaction.bus_total_cap}`], //Showing Undefined
 
                 ['DTI Registration', businessTransaction.bus_lname],
                 ['R.P. Tax Declaration for Building', businessTransaction.bus_lname],
@@ -1092,7 +1091,7 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
                 ['Purpose', businessTransaction.purpose_type],
                 ['Number of Copies', businessTransaction.copies],
                 ['Valid ID to Present Upon Claiming', businessTransaction.valid_id_type],
-                ['Amount', businessTransaction.amount],
+                ['Amount', `P ${businessTransaction.amount}`], //Showing Undefined
                 ['Date Processed', moment(businessTransaction.date_processed).format('MMMM D, YYYY')],
               ];
               
@@ -1101,7 +1100,7 @@ router.get('/buspermit/:transaction_id/download', async (req, res) => {
                 body: busDetailsData,
                 startY: 40,
                 margin: { horizontal: 10 },
-                theme: 'grid', 
+                theme: 'plain', 
                 headStyles: {
                     fillColor: [50, 50, 50], // Set the background color of the header row to black
                     textColor: 255, // Set the text color of the header row to white
@@ -1201,12 +1200,13 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
 
             pdf.addImage(taxPaymentTransaction.logoImage, 'PNG', 128, 5, 70, 35);
 
-            pdf.setFontSize(16);
-            pdf.setTextColor(255, 255, 255); // Set text color to white
-            pdf.setFillColor(0, 0, 0); // Set background color to black
-
+            pdf.setFont("helvetica", "bold");
             pdf.setFontSize(12);
-            pdf.setTextColor(0, 0, 0); // Set text color back to black
+            pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text("Real Property Tax Payment", 15, 19);
+            pdf.text("Transaction Details", 15, 23);
 
             const paymentDetailsHeaders = ['Field', 'Value'];
             const paymentDetailsData = [
@@ -1217,7 +1217,7 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
                 ['From', `${taxPaymentTransaction.tp_year} - ${taxPaymentTransaction.tp_period}`],
                 ['To', `${taxPaymentTransaction.tp_year} - ${taxPaymentTransaction.tp_period}`],
                 ['Date Processed', taxPaymentTransaction.date],
-                ['Amount', taxPaymentTransaction.amount],
+                ['Amount', `P ${taxPaymentTransaction.amount}`],
                 ['Date Processed', moment(taxPaymentTransaction.date_processed).format('MMMM D, YYYY')],
             ];
 
@@ -1226,7 +1226,7 @@ router.get('/taxpayment/:transaction_id/download', async (req, res) => {
                 body: paymentDetailsData,
                 startY: 40,
                 margin: { horizontal: 10 },
-                theme: 'grid',
+                theme: 'plain',
                 headStyles: {
                     fillColor: [50, 50, 50], // Set the background color of the header row to black
                     textColor: 255, // Set the text color of the header row to white
@@ -1351,19 +1351,20 @@ router.get('/taxclearance/:transaction_id/download', async (req, res) => {
 
             pdf.addImage(taxClearanceTransaction.logoImage, 'PNG', 128, 5, 70, 35);
 
-            pdf.setFontSize(16);
-            pdf.setTextColor(255, 255, 255);
-            pdf.setFillColor(0, 0, 0);
-
+            pdf.setFont("helvetica", "bold");
             pdf.setFontSize(12);
-            pdf.setTextColor(0, 0, 0);
+            pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text("Real Property Tax Clearance", 15, 19);
+            pdf.text("Transaction Details", 15, 23);
 
             const clearanceDetailsHeaders = ['Field', 'Value'];
             const clearanceDetailsData = [
                 ['Transaction ID', taxClearanceTransaction.transaction_id],
                 ['Tax Declaration Number (TDN)', taxClearanceTransaction.tc_rp_tdn],
                 ['Property Identification Number (PIN)', taxClearanceTransaction.tc_rp_pin],
-                ['Amount', taxClearanceTransaction.amount],
+                ['Amount', `P ${taxClearanceTransaction.amount}`],
                 ['Date Processed', moment(taxClearanceTransaction.date_processed).format('MMMM D, YYYY')],
             ];
 
@@ -1372,7 +1373,7 @@ router.get('/taxclearance/:transaction_id/download', async (req, res) => {
                 body: clearanceDetailsData,
                 startY: 40,
                 margin: { horizontal: 10 },
-                theme: 'grid',
+                theme: 'plain',
                 headStyles: {
                     fillColor: [50, 50, 50],
                     textColor: 255,
