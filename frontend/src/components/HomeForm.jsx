@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
@@ -11,8 +14,35 @@ import AboutSection from '../partials/home/AboutSection';
 
 const HomeForm = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+  const { user_id } = useParams();
+
 
   const logoSrc = '../src/images/mnl_footer.svg';
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    const checkToken = async (token) => {
+        try {
+            // Make a request to backend API to verify token and check user access
+            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+        } catch (error) {
+          window.location.reload();
+          navigate(`/`);
+        }
+    };
+  
+    checkToken(token); // Pass the token to the checkToken function
+}, [navigate, user_id]);
+
+
+
 
   useEffect(() => {
     // Check if the script is already appended
