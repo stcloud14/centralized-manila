@@ -33,7 +33,6 @@ function verifyToken(req, res, next) {
 
     } catch (error) {
         // If token verification fails, return a 403 Forbidden response
-        console.error('Error verifying token:', error);
         res.status(403).json({ message: "Failed to authenticate token." });
     }
 }
