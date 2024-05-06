@@ -111,7 +111,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
 
       // Calculation for the revenue
       const averageMonthlyRevenue = RevenueData.totalCC ? RevenueData.totalCC / 12 : 0;
-      const totalRefundAmount = 0;
+      const totalRefundAmount = RevenueData.TotalRCC || 0;
       const totalRefundIssued = 0;
 
       const pdf = new jsPDF();

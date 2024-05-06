@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import Flatpickr from 'react-flatpickr';
 
 function AdminBanner({ adminType, generateReports}) {
 
-  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedYear, setSelectedYear] = useState(moment().format('YYYY'));
   
 
   const handleClear = () => {

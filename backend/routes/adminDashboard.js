@@ -545,11 +545,11 @@ router.get('/revenue/', async (req, res) => {
     const selectedYear = req.query.selectedYear || new Date().getFullYear().toString();
 
     const query = `SELECT 
-    SUM(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_paid_amount, 
-    SUM(CASE WHEN ut.trans_type_id = 1 OR ut.trans_type_id = 2 AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_rp, 
-    SUM(CASE WHEN ut.trans_type_id = 3 AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount  ELSE 0 END) AS total_bp, 
-    SUM(CASE WHEN ut.trans_type_id = 4 AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_cc, 
-    SUM(CASE WHEN ut.trans_type_id = 5 OR ut.trans_type_id = 6 OR ut.trans_type_id = 7 AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_lcr, 
+    SUM(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} AND ut.status_type != 'Rejected' THEN ti.amount ELSE 0 END) AS total_paid_amount,
+    SUM(CASE WHEN (ut.trans_type_id = 1 OR ut.trans_type_id = 2) AND ut.status_type != 'Rejected' AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_rp, 
+    SUM(CASE WHEN ut.trans_type_id = 3 AND ut.status_type != 'Rejected' AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount  ELSE 0 END) AS total_bp, 
+    SUM(CASE WHEN ut.trans_type_id = 4 AND ut.status_type != 'Rejected' AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_cc, 
+    SUM(CASE WHEN (ut.trans_type_id = 5 OR ut.trans_type_id = 6 OR ut.trans_type_id = 7) AND ut.status_type != 'Rejected' AND YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_lcr,
 	DATE_FORMAT(NOW() - INTERVAL 0 MONTH, '%Y-%m-01') AS m1, 
     DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AS m2, 
     DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01') AS m3, 
@@ -660,18 +660,36 @@ router.get('/revenue/', async (req, res) => {
     WHERE 
         ut.status_type = 'Paid';`
 
-
-  
   try {
     const result = await queryDatabase(query);
 
+    const query1 = `SELECT 
+        SUM(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_rejected_amount,
+        SUM(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} AND (ut.trans_type_id = 1 OR ut.trans_type_id = 2) THEN ti.amount ELSE 0 END) AS total_rrp,
+        SUM(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} AND ut.trans_type_id = 3 THEN ti.amount ELSE 0 END) AS total_rbp,
+        SUM(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} AND ut.trans_type_id = 4 THEN ti.amount ELSE 0 END) AS total_rcc,
+        SUM(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} AND (ut.trans_type_id = 5 OR ut.trans_type_id = 6 OR ut.trans_type_id = 7) THEN ti.amount ELSE 0 END) AS total_rlcr
+    FROM 
+        user_transaction ut 
+    JOIN 
+        transaction_info ti ON ut.transaction_id = ti.transaction_id 
+    WHERE 
+        ut.status_type = 'Rejected';`;
+
+    const result1 = await queryDatabase(query1);
+
     const responseObj = {
         totalPaid: result[0].total_paid_amount || 0,
+        totalRPaid: result1.total_rejected_amount || 0,
         totalRP: result[0].total_rp || 0,
+        totalRRP: result1[0].total_rrp || 0,
         totalTC: result[0].total_tc || 0,
         totalBP: result[0].total_bp || 0,
+        totalRBP: result1[0].total_rbp || 0,
         totalCC: result[0].total_cc || 0,
+        totalRCC: result1[0].total_rcc || 0,
         totalLCR: result[0].total_lcr || 0,
+        totalRLCR: result1[0].total_rlcr || 0,
         latestmonths: [
             result[0].m12 || 0,
             result[0].m11 || 0,

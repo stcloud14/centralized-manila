@@ -116,7 +116,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
 
       // Calculation for the revenue
       const averageMonthlyRevenue = RevenueData.totalLCR ? RevenueData.totalLCR / 12 : 0;
-      const totalRefundAmount = 0;
+      const totalRefundAmount = RevenueData.TotalRLCR || 0;
       const totalRefundIssued = 0;
 
       const pdf = new jsPDF();
