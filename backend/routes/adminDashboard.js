@@ -678,18 +678,40 @@ router.get('/revenue/', async (req, res) => {
 
     const result1 = await queryDatabase(query1);
 
+    const query2 = `SELECT 
+        COUNT(*) AS total_count_rejected,
+        COUNT(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} THEN ti.amount ELSE 0 END) AS total_rejected_amount,
+        COUNT(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} AND (ut.trans_type_id = 1 OR ut.trans_type_id = 2) THEN ti.amount ELSE 0 END) AS total_crp,
+        COUNT(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} AND ut.trans_type_id = 3 THEN ti.amount ELSE 0 END) AS total_cbp,
+        COUNT(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} AND ut.trans_type_id = 4 THEN ti.amount ELSE 0 END) AS total_ccc,
+        COUNT(CASE WHEN YEAR(ut.date_processed) = ${selectedYear} AND (ut.trans_type_id = 5 OR ut.trans_type_id = 6 OR ut.trans_type_id = 7) THEN ti.amount ELSE 0 END) AS total_clcr
+    FROM 
+        user_transaction ut 
+    JOIN 
+        transaction_info ti ON ut.transaction_id = ti.transaction_id 
+    WHERE 
+        ut.status_type = 'Rejected'
+        AND YEAR(ut.date_processed) = ${selectedYear};`;
+
+    const result2 = await queryDatabase(query2);
+
     const responseObj = {
         totalPaid: result[0].total_paid_amount || 0,
-        totalRPaid: result1.total_rejected_amount || 0,
+        totalRPaid: result1[0].total_rejected_amount || 0,
+        totalCPaid: result2[0].total_count_rejected || 0,
         totalRP: result[0].total_rp || 0,
         totalRRP: result1[0].total_rrp || 0,
+        totalCRP: result2[0].total_crp ||0,
         totalTC: result[0].total_tc || 0,
         totalBP: result[0].total_bp || 0,
         totalRBP: result1[0].total_rbp || 0,
+        totalCBP: result2[0].total_cbp || 0,
         totalCC: result[0].total_cc || 0,
         totalRCC: result1[0].total_rcc || 0,
+        totalCCC: result2[0].total_ccc || 0,
         totalLCR: result[0].total_lcr || 0,
         totalRLCR: result1[0].total_rlcr || 0,
+        totalCLCR: result2[0].total_clcr || 0,
         latestmonths: [
             result[0].m12 || 0,
             result[0].m11 || 0,

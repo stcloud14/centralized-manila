@@ -47,9 +47,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
       });
       return response.data;
     } catch (error) {
-      // Handle error
-      console.error('Error fetching data:', error);
-      throw error; // Optionally re-throw the error for the caller to handle
+      throw error; 
     }
   }
 
@@ -103,22 +101,12 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
 
         await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
 
-        console.log('Report stored successfully');
-
-      // const { latestmonths, cedulacert } = transStats;
-
-      // console.log('TransStats:', transStats);
-
       // Calculation for the revenue
       const averageMonthlyRevenue = RevenueData.totalCC ? RevenueData.totalCC / 12 : 0;
-      const totalRefundAmount = RevenueData.TotalRCC || 0;
-      const totalRefundIssued = 0;
+      const totalRefundAmount = RevenueData.totalRCC || 0;
+      const totalRefundIssued = RevenueData.totalCCC || 0;
 
       const pdf = new jsPDF();
-
-      // Date of Report
-      // const currentDate1 = new Date();
-      // const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
 
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(12);
@@ -267,7 +255,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
             ['Total Gross Revenue', RevenueData.totalCC ? `P ${RevenueData.totalCC.toLocaleString()}` : 'P 0'],
             ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
             ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
-            ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
+            ['Total Refund Issued', `${totalRefundIssued.toLocaleString()}`],
         ]; // Sample data for the second table
           pdf.autoTable({
               startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols

@@ -50,9 +50,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
       });
       return response.data;
     } catch (error) {
-      // Handle error
-      console.error('Error fetching data:', error);
-      throw error; // Optionally re-throw the error for the caller to handle
+      throw error; 
     }
   }
 
@@ -110,20 +108,12 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
 
         await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
 
-        console.log('Report stored successfully');
-
-      // const { birthcert, deathcert, marriagecert } = transStats;
-
       // Calculation for the revenue
       const averageMonthlyRevenue = RevenueData.totalLCR ? RevenueData.totalLCR / 12 : 0;
-      const totalRefundAmount = RevenueData.TotalRLCR || 0;
-      const totalRefundIssued = 0;
+      const totalRefundAmount = RevenueData.totalRLCR || 0;
+      const totalRefundIssued = RevenueData.totalCLCR || 0;
 
       const pdf = new jsPDF();
-
-      // Date of Report
-      // const currentDate1 = new Date();
-      // const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
 
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(12);
@@ -177,7 +167,6 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
             const mc = dataArray[7];
             const totalCount = bc + dc + mc; 
             tableData[monthIndex] = [monthLabel, bc, dc, mc, totalCount]; 
-            console.log('dataArray for month', monthLabel, ':', dataArray); 
         } else {
             console.error(`Data is not an array.`);
         }
@@ -279,7 +268,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
             ['Total Gross Revenue', RevenueData.totalLCR ? `P ${RevenueData.totalLCR.toLocaleString()}` : ''],
             ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
             ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
-            ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
+            ['Total Refund Issued', `${totalRefundIssued.toLocaleString()}`],
         ]; // Sample data for the second table
           pdf.autoTable({
               startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols

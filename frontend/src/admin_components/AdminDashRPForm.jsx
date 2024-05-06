@@ -113,7 +113,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                 // Calculation for the revenue
                 const averageMonthlyRevenue = RevenueData.totalRP ? RevenueData.totalRP / 12 : 0;
                 const totalRefundAmount = RevenueData.totalRRP || 0;
-                const totalRefundIssued = 0;
+                const totalRefundIssued = RevenueData.totalCRP || 0;
 
                 const pdf = new jsPDF();
 
@@ -273,7 +273,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                     ['Total Gross Revenue', RevenueData.totalRP ? `P ${RevenueData.totalRP.toLocaleString()}` : 'P 0'],
                     ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
                     ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
-                    ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
+                    ['Total Refund Issued', `${totalRefundIssued.toLocaleString()}`],
                 ]; // Sample data for the second table
                   pdf.autoTable({
                       startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols

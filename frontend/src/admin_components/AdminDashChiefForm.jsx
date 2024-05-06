@@ -158,7 +158,7 @@ const AdminDashChiefForm = React.memo(
           // Calculation for the revenue
           const averageMonthlyRevenue = RevenueData.totalPaid ? RevenueData.totalPaid / 12 : 0;
           const totalRefundAmount = RevenueData.totalRPaid || 0;
-          const totalRefundIssued = 0;
+          const totalRefundIssued = RevenueData.totalCPaid || 0;
 
           const pdf = new jsPDF();
 
@@ -218,7 +218,7 @@ const AdminDashChiefForm = React.memo(
             if (Array.isArray(dataArray)) {
                 tableData[monthIndex] = [monthLabel, ...dataArray.slice(1)];
             } else {
-                console.error(`Data for ${monthLabel} is not an array.`);
+                console.error(`Data is not an array.`);
             }
           }
 
@@ -339,7 +339,7 @@ const AdminDashChiefForm = React.memo(
                 ['Total Gross Revenue', RevenueData.totalPaid ? `P ${RevenueData.totalPaid.toLocaleString()}` : ''],
                 ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
                 ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
-                ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
+                ['Total Refund Issued', `${totalRefundIssued.toLocaleString()}`],
             ]; // Sample data for the second table
               pdf.autoTable({
                   startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols

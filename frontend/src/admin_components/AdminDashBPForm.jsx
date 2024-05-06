@@ -48,9 +48,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
       });
       return response.data;
     } catch (error) {
-      // Handle error
-      console.error('Error fetching data:', error);
-      throw error; // Optionally re-throw the error for the caller to handle
+      throw error; 
     }
   }
 
@@ -104,22 +102,12 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
 
         await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
 
-        console.log('Report stored successfully');
-
-      // const { latestmonths, buspermit } = transStats;
-
-      // console.log('TransStats:', transStats);
-
       // Calculation for the revenue
       const averageMonthlyRevenue = RevenueData.totalBP ? RevenueData.totalBP / 12 : 0;
-      const totalRefundAmount = RevenueData.TotalRBP || 0;
-      const totalRefundIssued = 0;
+      const totalRefundAmount = RevenueData.totalRBP || 0;
+      const totalRefundIssued = RevenueData.totalCBP || 0;
 
       const pdf = new jsPDF();
-
-      // Date of Report
-      // const currentDate1 = new Date();
-      // const formattedDate1 = currentDate1.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
 
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(12);
@@ -269,7 +257,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
             ['Total Gross Revenue', RevenueData.totalRP ? `P ${RevenueData.totalBP.toLocaleString()}` : 'P 0'],
             ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
             ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
-            ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
+            ['Total Refund Issued', `${totalRefundIssued.toLocaleString()}`],
         ]; // Sample data for the second table
           pdf.autoTable({
               startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols
