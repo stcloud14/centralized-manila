@@ -11,7 +11,7 @@ const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isProcessConfirm, setIsProcessConfirm] = useState(false);
+  const [isCompleteConfirm, setIsCompleteConfirm] = useState(false);
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState();
@@ -85,18 +85,18 @@ useEffect(() => {
       setModalView(false);
     };
   
-    const handleProcessConfirm = (transaction) => {
-      setSelectedTransaction(transaction);
-      setIsProcessConfirm(true);
-    };
-  
     const handleRejectConfirm = (transaction) => {
       setSelectedTransaction(transaction);
       setIsRejectConfirm(true);
     };
-  
+
+  const handleCompleteConfirm = (transaction) => {
+    setSelectedTransaction(transaction);
+      setIsCompleteConfirm(true);
+    };
+
     const handleConfirmClose = () => {
-      setIsProcessConfirm(false);
+      setIsCompleteConfirm(false);
       setIsRejectConfirm(false);
     };
 
@@ -540,7 +540,7 @@ useEffect(() => {
             {renderContent()}
             
             {/* PROCESS MODAL */}
-          {isProcessConfirm && (
+          {isCompleteConfirm && (
               <div className="fixed z-50 inset-0 overflow-y-auto">
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                   <div className="fixed inset-0 transition-opacity" aria-hidden="true">
