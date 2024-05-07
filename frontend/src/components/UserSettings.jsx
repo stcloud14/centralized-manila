@@ -38,6 +38,9 @@ const UserSettings =()=>{
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(true);
 
+  const [continueButtonDisabled, setContinueButtonDisabled] = useState(true); // Initialize with true assuming initially "Select Cause" is selected
+
+
   
   const navigate = useNavigate();
 
@@ -61,6 +64,37 @@ const UserSettings =()=>{
   
     checkToken(token); // Pass the token to the checkToken function
 }, [navigate, user_id]);
+
+
+useEffect(() => {
+  // Fetch verification status from the database using the user_id
+  const fetchVerificationStatus = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8800/usersettings/check_verification_status/${user_id}`);
+      
+      // Check if response is successful (status code 2xx)
+      if (response.status = 200) {
+        // Check if verification status exists and handle accordingly
+        if (response.data && response.data.verification === 'Verified') {
+          setIsVerifiedStatus(true);
+        } else {
+          setIsVerifiedStatus(false);
+        }
+      } else {
+        // Handle non-successful response
+        console.error('Error fetching verification status. Status:', response.status);
+      }
+      
+      // Log the entire response for debugging
+      console.log("response", response);
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('Error fetching verification status:', error);
+    }
+  };
+
+  fetchVerificationStatus();
+}, [user_id]);
 
 
   const handleDelete = async (e) => {
@@ -161,18 +195,7 @@ const UserSettings =()=>{
     fetchUserImage()
   },[])
 
-  useEffect(()=>{
-    const fetchUserVerification= async()=>{
-        try{
-            const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
-            setIsVerifiedStatus(res.data[0].verification_status)
-            
-        }catch(err){
-            console.log(err)
-        }
-    }
-    fetchUserVerification()
-  },[])
+
 
   const location = useLocation();
   const [highlightButton, setHighlightButton] = useState(false);
@@ -818,8 +841,15 @@ const UserSettings =()=>{
                     <button
                         type="button"
                         onClick={handleApplyModal}
-                        className={`w-full sm:w-auto text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 ${highlightButton ? 'bg-blue-500 text-white dark:text-white dark:bg-blue-500' : ''}`}
-                        disabled={isVerifiedStatus === 'Verified'}>
+                        disabled={isVerifiedStatus}
+                        className={`w-full sm:w-auto text-blue-500 border border-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:focus:ring-blue-800 ${
+                          isVerifiedStatus 
+                          ? "bg-gray-400 text-gray-700 border-gray-400 cursor-not-allowed"
+                          : "border hover:text-white hover:bg-blue-500 dark:hover:bg-blue-500 dark:hover:text-white"
+                        }`}           >  
+    
+
+                        
                         Apply for Account Verification
                       </button>
 
@@ -830,11 +860,11 @@ const UserSettings =()=>{
                       )}
                      
                      {/* Conditional rendering for the warning message if isVerifiedStatus is defined */}
-                  {isVerifiedStatus && isVerifiedStatus === 'Verified' && (
+                  {/* {isVerifiedStatus && isVerifiedStatus === 'Verified' && (
                     <div className="text-red-700 text-sm bg-red-200 text-center rounded-full py-1.5 mb-5">
                       Warning: Your account is already verified!
                     </div>
-                  )}
+                  )} */}
 
                 </div>
 

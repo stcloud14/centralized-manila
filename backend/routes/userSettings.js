@@ -21,6 +21,28 @@ const router = Router();
     });
   });
 
+  router.get('/check_verification_status/:user_id', (req, res) => {
+    const user_id = req.params.user_id;
+  
+    // Query to select user_id and verification_status from user_verification
+    const query = `SELECT user_id, verification_status FROM user_verification WHERE user_id = ?`;
+  
+    // Execute the query
+    conn2.query(query, [user_id], (err, results) => {
+      if (err) {
+        console.error('Error executing query:', err);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+  
+      if (results.length === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Return user_id and verification_status
+      res.json({ user_id: results[0].user_id, verification: results[0].verification_status });
+    });
+  });
+
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
 
