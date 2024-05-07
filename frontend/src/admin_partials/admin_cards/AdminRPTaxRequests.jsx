@@ -762,7 +762,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
             <p className="font-medium text-slate-700 dark:text-white sm:mt-2 text-xs md:text-sm" id="modal-headline">
               Please select the cause of rejection.
             </p>
-            <select value={rejectCause} onChange={handleOptionChange} className="block w-full mt-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-[#212121] dark:border-white dark:text-slate-200 dark:focus:border-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+            <select value={rejectCause} onChange={handleOptionChange} className="block text-xs md:text-sm w-full mt-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-[#212121] dark:border-white dark:text-slate-200 dark:focus:border-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
               <option className="dark:bg-[#3d3d3d]" value="">Select Cause</option>
               <option className="dark:bg-[#3d3d3d]" value="1">Incorrect or incomplete documentation submitted</option>
               <option className="dark:bg-[#3d3d3d]" value="2">Failure to adhere to specific procedural requirements</option>
