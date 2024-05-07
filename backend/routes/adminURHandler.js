@@ -336,7 +336,7 @@ router.put('/updateuser/:user_id', auditMiddleware, async (req, res) => {
   }
   
   if (sex_type !== undefined) {
-    updateQueries.push({ query: "UPDATE user_personal SET `sex_type` = ? WHERE `user_id` = ?", values: [sex_type, user_id] });
+    updateQueries.push({ query: "UPDATE user_personal SET `sex_id` = ? WHERE `user_id` = ?", values: [sex_type, user_id] });
   }
   
   if (cvl_status !== undefined) {
