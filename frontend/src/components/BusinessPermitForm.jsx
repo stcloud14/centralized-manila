@@ -3,7 +3,7 @@ import axios from 'axios'
 import {Link} from "react-router-dom"
 
 
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
@@ -27,14 +27,37 @@ import ValidIdDropdown from '../partials/profile/ValidIdDropdown';
 import BPTermsModal from '../partials/business/BPTermsModal';
 import VerifyModal from '../partials/business/VerifyModal';
 import UploadButton from '../partials/business/UploadButton';
+import RemoveButton from '../partials/business/RemoveButton';
 
 
 const BusinessPermitForm =()=>{
 
   const { user_id } = useParams();
+  const navigate = useNavigate();
   // const location = useLocation();
   // const { pathname } = location;
   // const user_id = pathname.split("/")[2];
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    const checkToken = async (token) => {
+        try {
+            // Make a request to backend API to verify token and check user access
+            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+        } catch (error) {
+          window.location.reload();
+          navigate(`/`);
+        }
+    };
+  
+    checkToken(token); // Pass the token to the checkToken function
+}, [navigate, user_id]);
 
   const [busPermit, setBusPermit] = useState((prevData) => ({
     ...prevData,
@@ -1367,6 +1390,9 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
+                        <td className="py-2 px-3 sm:px-0 sm:justify-end sm:flex  text-xs md:text-sm font-medium">
+                          <RemoveButton/>
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_dti_reg'} />
                         </td>
@@ -1391,6 +1417,9 @@ const BusinessPermitForm =()=>{
                           }
                           return null; 
                         })}
+                        </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decland'} />
@@ -1417,6 +1446,9 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_paid'} />
                         </td>
@@ -1441,6 +1473,9 @@ const BusinessPermitForm =()=>{
                           }
                           return null; 
                         })}
+                        </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_articles'} />
@@ -1467,6 +1502,9 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_nga'} />
                         </td>
@@ -1491,6 +1529,9 @@ const BusinessPermitForm =()=>{
                           }
                           return null; 
                         })}
+                        </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_front'} />
@@ -1517,6 +1558,9 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decbldg'} />
                         </td>
@@ -1541,6 +1585,9 @@ const BusinessPermitForm =()=>{
                           }
                           return null; 
                         })}
+                        </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_fire'} />
@@ -1567,6 +1614,9 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page2'} />
                         </td>
@@ -1591,6 +1641,9 @@ const BusinessPermitForm =()=>{
                           }
                           return null; 
                         })}
+                        </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page3'} />
@@ -1617,6 +1670,9 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
+                        </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page4'} />
                         </td>
@@ -1641,6 +1697,9 @@ const BusinessPermitForm =()=>{
                           }
                           return null; 
                         })}
+                        </td>
+                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                          <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page5'} />

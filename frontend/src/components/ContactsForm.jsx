@@ -1,4 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
+
+import { useParams, useNavigate } from 'react-router-dom';
+
+
 import Footer from '../partials/Footer';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -14,6 +19,31 @@ const ContactsForm = () => {
   const contentRef = useRef(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const logoSrc = '../src/images/mnl_footer.svg';
+
+  const navigate = useNavigate();
+  const { user_id } = useParams();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    const checkToken = async (token) => {
+        try {
+            // Make a request to backend API to verify token and check user access
+            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+        } catch (error) {
+          window.location.reload();
+          navigate(`/`);
+        }
+    };
+  
+    checkToken(token); // Pass the token to the checkToken function
+}, [navigate, user_id]);
+  
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -80,7 +110,7 @@ const ContactsForm = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col col-span-full md:hidden bg-white dark:bg-[#181818] shadow-md rounded-sm">
+              <div className="flex flex-col col-span-full sm:col-span-3 md:hidden bg-white dark:bg-[#181818] shadow-md rounded-sm">
                 <div className="md:flex-1 px-5 py-4 md:flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="stroke-slate-800 dark:stroke-slate-200 w-20 h-20 object-contain my-5 mx-auto md:ml-5 md:mr-8">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -124,7 +154,7 @@ const ContactsForm = () => {
                     <h2 className="font-semibold text-slate-800 dark:text-slate-100 mb-1">Official Public Email</h2>
                     <div className="text-sm md:text-base text-slate-600 dark:text-slate-100">
                       <p className="font-semibold">MPIO:</p>
-                      <p className="">manilapublicinfo@gmail.com</p>
+                      <p className="break-all">manilapublicinfo@gmail.com</p>
                     </div>
                   </div>
                 </div> 
@@ -144,7 +174,7 @@ const ContactsForm = () => {
                         </svg>
                         <p className="font-semibold text-slate-800 dark:text-slate-200 ml-2">Real Estate Division</p>
                       </div>
-                      <div className="flex items-center justify-center sm:justify-start">
+                      <div className="flex items-center justify-center mt-3 sm:mt-0 sm:justify-start">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                         </svg>
@@ -179,7 +209,7 @@ const ContactsForm = () => {
                         </svg>
                         <p className="font-semibold text-slate-800 dark:text-slate-200 ml-2">Tax Payer's Lounge</p>
                       </div>
-                      <div className="flex items-center justify-center sm:justify-start">
+                      <div className="flex items-center justify-center mt-3 sm:mt-0 sm:justify-start">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                         </svg>
@@ -214,7 +244,7 @@ const ContactsForm = () => {
                         </svg>
                         <p className="font-semibold text-slate-800 dark:text-slate-200 ml-2">Local Civil Registry</p>
                       </div>
-                      <div className="flex items-center justify-center sm:justify-start">
+                      <div className="flex items-center justify-center mt-3 sm:mt-0 sm:justify-start">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                         </svg>
@@ -249,7 +279,7 @@ const ContactsForm = () => {
                         </svg>
                         <p className="font-semibold text-slate-800 dark:text-slate-200 ml-2">Electronic Data Processing (EDP)</p>
                       </div>
-                      <div className="flex items-center justify-center sm:justify-start">
+                      <div className="flex items-center justify-center mt-3 sm:mt-0 sm:justify-start">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                         </svg>

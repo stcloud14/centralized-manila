@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useParams, useLocation } from 'react-router-dom';
+
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -36,6 +36,27 @@ const UserSettings =()=>{
 
   
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    const checkToken = async (token) => {
+        try {
+            // Make a request to backend API to verify token and check user access
+            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+        } catch (error) {
+          window.location.reload();
+          navigate(`/`);
+        }
+    };
+  
+    checkToken(token); // Pass the token to the checkToken function
+}, [navigate, user_id]);
 
 
   const handleDelete = async (e) => {
@@ -244,6 +265,7 @@ const UserSettings =()=>{
       const response = await axios.post(`http://localhost:8800/usersettings/uploadimage/${user_id}`, formData);
 
       if (response.status === 200) {
+        window.location.reload();
           setIsSuccess(true);
           setSelectedFile(null);
           setIsButtonVisible(true);
@@ -276,7 +298,7 @@ const UserSettings =()=>{
           if (fileInput) {
             fileInput.value = '';
           }
-          
+          window.location.reload();
           setSelectedFile(null);
           setPreSelectedFile(null);
           setStoredImage(null);

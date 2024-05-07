@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
@@ -13,6 +16,29 @@ const ComingSoon = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const contentRef = useRef(null);
   const logoSrc = '../src/images/mnl_footer.svg';
+  const navigate = useNavigate();
+  const { user_id } = useParams();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    const checkToken = async (token) => {
+        try {
+            // Make a request to backend API to verify token and check user access
+            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+        } catch (error) {
+          window.location.reload();
+          navigate(`/`);
+        }
+    };
+  
+    checkToken(token); // Pass the token to the checkToken function
+}, [navigate, user_id]);
 
   useEffect(() => {
     // Add the animation classes when the component mounts
