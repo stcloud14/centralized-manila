@@ -265,6 +265,7 @@ const UserSettings =()=>{
       const response = await axios.post(`http://localhost:8800/usersettings/uploadimage/${user_id}`, formData);
 
       if (response.status === 200) {
+        window.location.reload();
           setIsSuccess(true);
           setSelectedFile(null);
           setIsButtonVisible(true);
@@ -297,7 +298,7 @@ const UserSettings =()=>{
           if (fileInput) {
             fileInput.value = '';
           }
-          
+          window.location.reload();
           setSelectedFile(null);
           setPreSelectedFile(null);
           setStoredImage(null);
