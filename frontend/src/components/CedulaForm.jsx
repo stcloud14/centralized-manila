@@ -32,6 +32,9 @@ const CedulaForm =()=>{
   const navigate = useNavigate();
   // const location = useLocation();
   // const { pathname } = location;
+  // const user_id = pathname.split("/")[2];  
+  
+
   // const user_id = pathname.split("/")[2];
   
   useEffect(() => {
@@ -70,6 +73,8 @@ const CedulaForm =()=>{
     ctc_municipalLabel: '',
     ctc_valididLabel: '',
     ctc_cvlLabel: '',
+    ctc_height: '',
+    ctc_weight: '',
   }));
 
   console.log(CtcCedula)
@@ -201,6 +206,7 @@ const handleInputChange = (e) => {
   const { name, id, value } = e.target;
   const updatedValue = isNaN(value) ? value.toUpperCase() : value;
   const numericValue = value.replace(/\D/g, '');
+  
   
   
   setCtcCedula((prevData) => {
@@ -367,7 +373,17 @@ const handleInputChange = (e) => {
         birthc_municipal: '',
       };
     }
-
+    
+    if (name === 'ctc_height' || name === 'ctc_weight'  ) {
+      // Remove non-numeric characters from the input value
+      const numericValue = value.replace(/\D/g, '');
+      return {
+        ...prevData,
+        [name]: numericValue,
+      };
+    }
+      
+  
     else {
       return {
       ...prevData,
@@ -382,6 +398,7 @@ const handleSelectChange = (selectedOption, fieldName) => {
     [fieldName]: selectedOption.value,
   }));
 };
+
 
 
 
