@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 
 import Footer from '../partials/Footer';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const PrivacyPolicyForm =()=>{
 

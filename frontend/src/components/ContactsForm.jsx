@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+
 
 import Footer from '../partials/Footer';
 import Sidebar from '../partials/Sidebar';

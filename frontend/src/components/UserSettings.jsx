@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useParams, useLocation } from 'react-router-dom';
+
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
