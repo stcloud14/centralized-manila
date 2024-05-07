@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../partials/Sidebar';
@@ -32,6 +33,26 @@ const UserSettings =()=>{
 
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(true);
+
+  
+  const navigate = useNavigate();
+
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+        const confirmDelete = window.confirm('Are you sure you want to delete your account?');
+        if (confirmDelete) {
+            await axios.delete(`http://localhost:8800/usersettings/accdelete/${user_id}`);
+            // Set the new URL using window.location.href
+            localStorage.removeItem('token');
+            navigate('/')
+          }
+        console.log(confirmDelete);
+    } catch (error) {
+        console.error('Error deleting account:', error.message);
+    }
+  };
 
   const handleButtonClick = () => {
     setIsInputVisible(true);
@@ -283,20 +304,6 @@ const UserSettings =()=>{
 
 
 
-  const handleDelete = async (e) => {
-    e.preventDefault();
-    try {
-        const confirmDelete = window.confirm('Are you sure you want to delete your account?');
-        if (confirmDelete) {
-            await axios.delete(`http://localhost:8800/usersettings/accdelete/${user_id}`);
-            // Set the new URL using window.location.href
-            window.location.href = '/';
-        }
-        console.log(confirmDelete);
-    } catch (error) {
-        console.error('Error deleting account:', error.message);
-    }
-  };
 
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
