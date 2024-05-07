@@ -262,6 +262,13 @@ const handleClick = async (e) => {
         setLoading(false)
         setIsSuccess(true);
         console.log('Successful Register');
+        
+        const res = await axios.post('http://localhost:8800/token/generate-token', { user_id });
+        const { token } = res.data;
+
+      // Store the token securely (consider using HttpOnly cookies for better security)
+        localStorage.setItem('token', token);
+        
         setTimeout(() => {
           setIsSuccess(false);
         }, 3000);
