@@ -8,6 +8,7 @@ import defaultImage from '../images/default_img.png';
 import ApplyVerificationModal from '../partials/business/ApplyVerificationModal';
 import PasswordRuleIcon from '../partials/register/PasswordRuleIcon';
 
+
 const UserSettings =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user_id } = useParams();
@@ -19,7 +20,8 @@ const UserSettings =()=>{
   const contentRef = useRef(null);
   const contentRef1 = useRef(null);
 
-  const [verifiedStatus, setIsVerifiedStatus] = useState();
+  const [verifiedStatus, setVerifiedStatus] = useState();
+  const [isVerifiedStatus, setIsVerifiedStatus] = useState();
 
 
   const [defaultImg, setDefaultImg] = useState(defaultImage);
@@ -149,7 +151,7 @@ const UserSettings =()=>{
           setStoredImage(fetchedUserImage);
         }
   
-        setIsVerifiedStatus(verificationStatus);
+        setVerifiedStatus(verificationStatus);
       } catch (err) {
         console.log(err);
       }
@@ -157,6 +159,18 @@ const UserSettings =()=>{
     fetchUserImage()
   },[])
 
+  useEffect(()=>{
+    const fetchUserVerification= async()=>{
+        try{
+            const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
+            setIsVerifiedStatus(res.data[0].verification_status)
+            
+        }catch(err){
+            console.log(err)
+        }
+    }
+    fetchUserVerification()
+  },[])
 
   const location = useLocation();
   const [highlightButton, setHighlightButton] = useState(false);
@@ -581,7 +595,7 @@ const UserSettings =()=>{
                         type="button"
                         onClick={handleApplyModal}
                         className={`w-full sm:w-auto text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 ${highlightButton ? 'bg-blue-500 text-white dark:text-white dark:bg-blue-500' : ''}`}
-                      >
+                        disabled={isVerifiedStatus === 'Verified'}>
                         Apply for Account Verification
                       </button>
 
@@ -590,8 +604,15 @@ const UserSettings =()=>{
                           Application for verification is successful!
                         </div>
                       )}
+                     
+                     {/* Conditional rendering for the warning message if isVerifiedStatus is defined */}
+                  {isVerifiedStatus && isVerifiedStatus === 'Verified' && (
+                    <div className="text-red-700 text-sm bg-red-200 text-center rounded-full py-1.5 mb-5">
+                      Warning: Your account is already verified!
+                    </div>
+                  )}
 
-                  </div>
+                </div>
 
                   <div className="flex flex-col justify-center mt-4 mb-4">
                     <h1 className='font-medium text-center text-slate-700 dark:text-white mt-10 mb-4'>Account Deletion</h1>
