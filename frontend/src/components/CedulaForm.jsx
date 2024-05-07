@@ -374,7 +374,7 @@ const handleInputChange = (e) => {
       };
     }
     
-    if (name === 'ctc_height' || name === 'ctc_weight'  ) {
+    if (name === 'ctc_weight'  ) {
       // Remove non-numeric characters from the input value
       const numericValue = value.replace(/\D/g, '');
       return {
@@ -382,7 +382,38 @@ const handleInputChange = (e) => {
         [name]: numericValue,
       };
     }
-      
+
+    if (name === 'ctc_height') {
+      const { name: inputName, value } = e.target;
+    
+      // Check if the length is 1 and it's a number
+      if (value.length === 1 && /^\d$/.test(value)) {
+        // If the first character typed is a number, add the symbol '
+        const formattedValue = value + "'";
+        return {
+          ...prevData,
+          [inputName]: formattedValue,
+        };
+      } else if (value.length > 1) {
+        // Remove non-numeric characters from the input value
+        const numericValue = value.replace(/\D/g, '');
+        // Add the ' after the first character if not already present
+        let formattedValue = numericValue.replace(/^(\d)/, "$1'");
+        // Limit the length to 4 characters including the '
+        formattedValue = formattedValue.substring(0, 4);
+        return {
+          ...prevData,
+          [inputName]: formattedValue,
+        };
+      } else {
+        // Return empty value or non-numeric characters
+        const numericValue = value.replace(/\D/g, '');
+        return {
+          ...prevData,
+          [inputName]: numericValue,
+        };
+      }
+    }
   
     else {
       return {
@@ -390,6 +421,8 @@ const handleInputChange = (e) => {
       [id]: updatedValue,
     };
   }
+
+  
 });
 };
 const handleSelectChange = (selectedOption, fieldName) => {
@@ -398,8 +431,6 @@ const handleSelectChange = (selectedOption, fieldName) => {
     [fieldName]: selectedOption.value,
   }));
 };
-
-
 
 
 // function formatNumberWithCommas(value) {
