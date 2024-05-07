@@ -82,7 +82,7 @@ const AdminContactsForm = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col col-span-full md:hidden bg-white dark:bg-[#181818] shadow-md rounded-sm">
+              <div className="flex flex-col col-span-full sm:col-span-3 md:hidden bg-white dark:bg-[#181818] shadow-md rounded-sm">
                 <div className="md:flex-1 px-5 py-4 md:flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="stroke-slate-800 dark:stroke-slate-200 w-20 h-20 object-contain my-5 mx-auto md:ml-5 md:mr-8">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -126,7 +126,7 @@ const AdminContactsForm = () => {
                     <h2 className="font-semibold text-slate-800 dark:text-slate-100 mb-1">Official Public Email</h2>
                     <div className="text-sm md:text-base text-slate-600 dark:text-slate-100">
                       <p className="font-semibold">MPIO:</p>
-                      <p className="">manilapublicinfo@gmail.com</p>
+                      <p className="break-all">manilapublicinfo@gmail.com</p>
                     </div>
                   </div>
                 </div> 
@@ -146,7 +146,7 @@ const AdminContactsForm = () => {
                         </svg>
                         <p className="font-semibold text-slate-800 dark:text-slate-200 ml-2">Real Estate Division</p>
                       </div>
-                      <div className="flex items-center justify-center sm:justify-start">
+                      <div className="flex items-center justify-center mt-3 sm:mt-0 sm:justify-start">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                         </svg>
@@ -181,7 +181,7 @@ const AdminContactsForm = () => {
                         </svg>
                         <p className="font-semibold text-slate-800 dark:text-slate-200 ml-2">Tax Payer's Lounge</p>
                       </div>
-                      <div className="flex items-center justify-center sm:justify-start">
+                      <div className="flex items-center justify-center mt-3 sm:mt-0 sm:justify-start">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                         </svg>
@@ -210,13 +210,13 @@ const AdminContactsForm = () => {
               <img src={LocalCivilRegistryImage} alt="Office Image" className="w-40 h-40 object-contain my-5 mx-auto md:ml-5 md:mr-8 rounded-sm"/>
                 <div className="pt-0 pr-0 sm:pt-5 sm:pr-5 text-center sm:text-left">
                     <div className='text-sm md:text-base dark:text-slate-200'>
-                      <div className="flex items-center justify-center mb-0 sm:mb-5 mt-0 sm:mt-2  sm:justify-start">
+                      <div className="flex items-center justify-center mb-0 sm:mb-5 mt-3 sm:mt-0 sm:justify-start">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-slate-800 dark:text-slate-200 w-6 h-6">
                           <path fill-rule="evenodd" d="M4.5 2.25a.75.75 0 0 0 0 1.5v16.5h-.75a.75.75 0 0 0 0 1.5h16.5a.75.75 0 0 0 0-1.5h-.75V3.75a.75.75 0 0 0 0-1.5h-15ZM9 6a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5H9Zm-.75 3.75A.75.75 0 0 1 9 9h1.5a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM9 12a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5H9Zm3.75-5.25A.75.75 0 0 1 13.5 6H15a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM13.5 9a.75.75 0 0 0 0 1.5H15A.75.75 0 0 0 15 9h-1.5Zm-.75 3.75a.75.75 0 0 1 .75-.75H15a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM9 19.5v-2.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-.75.75h-4.5A.75.75 0 0 1 9 19.5Z" clip-rule="evenodd" />
                         </svg>
                         <p className="font-semibold text-slate-800 dark:text-slate-200 ml-2">Local Civil Registry</p>
                       </div>
-                      <div className="flex items-center justify-center sm:justify-start">
+                      <div className="flex items-center justify-center mt-3 sm:mt-0 sm:justify-start">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                         </svg>
@@ -251,7 +251,7 @@ const AdminContactsForm = () => {
                         </svg>
                         <p className="font-semibold text-slate-800 dark:text-slate-200 ml-2">Electronic Data Processing (EDP)</p>
                       </div>
-                      <div className="flex items-center justify-center sm:justify-start">
+                      <div className="flex items-center justify-center mt-3 sm:mt-0 sm:justify-start">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                         </svg>
