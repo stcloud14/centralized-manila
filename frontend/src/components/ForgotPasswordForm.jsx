@@ -367,7 +367,6 @@ const navigate = useNavigate();
     
             setTimeout(() => {
               clearInterval(countdownInterval);
-              window.location.reload();
               navigate('/');
             }, 6000);
           

@@ -7,6 +7,8 @@ import Header from '../partials/Header';
 import defaultImage from '../images/default_img.png';
 import ApplyVerificationModal from '../partials/business/ApplyVerificationModal';
 import PasswordRuleIcon from '../partials/register/PasswordRuleIcon';
+import Loading from '../partials/Loading';
+
 
 
 const UserSettings =()=>{
@@ -335,9 +337,176 @@ const UserSettings =()=>{
     }
 
   }
-
   
 
+  const [isloading, setIsLoading] = useState(false)
+
+  const [isSuccess1, setIsSuccess1] = useState(false); 
+
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    symbol: false,
+    number: false,
+  });
+
+  const [current_password, setCurrentPassword] = useState("");
+  const [new_user_pass, setNewUserPass] = useState("");
+  const [confirm_user_pass, setConfirmUserPass] = useState("");
+  
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+  
+    switch(name) {
+      case 'current_password':
+        setCurrentPassword(value);
+        break;
+      case 'new_user_pass':
+        setNewUserPass(value);
+        break;
+      case 'confirm_user_pass':
+        setConfirmUserPass(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  
+  useEffect(() => {
+    setPasswordCriteria({
+      length: /^.{8,}$/.test(new_user_pass), 
+      uppercase: /[A-Z]/.test(new_user_pass), 
+      lowercase: /[a-z]/.test(new_user_pass), 
+      symbol: /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(new_user_pass), 
+      number: /\d/.test(new_user_pass), 
+    });
+  }, [new_user_pass]);
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z\d!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
+    console.log("current_password", current_password)
+  
+    if (current_password && new_user_pass && passwordRule.test(new_user_pass)) {
+      try {
+        // Verify current password
+        const verifyResponse = await axios.post(`http://localhost:8800/forgotpass/verify_pass/${user_id}`, {
+          current_password: current_password,
+        });
+        console.log("verifyResponse", verifyResponse)
+        
+  
+        if (verifyResponse.status === 200 && verifyResponse.data.isValid) {
+          // Current password is correct
+          if (new_user_pass !== confirm_user_pass) {
+            setPasswordError("The new password and the confirmed password do not match.");
+            setTimeout(() => {
+              setPasswordError('');
+            }, 4000);
+          } else {
+            try {
+              const response = await axios.put(`http://localhost:8800/forgotpass/reset_password/${user_id}`, {
+                new_user_pass: new_user_pass,
+              });
+              if (response.status === 200) {
+                try {
+                  const res = await axios.get(`http://localhost:8800/email/regis/${user_id}`);
+                  
+                  const date = new Date();
+                  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+    
+                  if (res.data.user_email) {
+                    const updatedUserEmail = res.data.user_email;
+                    const f_name = res.data.f_name;
+                    const l_name = res.data.l_name;
+    
+        
+                    console.log('FETCHED USER EMAIL:', updatedUserEmail);
+        
+                    const user_email = updatedUserEmail;
+        
+                    const trans_type = 'Reset Password';
+        
+                    const rowData = { trans_type, formattedDate};
+    
+                    // const status_type = 'P E N D I N G';
+        
+                    const body = {
+                      data: rowData,
+                      formattedDate: formattedDate,
+                      // status_type: status_type,
+                      // f_name: f_name,
+                      l_name: l_name
+                    };
+      
+                      const emailResponse = await axios.post(`http://localhost:8800/email/reset-email/${user_email}`, body);
+          
+                      if (emailResponse.data && emailResponse.data.message) {
+                        console.log('SENT EMAIL');
+                        // alert(emailResponse.data.message);
+                      } else {
+                        console.log("Failed to send email.");
+                      }
+                  } else {
+                    console.error('Transaction error:', res.statusText);
+                  }
+                } catch (fetchError) {
+                  console.log('NOT FETCHING EMAIL');
+                  console.error(fetchError);
+                }
+
+                setIsLoading(true);
+
+                setTimeout(() => {
+                  setIsLoading(false);
+                  setIsSuccess1(true);
+                    setTimeout(() => {
+                      setIsSuccess1(false);
+                      setIsLoading(true);
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 1000);
+                    },2000);
+                }, 3000);
+
+                console.log('Password reset successful!');
+              }
+            } catch (error) {
+              console.error(error);
+              // Handle error during password change
+            }
+          }
+        } else {
+          // Current password is incorrect
+          // setPasswordError('The current current password is incorrect.');
+          // setTimeout(() => {
+          //   setPasswordError('');
+          // }, 4000);
+        }
+      } catch (error) {
+        console.error(error);
+        // Handle error in password verification
+        setPasswordError('The current current password is incorrect.');
+        setTimeout(() => {
+          setPasswordError('');
+        }, 4000);
+      }
+    } else {
+      // Password doesn't meet the rule or current password is missing
+      setPasswordError(
+        'Password must be at least 8 characters long, including at least one uppercase letter, one lowercase letter, one symbol, and one number.'
+      );
+      setTimeout(() => {
+        setPasswordError('');
+      }, 5500);
+    }
+  };
 
 
 
@@ -488,31 +657,69 @@ const UserSettings =()=>{
                     </div>
 
 
+                    {isloading && (
+                    <div className="pt-3 font-medium flex  dark:bg-[#2b2b2b] text-slate-700 dark:text-white pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
+                    <svg
+                    aria-hidden="true"
+                    className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    >
+                    <path
+                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                      fill="currentFill"
+                    />
+                    </svg>
+                    <span className="pl-2">
+                    Please wait for a moment...
+                    </span>
+                    </div>
+                )}
+                    {isSuccess1 && (
+                      <div className="text-emerald-700 md:text-sm text-xs bg-emerald-200 text-center rounded-full py-1.5 mb-5">
+                        Password reset success!
+                      </div>
+                    )}
+
+                    {passwordError && <h3 className="text-red-500 text-xs md:text-sm text-justify mb-1">{passwordError}</h3>}
+
                     <h1 className='font-medium text-center text-slate-700 dark:text-white mt-10'>Password</h1>
                     <div className='mb-0'>
                       <h1 className='italic text-xs'>Password must be:</h1>
                       <div className="flex items-center">
-                        <PasswordRuleIcon />
+                        <PasswordRuleIcon  isValid={passwordCriteria.length} />
                         <h1 className="italic text-xs">Minimum of 8 Characters</h1>
                       </div>
 
                       <div className="flex items-center">
-                        <PasswordRuleIcon />
+                        <PasswordRuleIcon isValid={passwordCriteria.uppercase && passwordCriteria.lowercase} />
                         <h1 className="italic text-xs">At Least one uppercase and lowercase letter</h1>
                       </div>
 
                       <div className="flex items-center">
-                        <PasswordRuleIcon />
+                        <PasswordRuleIcon isValid={passwordCriteria.symbol} />
                         <h1 className="italic text-xs">At least one symbol (ex. !@#$%^&*.,-=)</h1>
                       </div>
 
                       <div className="flex items-center">
-                        <PasswordRuleIcon />
+                        <PasswordRuleIcon  isValid={passwordCriteria.number} />
                         <h1 className="italic text-xs">At least one number</h1>
                       </div>
                     </div>
+
                     <div className="relative z-0 w-full mb-2 group">
-                      <input type={showCurrentPassword ? 'text' : 'password'} name="current_pass" id="current_pass" placeholder=" "className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                      <input type={showCurrentPassword ? 'text' : 'password'} 
+                      name="current_password" 
+                      id="current_password" 
+                      placeholder=" "
+                      value={current_password}
+                      onChange={handleChange}
+                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                       <label htmlFor="current_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Current Password
                       </label>
@@ -533,8 +740,17 @@ const UserSettings =()=>{
                         </button>
                       )}
                     </div>
+
+                    {/* New Password */}
                     <div className="relative z-0 w-full mb-2 group">
-                      <input type={showNewPassword ? 'text' : 'password'} name="new_pass" id="new_pass" placeholder=" "className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                      <input 
+                      type={showNewPassword ? 'text' : 'password'} 
+                      name="new_user_pass" 
+                      id="new_user_pass" 
+                      placeholder=" "
+                      value={new_user_pass}
+                      onChange={handleChange}
+                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                       <label htmlFor="new_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         New Password
                       </label>
@@ -555,8 +771,16 @@ const UserSettings =()=>{
                         </button>
                       )}
                     </div>
+
+                    {/* Confirm New Password */}
                     <div className="relative z-0 w-full mb-2 group">
-                      <input type={showConfirmPassword ? 'text' : 'password'} name="confirm_pass" id="confirm_pass" placeholder=" "className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                      <input type={showConfirmPassword ? 'text' : 'password'} 
+                      name="confirm_user_pass" 
+                      id="confirm_user_pass" 
+                      onChange={handleChange}
+                      placeholder=" "
+                      value={confirm_user_pass}
+                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                       <label htmlFor="confirm_pass" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Confirm New Password
                       </label>
@@ -582,7 +806,7 @@ const UserSettings =()=>{
                     <div className="flex flex-col justify-center mb-4">
                       <button 
                           type="submit" 
-                          // onClick={handleSubmit}
+                          onClick={handleSubmit}
                           className="w-full sm:w-auto text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
                             Change Password
                       </button>

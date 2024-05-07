@@ -43,6 +43,61 @@ const router = Router();
     });
   });
 
+
+  router.post('/verify_pass/:user_id', (req, res) => {
+    const user_id = req.params.user_id;
+    const { current_password } = req.body;
+    console.log("current_password", current_password)
+  
+    // Query the database to fetch the user's current password based on user_id
+    const sql = "SELECT user_pass FROM user_auth WHERE user_id = ?";
+    conn2.query(sql, [user_id], async (err, results) => {
+      if (err) {
+        console.error("Database Error:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+  
+      if (results.length === 0) {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      const userPassword = results[0].user_pass;
+  
+      // Compare the provided current password with the fetched user's password
+      bcrypt.compare(current_password, userPassword, (bcryptErr, isMatch) => {
+        if (bcryptErr) {
+          console.error("Bcrypt Error:", bcryptErr);
+          return res.status(500).json({ error: "Internal server error" });
+        }
+  
+        if (isMatch) {
+          // Passwords match, current password is correct
+          return res.status(200).json({ isValid: true });
+        } else {
+          // Passwords don't match, current password is incorrect
+          return res.status(401).json({ isValid: false });
+        }
+      });
+    });
+  });
+
+  router.put('/reset_password/:user_id', async (req, res) => {
+    const user_id = req.params.user_id;
+    const { new_user_pass } = req.body;
+  
+    // Update the user's password in the database
+    const hashedPassword = await bcrypt.hash(new_user_pass, 10);
+    const updateSql = "UPDATE user_auth SET user_pass = ? WHERE user_id = ?";
+    conn2.query(updateSql, [hashedPassword, user_id], (updateErr) => {
+      if (updateErr) {
+        console.error("Password Update Error:", updateErr);
+        return res.status(500).json({ message: "Error occurred while updating the password." });
+      }
+  
+      res.status(200).json({ message: "Password changed successfully!" });
+    });
+  });
+
   router.put('/reset_pass/:mobile_no', async (req, res) => {
     const mobile_no = req.params.mobile_no;
     const { new_user_pass } = req.body;
