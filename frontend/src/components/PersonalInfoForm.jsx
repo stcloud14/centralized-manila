@@ -39,26 +39,26 @@ const PersonalInfoForm =()=>{
   const navigate = useNavigate();
   console.log(userName)
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
+//   useEffect(() => {
+//     const token = localStorage.getItem('token');
   
-    const checkToken = async (token) => {
-        try {
-            // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+//     const checkToken = async (token) => {
+//         try {
+//             // Make a request to backend API to verify token and check user access
+//             const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+//                 headers: {
+//                     Authorization: `Bearer ${token}`
+//                 }
+//             });
 
-        } catch (error) {
-          window.location.reload();
-          navigate(`/`);
-        }
-    };
+//         } catch (error) {
+//           window.location.reload();
+//           navigate(`/`);
+//         }
+//     };
   
-    checkToken(token); // Pass the token to the checkToken function
-}, [navigate, user_id]);
+//     checkToken(token); 
+// }, [navigate, user_id]);
   
     useEffect(() => {
     const fetchUserPersonal = async () => {

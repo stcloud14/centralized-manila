@@ -12,7 +12,6 @@ const LandingPageForm = () => {
     const token = localStorage.getItem('token');
   
     if (token) {
-      // Token exists, attempt to automatically log in
       authenticateWithToken(token);
     }
   }, []);
@@ -26,12 +25,10 @@ const LandingPageForm = () => {
       });
   
       if (response.status === 200) {
-        // Token is valid, user is authenticated
         setAuthenticated(true);
-        navigate(`/home/${response.data.user_id}`); // Redirect to home page
+        navigate(`/home/${response.data.user_id}`); 
       }
     } catch (error) {
-      // Token is invalid or expired, remove it from localStorage
       localStorage.removeItem('token');
     }
   };
