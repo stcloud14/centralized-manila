@@ -686,7 +686,7 @@ const BusinessPermitForm =()=>{
     e.preventDefault();
     
   const requiredFields = [
-    'bus_type','bus_name','bus_franchise', 'bus_reg_no','bus_tin','bus_lname','bus_fname','bus_sex','bus_email','bus_tel_no','bus_mobile_no','bus_bregion','bus_bprovince',
+    'bus_type','bus_name', 'bus_reg_no','bus_tin','bus_lname','bus_fname','bus_sex','bus_email','bus_mobile_no','bus_bregion','bus_bprovince',
     'bus_bcity', 'bus_bbrgy','bus_bhnum','bus_bstreet', 'bus_bzip', 'bus_floor','bus_emp','bus_male_emp','bus_female_emp', 'bus_van_no','bus_truck_no','bus_motor_no',
     'bus_region', 'bus_province','bus_city','bus_brgy','bus_hnum','bus_street', 'bus_zip','bus_office',
    'bus_validid','bus_nocopies','bus_print','bus_purpose',
