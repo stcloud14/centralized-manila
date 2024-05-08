@@ -280,13 +280,13 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Husband's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_hfname || marriageTransaction.husband_fname || '-'}</span>
                     </div>
-                    {marriageTransaction.marriagec_hmname ? (
+                    {marriageTransaction.husband_mname ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Husband's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_hmname || marriageTransaction.husband_mname || '-'}</span>
                     </div>
                     ) : null}
-                    {marriageTransaction.marriagec_hsuffix ? (
+                    {marriageTransaction.husband_suffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Husband's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_hsuffix || marriageTransaction.husband_suffix|| '-'}</span>
@@ -310,10 +310,12 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Wife's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_wmname || marriageTransaction.wife_mname || '-'}</span>
                     </div>
+                    {marriageTransaction.wife_suffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Wife's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_wsuffix || marriageTransaction.wife_suffix || '-'}</span>
                     </div>
+                     ) : null}
                                               
                     <br/>
 
@@ -350,13 +352,13 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqfname || marriageTransaction.reqf_name || '-'}</span>
                     </div>
-                    {marriageTransaction.marriagec_reqmname ? (
+                    {marriageTransaction.reqm_name ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqmname || marriageTransaction.reqm_name || '-'}</span>
                     </div>
                     ) : null}
-                    {marriageTransaction.marriagec_reqsuffix ? (
+                    {marriageTransaction.reqsuffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqsuffix || marriageTransaction.reqsuffix || '-'}</span>
