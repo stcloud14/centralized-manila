@@ -507,10 +507,10 @@ useEffect(() => {
           }
         } else {
           // Current password is incorrect
-          // setPasswordError('The current current password is incorrect.');
-          // setTimeout(() => {
-          //   setPasswordError('');
-          // }, 4000);
+          setPasswordError('The current current password is incorrect.');
+          setTimeout(() => {
+            setPasswordError('');
+          }, 4000);
         }
       } catch (error) {
         console.error(error);
@@ -847,7 +847,7 @@ useEffect(() => {
                           ? "bg-gray-400 text-gray-700 border-gray-400 cursor-not-allowed"
                           : "border hover:text-white hover:bg-blue-500 dark:hover:bg-blue-500 dark:hover:text-white"
                         }`}           >  
-    
+                        
 
                         
                         Apply for Account Verification
