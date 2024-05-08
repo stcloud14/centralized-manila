@@ -1376,7 +1376,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                           DTI Registration
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_dti_reg') {
                             const file = fileArray.value;
@@ -1404,7 +1404,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2">
                           R.P. Tax Declaration for Land (Upload if copy is available. If not, indicate TDN or PIN on the UAF to include fee on eSOA)
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_rptax_decland') {
                             const file = fileArray.value;
@@ -1432,7 +1432,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                           SEC Registration - Paid-up and Subscribed Page
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_sec_paid') {
                             const file = fileArray.value;
@@ -1460,7 +1460,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2">
                             SEC Registration - Articles of Primary and Secondary Purpose
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_sec_articles') {
                             const file = fileArray.value;
@@ -1488,7 +1488,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             NGA-Contract of Lease - Page Indicating Names and Floor Area - sqrm
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_nga') {
                             const file = fileArray.value;
@@ -1516,7 +1516,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             SEC Registration - Front Page
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_sec_front') {
                             const file = fileArray.value;
@@ -1544,7 +1544,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             R.P. Tax Declaration for Building (Upload if copy is available. If not, indicate TDN or PIN on the UAF to include fee on eSOA)
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_rptax_decbldg') {
                             const file = fileArray.value;
@@ -1572,7 +1572,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Fire Safety Inspection Certificate for Occupancy, valid in the last 9 months / Affidavit of Undertaking
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_fire') {
                             const file = fileArray.value;
@@ -1600,7 +1600,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 2 Document
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_page2') {
                             const file = fileArray.value;
@@ -1628,7 +1628,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 3 Document
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_page3') {
                             const file = fileArray.value;
@@ -1656,7 +1656,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 4 Document
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_page4') {
                             const file = fileArray.value;
@@ -1684,7 +1684,7 @@ const BusinessPermitForm =()=>{
                         <td className="md:pl-10 pl-3 pr-2 py-2 ">
                             Page 5 Document
                         </td>
-                        <td className="md:pl-10 pl-3 pr-2 py-2 text-right min-w-[100px]">
+                        <td className="md:pl-10 pl-3 pr-2 md:pr-5 py-2 text-right min-w-[100px]">
                         {selectedFiles.map((fileArray) => {
                           if (fileArray.fieldName === 'bus_page5') {
                             const file = fileArray.value;
