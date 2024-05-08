@@ -123,22 +123,29 @@ const LandingPageForm = () => {
         }
         
         const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence/email", body);
-    
-        if (existenceCheckResponse.data.exists) {
-          
-          const user_id = existenceCheckResponse.data.user_id;
-          // window.location.href = `/home/${user_id}`;
-  
+        const { exists, user_id } = existenceCheckResponse.data;
+        
+        if (exists) {
+          // Generate token for existing user
+          const tokenResponse = await axios.post('http://localhost:8800/token/generate-token', { user_id });
+          const { token } = tokenResponse.data;
+      
+          // Store the token securely (consider using HTTPOnly cookies)
+          localStorage.setItem('token', token);
+          // Redirect to home page
+          window.location.href = `/home/${user_id}`;
         } else {
+          // If user doesn't exist, redirect to registration page
           console.log("User does not exist. Proceed with registration");
           window.location.href = `/register`;
-
         }
       } catch (error) {
-    
-        console.error("Google Login Error:", error.message);
+        // Handle errors
+        console.error("Google Login Error:", error);
+        // Optionally, display an error message to the user
+        // alert("An error occurred during login. Please try again later.");
       }
-  };
+    };
 
 
 

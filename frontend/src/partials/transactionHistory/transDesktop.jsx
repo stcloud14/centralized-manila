@@ -12,7 +12,7 @@ import TransTypeDropdown from '../transDropdown/TransTypeDropdown';
 import StatusTypeDropdown from '../transDropdown/StatusTypeDropdown';
 import FilterButton from '../FilterButton';
 
-const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal, soaData }) => {
+const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal, soaData, latestPayment }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   
   const formatAmount = (amount) => {
@@ -332,6 +332,18 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
             pdf.text(lineOfSymbols, textXPosition, textYPosition);
 
 
+            function formatDate(dateString) {
+              const date = new Date(dateString);
+              const options = { year: 'numeric', month: 'long', day: 'numeric' };
+              return date.toLocaleDateString('en-US', options);
+          }
+
+            // Extract date and amount from latestPayment
+            const latestPaymentDate = latestPayment ? formatDate(latestPayment.date_processed) : null;
+            const latestPaymentAmount = latestPayment ? latestPayment.amount : null;            
+
+            console.log("Latest Payment Date: ", latestPaymentDate);
+            console.log("Latest Payment Amount: ", latestPaymentAmount);
             // Second Table Title
             const titleText = "Last Payment";
             const titleXPosition = 15; // Adjust as needed
@@ -347,7 +359,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
             pdf.autoTable({
                 startY: secondTableStartY,
                 head: [['Payment Date', 'Total Amount']],
-                body:  [["1/14/2023", "P 1200.00"]],
+                body:  [[latestPaymentDate, `P ${latestPaymentAmount}`]],
                 theme: 'plain',
                 columnStyles: {
                     0: { cellWidth: 40, cellPadding: 1, halign: 'center'}, // Adjust the width and height of the first column
