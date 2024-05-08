@@ -177,7 +177,7 @@ const handleProceed = (e) => {
   
   // Please fill up the necessary forms
    const requiredFields = ['ctc_lname','ctc_fname','ctc_sex','ctc_region','ctc_province','ctc_municipal',
- 'ctc_reqbrgy','ctc_reqhnum','ctc_reqstreet','ctc_reqzip','ctc_civilstatus','ctc_cznstatus',
+ 'ctc_reqbrgy','ctc_reqhnum','ctc_reqstreet','ctc_reqzip','ctc_civilstatus','ctc_cznstatus', 
 'ctc_employmentstatus','ctc_validid','ctc_profession']; //The input fields that is required
    const isIncomplete = requiredFields.some((field) => !CtcCedula[field]);
 
@@ -374,45 +374,13 @@ const handleInputChange = (e) => {
       };
     }
     
-    if (name === 'ctc_weight'  ) {
-      // Remove non-numeric characters from the input value
-      const numericValue = value.replace(/\D/g, '');
+    if (name === 'ctc_height' || name === 'ctc_weight') {
+      // Remove non-numeric characters and dots from the input value
+      const numericValue = value.replace(/[^\d.]/g, '');
       return {
         ...prevData,
         [name]: numericValue,
       };
-    }
-
-    if (name === 'ctc_height') {
-      const { name: inputName, value } = e.target;
-    
-      // Check if the length is 1 and it's a number
-      if (value.length === 1 && /^\d$/.test(value)) {
-        // If the first character typed is a number, add the symbol '
-        const formattedValue = value + "'";
-        return {
-          ...prevData,
-          [inputName]: formattedValue,
-        };
-      } else if (value.length > 1) {
-        // Remove non-numeric characters from the input value
-        const numericValue = value.replace(/\D/g, '');
-        // Add the ' after the first character if not already present
-        let formattedValue = numericValue.replace(/^(\d)/, "$1'");
-        // Limit the length to 4 characters including the '
-        formattedValue = formattedValue.substring(0, 4);
-        return {
-          ...prevData,
-          [inputName]: formattedValue,
-        };
-      } else {
-        // Return empty value or non-numeric characters
-        const numericValue = value.replace(/\D/g, '');
-        return {
-          ...prevData,
-          [inputName]: numericValue,
-        };
-      }
     }
   
     else {
@@ -692,8 +660,8 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                     <label htmlFor="ctc_cznstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Country of Citizenship<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={CtcCedula.ctc_height} type="text" name="ctc_height" id="ctc_height" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=""/>
-                    <label htmlFor="ctc_height" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Height (ft)</label>
+                    <input onChange={handleInputChange} value={CtcCedula.ctc_height} type="text" name="ctc_height" id="ctc_height" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" />
+                    <label htmlFor="ctc_height" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Height (cm)</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <input onChange={handleInputChange} value={CtcCedula.ctc_weight} type="text" name="ctc_weight" id="ctc_weight" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=""/>
