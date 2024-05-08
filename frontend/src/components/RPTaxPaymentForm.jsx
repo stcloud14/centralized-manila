@@ -90,7 +90,11 @@ const RPTaxPaymentForm =()=>{
         [inputName]: formattedWithDashes,
       }));
     } else {
-      console.log('Please enter valid first 2 letters.');
+      setWarning(true); // Show warning message and prevent opening the modal
+     
+      setTimeout(() => {
+         setWarning(false); // Set a timer to hide the warning message after 4 seconds
+      }, 4000);
     }
   
   
@@ -275,7 +279,8 @@ const handleCheckboxChange = (e) => {
   };
   
 
-  
+  const [warning, setWarning] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
 
@@ -416,6 +421,12 @@ const handleCheckboxChange = (e) => {
                   <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction successful! Redirecting to Transaction History...</div> 
                 </div>
               )}
+
+               {warning && (
+                  <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
+                   Please input two valid letters at the TDN.
+                  </div>
+                )}  
 
                 {showWarning && (
                   <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
