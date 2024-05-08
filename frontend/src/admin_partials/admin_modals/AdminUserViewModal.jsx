@@ -23,68 +23,98 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
     // Initialize userInfo with the values of selectedTransaction
     return selectedTransaction || {};
   });
-
-
-  const handleChangeData = (e) => {
-    const { name, value } = e.target;
-    const updatedValue = isNaN(value) ? value.toUpperCase() : value;
   
-    setUserInfo((prevData) => {
+  
+  const handleChangeData = (e) => {
+    console.log("Event:", e);
+    
+    // Check if the event is a typical event object with a target property
+    if (e && e.target) {
+      const { name, value } = e.target;
+      console.log("Name:", name);
+      console.log("Value:", value);
+    
+      if (!name) {
+        console.error("Name property is undefined on event.target");
+        return;
+      }
       
-      if (
-        name === 'mobile_no',
-        name === 'tel_no',
-        name === 'zip_code',
-        name === 'user_tin_id',
-        name === 'user_pgb_id',
-        name === 'user_philh_id',
-        name === 'user_sss_id',
-        name === 'user_gsis_id',
-        name === 'user_natl_id'
-      ) {
-        const digitValue = value.replace(/\D/g, '');
-
-        return {
-          ...prevData,
-          [name]: digitValue,
-        };
-      } 
-
-      if (name === 'birth_date') {
+      // If the field is not birth_date, just update the value directly
+      const updatedValue = isNaN(value) ? value.toUpperCase() : value;
     
-        return {
-          ...prevData,
-          [name]: value,
-        };
-      } 
-
-      if (name === 'region_id') {
+      // If the field is birth_date, convert it to ISO format
+      const formattedDate = name === 'birth_date' ? new Date(value).toISOString().split('T')[0] : null;
+      console.log("Formatted Date:", formattedDate);
     
-        return {
-          ...prevData,
-          [name]: value,
-          prov_id: '',
-          city_id: '',
-        };
-      } 
-
-      if (name === 'prov_id') {
+      setUserInfo((prevData) => {
+        if (
+          name === 'mobile_no' ||
+          name === 'tel_no' ||
+          name === 'zip_code' ||
+          name === 'user_tin_id' ||
+          name === 'user_pgb_id' ||
+          name === 'user_philh_id' ||
+          name === 'user_sss_id' ||
+          name === 'user_gsis_id' ||
+          name === 'user_natl_id'
+        ) {
+          const digitValue = value.replace(/\D/g, '');
     
-        return {
-          ...prevData,
-          [name]: value,
-          city_id: '',
-        };
-      } 
-
-      else {
+          return {
+            ...prevData,
+            [name]: digitValue,
+          };
+        }
+    
+        if (name === 'birth_date') {
+          // Assuming value is in the format YYYY-MM-DD
+          return {
+            ...prevData,
+            [name]: formattedDate,
+          };
+        }
+    
+        if (name === 'region_id') {
+          return {
+            ...prevData,
+            [name]: value,
+            prov_id: '',
+            city_id: '',
+          };
+        }
+    
+        if (name === 'prov_id') {
+          return {
+            ...prevData,
+            [name]: value,
+            city_id: '',
+          };
+        }
+    
         return {
           ...prevData,
           [name]: updatedValue,
         };
-      }
-    });
+      });
+    } else {
+      // Handle the scenario where 'e' is the selected date directly
+      const name = 'birth_date'; // Assuming birth_date is the field being updated
+      const value = e; // 'e' is the selected date
+  
+      // Convert the selected date to ISO format and remove the time part
+      const formattedDate = new Date(value).toISOString().split('T')[0];
+      console.log("Formatted Date:", formattedDate);
+  
+      // Update the userInfo state with the formatted date
+      setUserInfo((prevData) => ({
+        ...prevData,
+        [name]: formattedDate,
+      }));
+    }
   };
+  
+  
+  
 
 
   useEffect(() => {
