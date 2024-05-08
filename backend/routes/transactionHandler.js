@@ -211,7 +211,7 @@ router.get('/cedula/:transaction_id', async (req, res) => {
         r.region_name AS region, 
         tt.trans_type, 
         p.prov_name AS province, 
-        c.city_name,
+        c.city_name AS municipality,
         cc.transaction_id, 
         cc.cedula_date, 
         co.l_name, 
@@ -347,7 +347,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
                 ['Sex', cedulaTransaction.sex_type],
                 ['Region', cedulaTransaction.region],
                 ['Province', cedulaTransaction.province],
-                ['Municipal', cedulaTransaction.municipality],
+                ['Municipality', cedulaTransaction.municipality], // Correct field name
                 ['Barangay', cedulaTransaction.brgy_dist],
                 ['House No. / Unit Floor', cedulaTransaction.house_floor],
                 ['Stret / Building Name', cedulaTransaction.bldg_name],
