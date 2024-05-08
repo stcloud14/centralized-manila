@@ -375,21 +375,24 @@ const handleInputChange = (e) => {
     }
     
     if (name === 'ctc_height' || name === 'ctc_weight') {
-      // Remove non-numeric characters and dots from the input value
-      const numericValue = value.replace(/[^\d.]/g, '');
+      // Remove non-numeric characters and multiple dots from the input value
+      let numericValue = value.replace(/[^\d.]/g, ''); // Remove non-numeric characters and multiple dots
+      const dotIndex = numericValue.indexOf('.'); // Check if there is a dot already
+      if (dotIndex !== -1) {
+        // If there is a dot already, remove all subsequent dots
+        numericValue = numericValue.substring(0, dotIndex + 1) + numericValue.substring(dotIndex + 1).replace(/\./g, '');
+      }
       return {
         ...prevData,
         [name]: numericValue,
       };
-    }
-  
-    else {
+    } else {
       return {
-      ...prevData,
-      [id]: updatedValue,
-    };
-  }
-
+        ...prevData,
+        [id]: updatedValue,
+      };
+    }
+    
   
 });
 };
