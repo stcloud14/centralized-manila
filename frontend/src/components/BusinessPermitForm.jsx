@@ -59,7 +59,6 @@ const BusinessPermitForm =()=>{
     checkToken(token); // Pass the token to the checkToken function
 }, [navigate, user_id]);
 
-  const [isEditing, setIsEditing] = useState(false);
   const [busPermit, setBusPermit] = useState((prevData) => ({
     ...prevData,
     amount: 0,
@@ -89,10 +88,10 @@ const BusinessPermitForm =()=>{
     bus_office: 'MAIN OFFICE'
   });
 
-  //console.log(busOffice)
-  // console.log(busPermit)
+  console.log(busOffice)
+  console.log(busPermit)
 
-
+  const [warning, setWarning] = useState(false);
   const [dataRow, setDataRow] = useState([]);
   const [editingIndex, setEditingIndex] = useState(-1);
   const [rowData, setRowData] = useState({
@@ -142,8 +141,8 @@ const BusinessPermitForm =()=>{
     bus_page5: '',
   });
 
-  // console.log(selectedFiles)
-  // console.log(fileNames)
+  console.log(selectedFiles)
+  console.log(fileNames)
   
 
   const handleFileSelect = (file, target) => {
@@ -181,95 +180,125 @@ const BusinessPermitForm =()=>{
 
   // console.log(selectedFiles)
 
-  const isDataValid = (data) => {
-    return (
-      data.bus_line.trim() !== '' &&
-      data.bus_psic.trim() !== '' &&
-      data.bus_products.trim() !== '' &&
-      data.bus_units_no.trim() !== '' &&
-      data.bus_total_cap.trim() !== ''
-    );
-  };
 
-const handleEditChange = (e) => {
+  const handleActivityChange = (e) => {
     const { name, value } = e.target;
-
-    setEditData((prevData) => {
-        // Update editData based on the changed field
-        const updatedData = {
-            ...prevData,
-            [name]: value,
-        };
-
-        // Check if all required fields are filled
-        if (isDataValid(updatedData)) {
-            return updatedData;
-        } else {
-            // If any required field is missing, show an alert message
-            alert('Required fields are missing!');
-            // Return the previous data to prevent updating editData with incomplete data
-            return prevData;
-        }
-    });
-};
-
-const handleAddRow = () => {
-    if (editingIndex !== -1) {
-        // If currently editing a row, don't perform "Add Row" functionality
-        return;
-    }
-
-    // Proceed with "Add Row" functionality
-    if (isDataValid(rowData)) {
-        const newRow = { ...rowData };
-        setDataRow([...dataRow, newRow]);
-        setRowData({
-            bus_line: '',
-            bus_psic: '',
-            bus_products: '',
-            bus_units_no: '',
-            bus_total_cap: '',
-        });
-    } else {
-        alert('Required fields are missing');
-    }
-};
-
-const handleEditRow = (index) => {
-  const rowDataToEdit = dataRow[index];
-
-  console.log("Row data to edit:", rowDataToEdit); // Log the rowDataToEdit
-  console.log("Index:", index); // Log the index
-
-  // Set the editing index and edit data
-  setEditingIndex(index);
-  setEditData(rowDataToEdit);
-};
-
-
-
-
-const handleActivityChange = (e) => {
-    const { name, value } = e.target;
-
+  
     setRowData((prevData) => {
-        if (name === 'bus_line' || name === 'bus_products') {
-            const updatedValue = isNaN(value) ? value.toUpperCase() : value;
-            return {
-                ...prevData,
-                [name]: updatedValue,
-            };
-        } else {
-            const formattedValue = value.replace(/\D/g, '');
-            return {
-                ...prevData,
-                [name]: formattedValue,
-            };
-        }
+      // Update the data based on the changed field
+      const updatedData = {
+        ...prevData,
+        [name]: value,
+      };
+  
+      // Check if the field being changed is 'bus_line' or 'bus_products'
+      if (name === 'bus_line' || name === 'bus_products') {
+        // Convert the value to uppercase if it's not a number (assuming bus_line is a string)
+        const updatedValue = isNaN(value) ? value.toUpperCase() : value;
+        updatedData[name] = updatedValue;
+      } else {
+        // Remove non-numeric characters from the value if it's not 'bus_line' or 'bus_products'
+        updatedData[name] = value.replace(/\D/g, '');
+      }
+  
+      // Check if either 'bus_line' or 'bus_products' is empty
+      const isBusLineEmpty = updatedData['bus_line'].trim() === '';
+      const isBusProductsEmpty = updatedData['bus_products'].trim() === '';
+  
+      // If either 'bus_line' or 'bus_products' is empty, set the warning flag
+      if (isBusLineEmpty || isBusProductsEmpty) {
+        setWarning(true);
+        setTimeout(() => {
+          setWarning(false);
+        }, 4000);
+      }
+  
+      return updatedData;
     });
-};
+  };  
 
+  const handleAddRow = () => {
+    if (editingIndex !== -1) {
+      // If editing an existing row
+      const newData = [...dataRow];
+      newData[editingIndex] = { ...editData };
+      setDataRow(newData);
+      setEditingIndex(-1);
+    } else {
+      // If adding a new row
+      if (rowData.bus_line.trim() === '' || rowData.bus_total_cap.trim() === '') {
+        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
+        setWarning(true);
+        // Set a timeout to reset the warning status after 4 seconds
+        setTimeout(() => {
+          setWarning(false);
+        }, 4000);
+      } else {
+        setDataRow([...dataRow, { ...rowData }]);
+        setRowData({
+          bus_line: '',
+          bus_psic: '',
+          bus_products: '',
+          bus_units_no: '',
+          bus_total_cap: '',
+        });
+      }
+    }
+  };    
 
+  const handleEditRow = (index) => {
+    const rowDataToEdit = dataRow[index];
+  
+    // Check if bus_line is empty
+    if (rowDataToEdit.bus_line.trim() === '') {
+      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });  
+      setWarning(true);
+  
+      setTimeout(() => {
+        setWarning(false);
+      }, 4000);
+      
+      return;
+    }
+  
+    // Proceed with editing if bus_line is not empty
+    setEditingIndex(index);
+    setEditData(rowDataToEdit);
+  };
+  
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+  
+    setEditData((prevData) => {
+      // Update editData based on the changed field
+      const updatedData = {
+        ...prevData,
+        [name]: value,
+      };
+  
+      // Check if the backspace key is pressed and the value becomes empty
+      if (e.nativeEvent.inputType === "deleteContentBackward" && value === "") {
+        // If the field becomes empty due to backspace, return the updatedData without setting warning
+        return updatedData;
+      }
+  
+      // Check if any required field is empty after the update
+      const isBusLineEmpty = name === 'bus_line' && value.trim() === '';
+      const isBusProductsEmpty = name === 'bus_products' && value.trim() === '';
+  
+      // If bus_line or bus_products is empty after the update, set the warning
+      if (isBusLineEmpty || isBusProductsEmpty) {
+        setWarning(true);
+        setTimeout(() => {
+          setWarning(false);
+        }, 4000);
+        return prevData; // Return the previous data to prevent updating editData with incomplete data
+      }
+  
+      return updatedData;
+    });
+  };
+    
 
   const handleDeleteRow = (index) => {
     const newData = [...dataRow];
@@ -890,6 +919,12 @@ const handleActivityChange = (e) => {
               </div>
             )}
 
+
+            {warning && (
+              <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
+                Missing fields are required.
+              </div>
+            )}  
 
             {showWarning && (
               <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
