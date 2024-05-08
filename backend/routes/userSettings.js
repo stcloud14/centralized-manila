@@ -112,7 +112,7 @@ const router = Router();
       if (allowedFormats.includes(extname)) {
         return cb(null, true);
       } else {
-        return ;
+        return cb(new Error('Invalid file format. Please upload a JPEG or PNG image.'));
       }
     },
   });
