@@ -145,7 +145,7 @@ const BirthCertificateForm =()=>{
           
                   setTimeout(() => {
                     setIsSuccess(false);
-                  }, 2100);
+                  }, 210000);
                 }
               } else {
                 console.error('Transaction error:', res.statusText);

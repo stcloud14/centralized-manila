@@ -342,10 +342,12 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Father's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_fathermname || birthTransaction.father_mname || '-'}</span>
                     </div>
+                    {birthTransaction.birthc_fathersuffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Father's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_fathersuffix || birthTransaction.fathersuffix || '-'}</span>
                     </div>
+                    ) : null}
 
                     <br/>
                     
@@ -364,11 +366,12 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Mother's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_mothermname || birthTransaction.mother_mname || '-'}</span>
                     </div>
+                    {birthTransaction.birthc_mothersuffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mother's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_mothersuffix || birthTransaction.mothersuffix || '-'}</span>
                     </div>
-                    
+                     ) : null}
                     <br/>
                     
                     <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">

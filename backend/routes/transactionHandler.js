@@ -458,7 +458,7 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
     fi.father_fname, fi.father_mname, fi.father_lname, fi.suffix_type AS fathersuffix, \
     mi.mother_fname, mi.mother_mname, mi.mother_lname, mi.suffix_type AS mothersuffix, \
     ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
-    ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
+    ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c.city_name AS reqcity, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code, rc.reject_cause \
     \
     FROM birth_cert bc \
