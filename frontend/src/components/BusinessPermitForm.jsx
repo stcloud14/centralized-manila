@@ -294,13 +294,16 @@ const BusinessPermitForm =()=>{
         const formattedValue = value.replace(/\D/g, '');
 
         let maxLength;
-      if (id === 'bus_mobile_no') {
-        maxLength = 11;
-      } else if (id === 'bus_tel_no') {
-        maxLength = 8;
-      }else if (id === 'bus_bzip' , 'bus_zip') {
-        maxLength = 4;
-      }
+
+        if (id === 'bus_mobile_no') {
+          maxLength = 11;
+        } else if (id === 'bus_tel_no') {
+          maxLength = 8;
+        } else if (id === 'bus_bzip' || id === 'bus_zip') {
+          maxLength = 4;
+        } else {
+          maxLength = Infinity; // Or any default value you prefer
+        }
 
       if (formattedValue.length > maxLength) {
         const truncatedValue = formattedValue.slice(0, maxLength);
