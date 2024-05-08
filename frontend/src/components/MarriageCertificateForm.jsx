@@ -109,8 +109,12 @@ const MarriageCertificateForm =()=>{
                 const user_email = updatedUserEmail;
     
                 const trans_type = 'Marriage Certificate';
+
+                const reqcity = marriageCert.marriagec_municipalLabel;
+
+                const purpose_type = marriageCert.marriagec_purposeLabel;
     
-                const rowData = { ...marriageCert, transaction_id, trans_type, date, time};
+                const rowData = { ...marriageCert, reqcity, purpose_type,  transaction_id, trans_type, date, time};
     
                 const status_type = 'Pending';
     

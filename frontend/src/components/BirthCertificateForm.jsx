@@ -89,6 +89,7 @@ const BirthCertificateForm =()=>{
                 try {
                   const res1 = await axios.get(`http://localhost:8800/transachistory/transId/${user_id}`);
                   const transaction_id = res1.data[0]?.transaction_id;
+                  console.log(res1)
         
                   const res = await axios.get(`http://localhost:8800/email/${user_id}`);
                   
@@ -112,11 +113,15 @@ const BirthCertificateForm =()=>{
                     const user_email = updatedUserEmail;
         
                     const trans_type = 'Birth Certificate';
+
+                    const reqcity = birthCert.birthc_municipalLabel;
+
+                    const purpose_type = birthCert.birthc_purposeLabel
         
-                    const rowData = { ...birthCert, transaction_id, trans_type, date, time};
+                    const rowData = { ...birthCert, reqcity, purpose_type, transaction_id, trans_type, date, time};
         
                     const status_type = 'Pending';
-        
+                        
                     const body = {
                       data: rowData,
                       status_type: status_type,
@@ -136,7 +141,7 @@ const BirthCertificateForm =()=>{
                   // alert(emailError);
                   setTimeout(() => {
                     window.location.href = `/transachistory/${user_id}`;
-                  }, 2000); 
+                  }, 200000); 
           
                   setTimeout(() => {
                     setIsSuccess(false);

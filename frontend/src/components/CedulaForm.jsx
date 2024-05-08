@@ -96,6 +96,7 @@ const CedulaForm =()=>{
           const res1 = await axios.get(`http://localhost:8800/transachistory/transId/${user_id}`);
           const transaction_id = res1.data[0]?.transaction_id;
 
+
           const res = await axios.get(`http://localhost:8800/email/${user_id}`);
           
           if (res.data.user_email) {

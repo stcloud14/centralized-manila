@@ -113,8 +113,14 @@ const DeathCertificateForm =()=>{
               const user_email = updatedUserEmail;
   
               const trans_type = 'Death Certificate';
+
+              const reqcity = deathCert.deathc_municipalLabel;
+
+              const purpose_type = deathCert.deathc_purposeLabel;
+
+              
   
-              const rowData = { ...deathCert, transaction_id, trans_type, date, time};
+              const rowData = { ...deathCert, reqcity, purpose_type, transaction_id, trans_type, date, time};
   
               const status_type = 'Pending';
   

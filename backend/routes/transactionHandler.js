@@ -137,7 +137,7 @@ router.get('/transId/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
     const query = `SELECT transaction_id
       FROM user_transaction
-      WHERE trans_type_id = 1 AND user_id = ?
+      WHERE user_id = ?
       ORDER BY date_processed DESC
       LIMIT 1;`;
 

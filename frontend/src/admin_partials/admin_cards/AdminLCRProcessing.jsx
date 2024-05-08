@@ -395,7 +395,7 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
               const emailrefund = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
 
               if (emailResponse.data && emailResponse.data.message && emailrefund.data && emailrefund.data.message) {
