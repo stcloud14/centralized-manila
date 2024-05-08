@@ -249,13 +249,20 @@ const AuditDesktop = ({ auditTrail, searchInput, setSearchInput, handleSearch, h
                         </th>
                         <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                             <div className="flex items-center">
+                              
+                            </div>
+                        </th>
+                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                            <div className="flex items-center">
                               Date
                             </div>
-                        </th><th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        </th>
+                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                             <div className="flex items-center">
                               Identification Number
                             </div>
-                        </th><th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        </th>
+                        <th scope="col" className="px-3 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                             <div className="flex items-center">
                               Changes
                             </div>
@@ -280,6 +287,8 @@ const AuditDesktop = ({ auditTrail, searchInput, setSearchInput, handleSearch, h
                   </td>
                   <td className="px-3 py-4 flex items-center justify-between whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                   <span>{audit.admin}</span>
+                  </td>
+                  <td>
                   <img
                     name="userImage" 
                     className="inline-block h-10 w-10 rounded-full object-cover object-center"
