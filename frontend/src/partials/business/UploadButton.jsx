@@ -2,11 +2,20 @@ import React from 'react';
 
 const UploadButton = ({ openUploadModal, targetIMG }) => {
 
+  // const handleClick = (event) => {
+  //   openUploadModal(event);
+  //   setFileUploaded(prevState => ({
+  //     ...prevState,
+  //     [fieldName]: false,
+  //   }));
+  //   event.preventDefault();
+  // };
+
     return (
         <div>
             <button
                 onClick={() => {
-                    openUploadModal(targetIMG);
+                  openUploadModal(targetIMG); // Open upload modal for the specified target image
                 }}
                 className="flex justify-center pl-3 items-center text-center border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full cursor-pointer"
                 aria-label="Upload"
@@ -29,4 +38,4 @@ const UploadButton = ({ openUploadModal, targetIMG }) => {
       
 }
 
-export default UploadButton
+export default UploadButton;

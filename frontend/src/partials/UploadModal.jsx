@@ -4,21 +4,21 @@ const UploadModal = ({ onClose, onFileSelect, targetIMG }) => {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState(null);
+  const [uploadEnabled, setUploadEnabled] = useState(false);
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
       setSelectedFileName(file.name);
+      setUploadEnabled(true);
     } else {
       setSelectedFile(null);
       setSelectedFileName(null);
+      setUploadEnabled(false);
     }
     fileInputRef.current.value = '';
   };
-
-  console.log(targetIMG)
-  console.log(selectedFile)
 
   const preventDefault = (event) => {
     event.preventDefault();
@@ -28,20 +28,32 @@ const UploadModal = ({ onClose, onFileSelect, targetIMG }) => {
     fileInputRef.current.click();
   };
 
+  const handleFileSelect = (file) => {
+    if (file) {
+      setSelectedFile(file);
+      setSelectedFileName(file.name);
+      setUploadEnabled(true);
+    } else {
+      setUploadEnabled(false);
+    }
+  };
+
   const handleUploadClick = () => {
     if (selectedFile) {
+      console.log('Uploading file:', selectedFile.name, 'to targetIMG:', targetIMG);
       onFileSelect(selectedFile, targetIMG);
       setSelectedFile(null);
       setSelectedFileName(null);
-      onClose();
-
       fileInputRef.current.value = '';
-
+      setUploadEnabled(false);
+      onClose();
     } else {
- 
       console.error('Please select a file before uploading.');
     }
   };
+
+  console.log('selectedFile:', selectedFile);
+  console.log('selectedFileName:', selectedFileName);
  
   return (
       <div className="fixed z-50 inset-0 ">
@@ -111,13 +123,16 @@ const UploadModal = ({ onClose, onFileSelect, targetIMG }) => {
             )}
           </div>
 
-            <input
-              onChange={(event) => handleFileInputChange(event)}
-              ref={fileInputRef}
-              id="dropzone-file"
-              type="file"
-              className="hidden"
-            />
+          <input
+          onChange={(event) => {
+            handleFileInputChange(event);
+            handleFileSelect(event.target.files[0]); // Invoke handleFileSelect when a file is selected
+          }}
+          ref={fileInputRef}
+          id="dropzone-file"
+          type="file"
+          className="hidden"
+        />
           </label>
 
           </div>
