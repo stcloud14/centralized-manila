@@ -153,7 +153,7 @@ const cancelTrans = async (e) => {
       try {
         const res = await axios.get(`http://localhost:8800/transachistory/marriagecert/${transaction_id}`);
         setMarriageTransaction(res.data);
-        console.log(res.data);
+        console.log("marriage", res.data);
       } catch (err) {
         console.error(err);
       }} else {
@@ -366,12 +366,12 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Requestor's Relationship to the Owner</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqrelation || marriageTransaction.owner_rel || '-'}</span>
                     </div>
-                    {marriageTransaction.marriagec_telno ? (
+                    {marriageTransaction.tel_no ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Telephone No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_telno || marriageTransaction.tel_no || '-'}</span>
                     </div>
-                    ) : null}
+                    ) : null }
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mobile No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_mobileno || marriageTransaction.mobile_no || '-'}</span>

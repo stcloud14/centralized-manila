@@ -343,7 +343,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
     cv.cvl_status, ci.czn_id, ci.height, ci.weight, ci.acr_no, cv.cvl_status, \
     ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
     ti.amount, ti.copies, ti.print_id, vt.valid_id_type, pt.purpose_type, \
-    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    ai.brgy_dist, ai.municipality, ai.house_floor, ai.bldg_name, ai.zip_code \
     \
     FROM cedula_cert cc \
     \
@@ -910,9 +910,9 @@ router.get('/marriagecert/:transaction_id', async (req, res) => {
     const query = "SELECT  r.region_name AS region, tt.trans_type, p.prov_name AS province, c.city_name AS city, mc.transaction_id, mc.marriage_date, \
     hi.husband_fname, hi.husband_mname, hi.husband_lname, hi.suffix_type AS husband_suffix, \
     wi.wife_fname, wi.wife_mname, wi.wife_lname, wi.suffix_type AS wife_suffix, \
-    ci.consent_lname AS reql_name, ci.consent_fname AS reqf_name, ci.consent_mname AS reqm_name, ci.suffix_type AS reqsuffix, ci.owner_rel, ci.tel_no, ci.mobile_no, \
+    ci.consent_lname AS reql_name, ci.consent_fname AS reqf_name, ci.consent_mname AS reqm_name, ci.suffix_type AS reqsuffix, ci.owner_rel, \
     ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
-    ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
+    ai.email,  ci.mobile_no, ci.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code, rc.reject_cause \
     \
     FROM marriage_cert mc \
