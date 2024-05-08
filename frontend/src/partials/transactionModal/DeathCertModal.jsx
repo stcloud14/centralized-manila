@@ -349,11 +349,11 @@ const cancelTrans = async (e) => {
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_telno || deathTransaction.tel_no || '-'}</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_telno || deathTransaction.reqtel || '-'}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mobile No.</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_mobileno || deathTransaction.mobile_no || '-'}</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_mobileno || deathTransaction.reqnum || '-'}</span>
                     </div>
                                                                         
                     <br/>

@@ -454,7 +454,7 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
 
     const query = "SELECT bi.user_id, r.region_name AS region, tt.trans_type, p.prov_name AS province, c.city_name AS municipal, bc.transaction_id, bi.birth_date, \
     bo.l_name, bo.f_name, bo.m_name, bo.suffix_type, st.sex_type, bo.hospital_name, bo.country, bo.birth_reg_no, \
-    br.l_name AS reql_name,br.f_name AS reqf_name, br.m_name AS reqm_name, br.suffix_type AS reqsuffix, br.owner_relation, br.requestor_tin, br.tel_no, br.mobile_no, \
+    br.l_name AS reql_name,br.f_name AS reqf_name, br.m_name AS reqm_name, br.suffix_type AS reqsuffix, br.owner_relation, br.requestor_tin, br.tel_no AS reqtel, br.mobile_no AS reqnum, \
     fi.father_fname, fi.father_mname, fi.father_lname, fi.suffix_type AS fathersuffix, \
     mi.mother_fname, mi.mother_mname, mi.mother_lname, mi.suffix_type AS mothersuffix, \
     ti.amount, ti.copies, ptt.print_type, vt.valid_id_type, pt.purpose_type, \
@@ -719,8 +719,8 @@ router.get('/deathcert/:transaction_id', async (req, res) => {
         dr.m_name AS reqm_name, 
         dr.suffix_type AS reqsuffix, 
         dr.owner_rel, 
-        dr.mobile_no, 
-        dr.tel_no, 
+        dr.mobile_no AS reqnum, 
+        dr.tel_no AS reqtel, 
         ti.amount, 
         ti.copies, 
         ptt.print_type, 

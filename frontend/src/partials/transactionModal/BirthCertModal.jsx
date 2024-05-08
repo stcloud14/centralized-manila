@@ -399,15 +399,13 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Tax Identification Number</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqtin || birthTransaction.requestor_tin || '-'}</span>
                     </div>
-                    {birthTransaction.birthc_reqtelnum ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqtelnum || birthTransaction.tel_no || '-'}</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqtelnum || birthTransaction.reqtel || '-'}</span>
                     </div>
-                    ) : null}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mobile No.</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqmobnum || birthTransaction.mobile_no || '-'}</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqmobnum || birthTransaction.reqnum || '-'}</span>
                     </div>
                                               
                     <br/>
