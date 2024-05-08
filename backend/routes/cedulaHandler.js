@@ -101,7 +101,7 @@ const purpose = parseInt(req.body.ctc_purpose, 10) || null;
     const values4 = [transID, ctc_civilstatus, ctc_cznstatus, ctc_height, ctc_weight, ctc_aliencor];
     
     const query5 = "INSERT INTO cedula_transaction_info (`transaction_id`, `emp_status`, `acc_no`, `valid_id`, `pob_status`, `income_id`, `salary_id`, `gross_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    const values5 = [transID, ctc_employmentstatus, ctc_taxpayeraccno, ctc_validid, ctc_profession, ctc_incomeca || null, ctc_grossta, ctc_salariesta];
+    const values5 = [transID, ctc_employmentstatus, ctc_taxpayeraccno, ctc_validid, ctc_profession, ctc_incomeca || null,  ctc_salariesta, ctc_grossta];
 
     const query6 = "INSERT INTO address_info (`transaction_id`, `region_id`, `prov_id`, `city_id`, `brgy_dist`, `house_floor`, `bldg_name`, `zip_code`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     const values6 = [transID, ctc_region, ctc_province, ctc_municipal, ctc_reqbrgy, ctc_reqhnum, ctc_reqstreet, ctc_reqzip];
