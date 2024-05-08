@@ -112,7 +112,7 @@ const PaymentSuccessForm = () => {
 
           try {
             const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
-         
+          
             if (emailResponse.data && emailResponse.data.message) {
               console.log('SENT EMAIL:', emailResponse.data.message);
 
@@ -136,7 +136,7 @@ const PaymentSuccessForm = () => {
       setButtonVisible(false);
       setTimeout(() => {
       window.location.href = `http://localhost:5173/transachistory/${userId}`;
-      }, 3000);
+      }, 400000);
 
     } 
     catch (err) {

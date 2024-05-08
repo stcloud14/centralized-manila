@@ -119,7 +119,7 @@ const CedulaForm =()=>{
 
             const trans_type = 'Community Tax Certificate';
 
-            const city_name = CtcCedula.ctc_municipal;
+            const city_name = CtcCedula.ctc_municipalLabel;
 
             const rowData = { ...CtcCedula, city_name, transaction_id, trans_type, date, time};
 
