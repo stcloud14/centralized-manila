@@ -1393,7 +1393,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 sm:justify-end sm:flex  text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1421,7 +1421,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1449,7 +1449,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1477,7 +1477,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1505,7 +1505,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1533,7 +1533,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1561,7 +1561,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1589,7 +1589,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1617,7 +1617,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1645,7 +1645,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1673,7 +1673,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
@@ -1701,7 +1701,7 @@ const BusinessPermitForm =()=>{
                           return null; 
                         })}
                         </td>
-                        <td className="py-2 px-3 sm:px-0 text-xs md:text-sm font-medium">
+                        <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                           <RemoveButton/>
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
