@@ -102,7 +102,7 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
           pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
           pdf.setFont("helvetica", "normal");
           pdf.setFontSize(10);
-          pdf.text("Unified Departmental Administrative Report", 15, 19);
+          pdf.text("Registry Administrative Report", 15, 19);
           pdf.text("Report No.: " + reportNo, 15, 23);
 
           const additionalTextX = pdf.internal.pageSize.width - 50;
@@ -160,7 +160,7 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
           
           const noteText = [
             `I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the`,
-            `financial and operational performance of Real Property Transactions as of ${selectedYear}. Any identified`,
+            `financial and operational performance of Registry Administrative Report as of ${selectedYear}. Any identified`,
             `discrepancies or errors should be reported promptly for correction.`
         ];   
         const noteXPosition = 15; // Adjust as needed

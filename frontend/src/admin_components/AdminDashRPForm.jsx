@@ -126,7 +126,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                 pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
                 pdf.setFont("helvetica", "normal");
                 pdf.setFontSize(10);
-                pdf.text("Real Property Tax Administrative Report", 15, 19);
+                pdf.text("Real Property Administrative Report", 15, 19);
                 pdf.text("Report No.: " + reportNo, 15, 23);
 
                 const additionalTextX = pdf.internal.pageSize.width - 50;
