@@ -285,7 +285,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
       
           const noteText = [
             `I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the`,
-            `financial and operational performance of Real Property Transactions as of ${selectedYear}. Any identified`,
+            `financial and operational performance of Business Permit Transactions as of ${selectedYear}. Any identified`,
             `discrepancies or errors should be reported promptly for correction.`
         ];   
         const noteXPosition = 15; // Adjust as needed

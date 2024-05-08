@@ -396,7 +396,7 @@ const AdminDashChiefForm = React.memo(
           
               const noteText = [
                 `I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the`,
-                `financial and operational performance of Real Property Transactions as of ${selectedYear}. Any identified`,
+                `financial and operational performance of Unified Departamental Administrative Report as of ${selectedYear}. Any identified`,
                 `discrepancies or errors should be reported promptly for correction.`
             ];   
             const noteXPosition = 15; // Adjust as needed
@@ -438,10 +438,10 @@ const AdminDashChiefForm = React.memo(
             const tableWidth2 = 80; // Adjust the width according to your requirement
             const margin2 = (pageWidth - tableWidth) - 10; // Adjust the margin as needed
             
-            const signatureData2 = [['Chief Admin']];
+            const signatureData2 = [['Unified Departamental']];
             pdf.autoTable({
                 startY: pdf.autoTable.previous.finalY - 16,
-                head: [['Chief Administrative']],
+                head: [['Unified Departamental Administrative']],
                 body: signatureData2,
                 theme: 'plain',
                 styles: {
