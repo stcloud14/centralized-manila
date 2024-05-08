@@ -340,7 +340,7 @@ router.put('/updateuser/:user_id', auditMiddleware, async (req, res) => {
   }
   
   if (cvl_status !== undefined) {
-    updateQueries.push({ query: "UPDATE user_personal SET `cvl_status` = ? WHERE `user_id` = ?", values: [cvl_status, user_id] });
+    updateQueries.push({ query: "UPDATE user_personal SET `cvl_id` = ? WHERE `user_id` = ?", values: [cvl_status, user_id] });
   }
   
   if (res_status !== undefined) {
