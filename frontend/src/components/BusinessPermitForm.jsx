@@ -712,7 +712,7 @@ const BusinessPermitForm =()=>{
 
             setTimeout(() => {
               window.location.href = `/transachistory/${user_id}`;
-            }, 2000); 
+            }, 200000); 
     
             setTimeout(() => {
               setIsSuccess(false);
@@ -1256,7 +1256,7 @@ const BusinessPermitForm =()=>{
                 <div onChange={handleBusActivity} name="bus_activity" className="flex flex-col md:flex-row md:items-center text-sm items-start">
                   <label htmlFor="bus_mainoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
                     <input value="MAIN OFFICE" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
-                    Main Office
+                    Main Office<Req />
                   </label>
 
                   <label htmlFor="bus_branchoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">

@@ -81,6 +81,7 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
 
   useEffect(() => {
     const fetchBusinessTransaction = async () => {
+      console.log("transaction_id1", transaction_id)
       if (transaction_id) {
       try {
         const res = await axios.get(`http://localhost:8800/transachistory/buspermit/${transaction_id}`);
