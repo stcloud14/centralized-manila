@@ -343,7 +343,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
     cv.cvl_status, ci.czn_id, ci.height, ci.weight, ci.acr_no, cv.cvl_status, \
     ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
     ti.amount, ti.copies, ti.print_id, vt.valid_id_type, pt.purpose_type, \
-    ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code \
+    ai.brgy_dist, ai.municipality, ai.house_floor, ai.bldg_name, ai.zip_code \
     \
     FROM cedula_cert cc \
     \

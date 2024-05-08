@@ -316,7 +316,7 @@ const cancelTrans = async (e) => {
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Municipal</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_municipalLabel || cedulaTransaction.municipality || '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_municipalLabel || cedulaTransaction.municipality ||  cedulaTransaction.city_name || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Barangay</span>
