@@ -12,7 +12,7 @@ import TransTypeDropdown from '../transDropdown/TransTypeDropdown';
 import StatusTypeDropdown from '../transDropdown/StatusTypeDropdown';
 import FilterButton from '../FilterButton';
 
-const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal, soaData }) => {
+const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchInputChange, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal, soaData, latestPayment }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const formatAmount = (amount) => {
@@ -104,286 +104,299 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
         const pdf = new jsPDF();
         
         const generatedSOAObjects = [];
+        let existingSOANumbers = []; 
+        let knownTransactionTypes = {};
         
         for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
 
-          const arrayBase = pageNum - 1;
-
-          const transaction = filteredTransactions[arrayBase];
+            const arrayBase = pageNum - 1;
+            const transaction = filteredTransactions[arrayBase];
 
             // Check if transaction_id exists
             if (!transaction.transaction_id) {
-              continue;
+                continue;
+            }
+
+            let soaNumber, expiry_date;
+
+            // Check if the transaction type is known
+            if (!knownTransactionTypes[transaction.trans_type]) {
+                // Generate SOA number for new transaction type
+                soaNumber = generateUniqueSOA(transaction.trans_type, transaction.user_id);
+                knownTransactionTypes[transaction.trans_type] = true; // Mark transaction type as known
+            } else {
+                // Use existing SOA number for known transaction type
+                if (soaData && soaData.length > 0) {
+                    const matchedSoa = soaData.find(soa => soa.transaction_id === transaction.transaction_id);
+                    if (matchedSoa) {
+                        soaNumber = matchedSoa.soa_no;
+                        existingSOANumbers.push(soaNumber); // Add existing SOA number
+                        const expiryDateStr = matchedSoa.expiry_date;
+                        const expiryDate = moment(expiryDateStr);
+                        const formattedExpiryDate = expiryDate.format('MMMM DD, YYYY, hh:mm A');
+                        expiry_date = formattedExpiryDate;
+                    }
+                }
+            }
+
+            if (!soaNumber) {
+                // If still no SOA number, generate a default one
+                soaNumber = generateUniqueSOA(transaction.trans_type, transaction.user_id);
+            }
+
+            const soaObject = {
+                soa_no: soaNumber,
+                transaction_id: transaction.transaction_id
+            };
+
+            generatedSOAObjects.push(soaObject);
+
+            pdf.setFont("helvetica", "bold");
+            pdf.setFontSize(12);
+            pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text(transaction.trans_type, 15, 19);
+            pdf.text("Electronic Statement of Account", 15, 23);
+
+            // Additional text to be placed on the right
+            const currentDate1 = new Date();
+            const currentMonth = currentDate1.getMonth();
+            const currentYear = currentDate1.getFullYear();
+            const billingDate = new Date(currentYear, currentMonth, 6);
+
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+
+            const additionalText = [
+                { text: "Billing Date", bold: true },
+                `${monthNames[billingDate.getMonth()]} 6, ${billingDate.getFullYear()}`
+            ];
+
+            if (transaction.trans_type === 'Business Permit') {
+                additionalText.push(
+                    { text: "Business Type", bold: true },
+                    transaction.bus_type
+                );
+            }
+
+            const additionalTextX = pdf.internal.pageSize.width - 50;
+            const additionalTextY = 35;
+
+            additionalText.forEach((item, index) => {
+                const text = typeof item === 'string' ? item : item.text;
+                const isBold = typeof item === 'object' && item.bold;
+                pdf.setFont(isBold ? "helvetica" : "helvetica", isBold ? "bold" : "normal");
+                pdf.text(text, additionalTextX, additionalTextY + (index * 4));
+            });
+
+
+            // Display labels and their corresponding text
+            const labelSets = {
+                'Real Property Tax Payment': ["SOA No.", "Account Name:", "Tax Declaration Number:", "Transaction ID:"],
+                'Real Property Tax Clearance': ["SOA No.", "Tax Declaration Number:", "Transaction ID:"],
+                'Business Permit': ["SOA No.", "Name of Business:", "Name of Owner:", "Transaction ID:"],
+                'Community Tax Certificate': ["SOA No.", "Name of Owner:", "Transaction ID:"],
+                'Birth Certificate': ["SOA No.", "Name of Requestor:", "Transaction ID:"],
+                'Death Certificate': ["SOA No.", "Name of Requestor:", "Transaction ID:"],
+                'Marriage Certificate': ["SOA No.", "Name of Requestor:", "Transaction ID:"],
+                default: ["SOA No.", "Name of Requestor:", "Transaction ID:"],
+            };
+
+            const colonWidth = pdf.getStringUnitWidth(":") * 1;
+
+            const labels = labelSets[transaction.trans_type] || labelSets.default;
+
+            labels.forEach((label, index) => {
+                const labelWidth = pdf.getStringUnitWidth(label) * 3.9;
+                const textStartX = 15 + labelWidth + colonWidth;
+                let text;
+
+                switch (index) {
+                    case 0:
+                        text = soaNumber; 
+                        break;
+                    case 1:
+                        if (transaction.trans_type === 'Community Tax Certificate') {
+                            text = transaction.cedula_doc_owner || "Unknown Owner";
+                        } else if (transaction.trans_type === 'Birth Certificate') {
+                            text = transaction.birth_requestor || "Unknown Requestor";
+                        } else if (transaction.trans_type === 'Death Certificate') { 
+                            text = transaction.death_requestor || "Unknown Requestor";
+                        } else if (transaction.trans_type === 'Marriage Certificate') {
+                            text = transaction.consent_info || "Unknown Requestor";
+                        } else {
+                            text = transaction.acc_name || transaction.tc_tdn || transaction.bus_name  || "Unknown Owner";
+                        }
+                        break;
+                    case 2:
+                        if (transaction.trans_type === 'Business Permit') {
+                            text = transaction.bus_owner || "Unknown Owner";
+                        } else if (transaction.type === 'Real Property Tax Payment') {
+                            text = transaction.tp_tdn || "Unknown TDN";
+                        } else {
+                            text = transaction.transaction_id || "Transaction ID";
+                        }
+                        break;
+                    case 3:
+                        if (transaction.trans_type === 'Business Permit') {
+                            text = transaction.transaction_id || "Transaction ID";
+                        } else if (transaction.trans_type === 'Community Tax Certificate') {
+                            text = ""; 
+                        } else {
+                            text = transaction.transaction_id || "Transaction ID";
+                        }
+                        break;
+                    default:
+                        text = "Unknown";
+                }
+
+                pdf.setFont("helvetica", "bold");
+                pdf.text(label, 15, 35 + index * 4);
+                pdf.setFont("helvetica", "normal");
+                pdf.text(text, textStartX, 35 + index * 4);
+            });   
+
+            // Spacing between the text above and the table below
+            const textHeight = (labels.length + 1) * 4; 
+            const marginTop = 1;
+
+            // Adjust the starting y-coordinate for the first table
+            const firstTableStartY = 35 + textHeight + marginTop;
+
+            // Define styles for the first table header
+            const firstTableHeaderStyles = {
+                fillColor: [50, 50, 50],
+                textColor: 255,
+            };
+
+            // Transaction Details table
+            const { trans_type, tp_pin, tc_pin, amount, year_period, period_id, date, bus_reg_no, bus_tin, ci_acc_no, copies } = transaction;
+
+            let head, body;
+
+            switch (trans_type) {
+                case 'Real Property Tax Payment':
+                    head = [['PIN', 'Total Amount', 'Year', 'Quarter']];
+                    body = [[tp_pin, 'P ' + amount, year_period, period_id]];
+                    break;
+                case 'Real Property Tax Clearance':
+                    head = [['PIN', 'Total Amount', 'Date Processed']];
+                    body = [[tc_pin, 'P ' + amount, date]];
+                    break;
+                case 'Business Permit':
+                    head = [['DTI/SEC/CDA Registration No.', 'Tax Identification Number', 'Total Amount', 'Date Processed']];
+                    body = [[bus_reg_no, bus_tin, 'P ' + amount, date]];
+                    break;
+                case 'Community Tax Certificate':
+                    head = [['Tax Payer Account No.', 'Total Amount', 'Date Processed']];
+                    body = [[ci_acc_no, 'P ' + amount, date]];
+                    break;
+                default:  
+                    head = [['No. of Copies', 'Total Amount', 'Date Processed']];
+                    body = [[copies, 'P ' + amount, date]];
+            }
+
+            pdf.autoTable({
+                startY: firstTableStartY,
+                head: head,
+                body: body,
+                headStyles: firstTableHeaderStyles,
+                theme: 'plain',
+            });
+
+            // Function to repeat a symbol to form a line
+            function repeatSymbol(symbol, count) {
+                return symbol.repeat(count);
+            }
+
+            // Define the symbol and the number of repetitions
+            const symbol = "\u2022"; // Unicode for a bullet point symbol
+            const repetitions = 146; // Adjust the number of repetitions as needed
+
+            // Generate the line of symbols
+            const lineOfSymbols = repeatSymbol(symbol, repetitions);
+
+            // Add the line of symbols below the first table
+            const textXPosition = 15; // Adjust the X position
+            const textYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
+
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text(lineOfSymbols, textXPosition, textYPosition);
+
+
+            function formatDate(dateString) {
+              const date = new Date(dateString);
+              const options = { year: 'numeric', month: 'long', day: 'numeric' };
+              return date.toLocaleDateString('en-US', options);
           }
 
-          let soaNumber, expiry_date;
+            // Extract date and amount from latestPayment
+            const latestPaymentDate = latestPayment ? formatDate(latestPayment.date_processed) : null;
+            const latestPaymentAmount = latestPayment ? latestPayment.amount : null;            
 
-          if (soaData && soaData.length > 0) {
+            console.log("Latest Payment Date: ", latestPaymentDate);
+            console.log("Latest Payment Amount: ", latestPaymentAmount);
+            // Second Table Title
+            const titleText = "Last Payment";
+            const titleXPosition = 15; // Adjust as needed
+            const titleYPosition = pdf.autoTable.previous.finalY + 20;
 
-          const matchedSoa = soaData.find(soa => soa.transaction_id === transaction.transaction_id);
+            pdf.setFont("helvetica", "bold");
+            pdf.setFontSize(10);
+            pdf.text(titleText, titleXPosition, titleYPosition);
 
-          if (matchedSoa) {
+            // Second Table
+            const secondTableStartY = titleYPosition + 2; // Adjust spacing from title
 
-              soaNumber = matchedSoa.soa_no;
+            pdf.autoTable({
+                startY: secondTableStartY,
+                head: [['Payment Date', 'Total Amount']],
+                body:  [[latestPaymentDate, `P ${latestPaymentAmount}`]],
+                theme: 'plain',
+                columnStyles: {
+                    0: { cellWidth: 40, cellPadding: 1, halign: 'center'}, // Adjust the width and height of the first column
+                    1: { cellWidth: 40, cellPadding: 1, halign: 'center'}  // Adjust the width and height of the second column
+                },
+                headStyles: {
+                    fontStyle: 'normal',
+                    halign: 'center'
+                }
+            });
 
-              const expiryDateStr = matchedSoa.expiry_date;
-              const expiryDate = moment(expiryDateStr);
-              const formattedExpiryDate = expiryDate.format('MMMM DD, YYYY, hh:mm A');
+            // Add note text below the second table
+            const noteText = [
+                "Note:",
+                "1. Please present this Statement to the Teller when paying the fee for your " + transaction.trans_type + ".",
+                "2. This SOA can also be paid through 'Online Payment'. Just visit the website www.centralizedmanila.ph.",
+                "3. This eSOA is valid until " + expiry_date + "."
+            ];
+            const noteXPosition = 15; // Adjust as needed
+            const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
 
-              expiry_date = formattedExpiryDate;
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            noteText.forEach((text, index) => {
+                pdf.text(text, noteXPosition, noteYPosition + (index * 4)); // Adjust spacing here
+            });
 
-          }} else {
-              soaNumber = generateUniqueSOA(transaction.trans_type, transaction.user_id);
+            // Add signature on the right side at the bottom of the first table
+            const signatureXPosition = pdf.internal.pageSize.width - 58;
+            const signatureYPosition = pdf.autoTable.previous.finalY + 65;
 
-              const currentDate = moment();
-              const lastDayOfMonth = moment(currentDate).endOf('month');
-              const formattedExpiryDate = lastDayOfMonth.format('MMMM DD, YYYY, 11:59 A');
+            const fontSize = 10;
+            pdf.setFontSize(fontSize);
+            pdf.setFont("helvetica", "normal");
 
-              expiry_date = formattedExpiryDate;
-          }
+            pdf.text("City Treasurer", signatureXPosition + 12, signatureYPosition + 9);
 
-          const soaObject = {
-            soa_no: soaNumber,
-            transaction_id: transaction.transaction_id
-          };
-          
-          generatedSOAObjects.push(soaObject);
-      
-          pdf.setFont("helvetica", "bold");
-          pdf.setFontSize(12);
-          pdf.text("CITY GOVERNMENT OF MANILA", 15, 15);
-          pdf.setFont("helvetica", "normal");
-          pdf.setFontSize(10);
-          pdf.text(transaction.trans_type, 15, 19);
-          pdf.text("Electronic Statement of Account", 15, 23);
+            pdf.line(signatureXPosition, signatureYPosition + 5, signatureXPosition + 45, signatureYPosition + 5);
 
-          // Additional text to be placed on the right
-          const currentDate1 = new Date();
-          const currentMonth = currentDate1.getMonth();
-          const currentYear = currentDate1.getFullYear();
-          const billingDate = new Date(currentYear, currentMonth, 6);
-
-          const monthNames = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-          ];
-
-          const additionalText = [
-              { text: "Billing Date", bold: true },
-              `${monthNames[billingDate.getMonth()]} 6, ${billingDate.getFullYear()}`
-          ];
-
-          
-          if (transaction.trans_type === 'Business Permit') {
-              additionalText.push(
-                  { text: "Business Type", bold: true },
-                  transaction.bus_type
-              );
-          }
-        
-          const additionalTextX = pdf.internal.pageSize.width - 50;
-          const additionalTextY = 35;
-
-          additionalText.forEach((item, index) => {
-              const text = typeof item === 'string' ? item : item.text;
-              const isBold = typeof item === 'object' && item.bold;
-              pdf.setFont(isBold ? "helvetica" : "helvetica", isBold ? "bold" : "normal");
-              pdf.text(text, additionalTextX, additionalTextY + (index * 4));
-          });
-
-
-         // Display labels and their corresponding text
-        const labelSets = {
-          'Real Property Tax Payment': ["SOA No.", "Account Name:", "Tax Declaration Number:", "Transaction ID:"],
-          'Real Property Tax Clearance': ["SOA No.", "Tax Declaration Number:", "Transaction ID:"],
-          'Business Permit': ["SOA No.", "Name of Business:", "Name of Owner:", "Transaction ID:"],
-          'Community Tax Certificate': ["SOA No.", "Name of Owner:", "Transaction ID:"],
-          'Birth Certificate': ["SOA No.", "Name of Requestor:", "Transaction ID:"],
-          'Death Certificate': ["SOA No.", "Name of Requestor:", "Transaction ID:"], 
-          'Marriage Certificate': ["SOA No.", "Name of Requestor:", "Transaction ID:"], 
-          default: ["SOA No.", "Name of Requestor:", "Transaction ID:"],
-        };
-
-        const colonWidth = pdf.getStringUnitWidth(":") * 1;
-
-        const labels = labelSets[transaction.trans_type] || labelSets.default;
-
-        labels.forEach((label, index) => {
-          const labelWidth = pdf.getStringUnitWidth(label) * 3.9;
-          const textStartX = 15 + labelWidth + colonWidth;
-          let text;
-
-          switch (index) {
-              case 0:
-                  text = soaNumber; 
-                  break;
-              case 1:
-                  if (transaction.trans_type === 'Community Tax Certificate') {
-                      text = transaction.cedula_doc_owner || "Unknown Owner";
-                  } else if (transaction.trans_type === 'Birth Certificate') {
-                      text = transaction.birth_requestor || "Unknown Requestor";
-                  } else if (transaction.trans_type === 'Death Certificate') { 
-                      text = transaction.death_requestor || "Unknown Requestor";
-                  } else if (transaction.trans_type === 'Marriage Certificate') {
-                      text = transaction.consent_info || "Unknown Requestor";
-                  } else {
-                      text = transaction.acc_name || transaction.tc_tdn || transaction.bus_name  || "Unknown Owner";
-                  }
-                  break;
-              case 2:
-                  if (transaction.trans_type === 'Business Permit') {
-                      text = transaction.bus_owner || "Unknown Owner";
-                  } else if (transaction.type === 'Real Property Tax Payment') {
-                      text = transaction.tp_tdn || "Unknown TDN";
-                  } else {
-                    text = transaction.transaction_id || "Transaction ID";
-                  }
-                  break;
-              case 3:
-                  if (transaction.trans_type === 'Business Permit') {
-                      text = transaction.transaction_id || "Transaction ID";
-                  } else if (transaction.trans_type === 'Community Tax Certificate') {
-                      text = ""; 
-                  } else {
-                      text = transaction.transaction_id || "Transaction ID";
-                  }
-                  break;
-              default:
-                  text = "Unknown";
-          }
-
-          pdf.setFont("helvetica", "bold");
-          pdf.text(label, 15, 35 + index * 4);
-          pdf.setFont("helvetica", "normal");
-          pdf.text(text, textStartX, 35 + index * 4);
-        });   
-
-          // Spacing between the text above and the table below
-          const textHeight = (labels.length + 1) * 4; 
-          const marginTop = 1;
-
-          // Adjust the starting y-coordinate for the first table
-          const firstTableStartY = 35 + textHeight + marginTop;
-
-          // Define styles for the first table header
-          const firstTableHeaderStyles = {
-              fillColor: [50, 50, 50],
-              textColor: 255,
-          };
-
-          // Transaction Details table
-          const { trans_type, tp_pin, tc_pin, amount, year_period, period_id, date, bus_reg_no, bus_tin, ci_acc_no, copies } = transaction;
-
-          let head, body;
-
-          switch (trans_type) {
-              case 'Real Property Tax Payment':
-                  head = [['PIN', 'Total Amount', 'Year', 'Quarter']];
-                  body = [[tp_pin, 'P ' + amount, year_period, period_id]];
-                  break;
-              case 'Real Property Tax Clearance':
-                  head = [['PIN', 'Total Amount', 'Date Processed']];
-                  body = [[tc_pin, 'P ' + amount, date]];
-                  break;
-              case 'Business Permit':
-                  head = [['DTI/SEC/CDA Registration No.', 'Tax Identification Number', 'Total Amount', 'Date Processed']];
-                  body = [[bus_reg_no, bus_tin, 'P ' + amount, date]];
-                  break;
-              case 'Community Tax Certificate':
-                  head = [['Tax Payer Account No.', 'Total Amount', 'Date Processed']];
-                  body = [[ci_acc_no, 'P ' + amount, date]];
-                  break;
-              default:  
-                  head = [['No. of Copies', 'Total Amount', 'Date Processed']];
-                  body = [[copies, 'P ' + amount, date]];
-          }
-
-          pdf.autoTable({
-              startY: firstTableStartY,
-              head: head,
-              body: body,
-              headStyles: firstTableHeaderStyles,
-              theme: 'plain',
-          });
-
-          // Function to repeat a symbol to form a line
-          function repeatSymbol(symbol, count) {
-            return symbol.repeat(count);
-          }
-
-          // Define the symbol and the number of repetitions
-          const symbol = "\u2022"; // Unicode for a bullet point symbol
-          const repetitions = 146; // Adjust the number of repetitions as needed
-
-          // Generate the line of symbols
-          const lineOfSymbols = repeatSymbol(symbol, repetitions);
-
-          // Add the line of symbols below the first table
-          const textXPosition = 15; // Adjust the X position
-          const textYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
-
-          pdf.setFont("helvetica", "normal");
-          pdf.setFontSize(10);
-          pdf.text(lineOfSymbols, textXPosition, textYPosition);
-
-
-          // Second Table Title
-          const titleText = "Last Payment";
-          const titleXPosition = 15; // Adjust as needed
-          const titleYPosition = pdf.autoTable.previous.finalY + 20;
-
-          pdf.setFont("helvetica", "bold");
-          pdf.setFontSize(10);
-          pdf.text(titleText, titleXPosition, titleYPosition);
-
-          // Second Table
-          const secondTableStartY = titleYPosition + 2; // Adjust spacing from title
-
-          pdf.autoTable({
-              startY: secondTableStartY,
-              head: [['Payment Date', 'Total Amount']],
-              body:  [["1/14/2023", "P 1200.00"]],
-              theme: 'plain',
-              columnStyles: {
-                  0: { cellWidth: 40, cellPadding: 1, halign: 'center'}, // Adjust the width and height of the first column
-                  1: { cellWidth: 40, cellPadding: 1, halign: 'center'}  // Adjust the width and height of the second column
-              },
-              headStyles: {
-                  fontStyle: 'normal',
-                  halign: 'center'
-              }
-          });
-
-          // Add note text below the second table
-          const noteText = [
-              "Note:",
-              "1. Please present this Statement to the Teller when paying the fee for your " + transaction.trans_type + ".",
-              "2. This SOA can also be paid through 'Online Payment'. Just visit the website www.centralizedmanila.ph.",
-              "3. This eSOA is valid until " + expiry_date + "."
-          ];
-          const noteXPosition = 15; // Adjust as needed
-          const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
-
-          pdf.setFont("helvetica", "normal");
-          pdf.setFontSize(10);
-          noteText.forEach((text, index) => {
-              pdf.text(text, noteXPosition, noteYPosition + (index * 4)); // Adjust spacing here
-          });
-
-          // Add signature on the right side at the bottom of the first table
-          const signatureXPosition = pdf.internal.pageSize.width - 58;
-          const signatureYPosition = pdf.autoTable.previous.finalY + 65;
-
-          const fontSize = 10;
-          pdf.setFontSize(fontSize);
-          pdf.setFont("helvetica", "normal");
-
-          pdf.text("City Treasurer", signatureXPosition + 12, signatureYPosition + 9);
-
-          pdf.line(signatureXPosition, signatureYPosition + 5, signatureXPosition + 45, signatureYPosition + 5);
-
-          
-          // Get the current date and time
+            
+            // Get the current date and time
             const currentDate = new Date();
             const formattedDate = currentDate.toLocaleDateString('en-US', {
                 weekday: 'long',
@@ -439,15 +452,15 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
         const body = generatedSOAObjects;
 
         try {
-          const storeSOAnumbers = await axios.post(`http://localhost:8800/soa/store/${userPersonal.user_id}`, body);
+            const storeSOAnumbers = await axios.post(`http://localhost:8800/soa/store/${userPersonal.user_id}`, body);
 
-          if (storeSOAnumbers.status === 200) {
-            console.log('Successfully Generated SOA');
-          } else {
-            console.log("Failed to store SOA info into database.");
-          }
+            if (storeSOAnumbers.status === 200) {
+                console.log('Successfully Generated SOA');
+            } else {
+                console.log("Failed to store SOA info into database.");
+            }
         } catch (emailError) {
-          alert(emailError);
+            alert(emailError);
         }
 
         // Save the PDF
@@ -455,7 +468,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
     } catch (error) {
         console.error('Error generating transaction history:', error);
     }
-  };
+};
 
     return (
         <>
