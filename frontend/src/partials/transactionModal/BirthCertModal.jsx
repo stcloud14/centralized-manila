@@ -286,12 +286,10 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Owner's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_fname || birthTransaction.f_name || '-'}</span>
                     </div>
-                    {birthTransaction.birthc_mname ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Owner's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_mname || birthTransaction.m_name || '-'}</span>
                     </div>
-                    ) : null}
                     {birthTransaction.birthc_suffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Owner's Suffix</span>
