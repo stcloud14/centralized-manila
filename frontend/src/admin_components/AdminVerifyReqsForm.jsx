@@ -182,7 +182,7 @@ const AdminVerifyReqsForm =()=>{
                   setIsApproved(false);
                   handleRemoveTransaction(transaction.transaction_id);
                   window.location.reload()
-                }, 5000);
+                }, 2500);
                 // alert(emailResponse.data.message);
               } else {
                 console.log("Failed to send email.");
@@ -275,7 +275,7 @@ const AdminVerifyReqsForm =()=>{
                   setIsDeclined(false);
                   handleRemoveTransaction(transaction.transaction_id)
                   window.location.reload()
-                }, 5000);
+                }, 2500);
                 // alert(emailResponse.data.message);
               } else {
                 console.log("Failed to send email.");
@@ -328,7 +328,7 @@ const AdminVerifyReqsForm =()=>{
                         </svg>
                       </div>
                       <div className="text-emerald-700 text-sm bg-emerald-200 text-center rounded-full py-1.5 mb-5">
-                        {isPlaceholder ? "Placeholder Verification Approved!" : "Transaction Verification Approved!"}
+                        {isPlaceholder ? "Verification Approved!" : "Verification Approved!"}
                       </div>
                     </div>
                   )}
@@ -342,7 +342,7 @@ const AdminVerifyReqsForm =()=>{
                         </svg>
                       </div>
                       <div className="text-red-700 text-sm bg-red-200 text-center rounded-full py-1.5 mb-5">
-                        {isPlaceholder ? "Placeholder Verification Declined!" : "Transaction Verification Declined!"}
+                        {isPlaceholder ? "Verification Declined!" : "Verification Declined!"}
                       </div>
                     </div>
                   )} 

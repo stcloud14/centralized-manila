@@ -24,6 +24,7 @@ const UserSettings =()=>{
 
   const [verifiedStatus, setVerifiedStatus] = useState();
   const [isVerifiedStatus, setIsVerifiedStatus] = useState();
+  const [isRequestVerified, setisRequestVerified] = useState();
 
 
   const [defaultImg, setDefaultImg] = useState(defaultImage);
@@ -96,6 +97,36 @@ useEffect(() => {
   fetchVerificationStatus();
 }, [user_id]);
 
+useEffect(() => {
+  // Fetch verification status from the database using the user_id
+  const fetchApplicationStatus = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8800/usersettings/check_application_status/${user_id}`);
+      
+      // Check if response is successful (status code 2xx)
+      if (response.status = 200) {
+        // Check if verification status exists and handle accordingly
+        if (response.data && response.data.application === 'Applying') {
+          setisRequestVerified(true);
+        } else {
+          setisRequestVerified(false);
+        }
+      } else {
+        // Handle non-successful response
+        console.error('Error fetching verification status. Status:', response.status);
+      }
+      
+      // Log the entire response for debugging
+      console.log("Apply:", response);
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('Error fetching verification status:', error);
+    }
+  };
+
+  fetchApplicationStatus();
+}, [user_id]);
+
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -159,6 +190,7 @@ useEffect(() => {
     }
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    window.location.reload();
   };
 
 
@@ -841,15 +873,12 @@ useEffect(() => {
                     <button
                         type="button"
                         onClick={handleApplyModal}
-                        disabled={isVerifiedStatus}
+                        disabled={isVerifiedStatus || isRequestVerified}
                         className={`w-full sm:w-auto text-blue-500 border border-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-10 py-2.5 text-center mb-2 dark:focus:ring-blue-800 ${
-                          isVerifiedStatus 
+                          (isVerifiedStatus || isRequestVerified)  
                           ? "bg-gray-400 text-gray-700 border-gray-400 cursor-not-allowed"
                           : "border hover:text-white hover:bg-blue-500 dark:hover:bg-blue-500 dark:hover:text-white"
                         }`}           >  
-                        
-
-                        
                         Apply for Account Verification
                       </button>
 
