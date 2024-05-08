@@ -4,7 +4,7 @@ import React from 'react';
         return (
             <>
                       <option value="0" className='dark:bg-[#3d3d3d]'>Select Profession/Occupation/Business</option>
-                      <option value="ACCOUNT EXECUTIVE" className='dark:bg-[#3d3d3d]'>Account Executive</option>
+                      <option value="ACCOUNTs EXECUTIVE" className='dark:bg-[#3d3d3d]'>Account Executive</option>
                       <option value="ACCOUNTANT" className='dark:bg-[#3d3d3d]'>Accountant</option>
                       <option value="ACTUARY" className='dark:bg-[#3d3d3d]'>Actuary</option>
                       <option value="AEROSPACE ENGINEER" className='dark:bg-[#3d3d3d]'>Aerospace Engineer</option>
