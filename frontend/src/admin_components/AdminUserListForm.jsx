@@ -38,12 +38,31 @@ const AdminUserListForm = () => {
             const { userlist } = res.data;
             setUserApplications(userlist);
             setFilteredUserApplications(userlist);
+            console.log("userlist", userlist)
         }catch(err){
             console.log(err)
         }
     }
     fetchUserApplications()
   },[user_id])
+
+  // const handleSearch = () => {
+  //   const filteredURRegistry = userApplications.filter((transaction) => {
+  //     const { mobile_no, f_name, l_name, user_email, sex_type, verification_status } = transaction || {};
+      
+  //     const transactionId = mobile_no?.toString()?.toUpperCase();
+  //     const isFNameMatch = !searchFname || f_name?.toString()?.toUpperCase().includes(searchFname);
+  //     const isLNameMatch = !searchLname || l_name?.toString()?.toUpperCase().includes(searchLname);
+  //     const isEmailMatch = !searchEmail || user_email?.toString()?.includes(searchEmail);
+  //     const isIdMatch = transactionId && transactionId.includes(searchInput);
+  //     const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || sex_type === selectedType;
+  //     const isStatusMatch = !selectedStatus || selectedStatus === 'All' || verification_status === selectedStatus;
+  
+  //     return isFNameMatch && isLNameMatch && isEmailMatch && isIdMatch && isTypeMatch && isStatusMatch;
+  //   });
+  
+  //   setFilteredUserApplications(filteredURRegistry);
+  // };
 
   const handleSearch = () => {
     const filteredURRegistry = userApplications.filter((transaction) => {

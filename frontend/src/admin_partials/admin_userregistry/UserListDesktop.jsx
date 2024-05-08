@@ -46,7 +46,8 @@ const UserListDesktop = ({ handleOpenModal, userApplications, searchInput, setSe
                     <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </span>
-                <input value={searchFname} onChange={(e) => setSearchFname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search First Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                {/* <input value={searchFname} onChange={(e) => setSearchFname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search First Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/> */}
+                <input value={searchFname} onChange={(e) => setSearchFname(e.target.value ? e.target.value.toUpperCase() : '')}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search First Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
               </div>
             </div>
 
@@ -59,7 +60,9 @@ const UserListDesktop = ({ handleOpenModal, userApplications, searchInput, setSe
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value={searchLname} onChange={(e) => setSearchLname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Last Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  {/* <input value={searchLname} onChange={(e) => setSearchLname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Last Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/> */}
+                  <input value={searchLname} onChange={(e) => setSearchLname(e.target.value ? e.target.value.toUpperCase() : '')}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Last Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+
                 </div>
               </div>
 
@@ -95,7 +98,16 @@ const UserListDesktop = ({ handleOpenModal, userApplications, searchInput, setSe
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value={searchEmail} onChange={(e) => setSearchEmail(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Email..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  {/* <input value={searchEmail} onChange={(e) => setSearchEmail(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Email..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/> */}
+                  <input
+                    value={searchEmail || ""} // Replace null with an empty string
+                    onChange={(e) => setSearchEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search Email..."
+                    className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
+                  />
                 </div>
               </div>
 
@@ -186,9 +198,11 @@ const UserListDesktop = ({ handleOpenModal, userApplications, searchInput, setSe
                 <tbody>
 
                 {userApplications && userApplications.length > 0 ? (
-                userApplications.map((transaction) => (
+                userApplications.map((transaction, index) => (
 
-                <tr key={transaction?.transaction_id} onClick={() => handleOpenModal(transaction)} className='cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+                // <tr key={transaction?.transaction_id} onClick={() => handleOpenModal(transaction)} className='cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+                <tr key={index} onClick={() => handleOpenModal(transaction)} className='cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
+
                   <td className="px-1 py-2 whitespace-nowrap">
                     <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                       {transaction.l_name}
@@ -204,8 +218,11 @@ const UserListDesktop = ({ handleOpenModal, userApplications, searchInput, setSe
                       {transaction.m_name}
                     </div>
                   </td>
-                  <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                  {/* <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                     {transaction.sex_type.toUpperCase()}
+                  </td> */}
+                  <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                    {transaction.sex_type ? transaction.sex_type.toUpperCase() : ''}
                   </td>
                   <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                     {transaction.birth_place}
@@ -235,7 +252,7 @@ const UserListDesktop = ({ handleOpenModal, userApplications, searchInput, setSe
                 </tr>
                 ))
                 ) : (
-                  <tr>
+                  <tr key="noRecords">
                     <td colSpan="10" className="text-center py-4 text-slate-500 dark:text-slate-400">
                       No records found.
                     </td>

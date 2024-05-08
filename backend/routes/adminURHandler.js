@@ -8,124 +8,256 @@ const router = Router();
 
 
 router.get('/', async (req, res) => {
-    const query = "SELECT \
-    uv.user_id, \
-    uv.verification_status, \
-    uv.application_status, \
-    uv.user_valid_id, \
-    up.f_name, \
-    up.m_name, \
-    up.l_name, \
-    up.suffix_type, \
-    st.sex_type, \
-    cs.cvl_status, \
-    rs.res_status, \
-    css.czn_status, \
-    ub.birth_date, \
-    ub.birth_place, \
-    uc.user_email, \
-    uc.mobile_no, \
-    uc.tel_no, \
-    r.region_name, \
-    p.prov_name, \
-    c.city_name, \
-    uc.house_floor, \
-    uc.bldg_name, \
-    uc.brgy_dist, \
-    uc.zip_code, \
-    ug.user_tin_id, \
-    ug.user_pgb_id, \
-    ug.user_philh_id, \
-    ug.user_sss_id, \
-    ug.user_gsis_id, \
-    ug.user_natl_id, \
-    ui.user_image, \
-    ui.image_url \
-  FROM \
-    user_verification uv \
-  LEFT JOIN \
-    user_personal up ON up.user_id = uv.user_id AND up.user_id IS NOT NULL \
-  LEFT JOIN \
-    user_birth ub ON ub.user_id = uv.user_id AND ub.user_id IS NOT NULL \
-  LEFT JOIN \
-    user_contact uc ON uc.user_id = uv.user_id AND uc.user_id IS NOT NULL \
-  LEFT JOIN \
-    user_gov_id ug ON ug.user_id = uv.user_id AND ug.user_id IS NOT NULL \
-  LEFT JOIN \
-    user_image ui ON ui.user_id = uv.user_id AND ui.user_id IS NOT NULL \
-  LEFT JOIN \
-    region r ON uc.region_id = r.region_id AND uc.region_id IS NOT NULL \
-  LEFT JOIN \
-    province p ON uc.prov_id = p.prov_id AND uc.prov_id IS NOT NULL \
-    LEFT JOIN sex_type st ON up.sex_id = st.sex_id \
-    LEFT JOIN cvl_status cs ON up.cvl_id = cs.cvl_id \
-    LEFT JOIN res_status rs ON up.res_id = rs.res_id \
-    LEFT JOIN czn_status css ON up.czn_id = css.czn_id \
-  LEFT JOIN \
-    cities c ON uc.city_id = c.city_id AND uc.city_id IS NOT NULL \
-  WHERE \
-    uv.application_status = 'Applying' AND uv.user_valid_id IS NOT NULL \
-  ORDER BY up.l_name;";
+  //   const query = "SELECT \
+  //   uv.user_id, \
+  //   uv.verification_status, \
+  //   uv.application_status, \
+  //   uv.user_valid_id, \
+  //   up.f_name, \
+  //   up.m_name, \
+  //   up.l_name, \
+  //   up.suffix_type, \
+  //   st.sex_type, \
+  //   cs.cvl_status, \
+  //   rs.res_status, \
+  //   css.czn_status, \
+  //   ub.birth_date, \
+  //   ub.birth_place, \
+  //   uc.user_email, \
+  //   uc.mobile_no, \
+  //   uc.tel_no, \
+  //   r.region_name, \
+  //   p.prov_name, \
+  //   c.city_name, \
+  //   uc.house_floor, \
+  //   uc.bldg_name, \
+  //   uc.brgy_dist, \
+  //   uc.zip_code, \
+  //   ug.user_tin_id, \
+  //   ug.user_pgb_id, \
+  //   ug.user_philh_id, \
+  //   ug.user_sss_id, \
+  //   ug.user_gsis_id, \
+  //   ug.user_natl_id, \
+  //   ui.user_image, \
+  //   ui.image_url \
+  // FROM \
+  //   user_verification uv \
+  // LEFT JOIN \
+  //   user_personal up ON up.user_id = uv.user_id AND up.user_id IS NOT NULL \
+  // LEFT JOIN \
+  //   user_birth ub ON ub.user_id = uv.user_id AND ub.user_id IS NOT NULL \
+  // LEFT JOIN \
+  //   user_contact uc ON uc.user_id = uv.user_id AND uc.user_id IS NULL \
+  // LEFT JOIN \
+  //   user_gov_id ug ON ug.user_id = uv.user_id AND ug.user_id IS NOT NULL \
+  // LEFT JOIN \
+  //   user_image ui ON ui.user_id = uv.user_id AND ui.user_id IS NOT NULL \
+  // LEFT JOIN \
+  //   region r ON uc.region_id = r.region_id AND uc.region_id IS NOT NULL \
+  // LEFT JOIN \
+  //   province p ON uc.prov_id = p.prov_id AND uc.prov_id IS NOT NULL \
+  //   LEFT JOIN sex_type st ON up.sex_id = st.sex_id \
+  //   LEFT JOIN cvl_status cs ON up.cvl_id = cs.cvl_id \
+  //   LEFT JOIN res_status rs ON up.res_id = rs.res_id \
+  //   LEFT JOIN czn_status css ON up.czn_id = css.czn_id \
+  // LEFT JOIN \
+  //   cities c ON uc.city_id = c.city_id AND uc.city_id IS NOT NULL \
+  // WHERE \
+  //   uv.application_status = 'Applying' AND uv.user_valid_id IS NOT NULL \
+  // ORDER BY up.l_name;";
 
 
-  const query1 = "SELECT \
-    up.user_id, \
-    up.f_name, \
-    up.m_name, \
-    up.l_name, \
-    up.suffix_type, \
-    st.sex_type, \
-    cs.cvl_status, \
-    rs.res_status, \
-    css.czn_status, \
-    ub.birth_date, \
-    ub.birth_place, \
-    uc.user_email, \
-    uc.mobile_no, \
-    uc.tel_no, \
-    uc.region_id, \
-    uc.prov_id, \
-    uc.city_id, \
-    r.region_name, \
-    p.prov_name, \
-    c.city_name, \
-    uc.house_floor, \
-    uc.bldg_name, \
-    uc.brgy_dist, \
-    uc.zip_code, \
-    ug.user_tin_id, \
-    ug.user_pgb_id, \
-    ug.user_philh_id, \
-    ug.user_sss_id, \
-    ug.user_gsis_id, \
-    ug.user_natl_id, \
-    ui.user_image, \
-    ui.image_url, \
-    uv.verification_status, \
-    uv.application_status \
-  FROM \
-    user_personal up \
-  LEFT JOIN \
-    user_verification uv ON uv.user_id = up.user_id AND up.user_id IS NOT NULL \
-  LEFT JOIN \
-    user_birth ub ON ub.user_id = up.user_id AND ub.user_id IS NOT NULL \
-  LEFT JOIN \
-    user_contact uc ON uc.user_id = up.user_id AND uc.user_id IS NOT NULL \
-  LEFT JOIN \
-    user_gov_id ug ON ug.user_id = up.user_id AND ug.user_id IS NOT NULL \
-  LEFT JOIN \
-    user_image ui ON ui.user_id = up.user_id AND ui.user_id IS NOT NULL \
-  JOIN \
-    region r ON uc.region_id = r.region_id AND uc.region_id \
-  JOIN \
-    province p ON uc.prov_id = p.prov_id AND uc.prov_id \
-    LEFT JOIN sex_type st ON up.sex_id = st.sex_id \
-    LEFT JOIN cvl_status cs ON up.cvl_id = cs.cvl_id \
-    LEFT JOIN res_status rs ON up.res_id = rs.res_id \
-    LEFT JOIN czn_status css ON up.czn_id = css.czn_id \
-  JOIN \
-    cities c ON uc.city_id = c.city_id AND uc.city_id \
-  ORDER BY up.l_name;";
+  // const query1 = "SELECT \
+  //   up.user_id, \
+  //   up.f_name, \
+  //   up.m_name, \
+  //   up.l_name, \
+  //   up.suffix_type, \
+  //   st.sex_type, \
+  //   cs.cvl_status, \
+  //   rs.res_status, \
+  //   css.czn_status, \
+  //   ub.birth_date, \
+  //   ub.birth_place, \
+  //   uc.user_email, \
+  //   uc.mobile_no IS NOT NULL, \
+  //   uc.tel_no IS NULL, \
+  //   uc.region_id IS NULL, , \
+  //   uc.prov_id IS NULL, \
+  //   uc.city_id IS NULL, \
+  //   r.region_name, \
+  //   p.prov_name, \
+  //   c.city_name, \
+  //   uc.house_floor, \
+  //   uc.bldg_name, \
+  //   uc.brgy_dist, \
+  //   uc.zip_code, \
+  //   ug.user_tin_id, \
+  //   ug.user_pgb_id, \
+  //   ug.user_philh_id, \
+  //   ug.user_sss_id, \
+  //   ug.user_gsis_id, \
+  //   ug.user_natl_id, \
+  //   ui.user_image, \
+  //   ui.image_url, \
+  //   uv.verification_status, \
+  //   uv.application_status \
+  // FROM \
+  //   user_personal up \
+  // LEFT JOIN \
+  //   user_verification uv ON uv.user_id = up.user_id AND up.user_id IS NOT NULL \
+  // LEFT JOIN \
+  //   user_birth ub ON ub.user_id = up.user_id AND ub.user_id IS NOT NULL \
+  // LEFT JOIN \
+  //   user_contact uc ON uc.user_id = up.user_id AND uc.user_id IS NULL  \
+  // LEFT JOIN \
+  //   user_gov_id ug ON ug.user_id = up.user_id AND ug.user_id IS NOT NULL \
+  // LEFT JOIN \
+  //   user_image ui ON ui.user_id = up.user_id AND ui.user_id IS NOT NULL \
+  // JOIN \
+  //   region r ON uc.region_id = r.region_id AND uc.region_id \
+  // JOIN \
+  //   province p ON uc.prov_id = p.prov_id AND uc.prov_id \
+  //   LEFT JOIN sex_type st ON up.sex_id = st.sex_id \
+  //   LEFT JOIN cvl_status cs ON up.cvl_id = cs.cvl_id \
+  //   LEFT JOIN res_status rs ON up.res_id = rs.res_id \
+  //   LEFT JOIN czn_status css ON up.czn_id = css.czn_id \
+  // JOIN \
+  //   cities c ON uc.city_id = c.city_id AND uc.city_id \
+  // ORDER BY up.l_name;";
+
+  const query = `
+  SELECT
+    uv.user_id,
+    uv.verification_status,
+    uv.application_status,
+    uv.user_valid_id,
+    up.f_name,
+    up.m_name,
+    up.l_name,
+    up.suffix_type,
+    st.sex_type,
+    cs.cvl_status,
+    rs.res_status,
+    css.czn_status,
+    ub.birth_date,
+    ub.birth_place,
+    uc.user_email,
+    uc.mobile_no,
+    uc.tel_no,
+    r.region_name,
+    p.prov_name,
+    c.city_name,
+    uc.house_floor,
+    uc.bldg_name,
+    uc.brgy_dist,
+    uc.zip_code,
+    ug.user_tin_id,
+    ug.user_pgb_id,
+    ug.user_philh_id,
+    ug.user_sss_id,
+    ug.user_gsis_id,
+    ug.user_natl_id,
+    ui.user_image,
+    ui.image_url
+  FROM
+    user_verification uv
+  LEFT JOIN
+    user_personal up ON up.user_id = uv.user_id
+  LEFT JOIN
+    user_birth ub ON ub.user_id = uv.user_id
+  LEFT JOIN
+    user_contact uc ON uc.user_id = uv.user_id
+  LEFT JOIN
+    user_gov_id ug ON ug.user_id = uv.user_id
+  LEFT JOIN
+    user_image ui ON ui.user_id = uv.user_id
+  LEFT JOIN
+    region r ON uc.region_id = r.region_id
+  LEFT JOIN
+    province p ON uc.prov_id = p.prov_id
+  LEFT JOIN
+    sex_type st ON up.sex_id = st.sex_id
+  LEFT JOIN
+    cvl_status cs ON up.cvl_id = cs.cvl_id
+  LEFT JOIN
+    res_status rs ON up.res_id = rs.res_id
+  LEFT JOIN
+    czn_status css ON up.czn_id = css.czn_id
+  LEFT JOIN
+    cities c ON uc.city_id = c.city_id
+  WHERE
+    uv.application_status = 'Applying' AND uv.user_valid_id IS NOT NULL
+  ORDER BY
+    up.l_name;
+`;
+
+const query1 = `
+  SELECT
+    up.user_id,
+    up.f_name,
+    up.m_name,
+    up.l_name,
+    up.suffix_type,
+    st.sex_type,
+    cs.cvl_status,
+    rs.res_status,
+    css.czn_status,
+    ub.birth_date,
+    ub.birth_place,
+    uc.user_email,
+    uc.mobile_no,
+    uc.tel_no,
+    uc.region_id,
+    uc.prov_id,
+    uc.city_id,
+    r.region_name,
+    p.prov_name,
+    c.city_name,
+    uc.house_floor,
+    uc.bldg_name,
+    uc.brgy_dist,
+    uc.zip_code,
+    ug.user_tin_id,
+    ug.user_pgb_id,
+    ug.user_philh_id,
+    ug.user_sss_id,
+    ug.user_gsis_id,
+    ug.user_natl_id,
+    ui.user_image,
+    ui.image_url,
+    uv.verification_status,
+    uv.application_status
+  FROM
+    user_personal up
+  LEFT JOIN
+    user_verification uv ON uv.user_id = up.user_id
+  LEFT JOIN
+    user_birth ub ON ub.user_id = up.user_id
+  LEFT JOIN
+    user_contact uc ON uc.user_id = up.user_id
+  LEFT JOIN
+    user_gov_id ug ON ug.user_id = up.user_id
+  LEFT JOIN
+    user_image ui ON ui.user_id = up.user_id
+  LEFT JOIN
+    region r ON uc.region_id = r.region_id
+  LEFT JOIN
+    province p ON uc.prov_id = p.prov_id
+  LEFT JOIN
+    sex_type st ON up.sex_id = st.sex_id
+  LEFT JOIN
+    cvl_status cs ON up.cvl_id = cs.cvl_id
+  LEFT JOIN
+    res_status rs ON up.res_id = rs.res_id
+  LEFT JOIN
+    czn_status css ON up.czn_id = css.czn_id
+  LEFT JOIN
+    cities c ON uc.city_id = c.city_id
+  ORDER BY
+    up.l_name;
+`;
 
     try {
         const result = await queryDatabase(query);
@@ -340,7 +472,7 @@ router.put('/updateuser/:user_id', auditMiddleware, async (req, res) => {
   }
   
   if (cvl_status !== undefined) {
-    updateQueries.push({ query: "UPDATE user_personal SET `cvl_id` = ? WHERE `user_id` = ?", values: [cvl_status, user_id] });
+    updateQueries.push({ query: "UPDATE user_personal SET `cvl_status` = ? WHERE `user_id` = ?", values: [cvl_status, user_id] });
   }
   
   if (res_status !== undefined) {
