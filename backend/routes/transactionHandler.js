@@ -155,7 +155,7 @@ router.get('/transId/:user_id', async (req, res) => {
 router.get('/cedula/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS municipality, cc.transaction_id, cc.cedula_date, \
+    const query = "SELECT  r.region_name AS region, tt.trans_type, p.prov_name AS province, c.city_name AS municipality, cc.transaction_id, cc.cedula_date, \
     co.l_name, co.f_name, co.m_name, co.suffix_type, st.sex_type, \
     cv.cvl_status, ci.czn_id, ci.height, ci.weight, ci.acr_no, \
     ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
@@ -165,6 +165,7 @@ router.get('/cedula/:transaction_id', async (req, res) => {
     FROM cedula_cert cc \
     \
     LEFT JOIN user_transaction ut ON cc.transaction_id = ut.transaction_id \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN transaction_info ti ON cc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN address_info ai ON cc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN cedula_doc_owner co ON cc.transaction_id = co.transaction_id AND co.transaction_id IS NOT NULL \
@@ -320,7 +321,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
 router.get('/birthcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT bi.user_id, r.region_name AS region, p.prov_name AS province, c.city_name AS municipal, bc.transaction_id, bi.birth_date, \
+    const query = "SELECT bi.user_id, r.region_name AS region, tt.trans_type, p.prov_name AS province, c.city_name AS municipal, bc.transaction_id, bi.birth_date, \
     bo.l_name, bo.f_name, bo.m_name, bo.suffix_type, st.sex_type, bo.hospital_name, bo.country, bo.birth_reg_no, \
     br.l_name AS reql_name,br.f_name AS reqf_name, br.m_name AS reqm_name, br.suffix_type AS reqsuffix, br.owner_relation, br.requestor_tin, br.tel_no, br.mobile_no, \
     fi.father_fname, fi.father_mname, fi.father_lname, fi.suffix_type AS fathersuffix, \
@@ -333,6 +334,7 @@ router.get('/birthcert/:transaction_id', async (req, res) => {
     JOIN birth_info bi ON bc.transaction_id = bi.transaction_id \
     \
     LEFT JOIN user_transaction ut ON bc.transaction_id = ut.transaction_id \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN transaction_info ti ON bc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN address_info ai ON bc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN birth_doc_owner bo ON bc.transaction_id = bo.transaction_id AND bo.transaction_id IS NOT NULL \
@@ -513,7 +515,7 @@ router.get('/birthcert/:transaction_id/download', async (req, res) => {
 router.get('/deathcert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT r.region_name AS region, tt.trans_type, p.prov_name AS province, c.city_name AS city, dc.transaction_id, dc.death_date, \
+    const query = "SELECT r.region_name AS region, tt.trans_type, p.prov_name AS province, c.city_name AS municipal, dc.transaction_id, dc.death_date, \
     do.l_name, do.f_name, do.m_name, do.suffix_type, st.sex_type, \
     dr.l_name AS reql_name, dr.f_name AS reqf_name, dr.m_name AS reqm_name, dr.suffix_type AS reqsuffix, \
     dr.owner_rel, dr.mobile_no, dr.tel_no, \
@@ -693,7 +695,7 @@ router.get('/deathcert/:transaction_id/download', async (req, res) => {
 router.get('/marriagecert/:transaction_id', async (req, res) => {
     const transaction_id = req.params.transaction_id;
 
-    const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS city, mc.transaction_id, mc.marriage_date, \
+    const query = "SELECT  r.region_name AS region, tt.trans_type, p.prov_name AS province, c.city_name AS city, mc.transaction_id, mc.marriage_date, \
     hi.husband_fname, hi.husband_mname, hi.husband_lname, hi.suffix_type AS husband_suffix, \
     wi.wife_fname, wi.wife_mname, wi.wife_lname, wi.suffix_type AS wife_suffix, \
     ci.consent_lname AS reql_name, ci.consent_fname AS reqf_name, ci.consent_mname AS reqm_name, ci.suffix_type AS reqsuffix, ci.owner_rel, ci.tel_no, ci.mobile_no, \
@@ -704,6 +706,7 @@ router.get('/marriagecert/:transaction_id', async (req, res) => {
     FROM marriage_cert mc \
     \
     LEFT JOIN user_transaction ut ON mc.transaction_id = ut.transaction_id \
+    LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
     LEFT JOIN transaction_info ti ON mc.transaction_id = ti.transaction_id AND ti.transaction_id IS NOT NULL \
     LEFT JOIN address_info ai ON mc.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN husband_info hi ON mc.transaction_id = hi.transaction_id AND hi.transaction_id IS NOT NULL \
