@@ -226,22 +226,6 @@ const TermsConditionsForm =()=>{
             <span className="text-left text-slate-700 dark:text-white">
               The City Government of Manila's additional policies, insofar as they align with this Privacy Notice, will remain in effect. In the event that any provision of this Notice is deemed unenforceable or invalid by a court with competent jurisdiction, the invalidity of that particular provision will not impact the validity of the remaining provisions, which will continue to be fully effective.
             </span>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             </div>
           </div>
           {user_id && (

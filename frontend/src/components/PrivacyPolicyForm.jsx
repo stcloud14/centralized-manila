@@ -10,33 +10,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 const PrivacyPolicyForm =()=>{
 
   const { user_id } = useParams();
-  const navigate = useNavigate();
 
   const contentRef = useRef(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const logoSrc = '../src/images/mnl_footer.svg';
-
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-  
-    const checkToken = async (token) => {
-        try {
-            // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-        } catch (error) {
-          window.location.reload();
-          navigate(`/`);
-        }
-    };
-  
-    checkToken(token); // Pass the token to the checkToken function
-}, [navigate, user_id]);
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -252,22 +229,6 @@ const PrivacyPolicyForm =()=>{
             <span className="text-left text-slate-700 dark:text-white">
               The City Government of Manila's additional policies, insofar as they align with this Privacy Notice, will remain in effect. In the event that any provision of this Notice is deemed unenforceable or invalid by a court with competent jurisdiction, the invalidity of that particular provision will not impact the validity of the remaining provisions, which will continue to be fully effective.
             </span>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             </div>
           </div>
           {user_id && (

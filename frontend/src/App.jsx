@@ -99,7 +99,6 @@ function App() {
         <Route exact path="/faqs/:user_id" element={<FAQs/>} />
         <Route exact path="/about/:user_id" element={<About/>} />
         <Route exact path="/contacts/:user_id" element={<Contacts/>} />
-        <Route exact path="/privacypolicy/:user_id" element={<PrivacyPolicy/>} />
         <Route exact path="/paymentsuccess/:user_id" element={<PaymentSuccess/>} />
         <Route exact path="/forgotpass/" element={<ForgotPassword/>} />
         <Route exact path="/comingsoon/:user_id" element={<ComingSoon/>} />
@@ -122,15 +121,15 @@ function App() {
       </Routes>
 
       <DashboardProvider>
-          <Routes>
-            <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
-            <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />
-            <Route exact path="/admin_dash_bp/:admin_type" element={<AdminDashBP />} />
-            <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
-            <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
-            <Route exact path="/admin_dash_ur/:admin_type" element={<AdminDashUR />} />
-          </Routes>
-        </DashboardProvider>
+        <Routes>
+          <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
+          <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />
+          <Route exact path="/admin_dash_bp/:admin_type" element={<AdminDashBP />} />
+          <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
+          <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
+          <Route exact path="/admin_dash_ur/:admin_type" element={<AdminDashUR />} />
+        </Routes>
+      </DashboardProvider>
     </>
   );
 }
