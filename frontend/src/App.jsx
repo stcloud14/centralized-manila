@@ -18,6 +18,7 @@ import Home from './pages/Home';
 import PersonalInfo from './pages/PersonalInfo';
 import ContactInfo from './pages/ContactInfo';
 import GovernmentInfo from './pages/GovernmentInfo';
+import RPTaxClearance from './pages/RPTaxClearance';
 import RPTaxPayment from './pages/RPTaxPayment';
 import TransactionHistory from './pages/TransactionHistory';
 import BusinessPermit from './pages/BusinessPermit';
