@@ -9,6 +9,7 @@ import './css/style.css';
 
 import './charts/ChartjsConfig';
 
+
 // Import pages
 import LandingPage from './pages/LandingPage';
 import LoginAdmin from './pages/LoginAdmin';
