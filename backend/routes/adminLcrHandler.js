@@ -9,7 +9,7 @@ const router = Router();
 router.get('/', async (req, res) => {
 
     // Birth Certificate Details
-    const query = "SELECT ut.transaction_id, ut.user_id, tt.trans_type, ut.status_type, ut.date_processed, br.l_name AS reql_name, br.f_name AS reqf_name, br.m_name AS reqm_name, st.sex_id, br.suffix_type AS reqsuffix, br.owner_relation, br.requestor_tin, br.tel_no, br.mobile_no, bi.birth_date, \
+    const query = "SELECT ut.transaction_id, ut.user_id, tt.trans_type, ut.status_type, ut.date_processed, br.l_name AS reql_name, br.f_name AS reqf_name, br.m_name AS reqm_name, st.sex_type, br.suffix_type AS reqsuffix, br.owner_relation, br.requestor_tin, br.tel_no, br.mobile_no, bi.birth_date, \
     bo.l_name, bo.m_name, bo.f_name, bo.suffix_type, bo.hospital_name, bo.country, bo.birth_reg_no, \
     r.region_name AS region, p.prov_name AS province, c.city_name AS municipal, \
     ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
