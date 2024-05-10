@@ -66,16 +66,9 @@ const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.suffix_type}</span>
                   </div>
                   
-                  {/*<div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                    <span className="font-medium whitespace-nowrap">Owner's Sex</span>
-                    <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.sex_type}</span>
-                  </div>*/}
-
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Owner's Sex</span>
-                    <span className="whitespace-nowrap md:mb-0 mb-1">
-                      {selectedTransaction.sex_id === 1 ? 'Male' : selectedTransaction.sex_id === 2 ? 'Female' : ''}
-                    </span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.sex_type}</span>
                   </div>
 
                   <br/>
