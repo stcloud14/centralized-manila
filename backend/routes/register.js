@@ -20,7 +20,7 @@ router.post('/check-existence', async (req, res) => {
     try {
       const result = await queryDatabase(query, values);
       if (result.length > 0) {
-        res.json({ exists: true, message: "Mobile number already exists. Please use another or proceed to login." });
+        res.json({ exists: true, message: "Mobile number already exists. proceed to login." });
       } else {
         res.json({ exists: false, message: "User does not exist. Proceed to register." });
       }
