@@ -236,7 +236,7 @@ router.get('/', async (req, res) => {
     wi.wife_fname, wi.wife_mname, wi.wife_lname, wi.suffix_type AS wife_suffix, \
     ci.consent_lname AS reql_name, ci.consent_fname AS reqf_name, ci.consent_mname AS reqm_name, ci.suffix_type AS reqsuffix, ci.owner_rel, ci.tel_no, ci.mobile_no, \
     ti.amount, ti.copies, ptt.print_type, ti.valid_id, ti.purpose_id, \
-    ai.email, ai.mobile_no, ai.tel_no, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
+    ai.email, r1.region_name AS reqregion, p1.prov_name AS reqprovince, c1.city_name AS reqcity, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ai.zip_code, pt.purpose_type, vt.valid_id_type \
     \
     FROM user_transaction ut \

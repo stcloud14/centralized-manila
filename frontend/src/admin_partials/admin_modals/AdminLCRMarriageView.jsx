@@ -155,16 +155,16 @@ const AdminLCRMarriageView = ({ selectedTransaction, isOpen, handleClose, transT
                           {selectedTransaction.tel_no && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tel_no}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.marriagec_mobileno || selectedTransaction.reqtel || selectedTransaction.tel_no || '-'}</span>
                           </div>
                           )}
 
-                          {selectedTransaction.mobile_no && (
+                          {selectedTransaction.mobile_no ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mobile No.</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.mobile_no}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.marriagec_mobileno || selectedTransaction.reqnum || selectedTransaction.mobile_no || '-'}</span>
                           </div>
-                          )}                                                                     
+                          ) : null}                                                                     
                           <br/>
 
                           <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
