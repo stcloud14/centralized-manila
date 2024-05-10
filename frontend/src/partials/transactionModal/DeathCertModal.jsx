@@ -347,10 +347,12 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Relationship to the Owner</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqrelation || deathTransaction.owner_rel || '-'}</span>
                     </div>
+                    {deathTransaction.reqtel ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Telephone No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_telno || deathTransaction.reqtel || '-'}</span>
                     </div>
+                    ) : null}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mobile No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_mobileno || deathTransaction.reqnum || '-'}</span>
