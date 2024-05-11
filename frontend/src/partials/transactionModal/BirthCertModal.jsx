@@ -285,14 +285,19 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Owner's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_fname || birthTransaction.f_name || '-'}</span>
                     </div>
+                    {birthTransaction.m_name ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Owner's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_mname || birthTransaction.m_name || '-'}</span>
                     </div>
+                    ) : null}
+                    {birthTransaction.suffix_type ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Owner's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_suffix || birthTransaction.suffix_type || '-'}</span>
                     </div>
+                    ) : null}
+
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Owner's Sex</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_sexLabel || birthTransaction.sex_type || '-'}</span>
@@ -319,26 +324,33 @@ const cancelTrans = async (e) => {
                     </div>
                     
                     <br/>
-                    
                     <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
                       <span className="font-semibold whitespace-nowrap">Father's Name of Document Owner</span>
-                    </div>
+                    </div>                  
+                    {birthTransaction.father_lname ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Father's Last Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_fatherlname || birthTransaction.father_lname || '-'}</span>
                     </div>
+                     ) : null}
+                    {birthTransaction.father_fname ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Father's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_fatherfname || birthTransaction.father_fname || '-'}</span>
                     </div>
+                     ) : null}
+                    {birthTransaction.father_mname ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Father's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_fathermname || birthTransaction.father_mname || '-'}</span>
                     </div>
+                    ) : null}
+                    {birthTransaction.fathersuffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Father's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_fathersuffix || birthTransaction.fathersuffix || '-'}</span>
                     </div>
+                    ) : null}
 
                     <br/>
                     
@@ -353,14 +365,18 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Mother's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_motherfname || birthTransaction.mother_fname || '-'}</span>
                     </div>
+                    {birthTransaction.mother_mname ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mother's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_mothermname || birthTransaction.mother_mname || '-'}</span>
                     </div>
+                    ) : null}
+                    {birthTransaction.mothersuffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mother's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_mothersuffix || birthTransaction.mothersuffix || '-'}</span>
                     </div>
+                    ) : null}
                     <br/>
                     
                     <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
@@ -374,30 +390,40 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqfname || birthTransaction.reqf_name || '-'}</span>
                     </div>
+                    {birthTransaction.reqm_name ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqmname || birthTransaction.reqm_name || '-'}</span>
                     </div>
+                    ) : null}
+                    {birthTransaction.reqsuffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqsuffix || birthTransaction.reqsuffix || '-'}</span>
                     </div>
+                    ) : null}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Relationship to the Owner</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqrelation || birthTransaction.owner_relation || '-'}</span>
                     </div>
+                    {birthTransaction.requestor_tin ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Tax Identification Number</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqtin || birthTransaction.requestor_tin || '-'}</span>
                     </div>
+                    ) : null}
+                    {birthTransaction.reqtel ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Telephone No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqtelnum || birthTransaction.reqtel || '-'}</span>
                     </div>
+                    ) : null}
+                    {birthTransaction.reqnum ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mobile No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_reqmobnum || birthTransaction.reqnum || '-'}</span>
                     </div>
+                    ) : null}
                                               
                     <br/>
                     
@@ -434,21 +460,24 @@ const cancelTrans = async (e) => {
                     </div>
 
                     <br/>
-
+                    {birthTransaction.country ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Country</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_country || birthTransaction.country || '-'}</span>
                     </div>
+                    ) : null}
                     {birthTransaction.birthc_bren ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Birth Registry Number (BReN)</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_bren || birthTransaction.birth_reg_no || '-'}</span>
                     </div>
                     ) : null}
+                    {birthTransaction.hospital_name ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Hospital Name / Name of Midwife / Hilot</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_hospital || birthTransaction.hospital_name || '-'}</span>
                     </div>
+                    ) : null}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">No. of Copies</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{birthTransaction.birthc_nocopies || birthTransaction.copies || '-'}</span>

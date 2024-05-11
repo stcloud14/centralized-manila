@@ -55,27 +55,22 @@ const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.f_name}</span>
                   </div>
                   : null} 
+                  {selectedTransaction.m_name && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Owner's Middle Name</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.m_name}</span>
                   </div>
-                  
-                  
+                  )}
+                  {selectedTransaction.suffix_type && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Owner's Suffix</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.suffix_type}</span>
                   </div>
+                  )}
                   
-                  {/*<div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                    <span className="font-medium whitespace-nowrap">Owner's Sex</span>
-                    <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.sex_type}</span>
-                  </div>*/}
-
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Owner's Sex</span>
-                    <span className="whitespace-nowrap md:mb-0 mb-1">
-                      {selectedTransaction.sex_id === 1 ? 'Male' : selectedTransaction.sex_id === 2 ? 'Female' : ''}
-                    </span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.sex_type}</span>
                   </div>
 
                   <br/>
@@ -105,23 +100,30 @@ const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType
                   <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
                     <span className="font-semibold whitespace-nowrap">Father's Name of Document Owner</span>
                   </div>
+                  {selectedTransaction.father_lname && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Father's Last Name</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.father_lname}</span>
                   </div>
+                  )}
+                  {selectedTransaction.father_fname && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Father's First Name</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.father_fname}</span>
                   </div>
+                  )}
+                  {selectedTransaction.father_mname && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Father's Middle Name</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.father_mname}</span>
                   </div>
+                  )}
+                  {selectedTransaction.fathersuffix && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Father's Suffix</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.fathersuffix}</span>
                   </div>
-
+                  )}
                   <br/>
                   
                   <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
@@ -135,14 +137,18 @@ const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType
                     <span className="font-medium whitespace-nowrap">Mother's First Name</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.mother_fname}</span>
                   </div>
+                  {selectedTransaction.mother_mname && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Mother's Middle Name</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.mother_mname}</span>
                   </div>
+                  )}
+                  {selectedTransaction.mothersuffix && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Mother's Suffix</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.mothersuffix}</span>
                   </div>
+                  )}
                   
                   <br/>
                   
@@ -157,37 +163,46 @@ const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType
                     <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqf_name}</span>
                   </div>
-                  
+                  {selectedTransaction.reqm_name && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{ selectedTransaction.reqm_name}</span>
                   </div>
+                  )}
                   
-                  
+                  {selectedTransaction.reqsuffix && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqsuffix}</span>
                   </div>
+                  )}
                   
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Relationship to the Owner</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.owner_relation}</span>
                   </div>
+
+                  {selectedTransaction.requestor_tin && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Tax Identification Number</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.requestor_tin}</span>
                   </div>
+                  )}
                   
+                  {selectedTransaction.reqtel && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Telephone No.</span>
-                    <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tel_no}</span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.birthc_reqtelnum || selectedTransaction.reqtel || selectedTransaction.tel_no || '-'}</span>
                   </div>
-                 
+                  )}
+
+                  {selectedTransaction.reqnum && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Mobile No.</span>
-                    <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.mobile_no}</span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.birthc_reqmobnum || selectedTransaction.reqnum || selectedTransaction.mobile_no || '-'}</span>
                   </div>
-                                            
+                  )}
+
                   <br/>
                   
                   <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
@@ -224,16 +239,20 @@ const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType
 
                   <br/>
 
-                  <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                    <span className="font-medium whitespace-nowrap">Country</span>
-                    <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.country}</span>
-                  </div>
-                  
+                  {selectedTransaction.country && (
+                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                      <span className="font-medium whitespace-nowrap">Country</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.country}</span>
+                    </div>
+                  )}
+
+                  {selectedTransaction.country && (              
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Birth Registry Number (BReN)</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.birth_reg_no}</span>
                   </div>
-                  
+                   )}
+
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Hospital Name / Name of Midwife / Hilot</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.hospital_name}</span>

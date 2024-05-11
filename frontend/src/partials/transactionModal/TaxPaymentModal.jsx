@@ -88,9 +88,16 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
     e.preventDefault();
   
     try {
- 
-      const response = await axios.post(`http://localhost:8800/transachistory/canceltrans/${transaction_id}`, selectedTransaction);
-  
+    const { transaction_id } = selectedTransaction; // Extracting transaction_id
+    const rp_tdn = selectedTransaction.tp_rp_tdn; // Extracting rp_tdn or tp_rp_tdn
+    console.log("tp_rp_tdn", rp_tdn)
+    console.log("selectedTransaction 1", selectedTransaction)
+
+    const response = await axios.post(`http://localhost:8800/transachistory/canceltrans/${transaction_id}`, 
+      selectedTransaction
+
+    );
+      console.log("selectedTransaction", selectedTransaction)
       if (response.status === 200) {
         // Fetch user_email after successful payment
         try {
@@ -104,11 +111,16 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
 
             const user_email = updatedUserEmail;
 
+            const rp_tdn = selectedTransaction.tp_rp_tdn;
+
+            const rp_pin = selectedTransaction.tp_rp_pin;
+
+
             const trans_type = 'Real Property Tax Payment';
 
-            const rowData = { ...selectedTransaction, trans_type};
+            const rowData = { ...selectedTransaction, trans_type, rp_tdn, rp_pin};
 
-            const status_type = 'C A N C E L E D';
+            const status_type = 'Canceled';
 
             const body = {
               data: rowData,

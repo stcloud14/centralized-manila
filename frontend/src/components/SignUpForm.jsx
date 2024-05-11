@@ -149,6 +149,8 @@ const handleChange = (e) => {
 
 const [showWarning, setShowWarning] = useState(false);
 
+const [isDeclined, setisDeclined] = useState();
+
 
 const handleClick = async (e) => {
   e.preventDefault();
@@ -178,14 +180,23 @@ const handleClick = async (e) => {
       const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence", {
         mobile_no: userReg.mobile_no,
       });
-      setLoading(true)
+
 
       if (existenceCheckResponse.data.exists) {
         // User exists, display a message or redirect to the login page
-        alert(existenceCheckResponse.data.message);
+        setisDeclined(true)
+        setTimeout(() => {
+          setisDeclined(false)
+          setLoading(true)
+          // alert(existenceCheckResponse.data.message);
+          setTimeout(() => {
+            setLoading(false);
+            navigate("/");
+            window.location.reload();
+          }, 4000);
+        }, 4000);
 
-        
-        navigate("/register");
+
       } else {
 
         const formData = new FormData();
@@ -271,8 +282,9 @@ const handleClick = async (e) => {
         
         setTimeout(() => {
           setIsSuccess(false);
-        }, 3000);
-        navigate(`/home/${user_id}`);
+          navigate(`/home/${user_id}`);
+        }, 5000);
+
       }
     } catch (err) {
       console.log(err);
@@ -516,6 +528,14 @@ console.log(selectedFiles)
                     )}
                   </div>
                 </div>
+
+                {isDeclined && (
+                    <div className="my-5 text-center">
+                      <div className="text-red-700 text-sm bg-red-200 text-center rounded-full py-1.5 mb-5">
+                        <h1>Account already exists. redirecting to login.</h1> 
+                      </div>
+                    </div>
+                  )} 
    
                 <div className="text-center">
                   {loading ? (
@@ -537,7 +557,7 @@ console.log(selectedFiles)
                     />
                   </svg>
                   <span className="pl-2">
-                    Please wait for a moment...
+                    Redirecting to login, please wait for a moment...
                   </span>
                   </div>
                   ) : (

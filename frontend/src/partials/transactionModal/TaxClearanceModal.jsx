@@ -86,6 +86,8 @@ const cancelTrans = async (e) => {
 
   try {
 
+
+
     const response = await axios.post(`http://localhost:8800/transachistory/canceltrans/${transaction_id}`, selectedTransaction);
 
     if (response.status === 200) {
@@ -101,11 +103,15 @@ const cancelTrans = async (e) => {
 
           const user_email = updatedUserEmail;
 
+          const rp_tdn = selectedTransaction.tc_tdn;
+
+          const rp_pin = selectedTransaction.tc_pin;
+
           const trans_type = 'Real Property Tax Clearance';
 
-          const rowData = { ...selectedTransaction, trans_type};
+          const rowData = { ...selectedTransaction, trans_type, rp_tdn, rp_pin};
 
-          const status_type = 'C A N C E L E D';
+          const status_type = 'Canceled';
 
           const body = {
             data: rowData,
@@ -263,8 +269,8 @@ const cancelTrans = async (e) => {
                       </div>
 
                       {isSuccess && (                
-                        <div className="mb-5 text-center">
-                          <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction Canceled!</div> 
+                        <div className="my-5 text-center">
+                      <div className="text-red-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">Transaction Canceled!</div> 
                         </div>
                       )}
 

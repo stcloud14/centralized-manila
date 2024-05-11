@@ -56,16 +56,19 @@ const AdminLCRDeathView = ({ selectedTransaction, isOpen, handleClose, transType
                           </div>
                           :null }
                           
+                          {selectedTransaction.m_name && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Middle Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.m_name}</span>
                           </div>
+                          )}
                           
-                          
+                          {selectedTransaction.suffix_type && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Suffix</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.suffix_type}</span>
                           </div>
+                          )}
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Owner's Sex</span>
@@ -107,33 +110,37 @@ const AdminLCRDeathView = ({ selectedTransaction, isOpen, handleClose, transType
                             <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqf_name}</span>
                           </div>
-                          
+                          {selectedTransaction.reqm_name && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqm_name}</span>
                           </div>
+                          )}
                           
-                          
+                          {selectedTransaction.reqsuffix && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.reqsuffix}</span>
                           </div>
-                          
+                          )}
+
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Relationship to the Owner</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.owner_rel}</span>
                           </div>
                           
+                          {selectedTransaction.tel_no && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Telephone No.</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.tel_no}</span>
                           </div>
-                          
+                          )}
+                          {selectedTransaction.mobile_no && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mobile No.</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.mobile_no}</span>
                           </div>
-                                                                              
+                          )}                                      
                           <br/>
 
                           <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
@@ -170,11 +177,12 @@ const AdminLCRDeathView = ({ selectedTransaction, isOpen, handleClose, transType
 
                           <br/>
 
-                          
+                          {selectedTransaction.regnum && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Registry Number</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.regnum}</span>
                           </div>
+                          )}
                           
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">No. of Copies</span>

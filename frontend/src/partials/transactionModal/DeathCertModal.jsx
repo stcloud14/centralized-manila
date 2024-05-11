@@ -284,14 +284,18 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Owner's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_fname || deathTransaction.f_name || '-'}</span>
                     </div>
+                    {deathTransaction.m_name ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Owner's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_mname || deathTransaction.m_name || '-'}</span>
                     </div>
+                    ) : null}
+                    {deathTransaction.suffix_type ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Owner's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_suffix || deathTransaction.suffix_type || '-'}</span>
                     </div>
+                    ) : null}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Owner's Sex</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_sexLabel || deathTransaction.sex_type || '-'}</span>
@@ -332,27 +336,34 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Requestor's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqfname || deathTransaction.reqf_name || '-'}</span>
                     </div>
+                    {deathTransaction.reqm_name ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Requestor's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqmname || deathTransaction.reqm_name || '-'}</span>
                     </div>
+                    ) : null}
+                    {deathTransaction.reqsuffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Requestor's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqsuffix || deathTransaction.reqsuffix || '-'}</span>
                     </div>
+                    ) : null}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Relationship to the Owner</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_reqrelation || deathTransaction.owner_rel || '-'}</span>
                     </div>
+                    {deathTransaction.reqtel ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Telephone No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_telno || deathTransaction.reqtel || '-'}</span>
                     </div>
+                    ) : null}
+                    {deathTransaction.reqnum ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mobile No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{deathTransaction.deathc_mobileno || deathTransaction.reqnum || '-'}</span>
                     </div>
-                                                                        
+                    ) : null}                                              
                     <br/>
 
                     <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">

@@ -114,7 +114,7 @@ const BirthCertificateForm =()=>{
         
                     const trans_type = 'Birth Certificate';
 
-                    const reqcity = birthCert.birthc_municipalLabel;
+                    const reqcity = birthCert.birthc_reqmunicipalLabel;
 
                     const purpose_type = birthCert.birthc_purposeLabel
         
