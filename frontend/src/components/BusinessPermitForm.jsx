@@ -764,7 +764,7 @@ const BusinessPermitForm =()=>{
     'bus_type','bus_name', 'bus_reg_no','bus_tin','bus_lname','bus_fname','bus_sex','bus_email','bus_mobile_no','bus_bregion','bus_bprovince',
     'bus_bcity', 'bus_bbrgy','bus_bhnum','bus_bstreet', 'bus_bzip', 'bus_floor','bus_emp','bus_male_emp','bus_female_emp', 'bus_van_no','bus_truck_no','bus_motor_no',
     'bus_region', 'bus_province','bus_city','bus_brgy','bus_hnum','bus_street', 'bus_zip','bus_office',
-   'bus_validid','bus_nocopies','bus_print','bus_purpose',
+  //  'bus_validid','bus_nocopies','bus_print','bus_purpose',
   ];
 /*
     'bus_type','bus_name','bus_franchise', 'bus_reg_no','bus_tin','bus_lname','bus_fname', 'bus_suffix','bus_sex','bus_email','bus_tel_no','bus_mobile_no','bus_bregion','bus_bprovince',
@@ -1759,12 +1759,10 @@ const BusinessPermitForm =()=>{
                 </div>
                 <div className="grid md:grid-cols-8 md:gap-6 mt-4">
                   {/* Description */}
-
                   <div className="w-full mb-6 md:col-start-2 md:col-span-6 p-2 rounded-md shadow-md text-gray-700 uppercase bg-slate-200 dark:text-gray-400 dark:bg-[#333333] dark:border-gray-700 ">
                       <h1 className="text-[0.75rem] text-center flex pl-1 mt-0.5"><span className="font-medium pr-1">Note:</span>For Single Proprietor - DTI Registration is required. For Corporation and Partnership - SEC Registration is Required. If owned, enter Tax Dec No. or PIN on UAF. If not owned, Contract of Lease is Required.</h1>
                   </div>
-
-                  </div>
+                </div>
                 </div>
 
                 {/* Group 12 - Transaction Information*/}
