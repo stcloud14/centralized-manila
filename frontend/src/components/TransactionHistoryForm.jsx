@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
@@ -13,6 +13,30 @@ import TransDesktop from '../partials/transactionHistory/transDesktop';
 const TransactionHistoryForm = () => {
   
   const { user_id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    const checkToken = async (token) => {
+        try {
+            // Make a request to backend API to verify token and check user access
+            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+        } catch (error) {
+          window.location.reload();
+          navigate(`/`);
+        }
+    };
+  
+    checkToken(token); // Pass the token to the checkToken function
+}, [navigate, user_id]);
+
+
   // const location = useLocation();
   // const { pathname } = location;
   // const user_id = pathname.split("/")[2];
@@ -30,7 +54,6 @@ const TransactionHistoryForm = () => {
   const [selectedType, setSelectedType] = useState('');
   const [userPersonal, setUserPersonal]=useState({});
   const [soaData, setSoaData]=useState();
-  const [latestPayment, setLatestPayment] = useState({});
 
   console.log(userTransaction)
 
@@ -108,103 +131,49 @@ const TransactionHistoryForm = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  
+const handleSearch = (e) => {
+  const filteredTransactions = userTransaction
+    .filter((transaction) => {
+      const transactionId = transaction.transaction_id.toString().toUpperCase();
 
-  const handleSearch = (e) => {
-    const filteredTransactions = userTransaction
-      .filter((transaction) => {
-        const transactionId = transaction.transaction_id.toString().toUpperCase();
-  
-        const isDateInRange = (() => {
-          if (!selectedDate || !selectedDatee) {
-            return true; // No date range selected, include all transactions
-          }
-  
-          const transactionDate = new Date(transaction.date_processed);
-          const startDate = new Date(selectedDate);
-          const endDate = new Date(selectedDatee);
-          endDate.setHours(23, 59, 59, 999);
-  
-          return startDate <= transactionDate && transactionDate <= endDate;
-        });
-  
-        return (
-          transactionId.includes(searchInput) &&
-          isSubsequence(searchInput, transactionId) &&
-          isDateInRange() && // Call the function to check date range
-          (!selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || (transaction.trans_type) === (selectedType)) &&
-          (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase())
-        );
-      })
-      .filter((transaction) => {
-        // Exclude records with trans_type as null or 'default'
-        return transaction.trans_type !== null && transaction.trans_type.toLowerCase() !== 'default';
-      })
-      .sort((a, b) => {
-        // Sort the transactions based on the selected option and order
-        const valueA = a[sortOption];
-        const valueB = b[sortOption];
-  
-        if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
-        if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
-        return 0;
-      });
-  
-    // Filter transactions by the selected type
-    const transactionsOfType = filteredTransactions.filter(transaction => transaction.trans_type === selectedType);
-  
-    // Function to find the last payment date before a given transaction date within the selected type
-    const findLastPayment = (transactions) => {
-      const lastPayments = {};
-  
-      transactions.forEach(transaction => {
+      const isDateInRange = (() => {
+        if (!selectedDate || !selectedDatee) {
+          return true; // No date range selected, include all transactions
+        }
+
         const transactionDate = new Date(transaction.date_processed);
-        const transactionId = transaction.transaction_id;
-  
-        if (!lastPayments[transactionId] || transactionDate > lastPayments[transactionId]) {
-          lastPayments[transactionId] = transactionDate;
-        }
+        const startDate = new Date(selectedDate);
+        const endDate = new Date(selectedDatee);
+        endDate.setHours(23, 59, 59, 999);
+
+        return startDate <= transactionDate && transactionDate <= endDate;
       });
-  
-      return lastPayments;
-    };
-  
-    // Get the last payment dates for transactions of the selected type
-    const lastPayments = findLastPayment(transactionsOfType);
-  
-    // Find the last payment date for the selected transaction
-    const selectedTransaction = transactionsOfType.find(transaction => {
-      const transactionDate = new Date(transaction.date_processed);
-      const lastPaymentDate = lastPayments[transaction.transaction_id];
-      
-      return transactionDate.getTime() === lastPaymentDate.getTime();
+
+      return (
+        transactionId.includes(searchInput) &&
+        isSubsequence(searchInput, transactionId) &&
+        isDateInRange() && // Call the function to check date range
+        (!selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || (transaction.trans_type) === (selectedType)) &&
+        (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase())
+      );
+    })
+    .filter((transaction) => {
+      // Exclude records with trans_type as null or 'default'
+      return transaction.trans_type !== null && transaction.trans_type.toLowerCase() !== 'default';
+    })
+    .sort((a, b) => {
+      // Sort the transactions based on the selected option and order
+      const valueA = a[sortOption];
+      const valueB = b[sortOption];
+
+      if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
+      if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
     });
-  
-    // If the obtained last payment date is the same as the one selected, increment it by one day
-    let latestPayment = selectedTransaction;
-    if (selectedTransaction) {
-      const transactionDate = new Date(selectedTransaction.date_processed);
-      const lastPaymentDate = lastPayments[selectedTransaction.transaction_id];
-  
-      if (transactionDate.getTime() === lastPaymentDate.getTime()) {
-        const nextDate = new Date(lastPaymentDate);
-        nextDate.setDate(nextDate.getDate() + 1);
-  
-        // Find the next latest payment date within the selected type
-        for (const transaction of transactionsOfType) {
-          if (transaction.transaction_id === selectedTransaction.transaction_id) {
-            const nextTransactionDate = new Date(transaction.date_processed);
-            if (nextTransactionDate.getTime() === nextDate.getTime()) {
-              latestPayment = transaction;
-              break;
-            }
-          }
-        }
-      }
-    }
-  
-    setFilteredTransactions(filteredTransactions);
-    setLatestPayment(latestPayment);
-  };
+
+  setFilteredTransactions(filteredTransactions);
+};
 
      
   // Make sure that the transaction searching is the same order in terms of characters
@@ -342,7 +311,6 @@ const logoSrc = '../src/images/mnl_footer.svg';
                 filteredTransactions={filteredTransactions}
                 userPersonal={userPersonal}
                 soaData={soaData}
-                latestPayment={latestPayment}
               />
             ) : (
               // For Desktop View
@@ -368,7 +336,6 @@ const logoSrc = '../src/images/mnl_footer.svg';
                 filteredTransactions={filteredTransactions}
                 userPersonal={userPersonal}
                 soaData={soaData}
-                latestPayment={latestPayment}
               />
             )}
           </div>

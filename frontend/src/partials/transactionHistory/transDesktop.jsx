@@ -12,7 +12,7 @@ import TransTypeDropdown from '../transDropdown/TransTypeDropdown';
 import StatusTypeDropdown from '../transDropdown/StatusTypeDropdown';
 import FilterButton from '../FilterButton';
 
-const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal, soaData, latestPayment }) => {
+const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal, soaData }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   
   const formatAmount = (amount) => {
@@ -103,7 +103,18 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
 
   const generatePDF = async () => {
     try {
-        const totalPages = filteredTransactions.length;
+
+        // Check if there are any pending transactions
+        const pendingTransactions = filteredTransactions.filter(transaction => transaction.status_type.toLowerCase() === 'pending');
+
+        if (pendingTransactions.length === 0) {
+            // Log details of transactions that were considered not pending
+            console.log('No pending transactions found. Cannot generate PDF.');
+            console.log('Transactions considered not pending:', filteredTransactions);
+            return;
+        }
+
+        const totalPages = pendingTransactions.length;
 
         const pdf = new jsPDF();
         
@@ -112,9 +123,9 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
         let knownTransactionTypes = {};
         
         for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-
-            const arrayBase = pageNum - 1;
-            const transaction = filteredTransactions[arrayBase];
+            const transaction = pendingTransactions[pageNum - 1];
+            // const arrayBase = pageNum - 1;
+            // const transaction = filteredTransactions[arrayBase];
 
             // Check if transaction_id exists
             if (!transaction.transaction_id) {
@@ -127,14 +138,14 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
             if (!knownTransactionTypes[transaction.trans_type]) {
                 // Generate SOA number for new transaction type
                 soaNumber = generateUniqueSOA(transaction.trans_type, transaction.user_id);
-                knownTransactionTypes[transaction.trans_type] = true; // Mark transaction type as known
+                knownTransactionTypes[transaction.trans_type] = true; 
             } else {
                 // Use existing SOA number for known transaction type
                 if (soaData && soaData.length > 0) {
                     const matchedSoa = soaData.find(soa => soa.transaction_id === transaction.transaction_id);
                     if (matchedSoa) {
                         soaNumber = matchedSoa.soa_no;
-                        existingSOANumbers.push(soaNumber); // Add existing SOA number
+                        existingSOANumbers.push(soaNumber); 
                         const expiryDateStr = matchedSoa.expiry_date;
                         const expiryDate = moment(expiryDateStr);
                         const formattedExpiryDate = expiryDate.format('MMMM DD, YYYY, hh:mm A');
@@ -332,18 +343,6 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
             pdf.text(lineOfSymbols, textXPosition, textYPosition);
 
 
-            function formatDate(dateString) {
-              const date = new Date(dateString);
-              const options = { year: 'numeric', month: 'long', day: 'numeric' };
-              return date.toLocaleDateString('en-US', options);
-          }
-
-            // Extract date and amount from latestPayment
-            const latestPaymentDate = latestPayment ? formatDate(latestPayment.date_processed) : null;
-            const latestPaymentAmount = latestPayment ? latestPayment.amount : null;            
-
-            console.log("Latest Payment Date: ", latestPaymentDate);
-            console.log("Latest Payment Amount: ", latestPaymentAmount);
             // Second Table Title
             const titleText = "Last Payment";
             const titleXPosition = 15; // Adjust as needed
@@ -359,7 +358,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
             pdf.autoTable({
                 startY: secondTableStartY,
                 head: [['Payment Date', 'Total Amount']],
-                body:  [[latestPaymentDate, `P ${latestPaymentAmount}`]],
+                body:  [["1/14/2023", "P 1200.00"]],
                 theme: 'plain',
                 columnStyles: {
                     0: { cellWidth: 40, cellPadding: 1, halign: 'center'}, // Adjust the width and height of the first column
