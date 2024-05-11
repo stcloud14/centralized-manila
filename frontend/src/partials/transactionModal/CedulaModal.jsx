@@ -86,6 +86,7 @@ const cancelTrans = async (e) => {
 
     const { transaction_id } = selectedTransaction;
     console.log("selectedTransaction", selectedTransaction)
+    console.log(cedulaTransaction)
 
     const response = await axios.post(`http://localhost:8800/transachistory/canceltrans/${transaction_id}`, selectedTransaction);
 
@@ -103,8 +104,13 @@ const cancelTrans = async (e) => {
           const user_email = updatedUserEmail;
 
           const trans_type = 'Community Tax Certificate';
+          
+          const date = cedulaTransaction.cedula_date;
 
-          const rowData = { ...selectedTransaction, trans_type};
+          const time = selectedTransaction.time;
+
+          const rowData = { ...cedulaTransaction, trans_type, date, time};
+
 
           const status_type = 'Canceled';
 
