@@ -1214,6 +1214,11 @@ const BusinessPermitForm =()=>{
                   <div className="group md:ml-9">
                   <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_tax_incentives'} />
                   </div>
+                  <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_tax_incentives' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_tax_incentives')} />
+                            )}
+                        </td>
                   <p>
                     {selectedFiles.map((fileArray) => {
                       if (fileArray.fieldName === 'bus_tax_incentives') {
