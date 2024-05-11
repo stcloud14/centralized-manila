@@ -87,38 +87,23 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
 
   return (
     isOpen && (
-      <div className="fixed z-50 inset-0 overflow-y-auto flex items-center justify-center">
+      <div className="fixed z-50 inset-0 flex items-center justify-center">
         {/* Left Modal */}
           <div className="absolute left-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
           <div className="absolute left-0 flex items-center justify-center w-1/2 h-full">
-            <div className="inline-block bg-white dark:bg-[#212121] rounded-sm text-center overflow-hidden shadow-xl transform transition-all">
-              <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4 h-96 overflow-y-auto"> {/* Add a fixed height and make it scrollable */}
-                <div className="mx-auto mt-4">
-                <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center text-xs md:text-sm sm:block sm:p-0">
-                  <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                    <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            <div className="inline-block bg-white dark:bg-[#212121] h-96 pt-8 overflow-y-auto px-4 rounded-sm text-center overflow-hidden shadow-xl transform transition-all">
+    
+                <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 dark:text-white">
+                  <div className="mb-6">
+                  <span className="font-bold md:text-lg text-sm">Business Permit Transaction Details</span>
                   </div>
-                  <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                    &#8203;
-                  </span>
-                  <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
-                  <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 overflow-y-auto">
-                    <div className="mb-6">
-                    <span className="font-bold md:text-lg text-sm">Business Permit Transaction Details</span>
-                    </div>
-                  </div>
+                </div>
               
-              
-              
-              <div className="max-h-[19.5rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
-                <div className="mx-auto">
-                        <div className="sm:mt-0" id="modal-headline">   
-                          <div className="mx-auto">
-                            <div className="mb-0">
-                              
+                <div className="dark:text-white mx-16">
+                        <div className="sm:mt-0" id="modal-headline">     
                               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                                 <span className="font-medium whitespace-nowrap">Transaction ID</span>
-                                <span className="whitespace-nowrap md:mb-0 mb-1">{transaction_id}</span>
+                                <span className="whitespace-nowrap md:mb-7 mb-1">{transaction_id}</span>
                               </div>
                               
                               <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
@@ -564,14 +549,11 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                           <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
                           <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_valididLabel || selectedTransaction.valid_id || '-'}</span>
                         </div>
-                      </div>
+                
                       
-                    </div>
+                  
                   </div>
                 </div>
-              </div>
-
-              <div className="mx-auto bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-4 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 lg:pr-10 ">
                 {transaction_id ? (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Date Processed</span>
@@ -610,16 +592,10 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   selectedTransaction.amount !== undefined ? selectedTransaction.amount + '.00' : '-'}`
                   )}</span>
                 </div>
-              </div>
 
-                  <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
+                <div className="bg-white dark:bg-[#212121] pt-3 pb-5 gap-3 flex items-center">
                       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
-                  </div>
-
-                  </div>
-                </div>
-                </div>
-              </div>
+                  </div>     
             </div>
           </div>
 
@@ -627,9 +603,19 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
           <div className="absolute right-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
           <div className="absolute right-0 flex items-center justify-center w-1/2 h-full">
             <div className="inline-block bg-white dark:bg-[#212121] rounded-sm text-center overflow-hidden overflow-y-auto shadow-xl transform transition-all">
+            <div className="dark:bg-[#212121] pt-3 pb-1 items-center">
+              <button type="button" onClick={handleConfirmClose} className="float-right text-slate-500 text-xs md:text-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="md:w-5 md:h-5 w-4 h-4 mr-1">
+                  <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
               <div className="bg-white dark:bg-[#212121] mx-2 pt-5 pb-4 sm:p-6 sm:pb-4 h-96"> {/* Add a fixed height and make it scrollable */}
-                <div className="font-semibold text-slate-700 mb-3 md:px-32 px-4 text-center dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                  Permit Charges
+                <div className="md:px-40 px-4 pt-5 pb-0 sm:p-6 sm:pb-0 dark:text-white">
+                  <div className="mb-6">
+                  <span className="font-bold md:text-lg text-sm">Business Permit Charges</span>
+                  </div>
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">R E SUB-LESSOR</label>
