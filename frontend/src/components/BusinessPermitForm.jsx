@@ -764,7 +764,7 @@ const BusinessPermitForm =()=>{
     'bus_type','bus_name', 'bus_reg_no','bus_tin','bus_lname','bus_fname','bus_sex','bus_email','bus_mobile_no','bus_bregion','bus_bprovince',
     'bus_bcity', 'bus_bbrgy','bus_bhnum','bus_bstreet', 'bus_bzip', 'bus_floor','bus_emp','bus_male_emp','bus_female_emp', 'bus_van_no','bus_truck_no','bus_motor_no',
     'bus_region', 'bus_province','bus_city','bus_brgy','bus_hnum','bus_street', 'bus_zip','bus_office',
-   'bus_validid','bus_nocopies','bus_print','bus_purpose',
+  //  'bus_validid','bus_nocopies','bus_print','bus_purpose',
   ];
 /*
     'bus_type','bus_name','bus_franchise', 'bus_reg_no','bus_tin','bus_lname','bus_fname', 'bus_suffix','bus_sex','bus_email','bus_tel_no','bus_mobile_no','bus_bregion','bus_bprovince',
@@ -1214,6 +1214,11 @@ const BusinessPermitForm =()=>{
                   <div className="group md:ml-9">
                   <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_tax_incentives'} />
                   </div>
+                  <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_tax_incentives' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_tax_incentives')} />
+                            )}
+                        </td>
                   <p>
                     {selectedFiles.map((fileArray) => {
                       if (fileArray.fieldName === 'bus_tax_incentives') {
@@ -1237,12 +1242,12 @@ const BusinessPermitForm =()=>{
 
               {/* Group 10 - Business Activity*/}
               <div className="pt-12 text-slate-700 dark:text-white">
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Business Activity</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Business Activity<Req/></h1>
                 {/* Row 1 */}
                 <div onChange={handleBusActivity} name="bus_activity" className="flex flex-col md:flex-row md:items-center text-sm items-start">
                   <label htmlFor="bus_mainoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
                     <input value="MAIN OFFICE" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
-                    Main Office<Req />
+                    Main Office
                   </label>
 
                   <label htmlFor="bus_branchoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
@@ -1438,7 +1443,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_dti_reg')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_dti_reg' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_dti_reg')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_dti_reg'} />
@@ -1466,7 +1473,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_rptax_decland')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_rptax_decland' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_rptax_decland')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decland'} />
@@ -1494,7 +1503,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_sec_paid')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_sec_paid' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_sec_paid')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_paid'} />
@@ -1522,7 +1533,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_sec_articles')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_sec_articles' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_sec_articles')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_articles'} />
@@ -1550,7 +1563,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_nga')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_nga' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_nga')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_nga'} />
@@ -1578,7 +1593,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_sec_front')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_sec_front' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_sec_front')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_front'} />
@@ -1606,7 +1623,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_rptax_decbldg')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_rptax_decbldg' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_rptax_decbldg')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decbldg'} />
@@ -1634,7 +1653,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_fire')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_fire' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_fire')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_fire'} />
@@ -1662,7 +1683,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_page2')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_page2' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_page2')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page2'} />
@@ -1690,7 +1713,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_page3')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_page3' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_page3')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page3'} />
@@ -1718,7 +1743,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_page4')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_page4' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_page4')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page4'} />
@@ -1746,9 +1773,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                                
-                        <RemoveButton handleRemove={() => handleRemove('bus_page5')} setFileUploaded={setFileUploaded} />
-
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_page5' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_page5')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page5'} />
@@ -1757,13 +1784,19 @@ const BusinessPermitForm =()=>{
                     </tbody>
                   </table>
                 </div>
+                <div className="grid md:grid-cols-8 md:gap-6 mt-4">
+                  {/* Description */}
+                  <div className="w-full mb-6 md:col-start-2 md:col-span-6 p-2 rounded-md shadow-md text-gray-700 uppercase bg-slate-200 dark:text-gray-400 dark:bg-[#333333] dark:border-gray-700 ">
+                      <h1 className="text-[0.75rem] text-center flex pl-1 mt-0.5"><span className="font-medium pr-1">Note:</span>For Single Proprietor - DTI Registration is required. For Corporation and Partnership - SEC Registration is Required. If owned, enter Tax Dec No. or PIN on UAF. If not owned, Contract of Lease is Required.</h1>
+                  </div>
+                </div>
                 </div>
 
                 {/* Group 12 - Transaction Information*/}
-                <div className='pt-10'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Transaction Information</h1>
+                {/* <div className='pt-10'>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Transaction Information</h1> */}
                 {/* Row 1 */}
-                <div className="grid md:grid-cols-2 md:gap-6">
+                {/* <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_nocopies} name="bus_nocopies" id="bus_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                        <CopiesDropdown/>
@@ -1776,9 +1809,9 @@ const BusinessPermitForm =()=>{
                     </select>
                     <label htmlFor="bus_print" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">What to Print<Req /></label>
                   </div>
-                </div>
+                </div> */}
                 {/* Row 2 */}
-                <div className="grid md:grid-cols-2 md:gap-6">
+                {/* <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_purpose} name="bus_purpose" id="bus_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                      <PurposeDropdown/>
@@ -1791,11 +1824,11 @@ const BusinessPermitForm =()=>{
                     </select>
                     <label htmlFor="bus_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>
-                </div> 
+                </div>  */}
               
 
               {/* Group 13 - Computation */}
-              <div className="flex justify-center md:justify-end text-sm">
+              {/* <div className="flex justify-center md:justify-end text-sm">
                  <div className="w-full md:w-1/2">
                      <div className="flex justify-between mt-2">
                          <span className="font-medium whitespace-nowrap">Print Fee</span>
@@ -1812,7 +1845,7 @@ const BusinessPermitForm =()=>{
                      </div>
                  </div>
               </div>
-              </div>
+              </div> */}
 
               <div className="flex justify-end items-end mt-10 mb-4">
                 <button
