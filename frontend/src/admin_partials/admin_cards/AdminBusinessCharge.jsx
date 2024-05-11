@@ -134,7 +134,7 @@ useEffect(() => {
             handleChargeOpen={handleChargeOpen}
             handleRejectConfirm={handleRejectConfirm}
             handleProcessConfirm={handleProcessConfirm}
-            section={'Requests'}
+            section={'Charges'}
           />
         );
       } else if (viewMode === 'card') {
@@ -145,7 +145,7 @@ useEffect(() => {
             handleChargeOpen={handleChargeOpen}
             handleRejectConfirm={handleRejectConfirm}
             handleProcessConfirm={handleProcessConfirm}
-            section={'Requests'}          
+            section={'Charges'}          
           />
         );
       }

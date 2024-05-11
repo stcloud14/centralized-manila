@@ -120,6 +120,7 @@ useEffect(() => {
             handleModalOpen={handleModalOpen}
             handleRejectConfirm={handleRejectConfirm}
             handleCompleteConfirm={handleCompleteConfirm}
+            section={'Processing'}
           />
         );
       } else if (viewMode === 'card') {
@@ -128,7 +129,8 @@ useEffect(() => {
             filteredBusinessPermit={filteredBusinessPermit}
             handleModalOpen={handleModalOpen}
             handleRejectConfirm={handleRejectConfirm}
-            handleCompleteConfirm={handleCompleteConfirm}        
+            handleCompleteConfirm={handleCompleteConfirm}   
+            section={'Processing'}     
           />
         );
       }
