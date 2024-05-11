@@ -99,11 +99,11 @@ const cancelTrans = async (e) => {
 
           const user_email = updatedUserEmail;
 
-          const trans_type = 'Real Property Tax Payment';
+          const trans_type = 'Birth Certificate';
 
           const rowData = { ...selectedTransaction, trans_type};
 
-          const status_type = 'C A N C E L E D';
+          const status_type = 'Canceled';
 
           const body = {
             data: rowData,
@@ -139,7 +139,7 @@ const cancelTrans = async (e) => {
           setIsSuccess(false);
           // onClose();
           window.location.href = `http://localhost:5173/transachistory/${user_id}`;
-        }, 1000);
+        }, 100000000);
 
 
         
