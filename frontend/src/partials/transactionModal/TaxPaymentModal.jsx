@@ -111,9 +111,9 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
 
             const user_email = updatedUserEmail;
 
-            const rp_tdn = selectedTransaction.tp_rp_tdn;
+            const rp_tdn = selectedTransaction.tp_tdn;
 
-            const rp_pin = selectedTransaction.tp_rp_pin;
+            const rp_pin = selectedTransaction.tp_pin;
 
 
             const trans_type = 'Real Property Tax Payment';
