@@ -288,7 +288,9 @@ const handleCheckboxChange = (e) => {
     e.preventDefault();
 
     // Please fill up the necessary forms
-     const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
+     const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period',
+    //  'amount'
+    ]; //The input fields that is required
      const isIncomplete = requiredFields.some((field) => !rptaxPayment[field]);
 
      if (isIncomplete) {
@@ -504,7 +506,7 @@ const handleCheckboxChange = (e) => {
                       <label htmlFor="period" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Period<Req /></label>
                     </div>
 
-                    <div className="relative z-0 w-full mb-2 group">
+                    {/* <div className="relative z-0 w-full mb-2 group">
                     
                       <input
                         type="text" name="amount" id="amount" placeholder=" " onChange={handleInputChange} value={rptaxPayment.amount}
@@ -518,7 +520,7 @@ const handleCheckboxChange = (e) => {
                       >
                         Amount<Req />
                       </label>
-                    </div>
+                    </div> */}
 
                 </div>
 

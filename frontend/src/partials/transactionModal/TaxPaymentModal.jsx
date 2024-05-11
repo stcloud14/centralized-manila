@@ -354,11 +354,11 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                   </>
                     ) : null}
 
-                    <hr className='mt-7 mb-1'/>
+                    {/* <hr className='mt-7 mb-1'/>
                     <div className="flex justify-between">
                     <span className="font-semibold whitespace-nowrap">{status_type === "Pending" ? "Amount Paid" : status_type === "Processing" ? "Amount to Pay" : "Amount"}</span>
                       <span className="font-semibold whitespace-nowrap ml-4">P {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00': '-'} </span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
