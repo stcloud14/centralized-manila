@@ -95,7 +95,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
               <div className='mx-14'>
                 <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 dark:text-white">
                   <div className="mb-6">
-                  <span className="font-bold md:text-lg text-sm">Business Permit Transaction Details</span>
+                    <span className="font-bold md:text-lg text-sm">Business Permit Transaction Details</span>
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
