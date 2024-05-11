@@ -1199,27 +1199,20 @@ const BusinessPermitForm =()=>{
               <div className="flex flex-col mt-11 md:flex-row text-sm text-gray-700 dark:text-white md:items-center items-start">
                 <span className="mb-2 md:mb-0">Tax Incentives from any Government Entity</span>
 
-                <div onChange={handleInputChange} name="bus_tax_incentives" className="flex mb-2 md:mb-0">
+                <div onChange={(e) => {handleInputChange(e); e.target.value === "NO" && handleRemove('bus_tax_incentives')}} name="bus_tax_incentives" className="flex mb-2 md:mb-0">
                   <label className="mr-2">
-                    <input value="NO" type="radio" name="bus_tax_incentives" defaultChecked className="border border-gray-500 md:ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value="NO" type="radio" name="bus_tax_incentives" checked={busPermit.bus_tax_incentives === "NO"} className="border border-gray-500 md:ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     <span className="ml-1.5">No</span>
                   </label>
                   <label>
-                    <input value="YES" type="radio" name="bus_tax_incentives" className="border border-gray-500 ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
+                    <input value="YES" type="radio" name="bus_tax_incentives" checked={busPermit.bus_tax_incentives === "YES"} onChange={() => handleInputChange({ target: { name: 'bus_tax_incentives', value: 'YES' } })} className="border border-gray-500 ml-4 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
                     <span className="ml-1.5">Yes</span>
                   </label>
                 </div>
 
                 {busPermit.bus_tax_incentives === "YES" ? (
                   <>
-                  <div className="group md:ml-9">
-                  <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_tax_incentives'} />
-                  </div>
-                  <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_tax_incentives' && fileArray.value !== null) && (
-                                <RemoveButton handleRemove={() => handleRemove('bus_tax_incentives')} />
-                            )}
-                        </td>
+                  <div className="flex flex-row group ml-4 items-center">
                   <p>
                     {selectedFiles.map((fileArray) => {
                       if (fileArray.fieldName === 'bus_tax_incentives') {
@@ -1237,6 +1230,16 @@ const BusinessPermitForm =()=>{
                       return null; 
                     })}
                   </p>
+                  <td td className="flex flex-row group ml-1">
+                    <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_tax_incentives'} />
+                  </td>
+                    <td className="flex flex-row group ml-1">
+                        {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_tax_incentives' && fileArray.value !== null) && (
+                            <RemoveButton handleRemove={() => handleRemove('bus_tax_incentives')} />
+                        )}
+                    </td>
+                  </div>
+
                   </>
                 ) : null}
               </div>
