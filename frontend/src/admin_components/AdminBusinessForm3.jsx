@@ -25,7 +25,7 @@ const AdminBusinessForm3 =()=>{
 
   const fetchUserTransaction = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/adminbp/processing/`);
+      const res = await axios.get(`http://localhost:8800/adminbp/charges/`);
       setBusinessPermit(res.data.businesspermit);
     } catch (err) {
       console.log(err);
