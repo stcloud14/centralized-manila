@@ -572,7 +572,6 @@ const handleCloseConfirm = () => {
 
                     
                     <br />
-                    {businessTransaction.bus_dti_reg ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">DTI Registration</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -584,9 +583,7 @@ const handleCloseConfirm = () => {
                           }
                       </span>
                   </div>
-                  ) : null}
 
-                    {businessTransaction.bus_rptax_decbldg ? (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Building</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -598,9 +595,7 @@ const handleCloseConfirm = () => {
                         }
                     </span>
                 </div>
-                  ) : null}
 
-                    {businessTransaction.bus_sec_paid ? (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Paid-up and Subscribed Page</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -612,9 +607,7 @@ const handleCloseConfirm = () => {
                         }
                     </span>
                 </div>
-                  ) : null}
 
-                  {businessTransaction.bus_sec_articles ? (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Articles of Primary and Secondary Purpose</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -626,9 +619,7 @@ const handleCloseConfirm = () => {
                         }
                     </span>
                 </div>
-                  ) : null}
 
-                {businessTransaction.bus_nga ? (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">NGA-Contract of Lease</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -640,9 +631,7 @@ const handleCloseConfirm = () => {
                         }
                     </span>
                 </div>
-                ) : null}
 
-                {businessTransaction.bus_sec_front ? (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">SEC Registration</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -654,9 +643,7 @@ const handleCloseConfirm = () => {
                         }
                     </span>
                 </div>
-                ) : null}
 
-                {businessTransaction.bus_rptax_decland ? (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Land</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -668,9 +655,8 @@ const handleCloseConfirm = () => {
                         }
                     </span>
                 </div>
-                ) : null}
+                
 
-                  {businessTransaction.bus_fire ? (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Fire Safety Inspection Certificate</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -682,9 +668,7 @@ const handleCloseConfirm = () => {
                         }
                     </span>
                 </div>
-                ) : null}
                 
-                  {businessTransaction.bus_page2 ? (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Page 2 Document</span>
                   <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -696,9 +680,7 @@ const handleCloseConfirm = () => {
                       }
                   </span>
               </div>
-            ) : null}
 
-              {businessTransaction.bus_page3 ? (
               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Page 3 Document</span>
                   <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -710,9 +692,9 @@ const handleCloseConfirm = () => {
                       }
                   </span>
               </div>
-            ) : null}
+      
 
-            {businessTransaction.bus_page4 ? (
+           
               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Page 4 Document</span>
                   <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -724,9 +706,9 @@ const handleCloseConfirm = () => {
                       }
                   </span>
               </div>
-            ) : null}
+            
 
-              {businessTransaction.bus_page5 ? (
+             
               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Page 5 Document</span>
                   <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -738,7 +720,7 @@ const handleCloseConfirm = () => {
                       }
                   </span>
               </div>
-            ) : null}
+          
 
                     <br />
 
