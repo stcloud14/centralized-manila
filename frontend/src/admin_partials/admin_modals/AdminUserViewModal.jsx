@@ -375,7 +375,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
           <div className="inline-block align-bottom bg-white dark:bg-[#333333] rounded-sm text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl max-h-screen relative">
             {/* Menu Bar */}
             <div className="bg-slate-200 dark:bg-[#212121] pt-1.5 pb-1 items-center">
-              <button onClick={handleCLoseClick} type="button" className="float-right text-slate-500 text-xs md:text-sm"
+              <button onClick={handleCLoseClick} type="button" className="float-right text-slate-500 dark:text-slate-300 text-xs md:text-sm"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="md:w-5 md:h-5 w-4 h-4 mr-1">
                   <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />

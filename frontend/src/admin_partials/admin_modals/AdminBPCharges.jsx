@@ -131,8 +131,8 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
         {/* Left Modal */}
           <div className="absolute left-0 w-1/2 min-h-screen h-full bg-gray-500 opacity-75"></div>
           <div className="absolute left-0 flex items-center justify-center w-1/2 h-full">
-            <div className="inline-block bg-white dark:bg-[#212121] h-96 pt-8 overflow-y-auto px-4 rounded-sm text-center overflow-hidden shadow-xl transform transition-all">
-              <div className='mx-14'>
+            <div className="inline-block bg-white dark:bg-[#212121] justify-between ms-20 w-[44rem] h-[44rem] pt-8 overflow-y-auto px-8 rounded-sm dark:text-white text-center overflow-hidden shadow-xl transform transition-all">
+                <div>
                 <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 dark:text-white">
                   <div className="mb-6">
                     <span className="font-bold md:text-lg text-sm">Business Permit Transaction Details</span>
@@ -616,10 +616,9 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                 {transaction_id ? (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Status</span>
-                  <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>
+                  <span className="whitespace-nowrap md:mb-10 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>
                 </div>
                 ) : null}
-
                 </div>
 
             </div>
@@ -631,17 +630,17 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
           {/* Right Modal */}
           <div className="absolute right-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
           <div className="absolute right-0 flex items-center justify-center w-1/2 h-full">
-            <div className="inline-block bg-white dark:bg-[#212121] rounded-sm text-center overflow-hidden overflow-y-auto shadow-xl transform transition-all">
-            <div className="dark:bg-[#212121] pt-3 pb-1 items-center">
-              <button type="button" onClick={handleConfirmClose} className="float-right text-slate-500 text-xs md:text-sm"
+            <div className="inline-block bg-white dark:bg-[#3d3d3d] rounded-sm text-center overflow-hidden overflow-y-auto shadow-xl transform transition-all">
+            <div className="bg-slate-200 dark:bg-[#212121] pt-1 pb-6 items-center">
+              <button type="button" onClick={handleConfirmClose} className="float-right text-slate-500 dark:text-slate-200 text-xs md:text-sm"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="md:w-5 md:h-5 w-4 h-4 mr-1">
                   <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
                 </svg>
               </button>
             </div>
-              <div className="bg-white dark:bg-[#212121] mx-2 pt-5 pb-4 sm:p-6 sm:pb-4 h-96"> 
-                <div className="md:px-40 px-4 pt-5 pb-0 sm:p-6 sm:pb-0 dark:text-white">
+              <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[42rem]"> 
+                <div className="md:px-40 px-4 pt-2 pb-0 sm:p-6 sm:pb-0 dark:text-white">
                   <div className="mb-6">
                   <span className="font-bold md:text-lg text-sm">Business Permit Charges</span>
                   </div>
@@ -720,7 +719,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                 </div>
                 
                 {/* Button container */}
-                <div className="flex justify-center pb-8 space-x-2">
+                <div className="flex justify-end pb-8 space-x-2">
                   {isLoading ? (
                     <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 mt-[-10px]">
                       <Loading />
@@ -730,7 +729,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                       <button
                         onClick={handleConfirmClose}
                         type="button"
-                        className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                        className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                       >
                         <p>Cancel</p>
                       </button>
