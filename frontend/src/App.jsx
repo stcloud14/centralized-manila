@@ -52,6 +52,7 @@ import AdminRPTax1 from './admin_pages/AdminRPTax1';
 import AdminRPTax2 from './admin_pages/AdminRPTax2';
 import AdminBusiness1 from './admin_pages/AdminBusiness1';
 import AdminBusiness2 from './admin_pages/AdminBusiness2';
+import AdminBusiness3 from './admin_pages/AdminBusiness3';
 import AdminCedula1 from './admin_pages/AdminCedula1';
 import AdminCedula2 from './admin_pages/AdminCedula2';
 import AdminLCR1 from './admin_pages/AdminLCR1';
@@ -110,6 +111,7 @@ function App() {
         <Route exact path="/admin_rptax2/:admin_type" element={<AdminRPTax2 />} />
         <Route exact path="/admin_business1/:admin_type" element={<AdminBusiness1 />} />
         <Route exact path="/admin_business2/:admin_type" element={<AdminBusiness2 />} />
+        <Route exact path="/admin_business3/:admin_type" element={<AdminBusiness3 />} />
         <Route exact path="/admin_cedula1/:admin_type" element={<AdminCedula1 />} />
         <Route exact path="/admin_cedula2/:admin_type" element={<AdminCedula2 />} />
         <Route exact path="/admin_lcr1/:admin_type" element={<AdminLCR1 />} />
