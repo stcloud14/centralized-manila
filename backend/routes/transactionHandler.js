@@ -62,7 +62,7 @@ const router = Router();
 router.get('/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
 
-    const query = `SELECT ut.user_id, ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, \
+    const query = "SELECT ut.user_id, ut.transaction_id, tt.trans_type, ut.status_type, ut.date_processed, \
     ti.amount, ti.copies, ti.print_id, ti.valid_id, ti.purpose_id, \
     tp.acc_name, tp.rp_tdn AS tp_tdn, tp.rp_pin AS tp_pin, tp.period_id, y.year_period, \
     tc.rp_tdn AS tc_tdn, tc.rp_pin AS tc_pin, \
@@ -102,82 +102,30 @@ router.get('/:user_id', async (req, res) => {
     \
     LEFT JOIN bus_type bt ON bp.bus_type = bt.bus_type AND bt.bus_type IS NOT NULL \
     \
-    WHERE ut.user_id = ?`;
+    WHERE ut.user_id = ?";
 
     try {
         const result = await queryDatabase(query, [user_id]);
-
+    
         if (result.length > 0) {
-            const userTransactions = result.map(async row => {
+            const userTransactions = result.map(row => {
                 const formattedDate = moment(row.date_processed).format('MMMM D, YYYY');
                 const formattedTime = moment(row.date_processed).format('h:mm A');
 
-                // Query to find the latest transaction payment and amount
-                const query1 = "SELECT ut.date_processed, ti.amount \
-                                FROM user_transaction ut \
-                                JOIN transaction_info ti ON ut.transaction_id = ti.transaction_id \
-                                WHERE ut.trans_type_id IN (1, 2, 3, 4, 5, 6, 7) \
-                                ORDER BY ut.date_processed DESC \
-                                LIMIT 1"; 
-
-                const latestPayment = await queryDatabase(query1, [row.trans_type_id]);
-
-                if (latestPayment.length > 0) {
-                    const lastPaymentDate = moment(latestPayment[0].date_processed).format('YYYY-MM-DD');
-                    const selectedDate = moment(row.date_processed).format('YYYY-MM-DD');
-
-                    // Check if the obtained last payment date is the same as the selected date
-                    if (lastPaymentDate === selectedDate) {
-                        // If so, re-query for the next latest payment by incrementing the date by one day
-                        const nextDate = moment(lastPaymentDate).add(1, 'days').format('YYYY-MM-DD');
-                        const nextLatestPayment = await queryDatabase(query1, [row.trans_type_id, nextDate]);
-
-                        if (nextLatestPayment.length > 0) {
-                            return {
-                                ...row,
-                                date: formattedDate,
-                                time: formattedTime,
-                                latestPayment: nextLatestPayment[0]
-                            };
-                        } else {
-                            // Handle case where no next latest payment is found
-                            return {
-                                ...row,
-                                date: formattedDate,
-                                time: formattedTime,
-                                latestPayment: null
-                            };
-                        }
-                    } else {
-                        // Use the obtained last payment data
-                        return {
-                            ...row,
-                            date: formattedDate,
-                            time: formattedTime,
-                            latestPayment: latestPayment[0]
-                        };
-                    }
-                } else {
-                    // Handle case where no result is found
-                    return {
-                        ...row,
-                        date: formattedDate,
-                        time: formattedTime,
-                        latestPayment: null
-                    };
-                }
+                return {
+                    ...row,
+                    date: formattedDate,
+                    time: formattedTime,
+                };
             });
 
-            // Resolve all promises in user Transactions array
-            const resolvedUserTransactions = await Promise.all(userTransactions);
-
-            res.json(resolvedUserTransactions);
+            res.json(userTransactions);
         } else {
             // Handle case where no rows were returned
             console.log("No records found for user_id:", user_id);
             res.status(404).send('No records found for the specified user_id');
         }
-    } catch (err) {
+        } catch (err) {
         console.error(err);
         res.status(500).send('Error retrieving data');
     }
