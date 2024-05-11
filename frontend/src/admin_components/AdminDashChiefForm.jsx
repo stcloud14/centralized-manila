@@ -396,7 +396,7 @@ const AdminDashChiefForm = React.memo(
           
               const noteText = [
                 `I hereby certify that the provided information is accurate and has been carefully reviewed. This report depicts the`,
-                `financial and operational performance of Unified Departamental Administrative Report as of ${selectedYear}. Any identified`,
+                `financial and operational performance of Unified Departmental Administrative Report as of ${selectedYear}. Any identified`,
                 `discrepancies or errors should be reported promptly for correction.`
             ];   
             const noteXPosition = 15; // Adjust as needed
@@ -415,7 +415,7 @@ const AdminDashChiefForm = React.memo(
             
             const signatureData = [['City Treasurer']];
             pdf.autoTable({
-                startY: pdf.autoTable.previous.finalY + 40,
+                startY: pdf.autoTable.previous.finalY + 32,
                 head: [['Anne Mae Garcia']],
                 body: signatureData,
                 theme: 'plain',
@@ -436,12 +436,12 @@ const AdminDashChiefForm = React.memo(
             // Add a signature
             const pageWidth2 = pdf.internal.pageSize.width;
             const tableWidth2 = 80; // Adjust the width according to your requirement
-            const margin2 = (pageWidth - tableWidth) - 10; // Adjust the margin as needed
+            const margin2 = (pageWidth2- tableWidth2) - 10; // Adjust the margin as needed
             
-            const signatureData2 = [['Unified Departamental']];
+            const signatureData2 = [['Unified Departmental']];
             pdf.autoTable({
                 startY: pdf.autoTable.previous.finalY - 16,
-                head: [['Unified Departamental Administrative']],
+                head: [['Unified Departmental Administrative']],
                 body: signatureData2,
                 theme: 'plain',
                 styles: {
@@ -453,11 +453,52 @@ const AdminDashChiefForm = React.memo(
                 headStyles: {
                     fontStyle: 'normal',
                 },
-                margin: { right: margin },
+                margin: { right: margin2 },
             });
             pdf.setLineWidth(0.5); // Set line width
             pdf.line(15, pdf.autoTable.previous.finalY - 8, pdf.internal.pageSize.width - 118, pdf.autoTable.previous.finalY - 8);
 
+            // Add footer to each page
+            const totalPages = pdf.internal.getNumberOfPages();
+            for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+            pdf.setPage(pageNum);
+
+            // Generate footer text with pageNum
+            const currentDate = new Date();
+            const formattedDate1 = currentDate.toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+            });
+            const formattedTime = currentDate.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true,
+            });
+            const fullName = "Unified Departmental Administrative";
+            const footerText = `Generated on ${formattedDate1}, at ${formattedTime} by ${fullName}`;
+
+            // Add footer text to each page
+            const footerTextX = 15;
+            const footerTextY = pdf.internal.pageSize.height - 15;
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text(footerText, footerTextX, footerTextY);
+
+            // Calculate the width of the page number text
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            const pageNumberText = `Page ${pageNum} of ${totalPages}`;
+            const pageNumberTextWidth = pdf.getStringUnitWidth(pageNumberText) * pdf.internal.getFontSize();
+            
+            // Calculate the position for page number
+            const pageNumberTextX = pdf.internal.pageSize.width - (-19) - pageNumberTextWidth;
+            const pageNumberTextY = pdf.internal.pageSize.height - 15;
+
+            // Add page number
+            pdf.text(pageNumberText, pageNumberTextX, pageNumberTextY);
+          }
             
           const currentDate = new Date();
           const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
