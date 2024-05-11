@@ -226,7 +226,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
         </span>
         <div className="inline-block align-bottom rounded-lg text-center overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
           {transaction_id ? (
-            status_type === 'Pending' && (
+            status_type === 'Processing' && (
               <div className='bg-white dark:bg-[#212121] mb-5 p-5 rounded-lg'>
                 <div className="grid md:grid-cols-4 grid-cols-2 gap-3 items-center justify-center text-xs w-full">
                   <div className="flex flex-col items-center text-center">
@@ -356,7 +356,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
 
                     <hr className='mt-7 mb-1'/>
                     <div className="flex justify-between">
-                    <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : status_type === "Pending" ? "Amount to Pay" : "Amount"}</span>
+                    <span className="font-semibold whitespace-nowrap">{status_type === "Pending" ? "Amount Paid" : status_type === "Processing" ? "Amount to Pay" : "Amount"}</span>
                       <span className="font-semibold whitespace-nowrap ml-4">P {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00': '-'} </span>
                     </div>
                   </div>
@@ -404,7 +404,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                 </button>
               ) : null}
 
-              {status_type === 'Pending' && transaction_id ? (
+              {status_type === 'Processing' && transaction_id ? (
                 <button
                   onClick={handleOpenConfirm}
                   type="button"
