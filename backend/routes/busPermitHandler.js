@@ -96,7 +96,7 @@ let transID = null;
         bus_lessor,
         bus_rent,
         bus_validid,
-      
+        owned,
         bus_nocopies,
         bus_print,
         bus_purpose,
@@ -127,8 +127,8 @@ let transID = null;
     const query2 = "INSERT INTO address_info (`transaction_id`, `email`, `mobile_no`, `tel_no`, `region_id`, `prov_id`, `city_id`, `brgy_dist`, `house_floor`, `bldg_name`, `zip_code`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const values2 = [transID, bus_email, bus_mobile_no, bus_tel_no, bus_region, bus_province, bus_city, bus_brgy, bus_hnum, bus_street, bus_zip];
 
-    const query3 = "INSERT INTO bus_permit (`transaction_id`, `bus_type`, `bus_name`, `bus_franchise`, `bus_reg_no`, `bus_tin`, `bus_lessor`, `bus_rent`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    const values3 = [transID, bus_type, bus_name, bus_franchise, bus_reg_no, bus_tin, bus_lessor, bus_rent];
+    const query3 = "INSERT INTO bus_permit (`transaction_id`, `bus_type`, `bus_name`, `bus_franchise`, `bus_reg_no`, `bus_tin`, `bus_lessor`, `bus_rent` , `owned`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const values3 = [transID, bus_type, bus_name, bus_franchise, bus_reg_no, bus_tin, bus_lessor, bus_rent, owned];
 
     const query4 = "INSERT INTO bus_owner (`transaction_id`, `bus_lname`, `bus_fname`, `bus_mname`, `suffix_type`, `sex_id`) VALUES (?, ?, ?, ?, ?, ?)";
     const values4 = [transID, bus_lname, bus_fname, bus_mname, bus_suffix, bus_sex];
