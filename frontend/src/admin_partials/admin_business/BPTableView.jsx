@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleRejectConfirm, handleProcessConfirm, handleCompleteConfirm, section }) => (
+const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleChargeOpen, handleRejectConfirm, handleProcessConfirm, handleCompleteConfirm, section }) => (
     <div className="relative overflow-x-auto shadow-md rounded-sm">
     <table className="w-full text-left text-xs md:text-sm rtl:text-right text-gray-500 dark:text-gray-400">
       <thead className="text-gray-700 border-l-4 dark:border-l-[#212121] uppercase bg-slate-200 dark:bg-[#212121] dark:text-slate-400">
@@ -32,7 +32,6 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleRejectConf
               </th>
               <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                 <div className="flex justify-center items-center">
-                {console.log('Section:', section)}
                 {(section === undefined || section.trim() === 'Request') ? 'Complete' : 'Process'}
                 </div>
               </th>
@@ -76,7 +75,7 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleRejectConf
             {section === 'Requests' ? (
             <td className="py-1 whitespace-nowrap">
               <div className="flex justify-center gap-4 px-2">
-                <div onClick={(e) => { e.stopPropagation(); handleProcessConfirm(transaction); }} className="group cursor-pointer flex items-center">
+                <div onClick={(e) => { e.stopPropagation(); handleChargeOpen(transaction); }} className="group cursor-pointer flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-500 hover:text-green-600">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                     </svg>

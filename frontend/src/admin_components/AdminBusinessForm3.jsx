@@ -8,7 +8,8 @@ import AdminFooter from '../admin_partials/AdminFooter';
 
 import AdminBPView from '../admin_partials/admin_modals/AdminBPView';
 
-import AdminBusinessCharges from '../admin_partials/admin_cards/AdminBusinessCharges';
+import AdminBusinessCharge from '../admin_partials/admin_cards/AdminBusinessCharge';
+
 
 
 const AdminBusinessForm3 =()=>{
@@ -133,9 +134,9 @@ const AdminBusinessForm3 =()=>{
 
           <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
-            <AdminBusinessCharges
-              businessPermit={businessPermit}
-              handleUpdateData={handleUpdateData}
+            <AdminBusinessCharge
+            businessPermit = {businessPermit}
+            handleUpdateData={handleUpdateData}
             />
           </div>
           </>
