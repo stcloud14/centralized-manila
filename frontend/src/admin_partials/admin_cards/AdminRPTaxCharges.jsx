@@ -12,6 +12,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
+  const [modalViewCharge, setModalViewCharge] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isProcessConfirm, setIsProcessConfirm] = useState(false);
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
@@ -119,6 +120,16 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
     setViewMode(mode);
   };
 
+  const handleChargeOpen = (transaction, type) => {
+    setSelectedTransaction(transaction);
+    setTransType(type);
+    setModalViewCharge(true);
+  };
+
+  const handleChargeClose = () => {
+    setModalViewCharge(false);
+  };
+
   const handleModalOpen = (transaction, type) => {
     setSelectedTransaction(transaction);
     setTransType(type);
@@ -173,9 +184,10 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
           filteredTaxClearance={filteredTaxClearance}
           filteredTaxPayment={filteredTaxPayment}
           handleModalOpen={handleModalOpen}
+          handleChargeOpen={handleChargeOpen}
           handleRejectConfirm={handleRejectConfirm}
           handleProcessConfirm={handleProcessConfirm}
-          section={'Requests'}
+          section={'Charges'}
         />
       );
     } else if (viewMode === 'card') {
@@ -184,9 +196,10 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
           filteredTaxClearance={filteredTaxClearance}
           filteredTaxPayment={filteredTaxPayment}
           handleModalOpen={handleModalOpen}
+          handleChargeOpen={handleChargeOpen}
           handleRejectConfirm={handleRejectConfirm}
           handleProcessConfirm={handleProcessConfirm}
-          section={'Requests'}
+          section={'Charges'}
         />
       );
     }
@@ -822,6 +835,18 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
               selectedTransaction={selectedTransaction}
               isOpen={modalView}
               handleClose={handleModalClose}
+              transType={transType}
+            />
+            )}
+
+            {selectedTransaction && modalView && (
+            <AdminRPTaxCharges
+              // selectedTransaction={selectedTransaction}
+              selectedTransaction={selectedTransaction}
+              isOpen={modalViewCharge}
+              // handleClose={handleModalClose}
+              handleProcess={handleProcess}
+              handleConfirmClose={handleChargeClose}
               transType={transType}
             />
             )}
