@@ -288,7 +288,9 @@ const handleCheckboxChange = (e) => {
     e.preventDefault();
 
     // Please fill up the necessary forms
-     const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period','amount']; //The input fields that is required
+     const requiredFields = ['acc_name','rp_tdn', 'rp_pin','rp_year','period',
+     'amount'
+    ]; //The input fields that is required
      const isIncomplete = requiredFields.some((field) => !rptaxPayment[field]);
 
      if (isIncomplete) {
