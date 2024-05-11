@@ -9,7 +9,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     const query = "SELECT  r.region_name AS bus_bregion, ut.user_id, ut.date_processed, p.prov_name AS bus_bprovince, ut.status_type, c.city_name AS bus_bcity, \
-    ba.brgy_dist AS bus_bbgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
+    ba.brgy_dist AS bus_bbrgy, ba.house_floor AS bus_bhnum, ba.bldg_name AS bus_bstreet, ba.zip_code AS bus_bzip, bp.transaction_id,\
     bp.bus_name, bp.bus_franchise, bp.bus_reg_no, bp.bus_tin, bp.bus_lessor, bp.bus_rent, bp.owned, \
     bo.bus_fname, bo.bus_mname, bo.bus_lname, bo.suffix_type AS bus_suffix, st.sex_type AS bus_sex,\
     ai.email AS bus_email, ai.tel_no AS bus_tel_no, ai.mobile_no AS bus_mobile_no, \
