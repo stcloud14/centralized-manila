@@ -374,6 +374,7 @@ const handleInputChange = (e) => {
         birthc_municipal: '',
       };
     }
+
     
     if (name === 'ctc_height' || name === 'ctc_weight') {
       // Remove non-numeric characters and multiple dots from the input value
@@ -387,6 +388,7 @@ const handleInputChange = (e) => {
         ...prevData,
         [name]: numericValue,
       };
+
     } else {
       return {
         ...prevData,
@@ -437,17 +439,23 @@ function equivalentAmount({ value }) {
   }
 }
 
-function totalingAmount({ totalAmount }) {
-  if (totalAmount > 0) {
-    const totalInterest = Math.round(totalAmount * 0.2);
-    const totalAmountPaid = Math.round(parseFloat(totalAmount) + parseFloat(totalInterest));
 
-    return [totalInterest, totalAmountPaid];
+function totalingAmount({ totalAmount }) {
+  const ctc_confee = 15;
+  const ctc_basefee = 5;
+
+  if (totalAmount > 0) {
+    const totalFees = ctc_confee + ctc_basefee;
+    const totalInterest = Math.round(totalAmount * 0.2);
+    const totalAmountPaid = Math.round(parseFloat(totalAmount) + parseFloat(totalInterest) + totalFees);
+
+    return [totalInterest, totalAmountPaid ];
 
   } else {
     return [0, 0];
   }
 }
+
 
 const [isModalVisible, setIsModalVisible] = useState(true);
   const [isVerifiedStatus, setIsVerifiedStatus] = useState();
@@ -809,6 +817,14 @@ const [isModalVisible, setIsModalVisible] = useState(true);
               <div className="flex justify-between mt-2">
                     <span className="whitespace-nowrap">Interest (20%)</span>
                     <span name="ctc_interest" id="ctc_interest" className="whitespace-nowrap">P {CtcCedula.ctc_interest} .00</span>
+                  </div>
+                  <div className="flex justify-between mt-2">
+                    <span className="whitespace-nowrap">Base Fee</span>
+                    <span name="ctc_basefee" id="ctc_basefee" className="whitespace-nowrap">P 5 .00</span>
+                  </div>
+                  <div className="flex justify-between mt-2">
+                    <span className="whitespace-nowrap">Convenience Fee </span>
+                    <span name="ctc_confee" id="ctc_confee" className="whitespace-nowrap">P 15 .00</span>
                   </div>
 
                      <hr className='mt-2.5 mb-1'/>

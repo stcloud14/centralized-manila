@@ -400,7 +400,7 @@ const BirthCertificateForm =()=>{
   
   function updateTotalAmount(product) {
     if (product > 0) {
-      return product + 50;
+      return product + 50 + 15;
     } else {
       return 0;
     }
@@ -838,6 +838,10 @@ const BirthCertificateForm =()=>{
                      <div className="flex justify-between mt-2">
                          <span className="font-medium whitespace-nowrap">Rush Service Fee</span>
                          <span className="whitespace-nowrap">P50.00</span>
+                     </div>
+                     <div className="flex justify-between mt-2">
+                         <span className="font-medium whitespace-nowrap">Convenience Fee</span>
+                         <span className="whitespace-nowrap">P15.00</span>
                      </div>
                      <hr className='mt-2.5 mb-1'/>
                      <div className="flex justify-between">
