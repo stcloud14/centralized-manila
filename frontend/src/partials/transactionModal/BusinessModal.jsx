@@ -137,7 +137,7 @@ const cancelTrans = async (e) => {
 
           const rowData = { ...selectedTransaction, trans_type};
 
-          const status_type = 'C A N C E L E D';
+          const status_type = 'Canceled';
 
           const body = {
             data: rowData,
@@ -275,15 +275,15 @@ const handleCloseConfirm = () => {
             </div>
           </div>
 
-          {isSuccess && (                
-            <div className="my-5 text-center">
-              <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction Canceled!</div> 
-            </div>
-          )}
 
           <div className="md:max-h-[11.5rem] max-h-[5.5rem] bg-white dark:bg-[#212121] dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
             <div className="mx-auto">
               <div className="sm:mt-0" id="modal-headline">   
+              {isSuccess && (                
+                <div className="mb-5 text-center">
+                  <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5">Transaction Canceled!</div> 
+                </div>
+              )}
                 <div className="mx-auto">
                   <div className="mb-0">
                     {businessTransaction.transaction_id ? (

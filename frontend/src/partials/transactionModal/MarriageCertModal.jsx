@@ -251,16 +251,15 @@ const cancelTrans = async (e) => {
             <span className="font-bold md:text-lg text-sm">Marriage Certificate Transaction Details</span>
             </div>
           </div>
-
-          {isSuccess && (                
-            <div className="my-5 text-center">
-              <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction Canceled!</div> 
-            </div>
-          )}
-          
+        
           <div className="md:max-h-[11.5rem] max-h-[5.5rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
             <div className="mx-auto">
               <div className="sm:mt-0" id="modal-headline">   
+              {isSuccess && (                
+                <div className="mb-5 text-center">
+                  <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction Canceled!</div> 
+                </div>
+              )} 
                 <div className="mx-auto">
                   <div className="mb-0">
                     {marriageTransaction.transaction_id ? (
@@ -280,17 +279,20 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Husband's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_hfname || marriageTransaction.husband_fname || '-'}</span>
                     </div>
-
+                    {marriageTransaction.husband_mname ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Husband's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_hmname || marriageTransaction.husband_mname || '-'}</span>
                     </div>
+                    ) : null }
+                    {marriageTransaction.husband_suffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Husband's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_hsuffix || marriageTransaction.husband_suffix|| '-'}</span>
                     </div>
+                    ) : null}
                     <br/>
-
+                    
                     <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
                       <span className="font-semibold whitespace-nowrap">Wife's Personal Information</span>
                     </div>
@@ -302,15 +304,21 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Wife's First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_wfname || marriageTransaction.wife_fname || '-'}</span>
                     </div>
+                    {marriageTransaction.wife_mname ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Wife's Middle Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_wmname || marriageTransaction.wife_mname || '-'}</span>
                     </div>
+                    ) : null}
+
+                    {marriageTransaction.wife_suffix ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Wife's Suffix</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_wsuffix || marriageTransaction.wife_suffix || '-'}</span>
-                    </div>                   
+                    </div>  
+                    ) : null}                 
                     <br/>
+                    
 
                     <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
                       <span className="font-semibold whitespace-nowrap">Place of Marriage Information</span>
@@ -361,14 +369,18 @@ const cancelTrans = async (e) => {
                       <span className="font-medium whitespace-nowrap">Requestor's Relationship to the Owner</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_reqrelation || marriageTransaction.owner_rel || '-'}</span>
                     </div>
+                    {marriageTransaction.tel_no ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Telephone No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_telno || marriageTransaction.tel_no || '-'}</span>
                     </div>
+                    ) : null }
+                    {marriageTransaction.mobile_no ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mobile No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{marriageTransaction.marriagec_mobileno || marriageTransaction.mobile_no || '-'}</span>
-                    </div>                                                                             
+                    </div>  
+                    ) : null }                                                                           
                     <br/>
 
                     <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">

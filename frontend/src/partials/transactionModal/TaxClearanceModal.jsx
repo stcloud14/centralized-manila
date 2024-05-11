@@ -86,6 +86,8 @@ const cancelTrans = async (e) => {
 
   try {
 
+
+
     const response = await axios.post(`http://localhost:8800/transachistory/canceltrans/${transaction_id}`, selectedTransaction);
 
     if (response.status === 200) {
@@ -101,11 +103,15 @@ const cancelTrans = async (e) => {
 
           const user_email = updatedUserEmail;
 
+          const rp_tdn = selectedTransaction.tc_tdn;
+
+          const rp_pin = selectedTransaction.tc_pin;
+
           const trans_type = 'Real Property Tax Clearance';
 
-          const rowData = { ...selectedTransaction, trans_type};
+          const rowData = { ...selectedTransaction, trans_type, rp_tdn, rp_pin};
 
-          const status_type = 'C A N C E L E D';
+          const status_type = 'Canceled';
 
           const body = {
             data: rowData,
@@ -255,19 +261,16 @@ const cancelTrans = async (e) => {
               )}
               <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-t-lg">
                 <div className="mx-auto mt-2">
-
                   <div className="sm:mt-0" id="modal-headline">   
+                  {isSuccess && (                
+                        <div className="mb-5 text-center">
+                      <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5">Transaction Canceled!</div> 
+                        </div>
+                      )}
                     <div className="mx-auto">
                       <div className="mb-6">
                         <span className="font-bold md:text-lg text-sm">Tax Clearance Transaction Details</span>
                       </div>
-
-                      {isSuccess && (                
-                        <div className="my-5 text-center">
-                          <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction Canceled!</div> 
-                        </div>
-                      )}
-
                       <div className="mb-6">
                         {transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">

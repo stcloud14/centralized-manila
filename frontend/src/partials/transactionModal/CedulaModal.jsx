@@ -84,6 +84,9 @@ const cancelTrans = async (e) => {
 
   try {
 
+    const { transaction_id } = selectedTransaction;
+    console.log("selectedTransaction", selectedTransaction)
+
     const response = await axios.post(`http://localhost:8800/transachistory/canceltrans/${transaction_id}`, selectedTransaction);
 
     if (response.status === 200) {
@@ -99,11 +102,11 @@ const cancelTrans = async (e) => {
 
           const user_email = updatedUserEmail;
 
-          const trans_type = 'Real Property Tax Payment';
+          const trans_type = 'Community Tax Certificate';
 
           const rowData = { ...selectedTransaction, trans_type};
 
-          const status_type = 'C A N C E L E D';
+          const status_type = 'Canceled';
 
           const body = {
             data: rowData,
@@ -139,7 +142,7 @@ const cancelTrans = async (e) => {
           setIsSuccess(false);
           // onClose();
           window.location.href = `http://localhost:5173/transachistory/${user_id}`;
-        }, 1000);
+        }, 10000000);
         
       } else {
         console.error('Transaction error:', response.statusText);
@@ -260,15 +263,14 @@ const cancelTrans = async (e) => {
                 </div>
               </div>
 
-              {isSuccess && (                
-                <div className="my-5 text-center">
-                  <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs md:w-auto w-full rounded-full py-1.5'>Transaction Canceled!</div> 
-                </div>
-              )}
-
               <div className="md:max-h-[11.5rem] max-h-[5.5rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
                   <div className="mx-auto">
                     <div className="sm:mt-0" id="modal-headline">   
+                    {isSuccess && (                
+                      <div className="mb-5 text-center">
+                            <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5">Transaction Canceled!</div> 
+                      </div>
+                    )}    
                       <div className="mx-auto">
                         <div className="mb-0">
                         {cedulaTransaction.transaction_id ? (
