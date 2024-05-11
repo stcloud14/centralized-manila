@@ -611,54 +611,69 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
           {/* Render Content */}
           {renderContent()}
           
-          {/* PROCESS MODAL */}
-          {isCompleteConfirm && (
-              <div className="fixed z-50 inset-0 overflow-y-auto">
-                <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                  <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                    <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                  </div>
-                  <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                    &#8203;
-                  </span>
-                  <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                    <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                      <div className="mx-auto mt-4">
-                        <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                          Would you like to mark this transaction as complete?
-                        </span>
-                      </div>
+            {/* PROCESS MODAL */}
+            {isCompleteConfirm && (
+              <div className="fixed z-50 inset-0 overflow-y-auto flex items-center justify-center">
+              {/* Left Modal */}
+              <div className="absolute left-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
+              <div className="absolute left-0 flex items-center justify-center w-1/2 h-full">
+                <div className="inline-block bg-white dark:bg-[#212121] rounded-sm text-center overflow-hidden shadow-xl transform transition-all">
+                  <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4 h-96 overflow-y-auto"> {/* Add a fixed height and make it scrollable */}
+                    <div className="mx-auto mt-4">
+                      {/* Add your content for the left modal here */}
                     </div>
-
-                    {isLoading ? (
-                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
-                        <Loading />
-                      </div>
-                    ) : (
-                      <>
-                    <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
-                      <button
-                        onClick={handleConfirmClose}
-                        type="button"
-                        className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                      >
-                        <p>Cancel</p>
-                      </button>
-                    
-                      <button
-                        onClick={handleComplete} 
-                        type="button"
-                        className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
-                        >
-                      Confirm
-                      </button>
-                    </div>
-                    </>
-                    )}
-
+                    {/* Rest of your content */}
                   </div>
                 </div>
               </div>
+
+              {/* Right Modal */}
+              <div className="absolute right-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
+              <div className="absolute right-0 flex items-center justify-center w-1/2 h-full">
+                <div className="inline-block bg-white dark:bg-[#212121] rounded-sm text-center overflow-hidden overflow-y-auto shadow-xl transform transition-all">
+                  <div className="bg-white dark:bg-[#212121] mx-2 pt-5 pb-4 sm:p-6 sm:pb-4 h-96"> {/* Add a fixed height and make it scrollable */}
+                    <div className="font-semibold text-slate-700 mb-3 md:px-32 px-4 text-center dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                      Permit Charges
+                    </div>
+                    <div className="mt-2">
+                      <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">REAL PROPERTY TAX AMOUNT</label>
+                      <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                    </div>
+                    <div className="font-semibold flex space-x-2 text-slate-700 text-start py-8 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                      <span>Total :</span>
+                      <span className='font-normal'>P 1200.00</span>
+                    </div>
+                    
+                    {/* Button container */}
+                    <div className="flex justify-center pb-8 space-x-2">
+                      {isLoading ? (
+                        <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 mt-[-10px]">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <>
+                          <button
+                            onClick={handleConfirmClose}
+                            type="button"
+                            className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                          >
+                            <p>Cancel</p>
+                          </button>
+
+                          <button
+                            onClick={handleComplete}
+                            type="button"
+                            className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
+                          >
+                            Confirm
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             )}
 
             {/* REJECT MODAL */}
