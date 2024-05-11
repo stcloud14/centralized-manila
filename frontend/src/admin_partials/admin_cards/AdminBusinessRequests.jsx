@@ -552,7 +552,7 @@ useEffect(() => {
                 {/* Left Modal */}
                 <div className="absolute left-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
                   <div className="absolute left-0 flex items-center justify-center w-1/2 h-full">
-                    <div className="inline-block bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all">
+                    <div className="inline-block bg-white dark:bg-[#212121] rounded-lg text-center overflow-hidden shadow-xl transform transition-all">
                       <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div className="mx-auto mt-4">
                            {/* Add your content for the left modal here */}
@@ -564,7 +564,7 @@ useEffect(() => {
                 {/* Right Modal */}
                 <div className="absolute right-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
                   <div className="absolute right-0 flex items-center justify-center w-1/2 h-full">
-                    <div className="inline-block bg-white rounded-lg md:px-12 px-2 text-center overflow-hidden shadow-xl transform transition-all">
+                    <div className="inline-block bg-white  dark:bg-[#212121] rounded-lg md:px-12 px-2 text-center overflow-hidden shadow-xl transform transition-all">
                       <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div className="font-semibold text-slate-700 mb-3 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
                           Permit Charges
