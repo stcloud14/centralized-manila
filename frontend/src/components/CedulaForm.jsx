@@ -756,7 +756,32 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                     </div>
                 </div>
                 {/* Row 3 */}
-                <h1 className='text-sm text-slate-700 dark:text-white'>Additional Residence Tax on the following items owned or earned in the Philippines (Tax not exceeded P5,000)</h1>
+                <div className="flex items-center"> {/* Use flex container to align items horizontally */}
+  <h1 className='text-sm text-slate-700 dark:text-white'>
+    Additional Residence Tax on the following items owned or earned in the Philippines (Tax not exceeded P5,000)
+  </h1>
+  <div className="hidden sm:flex ml-2"> {/* Use ml-2 for left margin between h1 and SVG on larger screens */}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      className="w-4 h-4 flex-shrink-0"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+      />
+    </svg>
+    <h1 className="text-[0.50rem] text-gray-500 dark:text-gray-400 pl-1 mt-0.5">
+      If none, put 0
+    </h1>
+  </div>
+</div>
+
+                
                 {/* Row 4 */}
                 <h1 className='text-xs text-slate-700 dark:text-white mt-2.5 mb-1.5'>Income from Real Property (P1 for every P1,000)</h1>
                   <div className="grid md:grid-cols-2 md:gap-6">
