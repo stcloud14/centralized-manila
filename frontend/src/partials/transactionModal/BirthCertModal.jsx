@@ -104,7 +104,11 @@ const cancelTrans = async (e) => {
 
           const trans_type = 'Birth Certificate';
 
-          const rowData = { ...birthTransaction, trans_type};
+          const date = birthTransaction.birth_date;
+
+          const time = selectedTransaction.time;
+
+          const rowData = { ...birthTransaction, trans_type, date, time};
 
           const status_type = 'Canceled';
 
