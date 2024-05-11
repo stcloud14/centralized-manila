@@ -160,7 +160,7 @@ useEffect(() => {
   
               const rowData = { ...selectedTransaction, trans_type};
   
-              const statusType = 'Complete';
+              const statusType = 'Pending';
   
               const body = {
                 data: rowData,

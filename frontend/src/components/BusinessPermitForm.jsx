@@ -677,7 +677,7 @@ const BusinessPermitForm =()=>{
   
               const rowData = { ...busPermit, transaction_id, trans_type, date, time};
   
-              const status_type = 'Pending';
+              const status_type = 'Processing';
   
               const body = {
                 data: rowData,
