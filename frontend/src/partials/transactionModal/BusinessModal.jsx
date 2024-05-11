@@ -99,7 +99,7 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
 
   function getShortName(longName, maxCharacters) {
     if (!longName) {
-        return '-';
+        return '';
     }
 
     const fileNameWithoutExtension = longName.split('.').slice(0, -1).join('.');
