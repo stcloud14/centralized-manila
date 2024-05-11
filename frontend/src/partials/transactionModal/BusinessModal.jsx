@@ -724,14 +724,14 @@ const handleCloseConfirm = () => {
 
                     <br />
 
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                    {/* <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">No. of Copies</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_nocopies || businessTransaction.copies || '-'}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">What to Print</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_printLabel || businessTransaction.print_type || '-'}</span>
-                    </div>
+                    </div> */}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Purpose</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_purposeLabel || businessTransaction.purpose_type || '-'}</span>
