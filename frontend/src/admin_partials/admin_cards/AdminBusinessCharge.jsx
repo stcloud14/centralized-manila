@@ -705,7 +705,7 @@ useEffect(() => {
               // selectedTransaction={selectedTransaction}
               selectedTransaction={selectedTransaction}
               isOpen={modalViewCharge}
-              handleClose={handleChargeClose}
+              handleConfirmClose={handleChargeClose}
               transType={transType}
             />
             )}

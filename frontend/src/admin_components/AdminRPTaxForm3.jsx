@@ -24,7 +24,7 @@ const AdminRPTaxForm3 = () => {
 
   const fetchUserTransaction = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/adminrptax/processing/`);
+      const res = await axios.get(`http://localhost:8800/adminrptax/charges/`);
       setTaxPayment(res.data.taxpayment);
       setTaxClearance(res.data.taxclearance);
     } catch (err) {
