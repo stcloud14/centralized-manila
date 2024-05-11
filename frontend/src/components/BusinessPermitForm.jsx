@@ -764,7 +764,8 @@ const BusinessPermitForm =()=>{
     'bus_type','bus_name', 'bus_reg_no','bus_tin','bus_lname','bus_fname','bus_sex','bus_email','bus_mobile_no','bus_bregion','bus_bprovince',
     'bus_bcity', 'bus_bbrgy','bus_bhnum','bus_bstreet', 'bus_bzip', 'bus_floor','bus_emp','bus_male_emp','bus_female_emp', 'bus_van_no','bus_truck_no','bus_motor_no',
     'bus_region', 'bus_province','bus_city','bus_brgy','bus_hnum','bus_street', 'bus_zip','bus_office',
-   'bus_validid','bus_nocopies','bus_print','bus_purpose',
+    'bus_validid','bus_purpose',
+  //  'bus_nocopies','bus_print',
   ];
 /*
     'bus_type','bus_name','bus_franchise', 'bus_reg_no','bus_tin','bus_lname','bus_fname', 'bus_suffix','bus_sex','bus_email','bus_tel_no','bus_mobile_no','bus_bregion','bus_bprovince',
@@ -1214,6 +1215,11 @@ const BusinessPermitForm =()=>{
                   <div className="group md:ml-9">
                   <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_tax_incentives'} />
                   </div>
+                  <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_tax_incentives' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_tax_incentives')} />
+                            )}
+                        </td>
                   <p>
                     {selectedFiles.map((fileArray) => {
                       if (fileArray.fieldName === 'bus_tax_incentives') {
@@ -1781,17 +1787,15 @@ const BusinessPermitForm =()=>{
                 </div>
                 <div className="grid md:grid-cols-8 md:gap-6 mt-4">
                   {/* Description */}
-
                   <div className="w-full mb-6 md:col-start-2 md:col-span-6 p-2 rounded-md shadow-md text-gray-700 uppercase bg-slate-200 dark:text-gray-400 dark:bg-[#333333] dark:border-gray-700 ">
                       <h1 className="text-[0.75rem] text-center flex pl-1 mt-0.5"><span className="font-medium pr-1">Note:</span>For Single Proprietor - DTI Registration is required. For Corporation and Partnership - SEC Registration is Required. If owned, enter Tax Dec No. or PIN on UAF. If not owned, Contract of Lease is Required.</h1>
                   </div>
-
-                  </div>
+                </div>
                 </div>
 
                 {/* Group 12 - Transaction Information*/}
-                {/* <div className='pt-10'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Transaction Information</h1> */}
+                <div className='pt-10'>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Transaction Information</h1>
                 {/* Row 1 */}
                 {/* <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
@@ -1808,7 +1812,7 @@ const BusinessPermitForm =()=>{
                   </div>
                 </div> */}
                 {/* Row 2 */}
-                {/* <div className="grid md:grid-cols-2 md:gap-6">
+                <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_purpose} name="bus_purpose" id="bus_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                      <PurposeDropdown/>
@@ -1821,7 +1825,7 @@ const BusinessPermitForm =()=>{
                     </select>
                     <label htmlFor="bus_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>
-                </div>  */}
+                </div> </div>
               
 
               {/* Group 13 - Computation */}

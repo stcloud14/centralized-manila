@@ -151,79 +151,103 @@ useEffect(() => {
       }
     };
 
-    const handleProcess = async () => {  
+    
+    const handleProcess = async (e) => {
+      e.preventDefault();
 
-      const transaction_id = selectedTransaction.transaction_id;
-      const trans_type = selectedTransaction.trans_type;
-      const user_id = selectedTransaction.user_id;
-
-      try {
-        const response = await axios.post(`http://localhost:8800/adminbp/updateprocess/${transaction_id}`, selectedTransaction);
-        setIsLoading(true);
-      if (response.status === 200) {
-
-        try {
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
-
-          if (res.data.user_email) {
-            const updatedUserEmail = res.data.user_email;
-            const f_name = res.data.f_name;
-            const l_name = res.data.l_name;
-            const sex_type = res.data.sex_type;
-            console.log('FETCHED USER EMAIL:', updatedUserEmail);
-
-            const user_email = updatedUserEmail;
-
-            const rowData = { ...selectedTransaction, trans_type};
-
-            const statusType = 'Processing';
-
-            const body = {
-              data: rowData,
-              f_name: f_name,
-              l_name: l_name,
-              sex_type: sex_type,
-              status_type: statusType,
-            };
-  
-            // Proceed with additional logic after updating state
-            try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
-  
-              if (emailResponse.data && emailResponse.data.message) {
-                console.log('SENT EMAIL');
-              } else {
-                console.log("Failed to send email.");
-              }
-            } catch (emailError) {
-              // alert(emailError);
-            }
-          } else {
-            console.error('Transaction error:', res.statusText);
-          }
-        } catch (fetchError) {
-          console.log('NOT FETCHING EMAIL');
-          console.error(fetchError);
-        }
-
-        setIsLoading(false);
-        handleConfirmClose();
-        handleUpdateData();
-        setSelectedTransaction('');
-
-        setIsSuccess(true); // Set success state to true
-        console.log('Update successful');
-
-        setTimeout(() => {
-          setIsSuccess(false);
-        }, 2100);
-      } else {
-        console.error('Transaction error:', response.statusText);
+      const body = {
+          user_id,
+          transType,
+          totalVal
       }
-    } catch (err) {
-      console.error('Transaction error:', err);
-    }
+  
+      try {
+          const response = await axios.post(`http://localhost:8800/adminbp/updateamount/${transaction_id}`, body);
+  
+          if (response.status === 200) {
+            // Fetch user_email after successful payment
+            try {
+              const res1 = await axios.get(`http://localhost:8800/transachistory/transId/${user_id}`);
+              const transaction_id = res1.data[0]?.transaction_id;
+    
+              const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+              
+              if (res.data.user_email) {
+                const updatedUserEmail = res.data.user_email;
+                const f_name = res.data.f_name;
+                const l_name = res.data.l_name;
+                const sex_type = res.data.sex_type;
+                const currentDate = new Date();
+                        const date = currentDate.toLocaleDateString('en-US', {
+                            month: 'long',
+                            day: 'numeric',
+                            year: 'numeric'
+                        });
+                        const time = currentDate.toLocaleTimeString('en-US', {
+                          hour: 'numeric',
+                          minute: 'numeric'
+                      });
+                
+                console.log('FETCHED USER EMAIL:', updatedUserEmail);
+    
+                const user_email = updatedUserEmail;
+    
+                const trans_type = 'Business Permit';
+    
+                const rowData = { ...selectedTransaction, transaction_id, trans_type, date, time};
+    
+                const status_type = 'Processing';
+    
+                const body = {
+                  data: rowData,
+                  status_type: status_type,
+                  sex_type: sex_type,
+                  f_name: f_name,
+                  l_name: l_name
+                };
+
+      
+                try {
+                      const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+          
+                      if (emailResponse.data && emailResponse.data.message) {
+                        console.log('SENT EMAIL');
+                      } else {
+                        console.log("Failed to send email.");
+                      }
+                    } catch (emailError) {
+                      // alert(emailError);
+                    }
+                  } else {
+                    console.error('Transaction error:', res.statusText);
+                  }
+                } catch (fetchError) {
+                  console.log('NOT FETCHING EMAIL');
+                  console.error(fetchError);
+                }
+  
+                setIsLoading(false);
+                handleConfirmClose();
+                handleUpdateData();
+                setSelectedTransaction('');
+        
+                setIsSuccess(true);
+                console.log('Update successful');
+        
+                setTimeout(() => {
+                  setIsSuccess(false);
+                }, 2100);
+
+              } else {
+                console.error('Transaction error:', response.statusText);
+              }
+  
+      } catch (err) {
+          console.error('Transaction error:', err);
+      }
   };
+
+  
 
   const handleReject = async () => {  
 
