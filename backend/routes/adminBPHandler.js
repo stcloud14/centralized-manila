@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
     LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE  ut.trans_type_id = 3 AND ut.status_type = 'Paid'";
+    WHERE  ut.trans_type_id = 3 AND ut.status_type = 'Pending'";
 
     const query1 = "SELECT bus_office, bus_line, bus_psic, bus_products, bus_units_no, bus_total_cap\
     \
@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
     \
     LEFT JOIN bus_activity ba ON ut.transaction_id = ba.transaction_id AND ut.transaction_id IS NOT NULL \
     \
-    WHERE ut.trans_type_id = 3 AND ut.status_type = 'Paid'";
+    WHERE ut.trans_type_id = 3 AND ut.status_type = 'Pending'";
 
 
     try {
@@ -134,7 +134,7 @@ router.get('/processing', async (req, res) => {
     LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE  ut.trans_type_id = 3 AND ut.status_type = 'Processing'";
+    WHERE  ut.trans_type_id = 3 AND ut.status_type = 'Paid'";
 
     const query1 = "SELECT bus_office, bus_line, bus_psic, bus_products, bus_units_no, bus_total_cap\
     \
@@ -142,7 +142,7 @@ router.get('/processing', async (req, res) => {
     \
     LEFT JOIN bus_activity ba ON ut.transaction_id = ba.transaction_id AND ut.transaction_id IS NOT NULL \
     \
-    WHERE ut.trans_type_id = 3 AND ut.status_type = 'Processing'";
+    WHERE ut.trans_type_id = 3 AND ut.status_type = 'Paid'";
 
 
     try {
