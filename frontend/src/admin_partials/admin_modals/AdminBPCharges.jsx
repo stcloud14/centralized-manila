@@ -131,7 +131,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
         {/* Left Modal */}
           <div className="absolute left-0 w-1/2 min-h-screen h-full bg-gray-500 opacity-75"></div>
           <div className="absolute left-0 flex items-center justify-center w-1/2 h-full">
-            <div className="inline-block bg-white dark:bg-[#212121] justify-between ms-20 w-[44rem] h-[44rem] pt-8 overflow-y-auto px-8 rounded-sm dark:text-white text-center overflow-hidden shadow-xl transform transition-all">
+            <div className="inline-block bg-white dark:bg-[#212121] justify-between ms-20 w-[44rem] h-[44rem] overflow-y-auto px-8 rounded-sm dark:text-white text-center overflow-hidden shadow-xl transform transition-all">
                 <div>
                 <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 dark:text-white">
                   <div className="mb-6">
@@ -630,21 +630,18 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
           {/* Right Modal */}
           <div className="absolute right-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
           <div className="absolute right-0 flex items-center justify-center w-1/2 h-full">
-            <div className="inline-block bg-white dark:bg-[#3d3d3d] rounded-sm text-center overflow-hidden overflow-y-auto shadow-xl transform transition-all">
-            <div className="bg-slate-200 dark:bg-[#212121] pt-1 pb-6 items-center">
-              <button type="button" onClick={handleConfirmClose} className="float-right text-slate-500 dark:text-slate-200 text-xs md:text-sm"
+          <div className="inline-block align-bottom bg-white dark:bg-[#333333] rounded-sm text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl max-h-screen relative">
+            {/* Menu Bar */}
+            <div className="bg-slate-200 dark:bg-[#212121] pt-1.5 pb-1 items-center">
+              <button onClick={handleConfirmClose} type="button" className="float-right text-slate-500 dark:text-slate-300 text-xs md:text-sm"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="md:w-5 md:h-5 w-4 h-4 mr-1">
                   <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
                 </svg>
               </button>
+              <span className="font-semibold text-gray-700 bg-slate-200 dark:bg-[#212121] dark:text-gray-300 ml-6">Business Permit Charges</span>
             </div>
-              <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[42rem]"> 
-                <div className="md:px-40 px-4 pt-2 pb-0 sm:p-6 sm:pb-0 dark:text-white">
-                  <div className="mb-6">
-                  <span className="font-bold md:text-lg text-sm">Business Permit Charges</span>
-                  </div>
-                </div>
+              <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[42rem] overflow-y-auto"> 
                 <div className="mt-2">
                   <label htmlFor="bp_1" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">R E SUB-LESSOR</label>
                   <input value={values.bp_1} onChange={handleChange} type="text" name="bp_1" id="bp_1" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
