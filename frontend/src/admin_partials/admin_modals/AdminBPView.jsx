@@ -9,65 +9,65 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
 
   console.log(selectedTransaction)
 
-  const trans_type = 'Business Permit';
+  // const trans_type = 'Business Permit';
 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
 
-  const [businessTransaction, setBusinessTransaction] = useState({});
+  // const [businessTransaction, setBusinessTransaction] = useState({});
   
-  const makePayment = async () => {
-    try {
-        if (!transaction_id) {
-            console.error("Transaction ID is not defined.");
-            alert("Error creating checkout session. Please try again later.");
-            return;
-        }
+//   const makePayment = async () => {
+//     try {
+//         if (!transaction_id) {
+//             console.error("Transaction ID is not defined.");
+//             alert("Error creating checkout session. Please try again later.");
+//             return;
+//         }
 
-        const body = {
-          data: selectedTransaction,
-          trans_type: trans_type,
-          user_id: user_id,
-      };
+//         const body = {
+//           data: selectedTransaction,
+//           trans_type: trans_type,
+//           user_id: user_id,
+//       };
 
-        const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
+//         const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
 
-        if (response.data && response.data.checkoutSessionUrl) {
-            const checkoutSessionUrl = response.data.checkoutSessionUrl;
+//         if (response.data && response.data.checkoutSessionUrl) {
+//             const checkoutSessionUrl = response.data.checkoutSessionUrl;
 
-            if (checkoutSessionUrl) {
-                console.log('Checkout Session URL:', checkoutSessionUrl);
+//             if (checkoutSessionUrl) {
+//                 console.log('Checkout Session URL:', checkoutSessionUrl);
 
-                // Open a new window or tab with the checkout session URL
-                const newWindow = window.open(checkoutSessionUrl, '_self');
+//                 // Open a new window or tab with the checkout session URL
+//                 const newWindow = window.open(checkoutSessionUrl, '_self');
                 
-            }
-        } else {
-            console.error("Invalid checkout session - Response structure is unexpected:", response);
-            alert("Error creating checkout session. Please try again later.");
-        }
-    } catch (error) {
-        console.error("Error creating checkout session:", error);
-        alert("Error creating checkout session. Please try again later.");
-    }
-};
+//             }
+//         } else {
+//             console.error("Invalid checkout session - Response structure is unexpected:", response);
+//             alert("Error creating checkout session. Please try again later.");
+//         }
+//     } catch (error) {
+//         console.error("Error creating checkout session:", error);
+//         alert("Error creating checkout session. Please try again later.");
+//     }
+//    };
 
-  useEffect(() => {
-    const fetchBusinessTransaction = async () => {
-      if (transaction_id) {
-      try {
-        const res = await axios.get(`http://localhost:8800/transachistory/buspermit/${transaction_id}`);
-        setBusinessTransaction(res.data);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err);
-        console.error('Error message:', err.message);
-      }} else {
-        setBusinessTransaction(selectedTransaction);
-      }
-    };
-    fetchBusinessTransaction();
-  }, [transaction_id]);
+  // useEffect(() => {
+  //   const fetchBusinessTransaction = async () => {
+  //     if (transaction_id) {
+  //     try {
+  //       const res = await axios.get(`http://localhost:8800/transachistory/buspermit/${transaction_id}`);
+  //       setBusinessTransaction(res.data);
+  //       console.log(res.data);
+  //     } catch (err) {
+  //       console.error(err);
+  //       console.error('Error message:', err.message);
+  //     }} else {
+  //       setBusinessTransaction(selectedTransaction);
+  //     }
+  //   };
+  //   fetchBusinessTransaction();
+  // }, [transaction_id]);
 
   function getShortName(longName, maxCharacters) {
     if (!longName) {
