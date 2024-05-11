@@ -107,9 +107,9 @@ let transID = null;
     
     
     const transType = '3';
-    const statusType = 'Pending';
+    const statusType = 'Processing';
     const trans_type = 'Business Permit';
-    const notif_title = 'Transaction Payment Pending';
+    const notif_title = 'Transaction Payment Proccessing';
     const plainAmount = amount;
     const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transID}</span> is currently awaiting payment. Please pay the required amount of <span className="font-medium dark:text-white">P ${plainAmount}</span>.</p>`;
     const date = new Date();
