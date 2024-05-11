@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BPCardView = ({filteredBusinessPermit, handleModalOpen, handleRejectConfirm, handleProcessConfirm, handleCompleteConfirm, section }) => {
+const BPCardView = ({filteredBusinessPermit, handleModalOpen, handleChargeOpen, handleRejectConfirm, handleProcessConfirm, handleCompleteConfirm, section }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-4">
 
@@ -23,29 +23,42 @@ const BPCardView = ({filteredBusinessPermit, handleModalOpen, handleRejectConfir
             </div>
 
             <div className="px-4 pb-5 space-x-4 flex justify-between items-center group">
-              <div onClick={(e) => { e.stopPropagation(); handleRejectConfirm(transaction); }} className="flex justify-center items-center text-center cursor-pointer p-1 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-sm mt-2 flex-grow">
+              {section === 'Charges' && (<div onClick={(e) => { e.stopPropagation(); handleRejectConfirm(transaction); }} className="flex justify-center items-center text-center cursor-pointer p-1 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-sm mt-2 flex-grow">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
                 <span className="text-xs font-normal">&nbsp;{section === 'Requests' ? 'Reject' : 'Mark as rejected'}</span>
               </div>
+              )}
 
-            {section === 'Requests' ? (
-              <div onClick={(e) => { e.stopPropagation(); handleProcessConfirm(transaction); }} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+            {section === 'Processing' && (
+              <div onClick={(e) => { e.stopPropagation(); handleCompleteConfirm(transaction); }} className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
               </svg>
-              <span className="text-xs font-normal">&nbsp;                {console.log('Section:', section)}
-                {(section === undefined || section.trim() === 'Request') ? 'Complete' : 'Process'}</span>
+              <span className="text-xs font-normal">&nbsp;Mark as complete</span>
             </div>
-            ) : ( 
+            )} 
+            
+            {/* {section === 'Requests' && ( 
               <div onClick={(e) => { e.stopPropagation(); handleCompleteConfirm(transaction); }}  className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
               </svg>
               <span className="text-xs font-normal">&nbsp;Mark as complete</span>
             </div>
+            )} */}
+
+            {section === 'Charges' && ( 
+              <div onClick={(e) => { e.stopPropagation(); handleChargeOpen(transaction); }}  className="flex justify-center items-center text-center cursor-pointer p-1 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-sm mt-2 flex-grow">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
+              <span className="text-xs font-normal">&nbsp;Mark as processing</span>
+            </div>
             )}
+
+
 
             </div>
           </div>

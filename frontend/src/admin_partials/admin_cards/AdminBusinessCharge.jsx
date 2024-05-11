@@ -152,14 +152,19 @@ useEffect(() => {
     };
 
     
-    const handleProcess = async (e) => {
+    const handleProcess = async (e, totalVal) => {
       e.preventDefault();
 
+      const { user_id, transaction_id, trans_type } = selectedTransaction;
+
       const body = {
-          user_id,
-          transType,
-          totalVal
-      }
+        user_id,
+        trans_type,
+        totalVal
+      };
+
+      console.log(body)
+      
   
       try {
           const response = await axios.post(`http://localhost:8800/adminbp/updateamount/${transaction_id}`, body);
@@ -193,10 +198,12 @@ useEffect(() => {
                 const user_email = updatedUserEmail;
     
                 const trans_type = 'Business Permit';
+
+                const amount = totalVal;
     
-                const rowData = { ...selectedTransaction, transaction_id, trans_type, date, time};
+                const rowData = { ...selectedTransaction, transaction_id, amount, trans_type, date, time};
     
-                const status_type = 'Processing';
+                const status_type = 'Pending';
     
                 const body = {
                   data: rowData,
@@ -730,6 +737,7 @@ useEffect(() => {
               selectedTransaction={selectedTransaction}
               isOpen={modalViewCharge}
               handleConfirmClose={handleChargeClose}
+              handleProcess={handleProcess}
               transType={transType}
             />
             )}

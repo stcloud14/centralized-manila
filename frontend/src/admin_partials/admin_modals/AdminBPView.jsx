@@ -601,10 +601,12 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
             <hr className='mb-1'/>
             <div className="flex justify-between">
             <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : "Amount to Pay"}</span>
-              <span className="font-semibold whitespace-nowrap ml-4"> {selectedTransaction && (
+              <span className="font-semibold whitespace-nowrap ml-4"> 
+              {selectedTransaction && selectedTransaction.amount !== 0 ? (
                 `P ${selectedTransaction.bus_amount !== undefined ? selectedTransaction.bus_amount + '.00' : 
               selectedTransaction.amount !== undefined ? selectedTransaction.amount + '.00' : '-'}`
-              )}</span>
+              ) : "Kindly input additional charges"}
+              </span>
             </div>
           </div>
 

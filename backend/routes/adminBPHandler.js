@@ -225,7 +225,7 @@ router.get('/processing', async (req, res) => {
     LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE  ut.trans_type_id = 3 AND ut.status_type = 'Paid'";
+    WHERE  ut.trans_type_id = 3 AND ut.status_type = 'Paid' ORDER BY ut.date_processed DESC";
 
     const query1 = "SELECT bus_office, bus_line, bus_psic, bus_products, bus_units_no, bus_total_cap\
     \
@@ -290,17 +290,18 @@ router.post('/updateamount/:transaction_id', auditMiddleware, async (req, res) =
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
+    const updateAmount = `UPDATE transaction_info SET amount = ? WHERE transaction_id = ?;`;
+
     const updateQuery = `UPDATE user_transaction SET status_type = 'Pending'  WHERE transaction_id = ?;`;
 
     const query = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
     const values = [user_id, formattedDate, notif_title, notif_message];
 
-    const updateAmount = `UPDATE transaction_info SET amount = ?  WHERE transaction_id = ?;`;
 
     try {
+        const result2 = await queryDatabase(updateAmount, [total, transaction_id]);
         const result = await queryDatabase(updateQuery, [transaction_id]);
         const result1 = await queryDatabase(query,values);
-        const result2 = await queryDatabase(updateAmount, [total, transaction_id]);
 
         res.json({
             message: "Updated transaction!",

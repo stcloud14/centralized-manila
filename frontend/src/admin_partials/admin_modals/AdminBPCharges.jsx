@@ -4,7 +4,7 @@ import moment from 'moment/moment.js';
 import StatusBadgeModal from '../StatusBadgeModal';
 import Loading from '../../partials/Loading';
 
-const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, businessImages, handleConfirmClose, isLoading, transType }) => {
+const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, businessImages, handleConfirmClose, handleProcess, isLoading, transType }) => {
 
   const { user_id, transaction_id, status_type, date_processed } = selectedTransaction;
 
@@ -736,7 +736,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                       </button>
 
                       <button
-                        onClick={handleComplete}
+                        onClick={(e) => handleProcess(e, totalVal)}
                         type="button"
                         className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                       >

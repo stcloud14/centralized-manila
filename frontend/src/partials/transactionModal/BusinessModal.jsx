@@ -788,10 +788,12 @@ const handleCloseConfirm = () => {
             <hr className='mb-1'/>
             <div className="flex justify-between">
             <span className="font-semibold whitespace-nowrap">{status_type === "Pending" ? "Amount Paid" : status_type === "Processing" ? "Amount to Pay" : "Amount"}</span>
-              <span className="font-semibold whitespace-nowrap ml-4"> {businessTransaction && (
+              <span className="font-semibold whitespace-nowrap ml-4"> 
+              {businessTransaction && status_type ? (
                 `P ${businessTransaction.bus_amount !== undefined ? businessTransaction.bus_amount + '.00' : 
               businessTransaction.amount !== undefined ? businessTransaction.amount + '.00' : '-'}`
-              )}</span>
+              ) : `Submit for amount declaration.`}
+              </span>
             </div>
           </div>
 

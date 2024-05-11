@@ -25,16 +25,21 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleChargeOpen
                   Tax Identification Number
                   </div>
               </th>
-              <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
-                <div className="flex justify-center items-center">
-                  Reject
-                </div>
-              </th>
-              <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+              {section === 'Charges' && (
+                <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                  <div className="flex justify-center items-center">
+                    Reject
+                  </div>
+                </th>
+              )}
+              {section === 'Charges' || section === 'Processing' && (
+                <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                 <div className="flex justify-center items-center">
                 {(section === undefined || section.trim() === 'Request') ? 'Complete' : 'Process'}
                 </div>
-              </th>
+               </th>
+              )}
+
           </tr>
       </thead>
       <tbody> 
@@ -63,6 +68,8 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleChargeOpen
             <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
               {transaction.bus_tin}
             </td>
+            
+            {section === 'Charges' && (
             <td className="py-1 whitespace-nowrap">
               <div className="flex justify-center gap-4 px-2">
                 <div onClick={(e) => { e.stopPropagation(); handleRejectConfirm(transaction); }} className="group cursor-pointer flex items-center">
@@ -72,7 +79,9 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleChargeOpen
                 </div>
               </div>
             </td>
-            {section === 'Requests' && (
+            )}
+
+            {/* {section === 'Requests' && (
             <td className="py-1 whitespace-nowrap">
               <div className="flex justify-center gap-4 px-2">
                 <div onClick={(e) => { e.stopPropagation(); handleProcessConfirm(transaction); }} className="group cursor-pointer flex items-center">
@@ -82,7 +91,7 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleChargeOpen
                 </div>
               </div>
             </td>
-            )}
+            )} */}
             
             {section === 'Charges' && (
               <td className="py-1 whitespace-nowrap">
