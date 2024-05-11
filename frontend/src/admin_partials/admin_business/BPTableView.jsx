@@ -72,17 +72,31 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleChargeOpen
                 </div>
               </div>
             </td>
-            {section === 'Requests' ? (
+            {section === 'Requests' && (
             <td className="py-1 whitespace-nowrap">
               <div className="flex justify-center gap-4 px-2">
-                <div onClick={(e) => { e.stopPropagation(); handleChargeOpen(transaction); }} className="group cursor-pointer flex items-center">
+                <div onClick={(e) => { e.stopPropagation(); handleProcessConfirm(transaction); }} className="group cursor-pointer flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-500 hover:text-green-600">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                     </svg>
                 </div>
               </div>
             </td>
-            ) : (
+            )}
+            
+            {section === 'Charges' && (
+              <td className="py-1 whitespace-nowrap">
+              <div className="flex justify-center gap-4 px-1">
+                <div onClick={(e) => { e.stopPropagation(); handleChargeOpen(transaction); }} className="group cursor-pointer flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-500 hover:text-green-600">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                  </svg>
+                </div>
+              </div>
+            </td>
+            )}
+
+            {section === 'Processing' && (
               <td className="py-1 whitespace-nowrap">
               <div className="flex justify-center gap-4 px-1">
                 <div onClick={(e) => { e.stopPropagation(); handleCompleteConfirm(transaction); }} className="group cursor-pointer flex items-center">
@@ -93,6 +107,7 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleChargeOpen
               </div>
             </td>
             )}
+
           </tr>
         ))}
 
