@@ -8,11 +8,12 @@ import RPTableView from '../admin_rptax/RPTableView';
 import Loading from '../../partials/Loading';
 
 const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
+
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isCompleteConfirm, setIsCompleteConfirm] = useState(false);
+  const [isProcessConfirm, setIsProcessConfirm] = useState(false);
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState();
@@ -108,7 +109,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
     const selectedType = e.target.value;
     setSelectedType(selectedType);
   };
-  
+
   const toggleDropdown = () => {
     console.log('Toggling dropdown state');
     setDropdownOpen(!isDropdownOpen);
@@ -117,6 +118,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
   const handleToggleView = (mode) => {
     setViewMode(mode);
   };
+
   const handleModalOpen = (transaction, type) => {
     setSelectedTransaction(transaction);
     setTransType(type);
@@ -127,9 +129,9 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
     setModalView(false);
   };
 
-  const handleCompleteConfirm = (transaction) => {
+  const handleProcessConfirm = (transaction) => {
     setSelectedTransaction(transaction);
-    setIsCompleteConfirm(true);
+    setIsProcessConfirm(true);
   };
 
   const handleRejectConfirm = (transaction) => {
@@ -138,10 +140,9 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
   };
 
   const handleConfirmClose = () => {
-    setIsCompleteConfirm(false);
+    setIsProcessConfirm(false);
     setIsRejectConfirm(false);
   };
-
 
   const [rejectCause, setRejectCause] = useState('');
   const [continueButtonDisabled, setContinueButtonDisabled] = useState(true); // Initialize with true assuming initially "Select Cause" is selected
@@ -158,13 +159,14 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
   const renderContent = () => {
     // const hasRecords = filteredTaxClearance.length > 0 || filteredTaxPayment.length > 0;
   
-   // if (!hasRecords) {
-   //   return (
-   //     <div className="flex items-center justify-center text-slate-400 dark:text-white text-lg h-32">
-  //        No records found.
-   //     </div>
-   //   );
-   // }
+    // if (!hasRecords) {
+    //   return (
+    //     <div className="flex items-center justify-center text-slate-400 dark:text-white text-lg h-32">
+    //       No records found.
+    //     </div>
+    //   );
+    // }
+
     if (viewMode === 'table') {
       return (
         <RPTableView
@@ -172,7 +174,8 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
           filteredTaxPayment={filteredTaxPayment}
           handleModalOpen={handleModalOpen}
           handleRejectConfirm={handleRejectConfirm}
-          handleCompleteConfirm={handleCompleteConfirm}
+          handleProcessConfirm={handleProcessConfirm}
+          section={'Requests'}
         />
       );
     } else if (viewMode === 'card') {
@@ -182,21 +185,22 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
           filteredTaxPayment={filteredTaxPayment}
           handleModalOpen={handleModalOpen}
           handleRejectConfirm={handleRejectConfirm}
-          handleCompleteConfirm={handleCompleteConfirm}
+          handleProcessConfirm={handleProcessConfirm}
+          section={'Requests'}
         />
       );
     }
   };
 
 
-  const handleComplete = async () => {  
+  const handleProcess = async () => {  
 
     const transaction_id = selectedTransaction.transaction_id;
     const trans_type = selectedTransaction.trans_type;
     const user_id = selectedTransaction.user_id;
   
     try {
-      const response = await axios.post(`http://localhost:8800/adminrptax/updatecomplete/${transaction_id}`, selectedTransaction);
+      const response = await axios.post(`http://localhost:8800/adminrptax/updateprocess/${transaction_id}`, selectedTransaction);
       setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {
@@ -209,13 +213,13 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
             const sex_type = res.data.sex_type;
-            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+            // console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
             const rowData = { ...selectedTransaction, trans_type};
 
-            const statusType = 'Complete';
+            const statusType = 'Processing';
 
             const body = {
               data: rowData,
@@ -246,7 +250,6 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
         }
 
         setIsLoading(false);
-
         handleConfirmClose();
         handleUpdateData();
         setSelectedTransaction('');
@@ -279,9 +282,12 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
   
       const retrieveResponse = await axios.get(`http://localhost:8800/payment/create-checkout-retrieve/${transaction_id}`);
 
+      // console.log("retrieveResponse" , retrieveResponse.data)
       const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
       const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
+      // console.log("payment_method", formatted_payment_method);
       const service_requested = retrieveResponse.data.data.attributes.description;
+      // console.log("Service Requested", service_requested)
       
       const response = await axios.post(`http://localhost:8800/adminrptax/updatereject/${transaction_id}`, body);
       setIsLoading(true);
@@ -296,7 +302,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
             const sex_type = res.data.sex_type;
-            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+            // console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
@@ -315,7 +321,6 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
             // Proceed with additional logic after updating state
             try {
               const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
-              
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
@@ -341,7 +346,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
             const sex_type = res.data.sex_type;
-            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+            // console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
 
@@ -359,14 +364,12 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
               transaction_id: transaction_id,
               service_requested: service_requested,
             };
-
   
             // Proceed with additional logic after updating state
             try {
               const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
               const emailrefund = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
 
-  
               if (emailResponse.data && emailResponse.data.message && emailrefund.data && emailrefund.data.message) {
                 console.log('SENT EMAIL');
               } else {
@@ -382,8 +385,6 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
           console.log('NOT FETCHING EMAIL');
           console.error(fetchError);
         }
-
-
         setIsLoading(false);
 
         handleConfirmClose();
@@ -403,18 +404,18 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
   };
 
 
-  return (
-    <>
-      {/* Requests Area */}
-      <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200">
-        <div className="px-5 py-5">
-          <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>Tax Clearance and Tax Payment Charges</h1>
+    return (
+      <>
+        {/* Requests Area */}
+        <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200">
+          <div className="px-5 py-5">
+            <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>Tax Clearance and Tax Payment Charges</h1>
 
-          {isSuccess && (                
-            <div className="my-5 text-center">
-              <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction update successful!</div> 
-            </div>
-            )}
+            {isSuccess && (                
+              <div className="my-5 text-center">
+                <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction update successful!</div> 
+              </div>
+              )}
 
           {/* Search */}
           <div className="flex flex-col items-center sm:flex-row text-xs pb-5">
@@ -501,9 +502,9 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
 
 
               {/* Type Row */}
-              <div value={selectedType} onChange={handleInputChange} className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block text-xs">Type:</span>
-                  <select name="typeDropdown"  id="typeDropdown"  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                  <select value={selectedType} onChange={handleInputChange} name="typeDropdown"  id="typeDropdown"  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
                     <option value="All" className="dark:bg-[#3d3d3d]">Select Type</option>
                     <option value="Real Property Tax Payment" className="dark:bg-[#3d3d3d]">Real Property Tax Payment</option>
                     <option value="Real Property Tax Clearance" className="dark:bg-[#3d3d3d]">Real Property Tax Clearance</option>
@@ -608,76 +609,84 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
               </div>
             </div>
 
-          {/* Render Content */}
-          {renderContent()}
+
+            {/* Search */}
+            {/* <div className="flex flex-col items-center md:flex-row text-xs mx-2 mb-2 sm:mb-7">
+              <div className="relative flex flex-col items-center md:flex-row w-full">
+                <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mb-[0.5rem] sm:mb-0">
+                    <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+                </span>
+                <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toUpperCase())} id="searchInput" type="text" placeholder="Search ID..." className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white mr-0 sm:mr-2 pl-8 py-1 md:py-0.5 rounded-sm mb-2 md:mb-0"/>
+              </div>
+              <div className="flex w-full items-center">
+                <p className="pr-1 text-slate-700 dark:text-white">Date:</p>
+                <Flatpickr
+                  value={selectedDate}
+                  onChange={(date) => setSelectedDate(date[0])}
+                  options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                      if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                        if (monthDropdown) {
+                          monthDropdown.style.backgroundColor = '#212121';
+                        }
+                      }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                      const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                      if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                      }
+                    },
+                  }}
+                  placeholder="From"
+                  className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                />
+                <span className="px-1">-</span>
+                <Flatpickr
+                  value={selectedDatee}
+                  onChange={(date) => setSelectedDatee(date[0])}
+                  options={{
+                    dateFormat: 'Y-m-d',
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    appendTo: document.body,
+                    onOpen: function (selectedDates, dateStr, instance) {
+                      if (document.documentElement.classList.contains('dark')) {
+                        const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                        if (monthDropdown) {
+                          monthDropdown.style.backgroundColor = '#212121';
+                        }
+                      }
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                      const monthDropdown = instance.calendarContainer.querySelector('.flatpickr-monthDropdown-months');
+                      if (monthDropdown) {
+                        monthDropdown.style.backgroundColor = '';
+                      }
+                    },
+                  }}
+                  placeholder="To"
+                  className="bg-transparent text-xs md:text-sm w-full border border-slate-300 text-slate-700 dark:text-white pl-2 py-1 md:py-0.5 rounded-sm"
+                />
+              </div>      
+            </div> */}
+
+            
           
+  
+            {/* Render Content */}
+            {renderContent()}
+          
+
             {/* PROCESS MODAL */}
-            {isCompleteConfirm && (
-              <div className="fixed z-50 inset-0 overflow-y-auto flex items-center justify-center">
-              {/* Left Modal */}
-              <div className="absolute left-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
-              <div className="absolute left-0 flex items-center justify-center w-1/2 h-full">
-                <div className="inline-block bg-white dark:bg-[#212121] rounded-sm text-center overflow-hidden shadow-xl transform transition-all">
-                  <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4 h-96 overflow-y-auto"> {/* Add a fixed height and make it scrollable */}
-                    <div className="mx-auto mt-4">
-                      {/* Add your content for the left modal here */}
-                    </div>
-                    {/* Rest of your content */}
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Modal */}
-              <div className="absolute right-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
-              <div className="absolute right-0 flex items-center justify-center w-1/2 h-full">
-                <div className="inline-block bg-white dark:bg-[#212121] rounded-sm text-center overflow-hidden overflow-y-auto shadow-xl transform transition-all">
-                  <div className="bg-white dark:bg-[#212121] mx-2 pt-5 pb-4 sm:p-6 sm:pb-4 h-96"> {/* Add a fixed height and make it scrollable */}
-                    <div className="font-semibold text-slate-700 mb-3 md:px-32 px-4 text-center dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                      Permit Charges
-                    </div>
-                    <div className="mt-2">
-                      <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">REAL PROPERTY TAX AMOUNT</label>
-                      <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
-                    </div>
-                    <div className="font-semibold flex space-x-2 text-slate-700 text-start py-8 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                      <span>Total :</span>
-                      <span className='font-normal'>P 1200.00</span>
-                    </div>
-                    
-                    {/* Button container */}
-                    <div className="flex justify-center pb-8 space-x-2">
-                      {isLoading ? (
-                        <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 mt-[-10px]">
-                          <Loading />
-                        </div>
-                      ) : (
-                        <>
-                          <button
-                            onClick={handleConfirmClose}
-                            type="button"
-                            className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                          >
-                            <p>Cancel</p>
-                          </button>
-
-                          <button
-                            onClick={handleComplete}
-                            type="button"
-                            className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
-                          >
-                            Confirm
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            )}
-
-            {/* REJECT MODAL */}
-            {isRejectConfirm && (
+            {isProcessConfirm && (
               <div className="fixed z-50 inset-0 overflow-y-auto">
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                   <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -688,80 +697,140 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
                   </span>
                   <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                     <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div className="mx-auto mt-4">
-                    {rejectCause === "" && (
-                        <p className="font-medium text-red-500 sm:mt-2 text-xs md:text-sm" id="modal-headline">
-                          Please select specify concern accordingly.
-                        </p>
-                      )}
-                      <p className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                        Are you sure you would like to REJECT this transaction? This is irreversible.
-                      </p>
-
-
-
-                      <p className="font-medium text-slate-700 dark:text-white sm:mt-2 text-xs md:text-sm" id="modal-headline">
-                        Please select the cause of rejection.
-                      </p>
-                      
-                      <select value={rejectCause} onChange={handleOptionChange} className="block text-xs md:text-sm w-full mt-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-[#212121] dark:border-white dark:text-slate-200 dark:focus:border-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                        <option className="dark:bg-[#3d3d3d]" value="">Select Cause</option>
-                        <option className="dark:bg-[#3d3d3d]" value="1">Incorrect or incomplete documentation submitted</option>
-                        <option className="dark:bg-[#3d3d3d]" value="2">Failure to adhere to specific procedural requirements</option>
-                        <option className="dark:bg-[#3d3d3d]" value="3">Inconsistent or conflicting details in the submitted paperwork</option>
-                        <option className="dark:bg-[#3d3d3d]" value="4">Non-compliance with City Hall regulations</option>
-                        <option className="dark:bg-[#3d3d3d]" value="5">No records found</option>
-                      </select>
-
+                      <div className="mx-auto mt-4">
+                        <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                          Are you sure you would like to move this transaction into the Processing section?
+                        </span>
+                      </div>
                     </div>
-                    </div>
+
 
                     {isLoading ? (
                       <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
                         <Loading />
                       </div>
                     ) : (
-                      <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
-                        <button
-                          onClick={handleConfirmClose}
-                          type="button"
-                          className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                        >
-                          <p>Cancel</p>
-                        </button>
+                      <>
+                    <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                    <button
+                      onClick={handleConfirmClose}
+                      type="button"
+                      className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                    >
+                      <p>Cancel</p>
+                    </button>
 
-                        <button
-                        onClick={handleReject}
-                        type="button"
-                        disabled={continueButtonDisabled}
-                        className={`text-white text-xs md:text-sm border focus:ring-4 focus:outline-none font-normal rounded-full px-5 py-2 text-center mb-2 dark:text-white dark:focus:ring-emerald-800 ${
-                          continueButtonDisabled
-                            ? "bg-gray-400 border-gray-400 cursor-not-allowed"
-                            : "bg-emerald-500 border-emerald-500 hover:bg-emerald-600 dark:hover:bg-emerald-700"
-                        }`}             >
-                        Confirm
-                      </button>
-                      </div>
+                    <button
+                    onClick={handleProcess}
+                    type="button"
+                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
+                    >
+                    Confirm
+                    </button>
+                    </div>
+                    </>
                     )}
-                    
+
+
                   </div>
                 </div>
               </div>
             )}
 
-          {selectedTransaction && modalView && (
-          <AdminRPView
-            // selectedTransaction={selectedTransaction}
-            selectedTransaction={selectedTransaction}
-            isOpen={modalView}
-            handleClose={handleModalClose}
-            transType={transType}
-          />
-          )}
-        </div>
+            {/* REJECT MODAL */}
+            {isRejectConfirm && (
+  <div className="fixed z-50 inset-0 overflow-y-auto">
+    <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+        <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
       </div>
-    </>
-  );
-};
+      <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+        &#8203;
+      </span>
+      <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div className="mx-auto mt-4">
+          {rejectCause === "" && (
+              <p className="font-medium text-red-500 sm:mt-2 text-xs md:text-sm" id="modal-headline">
+                Please select specify concern accordingly.
+              </p>
+            )}
+            <p className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+              Are you sure you would like to REJECT this transaction? This is irreversible.
+            </p>
 
-export default AdminRPTaxCharges;
+            <p className="font-medium text-slate-700 dark:text-white sm:mt-2 text-xs md:text-sm" id="modal-headline">
+              Please select the cause of rejection.
+            </p>
+            <select value={rejectCause} onChange={handleOptionChange} className="block text-xs md:text-sm w-full mt-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-[#212121] dark:border-white dark:text-slate-200 dark:focus:border-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+              <option className="dark:bg-[#3d3d3d]" value="">Select Cause</option>
+              <option className="dark:bg-[#3d3d3d]" value="1">Incorrect or incomplete documentation submitted</option>
+              <option className="dark:bg-[#3d3d3d]" value="2">Failure to adhere to specific procedural requirements</option>
+              <option className="dark:bg-[#3d3d3d]" value="3">Inconsistent or conflicting details in the submitted paperwork</option>
+              <option className="dark:bg-[#3d3d3d]" value="4">Non-compliance with City Hall regulations</option>
+              <option className="dark:bg-[#3d3d3d]" value="5">No records found</option>
+            </select>
+
+          </div>
+        </div>
+
+
+        {isLoading ? (
+          <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+            <Loading />
+          </div>
+        ) : (
+          <>
+            <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+              <button
+                onClick={handleConfirmClose}
+                type="button"
+                className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+              >
+                <p>Cancel</p>
+              </button>
+
+
+              <button
+                onClick={handleReject}
+                type="button"
+                disabled={continueButtonDisabled}
+                className={`text-white text-xs md:text-sm border focus:ring-4 focus:outline-none font-normal rounded-full px-5 py-2 text-center mb-2 dark:text-white dark:focus:ring-emerald-800 ${
+                  continueButtonDisabled
+                    ? "bg-gray-400 border-gray-400 cursor-not-allowed"
+                    : "bg-emerald-500 border-emerald-500 hover:bg-emerald-600 dark:hover:bg-emerald-700"
+                }`}             >
+                Confirm
+              </button>
+
+            </div>
+          </>
+        )}
+
+
+
+                  </div>
+                </div>
+              </div>
+            )}
+
+            
+
+            {selectedTransaction && modalView && (
+            <AdminRPView
+              // selectedTransaction={selectedTransaction}
+              selectedTransaction={selectedTransaction}
+              isOpen={modalView}
+              handleClose={handleModalClose}
+              transType={transType}
+            />
+            )}
+          </div>
+        </div>
+      </>
+    );
+  };
+  
+  
+  export default AdminRPTaxCharges;
+  

@@ -277,26 +277,7 @@ const BusinessPermitForm =()=>{
     }
   };    
 
-  const handleEditRow = (index) => {
-    const rowDataToEdit = dataRow[index];
-  
-    // Check if bus_line is empty
-    if (rowDataToEdit.bus_line.trim() === '') {
-      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });  
-      setWarning(true);
-  
-      setTimeout(() => {
-        setWarning(false);
-      }, 4000);
-      
-      return;
-    }
-  
-    // Proceed with editing if bus_line is not empty
-    setEditingIndex(index);
-    setEditData(rowDataToEdit);
-  };
-  
+ 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
   
@@ -1256,12 +1237,12 @@ const BusinessPermitForm =()=>{
 
               {/* Group 10 - Business Activity*/}
               <div className="pt-12 text-slate-700 dark:text-white">
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Business Activity</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Business Activity<Req/></h1>
                 {/* Row 1 */}
                 <div onChange={handleBusActivity} name="bus_activity" className="flex flex-col md:flex-row md:items-center text-sm items-start">
                   <label htmlFor="bus_mainoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
                     <input value="MAIN OFFICE" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
-                    Main Office<Req />
+                    Main Office
                   </label>
 
                   <label htmlFor="bus_branchoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
@@ -1408,19 +1389,8 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="md:pl-3 pl-5 py-2 whitespace-nowrap text-xs md:text-sm font-medium">
                           <div className="flex space-x-3">
-                          {editingIndex === index ? (
-                            <a onClick={() => handleAddRow()} className="group flex justify-center items-center text-center p-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full cursor-pointer" >
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                              </svg>
-                            </a>
-                          ) : (
-                            <a onClick={() => handleEditRow(index)} className="group flex justify-center items-center text-center p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-full cursor-pointer" >
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                <path className="stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                              </svg>
-                            </a>
-                          )}
+                            
+                       
                             <a onClick={() => handleDeleteRow(index)} className="group flex justify-center items-center text-center p-2 bg-red-500 hover:bg-red-600 text-white rounded-full cursor-pointer" >
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -1809,13 +1779,21 @@ const BusinessPermitForm =()=>{
                     </tbody>
                   </table>
                 </div>
+                <div className="grid md:grid-cols-8 md:gap-6 mt-4">
+                  {/* Description */}
+
+                  <div className="w-full mb-6 md:col-start-2 md:col-span-6 p-2 rounded-md shadow-md text-gray-700 uppercase bg-slate-200 dark:text-gray-400 dark:bg-[#333333] dark:border-gray-700 ">
+                      <h1 className="text-[0.75rem] text-center flex pl-1 mt-0.5"><span className="font-medium pr-1">Note:</span>For Single Proprietor - DTI Registration is required. For Corporation and Partnership - SEC Registration is Required. If owned, enter Tax Dec No. or PIN on UAF. If not owned, Contract of Lease is Required.</h1>
+                  </div>
+
+                  </div>
                 </div>
 
                 {/* Group 12 - Transaction Information*/}
-                <div className='pt-10'>
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Transaction Information</h1>
+                {/* <div className='pt-10'>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Transaction Information</h1> */}
                 {/* Row 1 */}
-                <div className="grid md:grid-cols-2 md:gap-6">
+                {/* <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_nocopies} name="bus_nocopies" id="bus_nocopies" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                        <CopiesDropdown/>
@@ -1828,9 +1806,9 @@ const BusinessPermitForm =()=>{
                     </select>
                     <label htmlFor="bus_print" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">What to Print<Req /></label>
                   </div>
-                </div>
+                </div> */}
                 {/* Row 2 */}
-                <div className="grid md:grid-cols-2 md:gap-6">
+                {/* <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={busPermit.bus_purpose} name="bus_purpose" id="bus_purpose" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
                      <PurposeDropdown/>
@@ -1843,11 +1821,11 @@ const BusinessPermitForm =()=>{
                     </select>
                     <label htmlFor="bus_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>
-                </div> 
+                </div>  */}
               
 
               {/* Group 13 - Computation */}
-              <div className="flex justify-center md:justify-end text-sm">
+              {/* <div className="flex justify-center md:justify-end text-sm">
                  <div className="w-full md:w-1/2">
                      <div className="flex justify-between mt-2">
                          <span className="font-medium whitespace-nowrap">Print Fee</span>
@@ -1864,7 +1842,7 @@ const BusinessPermitForm =()=>{
                      </div>
                  </div>
               </div>
-              </div>
+              </div> */}
 
               <div className="flex justify-end items-end mt-10 mb-4">
                 <button

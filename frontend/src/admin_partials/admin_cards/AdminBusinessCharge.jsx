@@ -3,15 +3,17 @@ import axios from 'axios'
 import Flatpickr from 'react-flatpickr';
 
 import AdminBPView from '../admin_modals/AdminBPView';
-import BPCardView from '../admin_business/BPCardView';  
+import BPCardView from '../admin_business/BPCardView';
 import BPTableView from '../admin_business/BPTableView';
 import Loading from '../../partials/Loading';
+import AdminBPCharges from '../admin_modals/AdminBPCharges';
 
-const AdminBusinessProcessing = ({businessPermit, handleUpdateData}) => {
+const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
+  const [modalViewCharge, setModalViewCharge] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isCompleteConfirm, setIsCompleteConfirm] = useState(false);
+  const [isProcessConfirm, setIsProcessConfirm] = useState(false);
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState();
@@ -84,19 +86,29 @@ useEffect(() => {
     const handleModalClose = () => {
       setModalView(false);
     };
+
+    const handleChargeOpen = (transaction, type) => {
+        setSelectedTransaction(transaction);
+        setTransType(type);
+        setModalViewCharge(true);
+      };
+    
+      const handleChargeClose = () => {
+        setModalViewCharge(false);
+      };
+  
+    const handleProcessConfirm = (transaction) => {
+      setSelectedTransaction(transaction);
+      setIsProcessConfirm(true);
+    };
   
     const handleRejectConfirm = (transaction) => {
       setSelectedTransaction(transaction);
       setIsRejectConfirm(true);
     };
-
-  const handleCompleteConfirm = (transaction) => {
-    setSelectedTransaction(transaction);
-      setIsCompleteConfirm(true);
-    };
-
+  
     const handleConfirmClose = () => {
-      setIsCompleteConfirm(false);
+      setIsProcessConfirm(false);
       setIsRejectConfirm(false);
     };
 
@@ -112,15 +124,17 @@ useEffect(() => {
       setContinueButtonDisabled(selectedValue === "");
     };
 
+  
     const renderContent = () => {
       if (viewMode === 'table') {
         return (
           <BPTableView
             filteredBusinessPermit={filteredBusinessPermit}
             handleModalOpen={handleModalOpen}
+            handleChargeOpen={handleChargeOpen}
             handleRejectConfirm={handleRejectConfirm}
-            handleCompleteConfirm={handleCompleteConfirm}
-            section={'Processing'}
+            handleProcessConfirm={handleProcessConfirm}
+            section={'Charges'}
           />
         );
       } else if (viewMode === 'card') {
@@ -128,221 +142,220 @@ useEffect(() => {
           <BPCardView
             filteredBusinessPermit={filteredBusinessPermit}
             handleModalOpen={handleModalOpen}
+            handleChargeOpen={handleChargeOpen}
             handleRejectConfirm={handleRejectConfirm}
-            handleCompleteConfirm={handleCompleteConfirm}   
-            section={'Processing'}     
+            handleProcessConfirm={handleProcessConfirm}
+            section={'Charges'}          
           />
         );
       }
     };
 
-    const handleComplete = async () => {  
+    const handleProcess = async () => {  
 
       const transaction_id = selectedTransaction.transaction_id;
       const trans_type = selectedTransaction.trans_type;
       const user_id = selectedTransaction.user_id;
-    
+
       try {
-        const response = await axios.post(`http://localhost:8800/adminbp/updatecomplete/${transaction_id}`, selectedTransaction);
+        const response = await axios.post(`http://localhost:8800/adminbp/updateprocess/${transaction_id}`, selectedTransaction);
         setIsLoading(true);
-        // Check the response status before proceeding
-        if (response.status === 200) {
+      if (response.status === 200) {
+
+        try {
+          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const rowData = { ...selectedTransaction, trans_type};
+
+            const statusType = 'Processing';
+
+            const body = {
+              data: rowData,
+              f_name: f_name,
+              l_name: l_name,
+              sex_type: sex_type,
+              status_type: statusType,
+            };
   
-          try {
-            const res = await axios.get(`http://localhost:8800/email/${user_id}`);
-            
-            if (res.data.user_email) {
-              const updatedUserEmail = res.data.user_email;
-              const f_name = res.data.f_name;
-              const l_name = res.data.l_name;
-              const sex_type = res.data.sex_type;
-              console.log('FETCHED USER EMAIL:', updatedUserEmail);
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
   
-              const user_email = updatedUserEmail;
-  
-              const rowData = { ...selectedTransaction, trans_type};
-  
-              const statusType = 'Complete';
-  
-              const body = {
-                data: rowData,
-                f_name: f_name,
-                l_name: l_name,
-                sex_type: sex_type,
-                status_type: statusType,
-              };
-    
-              // Proceed with additional logic after updating state
-              try {
-                const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
-    
-                if (emailResponse.data && emailResponse.data.message) {
-                  console.log('SENT EMAIL');
-                } else {
-                  console.log("Failed to send email.");
-                }
-              } catch (emailError) {
-                // alert(emailError);
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+              } else {
+                console.log("Failed to send email.");
               }
-            } else {
-              console.error('Transaction error:', res.statusText);
+            } catch (emailError) {
+              // alert(emailError);
             }
-          } catch (fetchError) {
-            console.log('NOT FETCHING EMAIL');
-            console.error(fetchError);
+          } else {
+            console.error('Transaction error:', res.statusText);
           }
-  
-          setIsLoading(false);
-          handleConfirmClose();
-          handleUpdateData();
-          setSelectedTransaction('');
-  
-          setIsSuccess(true); // Set success state to true
-          console.log('Update successful');
-  
-          setTimeout(() => {
-            setIsSuccess(false);
-          }, 2100);
-        } else {
-          console.error('Transaction error:', response.statusText);
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
         }
-      } catch (err) {
-        console.error('Transaction error:', err);
+
+        setIsLoading(false);
+        handleConfirmClose();
+        handleUpdateData();
+        setSelectedTransaction('');
+
+        setIsSuccess(true); // Set success state to true
+        console.log('Update successful');
+
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 2100);
+      } else {
+        console.error('Transaction error:', response.statusText);
       }
-    };
-  
-  
-    const handleReject = async () => {  
-  
-      const transaction_id = selectedTransaction.transaction_id;
-      const trans_type = selectedTransaction.trans_type;
-      const user_id = selectedTransaction.user_id;
-    
-      const body = {
-        selectedTransaction,
-        rejectCause
-      }
-    
+    } catch (err) {
+      console.error('Transaction error:', err);
+    }
+  };
 
-        const retrieveResponse = await axios.get(`http://localhost:8800/payment/create-checkout-retrieve/${transaction_id}`);
+  const handleReject = async () => {  
 
-        const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
-        const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
-        const service_requested = retrieveResponse.data.data.attributes.description;
+    const transaction_id = selectedTransaction.transaction_id;
+    const trans_type = selectedTransaction.trans_type;
+    const user_id = selectedTransaction.user_id;
+  
+    const body = {
+      selectedTransaction,
+      rejectCause
+    }
+  
 
-        const response = await axios.post(`http://localhost:8800/adminbp/updatereject/${transaction_id}`, body);
-        setIsLoading(true);
-        // Check the response status before proceeding
-        if (response.status === 200) {
-  
-          try {
-            const res = await axios.get(`http://localhost:8800/email/${user_id}`);
-            
-            if (res.data.user_email) {
-              const updatedUserEmail = res.data.user_email;
-              const f_name = res.data.f_name;
-              const l_name = res.data.l_name;
-              const sex_type = res.data.sex_type;
-              console.log('FETCHED USER EMAIL:', updatedUserEmail);
-  
-              const user_email = updatedUserEmail;
-  
-              const rowData = { ...selectedTransaction, trans_type};
-  
-              const statusType = 'Rejected';
-  
-              const body = {
-                data: rowData,
-                f_name: f_name,
-                l_name: l_name,
-                sex_type: sex_type,
-                status_type: statusType,
-              };
-    
-              // Proceed with additional logic after updating state
-              try {
-                const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
-    
-                if (emailResponse.data && emailResponse.data.message) {
-                  console.log('SENT EMAIL');
-                } else {
-                  console.log("Failed to send email.");
-                }
-              } catch (emailError) {
-                // alert(emailError);
-              }
-            } else {
-              console.error('Transaction error:', res.statusText);
-            }
-          } catch (fetchError) {
-            console.log('NOT FETCHING EMAIL');
-            console.error(fetchError);
-          }
+      const retrieveResponse = await axios.get(`http://localhost:8800/payment/create-checkout-retrieve/${transaction_id}`);
 
-          try {
-            const res = await axios.get(`http://localhost:8800/email/${user_id}`);
-            
-            if (res.data.user_email) {
-              const updatedUserEmail = res.data.user_email;
-              const f_name = res.data.f_name;
-              const l_name = res.data.l_name;
-              const sex_type = res.data.sex_type;
-              console.log('FETCHED USER EMAIL:', updatedUserEmail);
-  
-              const user_email = updatedUserEmail;
-  
-              const rowData = { ...selectedTransaction, trans_type};
-  
-              const statusType = 'Refunded';
+      const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
+      const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
+      const service_requested = retrieveResponse.data.data.attributes.description;
+      
+      const response = await axios.post(`http://localhost:8800/adminbp/updatereject/${transaction_id}`, body);
+      setIsLoading(true);
+      // Check the response status before proceeding
+      if (response.status === 200) {
 
-              const body = {
-                data: rowData,
-                f_name: f_name,
-                l_name: l_name,
-                sex_type: sex_type,
-                status_type: statusType,
-                formatted_payment_method: formatted_payment_method,
-                transaction_id: transaction_id,
-                service_requested: service_requested,
-              };
-    
-              // Proceed with additional logic after updating state
-              try {
-                const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
-                const emailrefund = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
-
-                if (emailResponse.data && emailResponse.data.message && emailrefund.data && emailrefund.data.message) {
-                  console.log('SENT EMAIL');
-                } else {
-                  console.log("Failed to send email.");
-                }
-              } catch (emailError) {
-                // alert(emailError);
-              }
-            } else {
-              console.error('Transaction error:', res.statusText);
-            }
-          } catch (fetchError) {
-            console.log('NOT FETCHING EMAIL');
-            console.error(fetchError);
-          }
+        try {
+          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
           
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const rowData = { ...selectedTransaction, trans_type};
+
+            const statusType = 'Rejected';
+
+            const body = {
+              data: rowData,
+              f_name: f_name,
+              l_name: l_name,
+              sex_type: sex_type,
+              status_type: statusType,
+            };
   
-          setIsLoading(false);
-          handleConfirmClose();
-          handleUpdateData();
-          setSelectedTransaction('');
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
   
-          setIsSuccess(true); // Set success state to true
-          console.log('Update successful');
-  
-          setTimeout(() => {
-            setIsSuccess(false);
-          }, 2100);
-        } else {
-          console.error('Transaction error:', response.statusText);
+              if (emailResponse.data && emailResponse.data.message) {
+                console.log('SENT EMAIL');
+              } else {
+                console.log("Failed to send email.");
+              }
+            } catch (emailError) {
+              // alert(emailError);
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
         }
-    };
+
+         try {
+          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          
+          if (res.data.user_email) {
+            const updatedUserEmail = res.data.user_email;
+            const f_name = res.data.f_name;
+            const l_name = res.data.l_name;
+            const sex_type = res.data.sex_type;
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
+
+            const user_email = updatedUserEmail;
+
+            const rowData = { ...selectedTransaction, trans_type};
+
+            const statusType = 'Refunded';
+
+            const body = {
+              data: rowData,
+              f_name: f_name,
+              l_name: l_name,
+              sex_type: sex_type,
+              status_type: statusType,
+              formatted_payment_method: formatted_payment_method,
+              transaction_id: transaction_id,
+              service_requested: service_requested,
+            };
+  
+            // Proceed with additional logic after updating state
+            try {
+              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+              const emailrefund = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
+
+              if (emailResponse.data && emailResponse.data.message && emailrefund.data && emailrefund.data.message) {
+                console.log('SENT EMAIL');
+              } else {
+                console.log("Failed to send email.");
+              }
+            } catch (emailError) {
+              // alert(emailError);
+            }
+          } else {
+            console.error('Transaction error:', res.statusText);
+          }
+        } catch (fetchError) {
+          console.log('NOT FETCHING EMAIL');
+          console.error(fetchError);
+        }
+
+        setIsLoading(false);
+        handleConfirmClose();
+        handleUpdateData();
+        setSelectedTransaction('');
+
+        setIsSuccess(true); // Set success state to true
+        console.log('Update successful');
+
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 2100);
+      } else {
+        console.error('Transaction error:', response.statusText);
+      }
+    
+  };
 
     return (
       <>
@@ -352,11 +365,11 @@ useEffect(() => {
             <h1 className='font-medium text-center text-slate-700 dark:text-white mb-4'>Business Permit Requests</h1>
 
             {isSuccess && (                
-            <div className="my-5 text-center">
-              <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction update successful!</div> 
-            </div>
-            )}
-
+              <div className="my-5 text-center">
+                <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction update successful!</div> 
+              </div>
+              )}
+              
           {/* Search */}
           <div className="flex flex-col items-center sm:flex-row text-xs pb-5">
             <div className="flex-row flex justify-end w-full">
@@ -440,18 +453,24 @@ useEffect(() => {
                   </span>
               </div>
 
-               {/* Business Type Row */}
-               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-                <span className="hidden sm:block text-xs">Business Type:</span>
-                <select  value={selectType} onChange={(e) => setSelectType(e.target.value)} name="typeDropdown"  id="typeDropdown"  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
-                  <option value="All" className="dark:bg-[#3d3d3d]">Select Business Type</option>
-                  <option value="Sole Proprietorship" className="dark:bg-[#3d3d3d]">Sole Proprietorship</option>
-                  <option value="One Person Corporation" className="dark:bg-[#3d3d3d]">One Person Corporation</option>
-                  <option value="Partnership" className="dark:bg-[#3d3d3d]">Partnership</option>
-                  <option value="Corporation" className="dark:bg-[#3d3d3d]">Corporation</option>
-                  <option value="Cooperation" className="dark:bg-[#3d3d3d]">Cooperation</option>
-                </select>
-              </div>
+            {/* Business Type Row */}
+            <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+              <span className="hidden sm:block text-xs">Business Type:</span>
+              <select  
+                value={selectType} 
+                onChange={(e) => setSelectType(e.target.value)} 
+                name="typeDropdown"  
+                id="typeDropdown"  
+                className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]"
+              >
+                <option value="All" className="dark:bg-[#3d3d3d]">Select Business Type</option>
+                <option value="Sole Proprietorship" className="dark:bg-[#3d3d3d]">Sole Proprietorship</option>
+                <option value="One Person Corporation" className="dark:bg-[#3d3d3d]">One Person Corporation</option>
+                <option value="Partnership" className="dark:bg-[#3d3d3d]">Partnership</option>
+                <option value="Corporation" className="dark:bg-[#3d3d3d]">Corporation</option>
+                <option value="Cooperative" className="dark:bg-[#3d3d3d]">Cooperative</option>
+              </select>
+            </div>
 
               {/* Transaction ID */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
@@ -466,8 +485,8 @@ useEffect(() => {
                 </div>
               </div>
 
-                 {/* TIN */}
-                 <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+              {/* TIN */}
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                 <span className="hidden sm:block pr-10 text-xs">TIN:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
@@ -479,7 +498,8 @@ useEffect(() => {
                 </div>
               </div>
 
-              <button type="button" onClick={() => { handleSearch(); toggleDropdown(); }}  className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
+
+              <button type="button" onClick={() => { handleSearch(); toggleDropdown(); }} className=" bg-blue-500 hover:bg-blue-600 text-white mr-[6px] sm:mr-[0px] px-4 py-1 mt-2 mb-0.5 rounded-sm flex items-center ml-auto">
                   <span className="mx-auto">Filter</span>
               </button>
               </div>
@@ -536,62 +556,61 @@ useEffect(() => {
                 </div>
               </div>
             </div>
-
   
             {/* Render Content */}
             {renderContent()}
             
             {/* PROCESS MODAL */}
-          {isCompleteConfirm && (
-              <div className="fixed z-50 inset-0 overflow-y-auto">
-                <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                  <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                    <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                  </div>
-                  <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                    &#8203;
-                  </span>
-                  <div className="inline-block align-bottom bg-white rounded-sm text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                    <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                      <div className="mx-auto mt-4">
-                        <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                          Would you like to mark this transaction as complete?
-                        </span>
-                      </div>
-                    </div>
+            {/* {isProcessConfirm && (
+               <div className="fixed z-50 inset-0 overflow-y-auto">
+               <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                 <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                   <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                 </div>
+                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                   &#8203;
+                 </span>
+                 <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                   <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                     <div className="mx-auto mt-4">
+                       <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                         Would you like to mark this transaction as complete?
+                       </span>
+                     </div>
+                   </div>
 
 
-                    
-                    {isLoading ? (
-                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
-                        <Loading />
-                      </div>
-                    ) : (
-                      <>
-                    <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
-                      <button
-                        onClick={handleConfirmClose}
-                        type="button"
-                        className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                      >
-                        <p>Cancel</p>
-                      </button>
-                    
-                    <button
-                    onClick={handleComplete} 
-                    type="button"
-                    className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      Confirm
-                    </button>
-                    </div>
-                    </>
-                    )}
+                   
+                   {isLoading ? (
+                     <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                       <Loading />
+                     </div>
+                   ) : (
+                     <>
+                   <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                     <button
+                       onClick={handleConfirmClose}
+                       type="button"
+                       className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                     >
+                       <p>Cancel</p>
+                     </button>
+                   
+                   <button
+                   onClick={handleReject} 
+                   type="button"
+                   className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
+                   >
+                     Confirm
+                   </button>
+                   </div>
+                   </>
+                   )}
 
-                  </div>
-                </div>
-              </div>
-            )}
+                 </div>
+               </div>
+             </div>
+            )} */}
 
             {/* REJECT MODAL */}
             {isRejectConfirm && (
@@ -632,6 +651,7 @@ useEffect(() => {
 
                     </div>
                     </div>
+                  
 
                     {isLoading ? (
                       <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
@@ -639,17 +659,16 @@ useEffect(() => {
                       </div>
                     ) : (
                       <>
-
-                    <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
-                      <button
-                        onClick={handleConfirmClose}
-                        type="button"
-                        className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
-                      >
+                  <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                    <button
+                      onClick={handleConfirmClose}
+                      type="button"
+                      className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                    >
                       <p>Cancel</p>
-                      </button>
-                    
-                      <button
+                    </button>
+
+                    <button
                           onClick={handleReject}
                           type="button"
                           disabled={continueButtonDisabled}
@@ -660,29 +679,42 @@ useEffect(() => {
                           }`}             >
                           Confirm
                         </button>
-                      </div>
-                      </>
+                  </div>
+                  </>
                     )}
-                    
+
                   </div>
                 </div>
               </div>
             )}
 
-          {selectedTransaction && modalView && (
-          <AdminBPView
-            // selectedTransaction={selectedTransaction}
-            selectedTransaction={selectedTransaction}
-            isOpen={modalView}
-            handleClose={handleModalClose}
-            transType={transType}
-          />
-          )}
+            
+
+            {selectedTransaction && modalView && (
+            <AdminBPView
+              // selectedTransaction={selectedTransaction}
+              selectedTransaction={selectedTransaction}
+              isOpen={modalView}
+              handleClose={handleModalClose}
+              transType={transType}
+            />
+            )}
+
+            {selectedTransaction && modalViewCharge && (
+            <AdminBPCharges
+              // selectedTransaction={selectedTransaction}
+              selectedTransaction={selectedTransaction}
+              isOpen={modalViewCharge}
+              handleConfirmClose={handleChargeClose}
+              transType={transType}
+            />
+            )}
+
           </div>
         </div>
       </>
     );
   };
   
-  export default AdminBusinessProcessing;
+  export default AdminBusinessRequests;
   
