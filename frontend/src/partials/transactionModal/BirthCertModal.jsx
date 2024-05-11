@@ -89,6 +89,9 @@ const cancelTrans = async (e) => {
     if (response.status === 200) {
       // Fetch user_email after successful payment
       try {
+
+        const { transaction_id } = selectedTransaction;
+        console.log("selectedTransaction", birthTransaction)
         const res = await axios.get(`http://localhost:8800/email/${user_id}`);
         
         if (res.data.user_email) {
@@ -101,7 +104,7 @@ const cancelTrans = async (e) => {
 
           const trans_type = 'Birth Certificate';
 
-          const rowData = { ...selectedTransaction, trans_type};
+          const rowData = { ...birthTransaction, trans_type};
 
           const status_type = 'Canceled';
 
@@ -139,7 +142,7 @@ const cancelTrans = async (e) => {
           setIsSuccess(false);
           // onClose();
           window.location.href = `http://localhost:5173/transachistory/${user_id}`;
-        }, 100000000);
+        }, 1000);
 
 
         
