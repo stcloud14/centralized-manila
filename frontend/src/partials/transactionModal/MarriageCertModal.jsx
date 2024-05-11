@@ -97,11 +97,15 @@ const cancelTrans = async (e) => {
 
           const user_email = updatedUserEmail;
 
-          const trans_type = 'Real Property Tax Payment';
+          const trans_type = 'Marriage Certificate';
 
-          const rowData = { ...selectedTransaction, trans_type};
+          const date = marriageTransaction.marriage_date;
 
-          const status_type = 'C A N C E L E D';
+          const time = selectedTransaction.time;
+
+          const rowData = { ...marriageTransaction, trans_type, date, time};
+
+          const status_type = 'Canceled';
 
           const body = {
             data: rowData,
@@ -153,7 +157,6 @@ const cancelTrans = async (e) => {
       try {
         const res = await axios.get(`http://localhost:8800/transachistory/marriagecert/${transaction_id}`);
         setMarriageTransaction(res.data);
-        console.log("marriage", res.data);
       } catch (err) {
         console.error(err);
       }} else {
