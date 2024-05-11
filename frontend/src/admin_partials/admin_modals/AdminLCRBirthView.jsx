@@ -189,19 +189,19 @@ const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType
                   </div>
                   )}
                   
-                  {selectedTransaction.reqtel && (
+                  {selectedTransaction.tel_no && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Telephone No.</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.birthc_reqtelnum || selectedTransaction.reqtel || selectedTransaction.tel_no || '-'}</span>
                   </div>
                   )}
 
-                  {selectedTransaction.reqnum && (
+                  {selectedTransaction.mobile_no ? (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Mobile No.</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.birthc_reqmobnum || selectedTransaction.reqnum || selectedTransaction.mobile_no || '-'}</span>
                   </div>
-                  )}
+                  )  : null}
 
                   <br/>
                   
