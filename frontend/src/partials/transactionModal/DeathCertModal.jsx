@@ -257,15 +257,12 @@ const cancelTrans = async (e) => {
             </div>
           </div>
           
-
+          <div className="md:max-h-[11.5rem] max-h-[5.5rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
           {isSuccess && (                
-            <div className="my-5 text-center">
+            <div className="mb-5 text-center">
               <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction Canceled!</div> 
             </div>
           )}
-          
-
-          <div className="md:max-h-[11.5rem] max-h-[5.5rem] bg-white dark:bg-[#212121] text-slate-700 dark:text-white pb-0 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-6 md:pr-6 overflow-y-auto">
             <div className="mx-auto">
               <div className="sm:mt-0" id="modal-headline">   
                 <div className="mx-auto">

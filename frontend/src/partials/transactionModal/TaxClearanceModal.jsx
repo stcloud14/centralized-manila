@@ -263,7 +263,7 @@ const cancelTrans = async (e) => {
                       </div>
 
                       {isSuccess && (                
-                        <div className="my-5 text-center">
+                        <div className="mb-5 text-center">
                           <div className='text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5'>Transaction Canceled!</div> 
                         </div>
                       )}

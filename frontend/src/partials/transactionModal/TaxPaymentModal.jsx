@@ -265,8 +265,8 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                   </div>
 
                   {isSuccess && (                
-                    <div className="my-5 text-center">
-                      <div className="text-red-500 text-xs text-center px-5 py-2 mb-0 md:text-sm ms-2 hover:text-white border border-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-normal rounded-full dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">Transaction Canceled!</div> 
+                    <div className="mb-5 text-center">
+                      <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5">Transaction Canceled!</div> 
                     </div>
                   )}
 
