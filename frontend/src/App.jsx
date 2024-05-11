@@ -50,6 +50,7 @@ import AdminDashUR from './admin_pages/AdminDashUR';
 // Import Admin Pages
 import AdminRPTax1 from './admin_pages/AdminRPTax1';
 import AdminRPTax2 from './admin_pages/AdminRPTax2';
+import AdminRPTax3 from './admin_pages/AdminRPTax3';
 import AdminBusiness1 from './admin_pages/AdminBusiness1';
 import AdminBusiness2 from './admin_pages/AdminBusiness2';
 import AdminBusiness3 from './admin_pages/AdminBusiness3';
@@ -109,6 +110,7 @@ function App() {
         <Route exact path="/admin_settings/:admin_type" element={<AdminSettings />} />
         <Route exact path="/admin_rptax1/:admin_type" element={<AdminRPTax1 />} />
         <Route exact path="/admin_rptax2/:admin_type" element={<AdminRPTax2 />} />
+        <Route exact path="/admin_rptax3/:admin_type" element={<AdminRPTax3 />} />
         <Route exact path="/admin_business1/:admin_type" element={<AdminBusiness1 />} />
         <Route exact path="/admin_business2/:admin_type" element={<AdminBusiness2 />} />
         <Route exact path="/admin_business3/:admin_type" element={<AdminBusiness3 />} />
