@@ -95,7 +95,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
           &#8203;
         </span>
-        <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
+        <div className="inline-block align-bottom bg-white dark:bg-[#212121] text-slate-700 dark:text-white rounded-sm text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
           <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 overflow-y-auto">
                           <div className="mb-6">
                           <span className="font-bold md:text-lg text-sm">Business Permit Transaction Details</span>
@@ -592,7 +592,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
             {transaction_id ? (
             <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
               <span className="font-medium whitespace-nowrap">Status</span>
-              <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>
+              <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-sm bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>
             </div>
             ) : null}
 
