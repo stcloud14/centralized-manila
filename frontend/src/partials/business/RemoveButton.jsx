@@ -1,15 +1,17 @@
 import React from 'react';
 
-const RemoveButton = ({ handleRemove, fieldName, setFileUploaded }) => {
-
+const RemoveButton = ({ handleRemove, fieldName }) => {
   const handleClick = (event) => {
     handleRemove(event);
+    // Assuming you have a state variable named `fileUploaded` for each file
+    // Update the state of the specific file to false when removed
     setFileUploaded(prevState => ({
       ...prevState,
       [fieldName]: false,
     }));
     event.preventDefault();
   };
+
   return (
     <div>
 

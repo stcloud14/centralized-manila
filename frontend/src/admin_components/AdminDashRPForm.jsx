@@ -363,21 +363,61 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                 pdf.setLineWidth(0.5); // Set line width
                 pdf.line(15, pdf.autoTable.previous.finalY - 8, pdf.internal.pageSize.width - 118, pdf.autoTable.previous.finalY - 8);
 
+                // Add footer to each page
+                const totalPages = pdf.internal.getNumberOfPages();
+                for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+                pdf.setPage(pageNum);
+
+                // Generate footer text with pageNum
+                const currentDate = new Date();
+                const formattedDate1 = currentDate.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                });
+                const formattedTime = currentDate.toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true,
+                });
+                const fullName = "Real Property Tax Administrative";
+                const footerText = `Generated on ${formattedDate1}, at ${formattedTime} by ${fullName}`;
+
+                // Add footer text to each page
+                const footerTextX = 15;
+                const footerTextY = pdf.internal.pageSize.height - 15;
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(10);
+                pdf.text(footerText, footerTextX, footerTextY);
+
+                // Calculate the width of the page number text
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(10);
+                const pageNumberText = `Page ${pageNum} of ${totalPages}`;
+                const pageNumberTextWidth = pdf.getStringUnitWidth(pageNumberText) * pdf.internal.getFontSize();
                 
-              const currentDate = new Date();
-              const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
-              const filename = `${admin_type}_reports_${formattedDate}.pdf`;
+                // Calculate the position for page number
+                const pageNumberTextX = pdf.internal.pageSize.width - (-19) - pageNumberTextWidth;
+                const pageNumberTextY = pdf.internal.pageSize.height - 15;
 
-              pdf.save(filename);
-
-            } else {
-              console.log("Failed to fetch report year period.");
+                // Add page number
+                pdf.text(pageNumberText, pageNumberTextX, pageNumberTextY);
             }
 
-            } catch (error) {
-              console.error('Error generating reports:', error);
-            }
-          };
+            // Save PDF
+            const currentDate = new Date();
+            const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+            const filename = `${admin_type}_reports_${formattedDate}.pdf`;
+            pdf.save(filename);
+        } else {
+            console.log("Failed to fetch report year period.");
+        }
+    } catch (error) {
+        console.error('Error generating reports:', error);
+    }
+};
+
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
