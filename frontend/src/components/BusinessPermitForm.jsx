@@ -1468,7 +1468,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_dti_reg')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_dti_reg' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_dti_reg')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_dti_reg'} />
@@ -1496,7 +1498,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_rptax_decland')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_rptax_decland' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_rptax_decland')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decland'} />
@@ -1524,7 +1528,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_sec_paid')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_sec_paid' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_sec_paid')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_paid'} />
@@ -1552,7 +1558,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_sec_articles')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_sec_articles' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_sec_articles')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_articles'} />
@@ -1580,7 +1588,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_nga')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_nga' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_nga')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_nga'} />
@@ -1608,7 +1618,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_sec_front')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_sec_front' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_sec_front')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_sec_front'} />
@@ -1636,7 +1648,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_rptax_decbldg')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_rptax_decbldg' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_rptax_decbldg')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_rptax_decbldg'} />
@@ -1664,7 +1678,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_fire')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_fire' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_fire')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_fire'} />
@@ -1692,7 +1708,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_page2')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_page2' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_page2')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page2'} />
@@ -1720,7 +1738,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_page3')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_page3' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_page3')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page3'} />
@@ -1748,7 +1768,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                        <RemoveButton handleRemove={() => handleRemove('bus_page4')} />
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_page4' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_page4')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page4'} />
@@ -1776,9 +1798,9 @@ const BusinessPermitForm =()=>{
                         })}
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
-                                
-                        <RemoveButton handleRemove={() => handleRemove('bus_page5')} setFileUploaded={setFileUploaded} />
-
+                            {selectedFiles.some(fileArray => fileArray.fieldName === 'bus_page5' && fileArray.value !== null) && (
+                                <RemoveButton handleRemove={() => handleRemove('bus_page5')} />
+                            )}
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
                           <UploadButton openUploadModal={openUploadModal} targetIMG={'bus_page5'} />
