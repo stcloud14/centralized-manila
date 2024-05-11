@@ -2,21 +2,15 @@ import React from 'react';
 
 const UploadButton = ({ openUploadModal, targetIMG }) => {
 
-  // const handleClick = (event) => {
-  //   openUploadModal(event);
-  //   setFileUploaded(prevState => ({
-  //     ...prevState,
-  //     [fieldName]: false,
-  //   }));
-  //   event.preventDefault();
-  // };
+    const handleClick = (event) => {
+        event.preventDefault(); // Prevent default behavior (scrolling to the top of the page)
+        openUploadModal(targetIMG); // Open upload modal for the specified target image
+    };
 
     return (
         <div>
             <button
-                onClick={() => {
-                  openUploadModal(targetIMG); // Open upload modal for the specified target image
-                }}
+                onClick={handleClick}
                 className="flex justify-center pl-3 items-center text-center border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full cursor-pointer"
                 aria-label="Upload"
             >
