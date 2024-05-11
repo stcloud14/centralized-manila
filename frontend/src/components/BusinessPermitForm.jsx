@@ -38,10 +38,12 @@ const BusinessPermitForm =()=>{
   // const { pathname } = location;
   // const user_id = pathname.split("/")[2];
 
+  const [fileUploaded, setFileUploaded] = useState(false); // Managing whether a file has been uploaded or not
+
   const handleRemove = (fieldNameToRemove) => {
     console.log("Removing value for field:", fieldNameToRemove);
     
-    // Clear the value for the specified fieldName
+    // Update selectedFiles state by removing the specified fieldName
     setSelectedFiles(prevFiles => {
       return prevFiles.map(fileArray => {
         if (fileArray.fieldName === fieldNameToRemove) {
@@ -52,8 +54,17 @@ const BusinessPermitForm =()=>{
       });
     });
   
-    // No need to modify the fileNames state in this case
+    // Update fileNames state by setting the fileName to an empty string for the specified fieldName
+    setFileNames(prevNames => ({
+      ...prevNames,
+      [fieldNameToRemove]: '',
+    }));
+  
+    // Ensure that the fileUploaded state is updated after removing the file
+    const isAnyFileUploaded = selectedFiles.some(fileArray => fileArray.value !== null);
+    setFileUploaded(isAnyFileUploaded);
   };
+  
 
 
   useEffect(() => {
@@ -1766,7 +1777,7 @@ const BusinessPermitForm =()=>{
                         </td>
                         <td className="py-2 md:px-0 px-3 text-xs md:text-sm font-medium">
                                 
-                          <RemoveButton handleRemove={() => handleRemove('bus_page5')} />
+                        <RemoveButton handleRemove={() => handleRemove('bus_page5')} setFileUploaded={setFileUploaded} />
 
                         </td>
                         <td className="py-2 md:px-10 px-3  text-xs md:text-sm font-medium">
