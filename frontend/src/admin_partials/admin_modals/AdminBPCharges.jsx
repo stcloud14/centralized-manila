@@ -2,72 +2,112 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import moment from 'moment/moment.js';
 import StatusBadgeModal from '../StatusBadgeModal';
+import Loading from '../../partials/Loading';
 
-const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, businessImages, handleConfirmClose, handleComplete, isLoading, transType }) => {
+const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, businessImages, handleConfirmClose, isLoading, transType }) => {
 
-  const { transaction_id, status_type, date_processed } = selectedTransaction;
-
-  console.log(selectedTransaction)
-
-  const trans_type = 'Business Permit';
+  const { user_id, transaction_id, status_type, date_processed } = selectedTransaction;
 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
 
-  const [businessTransaction, setBusinessTransaction] = useState({});
-  
-  const makePayment = async () => {
-    try {
-        if (!transaction_id) {
-            console.error("Transaction ID is not defined.");
-            alert("Error creating checkout session. Please try again later.");
-            return;
-        }
+  const [totalVal, setTotalVal] = useState();
 
-        const body = {
-          data: selectedTransaction,
-          trans_type: trans_type,
-          user_id: user_id,
-      };
+  const [values, setValues] = useState({
+    bp_1: '',
+    bp_2: '',
+    bp_3: '',
+    bp_4: '',
+    bp_5: '',
+    bp_6: '',
+    bp_7: '',
+    bp_8: '',
+    bp_9: '',
+    bp_10: '',
+    bp_11: '',
+    bp_12: '',
+    bp_13: '',
+    bp_14: '',
+    bp_15: '',
+    bp_16: '',
+    bp_17: '',
+  });
 
-        const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
-
-        if (response.data && response.data.checkoutSessionUrl) {
-            const checkoutSessionUrl = response.data.checkoutSessionUrl;
-
-            if (checkoutSessionUrl) {
-                console.log('Checkout Session URL:', checkoutSessionUrl);
-
-                // Open a new window or tab with the checkout session URL
-                const newWindow = window.open(checkoutSessionUrl, '_self');
-                
-            }
-        } else {
-            console.error("Invalid checkout session - Response structure is unexpected:", response);
-            alert("Error creating checkout session. Please try again later.");
-        }
-    } catch (error) {
-        console.error("Error creating checkout session:", error);
-        alert("Error creating checkout session. Please try again later.");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
     }
-};
 
-  useEffect(() => {
-    const fetchBusinessTransaction = async () => {
-      if (transaction_id) {
-      try {
-        const res = await axios.get(`http://localhost:8800/transachistory/buspermit/${transaction_id}`);
-        setBusinessTransaction(res.data);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err);
-        console.error('Error message:', err.message);
-      }} else {
-        setBusinessTransaction(selectedTransaction);
-      }
-    };
-    fetchBusinessTransaction();
-  }, [transaction_id]);
+    useEffect(() => {
+        let sum = 0;
+        for (const key in values) {
+            if (values.hasOwnProperty(key) && values[key] !== '') {
+            sum += parseFloat(values[key]);
+            }
+        }
+    setTotalVal(sum);
+    }, [values]);
+
+
+    
+
+//   const [businessTransaction, setBusinessTransaction] = useState({});
+  
+//   const makePayment = async () => {
+//     try {
+//         if (!transaction_id) {
+//             console.error("Transaction ID is not defined.");
+//             alert("Error creating checkout session. Please try again later.");
+//             return;
+//         }
+
+//         const body = {
+//           data: selectedTransaction,
+//           trans_type: trans_type,
+//           user_id: user_id,
+//       };
+
+//         const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
+
+//         if (response.data && response.data.checkoutSessionUrl) {
+//             const checkoutSessionUrl = response.data.checkoutSessionUrl;
+
+//             if (checkoutSessionUrl) {
+//                 console.log('Checkout Session URL:', checkoutSessionUrl);
+
+//                 // Open a new window or tab with the checkout session URL
+//                 const newWindow = window.open(checkoutSessionUrl, '_self');
+                
+//             }
+//         } else {
+//             console.error("Invalid checkout session - Response structure is unexpected:", response);
+//             alert("Error creating checkout session. Please try again later.");
+//         }
+//     } catch (error) {
+//         console.error("Error creating checkout session:", error);
+//         alert("Error creating checkout session. Please try again later.");
+//     }
+// };
+
+//   useEffect(() => {
+//     const fetchBusinessTransaction = async () => {
+//       if (transaction_id) {
+//       try {
+//         const res = await axios.get(`http://localhost:8800/transachistory/buspermit/${transaction_id}`);
+//         setBusinessTransaction(res.data);
+//         console.log(res.data);
+//       } catch (err) {
+//         console.error(err);
+//         console.error('Error message:', err.message);
+//       }} else {
+//         setBusinessTransaction(selectedTransaction);
+//       }
+//     };
+//     fetchBusinessTransaction();
+//   }, [transaction_id]);
 
   function getShortName(longName, maxCharacters) {
     if (!longName) {
@@ -599,6 +639,9 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
             </div>
           </div>
 
+
+          
+
           {/* Right Modal */}
           <div className="absolute right-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
           <div className="absolute right-0 flex items-center justify-center w-1/2 h-full">
@@ -611,83 +654,83 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                 </svg>
               </button>
             </div>
-              <div className="bg-white dark:bg-[#212121] mx-2 pt-5 pb-4 sm:p-6 sm:pb-4 h-96"> {/* Add a fixed height and make it scrollable */}
+              <div className="bg-white dark:bg-[#212121] mx-2 pt-5 pb-4 sm:p-6 sm:pb-4 h-96"> 
                 <div className="md:px-40 px-4 pt-5 pb-0 sm:p-6 sm:pb-0 dark:text-white">
                   <div className="mb-6">
                   <span className="font-bold md:text-lg text-sm">Business Permit Charges</span>
                   </div>
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">R E SUB-LESSOR</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_1" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">R E SUB-LESSOR</label>
+                  <input value={values.bp_1} onChange={handleChange} type="text" name="bp_1" id="bp_1" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">PERMIT FEE - R E SUB-LESSOR</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_2" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">PERMIT FEE - R E SUB-LESSOR</label>
+                  <input value={values.bp_2} onChange={handleChange} type="text" name="bp_2" id="bp_2" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">GARBAGE FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_3" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">GARBAGE FEE</label>
+                  <input value={values.bp_3} onChange={handleChange} type="text" name="bp_3" id="bp_3" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">SANITARY INSPECTION FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_4" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">SANITARY INSPECTION FEE</label>
+                  <input value={values.bp_4} onChange={handleChange} type="text" name="bp_4" id="bp_4" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">OCCUPATIONAL TAX</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_5" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">OCCUPATIONAL TAX</label>
+                  <input value={values.bp_5} onChange={handleChange} type="text" name="bp_5" id="bp_5" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">BUILDING INSP FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_6" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">BUILDING INSP FEE</label>
+                  <input value={values.bp_6} onChange={handleChange} type="text" name="bp_6" id="bp_6" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ELECTRICAL INSP FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_7" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ELECTRICAL INSP FEE</label>
+                  <input value={values.bp_7} onChange={handleChange} type="text" name="bp_7" id="bp_7" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">SIGNBOARD INSP FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_8" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">SIGNBOARD INSP FEE</label>
+                  <input value={values.bp_8} onChange={handleChange} type="text" name="bp_8" id="bp_8" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">PLUMBING INSP FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_9" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">PLUMBING INSP FEE</label>
+                  <input value={values.bp_9} onChange={handleChange} type="text" name="bp_9" id="bp_9" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">SIGNBOARD PERMIT FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_10" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">SIGNBOARD PERMIT FEE</label>
+                  <input value={values.bp_10} onChange={handleChange} type="text" name="bp_10" id="bp_10" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">FIRE SAFETY INSPECTION FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_11" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">FIRE SAFETY INSPECTION FEE</label>
+                  <input value={values.bp_11} onChange={handleChange} type="text" name="bp_11" id="bp_11" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">OCC / PC / HC / APP</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_12" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">OCC / PC / HC / APP</label>
+                  <input value={values.bp_12} onChange={handleChange} type="text" name="bp_12" id="bp_12" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ZONING INSPECTION FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_13" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ZONING INSPECTION FEE</label>
+                  <input value={values.bp_13} onChange={handleChange} type="text" name="bp_13" id="bp_13" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ZONING APPLICATION FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_14" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ZONING APPLICATION FEE</label>
+                  <input value={values.bp_14} onChange={handleChange} type="text" name="bp_14" id="bp_14" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ZONING PROCESSING FEE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_15" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ZONING PROCESSING FEE</label>
+                  <input value={values.bp_15} onChange={handleChange} type="text" name="bp_15" id="bp_15" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">CTC / C & C1</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_16" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">CTC / C & C1</label>
+                  <input value={values.bp_16} onChange={handleChange} type="text" name="bp_16" id="bp_16" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
-                  <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">BARANGAY BUSINESS CLEARANCE</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <label htmlFor="bp_17" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">BARANGAY BUSINESS CLEARANCE</label>
+                  <input value={values.bp_17} onChange={handleChange} type="text" name="bp_17" id="bp_17" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="font-semibold flex space-x-2 text-slate-700 text-start py-8 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
                   <span>Total :</span>
-                  <span className='font-normal'>P 1200.00</span>
+                  <span className='font-normal'>P {totalVal}.00</span>
                 </div>
                 
                 {/* Button container */}
