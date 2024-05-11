@@ -379,7 +379,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
                 "2. This eSOA is valid until " + expiry_date + "."
             ];
             const noteXPosition = 15; // Adjust as needed
-            const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
+            const noteYPosition = pdf.autoTable.previous.finalY + 20; // Adjust the Y position
 
             pdf.setFont("helvetica", "normal");
             pdf.setFontSize(10);
