@@ -228,7 +228,7 @@ const handleCloseConfirm = () => {
         
         <div className="inline-block align-bottom text-center overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl">
         {transaction_id ? (
-          status_type === 'Pending' && (
+          status_type === 'Processing' && (
             <div className='bg-white dark:bg-[#212121] mb-5 p-5 rounded-lg'>
               <div className="grid md:grid-cols-4 grid-cols-2 gap-3 items-center justify-center text-xs w-full">
                 <div className="flex flex-col items-center text-center">
@@ -782,7 +782,7 @@ const handleCloseConfirm = () => {
 
             <hr className='mb-1'/>
             <div className="flex justify-between">
-            <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : status_type === "Pending" ? "Amount to Pay" : "Amount"}</span>
+            <span className="font-semibold whitespace-nowrap">{status_type === "Pending" ? "Amount Paid" : status_type === "Processing" ? "Amount to Pay" : "Amount"}</span>
               <span className="font-semibold whitespace-nowrap ml-4"> {businessTransaction && (
                 `P ${businessTransaction.bus_amount !== undefined ? businessTransaction.bus_amount + '.00' : 
               businessTransaction.amount !== undefined ? businessTransaction.amount + '.00' : '-'}`
@@ -829,7 +829,7 @@ const handleCloseConfirm = () => {
                 </button>
               ): null}
 
-              {status_type === 'Pending' && transaction_id ? (
+              {status_type === 'Processing' && transaction_id ? (
                 <button
                   onClick={handleOpenConfirm}
                   type="button"
