@@ -32,7 +32,7 @@ const BPTableView = ({ filteredBusinessPermit, handleModalOpen, handleChargeOpen
                   </div>
                 </th>
               )}
-              {section === 'Charges' || section === 'Processing' && (
+              {(section === 'Charges' || section === 'Processing') && (
                 <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                 <div className="flex justify-center items-center">
                 {(section === undefined || section.trim() === 'Request') ? 'Complete' : 'Process'}
