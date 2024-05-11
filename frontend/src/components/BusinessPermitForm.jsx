@@ -1788,7 +1788,7 @@ const BusinessPermitForm =()=>{
                 <div className="grid md:grid-cols-8 md:gap-6 mt-4">
                   {/* Description */}
                   <div className="w-full mb-6 md:col-start-2 md:col-span-6 p-2 rounded-md shadow-md text-gray-700 uppercase bg-slate-200 dark:text-gray-400 dark:bg-[#333333] dark:border-gray-700 ">
-                      <h1 className="text-[0.75rem] text-center flex pl-1 mt-0.5"><span className="font-medium pr-1">Note:</span>For Single Proprietor - DTI Registration is required. For Corporation and Partnership - SEC Registration is Required. If owned, enter Tax Dec No. or PIN on UAF. If not owned, Contract of Lease is Required.</h1>
+                      <h1 className="text-xs md:text-[0.75rem] text-center flex pl-1 mt-0.5"><span className="font-medium pr-1">Note:</span>For Single Proprietor - DTI Registration is required. For Corporation and Partnership - SEC Registration is Required. If owned, enter Tax Dec No. or PIN on UAF. If not owned, Contract of Lease is Required.</h1>
                   </div>
                 </div>
                 </div>
