@@ -262,15 +262,15 @@ const cancelTrans = async (e) => {
               <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-t-lg">
                 <div className="mx-auto mt-2">
                   <div className="sm:mt-0" id="modal-headline">   
-                  {isSuccess && (                
-                        <div className="mb-5 text-center">
-                      <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5">Transaction Canceled!</div> 
-                        </div>
-                      )}
                     <div className="mx-auto">
                       <div className="mb-6">
                         <span className="font-bold md:text-lg text-sm">Tax Clearance Transaction Details</span>
                       </div>
+                      {isSuccess && (                
+                        <div className="mb-5 text-center">
+                      <div className="text-emerald-500 bg-emerald-100 md:text-sm text-xs text-center rounded-full py-1.5">Transaction Canceled!</div> 
+                        </div>
+                      )}
                       <div className="mb-6">
                         {transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
