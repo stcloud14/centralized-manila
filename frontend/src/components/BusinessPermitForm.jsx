@@ -1237,12 +1237,12 @@ const BusinessPermitForm =()=>{
 
               {/* Group 10 - Business Activity*/}
               <div className="pt-12 text-slate-700 dark:text-white">
-                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Business Activity</h1>
+                <h1 className='font-medium text-center text-slate-700 dark:text-white my-4'>Business Activity<Req/></h1>
                 {/* Row 1 */}
                 <div onChange={handleBusActivity} name="bus_activity" className="flex flex-col md:flex-row md:items-center text-sm items-start">
                   <label htmlFor="bus_mainoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
                     <input value="MAIN OFFICE" type="radio" name="bus_activity" defaultChecked className="border border-gray-500 mr-2 rounded-full text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 cursor-pointer" />
-                    Main Office<Req />
+                    Main Office
                   </label>
 
                   <label htmlFor="bus_branchoffice" className="flex items-center mb-2 md:mb-0 md:mx-auto">
