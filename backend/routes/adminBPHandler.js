@@ -279,6 +279,41 @@ router.get('/processing', async (req, res) => {
     }
 });
 
+router.post('/updateamount/:transaction_id', auditMiddleware, async (req, res) => {
+    const transaction_id = req.params.transaction_id;
+    const user_id = req.body.user_id;
+    const trans_type = req.body.trans_type;
+    const total = req.body.totalVal;
+
+    const notif_title = 'Transaction Undergoing Processing For Amount Declaration';
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transaction_id}</span> is currently undergoing processing for amount declaration.</p>`;
+    const date = new Date();
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
+    const updateQuery = `UPDATE user_transaction SET status_type = 'Pending'  WHERE transaction_id = ?;`;
+
+    const query = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
+    const values = [user_id, formattedDate, notif_title, notif_message];
+
+    const updateAmount = `UPDATE transaction_info SET amount = ?  WHERE transaction_id = ?;`;
+
+    try {
+        const result = await queryDatabase(updateQuery, [transaction_id]);
+        const result1 = await queryDatabase(query,values);
+        const result2 = await queryDatabase(updateAmount, [total, transaction_id]);
+
+        res.json({
+            message: "Updated transaction!",
+            success: result,
+            notif: result1,
+            amount: result2,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error executing queries" });
+    }
+});
+
 router.post('/updateprocess/:transaction_id', auditMiddleware, async (req, res) => {
     const transaction_id = req.params.transaction_id;
     const user_id = req.body.user_id;
