@@ -110,7 +110,7 @@ const MarriageCertificateForm =()=>{
     
                 const trans_type = 'Marriage Certificate';
 
-                const reqcity = marriageCert.marriagec_municipalLabel;
+                const reqcity = marriageCert.marriagec_reqmunicipalLabel;
 
                 const purpose_type = marriageCert.marriagec_purposeLabel;
     
