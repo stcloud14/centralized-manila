@@ -564,13 +564,36 @@ useEffect(() => {
                 {/* Right Modal */}
                 <div className="absolute right-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
                   <div className="absolute right-0 flex items-center justify-center w-1/2 h-full">
-                    <div className="inline-block bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all">
+                    <div className="inline-block bg-white rounded-lg md:px-12 px-2 text-center overflow-hidden shadow-xl transform transition-all">
                       <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div className="font-semibold text-slate-700 mb-3 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
                           Permit Charges
                         </div>
-                        <div className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
-                          Are you sure you would like to move this transaction into the Processing section?
+                        <div className="font-semibold text-start text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                          Description
+                        </div>
+                        <div className="font-normal text-start text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
+                          Lorem ipsum putangina talaga ng thesis na to
+                        </div>
+                        <div className="mt-2 ">
+                          <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Amount</label>
+                          <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                        </div>
+                        <div className="mt-2 ">
+                          <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Discount</label>
+                          <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                        </div>
+                        <div className="mt-2 ">
+                          <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Total</label>
+                          <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                        </div>
+                        <div className="mt-2 ">
+                          <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Year</label>
+                          <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                        </div>
+                        <div className="mt-2 ">
+                          <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Period</label>
+                          <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                         </div>
                       </div>
                       
@@ -581,19 +604,18 @@ useEffect(() => {
                         </div>
                       ) : (
                         <>
-                          <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex justify-end">
+                          <div className="bg-white dark:bg-[#212121] px-4 py-3 gap-3 sm:px-6 flex md:justify-end justify-center">
                             <button
                               onClick={handleConfirmClose}
                               type="button"
-                              className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                              className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-3 py-1.5 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                             >
                               <p>Cancel</p>
                             </button>
-
                             <button
                               onClick={handleProcess}
                               type="button"
-                              className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
+                              className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-3 py-1.5 text-center mb-2 dark:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                             >
                               Confirm
                             </button>

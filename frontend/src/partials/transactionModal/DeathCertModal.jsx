@@ -88,6 +88,9 @@ const cancelTrans = async (e) => {
 
     if (response.status === 200) {
       // Fetch user_email after successful payment
+      const { transaction_id } = selectedTransaction
+      console.log("selectedTransaction", deathTransaction)
+      console.log("time" , selectedTransaction )
       try {
         const res = await axios.get(`http://localhost:8800/email/${user_id}`);
         
@@ -99,11 +102,15 @@ const cancelTrans = async (e) => {
 
           const user_email = updatedUserEmail;
 
-          const trans_type = 'Real Property Tax Payment';
+          const trans_type = 'Death Certificate';
 
-          const rowData = { ...selectedTransaction, trans_type};
+          const date = deathTransaction.death_date;
 
-          const status_type = 'C A N C E L E D';
+          const time = selectedTransaction.time;
+
+          const rowData = { ...deathTransaction, trans_type, date, time};
+
+          const status_type = 'Canceled';
 
           const body = {
             data: rowData,
@@ -164,6 +171,7 @@ const cancelTrans = async (e) => {
     };
     fetchDeathTransaction();
   }, [transaction_id]);
+
   
  
   const handleOpenConfirm = () => {
