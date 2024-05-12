@@ -643,7 +643,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                   <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
                     &#8203;
                   </span>
-                  <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                  <div className="inline-block align-bottom bg-white rounded-sm text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                     <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                       <div className="mx-auto mt-4">
                         <span className="font-medium text-slate-700 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
@@ -663,7 +663,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                         <button
                           onClick={handleConfirmClose}
                           type="button"
-                          className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                          className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                         >
                           <p>Cancel</p>
                         </button>
@@ -671,7 +671,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                         <button
                         onClick={handleProcess}
                         type="button"
-                        className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
+                        className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:border-emerald-700 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                         >
                         Confirm
                         </button>
@@ -694,7 +694,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                   <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
                     &#8203;
                   </span>
-                  <div className="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                  <div className="inline-block align-bottom bg-white rounded-sm text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                     <div className="bg-white dark:bg-[#212121] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div className="mx-auto mt-4">
                     {rejectCause === "" && (
@@ -735,7 +735,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                           <button
                             onClick={handleConfirmClose}
                             type="button"
-                            className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                            className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                           >
                             <p>Cancel</p>
                           </button>
@@ -745,10 +745,10 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                           onClick={handleReject}
                           type="button"
                           disabled={continueButtonDisabled}
-                          className={`text-white text-xs md:text-sm border focus:ring-4 focus:outline-none font-normal rounded-full px-5 py-2 text-center mb-2 dark:text-white dark:focus:ring-emerald-800 ${
+                          className={`text-white text-xs md:text-sm border focus:ring-4 focus:outline-none font-normal rounded-sm px-5 py-2 text-center mb-2 dark:text-white dark:focus:ring-emerald-800 ${
                             continueButtonDisabled
                               ? "bg-gray-400 border-gray-400 cursor-not-allowed"
-                              : "bg-emerald-500 border-emerald-500 hover:bg-emerald-600 dark:hover:bg-emerald-700"
+                              : "bg-emerald-500 border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 dark:hover:bg-emerald-700 dark:hover:border-emerald-700"
                           }`}             >
                           Confirm
                         </button>

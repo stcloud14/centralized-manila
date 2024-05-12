@@ -706,7 +706,7 @@ useEffect(() => {
                           className={`text-white text-xs md:text-sm border focus:ring-4 focus:outline-none font-normal rounded-sm px-5 py-2 text-center mb-2 dark:text-white dark:focus:ring-emerald-800 ${
                             continueButtonDisabled
                               ? "bg-gray-400 border-gray-400 cursor-not-allowed"
-                              : "bg-emerald-500 border-emerald-500 hover:bg-emerald-600 dark:hover:bg-emerald-700"
+                              : "bg-emerald-500 border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 dark:hover:bg-emerald-700 dark:hover:border-emerald-700"
                           }`}             >
                           Confirm
                         </button>
