@@ -4,7 +4,7 @@ const CountrDropdown = () => {
     
     return (
         <>
-            <option value="0" className='dark:bg-[#3d3d3d]'>Select Country of Citizenship</option>
+            <option value="0" className='dark:bg-[#3d3d3d]'>Select Country</option>
             <option value="AFGHANISTAN" className='dark:bg-[#3d3d3d]'>Afghanistan</option>
             <option value="ALBANIA" className='dark:bg-[#3d3d3d]'>Albania</option>
             <option value="ALGERIA" className='dark:bg-[#3d3d3d]'>Algeria</option>

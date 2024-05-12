@@ -73,7 +73,7 @@ const BusinessPermitForm =()=>{
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -613,7 +613,7 @@ const BusinessPermitForm =()=>{
     }
   }
 
-  
+  const Base_Url = process.env.Base_Url;
   const [isSuccess, setIsSuccess] = useState(false);
 
   const contentRef = useRef(null);
@@ -630,15 +630,15 @@ const BusinessPermitForm =()=>{
     });
 
     try {
-        const response = await axios.post(`http://localhost:8800/buspermit/bus/${user_id}`, busPermit);
+        const response = await axios.post(`${Base_Url}buspermit/bus/${user_id}`, busPermit);
 
         if (response.status === 200) {
           // Fetch user_email after successful payment
           try {
-            const res1 = await axios.get(`http://localhost:8800/transachistory/transId/${user_id}`);
+            const res1 = await axios.get(`${Base_Url}transachistory/transId/${user_id}`);
             const transaction_id = res1.data[0]?.transaction_id;
   
-            const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+            const res = await axios.get(`${Base_Url}email/${user_id}`);
             
             if (res.data.user_email) {
               const updatedUserEmail = res.data.user_email;
@@ -673,7 +673,7 @@ const BusinessPermitForm =()=>{
               };
     
               try {
-                const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+                const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
     
                 if (emailResponse.data && emailResponse.data.message) {
                   console.log('SENT EMAIL');
@@ -707,7 +707,7 @@ const BusinessPermitForm =()=>{
             console.error('Transaction error:', response.statusText);
         }
 
-        const response1 = await axios.post(`http://localhost:8800/buspermit/busact`, { dataRow, busOffice });
+        const response1 = await axios.post(`${Base_Url}buspermit/busact`, { dataRow, busOffice });
 
         if (response1.status === 200) {
             setIsSuccess(true);
@@ -727,7 +727,7 @@ const BusinessPermitForm =()=>{
         }
 
 
-        const response2 = await fetch('http://localhost:8800/buspermit/busimg', {
+        const response2 = await fetch(`${Base_Url}buspermit/busimg`, {
         method: 'POST',
         body: formData,
         });
@@ -810,7 +810,7 @@ const BusinessPermitForm =()=>{
   useEffect(()=>{
     const fetchUserVerification= async()=>{
         try{
-            const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
+            const res= await axios.get(`${Base_Url}usersettings/${user_id}`)
             setIsVerifiedStatus(res.data[0].verification_status)
             
         }catch(err){
