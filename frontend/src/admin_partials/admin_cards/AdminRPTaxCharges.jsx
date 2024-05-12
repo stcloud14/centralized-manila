@@ -212,6 +212,13 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
   const handleProcess = async (e, totalVal) => {
     e.preventDefault();
 
+    // Check if the amount input is empty or null
+    if (!totalVal || isNaN(parseFloat(totalVal))) {
+      // If the amount is empty or not a valid number, display an error message or handle it accordingly
+      alert('Please enter a valid amount.');
+      return;
+  }
+
     const { user_id, transaction_id, trans_type } = selectedTransaction;
 
     const body = {
