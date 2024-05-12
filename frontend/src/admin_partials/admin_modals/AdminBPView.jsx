@@ -608,7 +608,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
               selectedTransaction.amount !== undefined ? selectedTransaction.amount + '.00' : '-'}`
               ) : "Kindly input additional charges"}
               </span> */}
-              <span>Note: Kindly input necessary charges</span>
+              <span>Note: Awaiting user payment</span>
             </div>
           </div>
 
