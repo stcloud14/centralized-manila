@@ -131,7 +131,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
         {/* Left Modal */}
           <div className="absolute left-0 w-1/2 min-h-screen h-full bg-gray-500 opacity-75"></div>
           <div className="absolute left-0 flex items-center justify-center w-1/2 h-full">
-            <div className="inline-block bg-white dark:bg-[#212121] justify-between ms-20 w-[44rem] h-[44rem] overflow-y-auto px-8 rounded-sm dark:text-white text-center overflow-hidden shadow-xl transform transition-all">
+            <div className="inline-block bg-white dark:bg-[#212121] justify-between ms-12 w-[44rem] h-[44rem] overflow-y-auto px-8 rounded-sm dark:text-white text-center overflow-hidden shadow-xl transform transition-all">
                 <div>
                 <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 dark:text-white">
                   <div className="mb-6">
