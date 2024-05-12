@@ -47,7 +47,7 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
       </thead>
       <tbody>
       
-      {filteredTaxClearance.length <= 0 && filteredTaxPayment.length <= 0 && (
+      {filteredTaxClearance?.length <= 0 && filteredTaxPayment?.length <= 0 && (
       <tr>
         <td colSpan="6" className="font-medium text-slate-600 items-center text-center py-4 justify-center dark:text-white">
           No records found.
