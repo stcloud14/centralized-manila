@@ -14,7 +14,7 @@ import FilterButton from '../FilterButton';
 
 const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal, soaData }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  
+  const Base_Url = process.env.Base_Url;
   const formatAmount = (amount) => {
     const parsedAmount = parseFloat(amount);
     if (isNaN(parsedAmount)) {
@@ -453,10 +453,11 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
             }
         }
 
+
         const body = generatedSOAObjects;
 
         try {
-            const storeSOAnumbers = await axios.post(`http://localhost:8800/soa/store/${userPersonal.user_id}`, body);
+            const storeSOAnumbers = await axios.post(`${Base_Url}soa/store/${userPersonal.user_id}`, body);
 
             if (storeSOAnumbers.status === 200) {
                 console.log('Successfully Generated SOA');
