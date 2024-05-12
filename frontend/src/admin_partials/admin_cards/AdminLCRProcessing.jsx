@@ -647,7 +647,7 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
                     </div>
 
                     {isLoading ? (
-                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-8 rounded-b-sm">
                         <Loading />
                       </div>
                     ) : (
@@ -720,7 +720,7 @@ const AdminLCRProcessing = ({ birthCert, deathCert, marriageCert, handleUpdateDa
 
 
                     {isLoading ? (
-                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-8 rounded-b-sm">
                         <Loading />
                       </div>
                     ) : (
