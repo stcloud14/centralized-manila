@@ -585,7 +585,7 @@ useEffect(() => {
                    <button
                    onClick={handleReject} 
                    type="button"
-                   className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
+                   className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:hover:border-emerald-700 dark:focus:ring-emerald-800"
                    >
                      Confirm
                    </button>
@@ -649,7 +649,7 @@ useEffect(() => {
                     <button
                       onClick={handleConfirmClose}
                       type="button"
-                      className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
+                      className="text-slate-500 text-xs md:text-sm ms-2 hover:text-white border border-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-slate-500 dark:text-white dark:hover:text-white dark:hover:bg-slate-500 dark:focus:ring-slate-800"
                     >
                       <p>Cancel</p>
                     </button>
@@ -658,10 +658,10 @@ useEffect(() => {
                           onClick={handleReject}
                           type="button"
                           disabled={continueButtonDisabled}
-                          className={`text-white text-xs md:text-sm border focus:ring-4 focus:outline-none font-normal rounded-full px-5 py-2 text-center mb-2 dark:text-white dark:focus:ring-emerald-800 ${
+                          className={`text-white text-xs md:text-sm border focus:ring-4 focus:outline-none font-normal rounded-sm px-5 py-2 text-center mb-2 dark:text-white dark:focus:ring-emerald-800 ${
                             continueButtonDisabled
                               ? "bg-gray-400 border-gray-400 cursor-not-allowed"
-                              : "bg-emerald-500 border-emerald-500 hover:bg-emerald-600 dark:hover:bg-emerald-700"
+                              : "bg-emerald-500 border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 dark:hover:bg-emerald-700 dark:hover:border-emerald-700"
                           }`}             >
                           Confirm
                         </button>
