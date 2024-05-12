@@ -556,7 +556,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_valididLabel || selectedTransaction.valid_id || '-'}</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_valididLabel || selectedTransaction.valid_id_type || '-'}</span>
                     </div>
                   </div>
                   
