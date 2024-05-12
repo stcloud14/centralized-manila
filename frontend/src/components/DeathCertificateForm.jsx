@@ -34,6 +34,7 @@ const DeathCertificateForm =()=>{
   // const { pathname } = location;
   // const user_id = pathname.split("/")[2];
 
+  const Base_Url = process.env.Base_Url;
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -76,7 +77,6 @@ const DeathCertificateForm =()=>{
   
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const Base_Url = process.env.Base_Url;
 
 
   const contentRef = useRef(null);
