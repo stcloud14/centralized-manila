@@ -8,6 +8,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, onFil
   const [selectedFileName, setSelectedFileName] = useState(null);
   const [isDeclined, setIsDeclined] = useState(false);
   const [isSuccess, setisSuccess] = useState(false);
+  const Base_Url = process.env.Base_Url;
 
   const [isLoading, setisLoading] = useState(false);
 
@@ -83,7 +84,7 @@ const ApplyVerificationModal = ({ isOpen, handleClose, setIsSuccessUpload, onFil
       const formData = new FormData();
       formData.append('user_valid_id', selectedFile);
 
-      const response = await axios.post(`http://localhost:8800/usersettings/applyverify/${userID}`, formData);
+      const response = await axios.post(`${Base_Url}usersettings/applyverify/${userID}`, formData);
 
       if (response.status === 200) {
         setisLoading(true);
