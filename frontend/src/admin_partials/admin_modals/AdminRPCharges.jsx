@@ -21,16 +21,48 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
       [name]: value,
     }));
   }
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      const charCode = e.keyCode || e.which;
+      const ctrlKey = e.ctrlKey || e.metaKey; // Check if Ctrl key is pressed
+  
+      // Allow backspace, delete, arrows, home, end, and decimal point
+      if (
+        charCode !== 8 &&
+        charCode !== 46 &&
+        (charCode < 37 || charCode > 40) &&
+        charCode !== 35 &&
+        charCode !== 36 &&
+        charCode !== 190 &&
+        !(ctrlKey && charCode === 65) // Allow Ctrl+A (65 is the char code for 'A')
+      ) {
+        const charStr = String.fromCharCode(charCode);
+        if (!/^\d$/.test(charStr)) {
+          e.preventDefault();
+        }
+      }
+    };
+  
+    const inputElement = document.getElementById("bp_amount");
+    if (inputElement) {
+      inputElement.addEventListener("keydown", handleKeyPress);
+  
+      return () => {
+        inputElement.removeEventListener("keydown", handleKeyPress);
+      };
+    }
+  }, []);
   
   useEffect(() => {
     let val = 0;
     for (const key in values) {
       if (!isNaN(parseFloat(values[key]))) {
-        val = parseFloat(values[key]);
+        val += parseFloat(values[key]);
       }
     }
     setTotalVal(val);
   }, [values]);
+
 
   return (
     // MAY CONDITION NA MAGDIDISPLAY LANG KUNG ANG ISOPEN AY TRUE, ITO RIN YUNG ISMODALOPEN, IBA LANG NAME
