@@ -12,12 +12,13 @@ function AdminHeader({ sidebarOpen, setSidebarOpen }) {
   const [userImage, setUserImage] = useState('');
 
   const { admin_type } = useParams();
+  const Base_Url = process.env.Base_Url;
 
 
   useEffect(()=>{
     const fetchUserImage= async()=>{
         try{
-            const res= await axios.get(`http://localhost:8800/adminprofile/${admin_type}`)
+            const res= await axios.get(`${Base_Url}adminprofile/${admin_type}`)
             setStoredImage(res.data[0])
 
         }catch(err){

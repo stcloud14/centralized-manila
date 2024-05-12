@@ -19,12 +19,13 @@ const AdminRPTaxForm2 = () => {
 
   const [taxPayment, setTaxPayment] = useState([]);
   const [taxClearance, setTaxClearance] = useState([]);
+  const Base_Url = process.env.Base_Url;
 
   console.log("userrole", admin_type)
 
   const fetchUserTransaction = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/adminrptax/processing/`);
+      const res = await axios.get(`${Base_Url}adminrptax/processing/`);
       setTaxPayment(res.data.taxpayment);
       setTaxClearance(res.data.taxclearance);
     } catch (err) {
