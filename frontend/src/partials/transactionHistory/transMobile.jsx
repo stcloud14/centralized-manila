@@ -109,6 +109,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
             console.log('Transactions considered not pending:', filteredTransactions);
             return;
         }
+        const Base_Url = process.env.Base_Url;
 
         const totalPages = pendingTransactions.length;
 
@@ -453,7 +454,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
         const body = generatedSOAObjects;
 
         try {
-            const storeSOAnumbers = await axios.post(`http://localhost:8800/soa/store/${userPersonal.user_id}`, body);
+            const storeSOAnumbers = await axios.post(`${Base_Url}soa/store/${userPersonal.user_id}`, body);
 
             if (storeSOAnumbers.status === 200) {
                 console.log('Successfully Generated SOA');
