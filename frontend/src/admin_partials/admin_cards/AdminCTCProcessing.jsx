@@ -557,7 +557,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                     </div>
 
                     {isLoading ? (
-                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-2 rounded-b-sm mt-[-10px]">
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-8 rounded-b-sm">
                         <Loading />
                       </div>
                     ) : (
@@ -629,7 +629,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                     </div>
 
                     {isLoading ? (
-                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-8 rounded-b-sm">
                         <Loading />
                       </div>
                     ) : (
