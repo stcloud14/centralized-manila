@@ -11,6 +11,9 @@ const DropdownProfile = ({ align }) => {
   const { pathname } = location;
   const user_id = pathname.split("/")[2];
 
+  const Base_Url = process.env.Base_Url;
+
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef(null);
   const dropdown = useRef(null);
@@ -28,7 +31,7 @@ const DropdownProfile = ({ align }) => {
     useEffect(()=>{
         const fetchUserPersonal= async()=>{
             try{
-                const res= await axios.get(`http://localhost:8800/profile/${user_id}`)
+                const res= await axios.get(`${Base_Url}profile/${user_id}`)
                 setUserPersonal((prevData) => {
                   if (prevData.f_name !== res.data.user_personal[0].f_name) {
                     return res.data.user_personal[0];
@@ -47,7 +50,7 @@ const DropdownProfile = ({ align }) => {
     useEffect(() => {
       const fetchUserImage = async () => {
         try {
-          const res = await axios.get(`http://localhost:8800/usersettings/${user_id}`);
+          const res = await axios.get(`${Base_Url}usersettings/${user_id}`);
           const fetchedUserImage = res.data[0].user_image;
           const fetchedImageURL = res.data[0].image_url;
           const verificationStatus = res.data[0].verification_status;
