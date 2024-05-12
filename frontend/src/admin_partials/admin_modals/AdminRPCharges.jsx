@@ -37,10 +37,10 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
     isOpen && (
       <div className="fixed z-50 inset-0 flex items-center justify-center">
         {/* Left Modal */}
-          <div className="absolute left-0 w-1/2 min-h-screen h-full bg-gray-500 opacity-75"></div>
+        <div className="absolute left-0 w-1/2 min-h-screen h-full bg-gray-500 opacity-75"></div>
           <div className="absolute left-0 flex items-center justify-center w-1/2 h-full">
-            <div className="inline-block bg-white dark:bg-[#212121] h-96 pt-8 overflow-y-auto px-4 rounded-sm text-center overflow-hidden shadow-xl transform transition-all">
-              <div className="mx-14">
+            <div className="inline-block bg-white dark:bg-[#212121] justify-between ms-12 w-[44rem] h-[30rem] overflow-y-auto px-8 rounded-sm dark:text-white text-center overflow-hidden shadow-xl transform transition-all">
+              <div>
                 <div className="px-4 pt-5 pb-0 sm:p-6 sm:pb-0 dark:text-white">
                   <div className="mb-6">
                     <span className="font-bold md:text-lg text-sm">Tax Transaction Details</span>
@@ -93,7 +93,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                 </div>
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Status</span>
-                  <span className="whitespace-nowrap md:mb-7 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>
+                  <span className="whitespace-nowrap md:mb-7 mb-1 text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>
                 </div>
               </div>
 
@@ -103,22 +103,18 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
           {/* Right Modal */}
           <div className="absolute right-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
           <div className="absolute right-0 flex items-center justify-center w-1/2 h-full">
-            <div className="inline-block bg-white dark:bg-[#212121] rounded-sm text-center overflow-hidden overflow-y-auto shadow-xl transform transition-all">
+          <div className="inline-block align-bottom bg-white dark:bg-[#333333] rounded-sm text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full max-w-2xl max-h-screen relative">
             {/* Menu Bar */}
-            <div className="dark:bg-[#212121] pt-3 pb-1 items-center">
-              <button type="button" onClick={handleConfirmClose} className="float-right text-slate-500 text-xs md:text-sm"
+            <div className="bg-slate-200 dark:bg-[#212121] pt-1.5 pb-1 items-center">
+              <button onClick={handleConfirmClose} type="button" className="float-right text-slate-500 dark:text-slate-300 text-xs md:text-sm"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="md:w-5 md:h-5 w-4 h-4 mr-1">
                   <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
                 </svg>
               </button>
+              <span className="font-semibold text-gray-700 bg-slate-200 dark:bg-[#212121] dark:text-gray-300 ml-6">Tax Charges</span>
             </div>
-              <div className="bg-white dark:bg-[#212121] mx-2 pt-5 pb-4 sm:p-6 sm:pb-4 h-96">
-                <div className="md:px-40 px-4 pt-5 pb-0 sm:p-6 sm:pb-0 dark:text-white">
-                  <div className="mb-6">
-                  <span className="font-bold md:text-lg text-sm">Tax Charges</span>
-                  </div>
-                </div>
+              <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[28rem] overflow-y-auto"> 
                 <div className="mt-2">
                   <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">AMOUNT</label>
                   <input type={values.tax_1} name="bp_amount" onChange={handleChange} id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
@@ -129,7 +125,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                 </div>
                 
                 {/* Button container */}
-                <div className="flex justify-center pb-8 space-x-2">
+                <div className="flex justify-end pb-8 space-x-2">
                   {isLoading ? (
                     <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 mt-[-10px]">
                       <Loading />
@@ -147,7 +143,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                       <button
                         onClick={handleProcess}
                         type="button"
-                        className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
+                        className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:hover:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                       >
                         Confirm
                       </button>

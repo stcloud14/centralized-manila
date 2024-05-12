@@ -616,7 +616,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                 {transaction_id ? (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Status</span>
-                  <span className="whitespace-nowrap md:mb-10 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>
+                  <span className="whitespace-nowrap md:mb-10 mb-1 text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>
                 </div>
                 ) : null}
                 </div>
@@ -734,7 +734,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                       <button
                         onClick={(e) => handleProcess(e, totalVal)}
                         type="button"
-                        className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
+                        className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:hover:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                       >
                         Confirm
                       </button>
