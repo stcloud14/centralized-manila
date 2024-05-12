@@ -193,8 +193,9 @@ const AdminCTCView = ({ selectedTransaction, isOpen, handleClose }) => {
                           </div>
                         </div>
 
-                        <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
+                        <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-end">
+                  {/* <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
+                   */}
                   <div className="flex items-center space-x-5 mt-auto">
                       <button
                           onClick={handleClose}

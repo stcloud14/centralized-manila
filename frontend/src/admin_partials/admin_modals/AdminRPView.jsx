@@ -85,7 +85,9 @@ const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) =>
                           </div>
                           ) : null}
                           {/* <hr className='mb-1'/> */}
-                            
+                            <div className="flex flex-col text-sm italic sm:flex-row text-start mb-1">
+                              <span>Note: Awaiting user payment</span>
+                            </div>
                         </div>
                       </div>
                     </div>
