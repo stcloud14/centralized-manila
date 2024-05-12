@@ -5,11 +5,32 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
 
   const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
 
-
   console.log(selectedTransaction);
    const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
    const time = moment(date_processed).format('h:mm A');
 
+   const [totalVal, setTotalVal] = useState();
+   const [values, setValues] = useState({
+    tax_1 : ''
+   });
+
+   const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+    }
+
+    useEffect(() => {
+      let sum = 0;
+      for (const key in values) {
+          if (values.hasOwnProperty(key) && values[key] !== '') {
+          sum += parseFloat(values[key]);
+          }
+      }
+  setTotalVal(sum);
+  }, [values]);
 
   return (
     // MAY CONDITION NA MAGDIDISPLAY LANG KUNG ANG ISOPEN AY TRUE, ITO RIN YUNG ISMODALOPEN, IBA LANG NAME
@@ -64,11 +85,11 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                 : null} 
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Date Processed</span>
-                  <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.date}</span>
+                  <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
                 </div>
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Time Processed</span>
-                  <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.time}</span>
+                  <span className="whitespace-nowrap md:mb-0 mb-1">{time}</span>
                 </div>
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Status</span>
@@ -100,11 +121,11 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">AMOUNT</label>
-                  <input type="text" name="bp_amount" id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input type={values.tax_1} name="bp_amount" onChange={handleChange} id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="font-semibold flex space-x-2 text-slate-700 text-start py-8 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
                   <span>Total :</span>
-                  <span className='font-normal'>P 1200.00</span>
+                  <span className='font-normal'>P {totalVal}.00</span>
                 </div>
                 
                 {/* Button container */}
