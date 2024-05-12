@@ -763,7 +763,8 @@ const BusinessPermitForm =()=>{
   const requiredFields = [
     'bus_type','bus_name', 'bus_reg_no','bus_tin','bus_lname','bus_fname','bus_sex','bus_email','bus_mobile_no','bus_bregion','bus_bprovince',
     'bus_bcity', 'bus_bbrgy','bus_bhnum','bus_bstreet', 'bus_bzip', 'bus_floor','bus_emp','bus_male_emp','bus_female_emp', 'bus_van_no','bus_truck_no','bus_motor_no',
-    'bus_region', 'bus_province','bus_city','bus_brgy','bus_hnum','bus_street', 'bus_zip','bus_office', 'bus_line','bus_psic', 'bus_total_cap',
+    'bus_region', 'bus_province','bus_city','bus_brgy','bus_hnum','bus_street', 'bus_zip','bus_office', 
+    // 'bus_line','bus_psic', 'bus_total_cap',
     'bus_validid','bus_purpose',
   //  'bus_nocopies','bus_print',
   ];
@@ -1278,15 +1279,15 @@ const BusinessPermitForm =()=>{
                 {/* Row 2 */} 
                 <div className="grid md:grid-cols-11 md:gap-6 mt-6">
                   <div className="relative z-0 w-full md:col-span-2 mb-6 group">
-                    <input value={rowData.bus_line} onChange={handleActivityChange} type="text" name="bus_line" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
-                    <label htmlFor="bus_line" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Line of Business<Req /></label>
+                    <input value={rowData.bus_line} onChange={handleActivityChange} type="text" name="bus_line" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
+                    <label htmlFor="bus_line" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Line of Business</label>
                   </div>
                   <div className="relative z-0 w-full md:col-span-2 mb-6 group">
-                    <input value={rowData.bus_psic} onChange={handleActivityChange} type="text" name="bus_psic" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
-                    <label htmlFor="bus_psic" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">PSIC<Req /></label>
+                    <input value={rowData.bus_psic} onChange={handleActivityChange} type="text" name="bus_psic" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
+                    <label htmlFor="bus_psic" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">PSIC</label>
                   </div>
                   <div className="relative z-0 w-full md:col-span-2 mb-6 group">
-                    <input value={rowData.bus_products} onChange={handleActivityChange} type="text" name="bus_products" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                    <input value={rowData.bus_products} onChange={handleActivityChange} type="text" name="bus_products" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
                     <label htmlFor="bus_products" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Products / Services</label>
                   </div>
                   <div className="relative z-0 w-full md:col-span-2 mb-6 group">
