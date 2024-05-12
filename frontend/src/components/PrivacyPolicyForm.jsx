@@ -44,28 +44,76 @@ const PrivacyPolicyForm =()=>{
                    </h1>
                   <br/>
               <span className="text-left text-slate-700 dark:text-white">
-                This Privacy Notice outlines our approach to the information we gather, detailing how we collect, use, share, store, and process your personal data. We are committed to respecting your privacy rights and adhering to applicable privacy and data protection laws, with a specific focus on the Data Privacy Act of 2012 (DPA). Similar to the National Privacy Commission (NPC), we strive to maintain a balance between safeguarding your personal privacy and facilitating the exchange of information, especially in the pursuit of our legitimate interests and fulfilling our responsibilities.
-                <br/><br/>
-                In this notification, we use the terms "data" and "information" interchangeably. When referring to "personal data," we encompass the notions of personal information, sensitive personal information, and privileged information. The first two are commonly employed to uniquely identify you. For precise definitions, you can consult the DPA text or visit the office of the designated Data Protection Officer in Manila. It is essential to recognize that the examples provided in this Privacy Notice, though illustrative, do not constitute an exhaustive list of all the data we handle.
+                Centralized<span className='text-blue-600'> M</span>
+                    <span className='text-red-500'>a</span>
+                    <span className='text-yellow-500'>n</span>
+                    <span className='text-green-500'>i</span>
+                    <span className='text-blue-600'>l</span>
+                    <span className='text-red-500'>a</span> acknowledges its obligations under Republic Act No. 10173, commonly referred to as the Data Privacy Act of 2012, and is dedicated to safeguarding your Personal Information.
                 <br/><br/>
                 </span>
-              <h1 className="text-slate-800 dark:text-slate-100 font-medium">Information We Collect, Acquire, or Generate</h1>
+              <h1 className="text-slate-800 dark:text-slate-100 font-medium">Coverage</h1>
                 <br/>
               <span className="text-left text-slate-700 dark:text-white">
-                We collect, obtain, or produce your personal data in a variety of ways. Written paperwork, photo and video records, digital content, and even biometric records may be among them. As examples, consider:
+                Your Personal Information is required for registration on our web application, which includes, at a minimum, your full name, address, email, and contact number. Your Personal Information is additionally necessary for the billing company or government agency to process your payments through the Centralized Manila System. This encompasses your full name, account number, date of birth, address, contact number, and Government ID details (where applicable).
+              </span>
                 <br/><br/>
-                1. Details you give us when making a purchase. Among other things, we gather when you deal with us:
+              <h1 className="text-slate-800 dark:text-slate-100 font-medium">Data Collection and Utilization</h1>
+                <br/>
+              <span className="text-left text-slate-700 dark:text-white">
+                We gather your personal information primarily to verify your identity and ensure the accuracy of your payment details. Your payment data is encrypted through our secure payment system and then uploaded for your payment/s. Moreover, your information may and will only be utilized for the following purposes:
               </span>
                 <br/><br/>
             <div className="ml-3">
               <span className="text-left text-slate-700 dark:text-white">
-                a. information from a directory, such as name, address, gender, birthdate, place of birth, phone number, email address, citizenship, education, age, and other pertinent details pertaining to the dealings with the City Government of Manila;
+                Inquiry into payment history;
                 <br/><br/>
-                b. Information about your individual circumstances, including your history, family background, marital status, government records, and any other pertinent circumstances or job history; and
+                Processing of document request;
                 <br/><br/>
-                c. Any and all data gathered via interviews and/or other methods of gathering personal information</span>
+                Centralized Manila advisories and updates;
+                <br/><br/>
+                Centralized Manila will not disclose your personal information to third parties without your consent, except when such disclosure or data sharing is mandated by applicable laws necessary for the aforementioned purposes.
+              </span>
             </div>
+              <br/>
+              <span className="text-left text-slate-700 dark:text-white">
+                Please direct any complaints to the DATA PROTECTION OFFICER via this email: centralizedmanila@gmail.com
+              </span>
+              <br/><br/>
+              <h1 className="text-slate-800 dark:text-slate-100 font-medium">Data Retention</h1>
                 <br/>
+              <span className="text-left text-slate-700 dark:text-white">
+                Your registered Personal Information and payment information will be retained in our database for as long as required by National laws, regulations, and guidelines. Centralized Manila has implemented suitable organizational, physical, and technical security measures to ensure the safeguarding of your personal information.
+              </span>
+                <br/><br/>
+              <h1 className="text-slate-800 dark:text-slate-100 font-medium">Customer Consent and Declaration</h1>
+                <br/>
+              <span className="text-left text-slate-700 dark:text-white">
+                The Personal and Payment Information I provide will be made in good faith, verified to the best of my knowledge, pursuant to any applicable Laws and Regulations. I fully understand that Centralized Manila is authorized to accept and process payments and documents submitted through its web application.
+              </span>
+                <br/><br/>
+              <span className="text-left text-slate-700 dark:text-white">
+              Furthermore, I have reviewed Centralized Manila’s Data Privacy Statement and hereby voluntarily and freely provide my consent for Centralized Manila to collect, encrypt, transmit, process, analyze, retrieve, update, or modify my personal data for registration on Centralized Manila’s online portal and processing of my bills payment. I also affirm my rights:
+              </span>
+                <br/><br/>
+              <div className="ml-3">
+              <span className="text-left text-slate-700 dark:text-white">
+                • Right to be informed,
+                <br/>
+                • Right to access,
+                <br/>
+                • Right to object,
+                <br/>
+                • Right to erase or block,
+                <br/>
+                • Right to rectify,
+                <br/>
+                • Right to damages,
+                <br/>
+                • Right to data portability.
+              </span>
+            </div>
+                {/* <br/>
               <span className="text-left text-slate-700 dark:text-white">2. Information we process or generate after the collection. When applying to City Government of Manila, as an employee, we may also collect additional information about you, including</span>
                 <br/>
             <div className="ml-3 text-left text-slate-700 dark:text-white ">
@@ -228,7 +276,7 @@ const PrivacyPolicyForm =()=>{
               <br/>
             <span className="text-left text-slate-700 dark:text-white">
               The City Government of Manila's additional policies, insofar as they align with this Privacy Notice, will remain in effect. In the event that any provision of this Notice is deemed unenforceable or invalid by a court with competent jurisdiction, the invalidity of that particular provision will not impact the validity of the remaining provisions, which will continue to be fully effective.
-            </span>
+            </span> */}
             </div>
           </div>
           {user_id && (

@@ -200,7 +200,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bprovinceLabel || selectedTransaction.bus_bprovince || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Business city</span>
+                            <span className="font-medium whitespace-nowrap">Business City</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bcityLabel || selectedTransaction.bus_bcity || '-'}</span>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
