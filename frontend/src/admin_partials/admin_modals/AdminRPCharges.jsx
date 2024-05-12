@@ -159,7 +159,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
               )}  
 
                 <div className='flex text-left dark:text-white text-sm pb-2'>
-                  <span>Note: Please input the exact amount for the Business Permit fees based on the user's provided details.</span>
+                  <span>Note: Please input the exact amount for the Real Property Tax Payment based on the user's provided details.</span>
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">AMOUNT</label>
