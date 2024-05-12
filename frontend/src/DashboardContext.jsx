@@ -32,10 +32,13 @@ export const DashboardProvider = ({ children }) => {
       totalLCR: totalLCR,
     } = revenue;
 
+    const Base_Url = process.env.Base_Url;
+
+
 
     const fetchData = async (url, setStateFunction) => {
         try {
-          const response = await axios.get(`http://localhost:8800/admin/${url}`);
+          const response = await axios.get(`${Base_Url}admin/${url}`);
           setStateFunction(response.data);
         } catch (err) {
           console.log(err);
