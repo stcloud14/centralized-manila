@@ -6,6 +6,8 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
   const { transaction_id, status_type, date_processed } = selectedTransaction; 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
+  const Base_Url = process.env.Base_Url;
+
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
@@ -23,7 +25,7 @@ const AdminRPReject = ({ transactions, setTransactions, selectedTransaction, isO
         new_status: 'Rejected',
       };
   
-      const response = await fetch(`http://localhost:8800/adminrptax/updateReject/${selectedTransaction.transaction_id}`, {
+      const response = await fetch(`${Base_Url}adminrptax/updateReject/${selectedTransaction.transaction_id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

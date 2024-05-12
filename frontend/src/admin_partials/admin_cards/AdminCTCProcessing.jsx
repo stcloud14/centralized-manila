@@ -24,6 +24,9 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
   const [searchQuery, setSearchQuery] = useState(''); 
   const [searchOwner, setSearchOwner] = useState(''); 
   const [filteredctcCedula, setFilteredctcCedula] = useState([]);
+
+  const Base_Url = process.env.Base_Url;
+
   
   const handleSearch = () => {
     const filteredData = ctcCedula.filter(transaction => {
@@ -149,13 +152,13 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
     const user_id = selectedTransaction.user_id;
   
     try {
-      const response = await axios.post(`http://localhost:8800/adminctc/updatecomplete/${transaction_id}`, selectedTransaction);
+      const response = await axios.post(`${Base_Url}adminctc/updatecomplete/${transaction_id}`, selectedTransaction);
       setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {
 
         try {
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          const res = await axios.get(`${Base_Url}email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -180,7 +183,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
@@ -230,19 +233,19 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
     }
   
 
-      const retrieveResponse = await axios.get(`http://localhost:8800/payment/create-checkout-retrieve/${transaction_id}`);
+      const retrieveResponse = await axios.get(`${Base_Url}payment/create-checkout-retrieve/${transaction_id}`);
 
       const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
       const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
       const service_requested = retrieveResponse.data.data.attributes.description;
       
-      const response = await axios.post(`http://localhost:8800/adminctc/updatereject/${transaction_id}`, body);
+      const response = await axios.post(`${Base_Url}adminctc/updatereject/${transaction_id}`, body);
       setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {
 
         try {
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          const res = await axios.get(`${Base_Url}email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -267,7 +270,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
@@ -286,7 +289,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
         }
 
         try {
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          const res = await axios.get(`${Base_Url}email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -315,8 +318,8 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
-              const emailrefund = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
+              const emailrefund = await axios.post(`${Base_Url}email/refund/${user_email}`, body);
 
               if (emailResponse.data && emailResponse.data.message && emailrefund.data && emailrefund.data.message) {
                 console.log('SENT EMAIL');
@@ -557,7 +560,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                     </div>
 
                     {isLoading ? (
-                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-8 rounded-b-sm">
                         <Loading />
                       </div>
                     ) : (
@@ -629,7 +632,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                     </div>
 
                     {isLoading ? (
-                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-8 rounded-b-sm">
                         <Loading />
                       </div>
                     ) : (

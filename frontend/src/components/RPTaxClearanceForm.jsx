@@ -25,7 +25,6 @@ const RPTaxClearanceForm =()=>{
 
   const [rptaxClearance, setRptaxClearance]=useState((prevData) => ({
     ...prevData,
-    amount: 100,
   }));
 
   useEffect(() => {

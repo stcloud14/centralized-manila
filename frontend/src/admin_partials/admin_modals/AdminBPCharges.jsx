@@ -11,6 +11,10 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
 
+
+  const Base_Url = process.env.Base_Url;
+
+
   const [totalVal, setTotalVal] = useState();
 
   const [values, setValues] = useState({
@@ -70,7 +74,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
 //           user_id: user_id,
 //       };
 
-//         const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
+//         const response = await axios.post(`${Base_Url}payment/create-checkout-session/${transaction_id}`, body);
 
 //         if (response.data && response.data.checkoutSessionUrl) {
 //             const checkoutSessionUrl = response.data.checkoutSessionUrl;
@@ -96,7 +100,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
 //     const fetchBusinessTransaction = async () => {
 //       if (transaction_id) {
 //       try {
-//         const res = await axios.get(`http://localhost:8800/transachistory/buspermit/${transaction_id}`);
+//         const res = await axios.get(`${Base_Url}transachistory/buspermit/${transaction_id}`);
 //         setBusinessTransaction(res.data);
 //         console.log(res.data);
 //       } catch (err) {
@@ -343,7 +347,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   {businessImages && businessImages.bus_tax_incentives !== undefined
                           ? getShortName(businessImages.bus_tax_incentives, 20)
                           : selectedTransaction && selectedTransaction.bus_tax_incentives !== undefined
-                          ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_tax_incentives}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_tax_incentives, 20)}</a>
+                          ? <a href={`/uploads/business/${selectedTransaction.bus_tax_incentives}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_tax_incentives, 20)}</a>
                           : ''
                   }
               </span>
@@ -428,7 +432,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                     {businessImages && businessImages.bus_dti_reg !== undefined
                       ? getShortName(businessImages.bus_dti_reg, 20)
                           : selectedTransaction && selectedTransaction.bus_dti_reg !== undefined
-                            ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_dti_reg, 20)}</a>
+                            ? <a href={`/uploads/business/${selectedTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_dti_reg, 20)}</a>
                             : ''
                     }
                 </span>
@@ -440,7 +444,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   {businessImages && businessImages.bus_rptax_decbldg !== undefined
                           ? getShortName(businessImages.bus_rptax_decbldg, 20)
                           : selectedTransaction && selectedTransaction.bus_rptax_decbldg !== undefined
-                          ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decbldg, 20)}</a>
+                          ? <a href={`/uploads/business/${selectedTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decbldg, 20)}</a>
                           : ''
                   }
               </span>
@@ -452,7 +456,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   {businessImages && businessImages.bus_sec_paid !== undefined
                       ? getShortName(businessImages.bus_sec_paid, 20)
                       : selectedTransaction && selectedTransaction.bus_sec_paid !== undefined
-                          ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_paid, 20)}</a>
+                          ? <a href={`/uploads/business/${selectedTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_paid, 20)}</a>
                           : ''
                   }
               </span>
@@ -465,7 +469,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   {businessImages && businessImages.bus_sec_articles !== undefined
                       ? getShortName(businessImages.bus_sec_articles,20 )
                       : selectedTransaction && selectedTransaction.bus_sec_articles !== undefined
-                          ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_articles, 20)}</a>
+                          ? <a href={`/uploads/business/${selectedTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_articles, 20)}</a>
                           : ''
                   }
               </span>
@@ -477,7 +481,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   {businessImages && businessImages.bus_nga !== undefined 
                       ? getShortName(businessImages.bus_nga, 20)
                       : selectedTransaction && selectedTransaction.bus_nga !== undefined
-                          ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_nga, 20)}</a>
+                          ? <a href={`/uploads/business/${selectedTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_nga, 20)}</a>
                           : ''
                   }
               </span>
@@ -489,7 +493,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   {businessImages && businessImages.bus_sec_front !== undefined
                       ? getShortName(businessImages.bus_sec_front, 20)
                       : selectedTransaction && selectedTransaction.bus_sec_front !== undefined
-                          ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_front, 20)}</a>
+                          ? <a href={`/uploads/business/${selectedTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_front, 20)}</a>
                           : ''
                   }
               </span>
@@ -501,7 +505,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   {businessImages && businessImages.bus_rptax_decland !== undefined
                       ? getShortName(businessImages.bus_rptax_decland, 20)
                       : selectedTransaction && selectedTransaction.bus_rptax_decland !== undefined
-                          ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decland, 20)}</a>
+                          ? <a href={`/uploads/business/${selectedTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decland, 20)}</a>
                           : ''
                   }
               </span>
@@ -513,7 +517,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   {businessImages && businessImages.bus_fire !== undefined
                       ? getShortName(businessImages.bus_fire, 20 )
                       : selectedTransaction && selectedTransaction.bus_fire !== undefined
-                          ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_fire, 20)}</a>
+                          ? <a href={`/uploads/business/${selectedTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_fire, 20)}</a>
                           : ''
                   }
               </span>
@@ -525,7 +529,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                 {businessImages && businessImages.bus_page2 !== undefined
                     ? getShortName(businessImages.bus_page2, 20)
                     : selectedTransaction && selectedTransaction.bus_page2 !== undefined
-                        ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page2, 20)}</a>
+                        ? <a href={`/uploads/business/${selectedTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page2, 20)}</a>
                         : ''
                 }
             </span>
@@ -537,7 +541,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                 {businessImages && businessImages.bus_page3 !== undefined
                     ? getShortName(businessImages.bus_page3, 20)
                     : selectedTransaction && selectedTransaction.bus_page3 !== undefined
-                        ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page3, 20)}</a>
+                        ? <a href={`/uploads/business/${selectedTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page3, 20)}</a>
                         : ''
                 }
             </span>
@@ -549,7 +553,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                 {businessImages && businessImages.bus_page4 !== undefined
                     ? getShortName(businessImages.bus_page4, 20)
                     : selectedTransaction && selectedTransaction.bus_page4 !== undefined
-                        ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page4, 20)}</a>
+                        ? <a href={`/uploads/business/${selectedTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page4, 20)}</a>
                         : ''
                 }
             </span>
@@ -561,7 +565,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                 {businessImages && businessImages.bus_page5 !== undefined
                     ? getShortName(businessImages.bus_page5, 20)
                     : selectedTransaction && selectedTransaction.bus_page5 !== undefined
-                        ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page5, 20)}</a>
+                        ? <a href={`/uploads/business/${selectedTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page5, 20)}</a>
                         : ''
                 }
             </span>
@@ -644,71 +648,71 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
               <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[42rem] overflow-y-auto"> 
                 <div className="mt-2">
                   <label htmlFor="bp_1" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">R E SUB-LESSOR</label>
-                  <input value={values.bp_1} onChange={handleChange} type="text" name="bp_1" id="bp_1" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_1} onChange={handleChange} type="text" name="bp_1" id="bp_1" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_2" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">PERMIT FEE - R E SUB-LESSOR</label>
-                  <input value={values.bp_2} onChange={handleChange} type="text" name="bp_2" id="bp_2" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_2} onChange={handleChange} type="text" name="bp_2" id="bp_2" className="block w-full md:text-sm rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_3" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">GARBAGE FEE</label>
-                  <input value={values.bp_3} onChange={handleChange} type="text" name="bp_3" id="bp_3" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_3} onChange={handleChange} type="text" name="bp_3" id="bp_3" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_4" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">SANITARY INSPECTION FEE</label>
-                  <input value={values.bp_4} onChange={handleChange} type="text" name="bp_4" id="bp_4" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_4} onChange={handleChange} type="text" name="bp_4" id="bp_4" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_5" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">OCCUPATIONAL TAX</label>
-                  <input value={values.bp_5} onChange={handleChange} type="text" name="bp_5" id="bp_5" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_5} onChange={handleChange} type="text" name="bp_5" id="bp_5" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_6" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">BUILDING INSP FEE</label>
-                  <input value={values.bp_6} onChange={handleChange} type="text" name="bp_6" id="bp_6" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_6} onChange={handleChange} type="text" name="bp_6" id="bp_6" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_7" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ELECTRICAL INSP FEE</label>
-                  <input value={values.bp_7} onChange={handleChange} type="text" name="bp_7" id="bp_7" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_7} onChange={handleChange} type="text" name="bp_7" id="bp_7" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_8" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">SIGNBOARD INSP FEE</label>
-                  <input value={values.bp_8} onChange={handleChange} type="text" name="bp_8" id="bp_8" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_8} onChange={handleChange} type="text" name="bp_8" id="bp_8" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_9" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">PLUMBING INSP FEE</label>
-                  <input value={values.bp_9} onChange={handleChange} type="text" name="bp_9" id="bp_9" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_9} onChange={handleChange} type="text" name="bp_9" id="bp_9" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_10" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">SIGNBOARD PERMIT FEE</label>
-                  <input value={values.bp_10} onChange={handleChange} type="text" name="bp_10" id="bp_10" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_10} onChange={handleChange} type="text" name="bp_10" id="bp_10" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_11" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">FIRE SAFETY INSPECTION FEE</label>
-                  <input value={values.bp_11} onChange={handleChange} type="text" name="bp_11" id="bp_11" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_11} onChange={handleChange} type="text" name="bp_11" id="bp_11" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_12" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">OCC / PC / HC / APP</label>
-                  <input value={values.bp_12} onChange={handleChange} type="text" name="bp_12" id="bp_12" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_12} onChange={handleChange} type="text" name="bp_12" id="bp_12" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_13" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ZONING INSPECTION FEE</label>
-                  <input value={values.bp_13} onChange={handleChange} type="text" name="bp_13" id="bp_13" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_13} onChange={handleChange} type="text" name="bp_13" id="bp_13" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_14" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ZONING APPLICATION FEE</label>
-                  <input value={values.bp_14} onChange={handleChange} type="text" name="bp_14" id="bp_14" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_14} onChange={handleChange} type="text" name="bp_14" id="bp_14" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_15" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">ZONING PROCESSING FEE</label>
-                  <input value={values.bp_15} onChange={handleChange} type="text" name="bp_15" id="bp_15" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_15} onChange={handleChange} type="text" name="bp_15" id="bp_15" className="block w-full md:text-sm rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_16" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">CTC / C & C1</label>
-                  <input value={values.bp_16} onChange={handleChange} type="text" name="bp_16" id="bp_16" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_16} onChange={handleChange} type="text" name="bp_16" id="bp_16" className="block w-full md:text-sm rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_17" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">BARANGAY BUSINESS CLEARANCE</label>
-                  <input value={values.bp_17} onChange={handleChange} type="text" name="bp_17" id="bp_17" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input value={values.bp_17} onChange={handleChange} type="text" name="bp_17" id="bp_17" className="block w-full md:text-sm rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="font-semibold flex space-x-2 text-slate-700 text-start py-8 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
                   <span>Total :</span>
@@ -718,8 +722,26 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                 {/* Button container */}
                 <div className="flex justify-end pb-8 space-x-2">
                   {isLoading ? (
-                    <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 mt-[-10px]">
-                      <Loading />
+                    <div className="pt-3 font-medium flex text-slate-700 dark:text-white pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center mb-3">
+                    <svg
+                    aria-hidden="true"
+                    className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    >
+                    <path
+                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                      fill="currentFill"
+                    />
+                    </svg>
+                    <span className="pl-2">
+                    Please wait for a moment...
+                    </span>
                     </div>
                   ) : (
                     <>

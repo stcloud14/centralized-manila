@@ -27,6 +27,7 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
   const [searchTIN, setSearchTIN] = useState('');
   const [selectType, setSelectType] = useState('All');
   const [filteredBusinessPermit, setFilteredBusinessPermit] = useState([]);
+  const Base_Url = process.env.Base_Url;
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
@@ -155,6 +156,13 @@ useEffect(() => {
     const handleProcess = async (e, totalVal) => {
       e.preventDefault();
 
+    // Check if the amount input is empty or null
+    if (!totalVal || isNaN(parseFloat(totalVal))) {
+      // If the amount is empty or not a valid number, display an error message or handle it accordingly
+      alert('Please enter a valid amount.');
+      return;
+  }
+
       const { user_id, transaction_id, trans_type } = selectedTransaction;
 
       const body = {
@@ -167,15 +175,18 @@ useEffect(() => {
       
   
       try {
-          const response = await axios.post(`http://localhost:8800/adminbp/updateamount/${transaction_id}`, body);
+          const response = await axios.post(`${Base_Url}adminbp/updateamount/${transaction_id}`, body);
   
           if (response.status === 200) {
+            setIsLoading(true);
             // Fetch user_email after successful payment
             try {
-              const res1 = await axios.get(`http://localhost:8800/transachistory/transId/${user_id}`);
+              const res1 = await axios.get(`${Base_Url}transachistory/transId/${user_id}`);
               const transaction_id = res1.data[0]?.transaction_id;
+                                setIsLoading(true);
+
     
-              const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+              const res = await axios.get(`${Base_Url}email/${user_id}`);
               
               if (res.data.user_email) {
                 const updatedUserEmail = res.data.user_email;
@@ -215,7 +226,7 @@ useEffect(() => {
 
       
                 try {
-                      const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+                      const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
           
                       if (emailResponse.data && emailResponse.data.message) {
                         console.log('SENT EMAIL');
@@ -233,17 +244,20 @@ useEffect(() => {
                   console.error(fetchError);
                 }
   
-                setIsLoading(false);
-                handleConfirmClose();
-                handleUpdateData();
-                setSelectedTransaction('');
-        
-                setIsSuccess(true);
-                console.log('Update successful');
-        
-                setTimeout(() => {
-                  setIsSuccess(false);
+                
+
+                  
+                  setIsLoading(false);
+                  handleConfirmClose();
+                  handleUpdateData();
+                  setSelectedTransaction('');
+                  console.log('Update successful');
+                  setIsSuccess(true); // Set isSuccess to true first
+                  setTimeout(() => {
+                  setIsSuccess(false); // Set isSuccess to false after the other operations
                 }, 2100);
+
+ 
 
               } else {
                 console.error('Transaction error:', response.statusText);
@@ -268,19 +282,20 @@ useEffect(() => {
     }
   
 
-      const retrieveResponse = await axios.get(`http://localhost:8800/payment/create-checkout-retrieve/${transaction_id}`);
+      const retrieveResponse = await axios.get(`${Base_Url}payment/create-checkout-retrieve/${transaction_id}`);
 
       const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
       const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
       const service_requested = retrieveResponse.data.data.attributes.description;
       
-      const response = await axios.post(`http://localhost:8800/adminbp/updatereject/${transaction_id}`, body);
-      setIsLoading(true);
+      const response = await axios.post(`${Base_Url}adminbp/updatereject/${transaction_id}`, body);
+
       // Check the response status before proceeding
       if (response.status === 200) {
+        setIsLoading(true);
 
         try {
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          const res = await axios.get(`${Base_Url}email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -305,7 +320,7 @@ useEffect(() => {
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
@@ -324,7 +339,7 @@ useEffect(() => {
         }
 
          try {
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          const res = await axios.get(`${Base_Url}email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -352,8 +367,9 @@ useEffect(() => {
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
-              const emailrefund = await axios.post(`http://localhost:8800/email/refund/${user_email}`, body);
+              
+              const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
+              const emailrefund = await axios.post(`${Base_Url}email/refund/${user_email}`, body);
 
               if (emailResponse.data && emailResponse.data.message && emailrefund.data && emailrefund.data.message) {
                 console.log('SENT EMAIL');
@@ -371,17 +387,17 @@ useEffect(() => {
           console.error(fetchError);
         }
 
+
+        setIsSuccess(true); // Set isSuccess to true first
         setIsLoading(false);
         handleConfirmClose();
         handleUpdateData();
         setSelectedTransaction('');
-
-        setIsSuccess(true); // Set success state to true
         console.log('Update successful');
 
         setTimeout(() => {
-          setIsSuccess(false);
-        }, 2100);
+        setIsSuccess(false); // Set isSuccess to false after the other operations
+      }, 2100);
       } else {
         console.error('Transaction error:', response.statusText);
       }
@@ -685,7 +701,7 @@ useEffect(() => {
                   
 
                     {isLoading ? (
-                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-1 rounded-b-lg mt-[-10px]">
+                      <div className="bg-white dark:bg-[#212121] text-slate-700 dark:text-white px-1 pb-8 rounded-b-sm">
                         <Loading />
                       </div>
                     ) : (
@@ -739,6 +755,7 @@ useEffect(() => {
               handleConfirmClose={handleChargeClose}
               handleProcess={handleProcess}
               transType={transType}
+              isLoading={isLoading}
             />
             )}
 

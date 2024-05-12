@@ -8,6 +8,8 @@ const AdminRPExpired = ({ selectedTransaction, isOpen, handleClose, transType })
 
   const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
   const time = moment(date_processed).format('h:mm A');
+  const Base_Url = process.env.Base_Url;
+
   const handleExpiredClick = async () => {
     try {
       if (!selectedTransaction || !selectedTransaction.transaction_id) {
@@ -20,7 +22,7 @@ const AdminRPExpired = ({ selectedTransaction, isOpen, handleClose, transType })
         new_status: 'Expired',
       };
   
-      const response = await fetch(`http://localhost:8800/adminrptax/updateExpired/${selectedTransaction.transaction_id}`, {
+      const response = await fetch(`${Base_Url}adminrptax/updateExpired/${selectedTransaction.transaction_id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

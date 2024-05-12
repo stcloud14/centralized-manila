@@ -21,12 +21,13 @@ const AdminRPTaxForm3 = () => {
 
   const [taxPayment, setTaxPayment] = useState([]);
   const [taxClearance, setTaxClearance] = useState([]);
+  const Base_Url = process.env.Base_Url;
 
   console.log("userrole", admin_type)
 
   const fetchUserTransaction = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/adminrptax/charges/`);
+      const res = await axios.get(`${Base_Url}adminrptax/charges/`);
       setTaxPayment(res.data.taxpayment);
       setTaxClearance(res.data.taxclearance);
     } catch (err) {
@@ -36,7 +37,7 @@ const AdminRPTaxForm3 = () => {
 
   const fetchExpiredTransaction = async () => {
     try {
-      //await axios.post(`http://localhost:8800/email/updateexpired`);
+      //await axios.post(`${Base_Url}email/updateexpired`);
       console.log('Sent emails')
       
     } catch (err) {

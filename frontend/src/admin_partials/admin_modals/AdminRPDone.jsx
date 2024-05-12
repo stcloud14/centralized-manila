@@ -6,6 +6,8 @@ const AdminRPDone = ({ transactions, setTransactions, selectedTransaction, isOpe
   const { transaction_id, status_type, date_processed } = selectedTransaction;
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
+  const Base_Url = process.env.Base_Url;
+
   const handleDoneClick = async () => {
     try {
       if (!selectedTransaction || !selectedTransaction.transaction_id) {
@@ -18,7 +20,7 @@ const AdminRPDone = ({ transactions, setTransactions, selectedTransaction, isOpe
         new_status: 'Complete',
       };
   
-      const response = await fetch(`http://localhost:8800/adminrptax/updateComplete/${selectedTransaction.transaction_id}`, {
+      const response = await fetch(`${Base_Url}adminrptax/updateComplete/${selectedTransaction.transaction_id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

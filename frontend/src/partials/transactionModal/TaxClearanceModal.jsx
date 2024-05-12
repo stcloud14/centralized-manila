@@ -318,7 +318,7 @@ const cancelTrans = async (e) => {
                           <span className="font-medium whitespace-nowrap">Reference Number</span>
                           <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
                         </div> */}
-                        {status_type ? (
+                        {transaction_id ? (
                         <>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
@@ -335,7 +335,11 @@ const cancelTrans = async (e) => {
                         <hr className='mt-7 mb-1'/>
                         <div className="flex justify-between">
                         <span className="font-semibold whitespace-nowrap">{status_type === "Pending" ? "Amount Paid" : status_type === "Processing" ? "Amount to Pay" : "Amount"}</span>
-                          <span className="font-semibold whitespace-nowrap ml-4">P {taxClearanceTransaction.amount ? taxClearanceTransaction.amount + '.00': '-'}</span>
+                        <span className="font-semibold whitespace-nowrap ml-4"> 
+                        {taxClearanceTransaction && status_type ? (
+                          `P${taxClearanceTransaction.amount !== undefined ? taxClearanceTransaction.amount + '.00' : '0.00'}`
+                          ) : `Submit for amount declaration.`}
+                          </span>
                         </div>
                       </div>
                     </div>

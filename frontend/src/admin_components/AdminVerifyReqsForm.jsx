@@ -37,14 +37,15 @@ const AdminVerifyReqsForm =()=>{
   const [selectedDate, setSelectedDate] = useState('');
   const [searchMobile, setSearchMobile] = useState('');
   const [searchEmail, setSearchEmail] = useState('');
-  
+  const Base_Url = process.env.Base_Url;
+
   // const [selectedDatee, setSelectedDatee] = useState('');
   
 
   useEffect(()=>{
     const fetchUserApplications= async()=>{
         try{
-            const res= await axios.get(`http://localhost:8800/adminur/`)
+            const res= await axios.get(`${Base_Url}adminur/`)
             const { verify } = res.data;
             setUserApplications(verify);
             setFilteredUserApplications(verify);
@@ -121,7 +122,7 @@ const AdminVerifyReqsForm =()=>{
     try {
       const trans_type = 'User Registry';
 
-      const response = await axios.post(`http://localhost:8800/adminur/approve/${transaction.user_id}`, {
+      const response = await axios.post(`${Base_Url}adminur/approve/${transaction.user_id}`, {
         user_id: transaction.user_id,
         trans_type: trans_type,
       });
@@ -129,7 +130,7 @@ const AdminVerifyReqsForm =()=>{
       if (response.status === 200) {
 
         try {
-          const res = await axios.get(`http://localhost:8800/email/${transaction.user_id}`);
+          const res = await axios.get(`${Base_Url}email/${transaction.user_id}`);
         
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -169,7 +170,7 @@ const AdminVerifyReqsForm =()=>{
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/status-verified-email/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/status-verified-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
@@ -217,12 +218,12 @@ const AdminVerifyReqsForm =()=>{
         trans_type,
       }
 
-      const response = await axios.post(`http://localhost:8800/adminur/decline/${transaction.user_id}`, body1);
+      const response = await axios.post(`${Base_Url}adminur/decline/${transaction.user_id}`, body1);
   
       if (response.status === 200) {
 
         try {
-          const res = await axios.get(`http://localhost:8800/email/${transaction.user_id}`);
+          const res = await axios.get(`${Base_Url}email/${transaction.user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -262,7 +263,7 @@ const AdminVerifyReqsForm =()=>{
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/status-verified-email/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/status-verified-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');

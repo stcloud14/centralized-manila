@@ -58,10 +58,13 @@ router.post("/create-checkout-session/:transaction_id", async (req, res) => {
         }
 
         // Replace this with your actual logic to get user_id and trans_type
-        
+        const Url = process.env.Url;
+
+        console.log("Url",Url)
+
         const { transaction_id } = req.params;
-        const success_url = `http://localhost:5173/paymentsuccess/${user_id}?transaction_id=${transaction_id}&amount=${newAmount}&user_id=${user_id}&trans_type=${trans_type}`;
-        const cancel_url = `http://localhost:5173/transachistory/${user_id}`;
+        const success_url = `${Url}paymentsuccess/${user_id}?transaction_id=${transaction_id}&amount=${newAmount}&user_id=${user_id}&trans_type=${trans_type}`;
+        const cancel_url = `${Url}transachistory/${user_id}`;
 
         const options = {
             method: 'POST',
@@ -281,7 +284,7 @@ function queryDatabase(query, values) {
 //         data: {
 //             attributes: {
 //                 events: ['checkout_session.payment.paid'],
-//                 url: 'http://localhost:5173/transachistory/'
+//                 url: '/transachistory/'
 //             }
 //         }
 //     })

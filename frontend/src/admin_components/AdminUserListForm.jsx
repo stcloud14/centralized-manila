@@ -30,11 +30,12 @@ const AdminUserListForm = () => {
   const [searchEmail, setSearchEmail] = useState('');
   const [selectedType, setSelectedType] = useState('All');
   const [selectedStatus, setSelectedStatus] = useState('All');
+  const Base_Url = process.env.Base_Url;
 
   useEffect(()=>{
     const fetchUserApplications= async()=>{
         try{
-            const res= await axios.get(`http://localhost:8800/adminur/`)
+            const res= await axios.get(`${Base_Url}adminur/`)
             const { userlist } = res.data;
             setUserApplications(userlist);
             setFilteredUserApplications(userlist);
