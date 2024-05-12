@@ -9,6 +9,7 @@ import Loading from '../../partials/Loading';
 const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, businessImages, onClose, onSubmit, handleOpenModal }) => {
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
+  const Base_Url = process.env.Base_Url;
 
   const trans_type = 'Business Permit';
 
@@ -57,7 +58,7 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
           user_id: user_id,
       };
 
-        const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
+        const response = await axios.post(`${Base_Url}payment/create-checkout-session/${transaction_id}`, body);
 
         if (response.data && response.data.checkoutSessionUrl) {
             const checkoutSessionUrl = response.data.checkoutSessionUrl;
@@ -84,7 +85,7 @@ const BusinessModal = ({ user_id, selectedTransaction, busOffice, businessData, 
       console.log("transaction_id1", transaction_id)
       if (transaction_id) {
       try {
-        const res = await axios.get(`http://localhost:8800/transachistory/buspermit/${transaction_id}`);
+        const res = await axios.get(`${Base_Url}transachistory/buspermit/${transaction_id}`);
         setBusinessTransaction(res.data);
         console.log(res.data);
       } catch (err) {
@@ -118,12 +119,12 @@ const cancelTrans = async (e) => {
 
   try {
 
-    const response = await axios.post(`http://localhost:8800/transachistory/canceltrans/${transaction_id}`, selectedTransaction);
+    const response = await axios.post(`${Base_Url}transachistory/canceltrans/${transaction_id}`, selectedTransaction);
 
     if (response.status === 200) {
       // Fetch user_email after successful payment
       try {
-        const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+        const res = await axios.get(`${Base_Url}email/${user_id}`);
         
         if (res.data.user_email) {
           const updatedUserEmail = res.data.user_email;
@@ -147,7 +148,7 @@ const cancelTrans = async (e) => {
           };
 
           try {
-            const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+            const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
 
             if (emailResponse.data && emailResponse.data.message) {
               console.log('SENT EMAIL');
@@ -172,7 +173,7 @@ const cancelTrans = async (e) => {
         setTimeout(() => {
           setIsSuccess(false);
           // onClose();
-          window.location.href = `http://localhost:5173/transachistory/${user_id}`;
+          window.location.href = `/transachistory/${user_id}`;
         }, 1000);
         
       } else {
@@ -196,7 +197,7 @@ const handleCloseConfirm = () => {
   // QR Download 
   const generateDownloadLink = (data) => {
     console.log('Generating download link:', data.transaction_id);
-    return `http://localhost:8800/transachistory/buspermit/${data.transaction_id}/download`;
+    return `${Base_Url}transachistory/buspermit/${data.transaction_id}/download`;
 };
 
   const downloadLink = isScanned ? generateDownloadLink(businessTransaction) : null;
@@ -493,7 +494,7 @@ const handleCloseConfirm = () => {
                         {businessImages && businessImages.bus_tax_incentives !== undefined
                                 ? getShortName(businessImages.bus_tax_incentives, 20)
                                 : businessTransaction && businessTransaction.bus_tax_incentives !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_tax_incentives}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_tax_incentives, 20)}</a>
+                                ? <a href={`/uploads/business/${businessTransaction.bus_tax_incentives}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_tax_incentives, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -578,7 +579,7 @@ const handleCloseConfirm = () => {
                           {businessImages && businessImages.bus_dti_reg !== undefined
                             ? getShortName(businessImages.bus_dti_reg, 20)
                                 : businessTransaction && businessTransaction.bus_dti_reg !== undefined
-                                  ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_dti_reg, 20)}</a>
+                                  ? <a href={`/uploads/business/${businessTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_dti_reg, 20)}</a>
                                   : ''
                           }
                       </span>
@@ -590,7 +591,7 @@ const handleCloseConfirm = () => {
                         {businessImages && businessImages.bus_rptax_decbldg !== undefined
                                 ? getShortName(businessImages.bus_rptax_decbldg, 20)
                                 : businessTransaction && businessTransaction.bus_rptax_decbldg !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_rptax_decbldg, 20)}</a>
+                                ? <a href={`/uploads/business/${businessTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_rptax_decbldg, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -602,7 +603,7 @@ const handleCloseConfirm = () => {
                         {businessImages && businessImages.bus_sec_paid !== undefined
                             ? getShortName(businessImages.bus_sec_paid, 20)
                             : businessTransaction && businessTransaction.bus_sec_paid !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_paid, 20)}</a>
+                                ? <a href={`/uploads/business/${businessTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_paid, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -614,7 +615,7 @@ const handleCloseConfirm = () => {
                         {businessImages && businessImages.bus_sec_articles !== undefined
                             ? getShortName(businessImages.bus_sec_articles,20 )
                             : businessTransaction && businessTransaction.bus_sec_articles !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_articles, 20)}</a>
+                                ? <a href={`/uploads/business/${businessTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_articles, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -626,7 +627,7 @@ const handleCloseConfirm = () => {
                         {businessImages && businessImages.bus_nga !== undefined 
                             ? getShortName(businessImages.bus_nga, 20)
                             : businessTransaction && businessTransaction.bus_nga !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_nga, 20)}</a>
+                                ? <a href={`/uploads/business/${businessTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_nga, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -638,7 +639,7 @@ const handleCloseConfirm = () => {
                         {businessImages && businessImages.bus_sec_front !== undefined
                             ? getShortName(businessImages.bus_sec_front, 20)
                             : businessTransaction && businessTransaction.bus_sec_front !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_front, 20)}</a>
+                                ? <a href={`/uploads/business/${businessTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_sec_front, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -650,7 +651,7 @@ const handleCloseConfirm = () => {
                         {businessImages && businessImages.bus_rptax_decland !== undefined
                             ? getShortName(businessImages.bus_rptax_decland, 20)
                             : businessTransaction && businessTransaction.bus_rptax_decland !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_rptax_decland, 20)}</a>
+                                ? <a href={`/uploads/business/${businessTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_rptax_decland, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -663,7 +664,7 @@ const handleCloseConfirm = () => {
                         {businessImages && businessImages.bus_fire !== undefined
                             ? getShortName(businessImages.bus_fire, 20 )
                             : businessTransaction && businessTransaction.bus_fire !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_fire, 20)}</a>
+                                ? <a href={`/uploads/business/${businessTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_fire, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -675,7 +676,7 @@ const handleCloseConfirm = () => {
                       {businessImages && businessImages.bus_page2 !== undefined
                           ? getShortName(businessImages.bus_page2, 20)
                           : businessTransaction && businessTransaction.bus_page2 !== undefined
-                              ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page2, 20)}</a>
+                              ? <a href={`/uploads/business/${businessTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page2, 20)}</a>
                               : ''
                       }
                   </span>
@@ -687,7 +688,7 @@ const handleCloseConfirm = () => {
                       {businessImages && businessImages.bus_page3 !== undefined
                           ? getShortName(businessImages.bus_page3, 20)
                           : businessTransaction && businessTransaction.bus_page3 !== undefined
-                              ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page3, 20)}</a>
+                              ? <a href={`/uploads/business/${businessTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page3, 20)}</a>
                               : ''
                       }
                   </span>
@@ -701,7 +702,7 @@ const handleCloseConfirm = () => {
                       {businessImages && businessImages.bus_page4 !== undefined
                           ? getShortName(businessImages.bus_page4, 20)
                           : businessTransaction && businessTransaction.bus_page4 !== undefined
-                              ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page4, 20)}</a>
+                              ? <a href={`/uploads/business/${businessTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page4, 20)}</a>
                               : ''
                       }
                   </span>
@@ -715,7 +716,7 @@ const handleCloseConfirm = () => {
                       {businessImages && businessImages.bus_page5 !== undefined
                           ? getShortName(businessImages.bus_page5, 20)
                           : businessTransaction && businessTransaction.bus_page5 !== undefined
-                              ? <a href={`http://localhost:5173/uploads/business/${businessTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page5, 20)}</a>
+                              ? <a href={`/uploads/business/${businessTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{getShortName(businessTransaction.bus_page5, 20)}</a>
                               : ''
                       }
                   </span>
