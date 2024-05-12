@@ -14,6 +14,8 @@ const AdminRPTaxForm3 = () => {
   const { admin_type } = useParams();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFetchedData, setIsFetchedData] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
@@ -32,16 +34,43 @@ const AdminRPTaxForm3 = () => {
     }
   };
 
+  const fetchExpiredTransaction = async () => {
+    try {
+      //await axios.post(`http://localhost:8800/email/updateexpired`);
+      console.log('Sent emails')
+      
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleUpdateData = () => {
     fetchUserTransaction();
   };
 
 
   useEffect(() => {
-    fetchUserTransaction();
+    const fetchData = async () => {
+        try {
+            await fetchExpiredTransaction();
+
+            await fetchUserTransaction();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    fetchData();
   }, []);
- 
-  
+
+  useEffect(() => {
+    if (isFetchedData) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }
+  }, [isFetchedData]);
+
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

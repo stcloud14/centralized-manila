@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
-const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, transType }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
+const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, transType, isLoading, handleProcess }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
 
-  const { transaction_id, status_type } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
+  const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
 
-  // const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
-  // const time = moment(date_processed).format('h:mm A');
 
-  console.log(selectedTransaction)
+  console.log(selectedTransaction);
+   const date = moment(date_processed).format('MMMM D, YYYY'); // INEXPLAIN KO KANINA TO
+   const time = moment(date_processed).format('h:mm A');
 
 
   return (
@@ -83,6 +83,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
           <div className="absolute right-0 w-1/2 h-full bg-gray-500 opacity-75"></div>
           <div className="absolute right-0 flex items-center justify-center w-1/2 h-full">
             <div className="inline-block bg-white dark:bg-[#212121] rounded-sm text-center overflow-hidden overflow-y-auto shadow-xl transform transition-all">
+            {/* Menu Bar */}
             <div className="dark:bg-[#212121] pt-3 pb-1 items-center">
               <button type="button" onClick={handleConfirmClose} className="float-right text-slate-500 text-xs md:text-sm"
               >
@@ -123,7 +124,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                       </button>
 
                       <button
-                        onClick={handleComplete}
+                        onClick={handleProcess}
                         type="button"
                         className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                       >

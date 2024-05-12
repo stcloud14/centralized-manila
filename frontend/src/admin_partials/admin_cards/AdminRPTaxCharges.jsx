@@ -6,12 +6,14 @@ import AdminRPView from '../admin_modals/AdminRPView';
 import RPCardView from '../admin_rptax/RPCardView';
 import RPTableView from '../admin_rptax/RPTableView';
 import Loading from '../../partials/Loading';
+import AdminRPCharges from '../admin_modals/AdminRPCharges';
 
 const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
+  const [modalViewCharge, setModalViewCharge] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isProcessConfirm, setIsProcessConfirm] = useState(false);
   const [isRejectConfirm, setIsRejectConfirm] = useState(false);
@@ -119,6 +121,16 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
     setViewMode(mode);
   };
 
+  const handleChargeOpen = (transaction, type) => {
+    setSelectedTransaction(transaction);
+    setTransType(type);
+    setModalViewCharge(true);
+  };
+
+  const handleChargeClose = () => {
+    setModalViewCharge(false);
+  };
+
   const handleModalOpen = (transaction, type) => {
     setSelectedTransaction(transaction);
     setTransType(type);
@@ -173,9 +185,10 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
           filteredTaxClearance={filteredTaxClearance}
           filteredTaxPayment={filteredTaxPayment}
           handleModalOpen={handleModalOpen}
+          handleChargeOpen={handleChargeOpen}
           handleRejectConfirm={handleRejectConfirm}
           handleProcessConfirm={handleProcessConfirm}
-          section={'Requests'}
+          section={'Charges'}
         />
       );
     } else if (viewMode === 'card') {
@@ -184,28 +197,42 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
           filteredTaxClearance={filteredTaxClearance}
           filteredTaxPayment={filteredTaxPayment}
           handleModalOpen={handleModalOpen}
+          handleChargeOpen={handleChargeOpen}
           handleRejectConfirm={handleRejectConfirm}
           handleProcessConfirm={handleProcessConfirm}
-          section={'Requests'}
+          section={'Charges'}
         />
       );
     }
   };
 
 
-  const handleProcess = async () => {  
+  const handleProcess = async (e, totalVal) => {
+    e.preventDefault();
 
-    const transaction_id = selectedTransaction.transaction_id;
-    const trans_type = selectedTransaction.trans_type;
-    const user_id = selectedTransaction.user_id;
+    const { user_id, transaction_id, trans_type } = selectedTransaction;
+
+    const body = {
+      user_id,
+      trans_type,
+      totalVal
+    };
+
+    console.log(body);
+
+    // const transaction_id = selectedTransaction.transaction_id;
+    // const trans_type = selectedTransaction.trans_type;
+    // const user_id = selectedTransaction.user_id;
   
     try {
-      const response = await axios.post(`http://localhost:8800/adminrptax/updateprocess/${transaction_id}`, selectedTransaction);
-      setIsLoading(true);
-      // Check the response status before proceeding
-      if (response.status === 200) {
+      const response = await axios.post(`http://localhost:8800/adminrp/updateamount/${transaction_id}`, body);
 
+      if (response.status === 200) {
+        // Fetch user_email after successful payment
         try {
+          const res1 = await axios.get(`http://localhost:8800/transachistory/transId/${user_id}`);
+          const transaction_id = res1.data[0]?.transaction_id;
+
           const res = await axios.get(`http://localhost:8800/email/${user_id}`);
           
           if (res.data.user_email) {
@@ -213,21 +240,36 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
             const f_name = res.data.f_name;
             const l_name = res.data.l_name;
             const sex_type = res.data.sex_type;
-            // console.log('FETCHED USER EMAIL:', updatedUserEmail);
+            const currentDate = new Date();
+                    const date = currentDate.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    const time = currentDate.toLocaleTimeString('en-US', {
+                      hour: 'numeric',
+                      minute: 'numeric'
+                  });
+            
+            console.log('FETCHED USER EMAIL:', updatedUserEmail);
 
             const user_email = updatedUserEmail;
+    
+                const trans_type = 'Business Permit';
 
-            const rowData = { ...selectedTransaction, trans_type};
-
-            const statusType = 'Processing';
-
-            const body = {
-              data: rowData,
-              f_name: f_name,
-              l_name: l_name,
-              sex_type: sex_type,
-              status_type: statusType,
-            };
+                const amount = totalVal;
+    
+                const rowData = { ...selectedTransaction, transaction_id, amount, trans_type, date, time};
+    
+                const status_type = 'Pending';
+    
+                const body = {
+                  data: rowData,
+                  status_type: status_type,
+                  sex_type: sex_type,
+                  f_name: f_name,
+                  l_name: l_name
+                };
   
             // Proceed with additional logic after updating state
             try {
@@ -822,6 +864,18 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
               selectedTransaction={selectedTransaction}
               isOpen={modalView}
               handleClose={handleModalClose}
+              transType={transType}
+            />
+            )}
+
+            {selectedTransaction && modalViewCharge && (
+            <AdminRPCharges
+              // selectedTransaction={selectedTransaction}
+              selectedTransaction={selectedTransaction}
+              isOpen={modalViewCharge}
+              // handleClose={handleModalClose}
+              handleProcess={handleProcess}
+              handleConfirmClose={handleChargeClose}
               transType={transType}
             />
             )}

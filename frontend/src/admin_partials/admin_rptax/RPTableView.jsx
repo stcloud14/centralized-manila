@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen, handleRejectConfirm, handleProcessConfirm, handleCompleteConfirm, section }) => {
+const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen, handleChargeOpen, handleRejectConfirm, handleProcessConfirm, handleCompleteConfirm, section }) => {
 
 
   return (
@@ -28,22 +28,26 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
               Property Identification Number
             </div>
           </th>
+          {section === 'Charges' && (
           <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
             <div className="flex justify-center items-center">
               Reject
             </div>
           </th>
+          )}
+          {(section === 'Charges' || section === 'Processing') && (
           <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
             <div className="flex justify-center items-center">
             {console.log('Section:', section)}
             {(section === undefined || section.trim() === 'Request') ? 'Complete' : 'Process'}
             </div>
           </th>
+          )}
         </tr>
       </thead>
       <tbody>
       
-      {filteredTaxClearance.length <= 0 && filteredTaxPayment.length <= 0 && (
+      {filteredTaxClearance?.length <= 0 && filteredTaxPayment?.length <= 0 && (
       <tr>
         <td colSpan="6" className="font-medium text-slate-600 items-center text-center py-4 justify-center dark:text-white">
           No records found.
@@ -68,6 +72,7 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
               {transaction.rp_pin}
             </td>
 
+            {section === 'Charges' && (
             <td className="py-1 whitespace-nowrap">
               <div className="flex justify-center gap-4 px-1">
                 <div onClick={(e) => { e.stopPropagation(); handleRejectConfirm(transaction); }} className="group cursor-pointer flex items-center">
@@ -77,8 +82,9 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
                 </div>
               </div>
             </td>
-
-            {section === 'Requests' ? (
+            )}
+{/* 
+            {section === 'Requests' && (
               <td className="py-1 whitespace-nowrap">
                 <div className="flex justify-center gap-4 px-1">
                   <div onClick={(e) => { e.stopPropagation(); handleProcessConfirm(transaction); }} className="group cursor-pointer flex items-center">
@@ -88,7 +94,21 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
                   </div>
                 </div>
               </td>
-            ) : (
+            )}*/}
+
+            {section === 'Charges' && (
+              <td className="py-1 whitespace-nowrap">
+              <div className="flex justify-center gap-4 px-1">
+                <div onClick={(e) => { e.stopPropagation(); handleChargeOpen(transaction); }} className="group cursor-pointer flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-500 hover:text-green-600">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                  </svg>
+                </div>
+              </div>
+            </td>
+            )}
+
+            {section === 'Processing' && (
               <td className="py-1 whitespace-nowrap">
               <div className="flex justify-center gap-4 px-1">
                 <div onClick={(e) => { e.stopPropagation(); handleCompleteConfirm(transaction); }} className="group cursor-pointer flex items-center">
@@ -99,6 +119,7 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
               </div>
             </td>
             )}
+
           </tr>
         ))}
 
@@ -118,7 +139,7 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
             <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
               {transaction.rp_pin}
             </td>
-
+            {section === 'Charges' && (
             <td className="py-1 whitespace-nowrap">
               <div className="flex justify-center gap-4 px-1">
                 <div onClick={(e) => { e.stopPropagation(); handleRejectConfirm(transaction); }} className="group cursor-pointer flex items-center">
@@ -128,8 +149,9 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
                 </div>
               </div>
             </td>
+            )}
 
-            {section === 'Requests' ? (
+            {/*{section === 'Requests' && (
               <td className="py-1 whitespace-nowrap">
                 <div className="flex justify-center gap-4 px-1">
                   <div onClick={(e) => { e.stopPropagation(); handleProcessConfirm(transaction); }} className="group cursor-pointer flex items-center">
@@ -139,7 +161,21 @@ const RPTableView = ({ filteredTaxClearance, filteredTaxPayment, handleModalOpen
                   </div>
                 </div>
               </td>
-            ) : (
+            )}*/}
+
+            {section === 'Charges' && (
+              <td className="py-1 whitespace-nowrap">
+              <div className="flex justify-center gap-4 px-1">
+                <div onClick={(e) => { e.stopPropagation(); handleChargeOpen(transaction); }} className="group cursor-pointer flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-500 hover:text-green-600">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                  </svg>
+                </div>
+              </div>
+            </td>
+            )}
+
+            {section === 'Processing' && (
               <td className="py-1 whitespace-nowrap">
               <div className="flex justify-center gap-4 px-1">
                 <div onClick={(e) => { e.stopPropagation(); handleCompleteConfirm(transaction); }} className="group cursor-pointer flex items-center">

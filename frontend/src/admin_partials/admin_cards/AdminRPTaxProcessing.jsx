@@ -173,6 +173,7 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
           handleModalOpen={handleModalOpen}
           handleRejectConfirm={handleRejectConfirm}
           handleCompleteConfirm={handleCompleteConfirm}
+          section={'Processing'}
         />
       );
     } else if (viewMode === 'card') {
@@ -183,6 +184,7 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
           handleModalOpen={handleModalOpen}
           handleRejectConfirm={handleRejectConfirm}
           handleCompleteConfirm={handleCompleteConfirm}
+          section={'Processing'}
         />
       );
     }

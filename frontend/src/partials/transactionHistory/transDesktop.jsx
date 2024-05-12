@@ -344,31 +344,31 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
 
 
             // Second Table Title
-            const titleText = "Last Payment";
-            const titleXPosition = 15; // Adjust as needed
-            const titleYPosition = pdf.autoTable.previous.finalY + 20;
+            // const titleText = "Last Payment";
+            // const titleXPosition = 15; // Adjust as needed
+            // const titleYPosition = pdf.autoTable.previous.finalY + 20;
 
-            pdf.setFont("helvetica", "bold");
-            pdf.setFontSize(10);
-            pdf.text(titleText, titleXPosition, titleYPosition);
+            // pdf.setFont("helvetica", "bold");
+            // pdf.setFontSize(10);
+            // pdf.text(titleText, titleXPosition, titleYPosition);
 
             // Second Table
-            const secondTableStartY = titleYPosition + 2; // Adjust spacing from title
+            // const secondTableStartY = titleYPosition + 2; // Adjust spacing from title
 
-            pdf.autoTable({
-                startY: secondTableStartY,
-                head: [['Payment Date', 'Total Amount']],
-                body:  [["1/14/2023", "P 1200.00"]],
-                theme: 'plain',
-                columnStyles: {
-                    0: { cellWidth: 40, cellPadding: 1, halign: 'center'}, // Adjust the width and height of the first column
-                    1: { cellWidth: 40, cellPadding: 1, halign: 'center'}  // Adjust the width and height of the second column
-                },
-                headStyles: {
-                    fontStyle: 'normal',
-                    halign: 'center'
-                }
-            });
+            // pdf.autoTable({
+            //     startY: secondTableStartY,
+            //     head: [['Payment Date', 'Total Amount']],
+            //     body:  [["1/14/2023", "P 1200.00"]],
+            //     theme: 'plain',
+            //     columnStyles: {
+            //         0: { cellWidth: 40, cellPadding: 1, halign: 'center'}, // Adjust the width and height of the first column
+            //         1: { cellWidth: 40, cellPadding: 1, halign: 'center'}  // Adjust the width and height of the second column
+            //     },
+            //     headStyles: {
+            //         fontStyle: 'normal',
+            //         halign: 'center'
+            //     }
+            // });
 
             // Add note text below the second table
             const noteText = [
@@ -379,7 +379,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
                 "2. This eSOA is valid until " + expiry_date + "."
             ];
             const noteXPosition = 15; // Adjust as needed
-            const noteYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
+            const noteYPosition = pdf.autoTable.previous.finalY + 20; // Adjust the Y position
 
             pdf.setFont("helvetica", "normal");
             pdf.setFontSize(10);
