@@ -738,7 +738,7 @@ const handleCloseConfirm = () => {
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_valididLabel || businessTransaction.valid_id || '-'}</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_valididLabel || businessTransaction.valid_id_type || '-'}</span>
                     </div>
                   </div>
                   
