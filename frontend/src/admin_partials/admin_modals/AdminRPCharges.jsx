@@ -20,16 +20,16 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
       ...prevValues,
       [name]: value,
     }));
-    }
-
-    useEffect(() => {
-      let sum = 0;
-      for (const key in values) {
-          if (values.hasOwnProperty(key) && values[key] !== '') {
-          sum += parseFloat(values[key]);
-          }
+  }
+  
+  useEffect(() => {
+    let val = 0;
+    for (const key in values) {
+      if (!isNaN(parseFloat(values[key]))) {
+        val = parseFloat(values[key]);
       }
-  setTotalVal(sum);
+    }
+    setTotalVal(val);
   }, [values]);
 
   return (
@@ -141,7 +141,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                       </button>
 
                       <button
-                        onClick={handleProcess}
+                        onClick={(e) => handleProcess(e, totalVal)}
                         type="button"
                         className="text-white text-xs md:text-sm bg-emerald-500 border border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-normal rounded-sm px-5 py-2 text-center mb-2 dark:border-emerald-500 dark:hover:border-emerald-700 dark:text-white dark:hover:text-white dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
                       >
