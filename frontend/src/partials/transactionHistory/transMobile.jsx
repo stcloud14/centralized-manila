@@ -100,15 +100,16 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
   const generatePDF = async () => {
     try {
 
-        // Check if there are any pending transactions
-        const pendingTransactions = filteredTransactions.filter(transaction => transaction.status_type.toLowerCase() === 'pending');
+      // Check if there are any pending transactions matching the search input's transaction ID
+      const pendingTransactions = filteredTransactions.filter(transaction =>
+        transaction.status_type.toLowerCase() === 'pending' || transaction.transaction_id.toLowerCase() === searchInput.toLowerCase()
+      );
 
-        if (pendingTransactions.length === 0) {
-            // Log details of transactions that were considered not pending
-            console.log('No pending transactions found. Cannot generate PDF.');
-            console.log('Transactions considered not pending:', filteredTransactions);
-            return;
-        }
+      if (pendingTransactions.length === 0) {
+        // Log a message if no pending transaction matching the search input is found
+        console.log('No pending transaction matching the search input found. Cannot generate PDF.');
+        return;
+      }
         const Base_Url = process.env.Base_Url;
 
         const totalPages = pendingTransactions.length;
