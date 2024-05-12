@@ -442,18 +442,17 @@ function equivalentAmount({ value }) {
   }
 }
 
-
 function totalingAmount({ totalAmount }) {
   const ctc_confee = 15;
   const ctc_basefee = 5;
 
-  if (totalAmount > 0) {
-    const totalFees = ctc_confee + ctc_basefee;
+  const totalFees = ctc_confee + ctc_basefee;
+
+  if (totalAmount >= 0) {
     const totalInterest = Math.round(totalAmount * 0.2);
     const totalAmountPaid = Math.round(parseFloat(totalAmount) + parseFloat(totalInterest) + totalFees);
 
-    return [totalInterest, totalAmountPaid ];
-
+    return [totalInterest, totalAmountPaid];
   } else {
     return [0, 0];
   }
