@@ -74,7 +74,7 @@ useEffect(() => {
   // Fetch verification status from the database using the user_id
   const fetchVerificationStatus = async () => {
     try {
-      const response = await axios.get(`http://localhost:8800/usersettings/check_verification_status/${user_id}`);
+      const response = await axios.get(`${Base_Url}usersettings/check_verification_status/${user_id}`);
       
       // Check if response is successful (status code 2xx)
       if (response.status = 200) {
@@ -104,7 +104,7 @@ useEffect(() => {
   // Fetch verification status from the database using the user_id
   const fetchApplicationStatus = async () => {
     try {
-      const response = await axios.get(`http://localhost:8800/usersettings/check_application_status/${user_id}`);
+      const response = await axios.get(`${Base_Url}usersettings/check_application_status/${user_id}`);
       
       // Check if response is successful (status code 2xx)
       if (response.status = 200) {
@@ -136,7 +136,7 @@ useEffect(() => {
     try {
         const confirmDelete = window.confirm('Are you sure you want to delete your account?');
         if (confirmDelete) {
-            await axios.delete(`http://localhost:8800/usersettings/accdelete/${user_id}`);
+            await axios.delete(`${Base_Url}usersettings/accdelete/${user_id}`);
             // Set the new URL using window.location.href
             localStorage.removeItem('token');
             navigate('/')
@@ -200,7 +200,7 @@ useEffect(() => {
   useEffect(()=>{
     const fetchUserImage= async()=>{
       try {
-        const res = await axios.get(`http://localhost:8800/usersettings/${user_id}`);
+        const res = await axios.get(`${Base_Url}usersettings/${user_id}`);
         const fetchedUserImage = res.data[0].user_image;
         const fetchedImageURL = res.data[0].image_url;
         const verificationStatus = res.data[0].verification_status;
@@ -336,7 +336,7 @@ useEffect(() => {
       const formData = new FormData();
       formData.append('user_img', selectedFile);
 
-      const response = await axios.post(`http://localhost:8800/usersettings/uploadimage/${user_id}`, formData);
+      const response = await axios.post(`${Base_Url}usersettings/uploadimage/${user_id}`, formData);
 
       if (response.status === 200) {
         window.location.reload();
@@ -365,7 +365,7 @@ useEffect(() => {
 
     try {
 
-      const response = await axios.delete(`http://localhost:8800/usersettings/removeimage/${user_id}`);
+      const response = await axios.delete(`${Base_Url}usersettings/removeimage/${user_id}`);
 
       if (response.status === 200) {
           const fileInput = document.getElementById('user_img');
@@ -454,7 +454,7 @@ useEffect(() => {
     if (current_password && new_user_pass && passwordRule.test(new_user_pass)) {
       try {
         // Verify current password
-        const verifyResponse = await axios.post(`http://localhost:8800/forgotpass/verify_pass/${user_id}`, {
+        const verifyResponse = await axios.post(`${Base_Url}forgotpass/verify_pass/${user_id}`, {
           current_password: current_password,
         });
         console.log("verifyResponse", verifyResponse)
@@ -469,12 +469,12 @@ useEffect(() => {
             }, 4000);
           } else {
             try {
-              const response = await axios.put(`http://localhost:8800/forgotpass/reset_password/${user_id}`, {
+              const response = await axios.put(`${Base_Url}forgotpass/reset_password/${user_id}`, {
                 new_user_pass: new_user_pass,
               });
               if (response.status === 200) {
                 try {
-                  const res = await axios.get(`http://localhost:8800/email/regis/${user_id}`);
+                  const res = await axios.get(`${Base_Url}email/regis/${user_id}`);
                   
                   const date = new Date();
                   const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
@@ -503,7 +503,7 @@ useEffect(() => {
                       l_name: l_name
                     };
       
-                      const emailResponse = await axios.post(`http://localhost:8800/email/reset-email/${user_email}`, body);
+                      const emailResponse = await axios.post(`${Base_Url}email/reset-email/${user_email}`, body);
           
                       if (emailResponse.data && emailResponse.data.message) {
                         console.log('SENT EMAIL');
