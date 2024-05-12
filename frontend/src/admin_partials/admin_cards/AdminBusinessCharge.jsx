@@ -171,10 +171,13 @@ useEffect(() => {
           const response = await axios.post(`${Base_Url}adminbp/updateamount/${transaction_id}`, body);
   
           if (response.status === 200) {
+            setIsLoading(true);
             // Fetch user_email after successful payment
             try {
               const res1 = await axios.get(`${Base_Url}transachistory/transId/${user_id}`);
               const transaction_id = res1.data[0]?.transaction_id;
+                                setIsLoading(true);
+
     
               const res = await axios.get(`${Base_Url}email/${user_id}`);
               
@@ -234,17 +237,17 @@ useEffect(() => {
                   console.error(fetchError);
                 }
   
-                setIsLoading(false);
-                handleConfirmClose();
-                handleUpdateData();
-                setSelectedTransaction('');
-        
-                setIsSuccess(true);
-                console.log('Update successful');
-        
-                setTimeout(() => {
-                  setIsSuccess(false);
-                }, 2100);
+                
+
+                  setTimeout(() => {
+                    setIsLoading(false);
+                    handleConfirmClose();
+                    handleUpdateData();
+                    setSelectedTransaction('');
+                    console.log('Update successful');
+                    setIsSuccess(true);
+                  }, 2100);
+ 
 
               } else {
                 console.error('Transaction error:', response.statusText);
@@ -276,9 +279,10 @@ useEffect(() => {
       const service_requested = retrieveResponse.data.data.attributes.description;
       
       const response = await axios.post(`${Base_Url}adminbp/updatereject/${transaction_id}`, body);
-      setIsLoading(true);
+
       // Check the response status before proceeding
       if (response.status === 200) {
+        setIsLoading(true);
 
         try {
           const res = await axios.get(`${Base_Url}email/${user_id}`);
@@ -353,6 +357,7 @@ useEffect(() => {
   
             // Proceed with additional logic after updating state
             try {
+              
               const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
               const emailrefund = await axios.post(`${Base_Url}email/refund/${user_email}`, body);
 
@@ -372,17 +377,16 @@ useEffect(() => {
           console.error(fetchError);
         }
 
-        setIsLoading(false);
-        handleConfirmClose();
-        handleUpdateData();
-        setSelectedTransaction('');
 
-        setIsSuccess(true); // Set success state to true
-        console.log('Update successful');
+          setTimeout(() => {
+            setIsLoading(false);
+            handleConfirmClose();
+            handleUpdateData();
+            setSelectedTransaction('');
+            console.log('Update successful');
+            setIsSuccess(true);
+          }, 2100);
 
-        setTimeout(() => {
-          setIsSuccess(false);
-        }, 2100);
       } else {
         console.error('Transaction error:', response.statusText);
       }
@@ -740,6 +744,7 @@ useEffect(() => {
               handleConfirmClose={handleChargeClose}
               handleProcess={handleProcess}
               transType={transType}
+              isLoading={isLoading}
             />
             )}
 
