@@ -56,23 +56,31 @@ const ContactInfoForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
+    const maxLengthForTelNo = 8;
+    const maxLengthForMobileNo = 11;
+  
+    // Truncate the value if it exceeds the maximum length
+    const truncatedValue = name === 'tel_no' ? value.slice(0, maxLengthForTelNo) : 
+                          name === 'mobile_no' ? value.slice(0, maxLengthForMobileNo) :
+                          value;
+  
     setUserContact((prevData) => {
       if (name === 'region_id') {
         return {
-          ...prevData,
-          region_id: value,
+          ...prevData,    
+          region_id: truncatedValue,
           prov_id: '',
           city_id: '',
         };
       }
-
+  
       return {
         ...prevData,
-        [name]: value,
+        [name]: truncatedValue,
       };
     });
   };
+  
 
   const [isSuccess, setIsSuccess] = useState(false); // New state for success message
   const contentRef = useRef(null);
