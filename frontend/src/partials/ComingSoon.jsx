@@ -12,7 +12,7 @@ import 'aos/dist/aos.css';
 AOS.init();
 
 const ComingSoon = () => {
-
+  const Base_Url = process.env.Base_Url;
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const contentRef = useRef(null);
   const logoSrc = '../src/images/mnl_footer.svg';
@@ -25,7 +25,7 @@ const ComingSoon = () => {
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
