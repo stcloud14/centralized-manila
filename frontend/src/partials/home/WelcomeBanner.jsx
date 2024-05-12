@@ -9,7 +9,7 @@ AOS.init();
 function WelcomeBanner() {
 
   const { user_id } = useParams();
-
+  const Base_Url = process.env.Base_Url;
   const [userName, setUserName]=useState();
 
   console.log(userName)
@@ -17,7 +17,7 @@ function WelcomeBanner() {
   useEffect(()=>{
     const fetchUserName= async()=>{
         try{
-            const res= await axios.get(`http://localhost:8800/profile/username/${user_id}`)
+            const res= await axios.get(`${Base_Url}profile/username/${user_id}`)
             setUserName(res.data)            
 
         }catch(err){

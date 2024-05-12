@@ -23,11 +23,11 @@ const AdminBusinessForm1 =()=>{
 
   const [businessPermit, setBusinessPermit] = useState([]);
   console.log("userrole", admin_type)
-
+  const Base_Url = process.env.Base_Url;
 
   const fetchUserTransaction = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/adminbp/`);
+      const res = await axios.get(`${Base_Url}adminbp/`);
       console.log('Response:', res.data);
       setBusinessPermit(res.data.businesspermit);
       console.log('FETCHED DATA')
@@ -40,7 +40,7 @@ const AdminBusinessForm1 =()=>{
 
   const fetchExpiredTransaction = async () => {
     try {
-      //await axios.post(`http://localhost:8800/email/updateexpired`);
+      //await axios.post(`${Base_Url}email/updateexpired`);
       console.log('Sent emails')
       
     } catch (err) {

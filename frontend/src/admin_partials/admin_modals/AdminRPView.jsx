@@ -76,10 +76,14 @@ const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) =>
                             <span className="font-medium whitespace-nowrap">Time Processed</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.time}</span>
                           </div>
+                          {transaction_id ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>
+                            {status_type === "Pending" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-yellow-200 text-yellow-800 w-24">{selectedTransaction.status_type}</span>}
+                            {status_type === "Paid" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>}
+                            {status_type === "Processing" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>}
                           </div>
+                          ) : null}
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Amount Paid</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">P {selectedTransaction.amount}</span>
