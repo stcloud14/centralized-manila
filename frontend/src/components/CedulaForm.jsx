@@ -67,7 +67,6 @@ const CedulaForm =()=>{
     ctc_grossca: 0,
     ctc_salariesca: 0,
     ctc_totalamount: 0,
-    ctc_interest: 0,
     amount: 0,
     ctc_residencetaxdue: '',
     ctc_sexLabel: '',
@@ -223,7 +222,7 @@ const handleInputChange = (e) => {
 
       const totalAmountPartial = incomeCedAmount + grossCedAmount + salariesCedAmount; 
       const totalAmount = Math.round(totalAmountPartial * 100) / 100; 
-      const [totalInterest, totalAmountPaid] = totalingAmount({ totalAmount });
+      const [ totalAmountPaid] = totalingAmount({ totalAmount });
 
 
       return {
@@ -231,7 +230,7 @@ const handleInputChange = (e) => {
         [name]: numericValue,
         ctc_cedamount: incomeCedAmount,
         ctc_totalamount: totalAmount,
-        ctc_interest: totalInterest,
+    
         amount: totalAmountPaid,
       };
     }
@@ -267,7 +266,7 @@ const handleInputChange = (e) => {
 
       const totalAmountPartial = incomeCedAmount + grossCedAmount + salariesCedAmount; 
       const totalAmount = Math.round(totalAmountPartial * 100) / 100; 
-      const [totalInterest, totalAmountPaid] = totalingAmount({ totalAmount });
+      const [ totalAmountPaid] = totalingAmount({ totalAmount });
 
 
 
@@ -276,7 +275,7 @@ const handleInputChange = (e) => {
         [name]: numericValue,
         ctc_grossca: grossCedAmount,
         ctc_totalamount: totalAmount,
-        ctc_interest: totalInterest,
+       
         amount: totalAmountPaid,
       };
     }
@@ -289,7 +288,7 @@ const handleInputChange = (e) => {
 
       const totalAmountPartial = incomeCedAmount + grossCedAmount + salariesCedAmount; 
       const totalAmount = Math.round(totalAmountPartial * 100) / 100; 
-      const [totalInterest, totalAmountPaid] = totalingAmount({ totalAmount });
+      const [ totalAmountPaid] = totalingAmount({ totalAmount });
 
 
 
@@ -298,7 +297,7 @@ const handleInputChange = (e) => {
         [name]: numericValue,
         ctc_salariesca: salariesCedAmount,
         ctc_totalamount: totalAmount,
-        ctc_interest: totalInterest,
+       
         amount: totalAmountPaid,
       };
     }
@@ -449,10 +448,9 @@ function totalingAmount({ totalAmount }) {
   const totalFees = ctc_confee + ctc_basefee;
 
   if (totalAmount >= 0) {
-    const totalInterest = Math.round(totalAmount * 0.2);
-    const totalAmountPaid = Math.round(parseFloat(totalAmount) + parseFloat(totalInterest) + totalFees);
+    const totalAmountPaid = Math.round(parseFloat(totalAmount) +  totalFees);
 
-    return [totalInterest, totalAmountPaid];
+    return [ totalAmountPaid];
   } else {
     return [0, 0];
   }
@@ -838,10 +836,6 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                 <span className="whitespace-nowrap">Total</span>
                 <span name="ctc_totalamount" id="ctc_totalamount" className="whitespace-nowrap">P {CtcCedula.ctc_totalamount} .00</span>
               </div>
-              <div className="flex justify-between mt-2">
-                    <span className="whitespace-nowrap">Interest (20%)</span>
-                    <span name="ctc_interest" id="ctc_interest" className="whitespace-nowrap">P {CtcCedula.ctc_interest} .00</span>
-                  </div>
                   <div className="flex justify-between mt-2">
                     <span className="whitespace-nowrap">Base Fee</span>
                     <span name="ctc_basefee" id="ctc_basefee" className="whitespace-nowrap">P 5 .00</span>
