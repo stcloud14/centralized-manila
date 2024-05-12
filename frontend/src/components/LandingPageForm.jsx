@@ -480,7 +480,7 @@ const LandingPageForm = () => {
                 />
                 <span>Remember Me</span> */}
               </label>
-              <a className="text-yellow-500 hover:text-blue-700 hover:text-yellow-600" href="/forgotpass">Forgot Password?</a>
+              <a className="text-yellow-500 hover:text-yellow-600" href="/forgotpass">Forgot Password?</a>
             </div>
             )}
             <div className="text-center">
