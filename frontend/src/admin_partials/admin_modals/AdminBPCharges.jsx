@@ -4,7 +4,7 @@ import moment from 'moment/moment.js';
 import StatusBadgeModal from '../StatusBadgeModal';
 import Loading from '../../partials/Loading';
 
-const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, businessImages, handleConfirmClose, handleProcess, isLoading, transType }) => {
+const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, businessImages, handleConfirmClose, handleProcess, isLoading, transType, warning }) => {
 
   const { user_id, transaction_id, status_type, date_processed } = selectedTransaction;
 
@@ -143,6 +143,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                  
                   <span className="font-medium whitespace-nowrap">Transaction ID</span>
                   <span className="whitespace-nowrap md:mb-7 mb-1">{transaction_id}</span>
                 </div>               
@@ -657,6 +658,13 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
               <span className="font-semibold text-gray-700 bg-slate-200 dark:bg-[#212121] dark:text-gray-300 ml-6">Business Permit Charges</span>
             </div>
               <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[42rem] overflow-y-auto"> 
+              
+              {warning && (
+                  <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
+                    Missing fields are required.
+                  </div>
+                )}  
+
                 <div className='flex text-left dark:text-white text-sm pb-2'>
                   <span>Note: Please input the exact amount for the Business Permit fees based on the user's provided details.</span>
                 </div>
