@@ -373,11 +373,10 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
 
             // Add note text below the second table
             const noteText = [
-                "Note:",
-                "1. Please present this Statement to the Teller for in-person payments. Alternatively, within the",
-                "   transaction details, use the 'Pay' button to settle your dues conveniently online. Disregard",
-                "   if the account has already been settled.",
-                "2. This eSOA is valid until " + expiry_date + "."
+              "Note:",
+              "1. Please present this Statement to the Teller for in-person payments. Alternatively, within the transaction details,",
+              "    use the 'Pay' button to settle your dues conveniently online. Disregard if the account has already been settled.",
+              "2. This eSOA is valid until " + expiry_date + "."
             ];
             const noteXPosition = 15; // Adjust as needed
             const noteYPosition = pdf.autoTable.previous.finalY + 20; // Adjust the Y position
