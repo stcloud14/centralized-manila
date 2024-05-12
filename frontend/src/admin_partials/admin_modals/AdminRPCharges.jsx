@@ -121,7 +121,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
               <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[28rem] overflow-y-auto"> 
              
               {warning && (
-                <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
+                <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
                   Missing fields are required.
                 </div>
               )}  
