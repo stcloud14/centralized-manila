@@ -10,6 +10,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
   console.log(selectedTransaction)
 
   // const trans_type = 'Business Permit';
+  const Base_Url = process.env.Base_Url;
 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
@@ -30,7 +31,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
 //           user_id: user_id,
 //       };
 
-//         const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
+//         const response = await axios.post(`${Base_Url}payment/create-checkout-session/${transaction_id}`, body);
 
 //         if (response.data && response.data.checkoutSessionUrl) {
 //             const checkoutSessionUrl = response.data.checkoutSessionUrl;
@@ -56,7 +57,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
   //   const fetchBusinessTransaction = async () => {
   //     if (transaction_id) {
   //     try {
-  //       const res = await axios.get(`http://localhost:8800/transachistory/buspermit/${transaction_id}`);
+  //       const res = await axios.get(`${Base_Url}transachistory/buspermit/${transaction_id}`);
   //       setBusinessTransaction(res.data);
   //       console.log(res.data);
   //     } catch (err) {

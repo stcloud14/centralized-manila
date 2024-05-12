@@ -15,6 +15,9 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
   const [isDeclined, setIsDeclined] = useState(false);
   const [isLoading, setisLoading] = useState(false)
 
+  const Base_Url = process.env.Base_Url;
+
+
   const [isImageModalOpen, setisImageModalOpen] = useState(false);
   const handleOpenImage = () => {
       setisImageModalOpen(true);
@@ -112,12 +115,12 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
         trans_type,
       }
 
-      const response = await axios.post(`http://localhost:8800/adminur/approve/${user_id}`, body1);
+      const response = await axios.post(`${Base_Url}adminur/approve/${user_id}`, body1);
   
       if (response.status === 200) {
 
         try {
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          const res = await axios.get(`${Base_Url}email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -157,7 +160,7 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/status-verified-email/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/status-verified-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
@@ -208,12 +211,12 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
         trans_type,
       }
 
-      const response = await axios.post(`http://localhost:8800/adminur/decline/${user_id}`, body1);
+      const response = await axios.post(`${Base_Url}adminur/decline/${user_id}`, body1);
   
       if (response.status === 200) {
 
         try {
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          const res = await axios.get(`${Base_Url}email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -253,7 +256,7 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/status-verified-email/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/status-verified-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
