@@ -18,11 +18,12 @@ function DropdownNotifications({ align }) {
 
   const { user_id } = useParams();
 
+  const Base_Url = process.env.Base_Url;
 
   useEffect(() => {
     const fetchUserNotification = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/notifications/${user_id}`);
+        const res = await axios.get(`${Base_Url}notifications/${user_id}`);
         setNotificationCount(res.data.notif_count);
         setAllNotif(res.data.user_notif);
         setNotifications(res.data.user_notif);
@@ -39,11 +40,11 @@ function DropdownNotifications({ align }) {
 const handleRead = async () => {
  
   try {
-    const response = await axios.post(`http://localhost:8800/notifications/markread/${user_id}`);
+    const response = await axios.post(`${Base_Url}notifications/markread/${user_id}`);
 
     if (response.status === 200) {
       try {
-        const res = await axios.get(`http://localhost:8800/notifications/${user_id}`);
+        const res = await axios.get(`${Base_Url}notifications/${user_id}`);
         setNotificationCount(res.data.notif_count);
         setAllNotif(res.data.user_notif);
         setNotifications(res.data.user_notif);

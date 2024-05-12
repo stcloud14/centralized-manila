@@ -28,11 +28,13 @@ const  AdminAuditTrailForm = () => {
   const [selectedStatus, setSelectedStatus] = useState('All');
   const [selectedType, setSelectedType] = useState('All');
 
+  const Base_Url = process.env.Base_Url;
+
 
   useEffect(() => {
     const fetchAuditTrail = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/audittrail/`);
+        const res = await axios.get(`${Base_Url}audittrail/`);
         setAuditTrail(res.data);
         setOriginalAuditTrail(res.data);
       } catch (err) {
