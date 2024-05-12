@@ -3,7 +3,7 @@ import React from 'react';
     const RelationshipDropdown = () => {
         return (
             <>
-                     <option value="0">Select Relationship</option>
+                     <option value="0" className="dark:bg-[#3d3d3d]">Select Relationship</option>
                     <option value="SIBLINGS" label="Sibling" className='dark:bg-[#3d3d3d]'>Sibling</option>
                     <option value="FATHER" label="Father" className='dark:bg-[#3d3d3d]'>Father</option>
                     <option value="DAUGHTER" label="Daughter" className='dark:bg-[#3d3d3d]'>Daughter</option>
