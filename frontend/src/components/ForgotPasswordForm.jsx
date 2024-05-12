@@ -7,6 +7,9 @@ import auth from '../../firebase.config';  // Updated import statement
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 const ForgotPasswordForm = () => {
+
+  const Base_Url = process.env.Base_Url;
+
   const [authenticated, setAuthenticated] = useState(true); //set false and later remove it so that it will works place true
   const [isSendOTP, setSendOTP] = useState(true); //set false and later remove it so that it will works place true
   const [isResetPassword, setResetPassword] = useState(false); //set it false when you are done configure
@@ -218,7 +221,7 @@ const ForgotPasswordForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8800/forgotpass/forgot-pass/${userReg.mobile_no}`);
+      const response = await axios.post(`${Base_Url}forgotpass/forgot-pass/${userReg.mobile_no}`);
       if (response.status === 200) {
         if (isSubmitting) {
           return;
@@ -295,7 +298,7 @@ const navigate = useNavigate();
         }, 4000);
       } else {
         try {
-          const response = await axios.put(`http://localhost:8800/forgotpass/reset_pass/${userReg.mobile_no}`, {
+          const response = await axios.put(`${Base_Url}forgotpass/reset_pass/${userReg.mobile_no}`, {
             new_user_pass: userReg.new_user_pass,
             user_id: userReg.user_id,
           });
@@ -303,7 +306,7 @@ const navigate = useNavigate();
           if (response.status === 200) {
 
             try {
-              const res = await axios.get(`http://localhost:8800/email/regis/${user_id}`);
+              const res = await axios.get(`${Base_Url}email/regis/${user_id}`);
               
               const date = new Date();
               const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
@@ -334,7 +337,7 @@ const navigate = useNavigate();
       
                 // Proceed with additional logic after updating state
                 try {
-                  const emailResponse = await axios.post(`http://localhost:8800/email/reset-email/${user_email}`, body);
+                  const emailResponse = await axios.post(`${Base_Url}email/reset-email/${user_email}`, body);
       
                   if (emailResponse.data && emailResponse.data.message) {
                     console.log('SENT EMAIL');
