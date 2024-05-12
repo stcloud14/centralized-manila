@@ -758,28 +758,29 @@ const BusinessPermitForm =()=>{
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
 
-const handleProceed = (e) => {
-  e.preventDefault();
+  const handleProceed = (e) => {
+    e.preventDefault();
+    
+    const requiredFields = [
+      'bus_type','bus_name', 'bus_reg_no','bus_tin','bus_lname','bus_fname','bus_sex','bus_email','bus_mobile_no','bus_bregion','bus_bprovince',
+      'bus_bcity', 'bus_bbrgy','bus_bhnum','bus_bstreet', 'bus_bzip', 'bus_floor','bus_emp','bus_male_emp','bus_female_emp', 'bus_van_no','bus_truck_no','bus_motor_no',
+      'bus_region', 'bus_province','bus_city','bus_brgy','bus_hnum','bus_street', 'bus_zip','bus_office',
+      'bus_validid','bus_purpose',
+    ];
   
-  const requiredFields = [
-    'bus_type','bus_name', 'bus_reg_no','bus_tin','bus_lname','bus_fname','bus_sex','bus_email','bus_mobile_no','bus_bregion','bus_bprovince',
-    'bus_bcity', 'bus_bbrgy','bus_bhnum','bus_bstreet', 'bus_bzip', 'bus_floor','bus_emp','bus_male_emp','bus_female_emp', 'bus_van_no','bus_truck_no','bus_motor_no',
-    'bus_region', 'bus_province','bus_city','bus_brgy','bus_hnum','bus_street', 'bus_zip','bus_office', 'bus_line','bus_psic', 'bus_total_cap',
-    'bus_validid','bus_purpose',
-  ];
-
-  const isIncomplete = requiredFields.some((field) => !busPermit[field]);
-
-  if (isIncomplete || dataRow.length === 0) {
-    contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-    setShowWarning(true); // Show warning message and prevent opening the modal
-    setTimeout(() => {
-      setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
-    }, 4000);
-  } else {
-    setIsModalOpen(true); // Proceed to open the modal
-  }  
-};
+    const isIncomplete = requiredFields.some((field) => !busPermit[field]);
+  
+    if (isIncomplete || dataRow.length === 0) {
+      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      setShowWarning(true); // Show warning message and prevent opening the modal
+      setTimeout(() => {
+        setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
+      }, 4000);
+    } else {
+      setIsModalOpen(true); // Proceed to open the modal
+    }  
+  };
+  
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setShowWarning(false);
