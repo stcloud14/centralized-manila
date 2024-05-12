@@ -110,9 +110,8 @@ const router = Router();
     const values5 = [transID, user_id, transType, statusType, formattedDate, formattedExpiryDate];
   
     const query6 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";
-
-    const values6 = [transID, plainAmount !== undefined ? plainAmount : 0];   
-  
+    const values6 = [transID, plainAmount];  
+    
     const query4 = "INSERT INTO rptax_clearance (`rp_tdn`, `rp_pin`, `transaction_id`) VALUES (?, ?, ?)";
     const values4 = [req.body.rp_tdn, req.body.rp_pin, transID];
 
