@@ -141,7 +141,7 @@ const ForgotPasswordForm = () => {
     setTimeout(() => {
       clearInterval(countdownInterval1);
       setIsButtonDisabled(false)
-    }, 31000);
+    }, 46000);
 
 
     } catch (error) {
@@ -202,7 +202,7 @@ const ForgotPasswordForm = () => {
         clearInterval(countdownInterval1);
         setIsButtonDisabled(false)
         setLoadingOTP(false)
-      }, 31000);
+      }, 46000);
 
 
     } catch (error) {
