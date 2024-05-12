@@ -539,7 +539,7 @@ useEffect(() => {
           }
         } else {
           // Current password is incorrect
-          setPasswordError('The current current password is incorrect.');
+          setPasswordError('The current password is incorrect.');
           setTimeout(() => {
             setPasswordError('');
           }, 4000);
@@ -547,7 +547,7 @@ useEffect(() => {
       } catch (error) {
         console.error(error);
         // Handle error in password verification
-        setPasswordError('The current current password is incorrect.');
+        setPasswordError('The current password is incorrect.');
         setTimeout(() => {
           setPasswordError('');
         }, 4000);
