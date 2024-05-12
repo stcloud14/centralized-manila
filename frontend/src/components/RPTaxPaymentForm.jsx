@@ -37,7 +37,7 @@ const RPTaxPaymentForm =()=>{
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -187,6 +187,7 @@ const handleCheckboxChange = (e) => {
   
 
   const [isSuccess, setIsSuccess] = useState(false);
+  const Base_Url = process.env.Base_Url;
 
   const contentRef = useRef(null);
 
@@ -195,15 +196,15 @@ const handleCheckboxChange = (e) => {
   
     try {
       // Make a POST request to save rptaxPayment data
-      const response = await axios.post(`http://localhost:8800/rptax/payment/${user_id}`, rptaxPayment);
+      const response = await axios.post(`${Base_Url}rptax/payment/${user_id}`, rptaxPayment);
   
       if (response.status === 200) {
         // Fetch user_email after successful payment
         try {
-          const res1 = await axios.get(`http://localhost:8800/transachistory/transId/${user_id}`);
+          const res1 = await axios.get(`${Base_Url}transachistory/transId/${user_id}`);
           const transaction_id = res1.data[0]?.transaction_id;
 
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          const res = await axios.get(`${Base_Url}email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -239,7 +240,7 @@ const handleCheckboxChange = (e) => {
 
   
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
@@ -319,7 +320,7 @@ const handleCheckboxChange = (e) => {
   useEffect(()=>{
     const fetchUserVerification= async()=>{
         try{
-            const res= await axios.get(`http://localhost:8800/usersettings/${user_id}`)
+            const res= await axios.get(`${Base_Url}usersettings/${user_id}`)
             setIsVerifiedStatus(res.data[0].verification_status)
             
         }catch(err){

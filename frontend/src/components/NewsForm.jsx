@@ -13,6 +13,9 @@ const NewsForm =()=>{
   const navigate = useNavigate();
   const { user_id } = useParams();
 
+  const Base_Url = process.env.Base_Url;
+
+
   const logoSrc = '../src/images/mnl_footer.svg';
 
 
@@ -22,7 +25,7 @@ const NewsForm =()=>{
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
