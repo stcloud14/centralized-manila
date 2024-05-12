@@ -60,7 +60,8 @@ const AdminSettings =()=>{
   const [isSuccess, setIsSuccess] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
 
-  
+  const Base_Url = process.env.Base_Url;
+
 
   const [defaultImg, setDefaultImg] = useState(defaultImage);
 
@@ -108,7 +109,7 @@ const AdminSettings =()=>{
   useEffect(()=>{
     const fetchUserImage= async()=>{
         try{
-            const res= await axios.get(`http://localhost:8800/adminprofile/${admin_type}`)
+            const res= await axios.get(`${Base_Url}adminprofile/${admin_type}`)
             setStoredImage(res.data[0])
 
         }catch(err){
@@ -200,7 +201,7 @@ const AdminSettings =()=>{
       const formData = new FormData();
       formData.append('user_img', selectedFile);
 
-      const response = await axios.post(`http://localhost:8800/adminprofile/uploadimage/${admin_type}`, formData);
+      const response = await axios.post(`${Base_Url}adminprofile/uploadimage/${admin_type}`, formData);
 
       if (response.status === 200) {
           setIsSuccess(true);
@@ -227,7 +228,7 @@ const AdminSettings =()=>{
 
     try {
 
-      const response = await axios.delete(`http://localhost:8800/adminprofile/removeimage/${admin_type}`);
+      const response = await axios.delete(`${Base_Url}adminprofile/removeimage/${admin_type}`);
 
       if (response.status === 200) {
           const fileInput = document.getElementById('user_img');

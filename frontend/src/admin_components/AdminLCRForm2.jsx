@@ -19,6 +19,7 @@ const AdminLCRForm2 =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
+  const Base_Url = process.env.Base_Url;
 
   const [birthCert, setBirthCert] = useState([]);
   const [deathCert, setDeathCert] = useState([]);
@@ -28,7 +29,7 @@ const AdminLCRForm2 =()=>{
 
   const fetchUserTransaction = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/adminlcr/processing/`);
+      const res = await axios.get(`${Base_Url}adminlcr/processing/`);
       setBirthCert(res.data.birthcert); 
       setDeathCert(res.data.deathcert);
       setMarriageCert(res.data.marriagecert);

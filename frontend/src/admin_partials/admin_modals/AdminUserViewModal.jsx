@@ -9,7 +9,8 @@ import GovInfo from '../admin_userregistry/GovInfo';
 import AdminUserDeleteModal from '../admin_modals/AdminUserDeleteModal';
 
 const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
-  
+  const Base_Url = process.env.Base_Url;
+
   const [userImage, setUserImage] = useState(null);
   const [storedImage, setStoredImage] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -230,12 +231,12 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
         trans_type,
       }
 
-      const response = await axios.put(`http://localhost:8800/adminur/updateuser/${selectedTransaction.user_id}`, body1);
+      const response = await axios.put(`${Base_Url}adminur/updateuser/${selectedTransaction.user_id}`, body1);
   
       if (response.status === 200) {
 
         try {
-          const res = await axios.get(`http://localhost:8800/email/${selectedTransaction.user_id}`);
+          const res = await axios.get(`${Base_Url}email/${selectedTransaction.user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -275,7 +276,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   
             // Proceed with additional logic after updating state
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/status-updated-email/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/status-updated-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
@@ -323,7 +324,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   //   e.preventDefault();
   
   //   try {
-  //     const response = await axios.delete(`http://localhost:8800/adminur/updateuser/${selectedTransaction.user_id}`);
+  //     const response = await axios.delete(`${Base_Url}adminur/updateuser/${selectedTransaction.user_id}`);
   
   //     if (response.status === 200) {
   //       setIsDeleted(true);

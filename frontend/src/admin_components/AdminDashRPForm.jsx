@@ -24,11 +24,12 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
   // const adminRole = state && state.user_role;
 
   const [reportData, setReportData]=useState();
+  const Base_Url = process.env.Base_Url;
 
   useEffect(() => {
     const fetchREPORTData = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/report/${admin_type}`);
+        const res = await axios.get(`${Base_Url}report/${admin_type}`);
         setReportData(res.data);
       } catch (err) {
         console.log(err);
@@ -39,7 +40,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
 
   async function fetchData(endpoint, selectedYear) {
     try {
-      const response = await axios.get(`http://localhost:8800/admin/${endpoint}/`, {
+      const response = await axios.get(`${Base_Url}admin/${endpoint}/`, {
         params: {
           selectedYear: selectedYear
         }
@@ -102,7 +103,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                   date_processed: new Date().toISOString(),
               };
 
-              await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
+              await axios.post(`${Base_Url}report/store/${admin_type}`, reportNum);
 
               console.log('Report stored successfully');
 

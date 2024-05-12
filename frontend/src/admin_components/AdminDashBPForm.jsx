@@ -24,13 +24,14 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
  // const admin_type = pathname.split("/")[2];
   
   // console.log("userrole", admin_type)
+  const Base_Url = process.env.Base_Url;
 
   const [reportData, setReportData]=useState();
 
   useEffect(() => {
     const fetchREPORTData = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/report/${admin_type}`);
+        const res = await axios.get(`${Base_Url}report/${admin_type}`);
         setReportData(res.data);
       } catch (err) {
         console.log(err);
@@ -41,7 +42,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
 
   async function fetchData(endpoint, selectedYear) {
     try {
-      const response = await axios.get(`http://localhost:8800/admin/${endpoint}/`, {
+      const response = await axios.get(`${Base_Url}admin/${endpoint}/`, {
         params: {
           selectedYear: selectedYear
         }
@@ -100,7 +101,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
             date_processed: new Date().toISOString(),
         };
 
-        await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
+        await axios.post(`${Base_Url}report/store/${admin_type}`, reportNum);
 
       // Calculation for the revenue
       const averageMonthlyRevenue = RevenueData.totalBP ? RevenueData.totalBP / 12 : 0;
