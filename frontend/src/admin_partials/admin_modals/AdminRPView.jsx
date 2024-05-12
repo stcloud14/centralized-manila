@@ -59,7 +59,7 @@ const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) =>
                           {transType === 'Tax Payment' ? 
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">From</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">1st Quarter</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.year_period}</span>
                           </div>
                           : null} 
                           {transType === 'Tax Payment' ? 
