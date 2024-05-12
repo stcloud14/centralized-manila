@@ -377,7 +377,7 @@ const handleCloseConfirm = () => {
                       <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_bprovinceLabel || businessTransaction.bus_bprovince || '-'}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                      <span className="font-medium whitespace-nowrap">Business city</span>
+                      <span className="font-medium whitespace-nowrap">Business City</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{businessTransaction.bus_bcityLabel || businessTransaction.bus_bcity || '-'}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
