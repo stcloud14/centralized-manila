@@ -693,7 +693,7 @@ const LandingPageForm = () => {
           Copyright &copy; {new Date().getFullYear()} |
           <a href="/indexadmin" className='hover:text-white'>
             <span className="hover:font-medium hover:text-blue-500"> B</span>
-            <span className="hover:font-medium hover:text-blue-500">S</span>
+            <span className="hover:font-medium hover:text-orange-500">S</span>
             <span className="hover:font-medium hover:text-yellow-500">I</span>
             <span className="hover:font-medium hover:text-purple-500">T</span>
             <span className="hover:font-medium hover:text-emerald-500"> 4</span>
