@@ -284,7 +284,7 @@ function queryDatabase(query, values) {
 //         data: {
 //             attributes: {
 //                 events: ['checkout_session.payment.paid'],
-//                 url: 'http://localhost:5173/transachistory/'
+//                 url: '/transachistory/'
 //             }
 //         }
 //     })
