@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
     bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
     bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
     bbt.bus_type_label AS bus_type, \
-    ti.amount as amount, ti.copies, ptt.print_type, ti.valid_id, tt.trans_type, pt.purpose_type, \
+    ti.amount as amount, ti.copies, ptt.print_type, vt.valid_id_type, tt.trans_type, pt.purpose_type, \
     r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
     ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip  \
     \
@@ -108,7 +108,7 @@ router.get('/charges', async (req, res) => {
     bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
     bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
     bbt.bus_type_label AS bus_type, \
-    ti.amount as amount, ti.copies, ptt.print_type, ti.valid_id, tt.trans_type, pt.purpose_type, \
+    ti.amount as amount, ti.copies, ptt.print_type, vt.valid_id_type, tt.trans_type, pt.purpose_type, \
     r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
     ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip  \
     \
@@ -199,7 +199,7 @@ router.get('/processing', async (req, res) => {
     bp.bus_lessor, bp.bus_rent, bi.bus_tax_incentives,\
     bi.bus_dti_reg, bi.bus_rptax_decbldg, bi.bus_sec_paid, bi.bus_sec_articles, bi.bus_nga, bi.bus_sec_front, bi.bus_rptax_decland, bi.bus_fire, bi.bus_page2, bi.bus_page3, bi.bus_page4, bi.bus_page5,\
     bbt.bus_type_label AS bus_type, \
-    ti.amount as amount, ti.copies, ptt.print_type, ti.valid_id, tt.trans_type, pt.purpose_type, \
+    ti.amount as amount, ti.copies, ptt.print_type, vt.valid_id_type, tt.trans_type, pt.purpose_type, \
     r1.region_name AS bus_region, p1.prov_name AS bus_province, c1.city_name AS bus_city, \
     ai.brgy_dist AS bus_brgy, ai.house_floor AS bus_hnum, ai.bldg_name AS bus_street, ai.zip_code AS bus_zip  \
     \
