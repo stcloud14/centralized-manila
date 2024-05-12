@@ -99,7 +99,7 @@ const router = Router();
     const trans_type = 'Real Property Tax Clerance';
     const notif_title = 'Transaction Payment Processing';
     const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transID}</span> is currently being processed.</span></p>`;
-    const statusType = 'Processing';
+    const statusType = 'Pending';
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
     const expiryDate = new Date();
