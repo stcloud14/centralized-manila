@@ -13,7 +13,7 @@ import AdminBusinessProcessing from '../admin_partials/admin_cards/AdminBusiness
 
 
 const AdminBusinessForm2 =()=>{
-
+  const Base_Url = process.env.Base_Url;
   const { admin_type } = useParams();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -25,7 +25,7 @@ const AdminBusinessForm2 =()=>{
 
   const fetchUserTransaction = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/adminbp/processing/`);
+      const res = await axios.get(`${Base_Url}adminbp/processing/`);
       setBusinessPermit(res.data.businesspermit);
     } catch (err) {
       console.log(err);

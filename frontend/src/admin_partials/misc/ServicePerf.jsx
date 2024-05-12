@@ -6,7 +6,7 @@ import DoughnutChart from '../../charts/DoughnutChart';
 import { tailwindConfig } from '../../utils/Utils';
 
 function ServicePerf() {
-
+  const Base_Url = process.env.Base_Url;
   const [servicePerf, setServicePerf] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
 
@@ -15,7 +15,7 @@ function ServicePerf() {
   useEffect(() => {
     const fetchServicePerf = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/admin/serviceperf/`);
+        const res = await axios.get(`${Base_Url}admin/serviceperf/`);
         setServicePerf(res.data);
         setDataLoaded(true);
       } catch (err) {

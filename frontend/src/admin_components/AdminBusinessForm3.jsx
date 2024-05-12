@@ -14,7 +14,7 @@ import AdminBusinessCharge from '../admin_partials/admin_cards/AdminBusinessChar
 
 const AdminBusinessForm3 =()=>{
   const { admin_type } = useParams();
-
+  const Base_Url = process.env.Base_Url;
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logoSrc = '../src/images/mnl_footer.svg';
@@ -28,7 +28,7 @@ const AdminBusinessForm3 =()=>{
 
   const fetchUserTransaction = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/adminbp/charges/`);
+      const res = await axios.get(`${Base_Url}adminbp/charges/`);
       console.log('Response:', res.data);
       setBusinessPermit(res.data.businesspermit);
       console.log('FETCHED DATA')
@@ -41,7 +41,7 @@ const AdminBusinessForm3 =()=>{
 
   const fetchExpiredTransaction = async () => {
     try {
-      //await axios.post(`http://localhost:8800/email/updateexpired`);
+      //await axios.post(`${Base_Url}email/updateexpired`);
       console.log('Sent emails')
       
     } catch (err) {
