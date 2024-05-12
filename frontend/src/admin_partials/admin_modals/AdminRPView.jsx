@@ -84,18 +84,14 @@ const AdminRPView = ({ selectedTransaction, isOpen, handleClose, transType }) =>
                             {status_type === "Processing" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>}
                           </div>
                           ) : null}
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Amount Paid</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">P {selectedTransaction.amount}</span>
-                          </div>
-
+                          {/* <hr className='mb-1'/> */}
+                            
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
+                <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-end">
                   <div className="flex items-center space-x-5 mt-auto">
                       <button
                           onClick={handleClose}

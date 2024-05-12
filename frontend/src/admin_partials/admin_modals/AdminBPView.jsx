@@ -599,21 +599,20 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
             </div>
             ) : null}
 
-            <hr className='mb-1'/>
+            {/* <hr className='mb-1'/> */}
             <div className="flex justify-between">
-            <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : "Amount to Pay"}</span>
+            {/* <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : "Amount to Pay"}</span>
               <span className="font-semibold whitespace-nowrap ml-4"> 
               {selectedTransaction && selectedTransaction.amount !== 0 ? (
                 `P ${selectedTransaction.bus_amount !== undefined ? selectedTransaction.bus_amount + '.00' : 
               selectedTransaction.amount !== undefined ? selectedTransaction.amount + '.00' : '-'}`
               ) : "Kindly input additional charges"}
-              </span>
+              </span> */}
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-between">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Sample_EPC_QR_code.png" alt="QR Code" className="w-20 h-20 mr-3"/>
-                  <div className="flex items-center space-x-5 mt-auto">
+          <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-end">
+                  <div className="flex items-center justify-end space-x-5 mt-auto">
                       <button
                           onClick={handleClose}
                           type="button"
