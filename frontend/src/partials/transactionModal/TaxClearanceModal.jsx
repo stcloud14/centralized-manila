@@ -335,7 +335,11 @@ const cancelTrans = async (e) => {
                         <hr className='mt-7 mb-1'/>
                         <div className="flex justify-between">
                         <span className="font-semibold whitespace-nowrap">{status_type === "Pending" ? "Amount Paid" : status_type === "Processing" ? "Amount to Pay" : "Amount"}</span>
-                          <span className="font-semibold whitespace-nowrap ml-4">P {taxClearanceTransaction.amount ? taxClearanceTransaction.amount + '.00': '-'}</span>
+                        <span className="font-semibold whitespace-nowrap ml-4"> 
+                        {taxClearanceTransaction && status_type ? (
+                          `P {taxClearanceTransaction.amount ? taxClearanceTransaction.amount + '.00': '-'}`
+                          ) : `Submit for amount declaration.`}
+                          </span>
                         </div>
                       </div>
                     </div>
