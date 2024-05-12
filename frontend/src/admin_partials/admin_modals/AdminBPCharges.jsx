@@ -4,7 +4,7 @@ import moment from 'moment/moment.js';
 import StatusBadgeModal from '../StatusBadgeModal';
 import Loading from '../../partials/Loading';
 
-const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, businessImages, handleConfirmClose, handleProcess, isLoading, transType }) => {
+const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, businessImages, handleConfirmClose, handleProcess, isLoading, transType, warning }) => {
 
   const { user_id, transaction_id, status_type, date_processed } = selectedTransaction;
 
@@ -43,17 +43,54 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
       ...prevValues,
       [name]: value,
     }));
-    }
+  }
 
-    useEffect(() => {
-        let sum = 0;
-        for (const key in values) {
-            if (values.hasOwnProperty(key) && values[key] !== '') {
-            sum += parseFloat(values[key]);
-            }
+
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      const charCode = e.keyCode || e.which;
+      const ctrlKey = e.ctrlKey || e.metaKey; // Check if Ctrl key is pressed
+  
+      // Allow Ctrl+A (select all)
+      if (ctrlKey && charCode === 65) return;
+  
+      // Allow backspace, delete, arrows, home, end, and decimal point
+      if (
+        charCode !== 8 &&
+        charCode !== 46 &&
+        (charCode < 37 || charCode > 40) &&
+        charCode !== 35 &&
+        charCode !== 36 &&
+        charCode !== 190
+      ) {
+        const charStr = String.fromCharCode(charCode);
+        if (!/^\d$/.test(charStr)) {
+          e.preventDefault();
         }
-    setTotalVal(sum);
-    }, [values]);
+      }
+    };
+  
+    const inputElements = document.querySelectorAll("[id^='bp_']");
+    inputElements.forEach((inputElement) => {
+      inputElement.addEventListener("keydown", handleKeyPress);
+    });
+  
+    return () => {
+      inputElements.forEach((inputElement) => {
+        inputElement.removeEventListener("keydown", handleKeyPress);
+      });
+    };
+  }, []);
+  
+  useEffect(() => {
+    let val = 0;
+    for (const key in values) {
+      if (!isNaN(parseFloat(values[key]))) {
+        val += parseFloat(values[key]);
+      }
+    }
+    setTotalVal(val);
+  }, [values]);
 
 
     
@@ -143,6 +180,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                  
                   <span className="font-medium whitespace-nowrap">Transaction ID</span>
                   <span className="whitespace-nowrap md:mb-7 mb-1">{transaction_id}</span>
                 </div>               
@@ -230,7 +268,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                       <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bprovinceLabel || selectedTransaction.bus_bprovince || '-'}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                      <span className="font-medium whitespace-nowrap">Business city</span>
+                      <span className="font-medium whitespace-nowrap">Business City</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_bcityLabel || selectedTransaction.bus_bcity || '-'}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
@@ -620,9 +658,20 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                 {transaction_id ? (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Status</span>
-                  <span className="whitespace-nowrap md:mb-10 mb-1 text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>
+                  <span className="whitespace-nowrap text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>
                 </div>
                 ) : null}
+
+                  <div className="flex flex-col text-sm italic sm:flex-row text-start mb-10">
+                  {/* <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : "Amount to Pay"}</span>
+                    <span className="font-semibold whitespace-nowrap ml-4"> 
+                    {selectedTransaction && selectedTransaction.amount !== 0 ? (
+                      `P ${selectedTransaction.bus_amount !== undefined ? selectedTransaction.bus_amount + '.00' : 
+                    selectedTransaction.amount !== undefined ? selectedTransaction.amount + '.00' : '-'}`
+                    ) : "Kindly input additional charges"}
+                    </span> */}
+                    <span>Note: Kindly input necessary charges.</span>
+                  </div>
                 </div>
 
             </div>
@@ -646,6 +695,16 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
               <span className="font-semibold text-gray-700 bg-slate-200 dark:bg-[#212121] dark:text-gray-300 ml-6">Business Permit Charges</span>
             </div>
               <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[42rem] overflow-y-auto"> 
+              
+              {warning && (
+                  <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                    Missing fields are required.
+                  </div>
+                )}  
+
+                <div className='flex text-left dark:text-white text-sm pb-2'>
+                  <span>Note: Please input the exact amount for the Business Permit fees based on the user's provided details.</span>
+                </div>
                 <div className="mt-2">
                   <label htmlFor="bp_1" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">R E SUB-LESSOR</label>
                   <input value={values.bp_1} onChange={handleChange} type="text" name="bp_1" id="bp_1" className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Flatpickr from 'react-flatpickr';
 
@@ -29,6 +29,8 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
   const [searchPIN, setSearchPIN] = useState('');
   const [filteredTaxClearance, setFilteredTaxClearance] = useState([]); 
   const [filteredTaxPayment, setFilteredTaxPayment] = useState([]); 
+
+  const [warning, setWarning] = useState(false);
 
   const Base_Url = process.env.Base_Url;
 
@@ -214,10 +216,12 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
 
     // Check if the amount input is empty or null
     if (!totalVal || isNaN(parseFloat(totalVal))) {
-      // If the amount is empty or not a valid number, display an error message or handle it accordingly
-      alert('Please enter a valid amount.');
+      setWarning(true);
+      setTimeout(() => {
+        setWarning(false);
+      }, 4000);
       return;
-  }
+    }
 
     const { user_id, transaction_id, trans_type } = selectedTransaction;
 
@@ -883,6 +887,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
               handleConfirmClose={handleChargeClose}
               transType={transType}
               isLoading={isLoading}
+              warning={warning}
             />
             )}
           </div>

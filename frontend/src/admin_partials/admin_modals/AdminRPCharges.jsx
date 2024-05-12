@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
-const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, transType, isLoading, handleProcess }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
+const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, transType, isLoading, handleProcess, warning }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
 
   const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
 
@@ -21,16 +21,48 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
       [name]: value,
     }));
   }
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      const charCode = e.keyCode || e.which;
+      const ctrlKey = e.ctrlKey || e.metaKey; // Check if Ctrl key is pressed
+  
+      // Allow backspace, delete, arrows, home, end, and decimal point
+      if (
+        charCode !== 8 &&
+        charCode !== 46 &&
+        (charCode < 37 || charCode > 40) &&
+        charCode !== 35 &&
+        charCode !== 36 &&
+        charCode !== 190 &&
+        !(ctrlKey && charCode === 65) // Allow Ctrl+A (65 is the char code for 'A')
+      ) {
+        const charStr = String.fromCharCode(charCode);
+        if (!/^\d$/.test(charStr)) {
+          e.preventDefault();
+        }
+      }
+    };
+  
+    const inputElement = document.getElementById("bp_amount");
+    if (inputElement) {
+      inputElement.addEventListener("keydown", handleKeyPress);
+  
+      return () => {
+        inputElement.removeEventListener("keydown", handleKeyPress);
+      };
+    }
+  }, []);
   
   useEffect(() => {
     let val = 0;
     for (const key in values) {
       if (!isNaN(parseFloat(values[key]))) {
-        val = parseFloat(values[key]);
+        val += parseFloat(values[key]);
       }
     }
     setTotalVal(val);
   }, [values]);
+
 
   return (
     // MAY CONDITION NA MAGDIDISPLAY LANG KUNG ANG ISOPEN AY TRUE, ITO RIN YUNG ISMODALOPEN, IBA LANG NAME
@@ -93,7 +125,10 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                 </div>
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Status</span>
-                  <span className="whitespace-nowrap md:mb-7 mb-1 text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>
+                  <span className="whitespace-nowrap mb-1 text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>
+                </div>
+                <div className="flex flex-col text-sm italic sm:flex-row text-start mb-2">
+                  <span>Note: Kindly input necessary charges.</span>
                 </div>
               </div>
 
@@ -114,7 +149,18 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
               </button>
               <span className="font-semibold text-gray-700 bg-slate-200 dark:bg-[#212121] dark:text-gray-300 ml-6">Tax Charges</span>
             </div>
+            
               <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[28rem] overflow-y-auto"> 
+             
+              {warning && (
+                <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 mb-5">
+                  Missing fields are required.
+                </div>
+              )}  
+
+                <div className='flex text-left dark:text-white text-sm pb-2'>
+                  <span>Note: Please input the exact amount for the Business Permit fees based on the user's provided details.</span>
+                </div>
                 <div className="mt-2">
                   <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">AMOUNT</label>
                   <input type={values.tax_1} name="bp_amount" onChange={handleChange} id="bp_amount" className="block w-full md:text-sm rounded border-0 py-1.5 px-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
