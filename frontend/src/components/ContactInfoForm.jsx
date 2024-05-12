@@ -16,13 +16,16 @@ const ContactInfoForm = () => {
   const [originalUserContact, setOriginalUserContact] = useState({});
   const navigate = useNavigate();
 
+  const Base_Url = process.env.Base_Url;
+
+
   useEffect(() => {
     const token = localStorage.getItem('token');
   
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -42,7 +45,7 @@ const ContactInfoForm = () => {
   useEffect(() => {
     const fetchUserContact = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/profile/contact/${user_id}`);
+        const res = await axios.get(`${Base_Url}profile/contact/${user_id}`);
         setUserContact(res.data[0]);
         setOriginalUserContact(res.data[0]); // Set original values
       } catch (err) {
@@ -89,7 +92,7 @@ const ContactInfoForm = () => {
     e.preventDefault();
     try {
       await axios
-        .put(`http://localhost:8800/profile/contact/${user_id}`, userContact)
+        .put(`${Base_Url}profile/contact/${user_id}`, userContact)
         .then((res) => {
           setIsSuccess(true);
           handleCloseModal();
