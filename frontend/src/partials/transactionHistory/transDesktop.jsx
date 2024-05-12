@@ -430,7 +430,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
             // Calculate the width of the page number text
             pdf.setFont("helvetica", "normal");
             pdf.setFontSize(10);
-            const pageNumberText = `Page ${pageNum} of ${totalPages}`;
+            const pageNumberText = `Page 1 of 1`;
             const pageNumberTextWidth = pdf.getStringUnitWidth(pageNumberText) * pdf.internal.getFontSize();
             
             // Calculate the position for page number
