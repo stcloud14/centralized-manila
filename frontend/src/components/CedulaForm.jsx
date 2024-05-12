@@ -479,7 +479,7 @@ const [isModalVisible, setIsModalVisible] = useState(true);
 
   console.log(CtcCedula);
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
   
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

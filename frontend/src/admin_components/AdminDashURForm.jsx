@@ -282,7 +282,7 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
   const [isLoading, setIsLoading] = useState(true);
 

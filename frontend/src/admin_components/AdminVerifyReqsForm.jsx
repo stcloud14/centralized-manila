@@ -19,7 +19,7 @@ const AdminVerifyReqsForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
   const [userApplications, setUserApplications] = useState();
   const [filteredUserApplications, setFilteredUserApplications] = useState([]);

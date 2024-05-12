@@ -16,7 +16,7 @@ const AdminBusinessForm1 =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
   const [isLoading, setIsLoading] = useState(true);
   const [isFetchedData, setIsFetchedData] = useState(false);

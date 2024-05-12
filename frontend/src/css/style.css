@@ -24,6 +24,20 @@ input:-webkit-autofill:active  {
   -webkit-text-fill-color: black !important;
 }
 
+.dark .landingbg {
+  background: url('./src/images/manila-v4.jpg');
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+}
+
+.landingbg {
+  background: url('./src/images/manila-v5.jpg');
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+}
+
 /* width */
 /* ::-webkit-scrollbar {
     width: 10px;

@@ -21,7 +21,7 @@ const AdminCedulaForm1 =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const Base_Url = process.env.Base_Url;
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
   const [ctcCedula, setctcCedula] = useState([]);
 

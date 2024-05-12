@@ -816,7 +816,7 @@ const BusinessPermitForm =()=>{
     setIsModalVisible(!isModalVisible);
   };
   
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
 
   function getShortName(longName, maxCharacters) {

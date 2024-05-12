@@ -15,7 +15,7 @@ const ComingSoon = () => {
   const Base_Url = process.env.Base_Url;
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const contentRef = useRef(null);
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
   const navigate = useNavigate();
   const { user_id } = useParams();
 

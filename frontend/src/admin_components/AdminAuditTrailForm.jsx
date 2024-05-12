@@ -115,7 +115,7 @@ const  AdminAuditTrailForm = () => {
     setSelectedStatus(selectedStatus);
   };
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

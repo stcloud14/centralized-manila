@@ -24,7 +24,7 @@ const HomeForm = () => {
 
 
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
 
   useEffect(() => {

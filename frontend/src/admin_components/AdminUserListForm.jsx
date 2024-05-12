@@ -19,7 +19,7 @@ const AdminUserListForm = () => {
   const [userApplications, setUserApplications] = useState();
   const [filteredUserApplications, setFilteredUserApplications] = useState([]);
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
   const [isModalOpen, setIsModalOpen] = useState(false);  
   const [selectedTransaction, setSelectedTransaction] = useState(null);

@@ -8,7 +8,7 @@ const AdminFooter = ({ logo }) => {
   const { pathname } = location;
   const user_id = pathname.split("/")[2];
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
   return (
     <footer className="text-gray-500 text-xs mx-10">

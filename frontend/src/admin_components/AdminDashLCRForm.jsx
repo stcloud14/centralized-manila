@@ -418,7 +418,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
   const [isVisible, setIsVisible] = useState(false);
 

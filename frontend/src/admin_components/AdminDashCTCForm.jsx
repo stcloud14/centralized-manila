@@ -405,7 +405,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl_footer.svg';
+  const logoSrc = '../src/images/mnl.png';
 
   const [isVisible, setIsVisible] = useState(false);
 
