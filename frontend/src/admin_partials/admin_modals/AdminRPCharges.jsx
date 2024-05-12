@@ -105,11 +105,11 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                 </div>
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">From</span>
-                  <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.year_period}</span>
+                  <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.year_period ? `${selectedTransaction.year_period} - 1st Quarter`: selectedTransaction.year_period ? `${selectedTransaction.year_period} - 1st Quarter`: '-'}</span>
                 </div>                    
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">To</span>
-                  <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.period_id}</span>
+                  <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.year_period ? `${selectedTransaction.year_period} - ${selectedTransaction.period_id}`: selectedTransaction.period_id ? `${selectedTransaction.period_id} - ${selectedTransaction.period_id}`: '-'}</span>
                 </div>
              
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
