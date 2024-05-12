@@ -10,22 +10,37 @@ import Section2 from '../partials/home/Section2';
 import Section3 from '../partials/home/Section3';
 import Section4 from '../partials/home/Section4';
 import AboutSection from '../partials/home/AboutSection';
+// import baseUrl from '../../../backend/';
 
 const HomeForm = () => {
+
+
+  const Base_Url = process.env.Base_Url;
+
+  console.log("Base_Url", Base_Url)
+
+
+
+
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const { user_id } = useParams();
 
+  const apiUrl = `${Base_Url}token/protect-token/${user_id}`;
+
+
 
   const logoSrc = '../src/images/mnl_footer.svg';
-  
+
+
   useEffect(() => {
     const token = localStorage.getItem('token');
   
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+            const response = await axios.get(apiUrl, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
