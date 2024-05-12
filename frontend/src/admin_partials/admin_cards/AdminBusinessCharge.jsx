@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import Flatpickr from 'react-flatpickr';
 
@@ -27,6 +27,8 @@ const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
   const [searchTIN, setSearchTIN] = useState('');
   const [selectType, setSelectType] = useState('All');
   const [filteredBusinessPermit, setFilteredBusinessPermit] = useState([]);
+  const [warning, setWarning] = useState(false);
+  const contentRef = useRef(null);
   const Base_Url = process.env.Base_Url;
 
   const toggleDropdown = () => {
@@ -158,8 +160,13 @@ useEffect(() => {
 
     // Check if the amount input is empty or null
     if (!totalVal || isNaN(parseFloat(totalVal))) {
-      // If the amount is empty or not a valid number, display an error message or handle it accordingly
-      alert('Please enter a valid amount.');
+      if (contentRef.current) {
+          contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      setWarning(true);
+      setTimeout(() => {
+          setWarning(false);
+      }, 4000);
       return;
   }
 
@@ -756,6 +763,7 @@ useEffect(() => {
               handleProcess={handleProcess}
               transType={transType}
               isLoading={isLoading}
+              warning={warning}
             />
             )}
 

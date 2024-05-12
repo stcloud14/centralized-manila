@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 
-const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, transType, isLoading, handleProcess }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
+const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, transType, isLoading, handleProcess, warning }) => { // KAILANGAN IDECLARE RIN DITO SA LOOB LAHAT NG IPINASA NA VALUE PARA MAACCESS
 
   const { transaction_id, status_type, date_processed } = selectedTransaction; // PANG DESTRUCTURE LANG NG LAMAN NG SELECTEDTRANSACTION, IBIG SABIHIN, MAY COPY NA YUNG VALUES SA LABAS NG SELECTEDTRANSACTION
 
@@ -119,6 +119,13 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
             </div>
             
               <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[28rem] overflow-y-auto"> 
+             
+              {warning && (
+                <div className="text-yellow-600 bg-yellow-100 md:text-sm text-xs text-center rounded-full py-1.5 my-5">
+                  Missing fields are required.
+                </div>
+              )}  
+
                 <div className='flex text-left dark:text-white text-sm pb-2'>
                   <span>Note: Please input the exact amount for the Business Permit fees based on the user's provided details.</span>
                 </div>
