@@ -20,6 +20,7 @@ const AdminCedulaForm2 =()=>{
   console.log("userrole", admin_type)
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const Base_Url = process.env.Base_Url;
 
   const logoSrc = '../src/images/mnl_footer.svg';
 
@@ -27,7 +28,7 @@ const AdminCedulaForm2 =()=>{
 
   const fetchUserTransaction = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/adminctc/processing/`);
+      const res = await axios.get(`${Base_Url}adminctc/processing/`);
       console.log('Response:', res.data);
       setctcCedula(res.data.cedulacert);
     } catch (err) {

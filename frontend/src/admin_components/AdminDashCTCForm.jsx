@@ -25,11 +25,12 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
   // const adminRole = state && state.user_role;
 
   const [reportData, setReportData]=useState();
+  const Base_Url = process.env.Base_Url;
 
   useEffect(() => {
     const fetchREPORTData = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/report/${admin_type}`);
+        const res = await axios.get(`${Base_Url}report/${admin_type}`);
         setReportData(res.data);
       } catch (err) {
         console.log(err);
@@ -40,7 +41,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
 
   async function fetchData(endpoint, selectedYear) {
     try {
-      const response = await axios.get(`http://localhost:8800/admin/${endpoint}/`, {
+      const response = await axios.get(`${Base_Url}admin/${endpoint}/`, {
         params: {
           selectedYear: selectedYear
         }
@@ -99,7 +100,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
             date_processed: new Date().toISOString(),
         };
 
-        await axios.post(`http://localhost:8800/report/store/${admin_type}`, reportNum);
+        await axios.post(`${Base_Url}report/store/${admin_type}`, reportNum);
 
       // Calculation for the revenue
       const averageMonthlyRevenue = RevenueData.totalCC ? RevenueData.totalCC / 12 : 0;
