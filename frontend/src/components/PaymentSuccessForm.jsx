@@ -136,7 +136,7 @@ const PaymentSuccessForm = () => {
       setIsLoading(false);
       setButtonVisible(false);
       setTimeout(() => {
-      window.location.href = `${Base_Url}transachistory/${userId}`;
+      window.location.href = `/transachistory/${userId}`;
       }, 2500);
 
     } 
