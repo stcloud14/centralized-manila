@@ -25,6 +25,9 @@ const PersonalInfoForm =()=>{
   // const { pathname } = location;
   // const user_id = pathname.split("/")[2];
 
+  const Base_Url = process.env.Base_Url;
+
+
   const [editMode, setEditMode] = useState(false);
   const [userPersonal, setUserPersonal]=useState({})
   const [userBirth, setUserBirth]=useState({})
@@ -45,7 +48,7 @@ const PersonalInfoForm =()=>{
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -63,7 +66,7 @@ const PersonalInfoForm =()=>{
     useEffect(() => {
     const fetchUserPersonal = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/profile/${user_id}`);
+        const res = await axios.get(`${Base_Url}profile/${user_id}`);
         setUserPersonal(res.data.user_personal[0]);
         setUserBirth(res.data.birth_info[0]);
         setOriginalUserPersonal(res.data.user_personal[0]); // Set original values
@@ -145,7 +148,7 @@ const PersonalInfoForm =()=>{
 
       try {
         await axios
-          .post(`http://localhost:8800/profile/${user_id}`, userData)
+          .post(`${Base_Url}profile/${user_id}`, userData)
           .then((res) => {
             setIsSuccess(true);
             handleCloseModal();

@@ -19,12 +19,13 @@ const LoginAdminForm = () => {
       [name]: value,
     }));
   };
+  const Base_Url = process.env.Base_Url;
 
   const handleLogin = async (e) => {
     e.preventDefault();
   
     try {
-      const response = await axios.post('http://localhost:8800/login/admin', adminCredentials);
+      const response = await axios.post(`${Base_Url}login/admin`, adminCredentials);
   
       if (response.data && response.data.message === 'Login successful') {
         const admin = response.data.admin;

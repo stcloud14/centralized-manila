@@ -65,17 +65,18 @@ const PaymentSuccessForm = () => {
 
   const { transaction_id, user_id } = transactionDetails;
 
+  const Base_Url = process.env.Base_Url;
 
   const handleReturn = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.post(`http://localhost:8800/payment/success/${transaction_id}`, transactionDetails);
+      const res = await axios.post(`${Base_Url}payment/success/${transaction_id}`, transactionDetails);
       try {
-        const res1 = await axios.get(`http://localhost:8800/transachistory/${transType}/${transaction_id}`);
+        const res1 = await axios.get(`${Base_Url}transachistory/${transType}/${transaction_id}`);
         const transaction_details = res1.data;
         console.log(transaction_details)
 
-        const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+        const res = await axios.get(`${Base_Url}email/${user_id}`);
         
         if (res.data.user_email) {
           const updatedUserEmail = res.data.user_email;
@@ -111,7 +112,7 @@ const PaymentSuccessForm = () => {
           };
 
           try {
-            const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+            const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
           
             if (emailResponse.data && emailResponse.data.message) {
               console.log('SENT EMAIL:', emailResponse.data.message);
@@ -135,7 +136,7 @@ const PaymentSuccessForm = () => {
       setIsLoading(false);
       setButtonVisible(false);
       setTimeout(() => {
-      window.location.href = `http://localhost:5173/transachistory/${userId}`;
+      window.location.href = `${Base_Url}transachistory/${userId}`;
       }, 2500);
 
     } 
