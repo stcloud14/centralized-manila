@@ -12,6 +12,8 @@ const paymongo = new Paymongo(process.env.SECRET_KEY);
 
 const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpenModal }) => {
   const { transaction_id, status_type, date_processed } = selectedTransaction;
+  const Base_Url = process.env.Base_Url;
+
 
   const trans_type = 'Real Property Tax Payment';
 
@@ -61,7 +63,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
             user_id: user_id,
         };
 
-        const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
+        const response = await axios.post(`${Base_Url}payment/create-checkout-session/${transaction_id}`, body);
 
         if (response.data && response.data.checkoutSessionUrl) {
             const checkoutSessionUrl = response.data.checkoutSessionUrl;
@@ -93,7 +95,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
     console.log("tp_rp_tdn", rp_tdn)
     console.log("selectedTransaction 1", selectedTransaction)
 
-    const response = await axios.post(`http://localhost:8800/transachistory/canceltrans/${transaction_id}`, 
+    const response = await axios.post(`${Base_Url}transachistory/canceltrans/${transaction_id}`, 
       selectedTransaction
 
     );
@@ -101,7 +103,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
       if (response.status === 200) {
         // Fetch user_email after successful payment
         try {
-          const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+          const res = await axios.get(`${Base_Url}email/${user_id}`);
           
           if (res.data.user_email) {
             const updatedUserEmail = res.data.user_email;
@@ -130,7 +132,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
             };
   
             try {
-              const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+              const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
   
               if (emailResponse.data && emailResponse.data.message) {
                 console.log('SENT EMAIL');
@@ -155,7 +157,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
         setTimeout(() => {
           setIsSuccess(false);
           // onClose();
-          window.location.href = `http://localhost:5173/transachistory/${user_id}`;
+          window.location.href = `/transachistory/${user_id}`;
         }, 1000);
         
       } else {
@@ -172,7 +174,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
     const fetchTaxPaymentTransaction = async () => {
       if (transaction_id) {
         try {
-          const res = await axios.get(`http://localhost:8800/transachistory/taxpayment/${transaction_id}`);
+          const res = await axios.get(`${Base_Url}transachistory/taxpayment/${transaction_id}`);
           setTaxPaymentTransaction(res.data);
         } catch (err) {
           console.error(err);
@@ -196,7 +198,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
   // QR Download 
   const generateDownloadLink = (data) => {
     console.log('Generating download link:', data.transaction_id);
-    return `http://localhost:8800/transachistory/taxpayment/${data.transaction_id}/download`;
+    return `${Base_Url}transachistory/taxpayment/${data.transaction_id}/download`;
 };
 
   const downloadLink = isScanned ? generateDownloadLink(taxPaymentTransaction) : null;

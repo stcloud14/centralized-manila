@@ -225,7 +225,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
     // const user_id = selectedTransaction.user_id;
   
     try {
-      const response = await axios.post(`http://localhost:8800/adminrp/updateamount/${transaction_id}`, body);
+      const response = await axios.post(`http://localhost:8800/adminrptax/updateamount/${transaction_id}`, body);
 
       if (response.status === 200) {
         // Fetch user_email after successful payment
@@ -255,7 +255,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
 
             const user_email = updatedUserEmail;
     
-                const trans_type = 'Business Permit';
+                const trans_type = 'Real Property Tax Payment' && 'Real Property Tax Clearance';
 
                 const amount = totalVal;
     

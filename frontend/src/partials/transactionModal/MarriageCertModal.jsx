@@ -7,6 +7,7 @@ import CancelTransactionModal from '../CancelTransactionModal';
 import Loading from '../../partials/Loading';
 
 const MarriageModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpenModal }) => {  
+  const Base_Url = process.env.Base_Url;
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
@@ -55,7 +56,7 @@ const MarriageModal = ({ user_id, selectedTransaction, onClose, onSubmit, handle
           user_id: user_id,
       };
 
-        const response = await axios.post(`http://localhost:8800/payment/create-checkout-session/${transaction_id}`, body);
+        const response = await axios.post(`${Base_Url}payment/create-checkout-session/${transaction_id}`, body);
 
         if (response.data && response.data.checkoutSessionUrl) {
             const checkoutSessionUrl = response.data.checkoutSessionUrl;
@@ -82,12 +83,12 @@ const cancelTrans = async (e) => {
 
   try {
 
-    const response = await axios.post(`http://localhost:8800/transachistory/canceltrans/${transaction_id}`, selectedTransaction);
+    const response = await axios.post(`${Base_Url}transachistory/canceltrans/${transaction_id}`, selectedTransaction);
 
     if (response.status === 200) {
       // Fetch user_email after successful payment
       try {
-        const res = await axios.get(`http://localhost:8800/email/${user_id}`);
+        const res = await axios.get(`${Base_Url}email/${user_id}`);
         
         if (res.data.user_email) {
           const updatedUserEmail = res.data.user_email;
@@ -115,7 +116,7 @@ const cancelTrans = async (e) => {
           };
 
           try {
-            const emailResponse = await axios.post(`http://localhost:8800/email/send-email/${user_email}`, body);
+            const emailResponse = await axios.post(`${Base_Url}email/send-email/${user_email}`, body);
 
             if (emailResponse.data && emailResponse.data.message) {
               console.log('SENT EMAIL');
@@ -140,7 +141,7 @@ const cancelTrans = async (e) => {
         setTimeout(() => {
           setIsSuccess(false);
           // onClose();
-          window.location.href = `http://localhost:5173/transachistory/${user_id}`;
+          window.location.href = `/transachistory/${user_id}`;
         }, 1000);
         
       } else {
@@ -155,7 +156,7 @@ const cancelTrans = async (e) => {
     const fetchMarriageTransaction = async () => {
       if (transaction_id) {
       try {
-        const res = await axios.get(`http://localhost:8800/transachistory/marriagecert/${transaction_id}`);
+        const res = await axios.get(`${Base_Url}transachistory/marriagecert/${transaction_id}`);
         setMarriageTransaction(res.data);
       } catch (err) {
         console.error(err);
@@ -178,7 +179,7 @@ const cancelTrans = async (e) => {
   // QR Download 
   const generateDownloadLink = (data) => {
     console.log('Generating download link:', data.transaction_id);
-    return `http://localhost:8800/transachistory/marriagecert/${data.transaction_id}/download`;
+    return `${Base_Url}transachistory/marriagecert/${data.transaction_id}/download`;
 };
 
   const downloadLink = isScanned ? generateDownloadLink(marriageTransaction) : null;
