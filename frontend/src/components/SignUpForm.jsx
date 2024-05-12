@@ -64,6 +64,9 @@ const [passwordError, setPasswordError] = useState('');
 const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z\d!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
 const [loading, setLoading] = useState(false);
 
+const Base_Url = process.env.Base_Url;
+
+
 const [passwordCriteria, setPasswordCriteria] = useState({
   length: false,
   uppercase: false,
@@ -177,7 +180,7 @@ const handleClick = async (e) => {
 
     try {
       // Check if the user already exists
-      const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence", {
+      const existenceCheckResponse = await axios.post(`${Base_Url}register/check-existence`, {
         mobile_no: userReg.mobile_no,
       });
 
@@ -207,11 +210,11 @@ const handleClick = async (e) => {
         });
 
 
-        const response = await axios.post("http://localhost:8800/register", userReg);
+        const response = await axios.post(`${Base_Url}register`, userReg);
 
         const user_id = response.data.user_id;
 
-        const response1 = await fetch(`http://localhost:8800/register/valid-id/${user_id}`, {
+        const response1 = await fetch(`${Base_Url}register/valid-id/${user_id}`, {
           method: 'POST',
           body: formData,
         });
@@ -220,7 +223,7 @@ const handleClick = async (e) => {
         if (response.status === 200 || response1.status === 200) {
           const user_id = response.data.user_id;
           try {
-            const res = await axios.get(`http://localhost:8800/email/regis/${user_id}`);
+            const res = await axios.get(`${Base_Url}email/regis/${user_id}`);
             
             // const date = new Date();
             // const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
@@ -251,7 +254,7 @@ const handleClick = async (e) => {
     
               // Proceed with additional logic after updating state
               try {
-                const emailResponse = await axios.post(`http://localhost:8800/email/registered-send-email/${user_email}`, body);
+                const emailResponse = await axios.post(`${Base_Url}email/registered-send-email/${user_email}`, body);
     
                 if (emailResponse.data && emailResponse.data.message) {
                   console.log('SENT EMAIL');
@@ -274,7 +277,7 @@ const handleClick = async (e) => {
         setIsSuccess(true);
         console.log('Successful Register');
         
-        const res = await axios.post('http://localhost:8800/token/generate-token', { user_id });
+        const res = await axios.post(`${Base_Url}token/generate-token`, { user_id });
         const { token } = res.data;
 
       // Store the token securely (consider using HttpOnly cookies for better security)

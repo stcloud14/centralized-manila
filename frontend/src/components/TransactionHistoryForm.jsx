@@ -14,6 +14,8 @@ const TransactionHistoryForm = () => {
   
   const { user_id } = useParams();
   const navigate = useNavigate();
+  const Base_Url = process.env.Base_Url;
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -21,7 +23,7 @@ const TransactionHistoryForm = () => {
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -60,7 +62,7 @@ const TransactionHistoryForm = () => {
   useEffect(() => {
     const fetchUserPersonal = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/profile/${user_id}`);
+        const res = await axios.get(`${Base_Url}profile/${user_id}`);
         setUserPersonal(res.data.user_personal[0]);
       } catch (err) {
         console.log(err);
@@ -72,7 +74,7 @@ const TransactionHistoryForm = () => {
   useEffect(() => {
     const fetchUserTransaction = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/transachistory/${user_id}`);
+        const res = await axios.get(`${Base_Url}transachistory/${user_id}`);
         const transactions = res.data;
 
         // Sort transactions by date in descending order (newest to oldest)
@@ -95,7 +97,7 @@ const TransactionHistoryForm = () => {
   useEffect(() => {
     const fetchSOAdata = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/soa/${user_id}`);
+        const res = await axios.get(`${Base_Url}soa/${user_id}`);
         setSoaData(res.data);
       } catch (err) {
         console.log(err);
