@@ -16,6 +16,7 @@ const GovernmentInfoForm = () => {
   const navigate = useNavigate();
 
   
+  const Base_Url = process.env.Base_Url;
 
   console.log(userPersonal);
 
@@ -25,7 +26,7 @@ const GovernmentInfoForm = () => {
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`http://localhost:8800/token/protect-token/${user_id}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -43,7 +44,7 @@ const GovernmentInfoForm = () => {
   useEffect(() => {
     const fetchUserPersonal = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/profile/govinfo/${user_id}`);
+        const res = await axios.get(`${Base_Url}profile/govinfo/${user_id}`);
         setUserPersonal(res.data[0]);
         setOriginalUserPersonal(res.data[0]); // Set original values
       } catch (err) {
@@ -69,7 +70,7 @@ const GovernmentInfoForm = () => {
     e.preventDefault();
     try {
       await axios
-        .put(`http://localhost:8800/profile/govinfo/${user_id}`, userPersonal)
+        .put(`${Base_Url}profile/govinfo/${user_id}`, userPersonal)
         .then((res) => {
           setIsSuccess(true);
           handleCloseModal();
@@ -133,7 +134,7 @@ const GovernmentInfoForm = () => {
 
     // const handleDelete= async(id)=>{
     //     try{
-    //         await axios.delete("http://localhost:8800/furns/" +id)
+    //         await axios.delete("${Base_Url}furns/" +id)
     //         window.location.reload()
     //     }catch(err){
     //         console.log(err)

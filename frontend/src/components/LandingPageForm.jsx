@@ -8,6 +8,8 @@ import auth from '../../firebase.config';  // Updated import statement
 
 const LandingPageForm = () => {
 
+  const Base_Url = process.env.Base_Url;
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
   
@@ -18,7 +20,7 @@ const LandingPageForm = () => {
   
   const authenticateWithToken = async (token) => {
     try {
-      const response = await axios.get("http://localhost:8800/token/protected-route", {
+      const response = await axios.get(`${Base_Url}token/protected-route`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -81,12 +83,12 @@ const LandingPageForm = () => {
       };
       
       // Check if the user exists
-      const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence/email", body);
+      const existenceCheckResponse = await axios.post(`${Base_Url}register/check-existence/email`, body);
       const { exists, user_id } = existenceCheckResponse.data;
       
       if (exists) {
         // Generate token for existing user
-        const tokenResponse = await axios.post('http://localhost:8800/token/generate-token', { user_id });
+        const tokenResponse = await axios.post(`${Base_Url}token/generate-token`, { user_id });
         const { token } = tokenResponse.data;
     
         // Store the token securely (consider using HTTPOnly cookies)
@@ -122,12 +124,12 @@ const LandingPageForm = () => {
           photoURL
         }
         
-        const existenceCheckResponse = await axios.post("http://localhost:8800/register/check-existence/email", body);
+        const existenceCheckResponse = await axios.post(`${Base_Url}register/check-existence/email`, body);
         const { exists, user_id } = existenceCheckResponse.data;
         
         if (exists) {
           // Generate token for existing user
-          const tokenResponse = await axios.post('http://localhost:8800/token/generate-token', { user_id });
+          const tokenResponse = await axios.post(`${Base_Url}token/generate-token`, { user_id });
           const { token } = tokenResponse.data;
       
           // Store the token securely (consider using HTTPOnly cookies)
@@ -208,7 +210,7 @@ const LandingPageForm = () => {
       console.log("User signed in successfully:", codeConfirmation.user);
 
       
-      const response = await axios.post('http://localhost:8800/token/generate-token', { user_id: userAuth.user_id });
+      const response = await axios.post(`${Base_Url}token/generate-token`, { user_id: userAuth.user_id });
       const { token } = response.data;
   
       // Store the token in localStorage or handle it as needed
@@ -347,7 +349,7 @@ const LandingPageForm = () => {
       
         try {
     
-          const response = await axios.post(`http://localhost:8800/login/compare-password/${userAuth.mobile_no}/${userAuth.user_pass}`);
+          const response = await axios.post(`${Base_Url}login/compare-password/${userAuth.mobile_no}/${userAuth.user_pass}`);
           console.log("Response data:", response.data);
           if (response.status === 200) {
 
