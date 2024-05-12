@@ -117,7 +117,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
               <div className="bg-white dark:bg-[#3d3d3d] pt-2 pb-4 sm:p-6 sm:pb-4 h-[28rem] overflow-y-auto"> 
                 <div className="mt-2">
                   <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">AMOUNT</label>
-                  <input type={values.tax_1} name="bp_amount" onChange={handleChange} id="bp_amount" className="block w-full md:text-sm text-xs rounded border-0 py-1.5 px-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
+                  <input type={values.tax_1} name="bp_amount" onChange={handleChange} id="bp_amount" className="block w-full md:text-sm rounded border-0 py-1.5 px-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" />
                 </div>
                 <div className="font-semibold flex space-x-2 text-slate-700 text-start py-8 dark:text-white sm:mt-0 text-xs md:text-sm" id="modal-headline">
                   <span>Total :</span>
@@ -127,7 +127,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                 {/* Button container */}
                 <div className="flex justify-end pb-8 space-x-2">
                   {isLoading ? (
-                    <div className="pt-3 font-medium flex  text-slate-700 dark:text-white pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center mb-3">
+                    <div className="pt-3 font-medium flex text-slate-700 dark:text-white pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center mb-3">
                     <svg
                     aria-hidden="true"
                     className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
