@@ -18,16 +18,9 @@ const HomeForm = () => {
   const Base_Url = process.env.Base_Url;
 
   console.log("Base_Url", Base_Url)
-
-
-
-
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const { user_id } = useParams();
-
-  const apiUrl = `${Base_Url}token/protect-token/${user_id}`;
 
 
 
@@ -40,7 +33,7 @@ const HomeForm = () => {
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
-            const response = await axios.get(apiUrl, {
+            const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
