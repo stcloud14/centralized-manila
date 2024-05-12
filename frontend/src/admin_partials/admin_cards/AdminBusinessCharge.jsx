@@ -239,13 +239,13 @@ useEffect(() => {
   
                 
 
-                setIsSuccess(true); // Set isSuccess to true first
+                  
                   setIsLoading(false);
                   handleConfirmClose();
                   handleUpdateData();
                   setSelectedTransaction('');
                   console.log('Update successful');
-
+                  setIsSuccess(true); // Set isSuccess to true first
                   setTimeout(() => {
                   setIsSuccess(false); // Set isSuccess to false after the other operations
                 }, 2100);
