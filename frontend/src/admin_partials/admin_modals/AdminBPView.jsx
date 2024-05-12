@@ -317,7 +317,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         {businessImages && businessImages.bus_tax_incentives !== undefined
                                 ? getShortName(businessImages.bus_tax_incentives, 20)
                                 : selectedTransaction && selectedTransaction.bus_tax_incentives !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_tax_incentives}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_tax_incentives, 20)}</a>
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_tax_incentives}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_tax_incentives, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -402,7 +402,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                           {businessImages && businessImages.bus_dti_reg !== undefined
                             ? getShortName(businessImages.bus_dti_reg, 20)
                                 : selectedTransaction && selectedTransaction.bus_dti_reg !== undefined
-                                  ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_dti_reg, 20)}</a>
+                                  ? <a href={`/uploads/business/${selectedTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_dti_reg, 20)}</a>
                                   : ''
                           }
                       </span>
@@ -414,7 +414,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         {businessImages && businessImages.bus_rptax_decbldg !== undefined
                                 ? getShortName(businessImages.bus_rptax_decbldg, 20)
                                 : selectedTransaction && selectedTransaction.bus_rptax_decbldg !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decbldg, 20)}</a>
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decbldg, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -426,7 +426,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         {businessImages && businessImages.bus_sec_paid !== undefined
                             ? getShortName(businessImages.bus_sec_paid, 20)
                             : selectedTransaction && selectedTransaction.bus_sec_paid !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_paid, 20)}</a>
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_paid, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -439,7 +439,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         {businessImages && businessImages.bus_sec_articles !== undefined
                             ? getShortName(businessImages.bus_sec_articles,20 )
                             : selectedTransaction && selectedTransaction.bus_sec_articles !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_articles, 20)}</a>
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_articles, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -451,7 +451,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         {businessImages && businessImages.bus_nga !== undefined 
                             ? getShortName(businessImages.bus_nga, 20)
                             : selectedTransaction && selectedTransaction.bus_nga !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_nga, 20)}</a>
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_nga, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -463,7 +463,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         {businessImages && businessImages.bus_sec_front !== undefined
                             ? getShortName(businessImages.bus_sec_front, 20)
                             : selectedTransaction && selectedTransaction.bus_sec_front !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_front, 20)}</a>
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_front, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -475,7 +475,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         {businessImages && businessImages.bus_rptax_decland !== undefined
                             ? getShortName(businessImages.bus_rptax_decland, 20)
                             : selectedTransaction && selectedTransaction.bus_rptax_decland !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decland, 20)}</a>
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decland, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -487,7 +487,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         {businessImages && businessImages.bus_fire !== undefined
                             ? getShortName(businessImages.bus_fire, 20 )
                             : selectedTransaction && selectedTransaction.bus_fire !== undefined
-                                ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_fire, 20)}</a>
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_fire, 20)}</a>
                                 : ''
                         }
                     </span>
@@ -499,7 +499,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                       {businessImages && businessImages.bus_page2 !== undefined
                           ? getShortName(businessImages.bus_page2, 20)
                           : selectedTransaction && selectedTransaction.bus_page2 !== undefined
-                              ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page2, 20)}</a>
+                              ? <a href={`/uploads/business/${selectedTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page2, 20)}</a>
                               : ''
                       }
                   </span>
@@ -511,7 +511,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                       {businessImages && businessImages.bus_page3 !== undefined
                           ? getShortName(businessImages.bus_page3, 20)
                           : selectedTransaction && selectedTransaction.bus_page3 !== undefined
-                              ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page3, 20)}</a>
+                              ? <a href={`/uploads/business/${selectedTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page3, 20)}</a>
                               : ''
                       }
                   </span>
@@ -523,7 +523,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                       {businessImages && businessImages.bus_page4 !== undefined
                           ? getShortName(businessImages.bus_page4, 20)
                           : selectedTransaction && selectedTransaction.bus_page4 !== undefined
-                              ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page4, 20)}</a>
+                              ? <a href={`/uploads/business/${selectedTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page4, 20)}</a>
                               : ''
                       }
                   </span>
@@ -535,7 +535,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                       {businessImages && businessImages.bus_page5 !== undefined
                           ? getShortName(businessImages.bus_page5, 20)
                           : selectedTransaction && selectedTransaction.bus_page5 !== undefined
-                              ? <a href={`http://localhost:5173/uploads/business/${selectedTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page5, 20)}</a>
+                              ? <a href={`/uploads/business/${selectedTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page5, 20)}</a>
                               : ''
                       }
                   </span>
