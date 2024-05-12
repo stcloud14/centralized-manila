@@ -103,18 +103,15 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
                   <span className="font-medium whitespace-nowrap">Property Identification Number (PIN)</span>
                   <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.rp_pin}</span>
                 </div>
-                {transType === 'Tax Payment' ? 
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">From</span>
-                  <span className="whitespace-nowrap md:mb-0 mb-1">1st Quarter</span>
-                </div>
-                : null} 
-                {transType === 'Tax Payment' ? 
+                  <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.year_period}</span>
+                </div>                    
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">To</span>
                   <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.period_id}</span>
                 </div>
-                : null} 
+             
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Date Processed</span>
                   <span className="whitespace-nowrap md:mb-0 mb-1">{date}</span>
@@ -159,7 +156,7 @@ const AdminRPCharges = ({ selectedTransaction, isOpen, handleConfirmClose, trans
               )}  
 
                 <div className='flex text-left dark:text-white text-sm pb-2'>
-                  <span>Note: Please input the exact amount for the Business Permit fees based on the user's provided details.</span>
+                  <span>Note: Please input the exact amount for the Real Property Tax Payment based on the user's provided details.</span>
                 </div>
                 <div className="mt-2">
                   <label htmlFor="bp_amount" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">AMOUNT</label>
