@@ -15,6 +15,7 @@ import SuffixDropdown from '../partials/profile/SuffixDropdown';
 import SexDropdown from '../partials/profile/SexDropdown';
 import RegionDropdown from '../partials/profile/RegionDropdown';
 import ProvinceDropdown from '../partials/profile/ProvinceDropdown';
+import RelationshipDropdown from '../partials/profile/RelationshipDropdown';
 import CityDropdown from '../partials/profile/CityDropdown';
 import CopiesDropdown from '../partials/profile/CopiesDropdown';
 import PurposeDropdown from '../partials/profile/PurposeDropdown';
@@ -661,7 +662,9 @@ const DeathCertificateForm =()=>{
                 {/* Row 2 */}
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={deathCert.deathc_reqrelation} type="text" name="deathc_reqrelation" id="deathc_reqrelation" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required/>
+                  <select onChange={handleInputChange} value={deathCert.deathc_reqrelation} type="text" name="deathc_reqrelation" id="deathc_reqrelation" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required>
+                    <RelationshipDropdown />
+                    </select>
                     <label htmlFor="deathc_reqrelation" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Relationship to the Owner<Req /></label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
