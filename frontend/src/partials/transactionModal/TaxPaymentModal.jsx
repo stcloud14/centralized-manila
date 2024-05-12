@@ -342,7 +342,7 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                     </div>
                     ) : null} */}
 
-                    {status_type ? (
+                    {transaction_id ? (
                     <>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Status</span>
@@ -356,11 +356,15 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                   </>
                     ) : null}
 
-                    {/* <hr className='mt-7 mb-1'/>
+                    <hr className='mb-1'/>
                     <div className="flex justify-between">
-                    <span className="font-semibold whitespace-nowrap">{status_type === "Pending" ? "Amount Paid" : status_type === "Processing" ? "Amount to Pay" : "Amount"}</span>
-                      <span className="font-semibold whitespace-nowrap ml-4">P {taxPaymentTransaction.amount ? taxPaymentTransaction.amount + '.00': '-'} </span>
-                    </div> */}
+                      <span className="font-semibold whitespace-nowrap">{status_type === "Pending" ? "Amount Paid" : status_type === "Processing" ? "Amount to Pay" : "Amount"}</span>
+                      <span className="font-semibold whitespace-nowrap ml-4"> 
+                        {taxPaymentTransaction && status_type ? (
+                          `P ${taxPaymentTransaction.amount !== undefined ? taxPaymentTransaction.amount + '.00' : '0.00'}`
+                        ) : `Submit for amount declaration.`}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -24,7 +24,7 @@ const router = Router();
   router.post('/payment/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
     const amount = req.body.amount;
-    const plainAmount = amount.replace(/,/g, '');
+    // const plainAmount = amount.replace(/,/g, '');
     const transID = generateTransactionID(req.body.rp_tdn, req.body.rp_pin);
     const transType = '1';
     const trans_type = 'Real Property Tax Payment';
@@ -44,7 +44,7 @@ const router = Router();
     const values1 = [transID, req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period];
   
     const query2 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";
-    const values2 = [transID, plainAmount];
+    const values2 = [transID, amount !== undefined ? amount : 0];    
 
     const query3 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
     const values3 = [user_id, formattedDate, notif_title, notif_message];

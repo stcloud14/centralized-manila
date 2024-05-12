@@ -318,7 +318,7 @@ const cancelTrans = async (e) => {
                           <span className="font-medium whitespace-nowrap">Reference Number</span>
                           <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
                         </div> */}
-                        {status_type ? (
+                        {transaction_id ? (
                         <>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
