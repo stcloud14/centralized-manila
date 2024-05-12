@@ -413,28 +413,28 @@ console.log(selectedFiles)
                 <div className="grid md:grid-cols-3 md:gap-6 sm:grid-cols-1">
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleChange} value={userReg.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer" >
-                      <option value="0">Select Civil Status</option>
-                      <option value="1">Single</option>
-                      <option value="2">Married</option>
-                      <option value="3">Separated</option>
-                      <option value="4">Widowed</option>
+                      <option value="0" className='dark:bg-[#3d3d3d] dark:text-white'>Select Civil Status</option>
+                      <option value="1" className='dark:bg-[#3d3d3d] dark:text-white'>Single</option>
+                      <option value="2" className='dark:bg-[#3d3d3d] dark:text-white'>Married</option>
+                      <option value="3" className='dark:bg-[#3d3d3d] dark:text-white'>Separated</option>
+                      <option value="4" className='dark:bg-[#3d3d3d] dark:text-white'>Widowed</option>
                     </select>
                     <label htmlFor="cvl_status" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleChange} value={userReg.czn_status} defaultValue={0} name="czn_status" id="czn_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
-                      <option value="0">Select Citizenship</option>
-                      <option value="1">Citizen</option>
-                      <option value="2">Permanent Resident</option>
-                      <option value="3">Temporary Resident</option>
+                      <option value="0" className='dark:bg-[#3d3d3d] dark:text-white'>Select Citizenship</option>
+                      <option value="1" className='dark:bg-[#3d3d3d] dark:text-white'>Citizen</option>
+                      <option value="2" className='dark:bg-[#3d3d3d] dark:text-white'>Permanent Resident</option>
+                      <option value="3" className='dark:bg-[#3d3d3d] dark:text-white'>Temporary Resident</option>
                     </select> 
                     <label htmlFor="czn_status" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleChange} value={userReg.res_status} defaultValue={0} name="res_status" id="res_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
-                      <option value="0">Select Residency Status</option>
-                      <option value="1">Resident</option>
-                      <option value="2">Non-Resident</option>
+                      <option value="0" className='dark:bg-[#3d3d3d] dark:text-white'>Select Residency Status</option>
+                      <option value="1" className='dark:bg-[#3d3d3d] dark:text-white'>Resident</option>
+                      <option value="2" className='dark:bg-[#3d3d3d] dark:text-white'>Non-Resident</option>
                     </select> 
                     <label htmlFor="res_status" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Residency Status</label>
                   </div>
