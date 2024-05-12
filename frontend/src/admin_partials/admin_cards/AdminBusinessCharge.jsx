@@ -239,14 +239,17 @@ useEffect(() => {
   
                 
 
+                setIsSuccess(true); // Set isSuccess to true first
+                  setIsLoading(false);
+                  handleConfirmClose();
+                  handleUpdateData();
+                  setSelectedTransaction('');
+                  console.log('Update successful');
+
                   setTimeout(() => {
-                    setIsLoading(false);
-                    handleConfirmClose();
-                    handleUpdateData();
-                    setSelectedTransaction('');
-                    console.log('Update successful');
-                    setIsSuccess(true);
-                  }, 2100);
+                  setIsSuccess(false); // Set isSuccess to false after the other operations
+                }, 2100);
+
  
 
               } else {
@@ -378,15 +381,16 @@ useEffect(() => {
         }
 
 
-          setTimeout(() => {
-            setIsLoading(false);
-            handleConfirmClose();
-            handleUpdateData();
-            setSelectedTransaction('');
-            console.log('Update successful');
-            setIsSuccess(true);
-          }, 2100);
+        setIsSuccess(true); // Set isSuccess to true first
+        setIsLoading(false);
+        handleConfirmClose();
+        handleUpdateData();
+        setSelectedTransaction('');
+        console.log('Update successful');
 
+        setTimeout(() => {
+        setIsSuccess(false); // Set isSuccess to false after the other operations
+      }, 2100);
       } else {
         console.error('Transaction error:', response.statusText);
       }

@@ -228,7 +228,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
   
     try {
       const response = await axios.post(`${Base_Url}adminrptax/updateamount/${transaction_id}`, body);
-
+      setIsLoading(true);
       if (response.status === 200) {
         // Fetch user_email after successful payment
         try {
@@ -292,18 +292,16 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
           console.log('NOT FETCHING EMAIL');
           console.error(fetchError);
         }
-
+        setIsSuccess(true); // Set isSuccess to true first
         setIsLoading(false);
         handleConfirmClose();
         handleUpdateData();
         setSelectedTransaction('');
-
-        setIsSuccess(true); // Set success state to true
         console.log('Update successful');
 
         setTimeout(() => {
-          setIsSuccess(false);
-        }, 2100);
+        setIsSuccess(false); // Set isSuccess to false after the other operations
+      }, 2100);
       } else {
         console.error('Transaction error:', response.statusText);
       }
@@ -429,18 +427,16 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
           console.log('NOT FETCHING EMAIL');
           console.error(fetchError);
         }
+        setIsSuccess(true); // Set isSuccess to true first
         setIsLoading(false);
-
         handleConfirmClose();
         handleUpdateData();
         setSelectedTransaction('');
-
-        setIsSuccess(true); // Set success state to true
         console.log('Update successful');
 
         setTimeout(() => {
-          setIsSuccess(false);
-        }, 2100);
+        setIsSuccess(false); // Set isSuccess to false after the other operations
+      }, 2100);
       } else {
         console.error('Transaction error:', response.statusText);
       }
@@ -879,6 +875,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
               handleProcess={handleProcess}
               handleConfirmClose={handleChargeClose}
               transType={transType}
+              isLoading={isLoading}
             />
             )}
           </div>
