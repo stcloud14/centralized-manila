@@ -43,17 +43,54 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
       ...prevValues,
       [name]: value,
     }));
-    }
+  }
 
-    useEffect(() => {
-        let sum = 0;
-        for (const key in values) {
-            if (values.hasOwnProperty(key) && values[key] !== '') {
-            sum += parseFloat(values[key]);
-            }
+
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      const charCode = e.keyCode || e.which;
+      const ctrlKey = e.ctrlKey || e.metaKey; // Check if Ctrl key is pressed
+  
+      // Allow Ctrl+A (select all)
+      if (ctrlKey && charCode === 65) return;
+  
+      // Allow backspace, delete, arrows, home, end, and decimal point
+      if (
+        charCode !== 8 &&
+        charCode !== 46 &&
+        (charCode < 37 || charCode > 40) &&
+        charCode !== 35 &&
+        charCode !== 36 &&
+        charCode !== 190
+      ) {
+        const charStr = String.fromCharCode(charCode);
+        if (!/^\d$/.test(charStr)) {
+          e.preventDefault();
         }
-    setTotalVal(sum);
-    }, [values]);
+      }
+    };
+  
+    const inputElements = document.querySelectorAll("[id^='bp_']");
+    inputElements.forEach((inputElement) => {
+      inputElement.addEventListener("keydown", handleKeyPress);
+    });
+  
+    return () => {
+      inputElements.forEach((inputElement) => {
+        inputElement.removeEventListener("keydown", handleKeyPress);
+      });
+    };
+  }, []);
+  
+  useEffect(() => {
+    let val = 0;
+    for (const key in values) {
+      if (!isNaN(parseFloat(values[key]))) {
+        val += parseFloat(values[key]);
+      }
+    }
+    setTotalVal(val);
+  }, [values]);
 
 
     
