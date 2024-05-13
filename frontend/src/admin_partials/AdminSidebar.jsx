@@ -120,7 +120,8 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
             </h3>
             <ul className="submenu mt-3 text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600">
             
-              {/* Dashboard */}
+              {/* DASHBOARD STARTS HERE */}
+
               {/* Dashboard chief_admin */}
               {admin_type === 'chief_admin'  ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
@@ -208,8 +209,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                 </NavLink>
               </li>
               ) : null} 
-
-                
+        
               {/* Dashboard Local Civil Registry */}
               {admin_type === 'lcr_admin'  ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
@@ -254,13 +254,10 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               </li>
               ) : null} 
 
-
-
-
-                  {/* END OF DASH BOARD  */}
+              {/* END OF DASHBOARD  */}
 
               {/* Real Property Tax */}
-              {/* {admin_type === 'chief_admin' || admin_type === 'rptax_admin' ? (
+              {admin_type === 'rptax_admin' ? (
               <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
@@ -341,10 +338,10 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   );
                 }}
               </AdminSidebarLinkGroup>
-              ) : null} */}
+              ) : null}
 
               {/* Business Permit */}
-              {/* {admin_type === 'chief_admin' || admin_type === 'business_admin' ? (
+              {admin_type === 'business_admin' ? (
               <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
@@ -420,10 +417,10 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   );
                 }}
               </AdminSidebarLinkGroup>
-              ) : null} */}
+              ) : null}
 
               {/* CTC / Cedula */}
-              {/* {admin_type === 'chief_admin' || admin_type === 'cedula_admin' ? (
+              {admin_type === 'cedula_admin' ? (
               <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
@@ -487,10 +484,10 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   );
                 }}
               </AdminSidebarLinkGroup>
-              ) : null} */}
+              ) : null}
 
               {/* Local Civil Registry */}
-              {/* {admin_type === 'chief_admin' || admin_type === 'lcr_admin' ? (
+              {admin_type === 'lcr_admin' ? (
                <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                {(handleClick, open) => {
                  return (
@@ -553,7 +550,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                  );
                }}
              </AdminSidebarLinkGroup>
-              ) : null} */}
+              ) : null}
 
               {/* {admin_type === 'chief_admin' || admin_type === 'lcr_admin' ? (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
