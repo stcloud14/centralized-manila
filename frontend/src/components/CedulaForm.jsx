@@ -743,7 +743,21 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={CtcCedula.ctc_validid} name="ctc_validid" id="ctc_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
-                      <ValidIdDropdown/>
+                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
+                      <option value="1" className='dark:bg-[#3d3d3d]'>PASSPORT</option>
+                      <option value="2" className='dark:bg-[#3d3d3d]'>SSS</option>
+                      <option value="3" className='dark:bg-[#3d3d3d]'>UMID</option>
+                      <option value="4" className='dark:bg-[#3d3d3d]'>PHILHEALTH</option>
+                      <option value="5" className='dark:bg-[#3d3d3d]'>DRIVER'S LICENSE</option>
+                      <option value="6" className='dark:bg-[#3d3d3d]'>VOTER'S ID</option>
+                      <option value="7" className='dark:bg-[#3d3d3d]'>SENIOR CITIZEN'S ID</option>
+                      <option value="8" className='dark:bg-[#3d3d3d]'>POSTAL ID</option>
+                      <option value="9" className='dark:bg-[#3d3d3d]'>BARANGAY ID</option>
+                      <option value="10" className='dark:bg-[#3d3d3d]'>NATIONAL ID</option>
+                      <option value="11" className='dark:bg-[#3d3d3d]'>AUTHORIZATION LETTER</option>
+                      <option value="12" className='dark:bg-[#3d3d3d]'>ITR</option>
+                      <option value="13" className='dark:bg-[#3d3d3d]'>PAYSLIP</option>
+                      <option value="14" className='dark:bg-[#3d3d3d]'>SCHOOL ID</option>
                     </select>
                     <label htmlFor="ctc_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>
