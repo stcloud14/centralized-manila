@@ -56,8 +56,6 @@ import React from 'react';
                     <option value="49" className='dark:bg-[#3d3d3d]'>OFW eCARD</option>
                     <option value="50" className='dark:bg-[#3d3d3d]'>DFA ID</option>
                     <option value="51" className='dark:bg-[#3d3d3d]'>SCHOOL ID</option>
-                    <option value="52" className='dark:bg-[#3d3d3d]'>ITR</option>
-                    <option value="53" className='dark:bg-[#3d3d3d]'>PAYSLIP</option>
 
 
             </>

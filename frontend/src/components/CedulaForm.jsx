@@ -743,7 +743,60 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={CtcCedula.ctc_validid} name="ctc_validid" id="ctc_validid" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
-                    <ValidIdDropdown/>
+                      <option value="0" className='dark:bg-[#3d3d3d]'>Select Valid ID to Present Upon Claiming</option>
+                      <option value="1" className='dark:bg-[#3d3d3d]'>PASSPORT</option>
+                      <option value="2" className='dark:bg-[#3d3d3d]'>SSS</option>
+                      <option value="3" className='dark:bg-[#3d3d3d]'>UMID</option>
+                      <option value="4" className='dark:bg-[#3d3d3d]'>PHILHEALTH</option>
+                      <option value="5" className='dark:bg-[#3d3d3d]'>DRIVER'S LICENSE</option>
+                      <option value="6" className='dark:bg-[#3d3d3d]'>VOTER'S ID</option>
+                      <option value="7" className='dark:bg-[#3d3d3d]'>SENIOR CITIZEN'S ID</option>
+                      <option value="8" className='dark:bg-[#3d3d3d]'>POSTAL ID</option>
+                      <option value="9" className='dark:bg-[#3d3d3d]'>BARANGAY ID</option>
+                      <option value="10" className='dark:bg-[#3d3d3d]'>NATIONAL ID</option>
+                      <option value="11" className='dark:bg-[#3d3d3d]'>AUTHORIZATION LETTER</option>
+                      <option value="12" className='dark:bg-[#3d3d3d]'>GSIS ID</option>
+                      <option value="13" className='dark:bg-[#3d3d3d]'>OWWA ID</option>
+                      <option value="14" className='dark:bg-[#3d3d3d]'>PRC ID</option>
+                      <option value="15" className='dark:bg-[#3d3d3d]'>TIN ID</option>
+                      <option value="16" className='dark:bg-[#3d3d3d]'>PHILIPPINE PASSPORT CARD</option>
+                      <option value="17" className='dark:bg-[#3d3d3d]'>PHILIPPINE NATIONAL POLICE ID</option>
+                      <option value="18" className='dark:bg-[#3d3d3d]'>AFP ID</option>
+                      <option value="19" className='dark:bg-[#3d3d3d]'>IBP ID</option>
+                      <option value="20" className='dark:bg-[#3d3d3d]'>PRC ID</option>
+                      <option value="21" className='dark:bg-[#3d3d3d]'>DFA EPASSPORT</option>
+                      <option value="22" className='dark:bg-[#3d3d3d]'>OFW ID</option>
+                      <option value="23" className='dark:bg-[#3d3d3d]'>SSS UMID</option>
+                      <option value="24" className='dark:bg-[#3d3d3d]'>DFA ISSUED POSTAL ID</option>
+                      <option value="25" className='dark:bg-[#3d3d3d]'>DOLE ID</option>
+                      <option value="26" className='dark:bg-[#3d3d3d]'>NCWDP ID</option>
+                      <option value="27" className='dark:bg-[#3d3d3d]'>DSWD ID</option>
+                      <option value="28" className='dark:bg-[#3d3d3d]'>PNR ID</option>
+                      <option value="29" className='dark:bg-[#3d3d3d]'>LGU ID</option>
+                      <option value="30" className='dark:bg-[#3d3d3d]'>PHILHEALTH INSURANCE CARD</option>
+                      <option value="31" className='dark:bg-[#3d3d3d]'>POEA eCARD</option>
+                      <option value="32" className='dark:bg-[#3d3d3d]'>NBI CLEARANCE</option>
+                      <option value="33" className='dark:bg-[#3d3d3d]'>CID CLEARANCE</option>
+                      <option value="34" className='dark:bg-[#3d3d3d]'>DTI CERTIFICATE</option>
+                      <option value="35" className='dark:bg-[#3d3d3d]'>COMPANY ID</option>
+                      <option value="36" className='dark:bg-[#3d3d3d]'>MARINA ID</option>
+                      <option value="37" className='dark:bg-[#3d3d3d]'>DOH LICENSE</option>
+                      <option value="38" className='dark:bg-[#3d3d3d]'>DOE LICENSE</option>
+                      <option value="39" className='dark:bg-[#3d3d3d]'>PRC PROFESSIONAL ID</option>
+                      <option value="40" className='dark:bg-[#3d3d3d]'>IBP ID</option>
+                      <option value="41" className='dark:bg-[#3d3d3d]'>IMMIGRANT CERTIFICATE</option>
+                      <option value="42" className='dark:bg-[#3d3d3d]'>BIR TIN ID</option>
+                      <option value="43" className='dark:bg-[#3d3d3d]'>LGU OFFICE ID</option>
+                      <option value="44" className='dark:bg-[#3d3d3d]'>PNP FIREARMS LICENSE</option>
+                      <option value="45" className='dark:bg-[#3d3d3d]'>SOLO PARENT ID</option>
+                      <option value="46" className='dark:bg-[#3d3d3d]'>PWD ID</option>
+                      <option value="47" className='dark:bg-[#3d3d3d]'>DOST ID</option>
+                      <option value="48" className='dark:bg-[#3d3d3d]'>PRC LICENSURE CERTIFICATE</option>
+                      <option value="49" className='dark:bg-[#3d3d3d]'>OFW eCARD</option>
+                      <option value="50" className='dark:bg-[#3d3d3d]'>DFA ID</option>
+                      <option value="51" className='dark:bg-[#3d3d3d]'>SCHOOL ID</option>
+                      <option value="52" className='dark:bg-[#3d3d3d]'>ITR</option>
+                      <option value="53" className='dark:bg-[#3d3d3d]'>PAYSLIP</option>
                     </select>
                     <label htmlFor="ctc_validid" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valid ID to Present Upon Claiming<Req /></label>
                   </div>
