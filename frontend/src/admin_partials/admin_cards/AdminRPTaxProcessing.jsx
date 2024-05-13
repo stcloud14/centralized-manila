@@ -3,6 +3,7 @@ import axios from 'axios';
 import Flatpickr from 'react-flatpickr';
 
 import AdminRPView from '../admin_modals/AdminRPView';
+import AdminRPCharge from '../admin_modals/AdminRPCharge';
 import RPCardView from '../admin_rptax/RPCardView';
 import RPTableView from '../admin_rptax/RPTableView';
 import Loading from '../../partials/Loading';
@@ -740,6 +741,15 @@ const AdminRPTaxProcessing = ({ taxPayment, taxClearance, handleUpdateData }) =>
 
           {selectedTransaction && modalView && (
           <AdminRPView
+            // selectedTransaction={selectedTransaction}
+            selectedTransaction={selectedTransaction}
+            isOpen={modalView}
+            handleClose={handleModalClose}
+            transType={transType}
+          />
+          )}
+          {selectedTransaction && modalView && (
+          <AdminRPCharge
             // selectedTransaction={selectedTransaction}
             selectedTransaction={selectedTransaction}
             isOpen={modalView}
