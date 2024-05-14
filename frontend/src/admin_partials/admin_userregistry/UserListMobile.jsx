@@ -50,8 +50,16 @@ const UserListMobile = ({ handleOpenModal, userApplications, searchInput, setSea
                     <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </span>
-                <input value={searchFname} onChange={(e) => setSearchFname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search First Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-              </div>
+                <input
+                  value={searchFname || ""} // Provide an empty string if searchFname is null
+                  onChange={(e) => setSearchFname(e.target.value.toUpperCase())}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                  id="searchInput"
+                  type="text"
+                  placeholder="Search First Name..."
+                  className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
+                />              
+                </div>
             </div>
 
             {/* Last Name */}
@@ -63,7 +71,15 @@ const UserListMobile = ({ handleOpenModal, userApplications, searchInput, setSea
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value={searchLname} onChange={(e) => setSearchLname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Last Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+                  <input
+                        value={searchLname || ""} // Provide an empty string if searchLname is null
+                        onChange={(e) => setSearchLname(e.target.value.toUpperCase())}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                        id="searchInput"
+                        type="text"
+                        placeholder="Search Last Name..."
+                        className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
+                      />
                 </div>
               </div>
 
@@ -86,8 +102,16 @@ const UserListMobile = ({ handleOpenModal, userApplications, searchInput, setSea
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value={searchInput} onChange={(e) => setSearchInput(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Mobile Number..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-                </div>
+                  <input
+                    value={searchInput || ""} // Provide an empty string if searchInput is null
+                    onChange={(e) => setSearchInput(e.target.value.toUpperCase())}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search Mobile Number..."
+                    className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
+                  />                
+                  </div>
               </div>
 
                 {/* Email */}
@@ -99,8 +123,16 @@ const UserListMobile = ({ handleOpenModal, userApplications, searchInput, setSea
                       <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                   </span>
-                  <input value={searchEmail} onChange={(e) => setSearchEmail(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Email..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-                </div>
+                  <input
+                    value={searchEmail || ""} // Provide an empty string if searchEmail is null
+                    onChange={(e) => setSearchEmail(e.target.value.toUpperCase())}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search Email..."
+                    className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
+                  />                
+                  </div>
               </div>
 
               {/* Status */}
@@ -134,36 +166,35 @@ const UserListMobile = ({ handleOpenModal, userApplications, searchInput, setSea
             </div>
 
             {userApplications?.length > 0 ? (
-            userApplications.map((transaction) => (
-
-              <div key={transaction.transaction_id} className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
-                <div className=" text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                  Name: {transaction.l_name}, {transaction.f_name} {transaction.m_name}
-                </div>
-                <div className="px-4 py-5">
-                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Sex: {transaction.sex_type.toUpperCase()}</div>
-                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Place of Birth: {transaction.birth_place}</div>
-                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date of Birth: {transaction.birth_date}</div>
-                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Mobile Number: {transaction.mobile_no}</div>
-                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Email: {transaction.user_email}</div>
-                  <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Verification Status: {transaction.verification_status.toUpperCase()}</div>
-                  <div className="mt-5 flex space-x-3 justify-center">
-                    <div onClick={() => handleOpenModal(transaction)} className="flex group justify-center items-center w-full text-center px-2 py-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-sm mt-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <span className="text-xs font-normal">&nbsp;View Full Information</span>
+                  userApplications.map((transaction, index) => (
+                    <div key={index} className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
+                      <div className="text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
+                        Name: {transaction.l_name}, {transaction.f_name} {transaction.m_name}
+                      </div>
+                      <div className="px-4 py-5">
+                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Sex: {transaction.sex_type ? transaction.sex_type.toUpperCase() : ""}</div>
+                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Place of Birth: {transaction.birth_place}</div>
+                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date of Birth: {transaction.birth_date}</div>
+                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Mobile Number: {transaction.mobile_no}</div>
+                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Email: {transaction.user_email}</div>
+                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Verification Status: {transaction.verification_status.toUpperCase()}</div>
+                        <div className="mt-5 flex space-x-3 justify-center">
+                          <div onClick={() => handleOpenModal(transaction)} className="flex group justify-center items-center w-full text-center px-2 py-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-sm mt-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span className="text-xs font-normal">&nbsp;View Full Information</span>
+                          </div>
+                        </div>
+                      </div>  
                     </div>
+                  ))
+                ) : (
+                  <div className="text-center text-slate-500 dark:text-slate-400">
+                    No records found.
                   </div>
-                </div>  
-              </div>
-              ))
-              ) : (
-                <div className="text-center text-slate-500 dark:text-slate-400">
-                  No records found.
-                </div>
-              )}
+                )}
           </div>
         </div>
         </>
