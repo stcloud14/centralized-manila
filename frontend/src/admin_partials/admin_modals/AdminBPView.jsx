@@ -324,7 +324,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                           ) : null}
 
                           <br />
-                          
+                          {selectedTransaction.bus_tax_incentives && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Incentives from any Government Entity</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -336,7 +336,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         }
                     </span>
                     </div>
-
+                          )}
                     <br />
 
                     <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
@@ -580,15 +580,6 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
             )}
 
                     <br />
-
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                      <span className="font-medium whitespace-nowrap">No. of Copies</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_nocopies || selectedTransaction.copies || '-'}</span>
-                    </div>
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                      <span className="font-medium whitespace-nowrap">What to Print</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_printLabel || selectedTransaction.print_type || '-'}</span>
-                    </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Purpose</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_purposeLabel || selectedTransaction.purpose_type || '-'}</span>
