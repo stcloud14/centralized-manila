@@ -414,7 +414,7 @@ const navigate = useNavigate();
 
       {/* Left Side */}
       <div className="lg:w-1/2 lg:ms-20">
-        <img src="../src/images/mnl.svg" alt="Centralized Manila Logo" className="lg:h-60 md:h-40 sm:h-28 h-28 mx-auto" />
+        <img src="https://i.ibb.co/12J7JDk/mnl.png" alt="Centralized Manila Logo" className="lg:h-60 md:h-40 sm:h-28 h-28 mx-auto" />
         <h1 className="text-center font-medium text-slate-700 text-2xl">Centralized
           <span className="text-blue-500"> M</span>
           <span className="text-red-500">a</span>
