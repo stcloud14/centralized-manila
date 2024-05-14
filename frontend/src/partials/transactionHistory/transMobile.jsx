@@ -177,9 +177,9 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
 
             // Additional text to be placed on the right
             const currentDate1 = new Date();
-            const currentMonth = currentDate1.getMonth();
-            const currentYear = currentDate1.getFullYear();
-            const billingDate = new Date(currentYear, currentMonth, 6);
+            // const currentMonth = currentDate1.getMonth();
+            // const currentYear = currentDate1.getFullYear();
+            // const billingDate = new Date(currentYear, currentMonth, 6);
 
             const monthNames = [
                 "January", "February", "March", "April", "May", "June",
@@ -188,7 +188,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
 
             const additionalText = [
                 { text: "Billing Date", bold: true },
-                `${monthNames[billingDate.getMonth()]} 6, ${billingDate.getFullYear()}`
+                transaction.date
             ];
 
             if (transaction.trans_type === 'Business Permit') {
@@ -296,23 +296,23 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
             switch (trans_type) {
                 case 'Real Property Tax Payment':
                     head = [['PIN', 'Total Amount', 'Year', 'Quarter']];
-                    body = [[tp_pin, 'P ' + amount, year_period, period_id]];
+                    body = [[tp_pin, 'P ' + amount + '.00', year_period, period_id]];
                     break;
                 case 'Real Property Tax Clearance':
                     head = [['PIN', 'Total Amount', 'Date Processed']];
-                    body = [[tc_pin, 'P ' + amount, date]];
+                    body = [[tc_pin, 'P ' + amount + '.00', date]];
                     break;
                 case 'Business Permit':
                     head = [['DTI/SEC/CDA Registration No.', 'Tax Identification Number', 'Total Amount', 'Date Processed']];
-                    body = [[bus_reg_no, bus_tin, 'P ' + amount, date]];
+                    body = [[bus_reg_no, bus_tin, 'P ' + amount + '.00', date]];
                     break;
                 case 'Community Tax Certificate':
                     head = [['Tax Payer Account No.', 'Total Amount', 'Date Processed']];
-                    body = [[ci_acc_no, 'P ' + amount, date]];
+                    body = [[ci_acc_no, 'P ' + amount + '.00', date]];
                     break;
                 default:  
                     head = [['No. of Copies', 'Total Amount', 'Date Processed']];
-                    body = [[copies, 'P ' + amount, date]];
+                    body = [[copies, 'P ' + amount + '.00', date]];
             }
 
             pdf.autoTable({
