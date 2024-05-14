@@ -225,6 +225,7 @@ router.get('/cedula/:transaction_id', async (req, res) => {
         ci.weight, 
         ci.acr_no, 
         ct.emp_status, 
+        cci.ctc_attachment, 
         ct.acc_no, 
         ct.valid_id, 
         ct.pob_status, 
@@ -250,6 +251,7 @@ router.get('/cedula/:transaction_id', async (req, res) => {
         LEFT JOIN cedula_doc_owner co ON cc.transaction_id = co.transaction_id AND co.transaction_id IS NOT NULL 
         LEFT JOIN cedula_other_info ci ON cc.transaction_id = ci.transaction_id AND ci.transaction_id IS NOT NULL 
         LEFT JOIN cedula_transaction_info ct ON cc.transaction_id = ct.transaction_id AND ct.transaction_id IS NOT NULL 
+        LEFT JOIN cedula_images cci ON cc.transaction_id = cci.transaction_id AND cci.transaction_id IS NOT NULL 
         LEFT JOIN region r ON cc.region_id = r.region_id 
         LEFT JOIN province p ON cc.prov_id = p.prov_id 
         LEFT JOIN cities c ON cc.city_id = c.city_id 
@@ -289,7 +291,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
     const query = "SELECT  r.region_name AS region, p.prov_name AS province, c.city_name AS municipality, cc.transaction_id, cc.cedula_date, \
     co.l_name, co.f_name, co.m_name, co.suffix_type, st.sex_type, \
     cv.cvl_status, ci.czn_id, ci.height, ci.weight, ci.acr_no, cv.cvl_status, \
-    ct.emp_status, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
+    ct.emp_status, cci.ctc_attachment, ct.acc_no, ct.valid_id, ct.pob_status, ct.income_id, ct.salary_id, ct.gross_id, \
     ti.amount, ti.copies, ti.print_id, vt.valid_id_type, pt.purpose_type, \
     ai.brgy_dist, ai.municipality, ai.house_floor, ai.bldg_name, ai.zip_code \
     \
@@ -300,6 +302,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
     LEFT JOIN cedula_doc_owner co ON cc.transaction_id = co.transaction_id AND co.transaction_id IS NOT NULL \
     LEFT JOIN cedula_other_info ci ON cc.transaction_id = ci.transaction_id AND ci.transaction_id IS NOT NULL \
     LEFT JOIN cedula_transaction_info ct ON cc.transaction_id = ct.transaction_id AND ct.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_images cci ON cc.transaction_id = cci.transaction_id AND cci.transaction_id IS NOT NULL \
     LEFT JOIN region r ON cc.region_id = r.region_id \
     LEFT JOIN province p ON cc.prov_id = p.prov_id \
     LEFT JOIN cities c ON cc.city_id = c.city_id \
@@ -358,6 +361,7 @@ router.get('/cedula/:transaction_id/download', async (req, res) => {
                 ['Weight (kg)', cedulaTransaction.weight],
                 ['Alien Certificate of Registration No.', cedulaTransaction.acr_no],
                 ['Employment Status', cedulaTransaction.emp_status],
+                ['Attachment Proof', cedulaTransaction.ctc_attachment],
                 ['Tax Payer Account No.', cedulaTransaction.acc_no],
                 ['Residence Tax Due', cedulaTransaction.cedula_date],
                 ['Valid ID to Present Upon Claiming', cedulaTransaction.valid_id_type],

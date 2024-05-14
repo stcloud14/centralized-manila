@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
     \
     LEFT JOIN bus_activity ba ON ut.transaction_id = ba.transaction_id AND ut.transaction_id IS NOT NULL \
     \
-    WHERE ut.trans_type_id = 3 AND ut.status_type = 'Pending'";
+    WHERE ut.trans_type_id = 3 AND ut.status_type = 'Pending' ORDER BY ut.date_processed DESC";
 
 
     try {
@@ -134,7 +134,7 @@ router.get('/charges', async (req, res) => {
     LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE  ut.trans_type_id = 3 AND ut.status_type = 'Processing'";
+    WHERE  ut.trans_type_id = 3 AND ut.status_type = 'Processing' ORDER BY ut.date_processed DESC";
 
     const query1 = "SELECT bus_office, bus_line, bus_psic, bus_products, bus_units_no, bus_total_cap\
     \
@@ -142,7 +142,7 @@ router.get('/charges', async (req, res) => {
     \
     LEFT JOIN bus_activity ba ON ut.transaction_id = ba.transaction_id AND ut.transaction_id IS NOT NULL \
     \
-    WHERE ut.trans_type_id = 3 AND ut.status_type = 'Processing'";
+    WHERE ut.trans_type_id = 3 AND ut.status_type = 'Processing' ORDER BY ut.date_processed DESC";
 
 
     try {
@@ -233,7 +233,7 @@ router.get('/processing', async (req, res) => {
     \
     LEFT JOIN bus_activity ba ON ut.transaction_id = ba.transaction_id AND ut.transaction_id IS NOT NULL \
     \
-    WHERE ut.trans_type_id = 3 AND ut.status_type = 'Paid'";
+    WHERE ut.trans_type_id = 3 AND ut.status_type = 'Paid' ORDER BY ut.date_processed DESC";
 
 
     try {
@@ -351,7 +351,7 @@ router.post('/updatecomplete/:transaction_id', auditMiddleware, async (req, res)
     const trans_type = req.body.trans_type;
 
     const notif_title = 'Transaction Complete';
-    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transaction_id}</span> has been marked <span className="font-medium dark:text-white">COMPLETE</span>. Kindly view the transaction for the next steps.</p>`;
+    const notif_message = `<p className="text-[0.8rem] pb-2">Your request for <span className="font-medium dark:text-white">${trans_type}: ${transaction_id}</span> has been marked <span className="font-medium dark:text-white">COMPLETE</span>. Kindly view your email for further instructions when claiming your document.</p>`;
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
