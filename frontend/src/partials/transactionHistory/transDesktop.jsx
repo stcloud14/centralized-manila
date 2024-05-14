@@ -180,18 +180,20 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
 
             // Additional text to be placed on the right
             const currentDate1 = new Date();
-            const currentMonth = currentDate1.getMonth();
-            const currentYear = currentDate1.getFullYear();
-            const billingDate = new Date(currentYear, currentMonth, 6);
+            // const currentMonth = currentDate1.getMonth();
+            // const currentYear = currentDate1.getFullYear();
+            // const billingDate = new Date(currentYear, currentMonth, 6);
 
             const monthNames = [
                 "January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
             ];
 
+            
+
             const additionalText = [
                 { text: "Billing Date", bold: true },
-                `${monthNames[billingDate.getMonth()]} 6, ${billingDate.getFullYear()}`
+                transaction.date
             ];
 
             if (transaction.trans_type === 'Business Permit') {
