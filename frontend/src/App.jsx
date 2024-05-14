@@ -118,6 +118,24 @@ function App() {
         <Route exact path="/admin_verifyreqs/:admin_type" element={<AdminVerifyReqs />} />
         <Route exact path="/admin_audittrail/:admin_type" element={<AdminAuditTrail />} />
         <Route exact path="/admin_contacts/:admin_type" element={<AdminContacts />} />
+<<<<<<< Updated upstream
+=======
+
+        {/* Admin Dashboard Routes */}
+        <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
+        <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />
+        <Route exact path="/admin_dash_bp/:admin_type" element={<AdminDashBP />} />
+        <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
+        <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
+        <Route exact path="/admin_dash_ur/:admin_type" element={<AdminDashUR />} />
+
+
+
+
+
+        <Route path="*" element={<Navigate to="/Forbidden/:user_input" />} />
+        <Route path="/Forbidden/:user_input" element={<Forbidden />} />
+>>>>>>> Stashed changes
       </Routes>
 
       <DashboardProvider>
