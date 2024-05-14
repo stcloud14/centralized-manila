@@ -558,13 +558,19 @@ const router = Router();
      let completeMessage = "";
 
   switch (transType) {
-    // case "Real Property Tax Payment":
-    //   completeMessage = "Your real property tax payment has been successfully processed and is now marked as complete.";
-    //   break;
+    case "Real Property Tax Payment":
+      completeMessage = `
+      <p style="font-size:16px;line-height:24px;margin:16px 0">To claim the requested document, you must bring:</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Your valid ID .</h2>
+      `;
+      break;
 
-    // case "Real Property Tax Clearance":
-    //   completeMessage = "Your real property tax clearance has been successfully processed and is now marked as complete.";
-    //   break;
+    case "Real Property Tax Clearance":
+      completeMessage = `
+      <p style="font-size:16px;line-height:24px;margin:16px 0">To claim the requested document, you must bring:</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Your valid ID .</h2>
+      `;
+      break;
 
     case "Birth Certificate":
       completeMessage = `
@@ -589,6 +595,20 @@ const router = Router();
       <p style="font-size:16px;line-height:24px;margin:16px 0">To claim the requested document, you must bring:</h2>
       <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Original and a photocopy of your ID that shows your address from the place where you are obtaining the document.</h2>
       <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Supporting documents that prove your relationship to the owner of the document.</h2>
+      `;
+      break;
+
+    case "Business Permit":
+        completeMessage = `
+        <p style="font-size:16px;line-height:24px;margin:16px 0">To claim the requested document, you must bring:</h2>
+        <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Your valid ID you selected from the form.</h2>
+        `;
+        break;
+
+    case "Community Tax Certificate":
+      completeMessage = `
+      <p style="font-size:16px;line-height:24px;margin:16px 0">To claim the requested document, you must bring:</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Your valid ID you selected from the form.</h2>
       `;
       break;
     // default:
