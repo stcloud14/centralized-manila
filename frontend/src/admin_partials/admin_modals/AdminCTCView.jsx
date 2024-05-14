@@ -8,6 +8,21 @@ const AdminCTCView = ({ selectedTransaction, isOpen, handleClose }) => {
 
   console.log(selectedTransaction)
 
+  function getShortName(longName, maxCharacters) {
+    if (!longName) {
+        return '';
+    }
+
+    const fileNameWithoutExtension = longName.split('.').slice(0, -1).join('.');
+    const extension = longName.split('.').pop();
+
+    const truncatedName = fileNameWithoutExtension.length > maxCharacters - extension.length - 5
+        ? fileNameWithoutExtension.substring(0, maxCharacters - extension.length - 5) + '..'
+        : fileNameWithoutExtension;
+
+    return extension ? truncatedName + '.' + extension : truncatedName;
+}
+
 
   return (
     isOpen && (
@@ -55,15 +70,13 @@ const AdminCTCView = ({ selectedTransaction, isOpen, handleClose }) => {
                             <span className="font-medium whitespace-nowrap">Middle Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.m_name}</span>
                           </div>
-
                           {selectedTransaction.suffix_type && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Suffix</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.suffix_type}</span>
                           </div>
                            )}
-
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Sex</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.sex_type}</span>
                           </div>
@@ -115,28 +128,24 @@ const AdminCTCView = ({ selectedTransaction, isOpen, handleClose }) => {
                             <span className="font-medium whitespace-nowrap">Country of Citizenship</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.czn_id}</span>
                           </div>
-
                           {selectedTransaction.height && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Height (cm)</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.height}</span>
                           </div>
                         )}
-
-                          {selectedTransaction.weight && (
+                           {selectedTransaction.weight && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Weight (kg)</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.weight}</span>
                           </div>
                         )}
-
                           {selectedTransaction.acr_no && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Alien Certificate of Registration No.</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.acr_no}</span>
                           </div>
                            )}
-
                           <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
                             <br/>
                           </div>
@@ -144,6 +153,14 @@ const AdminCTCView = ({ selectedTransaction, isOpen, handleClose }) => {
                             <span className="font-medium whitespace-nowrap">Employment Status</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.emp_status}</span>
                           </div>
+                          {selectedTransaction.ctc_attachment !== undefined ? (
+                            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                              <span className="font-medium whitespace-nowrap">Attachment Proof</span>
+                                  <a href={`/uploads/cedula/${selectedTransaction.ctc_attachment}`} target="_blank" rel="noopener noreferrer">
+                                    {getShortName(selectedTransaction.ctc_attachment, 20)}
+                                  </a>
+                            </div>
+                          ) : null}
 
                           {selectedTransaction.acc_no && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
@@ -151,7 +168,7 @@ const AdminCTCView = ({ selectedTransaction, isOpen, handleClose }) => {
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.acc_no}</span>
                           </div>
                         )}
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Residence Tax Due</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">    {moment(selectedTransaction.cedula_date).format('MMMM DD, YYYY')}</span>
                           </div>

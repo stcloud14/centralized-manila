@@ -477,7 +477,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
         <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200">
               <div className="px-5 py-5">
                 <h1 className='font-medium text-center text-slate-700 dark:text-white mb-5'>Transaction History</h1>
-                <div className="flex flex-col items-center mb-3 md:flex-row md:px-0 md:pr-0.5 px-0.5 text-xs">
+                <div className="flex flex-col items-center mb-2 md:flex-row md:px-0 md:pr-0.5 px-0.5 text-xs">
                   <div className="flex w-full items-center">
                     <button
                       type="button"
@@ -516,7 +516,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
                   </div>
 
                   <button
-                    className={`group border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white px-4 py-1 rounded-full inline-flex items-center ${['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`group border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white px-4 py-1 mt-2 rounded-full w-full justify-center inline-flex items-center ${['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
                     onClick={generatePDF}
                     disabled={['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus)}
                 >
