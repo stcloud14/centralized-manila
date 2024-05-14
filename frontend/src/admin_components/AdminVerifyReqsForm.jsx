@@ -318,7 +318,7 @@ const AdminVerifyReqsForm =()=>{
           <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200 mx-4 my-4">
             <div className="px-5 py-5">
               <h1 className='font-medium text-center text-slate-700 dark:text-white'>Registry</h1>
-              <h1 className='mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300'>User Verification Requests</h1> 
+              <h1 className='mb-5 text-sm italic text-center text-slate-700 dark:text-gray-300'>User Verification Requests</h1> 
 
               {isApproved && (
                     <div className="my-5 text-center">
@@ -349,7 +349,7 @@ const AdminVerifyReqsForm =()=>{
                   )} 
 
           <div className="flex flex-col items-center sm:flex-row text-xs">
-            <div className="flex-row flex justify-end w-full">
+            <div className="flex-row flex justify-end w-full mb-2">
 
             {/* Filter Button */}
             <div className="relative w-full sm:w-20 text-left z-10">
