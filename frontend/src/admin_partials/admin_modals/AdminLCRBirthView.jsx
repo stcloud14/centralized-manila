@@ -9,8 +9,9 @@ const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType
     return <div></div>;
   }
 
-  const { transaction_id, status_type } = selectedTransaction;
+  const { transaction_id, status_type, birth_date } = selectedTransaction;
   console.log(selectedTransaction)
+  const formattedBirthDate = moment(birth_date).format('MMMM D, YYYY');
 
   return (
     isOpen && (
@@ -92,7 +93,7 @@ const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType
                   </div>
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Owner's Date of Birth</span>
-                    <span className="whitespace-nowrap md:mb-0 mb-1">{moment(selectedTransaction.birth_date).format('MMMM DD, YYYY')}</span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">{formattedBirthDate}</span>
                   </div>
                   
                   <br/>
@@ -246,7 +247,7 @@ const AdminLCRBirthView = ({ selectedTransaction, isOpen, handleClose, transType
                     </div>
                   )}
 
-                  {selectedTransaction.country && (              
+                  {selectedTransaction.birth_reg_no && (              
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Birth Registry Number (BReN)</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.birth_reg_no}</span>
