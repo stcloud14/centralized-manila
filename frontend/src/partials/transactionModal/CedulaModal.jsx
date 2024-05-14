@@ -402,18 +402,21 @@ const cancelTrans = async (e) => {
                             <span className="font-medium whitespace-nowrap">Employment Status</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_employmentstatus || cedulaTransaction.emp_status || '-'}</span>
                           </div>
-                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                            <span className="font-medium whitespace-nowrap">Attachment Proof</span>
-                            {cedulaImages && cedulaImages.value !== null ? (
+                          {cedulaImages && cedulaImages.value ? (
+                            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                              <span className="font-medium whitespace-nowrap">Attachment Proof</span>
                               <span>{getShortName(cedulaImages.value.name, 20)}</span>
-                            ) : (
-                              cedulaTransaction && cedulaTransaction.ctc_attachment !== undefined ? (
+                            </div>
+                          ) : (
+                            cedulaTransaction && cedulaTransaction.ctc_attachment && (
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Attachment Proof</span>
                                 <a href={`/uploads/cedula/${cedulaTransaction.ctc_attachment}`} target="_blank" rel="noopener noreferrer">
                                   {getShortName(cedulaTransaction.ctc_attachment, 20)}
                                 </a>
-                              ) : null
-                            )}
-                          </div>
+                              </div>
+                            )
+                          )}
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Payer Account No.</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_taxpayeraccno || cedulaTransaction.acc_no || '-'}</span>
