@@ -1,41 +1,50 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import fourfour from '../images/resources/err02.png';
 
 const Forbidden = () => {
   const { user_input } = useParams();
 
 
   return (
-    <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        <main className="overflow-y-auto">
-
-              <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-[#2b2b2b] dark:border-[#3d3d3d] shadow-lg rounded-sm border border-slate-200 mx-4 my-4">
-            <div className="px-10 py-5">
-                <br/>
-                  <h1 className="text-slate-800 dark:text-slate-100 text-center font-medium text-xl sm:text-2xl">
-                    CENTRALIZED
-                    <span className='text-blue-600'> M</span>
-                    <span className='text-red-500'>A</span>
-                    <span className='text-yellow-500'>N</span>
-                    <span className='text-green-500'>I</span>
-                    <span className='text-blue-600'>L</span>
-                    <span className='text-red-500'>A</span>
-                   </h1>
-                  <br/>
-                  <h1 className="text-slate-800 dark:text-slate-100 text-center text-2xl sm:text-8xl font-black mt-[10rem]">
-                    404. That's an error.
-                  </h1>
-                  <p className="text-slate-800 dark:text-slate-100 text-center text-lg sm:text-xl mt-20 mb-3">
-                    The requested URL /{user_input} was not found on this server.
-                  </p>
-                  <p className="text-slate-800 dark:text-slate-100 text-center text-lg sm:text-xl mb-[10rem]">
-                    That's all we know.
-                  </p>
-
+    <div className="fixed inset-0 z-20 flex items-center justify-center dark:bg-[#212121] p-4">
+      <div className="max-w-screen-full w-screen h-full bg-white dark:bg-[#2b2b2b] shadow-md p-8 rounded-lg grid content-center z-10">
+          <div className="w-full lg:space-y-11 md:space-y-2 space-y-4 items-center text-center z-10">
+            <div>
+              <h1 className="text-slate-800 dark:text-slate-100 text-center font-medium text-xl sm:text-2xl">
+                Centralized
+                <span className='text-blue-600'> M</span>
+                <span className='text-red-500'>a</span>
+                <span className='text-yellow-500'>n</span>
+                <span className='text-green-500'>i</span>
+                <span className='text-blue-600'>l</span>
+                <span className='text-red-500'>a</span>
+              </h1>
+            </div>
+                  
+            <div>
+                <img src={fourfour} className='lg:h-72 md:h-40 h-52 w-auto mx-auto object-cover object-fit'/>
+            </div>
+            
+            <div>
+              <h1 className="text-slate-800 dark:text-slate-100 text-center lg:text-5xl md:text-4xl text-3xl font-black">
+                <span className='text-blue-600'>4</span>
+                <span className='text-yellow-500'>0</span>
+                <span className='text-red-500'>4</span>
+                <span className='text-emerald-600'>.</span> That's an error.
+              </h1>
+            </div>
+            <div>
+              <span className="text-slate-800 dark:text-slate-100 w-full text-center md:text-lg text-md">
+                The requested URL <span className='text-red-600'>/{user_input}</span> was not found on this server.
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-800 dark:text-slate-100 text-center md:text-lg text-sm">
+                That's all we know.
+              </span>
             </div>
           </div>
-        </main>
       </div>
     </div>
   );
