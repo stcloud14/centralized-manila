@@ -516,7 +516,7 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
                   </div>
 
                   <button
-                    className={`group border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white px-4 py-1 rounded-full inline-flex items-center ${['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`group border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white px-4 py-1 mt-2 rounded-full w-full justify-center inline-flex items-center ${['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
                     onClick={generatePDF}
                     disabled={['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus)}
                 >

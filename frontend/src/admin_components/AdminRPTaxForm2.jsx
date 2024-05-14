@@ -41,6 +41,30 @@ const AdminRPTaxForm2 = () => {
   useEffect(() => {
     fetchUserTransaction();
   }, []);
+
+  const fetchExpiredTransaction = async () => {
+    try {
+      //await axios.post(`${Base_Url}email/updateexpired`);
+      console.log('Sent emails')
+      
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+    useEffect(() => {
+      const fetchData = async () => {
+          try {
+              await fetchExpiredTransaction();
+  
+              await fetchUserTransaction();
+          } catch (error) {
+              console.error(error);
+          }
+      };
+  
+      fetchData();
+    }, []);
  
   
 
