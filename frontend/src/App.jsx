@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import {
   Routes,
   Route,
-  useLocation
+  useLocation,
+  Navigate
 } from 'react-router-dom';
 
 import './css/style.css';
@@ -63,6 +64,7 @@ import AdminVerifyReqs from './admin_pages/AdminVerifyReqs';
 import AdminAuditTrail from './admin_pages/AdminAuditTrail';
 import AdminSettings from './admin_components/AdminSettings';
 import TermsConditions from './pages/TermsConditions';
+import Forbidden from './pages/Forbidden';
 import AdminContacts from './admin_pages/AdminContacts';
 
 
@@ -84,6 +86,7 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/privacypolicy" element={<PrivacyPolicy/>} />
         <Route exact path="/termsconditions" element={<TermsConditions/>} />
+        <Route exact path="/Forbidden" element={<Forbidden/>} />
         <Route exact path="/home/:user_id" element={<Home />} />
         <Route exact path="/personalinfo/:user_id" element={<PersonalInfo />} />
         <Route exact path="/contact/:user_id" element={<ContactInfo />} />
@@ -122,6 +125,9 @@ function App() {
         <Route exact path="/admin_verifyreqs/:admin_type" element={<AdminVerifyReqs />} />
         <Route exact path="/admin_audittrail/:admin_type" element={<AdminAuditTrail />} />
         <Route exact path="/admin_contacts/:admin_type" element={<AdminContacts />} />
+
+        <Route path="*" element={<Navigate to="/Forbidden" />} />
+
       </Routes>
 
       <DashboardProvider>
