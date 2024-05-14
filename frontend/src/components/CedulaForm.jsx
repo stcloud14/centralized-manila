@@ -137,19 +137,33 @@ const CedulaForm =()=>{
   const [fileName, setFileName] = useState('');
 
   const handleFileSelect = (file) => {
+    const allowedTypes = [
+      'image/png', 
+      'image/jpeg', 
+      'application/pdf', 
+      'application/msword', 
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+  
     if (file.size > 2 * 1024 * 1024) {
       window.alert('File size exceeds the 2MB limit. Please select a smaller file.');
       return;
     }
-
+  
+    if (!allowedTypes.includes(file.type)) {
+      window.alert('Invalid file type. Please select a PNG, JPG, JPEG, PDF, or DOC/DOCX file.');
+      return;
+    }
+  
     if (selectedFile.value && selectedFile.value.name === file.name) {
       window.alert('Please select a different file');
       return;
     }
-
+  
     setFileName(file.name);
     setSelectedFile({ ...selectedFile, value: file });
   };
+  
 
   
 

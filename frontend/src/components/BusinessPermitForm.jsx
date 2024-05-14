@@ -171,12 +171,18 @@ const BusinessPermitForm =()=>{
   });  
 
   const handleFileSelect = (file, target) => {
-
+    const allowedTypes = ['image/png', 'image/jpeg', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+  
     if (file.size > 2 * 1024 * 1024) {
       window.alert('File size exceeds the 2MB limit. Please select a smaller file.');
       return;
     }
-
+  
+    if (!allowedTypes.includes(file.type)) {
+      window.alert('Invalid file type. Please select a PNG, JPG, JPEG, PDF, or DOC/DOCX file.');
+      return;
+    }
+  
     setSelectedFiles((prevFiles) => {
       const fileNameExists = prevFiles.some(
         (fileArray) => fileArray.value && fileArray.value.name && fileArray.value.name === file.name
@@ -186,7 +192,7 @@ const BusinessPermitForm =()=>{
         window.alert('Please select a different file');
         return prevFiles;
       }
-
+  
       const updatedFiles = prevFiles.map((fileArray) => {
         if (fileArray.fieldName === target) {
           setFileNames((prevFileNames) => ({
@@ -197,10 +203,11 @@ const BusinessPermitForm =()=>{
         }
         return fileArray;
       });
-
+  
       return updatedFiles;
     });
   };
+  
 
 
   const handleActivityChange = (e) => {
