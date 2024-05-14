@@ -194,7 +194,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_tel_no || selectedTransaction.bus_tel_no || '-'}</span>
                           </div>
                           )}
-                          
+
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mobile Number</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_mobile_no || selectedTransaction.bus_mobile_no || '-'}</span>
@@ -410,6 +410,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
 
                     
                     <br />
+                    {selectedTransaction.bus_dti_reg && (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">DTI Registration</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -421,7 +422,9 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                           }
                       </span>
                   </div>
+                    )}
 
+                {selectedTransaction.bus_rptax_decbldg && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Building</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -433,7 +436,9 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         }
                     </span>
                 </div>
+                )}
 
+                    {selectedTransaction.bus_sec_paid && (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Paid-up and Subscribed Page</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -445,8 +450,9 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         }
                     </span>
                 </div>
+                  )}
 
-
+                  {selectedTransaction.bus_sec_articles && (
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Articles of Primary and Secondary Purpose</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -457,8 +463,10 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                                 : ''
                         }
                     </span>
-                </div>
+                </div>              
+                  )}
 
+              {selectedTransaction.bus_nga && (
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">NGA-Contract of Lease</span>
                     <span className="whitespace-nowrap md:mb-0 mb-1">
@@ -470,6 +478,9 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         }
                     </span>
                 </div>
+                  )}
+
+              {selectedTransaction.bus_sec_front && (
 
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">SEC Registration</span>
@@ -482,6 +493,8 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         }
                     </span>
                 </div>
+              )}
+              {selectedTransaction.bus_rptax_decland && (
 
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Land</span>
@@ -494,6 +507,8 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         }
                     </span>
                 </div>
+              )}
+              {selectedTransaction.bus_fire && (
 
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                     <span className="font-medium whitespace-nowrap">Fire Safety Inspection Certificate</span>
@@ -506,6 +521,8 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                         }
                     </span>
                 </div>
+              )}
+              {selectedTransaction.bus_page2 && (
 
                 <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Page 2 Document</span>
@@ -518,6 +535,8 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                       }
                   </span>
               </div>
+            )}
+              {selectedTransaction.bus_page3 && (
 
               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Page 3 Document</span>
@@ -530,6 +549,8 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                       }
                   </span>
               </div>
+            )}
+              {selectedTransaction.bus_page4 && (
 
               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Page 4 Document</span>
@@ -542,6 +563,8 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                       }
                   </span>
               </div>
+            )}
+              {selectedTransaction.bus_page5 && (
 
               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                   <span className="font-medium whitespace-nowrap">Page 5 Document</span>
@@ -554,6 +577,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                       }
                   </span>
               </div>
+            )}
 
                     <br />
 
