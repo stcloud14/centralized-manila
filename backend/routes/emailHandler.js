@@ -555,6 +555,46 @@ const router = Router();
     const sexType = req.body.sex_type;
     
 
+     let completeMessage = "";
+
+  switch (transType) {
+    // case "Real Property Tax Payment":
+    //   completeMessage = "Your real property tax payment has been successfully processed and is now marked as complete.";
+    //   break;
+
+    // case "Real Property Tax Clearance":
+    //   completeMessage = "Your real property tax clearance has been successfully processed and is now marked as complete.";
+    //   break;
+
+    case "Birth Certificate":
+      completeMessage = `
+      <p style="font-size:16px;line-height:24px;margin:16px 0">To claim the requested document, you must bring:</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; An authorization letter from the document owner and their original valid ID if you are not the document owner. Additionally, if the document owner is under 18 years old, you must provide an authorization letter from the mother with her valid ID.</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Original and a photocopy of your ID that shows your address from the place where you are obtaining the document.</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Supporting documents that prove your relationship to the owner of the document.</h2>
+      `;
+      break;
+
+    case "Marriage Certificate":
+      completeMessage = `
+      <p style="font-size:16px;line-height:24px;margin:16px 0">To claim the requested document, you must bring:</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; An authorization letter from the document owner and their original valid ID if you are not the document owner.</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Original and a photocopy of the ID of one of the spouses is needed.</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Supporting documents that prove your relationship to the owner of the document.</h2>
+      `;
+      break;
+
+    case "Death Certificate":
+      completeMessage = `
+      <p style="font-size:16px;line-height:24px;margin:16px 0">To claim the requested document, you must bring:</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Original and a photocopy of your ID that shows your address from the place where you are obtaining the document.</h2>
+      <p style="font-size:16px;line-height:24px;margin:16px 0">&#183; Supporting documents that prove your relationship to the owner of the document.</h2>
+      `;
+      break;
+    // default:
+    //   completeMessage = "Your transaction has been successfully processed and is now marked as complete.";
+  }
+
     const message = {
       Pending: `
       <h2 style="font-size:26px;font-weight:bold;text-align:center">We have received a request to process your ${transType} via the email address <span style="font-weight: 700;">${user_email}</span>.</h2>
@@ -634,8 +674,9 @@ const router = Router();
       `,
       Complete: `
         <h2 style="font-size:26px;font-weight:bold;text-align:center">Congratulations! Your ${transType} has been successfully processed and is now marked as complete.</h2>
-        <p style="font-size:16px;line-height:24px;margin:16px 0">You will receive a confirmation email shortly. If you have any additional questions or need further assistance, feel free to reach out to our customer support team.</h2>
+        ${completeMessage}
         <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
+
         <div style="border: 3px dashed #93c5fd; padding: 3px; border-radius: 3px;">
             <div style="background-color: #93c5fd; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #1f347a !important;">
                 Complete
@@ -644,28 +685,7 @@ const router = Router();
         `,
     };
 
-    let completeMessage = "";
-
-  switch (transType) {
-    case "Real Property Tax Payment":
-      completeMessage = "Your real property tax payment has been successfully processed and is now marked as complete.";
-      break;
-
-    case "Real Property Tax Clearance":
-      completeMessage = "Your real property tax clearance has been successfully processed and is now marked as complete.";
-      break;
-
-    case "Business Permit":
-      completeMessage = "Your business permit application has been successfully processed and is now marked as complete.";
-      break;
-
-    case "Community Tax Certificate":
-      completeMessage = "Your community tax certificate has been successfully processed and is now marked as complete.";
-      break;
-
-    default:
-      completeMessage = "Your transaction has been successfully processed and is now marked as complete.";
-  }
+   
 
 
     const dynamicSex = (sexType === 'Female') ? 'Ms./Mrs.' : 'Mr.';
