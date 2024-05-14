@@ -1,16 +1,10 @@
-import React, { useState, useRef } from 'react';
-import Footer from '../partials/Footer';
-import Sidebar from '../partials/Sidebar';
-import Header from '../partials/Header';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-const Forbidden =()=>{
-
+const Forbidden = () => {
   const { user_input } = useParams();
 
-  const contentRef = useRef(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const logoSrc = '../src/images/mnl.png';
+
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -40,7 +34,6 @@ const Forbidden =()=>{
                 That's all we know.
               </p>
               <p className="text-slate-800 dark:text-slate-100">
-                User Input: {user_input}
               </p>
             </div>
           </div>
