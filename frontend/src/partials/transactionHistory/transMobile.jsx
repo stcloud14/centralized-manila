@@ -137,6 +137,9 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
                 // Generate SOA number for new transaction type
                 soaNumber = generateUniqueSOA(transaction.trans_type, transaction.user_id);
                 knownTransactionTypes[transaction.trans_type] = true; 
+                const expiryDate = moment().endOf('month').set({ hour: 23, minute: 59, second: 59 });
+                const formattedExpiryDate = expiryDate.format('MMMM DD, YYYY, hh:mm A');
+                expiry_date = formattedExpiryDate;
             } else {
                 // Use existing SOA number for known transaction type
                 if (soaData && soaData.length > 0) {
