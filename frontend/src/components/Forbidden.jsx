@@ -30,7 +30,6 @@ const Forbidden =()=>{
             <div className="px-10 py-5">
                 <br/>
                   <h1 className="text-slate-800 dark:text-slate-100 font-medium">
-                     Welcome to Centralized
                     <span className='text-blue-600'> 4</span>
                     <span className='text-red-500'>0</span>
                     <span className='text-yellow-500'>4</span>
