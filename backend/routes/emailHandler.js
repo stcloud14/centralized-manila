@@ -558,7 +558,7 @@ const router = Router();
     const message = {
       Pending: `
       <h2 style="font-size:26px;font-weight:bold;text-align:center">We have received a request to process your ${transType} via the email address <span style="font-weight: 700;">${user_email}</span>.</h2>
-      <p style="font-size:16px;line-height:24px;margin:16px 0">The transaction will be processed once the payment is received. Please ensure that the payment is made to proceed with the transaction, and we will notify you once the transaction is complete. If you have any questions, please do not hesitate to reach out to us.</p>        
+      <p style="font-size:16px;line-height:24px;margin:16px 0">The transaction will be processed once the payment is received. Please ensure that the payment is made within 5 days to proceed with the transaction, and we will notify you once the transaction is complete. If you have any questions, please do not hesitate to reach out to us.</p>        
       <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
         <div style="border: 3px dashed #fef08a; padding: 3px; border-radius: 3px;">
             <div style="background-color: #fef08a; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #854d0e;">
