@@ -21,6 +21,12 @@ function auditMiddleware(req, res, next) {
     let changes = '';
 
     switch (true) {
+
+        case path.includes('updateamount'):
+            activity = 'Pending Transaction';
+            changes = 'Updated Status - Pending';
+            break;
+            
         case path.includes('process'):
           activity = 'Processing Transaction';
           changes ='Updated Status - Processing';
@@ -34,6 +40,7 @@ function auditMiddleware(req, res, next) {
         case path.includes('reject'):
           activity = 'Rejected Transaction';
           changes ='Updated Status - Rejected';
+          console.log("Rejected Transaction Body:", body);
         break;
         
         case path.includes('approve'):
@@ -52,11 +59,13 @@ function auditMiddleware(req, res, next) {
         break;
           
     }
-      
+
 
     let admin = '';
 
-    switch (body && body.trans_type) {
+    const transType = body.trans_type || (body.selectedTransaction && body.selectedTransaction.trans_type);
+
+    switch (transType) {
     case 'Real Property Tax Payment':
     case 'Real Property Tax Clearance':
         admin = 'RPTAX ADMIN';

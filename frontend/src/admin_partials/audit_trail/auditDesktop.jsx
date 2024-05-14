@@ -173,6 +173,7 @@ const AuditDesktop = ({ auditTrail, searchInput, setSearchInput, handleSearch, h
                 <span className="hidden sm:block text-xs">Activity:</span>
                   <select  value={selectedStatus} onChange={handleInputChange2} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
                       <option value="All" className="dark:bg-[#3d3d3d]">Select Activity</option>
+                      <option value="Pending Transaction" className="dark:bg-[#3d3d3d]">Pending Transaction</option>
                       <option value="Processing Transaction" className="dark:bg-[#3d3d3d]">Processing Transaction</option>
                       <option value="Completed Transaction" className="dark:bg-[#3d3d3d]">Completed Transaction</option>
                       <option value="Rejected Transaction" className="dark:bg-[#3d3d3d]">Rejected Transaction</option>
