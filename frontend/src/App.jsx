@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState  } from 'react';
 import {
   Routes,
   Route,
@@ -67,12 +67,29 @@ import AdminContacts from './admin_pages/AdminContacts';
 
 function App() {
   const location = useLocation();
+  const [userInput, setUserInput] = useState('');
 
   useEffect(() => {
     document.querySelector('html').style.scrollBehavior = 'auto';
     window.scroll({ top: 0 });
     document.querySelector('html').style.scrollBehavior = '';
-  }, [location.pathname]); // triggered on route change
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const { pathname } = location;
+    // Exclude specific routes from redirection
+    const excludedRoutes = ['/indexadmin'];
+    // Check if the path matches the pattern: /:user_input
+    if (
+      pathname.match(/^\/[\w-]+$/) &&
+      !excludedRoutes.includes(pathname)
+    ) {
+      // Extract the user_input from the path
+      const user_input = pathname.substring(1);
+      // Redirect to Forbidden route with the user_input parameter
+      window.location.href = `/Forbidden/${user_input}`;
+    }
+  }, [location]);
 
   return (
     <DashboardProvider>
@@ -129,11 +146,16 @@ function App() {
         <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
         <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
         <Route exact path="/admin_dash_ur/:admin_type" element={<AdminDashUR />} />
-        
-        {/* Fallback Route */}
-        <Route path="*" element={<Navigate to="/Forbidden" />} />
+
+
+
+
+
+        <Route path="*" element={<Navigate to="/Forbidden/:user_input" />} />
+        <Route path="/Forbidden/:user_input" element={<Forbidden />} />
       </Routes>
     </DashboardProvider>
+
   );
 }
 
