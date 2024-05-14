@@ -8,6 +8,21 @@ const AdminCTCView = ({ selectedTransaction, isOpen, handleClose }) => {
 
   console.log(selectedTransaction)
 
+  function getShortName(longName, maxCharacters) {
+    if (!longName) {
+        return '';
+    }
+
+    const fileNameWithoutExtension = longName.split('.').slice(0, -1).join('.');
+    const extension = longName.split('.').pop();
+
+    const truncatedName = fileNameWithoutExtension.length > maxCharacters - extension.length - 5
+        ? fileNameWithoutExtension.substring(0, maxCharacters - extension.length - 5) + '..'
+        : fileNameWithoutExtension;
+
+    return extension ? truncatedName + '.' + extension : truncatedName;
+}
+
 
   return (
     isOpen && (
@@ -130,6 +145,14 @@ const AdminCTCView = ({ selectedTransaction, isOpen, handleClose }) => {
                             <span className="font-medium whitespace-nowrap">Employment Status</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.emp_status}</span>
                           </div>
+                          {selectedTransaction.ctc_attachment !== undefined ? (
+                            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                              <span className="font-medium whitespace-nowrap">Attachment Proof</span>
+                                  <a href={`/uploads/cedula/${selectedTransaction.ctc_attachment}`} target="_blank" rel="noopener noreferrer">
+                                    {getShortName(selectedTransaction.ctc_attachment, 20)}
+                                  </a>
+                            </div>
+                          ) : null}
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Payer Account No.</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.acc_no}</span>

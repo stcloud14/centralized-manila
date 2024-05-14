@@ -6,9 +6,12 @@ import StatusBadgeModal from '../StatusBadgeModal';
 import CancelTransactionModal from '../CancelTransactionModal';
 import Loading from '../../partials/Loading';
 
-const CedulaModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOpenModal }) => {
+const CedulaModal = ({ user_id, selectedTransaction, cedulaImages, onClose, onSubmit, handleOpenModal }) => {
 
   const { transaction_id, status_type, date_processed } = selectedTransaction;
+
+  console.log(cedulaImages);
+  
   const Base_Url = process.env.Base_Url;
 
   const trans_type = 'Community Tax Certificate';
@@ -42,6 +45,21 @@ const CedulaModal = ({ user_id, selectedTransaction, onClose, onSubmit, handleOp
       setIsLoading(false); 
     }
   };
+
+  function getShortName(longName, maxCharacters) {
+    if (!longName) {
+        return '';
+    }
+
+    const fileNameWithoutExtension = longName.split('.').slice(0, -1).join('.');
+    const extension = longName.split('.').pop();
+
+    const truncatedName = fileNameWithoutExtension.length > maxCharacters - extension.length - 5
+        ? fileNameWithoutExtension.substring(0, maxCharacters - extension.length - 5) + '..'
+        : fileNameWithoutExtension;
+
+    return extension ? truncatedName + '.' + extension : truncatedName;
+}
 
   const makePayment = async () => {
     try {
@@ -301,10 +319,12 @@ const cancelTrans = async (e) => {
                             <span className="font-medium whitespace-nowrap">Middle Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_mname || cedulaTransaction.m_name || '-'}</span>
                           </div>
+                        {cedulaTransaction.ctc_suffix ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Suffix</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_suffix || cedulaTransaction.suffix_type || '-'}</span>
                           </div>
+                        ) : null}
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Sex</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_sexLabel || cedulaTransaction.sex_type || '-'}</span>
@@ -357,24 +377,42 @@ const cancelTrans = async (e) => {
                             <span className="font-medium whitespace-nowrap">Country of Citizenship</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_cznstatus || cedulaTransaction.czn_id || '-'}</span>
                           </div>
+                          {cedulaTransaction.ctc_height ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Height (cm)</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_height || cedulaTransaction.height || '-'}</span>
                           </div>
+                          ) : null}
+                          {cedulaTransaction.ctc_weight ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Weight (kg)</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_weight || cedulaTransaction.weight || '-'}</span>
                           </div>
+                          ) : null}
+                          {cedulaTransaction.ctc_aliencor ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Alien Certificate of Registration No.</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_aliencor || cedulaTransaction.acr_no || '-'}</span>
                           </div>
+                          ) : null}
                           <div className="flex flex-col sm:flex-row md:items-center md:justify-center items-start justify-between mb-1">
                             <br/>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Employment Status</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{cedulaTransaction.ctc_employmentstatus || cedulaTransaction.emp_status || '-'}</span>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Attachment Proof</span>
+                            {cedulaImages && cedulaImages.value !== null ? (
+                              <span>{getShortName(cedulaImages.value.name, 20)}</span>
+                            ) : (
+                              cedulaTransaction && cedulaTransaction.ctc_attachment !== undefined ? (
+                                <a href={`/uploads/cedula/${cedulaTransaction.ctc_attachment}`} target="_blank" rel="noopener noreferrer">
+                                  {getShortName(cedulaTransaction.ctc_attachment, 20)}
+                                </a>
+                              ) : null
+                            )}
                           </div>
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Tax Payer Account No.</span>

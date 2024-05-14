@@ -9,7 +9,7 @@ const router = Router();
 router.get('/', async (req, res) => {
     const query = "SELECT ut.transaction_id, tt.trans_type, ut.user_id, ut.status_type, ut.date_processed, co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_id, cc.cedula_date, cc.prov_id, cc.city_id, cc.region_id, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ci.czn_id, ci.cvl_id, p.prov_name, c.city_name, r.region_name, cv.cvl_status, vp.valid_id_type, ct.acc_no, st.sex_type, \
-    ci.height, ci.weight, ci.acr_no, ct.income_id, ct.salary_id, ct.gross_id, ct.emp_status, ct.pob_status, ti.amount, ti.valid_id, ti.purpose_id\
+    ci.height, ci.weight, ci.acr_no, ct.income_id, ct.salary_id, ct.gross_id, ct.emp_status, cci.ctc_attachment, ct.pob_status, ti.amount, ti.valid_id, ti.purpose_id\
     \
     FROM user_transaction ut \
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
     LEFT JOIN cedula_doc_owner co ON ut.transaction_id = co.transaction_id AND co.transaction_id IS NOT NULL \
     LEFT JOIN cedula_other_info ci ON ut.transaction_id = ci.transaction_id AND ci.transaction_id IS NOT NULL \
     LEFT JOIN cedula_transaction_info ct ON ut.transaction_id = ct.transaction_id AND ct.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_images cci ON ut.transaction_id = cci.transaction_id AND cci.transaction_id IS NOT NULL \
     LEFT JOIN address_info ai ON ut.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN cedula_cert cc ON ut.transaction_id = cc.transaction_id AND cc.transaction_id IS NOT NULL \
     LEFT JOIN cities c ON cc.city_id = c.city_id \
@@ -26,7 +27,7 @@ router.get('/', async (req, res) => {
     LEFT JOIN valid_id_type vp ON ti.valid_id = vp.valid_id \
     LEFT JOIN sex_type st ON co.sex_id = st.sex_id \
     \
-    WHERE ut.trans_type_id = 4 AND ut.status_type = 'Paid'";
+    WHERE ut.trans_type_id = 4 AND ut.status_type = 'Paid' ORDER BY ut.date_processed DESC";
     
 
     try {
@@ -60,7 +61,7 @@ router.get('/', async (req, res) => {
 router.get('/processing', async (req, res) => {
     const query = "SELECT ut.transaction_id, tt.trans_type, ut.user_id, ut.status_type, ut.date_processed, co.l_name, co.f_name, co.m_name, co.suffix_type, co.sex_id, cc.cedula_date, cc.prov_id, cc.city_id, cc.region_id, \
     ai.brgy_dist, ai.house_floor, ai.bldg_name, ci.czn_id, ci.cvl_id, p.prov_name, c.city_name, r.region_name, cv.cvl_status, vp.valid_id_type, ct.acc_no, st.sex_type, \
-    ci.height, ci.weight, ci.acr_no, ct.income_id, ct.salary_id, ct.gross_id, ct.emp_status, ct.pob_status, ti.amount, ti.valid_id, ti.purpose_id\
+    ci.height, ci.weight, ci.acr_no, ct.income_id, ct.salary_id, ct.gross_id, ct.emp_status, cci.ctc_attachment, ct.pob_status, ti.amount, ti.valid_id, ti.purpose_id\
     \
     FROM user_transaction ut \
     LEFT JOIN transaction_type tt ON ut.trans_type_id = tt.trans_type_id \
@@ -68,6 +69,7 @@ router.get('/processing', async (req, res) => {
     LEFT JOIN cedula_doc_owner co ON ut.transaction_id = co.transaction_id AND co.transaction_id IS NOT NULL \
     LEFT JOIN cedula_other_info ci ON ut.transaction_id = ci.transaction_id AND ci.transaction_id IS NOT NULL \
     LEFT JOIN cedula_transaction_info ct ON ut.transaction_id = ct.transaction_id AND ct.transaction_id IS NOT NULL \
+    LEFT JOIN cedula_images cci ON ut.transaction_id = cci.transaction_id AND cci.transaction_id IS NOT NULL \
     LEFT JOIN address_info ai ON ut.transaction_id = ai.transaction_id AND ai.transaction_id IS NOT NULL \
     LEFT JOIN cedula_cert cc ON ut.transaction_id = cc.transaction_id AND cc.transaction_id IS NOT NULL \
     LEFT JOIN cities c ON cc.city_id = c.city_id \
@@ -77,7 +79,7 @@ router.get('/processing', async (req, res) => {
     LEFT JOIN valid_id_type vp ON ti.valid_id = vp.valid_id \
     LEFT JOIN sex_type st ON co.sex_id = st.sex_id \
     \
-    WHERE ut.trans_type_id = 4 AND ut.status_type = 'Processing'";
+    WHERE ut.trans_type_id = 4 AND ut.status_type = 'Processing' ORDER BY ut.date_processed DESC";
     
     try {
         const result = await queryDatabase(query);

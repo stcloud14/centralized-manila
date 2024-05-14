@@ -25,6 +25,9 @@ import CDCTermsModal from '../partials/business/CDCTermsModal';
 import ModalTransaction from '../partials/transactionModal/ModalTransaction';
 import TermsModal from '../partials/business/TermsModal';
 import VerifyModal from '../partials/business/VerifyModal';
+import UploadButton from '../partials/business/UploadButton';
+import UploadImageModal from '../partials/UploadModal';
+import RemoveButton from '../partials/business/RemoveButton';
 
 const CedulaForm =()=>{
   
@@ -80,6 +83,76 @@ const CedulaForm =()=>{
   }));
 
   console.log(CtcCedula)
+
+
+
+
+  
+  
+  const [uploadModal, setUploadModal] = useState(false);
+  const [targetIMG, setTargetIMG] = useState(null);
+  
+  
+
+  const openUploadModal = (targetIMG) => {
+    setTargetIMG(targetIMG);
+    setUploadModal(true);
+  };
+
+  function getShortName(longName, maxCharacters) {
+    if (!longName) {
+        return '-';
+    }
+
+    const fileNameWithoutExtension = longName.split('.').slice(0, -1).join('.');
+    const extension = longName.split('.').pop();
+
+    const truncatedName = fileNameWithoutExtension.length > maxCharacters - extension.length - 5
+        ? fileNameWithoutExtension.substring(0, maxCharacters - extension.length - 5) + '..'
+        : fileNameWithoutExtension;
+
+    return extension ? truncatedName + '.' + extension : truncatedName;
+  }
+
+
+  const [fileUploaded, setFileUploaded] = useState(false); // Managing whether a file has been uploaded or not
+
+  const handleRemove = () => {
+    console.log("Removing selected file.");
+  
+    // Reset selectedFile state to remove the file
+    setSelectedFile({ fieldName: 'ctc_attachment', value: null });
+  
+    // Reset fileName state to an empty string
+    setFileName('');
+  
+    // Update fileUploaded state to false since there's no file selected anymore
+    setFileUploaded(false);
+  };
+  
+
+  
+  const [selectedFile, setSelectedFile] = useState({ fieldName: 'ctc_attachment', value: null });
+
+  const [fileName, setFileName] = useState('');
+
+  const handleFileSelect = (file) => {
+    if (file.size > 2 * 1024 * 1024) {
+      window.alert('File size exceeds the 2MB limit. Please select a smaller file.');
+      return;
+    }
+
+    if (selectedFile.value && selectedFile.value.name === file.name) {
+      window.alert('Please select a different file');
+      return;
+    }
+
+    setFileName(file.name);
+    setSelectedFile({ ...selectedFile, value: file });
+  };
+
+  
+
   
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -87,12 +160,25 @@ const CedulaForm =()=>{
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+
+    if (selectedFile.value !== null) {
+      formData.append(selectedFile.fieldName, selectedFile.value, selectedFile.value.name);
+    }
+
   
     try {
-      const response = await axios.post(`${Base_Url}cedula/${user_id}`, CtcCedula);
+      const response = await axios.post(`${Base_Url}cedula/ctc/${user_id}`, CtcCedula);
+
+      const response1 = await fetch(`${Base_Url}cedula/ctcimg`, {
+        method: 'POST',
+        body: formData,
+      });
+
   
       // Check the response status before proceeding
-      if (response.status === 200) {
+      if (response.status === 200 || response1.status === 200) {
         // Fetch user_email after successful payment
         try {
           const res1 = await axios.get(`${Base_Url}transachistory/transId/${user_id}`);
@@ -155,8 +241,8 @@ const CedulaForm =()=>{
           console.error(fetchError);
         }
 
-        setIsSuccess(true); // Set success state to true
-        handleCloseModal(); // Close the modal
+        setIsSuccess(true);
+        handleCloseModal();
         contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
         console.log('Transaction successful');
         
@@ -164,9 +250,12 @@ const CedulaForm =()=>{
           setIsSuccess(false);
           window.location.href = `/transachistory/${user_id}`;
         }, 2100);
+
       } else {
         console.error('Transaction error:', response.statusText);
+        console.error('Transaction error:', response1.statusText);
       }
+
     } catch (err) {
       console.error('Transaction error:', err);
     }
@@ -180,7 +269,7 @@ const handleProceed = (e) => {
   
   // Please fill up the necessary forms
    const requiredFields = ['ctc_lname','ctc_fname','ctc_sex','ctc_region','ctc_province','ctc_municipal',
- 'ctc_reqbrgy','ctc_reqhnum','ctc_reqstreet','ctc_reqzip','ctc_civilstatus','ctc_cznstatus', 'ctc_residencetaxdue',
+ 'ctc_reqbrgy','ctc_reqhnum','ctc_reqstreet','ctc_reqzip','ctc_civilstatus','ctc_cznstatus', 'ctc_taxpayeraccno', 'ctc_residencetaxdue',
 'ctc_employmentstatus','ctc_validid','ctc_profession']; //The input fields that is required
    const isIncomplete = requiredFields.some((field) => !CtcCedula[field]);
 
@@ -401,6 +490,7 @@ const handleInputChange = (e) => {
   
 });
 };
+
 const handleSelectChange = (selectedOption, fieldName) => {
   setCtcCedula((prevCtcCedula) => ({
     ...prevCtcCedula,
@@ -476,8 +566,6 @@ const [isModalVisible, setIsModalVisible] = useState(true);
   const toggleModalVisibility = () => {
     setIsModalVisible(!isModalVisible);
   };
-
-  console.log(CtcCedula);
 
   const logoSrc = '../src/images/mnl.png';
   
@@ -576,6 +664,8 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                 Please fill in all required fields before proceeding.
               </div>
             )} 
+
+            {uploadModal && <UploadImageModal onClose={() => setUploadModal(false)}  onFileSelect={handleFileSelect} targetIMG={targetIMG} />}
 
               {/* Group 1 - Owner's Information*/}
               <h1 className='text-xs text-slate-700 dark:text-white mt-8'>All fields mark with <Req /> are required.</h1>
@@ -700,10 +790,43 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                     </select>
                     <label htmlFor="ctc_employmentstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Employment Status<Req /></label>
                   </div>
+                  
+                  <div className="flex flex-row group ml-4 items-center">
+                      
+                  <p className="text-xs text-slate-700 dark:text-white mt-2.5 mb-1.5">
+                    {selectedFile.value && selectedFile.fieldName === 'ctc_attachment' ? (
+                      <>
+                        {selectedFile.value.size > 2 * 1024 * 1024 ? (
+                          <div>File "{getShortName(selectedFile.value.name, 25)}" exceeds the 2MB limit.</div>
+                        ) : (
+                          getShortName(selectedFile.value.name, 25)
+                        )}
+                      </>
+                    ) : null}
+                  </p>
+
+                  {!selectedFile.value && (
+                    <td className="flex flex-row group ml-1">
+                      <UploadButton openUploadModal={openUploadModal} targetIMG={'ctc_attachment'} />
+                    </td>
+                  )}
+
+                  {selectedFile.value && (
+                    <td className="flex flex-row group ml-1">
+                      <RemoveButton handleRemove={handleRemove} />
+                    </td>
+                  )}
+
+                  </div>
+                  
+                </div>
+
+                <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <input onChange={handleInputChange} value={CtcCedula.ctc_taxpayeraccno} type="text" name="ctc_taxpayeraccno" id="ctc_taxpayeraccno" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_taxpayeraccno" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tax Payer Account No.</label>
+                    <label htmlFor="ctc_taxpayeraccno" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tax Payer Account No.<Req /></label>
                   </div>
+                  
                   <div className="relative z-0 w-full mb-6 group">
                     <Flatpickr
                       name='ctc_residencetaxdue'
@@ -735,10 +858,12 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                         CtcCedula.ctc_residencetaxdue ? 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
                       }`}
                     >
-                      Residence Tax Due
+                      Residence Tax Due<Req />
                     </label>
                 </div>
                 </div>
+
+
                 {/* Row 2 */}
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
@@ -921,7 +1046,7 @@ const [isModalVisible, setIsModalVisible] = useState(true);
         </main>
 
         {isModalOpen && (
-          <ModalTransaction selectedTransaction={CtcCedula} modalType={'Community Tax Certificate'} onClose={handleCloseModal} onSubmit={handleSubmit} />
+          <ModalTransaction selectedTransaction={CtcCedula} cedulaImages={selectedFile} modalType={'Community Tax Certificate'} onClose={handleCloseModal} onSubmit={handleSubmit} />
         )}
         
       </div>

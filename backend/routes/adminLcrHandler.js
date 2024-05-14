@@ -198,7 +198,7 @@ router.get('/', async (req, res) => {
     LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE ut.trans_type_id = 5 AND ut.status_type = 'Paid'";
+    WHERE ut.trans_type_id = 5 AND ut.status_type = 'Paid' ORDER BY ut.date_processed DESC";
 
     // Death Certificate Details
     const query1 = "SELECT ut.transaction_id, ut.user_id, tt.trans_type, ut.status_type, ut.date_processed, r.region_name AS region, p.prov_name AS province, c.city_name AS city, dc.death_date, \
@@ -228,7 +228,7 @@ router.get('/', async (req, res) => {
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     LEFT JOIN sex_type st ON do.sex_id = st.sex_id \
     \
-    WHERE ut.trans_type_id = 6 AND ut.status_type = 'Paid'";
+    WHERE ut.trans_type_id = 6 AND ut.status_type = 'Paid' ORDER BY ut.date_processed DESC";
 
     // Marriage Certificate Details
     const query2 = "SELECT ut.transaction_id, ut.user_id, tt.trans_type, ut.status_type, ut.date_processed, r.region_name AS region, p.prov_name AS province, c.city_name AS city, mc.marriage_date, \
@@ -258,7 +258,7 @@ router.get('/', async (req, res) => {
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE ut.trans_type_id = 7 AND ut.status_type = 'Paid'";
+    WHERE ut.trans_type_id = 7 AND ut.status_type = 'Paid' ORDER BY ut.date_processed DESC";
 
     try {
         const result = await queryDatabase(query);
@@ -354,7 +354,7 @@ router.get('/processing', async (req, res) => {
     LEFT JOIN sex_type st ON bo.sex_id = st.sex_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE ut.trans_type_id = 5 AND ut.status_type = 'Processing'";
+    WHERE ut.trans_type_id = 5 AND ut.status_type = 'Processing' ORDER BY ut.date_processed DESC";
 
     // Death Certificate Details Process
     const query1 = "SELECT ut.transaction_id, ut.user_id, tt.trans_type, ut.status_type, ut.date_processed, r.region_name AS region, p.prov_name AS province, c.city_name AS city, dc.death_date, \
@@ -384,7 +384,7 @@ router.get('/processing', async (req, res) => {
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     LEFT JOIN sex_type st ON do.sex_id = st.sex_id \
     \
-    WHERE ut.trans_type_id = 6 AND ut.status_type = 'Processing'";
+    WHERE ut.trans_type_id = 6 AND ut.status_type = 'Processing' ORDER BY ut.date_processed DESC";
 
     // Marriage Certificate Details Process
     const query2 = "SELECT ut.transaction_id, ut.user_id, tt.trans_type, ut.status_type, ut.date_processed, r.region_name AS region, p.prov_name AS province, c.city_name AS city, mc.marriage_date, \
@@ -414,7 +414,7 @@ router.get('/processing', async (req, res) => {
     LEFT JOIN purpose_type pt ON ti.purpose_id = pt.purpose_id \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE ut.trans_type_id = 7 AND ut.status_type = 'Processing'";
+    WHERE ut.trans_type_id = 7 AND ut.status_type = 'Processing' ORDER BY ut.date_processed DESC";
 
     try {
         const result = await queryDatabase(query);

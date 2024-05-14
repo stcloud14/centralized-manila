@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
     LEFT JOIN rptax_clearance tp ON ut.transaction_id = tp.transaction_id AND tp.transaction_id IS NOT NULL \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE ut.trans_type_id = 2 AND ut.status_type = 'Pending'";
+    WHERE ut.trans_type_id = 2 AND ut.status_type = 'Pending' ORDER BY ut.date_processed DESC";
 
     try {
         const result = await queryDatabase(query);
@@ -99,7 +99,7 @@ router.get('/charges', async (req, res) => {
     LEFT JOIN rptax_clearance tp ON ut.transaction_id = tp.transaction_id AND tp.transaction_id IS NOT NULL \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE ut.trans_type_id = 2 AND ut.status_type = 'Processing'";
+    WHERE ut.trans_type_id = 2 AND ut.status_type = 'Processing' ORDER BY ut.date_processed DESC";
 
     try {
         const result = await queryDatabase(query);
@@ -167,7 +167,7 @@ router.get('/processing', async (req, res) => {
     LEFT JOIN rptax_clearance tp ON ut.transaction_id = tp.transaction_id AND tp.transaction_id IS NOT NULL \
     LEFT JOIN print_type ptt ON ti.print_id = ptt.print_id \
     \
-    WHERE ut.trans_type_id = 2 AND ut.status_type = 'Paid'";
+    WHERE ut.trans_type_id = 2 AND ut.status_type = 'Paid' ORDER BY ut.date_processed DESC";
 
     try {
         const result = await queryDatabase(query);
