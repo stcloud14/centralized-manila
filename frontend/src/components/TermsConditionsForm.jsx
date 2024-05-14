@@ -30,7 +30,7 @@ const TermsConditionsForm =()=>{
             <div className="px-10 py-5">
               <h1 className="font-medium text-center text-slate-700 dark:text-white">Terms & Conditions</h1>
                 <br/>
-                  <h1 className="text-slate-800 dark:text-slate-100 font-medium">
+                  {/* <h1 className="text-slate-800 dark:text-slate-100 font-medium">
                      Welcome to Centralized
                     <span className='text-blue-600'> M</span>
                     <span className='text-red-500'>a</span>
@@ -39,11 +39,141 @@ const TermsConditionsForm =()=>{
                     <span className='text-blue-600'>l</span>
                     <span className='text-red-500'>a</span>
                    </h1>
-                  <br/>
+                  <br/> */}
               <span className="text-left text-slate-700 dark:text-white">
-                This Privacy Notice outlines our approach to the information we gather, detailing how we collect, use, share, store, and process your personal data. We are committed to respecting your privacy rights and adhering to applicable privacy and data protection laws, with a specific focus on the Data Privacy Act of 2012 (DPA). Similar to the National Privacy Commission (NPC), we strive to maintain a balance between safeguarding your personal privacy and facilitating the exchange of information, especially in the pursuit of our legitimate interests and fulfilling our responsibilities.
+                Welcome to Centralized <span className='text-blue-600'> M</span>
+                    <span className='text-red-500'>a</span>
+                    <span className='text-yellow-500'>n</span>
+                    <span className='text-green-500'>i</span>
+                    <span className='text-blue-600'>l</span>
+                    <span className='text-red-500'>a</span>! These Terms and Conditions ("Terms") govern your use of our web application and services ("Service"). By accessing or using our Service, you agree to be bound by these Terms.
                 <br/><br/>
-                In this notification, we use the terms "data" and "information" interchangeably. When referring to "personal data," we encompass the notions of personal information, sensitive personal information, and privileged information. The first two are commonly employed to uniquely identify you. For precise definitions, you can consult the DPA text or visit the office of the designated Data Protection Officer in Manila. It is essential to recognize that the examples provided in this Privacy Notice, though illustrative, do not constitute an exhaustive list of all the data we handle.
+              <span className="font-medium">
+                1. Use of the Service
+              </span>
+                <br/><br/>
+              <div className="ml-3">
+                <span>
+                  1.1 Eligibility: You may use our Service if you are under 18 years old, provided that you have obtained consent from your parent or legal guardian. By using our Service, you represent and warrant that you have obtained such consent, or that you are 18 years old or older.
+                  <br/><br/>
+                  1.2 License: We grant you a limited, non-exclusive, non-transferable license to use our Service for your personal, non-commercial use.
+                  <br/><br/>
+                  1.3 Compliance: Regardless of age, you agree to comply with all applicable laws and regulations when using our Service.
+                </span>
+              </div>
+                <br/>
+              <span className="font-medium">
+                2. User Conduct
+              </span>
+                <br/><br/>
+              <div className="ml-3">
+                <span>
+                  2.1 Prohibited Activities: You agree not to:
+                  <br/>
+                  <div className="ml-3 mt-2">
+                    <span>
+                      • Use the Service for any unlawful purpose.
+                      <br/>
+                      • Interfere with the operation of the Service.
+                      <br/>
+                      • Right to object,
+                      <br/>
+                      • Attempt to gain unauthorized access to the Service.
+                      <br/>
+                      • Violate any rights of any third party.
+                      <br/>
+                      • Engage in any conduct that is harmful, offensive, or disruptive to other users.
+                    </span>
+                  </div>
+                    <br/>
+              <span className="font-medium">
+                3. Intellectual Property
+              </span>
+                <br/><br/>
+              <div className="ml-3">
+                <span>
+                  3.1 Ownership: The Service and its contents are protected by copyright, trademark, and other intellectual property laws. We retain all rights to the Service and its content.
+                  <br/><br/>
+                  3.2 License: Subject to these Terms, we grant you a limited, non-exclusive license to access and use the Service for its intended purposes.
+                </span>
+              </div>
+                <br/>
+              <span className="font-medium">
+                4. Disclaimer
+              </span>
+                <br/><br/>
+              <div className="ml-3">
+                <span>
+                  No Warranty: The Service is provided on an "as is" and "as available" basis without warranties of any kind, express or implied. We do not guarantee that the Service will be uninterrupted, secure, or error-free.
+                </span>
+              </div>
+              <br/>
+              <span className="font-medium">
+                5. Limitation of Liability
+              </span>
+                <br/><br/>
+              <div className="ml-3">
+                <span>
+                  Exclusion of Damages: In no event shall we be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or in connection with your use of the Service.
+                </span>
+              </div>
+              <br/>
+              <span className="font-medium">
+                6. Indemnification
+              </span>
+                <br/><br/>
+              <div className="ml-3">
+                <span>
+                  You agree to indemnify, defend, and hold us harmless from any claims, damages, losses, liabilities, costs, or expenses arising out of your use of the Service or any violation of these Terms.
+                </span>
+              </div>
+              <br/>
+              <span className="font-medium">
+                7. Governing Law and Dispute Resolution
+              </span>
+                <br/><br/>
+              <div className="ml-3">
+                <span>
+                  7.1 Governing Law: These Terms are governed by and construed in accordance with the laws of the Philippines.
+                  <br/><br/>
+                  7.2 Dispute Resolution: Any dispute arising out of or relating to these Terms or the Service shall be resolved exclusively through arbitration in the Philippines in accordance with the rules of the Philippine Dispute Resolution Center, Inc. (PDRCI).
+                </span>
+              </div>
+              <br/>
+              <span className="font-medium">
+                8. Changes to These Terms
+              </span>
+                <br/><br/>
+              <div className="ml-3">
+                <span>
+                  We reserve the right to modify or revise these Terms at any time. Any changes will be effective immediately upon posting the updated Terms on the Service. Your continued use of the Service after the posting of changes constitutes acceptance of such changes.
+                </span>
+              </div>
+              <br/>
+              <span className="font-medium">
+                9. Contact Us
+              </span>
+                <br/><br/>
+              <div className="ml-3">
+                <span>
+                  If you have any questions, concerns, or feedback about these Terms or the Service, please contact us at centralizedmanila@gmail.com
+                </span>
+              </div>
+            </span>
+            
+          </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                {/* In this notification, we use the terms "data" and "information" interchangeably. When referring to "personal data," we encompass the notions of personal information, sensitive personal information, and privileged information. The first two are commonly employed to uniquely identify you. For precise definitions, you can consult the DPA text or visit the office of the designated Data Protection Officer in Manila. It is essential to recognize that the examples provided in this Privacy Notice, though illustrative, do not constitute an exhaustive list of all the data we handle.
                 <br/><br/>
                 </span>
               <h1 className="text-slate-800 dark:text-slate-100 font-medium">Information We Collect, Acquire, or Generate</h1>
@@ -224,7 +354,7 @@ const TermsConditionsForm =()=>{
             <h1 className="text-slate-800 dark:text-slate-100 font-medium">Other City of Manila Policies</h1>
               <br/>
             <span className="text-left text-slate-700 dark:text-white">
-              The City Government of Manila's additional policies, insofar as they align with this Privacy Notice, will remain in effect. In the event that any provision of this Notice is deemed unenforceable or invalid by a court with competent jurisdiction, the invalidity of that particular provision will not impact the validity of the remaining provisions, which will continue to be fully effective.
+              The City Government of Manila's additional policies, insofar as they align with this Privacy Notice, will remain in effect. In the event that any provision of this Notice is deemed unenforceable or invalid by a court with competent jurisdiction, the invalidity of that particular provision will not impact the validity of the remaining provisions, which will continue to be fully effective. */}
             </span>
             </div>
           </div>
