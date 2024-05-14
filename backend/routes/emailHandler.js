@@ -637,12 +637,36 @@ const router = Router();
         <p style="font-size:16px;line-height:24px;margin:16px 0">You will receive a confirmation email shortly. If you have any additional questions or need further assistance, feel free to reach out to our customer support team.</h2>
         <p style="font-size:16px;line-height:24px;margin:16px 0">This transaction is currently labeled as:</p>
         <div style="border: 3px dashed #93c5fd; padding: 3px; border-radius: 3px;">
+        ${completeMessage}
             <div style="background-color: #93c5fd; padding: 4px; font-size:32px; text-align: center; letter-spacing: 3px; font-weight: bold; border-radius: 3px; text-transform: uppercase; color: #1f347a !important;">
                 Complete
             </div>
         </div>
         `,
     };
+
+    let completeMessage = "";
+
+  switch (transType) {
+    case "Real Property Tax Payment":
+      completeMessage = "Your real property tax payment has been successfully processed and is now marked as complete.";
+      break;
+
+    case "Real Property Tax Clearance":
+      completeMessage = "Your real property tax clearance has been successfully processed and is now marked as complete.";
+      break;
+
+    case "Business Permit":
+      completeMessage = "Your business permit application has been successfully processed and is now marked as complete.";
+      break;
+
+    case "Community Tax Certificate":
+      completeMessage = "Your community tax certificate has been successfully processed and is now marked as complete.";
+      break;
+
+    default:
+      completeMessage = "Your transaction has been successfully processed and is now marked as complete.";
+  }
 
 
     const dynamicSex = (sexType === 'Female') ? 'Ms./Mrs.' : 'Mr.';

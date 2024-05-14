@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import {
   Routes,
   Route,
-  useLocation
+  useLocation,
+  Navigate
 } from 'react-router-dom';
 
 import './css/style.css';
@@ -63,6 +64,7 @@ import AdminVerifyReqs from './admin_pages/AdminVerifyReqs';
 import AdminAuditTrail from './admin_pages/AdminAuditTrail';
 import AdminSettings from './admin_components/AdminSettings';
 import TermsConditions from './pages/TermsConditions';
+import Forbidden from './pages/Forbidden';
 import AdminContacts from './admin_pages/AdminContacts';
 
 
@@ -78,12 +80,14 @@ function App() {
 
   return (
     <>
+    <DashboardProvider>
       <Routes>
         {/* Client Pages */}
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/privacypolicy" element={<PrivacyPolicy/>} />
         <Route exact path="/termsconditions" element={<TermsConditions/>} />
+        <Route exact path="/Forbidden" element={<Forbidden/>} />
         <Route exact path="/home/:user_id" element={<Home />} />
         <Route exact path="/personalinfo/:user_id" element={<PersonalInfo />} />
         <Route exact path="/contact/:user_id" element={<ContactInfo />} />
@@ -122,18 +126,21 @@ function App() {
         <Route exact path="/admin_verifyreqs/:admin_type" element={<AdminVerifyReqs />} />
         <Route exact path="/admin_audittrail/:admin_type" element={<AdminAuditTrail />} />
         <Route exact path="/admin_contacts/:admin_type" element={<AdminContacts />} />
-      </Routes>
 
-      <DashboardProvider>
-        <Routes>
+
+
+
           <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
           <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />
           <Route exact path="/admin_dash_bp/:admin_type" element={<AdminDashBP />} />
           <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
           <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
           <Route exact path="/admin_dash_ur/:admin_type" element={<AdminDashUR />} />
-        </Routes>
-      </DashboardProvider>
+
+          
+        <Route path="*" element={<Navigate to="/Forbidden" />} />
+     </Routes>
+    </DashboardProvider>
     </>
   );
 }
