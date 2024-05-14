@@ -310,7 +310,7 @@ console.log(selectedFiles)
           <div className='bg-white'>
             <div className='flex justify-center'>
               <div className='flex flex-col items-center'>
-                <img src='./src/images/mnl.svg' width="100" height="100" className='mt-10' />
+                <img src='https://i.ibb.co/12J7JDk/mnl.png' width="100" height="100" className='mt-10' />
                 <h1 className='font-normal mb-16 text-slate-500'>Centralized Manila</h1>
               </div>
             </div>

@@ -333,7 +333,7 @@ const handleCheckboxChange = (e) => {
     setIsModalVisible(!isModalVisible);
   };
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -537,7 +537,7 @@ const handleCheckboxChange = (e) => {
               </form>
             </div>
           </div>
-          <Footer logo={logoSrc} />
+          <Footer />
         </main>
 
 

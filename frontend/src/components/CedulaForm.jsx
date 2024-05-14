@@ -581,7 +581,7 @@ const [isModalVisible, setIsModalVisible] = useState(true);
     setIsModalVisible(!isModalVisible);
   };
 
-  const logoSrc = '../src/images/mnl.png';
+  
   
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -1056,7 +1056,7 @@ const [isModalVisible, setIsModalVisible] = useState(true);
             </form>
             </div>
           </div>
-          <Footer logo={logoSrc} />
+          <Footer />
         </main>
 
         {isModalOpen && (

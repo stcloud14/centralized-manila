@@ -15,7 +15,7 @@ const AdminRPTaxForm2 = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   const [taxPayment, setTaxPayment] = useState([]);
   const [taxClearance, setTaxClearance] = useState([]);
@@ -111,7 +111,7 @@ const AdminRPTaxForm2 = () => {
 
           </div>
 
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
         
       </div>

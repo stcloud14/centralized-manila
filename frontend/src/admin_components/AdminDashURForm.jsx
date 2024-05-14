@@ -282,7 +282,7 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -354,7 +354,7 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
               </>
             )}
           </div>
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
       </div>
     </div>

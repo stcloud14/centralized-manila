@@ -422,7 +422,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -494,7 +494,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
               </>
             )}
           </div>
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
       </div>
     </div>

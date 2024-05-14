@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-const Footer = ({ logo }) => {
+const Footer = () => {
 
   const location = useLocation();
   const { pathname } = location;
@@ -12,7 +12,7 @@ const Footer = ({ logo }) => {
     <footer className="text-gray-500 text-xs mx-10">
       <div className="flex flex-col items-center sm:flex-row sm:items-center mx-10">
         <div className="mb-0">
-          <img src={logo} alt="Company Logo" className="h-20" />
+          <img src="https://i.ibb.co/12J7JDk/mnl.png" alt="Company Logo" className="h-20" />
         </div>
 
         <div className="flex flex-col items-center sm:flex-row sm:ml-auto">

@@ -24,7 +24,7 @@ const HomeForm = () => {
 
 
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const HomeForm = () => {
               <Section4 />
             </div>
           </div>
-          <Footer logo={logoSrc} />
+          <Footer />
         </main>
       </div>
     </div>

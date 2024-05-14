@@ -18,7 +18,7 @@ import CallingGuyImage from '../images/resources/contacts_03.png';
 const ContactsForm = () => {
   const contentRef = useRef(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const logoSrc = '../src/images/mnl.png';
+  
 
   const navigate = useNavigate();
   const { user_id } = useParams();
@@ -314,7 +314,7 @@ const ContactsForm = () => {
             
           </div>
           
-          <Footer logo={logoSrc} />
+          <Footer />
         </main>
       </div>
     </div>

@@ -428,7 +428,7 @@ const DeathCertificateForm =()=>{
     setIsModalVisible(!isModalVisible);
   };
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -795,7 +795,7 @@ const DeathCertificateForm =()=>{
             </form>
             </div>
           </div>
-          <Footer logo={logoSrc} />
+          <Footer />
         </main>
 
         {isModalOpen && (

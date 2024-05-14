@@ -814,7 +814,7 @@ const BusinessPermitForm =()=>{
     setIsModalVisible(!isModalVisible);
   };
   
-  const logoSrc = '../src/images/mnl.png';
+  
 
 
   function getShortName(longName, maxCharacters) {
@@ -1853,7 +1853,7 @@ const BusinessPermitForm =()=>{
             </form>
             </div>
           </div>
-          <Footer logo={logoSrc} />
+          <Footer />
         </main>
 
         {isModalOpen && (

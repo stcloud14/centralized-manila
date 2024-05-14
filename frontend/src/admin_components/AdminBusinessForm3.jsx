@@ -17,7 +17,7 @@ const AdminBusinessForm3 =()=>{
   const Base_Url = process.env.Base_Url;
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   const [isLoading, setIsLoading] = useState(true);
   const [isFetchedData, setIsFetchedData] = useState(false);
@@ -142,7 +142,7 @@ const AdminBusinessForm3 =()=>{
           </>
           )}
 
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
 
       </div>

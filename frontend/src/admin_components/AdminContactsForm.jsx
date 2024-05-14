@@ -13,7 +13,7 @@ import CallingGuyImage from '../images/resources/contacts_03.png';
 const AdminContactsForm = () => {
   const contentRef = useRef(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const logoSrc = '../src/images/mnl.png';
+  
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -283,7 +283,7 @@ const AdminContactsForm = () => {
             
           </div>
           
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
       </div>
     </div>

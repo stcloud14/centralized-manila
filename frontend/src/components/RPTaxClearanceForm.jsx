@@ -285,7 +285,7 @@ const RPTaxClearanceForm =()=>{
     setIsModalVisible(!isModalVisible);
   };
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -440,7 +440,7 @@ const RPTaxClearanceForm =()=>{
               </form>
             </div>
           </div>
-            <Footer logo={logoSrc} />
+            <Footer />
         </main>
 
         {isModalOpen && (

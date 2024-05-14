@@ -398,7 +398,7 @@ const LandingPageForm = () => {
         <div className="md:w-1/2 flex items-center justify-center lg:mb-0 mb-5">
           <div className="text-center lg:pt-0 pt-20">
             <img
-              src="./src/images/mnl.png"
+              src="https://i.ibb.co/12J7JDk/mnl.png"
               alt="Centralized Manila Logo" className="lg:h-60 md:h-40 sm:h-28 h-28 mx-auto"
             />
             <span className="text-2xl text-white font-semibold tracking-wide">

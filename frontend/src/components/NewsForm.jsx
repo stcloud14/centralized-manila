@@ -16,7 +16,7 @@ const NewsForm =()=>{
   const Base_Url = process.env.Base_Url;
 
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const NewsForm =()=>{
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <EmbeddedPage />
           </div>
-          <Footer logo={logoSrc} />
+          <Footer />
         </main>
 
       

@@ -18,7 +18,7 @@ const AdminBusinessForm2 =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   const [businessPermit, setBusinessPermit] = useState([]);
   console.log("userrole", admin_type)
@@ -101,7 +101,7 @@ const AdminBusinessForm2 =()=>{
 
           </div>
 
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
 
       </div>

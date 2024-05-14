@@ -18,7 +18,7 @@ const AdminLCRForm2 =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
   const Base_Url = process.env.Base_Url;
 
   const [birthCert, setBirthCert] = useState([]);
@@ -94,7 +94,7 @@ const AdminLCRForm2 =()=>{
             />
           </div>
 
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
         {/*<AdminLCRBirthView
         />

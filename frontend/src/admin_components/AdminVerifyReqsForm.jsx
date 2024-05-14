@@ -19,7 +19,7 @@ const AdminVerifyReqsForm =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   const [userApplications, setUserApplications] = useState();
   const [filteredUserApplications, setFilteredUserApplications] = useState([]);
@@ -569,7 +569,7 @@ const AdminVerifyReqsForm =()=>{
               </div>
             </div>
           </div>
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
         {/* <AdminRPTaxClearanceModal
           isOpen={isModalOpen}

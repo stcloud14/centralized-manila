@@ -153,7 +153,7 @@ const ContactInfoForm = () => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    const logoSrc = '../src/images/mnl.png';
+    
  
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -403,7 +403,7 @@ const ContactInfoForm = () => {
             </form>
             </div>
           </div>
-          <Footer logo={logoSrc} />
+          <Footer />
         </main>
         {isModalOpen && (
           <div className="fixed z-50 inset-0 overflow-y-auto">

@@ -17,7 +17,7 @@ const AdminRPTaxForm3 = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isFetchedData, setIsFetchedData] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   const [taxPayment, setTaxPayment] = useState([]);
   const [taxClearance, setTaxClearance] = useState([]);
@@ -116,7 +116,7 @@ const AdminRPTaxForm3 = () => {
 
           </div>
 
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
         
       </div>

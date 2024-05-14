@@ -518,7 +518,7 @@ const AdminDashChiefForm = React.memo(
   
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -627,7 +627,7 @@ const AdminDashChiefForm = React.memo(
               </>
             )}
           </div>
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
       </div>
     </div>

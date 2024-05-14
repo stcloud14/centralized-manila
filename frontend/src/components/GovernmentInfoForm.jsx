@@ -143,7 +143,7 @@ const GovernmentInfoForm = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
 return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -319,7 +319,7 @@ return (
             </form>
             </div>
           </div>
-          <Footer logo={logoSrc} />
+          <Footer />
         </main>
 
         {isModalOpen && (

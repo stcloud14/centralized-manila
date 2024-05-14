@@ -115,7 +115,7 @@ const  AdminAuditTrailForm = () => {
     setSelectedStatus(selectedStatus);
   };
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -168,7 +168,7 @@ const  AdminAuditTrailForm = () => {
               />
             )}
           </div>
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
 
       </div>

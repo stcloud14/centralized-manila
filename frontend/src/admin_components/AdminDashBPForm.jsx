@@ -407,7 +407,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const logoSrc = '../src/images/mnl.png';
+  
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -477,7 +477,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
               </>
             )}
           </div>
-          <AdminFooter logo={logoSrc} />
+          <AdminFooter />
         </main>
       </div>
     </div>

@@ -275,7 +275,7 @@ const sortTransactions = (option, order) => {
     </button>
   );
 
-const logoSrc = '../src/images/mnl.png';
+
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -341,7 +341,7 @@ const logoSrc = '../src/images/mnl.png';
               />
             )}
           </div>
-          <Footer logo={logoSrc} />
+          <Footer />
         </main>
 
         {isModalOpen && selectedTransaction && (

@@ -13,7 +13,7 @@ const PrivacyPolicyForm =()=>{
 
   const contentRef = useRef(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const logoSrc = '../src/images/mnl.png';
+  
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
@@ -280,7 +280,7 @@ const PrivacyPolicyForm =()=>{
             </div>
           </div>
           {user_id && (
-          <Footer logo={logoSrc} />
+          <Footer />
           )}
         </main>
 
