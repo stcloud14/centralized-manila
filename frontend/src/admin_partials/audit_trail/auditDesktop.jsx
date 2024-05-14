@@ -188,7 +188,7 @@ const AuditDesktop = ({ auditTrail, searchInput, setSearchInput, handleSearch, h
                   <select  value={selectedType} onChange={handleInputChange} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
                       <option value="All" className="dark:bg-[#3d3d3d]">Select Admin</option>
                       <option value="RPTAX ADMIN" className="dark:bg-[#3d3d3d]">Real Property Tax</option>
-                      <option value="BUS ADMIN" className="dark:bg-[#3d3d3d]">Business Permit</option>
+                      <option value="BUSINESS ADMIN" className="dark:bg-[#3d3d3d]">Business Permit</option>
                       <option value="CTC ADMIN" className="dark:bg-[#3d3d3d]">Community Tax Certificate</option>
                       <option value="LCR ADMIN" className="dark:bg-[#3d3d3d]">Local Civil Registry</option>
                       <option value="UR ADMIN" className="dark:bg-[#3d3d3d]">User Registry</option>
