@@ -78,7 +78,7 @@ function App() {
   useEffect(() => {
     const { pathname } = location;
     // Exclude specific routes from redirection
-    const excludedRoutes = ['/indexadmin'];
+    const excludedRoutes = ['/indexadmin', '/register', '/privacypolicy', '/termsconditions','/forgotpass'];
     // Check if the path matches the pattern: /:user_input
     if (
       pathname.match(/^\/[\w-]+$/) &&

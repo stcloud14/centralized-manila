@@ -35,9 +35,15 @@ const Forbidden = () => {
               </h1>
             </div>
             <div>
-              <span className="text-slate-800 dark:text-slate-100 w-full text-center md:text-lg text-md">
+            <span className="text-slate-800 dark:text-slate-100 w-full text-center md:text-lg text-md">
+            {user_input !== ':user_input' ? (
+              <>
                 The requested URL <span className='text-red-600'>/{user_input}</span> was not found on this server.
-              </span>
+              </>
+            ) : (
+              <>The requested URL was not found on this server.</>
+            )}
+          </span>
             </div>
             <div>
               <span className="text-slate-800 dark:text-slate-100 text-center md:text-lg text-sm">
