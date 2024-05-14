@@ -3,6 +3,7 @@ import axios from 'axios'
 import Flatpickr from 'react-flatpickr';
 
 import AdminBPView from '../admin_modals/AdminBPView';
+import AdminBPCharge from '../admin_modals/AdminBPCharge';
 import BPCardView from '../admin_business/BPCardView';  
 import BPTableView from '../admin_business/BPTableView';
 import Loading from '../../partials/Loading';
@@ -672,6 +673,15 @@ useEffect(() => {
 
           {selectedTransaction && modalView && (
           <AdminBPView
+            // selectedTransaction={selectedTransaction}
+            selectedTransaction={selectedTransaction}
+            isOpen={modalView}
+            handleClose={handleModalClose}
+            transType={transType}
+          />
+          )}
+           {selectedTransaction && modalView && (
+          <AdminBPCharge
             // selectedTransaction={selectedTransaction}
             selectedTransaction={selectedTransaction}
             isOpen={modalView}
