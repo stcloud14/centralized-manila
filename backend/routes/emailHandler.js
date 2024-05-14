@@ -644,6 +644,29 @@ const router = Router();
         `,
     };
 
+    let completeMessage = "";
+
+  switch (transType) {
+    case "Real Property Tax Payment":
+      completeMessage = "Your real property tax payment has been successfully processed and is now marked as complete.";
+      break;
+
+    case "Real Property Tax Clearance":
+      completeMessage = "Your real property tax clearance has been successfully processed and is now marked as complete.";
+      break;
+
+    case "Business Permit":
+      completeMessage = "Your business permit application has been successfully processed and is now marked as complete.";
+      break;
+
+    case "Community Tax Certificate":
+      completeMessage = "Your community tax certificate has been successfully processed and is now marked as complete.";
+      break;
+
+    default:
+      completeMessage = "Your transaction has been successfully processed and is now marked as complete.";
+  }
+
 
     const dynamicSex = (sexType === 'Female') ? 'Ms./Mrs.' : 'Mr.';
     
