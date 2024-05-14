@@ -123,14 +123,19 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                             <span className="font-medium whitespace-nowrap">Business Type</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_typeLabel || selectedTransaction.bus_type || '-'}</span>
                           </div>
+                          
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Business Name</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_name ? selectedTransaction.bus_name : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_name}</span>
                           </div>
+
+                          {selectedTransaction.bus_franchise && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Trade Name / Franchise</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_franchise ? selectedTransaction.bus_franchise : '-'}</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_franchise}</span>
                           </div>
+                          )}
+
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">DTI / SEC / CDA Registration No.</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_reg_no ? selectedTransaction.bus_reg_no : '-'}</span>
@@ -153,16 +158,21 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                             <span className="font-medium whitespace-nowrap">First Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_fname ? selectedTransaction.bus_fname : '-'}</span>
                           </div>
+
+                          {selectedTransaction.bus_mname && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Middle Name</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_mname ? selectedTransaction.bus_mname : '-'}</span>
                           </div>
-                          {selectedTransaction.bus_suffix ? (
+                          )}
+                          
+                          {selectedTransaction.bus_suffix && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Suffix</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_suffix ? selectedTransaction.bus_suffix : '-'}</span>
                           </div>
-                          ) : null}
+                          )}
+
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Sex</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_sexLabel || selectedTransaction.bus_sex || '-'}</span>
@@ -177,10 +187,14 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
                             <span className="font-medium whitespace-nowrap">Email Address</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_email || selectedTransaction.bus_email || '-'}</span>
                           </div>
+
+                          {selectedTransaction.tel_no && (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Telephone Number</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_tel_no || selectedTransaction.bus_tel_no || '-'}</span>
                           </div>
+                          )}
+                          
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Mobile Number</span>
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_mobile_no || selectedTransaction.bus_mobile_no || '-'}</span>
