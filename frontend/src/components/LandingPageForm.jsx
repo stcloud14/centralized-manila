@@ -9,6 +9,8 @@ import auth from '../../firebase.config';  // Updated import statement
 const LandingPageForm = () => {
 
   const Base_Url = process.env.Base_Url;
+
+  console.log("Base_Url", Base_Url)
   
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -20,7 +22,7 @@ const LandingPageForm = () => {
   
   const authenticateWithToken = async (token) => {
     try {
-      const response = await axios.get(`${Base_Url}token/protected-route`, {
+      const response = await axios.get(`${Base_Url}/token/protected-route`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

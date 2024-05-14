@@ -75,21 +75,21 @@ function App() {
     document.querySelector('html').style.scrollBehavior = '';
   }, [location.pathname]);
 
-  useEffect(() => {
-    const { pathname } = location;
-    // Exclude specific routes from redirection
-    const excludedRoutes = ['/indexadmin'];
-    // Check if the path matches the pattern: /:user_input
-    if (
-      pathname.match(/^\/[\w-]+$/) &&
-      !excludedRoutes.includes(pathname)
-    ) {
-      // Extract the user_input from the path
-      const user_input = pathname.substring(1);
-      // Redirect to Forbidden route with the user_input parameter
-      window.location.href = `/Forbidden/${user_input}`;
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   const { pathname } = location;
+  //   // Exclude specific routes from redirection
+  //   const excludedRoutes = ['/indexadmin'];
+  //   // Check if the path matches the pattern: /:user_input
+  //   if (
+  //     pathname.match(/^\/[\w-]+$/) &&
+  //     !excludedRoutes.includes(pathname)
+  //   ) {
+  //     // Extract the user_input from the path
+  //     const user_input = pathname.substring(1);
+  //     // Redirect to Forbidden route with the user_input parameter
+  //     window.location.href = `/Forbidden/${user_input}`;
+  //   }
+  // }, [location]);
 
   return (
     <DashboardProvider>
@@ -151,8 +151,8 @@ function App() {
 
 
 
-        <Route path="*" element={<Navigate to="/Forbidden/:user_input" />} />
-        <Route path="/Forbidden/:user_input" element={<Forbidden />} />
+        {/* <Route path="*" element={<Navigate to="/Forbidden/:user_input" />} />
+        <Route path="/Forbidden/:user_input" element={<Forbidden />} /> */}
       </Routes>
     </DashboardProvider>
 
