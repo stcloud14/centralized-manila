@@ -33,7 +33,7 @@ const DropdownProfile = ({ align }) => {
             try{
                 const res= await axios.get(`${Base_Url}profile/${user_id}`)
                 setUserPersonal((prevData) => {
-                  if (prevData.f_name !== res.data.user_personal[0].f_name) {
+                  if (prevData.f_name !== res.data.user_personal[0]?.f_name) {
                     return res.data.user_personal[0];
                   }
                   return prevData;
