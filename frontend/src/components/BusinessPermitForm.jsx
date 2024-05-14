@@ -173,8 +173,8 @@ const BusinessPermitForm =()=>{
   const handleFileSelect = (file, target) => {
     const allowedTypes = ['image/png', 'image/jpeg', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
   
-    if (file.size > 2 * 1024 * 1024) {
-      window.alert('File size exceeds the 2MB limit. Please select a smaller file.');
+    if (file.size > 3 * 1024 * 1024) {
+      window.alert('File size exceeds the 3MB limit. Please select a smaller file.');
       return;
     }
   
