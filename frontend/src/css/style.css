@@ -25,6 +25,7 @@ input:-webkit-autofill:active  {
 }
 
 .dark .landingbg {
+  /* background: url('../images/manila-v4.jpg'); */
   background: url('https://i.ibb.co/PTykKg9/manila-v4.jpg');
   background-repeat: no-repeat;
   background-position: top;
@@ -32,6 +33,7 @@ input:-webkit-autofill:active  {
 }
 
 .landingbg {
+  /* background: url('../images/manila-v5.jpg'); */
   background: url('https://i.ibb.co/5h79QvV/manila-v5.jpg');
   background-repeat: no-repeat;
   background-position: top;
