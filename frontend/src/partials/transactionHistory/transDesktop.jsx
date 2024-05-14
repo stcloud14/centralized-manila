@@ -103,53 +103,81 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
 
   const generatePDF = async () => {
     try {
-
         // Check if there are any pending transactions matching the search input's transaction ID
         const pendingTransactions = filteredTransactions.filter(transaction =>
-          transaction.status_type.toLowerCase() === 'pending' || transaction.transaction_id.toLowerCase() === searchInput.toLowerCase()
+            transaction.status_type.toLowerCase() === 'pending' || transaction.transaction_id.toLowerCase() === searchInput.toLowerCase()
         );
 
         if (pendingTransactions.length === 0) {
-          // Log a message if no pending transaction matching the search input is found
-          console.log('No pending transaction matching the search input found. Cannot generate PDF.');
-          return;
+            // Log a message if no pending transaction matching the search input is found
+            console.log('No pending transaction matching the search input found. Cannot generate PDF.');
+            return;
         }
 
-        const totalPages = pendingTransactions.length;
-
         const pdf = new jsPDF();
-        
-        const generatedSOAObjects = [];
-        let existingSOANumbers = []; 
-        let knownTransactionTypes = {};
-        
-        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-            const transaction = pendingTransactions[pageNum - 1];
-            // const arrayBase = pageNum - 1;
-            // const transaction = filteredTransactions[arrayBase];
 
-            // Check if transaction_id exists
+        const generatedSOAObjects = [];
+        let existingSOANumbers = [];
+        let knownTransactionTypes = {};
+
+        // Function to add footer and page number
+        const addFooter = (pdf, pageNum, totalPages, userPersonal) => {
+            const currentDate = new Date();
+            const formattedDate = currentDate.toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+            });
+            const formattedTime = currentDate.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true,
+            });
+
+            let f_name = userPersonal.f_name;
+            let l_name = userPersonal.l_name;
+
+            f_name = f_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+            l_name = l_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+
+            const footerText = `Generated on ${formattedDate}, at ${formattedTime} by ${f_name} ${l_name}`;
+
+            const footerTextX = 15;
+            const footerTextY = pdf.internal.pageSize.height - 15;
+
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text(footerText, footerTextX, footerTextY);
+
+            const pageNumberText = `Page ${pageNum} of ${totalPages}`;
+            const pageNumberTextWidth = pdf.getStringUnitWidth(pageNumberText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+            const pageNumberTextX = pdf.internal.pageSize.width - 15 - pageNumberTextWidth;
+
+            pdf.text(pageNumberText, pageNumberTextX, footerTextY);
+        };
+
+        for (let pageNum = 1; pageNum <= pendingTransactions.length; pageNum++) {
+            const transaction = pendingTransactions[pageNum - 1];
+
             if (!transaction.transaction_id) {
                 continue;
             }
 
             let soaNumber, expiry_date;
 
-            // Check if the transaction type is known
             if (!knownTransactionTypes[transaction.trans_type]) {
-                // Generate SOA number for new transaction type
                 soaNumber = generateUniqueSOA(transaction.trans_type, transaction.user_id);
-                knownTransactionTypes[transaction.trans_type] = true; 
+                knownTransactionTypes[transaction.trans_type] = true;
                 const expiryDate = moment().endOf('month').set({ hour: 23, minute: 59, second: 59 });
                 const formattedExpiryDate = expiryDate.format('MMMM DD, YYYY, hh:mm A');
                 expiry_date = formattedExpiryDate;
             } else {
-                // Use existing SOA number for known transaction type
                 if (soaData && soaData.length > 0) {
                     const matchedSoa = soaData.find(soa => soa.transaction_id === transaction.transaction_id);
                     if (matchedSoa) {
                         soaNumber = matchedSoa.soa_no;
-                        existingSOANumbers.push(soaNumber); 
+                        existingSOANumbers.push(soaNumber);
                         const expiryDateStr = matchedSoa.expiry_date;
                         const expiryDate = moment(expiryDateStr);
                         const formattedExpiryDate = expiryDate.format('MMMM DD, YYYY, hh:mm A');
@@ -159,7 +187,6 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
             }
 
             if (!soaNumber) {
-                // If still no SOA number, generate a default one
                 soaNumber = generateUniqueSOA(transaction.trans_type, transaction.user_id);
             }
 
@@ -178,18 +205,11 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
             pdf.text(transaction.trans_type, 15, 19);
             pdf.text("Electronic Statement of Account", 15, 23);
 
-            // Additional text to be placed on the right
             const currentDate1 = new Date();
-            // const currentMonth = currentDate1.getMonth();
-            // const currentYear = currentDate1.getFullYear();
-            // const billingDate = new Date(currentYear, currentMonth, 6);
-
             const monthNames = [
                 "January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
             ];
-
-            
 
             const additionalText = [
                 { text: "Billing Date", bold: true },
@@ -213,8 +233,6 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
                 pdf.text(text, additionalTextX, additionalTextY + (index * 4));
             });
 
-
-            // Display labels and their corresponding text
             const labelSets = {
                 'Real Property Tax Payment': ["SOA No.", "Account Name:", "Tax Declaration Number:", "Transaction ID:"],
                 'Real Property Tax Clearance': ["SOA No.", "Tax Declaration Number:", "Transaction ID:"],
@@ -237,19 +255,19 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
 
                 switch (index) {
                     case 0:
-                        text = soaNumber; 
+                        text = soaNumber;
                         break;
                     case 1:
                         if (transaction.trans_type === 'Community Tax Certificate') {
                             text = transaction.cedula_doc_owner || "Unknown Owner";
                         } else if (transaction.trans_type === 'Birth Certificate') {
                             text = transaction.birth_requestor || "Unknown Requestor";
-                        } else if (transaction.trans_type === 'Death Certificate') { 
+                        } else if (transaction.trans_type === 'Death Certificate') {
                             text = transaction.death_requestor || "Unknown Requestor";
                         } else if (transaction.trans_type === 'Marriage Certificate') {
                             text = transaction.consent_info || "Unknown Requestor";
                         } else {
-                            text = transaction.acc_name || transaction.tc_tdn || transaction.bus_name  || "Unknown Owner";
+                            text = transaction.acc_name || transaction.tc_tdn || transaction.bus_name || "Unknown Owner";
                         }
                         break;
                     case 2:
@@ -265,7 +283,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
                         if (transaction.trans_type === 'Business Permit') {
                             text = transaction.transaction_id || "Transaction ID";
                         } else if (transaction.trans_type === 'Community Tax Certificate') {
-                            text = ""; 
+                            text = "";
                         } else {
                             text = transaction.transaction_id || "Transaction ID";
                         }
@@ -278,22 +296,17 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
                 pdf.text(label, 15, 35 + index * 4);
                 pdf.setFont("helvetica", "normal");
                 pdf.text(text, textStartX, 35 + index * 4);
-            });   
+            });
 
-            // Spacing between the text above and the table below
-            const textHeight = (labels.length + 1) * 4; 
+            const textHeight = (labels.length + 1) * 4;
             const marginTop = 1;
-
-            // Adjust the starting y-coordinate for the first table
             const firstTableStartY = 35 + textHeight + marginTop;
 
-            // Define styles for the first table header
             const firstTableHeaderStyles = {
                 fillColor: [50, 50, 50],
                 textColor: 255,
             };
 
-            // Transaction Details table
             const { trans_type, tp_pin, tc_pin, amount, year_period, period_id, date, bus_reg_no, bus_tin, ci_acc_no, copies } = transaction;
 
             let head, body;
@@ -315,7 +328,7 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
                     head = [['Tax Payer Account No.', 'Total Amount', 'Date Processed']];
                     body = [[ci_acc_no, 'P ' + amount, date]];
                     break;
-                default:  
+                default:
                     head = [['No. of Copies', 'Total Amount', 'Date Processed']];
                     body = [[copies, 'P ' + amount, date]];
             }
@@ -328,71 +341,35 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
                 theme: 'plain',
             });
 
-            // Function to repeat a symbol to form a line
             function repeatSymbol(symbol, count) {
                 return symbol.repeat(count);
             }
 
-            // Define the symbol and the number of repetitions
-            const symbol = "\u2022"; // Unicode for a bullet point symbol
-            const repetitions = 146; // Adjust the number of repetitions as needed
-
-            // Generate the line of symbols
+            const symbol = "\u2022";
+            const repetitions = 146;
             const lineOfSymbols = repeatSymbol(symbol, repetitions);
-
-            // Add the line of symbols below the first table
-            const textXPosition = 15; // Adjust the X position
-            const textYPosition = pdf.autoTable.previous.finalY + 10; // Adjust the Y position
+            const textXPosition = 15;
+            const textYPosition = pdf.autoTable.previous.finalY + 10;
 
             pdf.setFont("helvetica", "normal");
             pdf.setFontSize(10);
             pdf.text(lineOfSymbols, textXPosition, textYPosition);
 
-
-            // Second Table Title
-            // const titleText = "Last Payment";
-            // const titleXPosition = 15; // Adjust as needed
-            // const titleYPosition = pdf.autoTable.previous.finalY + 20;
-
-            // pdf.setFont("helvetica", "bold");
-            // pdf.setFontSize(10);
-            // pdf.text(titleText, titleXPosition, titleYPosition);
-
-            // Second Table
-            // const secondTableStartY = titleYPosition + 2; // Adjust spacing from title
-
-            // pdf.autoTable({
-            //     startY: secondTableStartY,
-            //     head: [['Payment Date', 'Total Amount']],
-            //     body:  [["1/14/2023", "P 1200.00"]],
-            //     theme: 'plain',
-            //     columnStyles: {
-            //         0: { cellWidth: 40, cellPadding: 1, halign: 'center'}, // Adjust the width and height of the first column
-            //         1: { cellWidth: 40, cellPadding: 1, halign: 'center'}  // Adjust the width and height of the second column
-            //     },
-            //     headStyles: {
-            //         fontStyle: 'normal',
-            //         halign: 'center'
-            //     }
-            // });
-
-            // Add note text below the second table
             const noteText = [
-              "Note:",
-              "1. Please present this Statement to the Teller for in-person payments. Alternatively, within the transaction details,",
-              "    use the 'Pay' button to settle your dues conveniently online. Disregard if the account has already been settled.",
-              "2. This eSOA is valid until " + expiry_date + "."
+                "Note:",
+                "1. Please present this Statement to the Teller for in-person payments. Alternatively, within the transaction details,",
+                "    use the 'Pay' button to settle your dues conveniently online. Disregard if the account has already been settled.",
+                "2. This eSOA is valid until " + expiry_date + "."
             ];
-            const noteXPosition = 15; // Adjust as needed
-            const noteYPosition = pdf.autoTable.previous.finalY + 20; // Adjust the Y position
+            const noteXPosition = 15;
+            const noteYPosition = pdf.autoTable.previous.finalY + 20;
 
             pdf.setFont("helvetica", "normal");
             pdf.setFontSize(10);
             noteText.forEach((text, index) => {
-                pdf.text(text, noteXPosition, noteYPosition + (index * 4)); // Adjust spacing here
+                pdf.text(text, noteXPosition, noteYPosition + (index * 4));
             });
 
-            // Add signature on the right side at the bottom of the first table
             const signatureXPosition = pdf.internal.pageSize.width - 58;
             const signatureYPosition = pdf.autoTable.previous.finalY + 65;
 
@@ -401,63 +378,14 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
             pdf.setFont("helvetica", "normal");
 
             pdf.text("City Treasurer", signatureXPosition + 12, signatureYPosition + 9);
-
             pdf.line(signatureXPosition, signatureYPosition + 5, signatureXPosition + 45, signatureYPosition + 5);
 
-            
-            // Get the current date and time
-            const currentDate = new Date();
-            const formattedDate = currentDate.toLocaleDateString('en-US', {
-                weekday: 'long',
-                month: 'long',
-                day: 'numeric',
-                year: 'numeric',
-            });
-            const formattedTime = currentDate.toLocaleTimeString('en-US', {
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true,
-            });
+            addFooter(pdf, pageNum, pendingTransactions.length, userPersonal);
 
-            // Construct the footer text with the dynamic date and time
-            let f_name = userPersonal.f_name;
-            let l_name = userPersonal.l_name;
-
-            f_name = f_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-            l_name = l_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-
-            const footerText = `Generated on ${formattedDate}, at ${formattedTime} by ${f_name} ${l_name}`;
-
-            // Calculate the position for footer text
-            const footerTextX = 15;
-            const footerTextY = pdf.internal.pageSize.height - 15;
-            
-            // Calculate the width of the page number text
-            pdf.setFont("helvetica", "normal");
-            pdf.setFontSize(10);
-            const pageNumberText = `Page 1 of 1`;
-            const pageNumberTextWidth = pdf.getStringUnitWidth(pageNumberText) * pdf.internal.getFontSize();
-            
-            // Calculate the position for page number
-            const pageNumberTextX = pdf.internal.pageSize.width - (-19) - pageNumberTextWidth;
-            const pageNumberTextY = pdf.internal.pageSize.height - 15;
-            
-            // Add footer text after the City Treasurer text
-            pdf.setFont("helvetica", "normal");
-            pdf.setFontSize(10);
-            
-            // Add footer text
-            pdf.text(footerText, footerTextX, footerTextY);
-            
-            // Add page number
-            pdf.text(pageNumberText, pageNumberTextX, pageNumberTextY);            
-
-            // Add new page if not the last page
-            if (pageNum !== totalPages) {
+            if (pageNum !== pendingTransactions.length) {
                 pdf.addPage();
             }
         }
-
 
         const body = generatedSOAObjects;
 
