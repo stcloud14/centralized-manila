@@ -66,14 +66,14 @@ app.use((req, res, next) => {
 });
 
 // Serve static files
-if (process.env.NODE_ENV === 'production') {
-  const staticPath = path.join(__dirname, '../frontend/dist');
-  app.use(express.static(staticPath));
+// if (process.env.NODE_ENV === 'production') {
+//   const staticPath = path.join(__dirname, '../frontend/dist');
+//   app.use(express.static(staticPath));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(staticPath, 'index.html'));
-  });
-}
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(staticPath, 'index.html'));
+//   });
+// }
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 
