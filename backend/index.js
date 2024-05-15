@@ -34,7 +34,7 @@ import generateREPHandler from './routes/generateREPHandler.js';
 const app = express();
 
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 
 // app.use(cors({
 //   origin: 'http://3.104.117.133',
