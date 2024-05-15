@@ -195,10 +195,12 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                       <span className="font-medium whitespace-nowrap">Business Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_name ? selectedTransaction.bus_name : '-'}</span>
                     </div>
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                      <span className="font-medium whitespace-nowrap">Trade Name / Franchise</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_franchise ? selectedTransaction.bus_franchise : '-'}</span>
-                    </div>
+                    {selectedTransaction.bus_franchise && (
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Trade Name / Franchise</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_franchise}</span>
+                          </div>
+                          )}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">DTI / SEC / CDA Registration No.</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_reg_no ? selectedTransaction.bus_reg_no : '-'}</span>
@@ -221,16 +223,20 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                       <span className="font-medium whitespace-nowrap">First Name</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_fname ? selectedTransaction.bus_fname : '-'}</span>
                     </div>
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                      <span className="font-medium whitespace-nowrap">Middle Name</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_mname ? selectedTransaction.bus_mname : '-'}</span>
-                    </div>
-                    {selectedTransaction.bus_suffix ? (
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                      <span className="font-medium whitespace-nowrap">Suffix</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_suffix ? selectedTransaction.bus_suffix : '-'}</span>
-                    </div>
-                    ) : null}
+                    {selectedTransaction.bus_mname && (
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Middle Name</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_mname ? selectedTransaction.bus_mname : '-'}</span>
+                          </div>
+                          )}
+                          
+                          {selectedTransaction.bus_suffix && (
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Suffix</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_suffix ? selectedTransaction.bus_suffix : '-'}</span>
+                          </div>
+                          )}
+
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Sex</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_sexLabel || selectedTransaction.bus_sex || '-'}</span>
@@ -245,10 +251,12 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                       <span className="font-medium whitespace-nowrap">Email Address</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_email || selectedTransaction.bus_email || '-'}</span>
                     </div>
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                      <span className="font-medium whitespace-nowrap">Telephone Number</span>
-                      <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_tel_no || selectedTransaction.bus_tel_no || '-'}</span>
-                    </div>
+                    {selectedTransaction.tel_no && (
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                            <span className="font-medium whitespace-nowrap">Telephone Number</span>
+                            <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_tel_no || selectedTransaction.bus_tel_no || '-'}</span>
+                          </div>
+                          )}
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Mobile Number</span>
                       <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_mobile_no || selectedTransaction.bus_mobile_no || '-'}</span>
@@ -379,17 +387,19 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
 
                     <br />
                     
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                <span className="font-medium whitespace-nowrap">Incentives from any Government Entity</span>
-                <span className="whitespace-nowrap md:mb-0 mb-1">
-                  {businessImages && businessImages.bus_tax_incentives !== undefined
-                          ? getShortName(businessImages.bus_tax_incentives, 20)
-                          : selectedTransaction && selectedTransaction.bus_tax_incentives !== undefined
-                          ? <a href={`/uploads/business/${selectedTransaction.bus_tax_incentives}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_tax_incentives, 20)}</a>
-                          : ''
-                  }
-              </span>
-              </div>
+                    {selectedTransaction.bus_tax_incentives && (
+                          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                      <span className="font-medium whitespace-nowrap">Incentives from any Government Entity</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">
+                        {businessImages && businessImages.bus_tax_incentives !== undefined
+                                ? getShortName(businessImages.bus_tax_incentives, 20)
+                                : selectedTransaction && selectedTransaction.bus_tax_incentives !== undefined
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_tax_incentives}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_tax_incentives, 20)}</a>
+                                : ''
+                        }
+                    </span>
+                    </div>
+                          )}
 
               <br />
 
@@ -463,170 +473,188 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
               ))}
 
               
-              <br />
-              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                <span className="font-medium whitespace-nowrap">DTI Registration</span>
-                <span className="whitespace-nowrap md:mb-0 mb-1">
-                    {businessImages && businessImages.bus_dti_reg !== undefined
-                      ? getShortName(businessImages.bus_dti_reg, 20)
-                          : selectedTransaction && selectedTransaction.bus_dti_reg !== undefined
-                            ? <a href={`/uploads/business/${selectedTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_dti_reg, 20)}</a>
-                            : ''
-                    }
-                </span>
-            </div>
+<br />
+                    {selectedTransaction.bus_dti_reg && (
+                    <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                      <span className="font-medium whitespace-nowrap">DTI Registration</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">
+                          {businessImages && businessImages.bus_dti_reg !== undefined
+                            ? getShortName(businessImages.bus_dti_reg, 20)
+                                : selectedTransaction && selectedTransaction.bus_dti_reg !== undefined
+                                  ? <a href={`/uploads/business/${selectedTransaction.bus_dti_reg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_dti_reg, 20)}</a>
+                                  : ''
+                          }
+                      </span>
+                  </div>
+                    )}
 
-            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-              <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Building</span>
-              <span className="whitespace-nowrap md:mb-0 mb-1">
-                  {businessImages && businessImages.bus_rptax_decbldg !== undefined
-                          ? getShortName(businessImages.bus_rptax_decbldg, 20)
-                          : selectedTransaction && selectedTransaction.bus_rptax_decbldg !== undefined
-                          ? <a href={`/uploads/business/${selectedTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decbldg, 20)}</a>
-                          : ''
-                  }
-              </span>
-          </div>
+                {selectedTransaction.bus_rptax_decbldg && (
+                  <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                    <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Building</span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">
+                        {businessImages && businessImages.bus_rptax_decbldg !== undefined
+                                ? getShortName(businessImages.bus_rptax_decbldg, 20)
+                                : selectedTransaction && selectedTransaction.bus_rptax_decbldg !== undefined
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_rptax_decbldg}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decbldg, 20)}</a>
+                                : ''
+                        }
+                    </span>
+                </div>
+                )}
 
-          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-              <span className="font-medium whitespace-nowrap">Paid-up and Subscribed Page</span>
-              <span className="whitespace-nowrap md:mb-0 mb-1">
-                  {businessImages && businessImages.bus_sec_paid !== undefined
-                      ? getShortName(businessImages.bus_sec_paid, 20)
-                      : selectedTransaction && selectedTransaction.bus_sec_paid !== undefined
-                          ? <a href={`/uploads/business/${selectedTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_paid, 20)}</a>
-                          : ''
-                  }
-              </span>
-          </div>
+                    {selectedTransaction.bus_sec_paid && (
+                <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                    <span className="font-medium whitespace-nowrap">Paid-up and Subscribed Page</span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">
+                        {businessImages && businessImages.bus_sec_paid !== undefined
+                            ? getShortName(businessImages.bus_sec_paid, 20)
+                            : selectedTransaction && selectedTransaction.bus_sec_paid !== undefined
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_sec_paid}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_paid, 20)}</a>
+                                : ''
+                        }
+                    </span>
+                </div>
+                  )}
 
+                  {selectedTransaction.bus_sec_articles && (
+                  <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                    <span className="font-medium whitespace-nowrap">Articles of Primary and Secondary Purpose</span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">
+                        {businessImages && businessImages.bus_sec_articles !== undefined
+                            ? getShortName(businessImages.bus_sec_articles,20 )
+                            : selectedTransaction && selectedTransaction.bus_sec_articles !== undefined
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_articles, 20)}</a>
+                                : ''
+                        }
+                    </span>
+                </div>              
+                  )}
 
-            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-              <span className="font-medium whitespace-nowrap">Articles of Primary and Secondary Purpose</span>
-              <span className="whitespace-nowrap md:mb-0 mb-1">
-                  {businessImages && businessImages.bus_sec_articles !== undefined
-                      ? getShortName(businessImages.bus_sec_articles,20 )
-                      : selectedTransaction && selectedTransaction.bus_sec_articles !== undefined
-                          ? <a href={`/uploads/business/${selectedTransaction.bus_sec_articles}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_articles, 20)}</a>
-                          : ''
-                  }
-              </span>
-          </div>
+              {selectedTransaction.bus_nga && (
+                <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                    <span className="font-medium whitespace-nowrap">NGA-Contract of Lease</span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">
+                        {businessImages && businessImages.bus_nga !== undefined 
+                            ? getShortName(businessImages.bus_nga, 20)
+                            : selectedTransaction && selectedTransaction.bus_nga !== undefined
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_nga, 20)}</a>
+                                : ''
+                        }
+                    </span>
+                </div>
+                  )}
 
-          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-              <span className="font-medium whitespace-nowrap">NGA-Contract of Lease</span>
-              <span className="whitespace-nowrap md:mb-0 mb-1">
-                  {businessImages && businessImages.bus_nga !== undefined 
-                      ? getShortName(businessImages.bus_nga, 20)
-                      : selectedTransaction && selectedTransaction.bus_nga !== undefined
-                          ? <a href={`/uploads/business/${selectedTransaction.bus_nga}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_nga, 20)}</a>
-                          : ''
-                  }
-              </span>
-          </div>
+              {selectedTransaction.bus_sec_front && (
 
-          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-              <span className="font-medium whitespace-nowrap">SEC Registration</span>
-              <span className="whitespace-nowrap md:mb-0 mb-1">
-                  {businessImages && businessImages.bus_sec_front !== undefined
-                      ? getShortName(businessImages.bus_sec_front, 20)
-                      : selectedTransaction && selectedTransaction.bus_sec_front !== undefined
-                          ? <a href={`/uploads/business/${selectedTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_front, 20)}</a>
-                          : ''
-                  }
-              </span>
-          </div>
+                <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                    <span className="font-medium whitespace-nowrap">SEC Registration</span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">
+                        {businessImages && businessImages.bus_sec_front !== undefined
+                            ? getShortName(businessImages.bus_sec_front, 20)
+                            : selectedTransaction && selectedTransaction.bus_sec_front !== undefined
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_sec_front}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_sec_front, 20)}</a>
+                                : ''
+                        }
+                    </span>
+                </div>
+              )}
+              {selectedTransaction.bus_rptax_decland && (
 
-          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-              <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Land</span>
-              <span className="whitespace-nowrap md:mb-0 mb-1">
-                  {businessImages && businessImages.bus_rptax_decland !== undefined
-                      ? getShortName(businessImages.bus_rptax_decland, 20)
-                      : selectedTransaction && selectedTransaction.bus_rptax_decland !== undefined
-                          ? <a href={`/uploads/business/${selectedTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decland, 20)}</a>
-                          : ''
-                  }
-              </span>
-          </div>
+                <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                    <span className="font-medium whitespace-nowrap">R.P. Tax Declaration for Land</span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">
+                        {businessImages && businessImages.bus_rptax_decland !== undefined
+                            ? getShortName(businessImages.bus_rptax_decland, 20)
+                            : selectedTransaction && selectedTransaction.bus_rptax_decland !== undefined
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_rptax_decland}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_rptax_decland, 20)}</a>
+                                : ''
+                        }
+                    </span>
+                </div>
+              )}
+              {selectedTransaction.bus_fire && (
 
-            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-              <span className="font-medium whitespace-nowrap">Fire Safety Inspection Certificate</span>
-              <span className="whitespace-nowrap md:mb-0 mb-1">
-                  {businessImages && businessImages.bus_fire !== undefined
-                      ? getShortName(businessImages.bus_fire, 20 )
-                      : selectedTransaction && selectedTransaction.bus_fire !== undefined
-                          ? <a href={`/uploads/business/${selectedTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_fire, 20)}</a>
-                          : ''
-                  }
-              </span>
-          </div>
+                  <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                    <span className="font-medium whitespace-nowrap">Fire Safety Inspection Certificate</span>
+                    <span className="whitespace-nowrap md:mb-0 mb-1">
+                        {businessImages && businessImages.bus_fire !== undefined
+                            ? getShortName(businessImages.bus_fire, 20 )
+                            : selectedTransaction && selectedTransaction.bus_fire !== undefined
+                                ? <a href={`/uploads/business/${selectedTransaction.bus_fire}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_fire, 20)}</a>
+                                : ''
+                        }
+                    </span>
+                </div>
+              )}
+              {selectedTransaction.bus_page2 && (
 
-          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-            <span className="font-medium whitespace-nowrap">Page 2 Document</span>
-            <span className="whitespace-nowrap md:mb-0 mb-1">
-                {businessImages && businessImages.bus_page2 !== undefined
-                    ? getShortName(businessImages.bus_page2, 20)
-                    : selectedTransaction && selectedTransaction.bus_page2 !== undefined
-                        ? <a href={`/uploads/business/${selectedTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page2, 20)}</a>
-                        : ''
-                }
-            </span>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-            <span className="font-medium whitespace-nowrap">Page 3 Document</span>
-            <span className="whitespace-nowrap md:mb-0 mb-1">
-                {businessImages && businessImages.bus_page3 !== undefined
-                    ? getShortName(businessImages.bus_page3, 20)
-                    : selectedTransaction && selectedTransaction.bus_page3 !== undefined
-                        ? <a href={`/uploads/business/${selectedTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page3, 20)}</a>
-                        : ''
-                }
-            </span>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-            <span className="font-medium whitespace-nowrap">Page 4 Document</span>
-            <span className="whitespace-nowrap md:mb-0 mb-1">
-                {businessImages && businessImages.bus_page4 !== undefined
-                    ? getShortName(businessImages.bus_page4, 20)
-                    : selectedTransaction && selectedTransaction.bus_page4 !== undefined
-                        ? <a href={`/uploads/business/${selectedTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page4, 20)}</a>
-                        : ''
-                }
-            </span>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-            <span className="font-medium whitespace-nowrap">Page 5 Document</span>
-            <span className="whitespace-nowrap md:mb-0 mb-1">
-                {businessImages && businessImages.bus_page5 !== undefined
-                    ? getShortName(businessImages.bus_page5, 20)
-                    : selectedTransaction && selectedTransaction.bus_page5 !== undefined
-                        ? <a href={`/uploads/business/${selectedTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page5, 20)}</a>
-                        : ''
-                }
-            </span>
-        </div>
-
-              <br />
-
-              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                <span className="font-medium whitespace-nowrap">No. of Copies</span>
-                <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_nocopies || selectedTransaction.copies || '-'}</span>
+                <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                  <span className="font-medium whitespace-nowrap">Page 2 Document</span>
+                  <span className="whitespace-nowrap md:mb-0 mb-1">
+                      {businessImages && businessImages.bus_page2 !== undefined
+                          ? getShortName(businessImages.bus_page2, 20)
+                          : selectedTransaction && selectedTransaction.bus_page2 !== undefined
+                              ? <a href={`/uploads/business/${selectedTransaction.bus_page2}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page2, 20)}</a>
+                              : ''
+                      }
+                  </span>
               </div>
+            )}
+              {selectedTransaction.bus_page3 && (
+
               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                <span className="font-medium whitespace-nowrap">What to Print</span>
-                <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_printLabel || selectedTransaction.print_type || '-'}</span>
+                  <span className="font-medium whitespace-nowrap">Page 3 Document</span>
+                  <span className="whitespace-nowrap md:mb-0 mb-1">
+                      {businessImages && businessImages.bus_page3 !== undefined
+                          ? getShortName(businessImages.bus_page3, 20)
+                          : selectedTransaction && selectedTransaction.bus_page3 !== undefined
+                              ? <a href={`/uploads/business/${selectedTransaction.bus_page3}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page3, 20)}</a>
+                              : ''
+                      }
+                  </span>
               </div>
+            )}
+              {selectedTransaction.bus_page4 && (
+
+              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                  <span className="font-medium whitespace-nowrap">Page 4 Document</span>
+                  <span className="whitespace-nowrap md:mb-0 mb-1">
+                      {businessImages && businessImages.bus_page4 !== undefined
+                          ? getShortName(businessImages.bus_page4, 20)
+                          : selectedTransaction && selectedTransaction.bus_page4 !== undefined
+                              ? <a href={`/uploads/business/${selectedTransaction.bus_page4}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page4, 20)}</a>
+                              : ''
+                      }
+                  </span>
+              </div>
+            )}
+              {selectedTransaction.bus_page5 && (
+
+              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                  <span className="font-medium whitespace-nowrap">Page 5 Document</span>
+                  <span className="whitespace-nowrap md:mb-0 mb-1">
+                      {businessImages && businessImages.bus_page5 !== undefined
+                          ? getShortName(businessImages.bus_page5, 20)
+                          : selectedTransaction && selectedTransaction.bus_page5 !== undefined
+                              ? <a href={`/uploads/business/${selectedTransaction.bus_page5}`} target="_blank" rel="noopener noreferrer">{getShortName(selectedTransaction.bus_page5, 20)}</a>
+                              : ''
+                      }
+                  </span>
+              </div>
+            )}
+
+
+              <br />
+
+             
               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                 <span className="font-medium whitespace-nowrap">Purpose</span>
                 <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_purposeLabel || selectedTransaction.purpose_type || '-'}</span>
               </div>
               <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-                <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
-                <span className="whitespace-nowrap md:mb-7 mb-1">{selectedTransaction.bus_valididLabel || selectedTransaction.valid_id || '-'}</span>
-              </div>
+                      <span className="font-medium whitespace-nowrap">Valid ID to Present Upon Claiming</span>
+                      <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.bus_valididLabel || selectedTransaction.valid_id_type || '-'}</span>
+                    </div>
           
                 
             
