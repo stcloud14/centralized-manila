@@ -49,6 +49,31 @@ app.use(cors({
   credentials: true
 }));
 
+app.use(cors({
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+}));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+  );
+  console.log(req.path, req.method);
+  next();
+});
+
+// Serve static files
+if (process.env.NODE_ENV === 'production') {
+  const staticPath = path.join(__dirname, '../frontend/dist');
+  app.use(express.static(staticPath));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(staticPath, 'index.html'));
+  });
+}
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 
