@@ -44,33 +44,22 @@ app.use(cors());
 
 
 app.use(cors({
-  origin: "http://54.206.127.243",
-  credentials: true,
-  optionSuccessStatus: 200,
+  origin: 'http://13.210.135.127',
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true
 }));
 
-// Additional CORS headers and logging
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-  );
-  console.log(req.path, req.method);
-  next();
-});
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// if (process.env.NODE_ENV === 'production') {
+//   const staticPath = path.join(__dirname, '../frontend/dist');
+//   app.use(express.static(staticPath));
 
-if (process.env.NODE_ENV === 'production') {
-  const staticPath = path.join(__dirname, '../frontend/dist');
-  app.use(express.static(staticPath));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(staticPath, 'index.html'));
-  });
-}
+//   app.get('/*', (req, res) => {
+//     res.sendFile(path.join(staticPath, 'index.html'));
+//   });
+// }
 
 // Client routes with /api prefix
 app.use('/api/login', login);
@@ -107,6 +96,6 @@ app.get("/", (req, res) => {
   res.json("hello, this is the backend");
 });
 
-app.listen(8800, () => {
+app.listen(8080, () => {
   console.log("Connected to backend");
 });
