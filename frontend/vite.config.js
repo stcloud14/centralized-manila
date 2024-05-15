@@ -35,5 +35,6 @@ export default defineConfig({
       transformMixedEsModules: true,
     },
     minify: 'esbuild',
+    chunkSizeWarningLimit: Infinity,
   }
 })
