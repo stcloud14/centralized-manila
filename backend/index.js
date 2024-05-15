@@ -36,11 +36,29 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// app.use(cors({
+//   origin: 'http://13.210.135.127',
+//   methods: 'GET,POST,PUT,DELETE',
+//   credentials: true
+// }));
+
+
 app.use(cors({
-  origin: 'http://13.210.135.127',
-  methods: 'GET,POST,PUT,DELETE',
-  credentials: true
+  origin: "http://54.206.127.243",
+  credentials: true,
+  optionSuccessStatus: 200,
 }));
+
+// Additional CORS headers and logging
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+  );
+  console.log(req.path, req.method);
+  next();
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
