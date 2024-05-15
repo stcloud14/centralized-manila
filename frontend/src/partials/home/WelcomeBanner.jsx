@@ -13,7 +13,7 @@ function WelcomeBanner() {
 
   const { user_id } = useParams();
   const Base_Url = process.env.Base_Url;
-  const [userName, setUserName]=useState();
+  const [userName, setUserName] = useState();
 
   console.log(user_id)
   console.log(userName)
@@ -21,11 +21,11 @@ function WelcomeBanner() {
   useEffect(()=>{
     const fetchUserName= async()=>{
         try{
-            const res= await axios.get(`${Base_Url}profile/${user_id}`)
-            setUserName(res.user_personal.f_name)            
+            const res= await axios.get(`${Base_Url}profile/username/${user_id}`);
+            setUserName(res.data);
 
         }catch(err){
-            console.log(err)
+            console.log(err);
         }
     }
     fetchUserName()

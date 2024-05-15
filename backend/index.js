@@ -37,7 +37,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use(cors({
-  origin: 'http://3.104.117.133',
+  origin: 'http://13.210.135.127',
   methods: 'GET,POST,PUT,DELETE',
   credentials: true
 }));
