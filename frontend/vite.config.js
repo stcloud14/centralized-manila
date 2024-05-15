@@ -2,6 +2,9 @@ import { defineConfig } from 'vite'
 import postcss from './postcss.config.js'
 import react from '@vitejs/plugin-react'
 import 'dotenv/config';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 // https://vitejs.dev/config/
@@ -11,7 +14,7 @@ export default defineConfig({
     port: 5173,
   },
   define: {
-    'process.env': process.env
+    'process.env': JSON.stringify(process.env),
   },
   css: {
     postcss,
@@ -30,6 +33,7 @@ export default defineConfig({
   build: {
     commonjsOptions: {
       transformMixedEsModules: true,
-    }
-  } 
+    },
+    minify: 'esbuild',
+  }
 })

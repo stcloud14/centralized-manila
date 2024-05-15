@@ -16,6 +16,9 @@ function DropdownNotifications({ align }) {
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
+  const params = useParams();
+  console.log('This is a parameter: ' + JSON.stringify(params));
+
   const { user_id } = useParams();
 
   const Base_Url = process.env.Base_Url;

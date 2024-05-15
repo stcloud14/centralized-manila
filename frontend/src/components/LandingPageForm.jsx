@@ -9,8 +9,6 @@ import auth from '../../firebase.config';  // Updated import statement
 const LandingPageForm = () => {
 
   const Base_Url = process.env.Base_Url;
-
-  console.log("Base_Url", Base_Url)
   
   useEffect(() => {
     const token = localStorage.getItem('token');

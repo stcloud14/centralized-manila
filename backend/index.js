@@ -36,23 +36,23 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// app.use(cors({
-//   origin: 'http://3.104.117.133',
-//   methods: 'GET,POST,PUT,DELETE',
-//   credentials: true
-// }));
+app.use(cors({
+  origin: 'http://3.104.117.133',
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true
+}));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// if (process.env.NODE_ENV === 'production') {
-//   const staticPath = path.join(__dirname, '../frontend/dist');
-//   app.use(express.static(staticPath));
+if (process.env.NODE_ENV === 'production') {
+  const staticPath = path.join(__dirname, '../frontend/dist');
+  app.use(express.static(staticPath));
 
-//   app.get('*', (req, res) => {
-//     res.sendFile(path.join(staticPath, 'index.html'));
-//   });
-// }
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(staticPath, 'index.html'));
+  });
+}
 
 // Client routes with /api prefix
 app.use('/api/login', login);
