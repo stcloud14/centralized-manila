@@ -23,6 +23,7 @@ const AdminBusinessForm3 =()=>{
   const [isFetchedData, setIsFetchedData] = useState(false);
 
   const [businessPermit, setBusinessPermit] = useState([]);
+  const [businessData, setBusinessData] = useState([]);
   console.log("userrole", admin_type)
 
 
@@ -31,6 +32,7 @@ const AdminBusinessForm3 =()=>{
       const res = await axios.get(`${Base_Url}adminbp/charges/`);
       console.log('Response:', res.data);
       setBusinessPermit(res.data.businesspermit);
+      setBusinessData(res.data.businesspermit1); 
       console.log('FETCHED DATA')
       setIsFetchedData(true);
 
@@ -135,6 +137,7 @@ const AdminBusinessForm3 =()=>{
           <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
             <AdminBusinessCharge
+            businessData={businessData}
             businessPermit = {businessPermit}
             handleUpdateData={handleUpdateData}
             />

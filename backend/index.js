@@ -48,6 +48,8 @@ app.use(cors());
 //   methods: 'GET,POST,PUT,DELETE',
 //   credentials: true
 // }));
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 // app.use(cors({
 //   origin: "*",
@@ -56,16 +58,20 @@ app.use(cors());
 // }));
 
 // app.use((req, res, next) => {
+//   // Set Content-Type header to JSON for all responses
+
+//   // Set Access-Control headers
 //   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH");
 //   res.header(
 //     "Access-Control-Allow-Headers",
 //     "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
 //   );
+
 //   console.log(req.path, req.method);
 //   next();
 // });
 
-// Serve static files
+// // Serve static files
 // if (process.env.NODE_ENV === 'production') {
 //   const staticPath = path.join(__dirname, '../frontend/dist');
 //   app.use(express.static(staticPath));
@@ -74,8 +80,7 @@ app.use(cors());
 //     res.sendFile(path.join(staticPath, 'index.html'));
 //   });
 // }
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+
 
 // if (process.env.NODE_ENV === 'production') {
 //   const staticPath = path.join(__dirname, '../frontend/dist');
@@ -117,7 +122,7 @@ app.use('/api/audittrail', auditTrailHandler);
 app.use('/api/report', generateREPHandler);
 
 // Root endpoint
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.json("hello, this is the backend");
 });
 

@@ -20,7 +20,7 @@ const LandingPageForm = () => {
   
   const authenticateWithToken = async (token) => {
     try {
-      const response = await axios.get(`${Base_Url}/token/protected-route`, {
+      const response = await axios.get(`${Base_Url}token/protected-route`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

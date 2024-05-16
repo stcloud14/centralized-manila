@@ -8,7 +8,7 @@ import BPTableView from '../admin_business/BPTableView';
 import Loading from '../../partials/Loading';
 import AdminBPCharges from '../admin_modals/AdminBPCharges';
 
-const AdminBusinessRequests = ({ businessPermit, handleUpdateData }) => {
+const AdminBusinessRequests = ({ businessData, businessPermit, handleUpdateData }) => {
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
   const [modalViewCharge, setModalViewCharge] = useState(false);
@@ -747,6 +747,7 @@ useEffect(() => {
             {selectedTransaction && modalView && (
             <AdminBPView
               // selectedTransaction={selectedTransaction}
+              businessData={businessData}
               selectedTransaction={selectedTransaction}
               isOpen={modalView}
               handleClose={handleModalClose}
@@ -757,6 +758,7 @@ useEffect(() => {
             {selectedTransaction && modalViewCharge && (
             <AdminBPCharges
               // selectedTransaction={selectedTransaction}
+              businessData={businessData}
               selectedTransaction={selectedTransaction}
               isOpen={modalViewCharge}
               handleConfirmClose={handleChargeClose}
