@@ -26,9 +26,14 @@ export default defineConfig({
   },
   plugins: [react()],
   resolve: {
-    alias: {
-      '~': path.resolve(__dirname, 'src'),
-    },
+    alias: [
+      {
+        find: /^~.+/,
+        replacement: (val) => {
+          return val.replace(/^~/, "");
+        },
+      },
+    ],
   },
   build: {
     sourcemap: true, // Enable source maps for better debugging
