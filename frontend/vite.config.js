@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite'
-import postcss from './postcss.config.js'
-import react from '@vitejs/plugin-react'
-import 'dotenv/config';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import postcss from './postcss.config.js';
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -12,7 +12,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://3.27.109.196:8080',
+        target: process.env.API_URL || 'http://localhost:8080',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
@@ -26,20 +26,16 @@ export default defineConfig({
   },
   plugins: [react()],
   resolve: {
-    alias: [
-      {
-        find: /^~.+/,
-        replacement: (val) => {
-          return val.replace(/^~/, "");
-        },
-      },
-    ],
+    alias: {
+      '~': path.resolve(__dirname, 'src'),
+    },
   },
   build: {
+    sourcemap: true, // Enable source maps for better debugging
     commonjsOptions: {
       transformMixedEsModules: true,
     },
     minify: 'esbuild',
-    chunkSizeWarningLimit: Infinity,
-  }
+    chunkSizeWarningLimit: 1000,
+  },
 });

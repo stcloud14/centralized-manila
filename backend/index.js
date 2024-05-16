@@ -48,34 +48,38 @@ app.use(cors());
 //   methods: 'GET,POST,PUT,DELETE',
 //   credentials: true
 // }));
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
-app.use(cors({
-  origin: "*",
-  credentials: true,
-  optionSuccessStatus: 200,
-}));
+// app.use(cors({
+//   origin: "*",
+//   credentials: true,
+//   optionSuccessStatus: 200,
+// }));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-  );
-  console.log(req.path, req.method);
-  next();
-});
+// app.use((req, res, next) => {
+//   // Set Content-Type header to JSON for all responses
 
-// Serve static files
-if (process.env.NODE_ENV === 'production') {
-  const staticPath = path.join(__dirname, '../frontend/dist');
-  app.use(express.static(staticPath));
+//   // Set Access-Control headers
+//   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+//   );
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(staticPath, 'index.html'));
-  });
-}
+//   console.log(req.path, req.method);
+//   next();
+// });
+
+// // Serve static files
+// if (process.env.NODE_ENV === 'production') {
+//   const staticPath = path.join(__dirname, '../frontend/dist');
+//   app.use(express.static(staticPath));
+
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(staticPath, 'index.html'));
+//   });
+// }
 
 
 // if (process.env.NODE_ENV === 'production') {
@@ -118,7 +122,7 @@ app.use('/api/audittrail', auditTrailHandler);
 app.use('/api/report', generateREPHandler);
 
 // Root endpoint
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.json("hello, this is the backend");
 });
 
