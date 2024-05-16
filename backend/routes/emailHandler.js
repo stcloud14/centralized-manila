@@ -59,9 +59,7 @@ const router = Router();
                               ${typeInfo}
                               <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Date: </span>${body.data.date}</p>
                               <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">Time: </span>${body.data.time}</p>
-                              <p style="font-size:16px;line-height:22px;margin:16px 0">
-                              <span style="font-weight: 600;">${dynamicAmountTitle} </span>P ${amount || amount === 0 ? amount : 0}.00
-                            </p>                            
+                              <p style="font-size:16px;line-height:22px;margin:16px 0"><span style="font-weight: 600;">${dynamicAmountTitle} </span>P ${amount || 0}.00</p>
 
                               <p style="font-size:16px;line-height:18px;margin:50px 0px 10px 0px">Best regards,</p>
                               <p style="font-size:16px;line-height:18px;margin:2px 0px 16px 0px">Centralized Manila Team</p>
