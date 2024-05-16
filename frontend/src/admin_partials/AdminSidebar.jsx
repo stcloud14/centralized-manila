@@ -257,7 +257,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               {/* END OF DASHBOARD  */}
 
               {/* Real Property Tax */}
-              {admin_type === 'rptax_admin' ? (
+              {admin_type === 'chief_admin' || admin_type === 'rptax_admin' ? (
               <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
@@ -341,7 +341,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               ) : null}
 
               {/* Business Permit */}
-              {admin_type === 'business_admin' ? (
+              {admin_type === 'chief_admin' || admin_type === 'business_admin' ? (
               <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
@@ -420,7 +420,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               ) : null}
 
               {/* CTC / Cedula */}
-              {admin_type === 'cedula_admin' ? (
+              {admin_type === 'chief_admin' || admin_type === 'cedula_admin' ? (
               <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
@@ -487,7 +487,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               ) : null}
 
               {/* Local Civil Registry */}
-              {admin_type === 'lcr_admin' ? (
+              {admin_type === 'chief_admin' || admin_type === 'lcr_admin' ? (
                <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                {(handleClick, open) => {
                  return (

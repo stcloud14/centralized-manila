@@ -8,6 +8,7 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
   const { transaction_id, status_type, date_processed } = selectedTransaction;
 
   console.log(selectedTransaction)
+  console.log(busOffice)
 
   // const trans_type = 'Business Permit';
   const Base_Url = process.env.Base_Url;
