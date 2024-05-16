@@ -48,6 +48,8 @@ app.use(cors());
 //   methods: 'GET,POST,PUT,DELETE',
 //   credentials: true
 // }));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(cors({
   origin: "*",
@@ -74,8 +76,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(staticPath, 'index.html'));
   });
 }
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+
 
 // if (process.env.NODE_ENV === 'production') {
 //   const staticPath = path.join(__dirname, '../frontend/dist');
