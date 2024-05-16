@@ -229,7 +229,7 @@ const handleCheckboxChange = (e) => {
 
             const rowData = { ...rptaxPayment, transaction_id, trans_type, date, time};
 
-            const status_type = 'Pending';
+            const status_type = 'Processing';
 
             const body = {
               data: rowData,

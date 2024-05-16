@@ -44,7 +44,7 @@ const router = Router();
     const values1 = [transID, req.body.acc_name, req.body.rp_tdn, req.body.rp_pin, req.body.rp_year, req.body.period];
   
     const query2 = "INSERT INTO transaction_info (`transaction_id`, `amount`) VALUES (?, ?)";
-    const values2 = [transID, amount !== undefined ? amount : 0];    
+    const values2 = [transID, amount || 0];
 
     const query3 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
     const values3 = [user_id, formattedDate, notif_title, notif_message];
