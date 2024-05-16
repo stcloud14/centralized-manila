@@ -6,12 +6,17 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
-// https://vitejs.dev/config/
 export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://3.27.109.196:8080',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
   define: {
     'process.env': JSON.stringify(process.env),
@@ -37,4 +42,4 @@ export default defineConfig({
     minify: 'esbuild',
     chunkSizeWarningLimit: Infinity,
   }
-})
+});
