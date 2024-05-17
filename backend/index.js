@@ -57,21 +57,22 @@ app.use(cors({
   credentials: true,
   optionSuccessStatus: 200,
 }));
-// app.use(express.static(buildPath))
 
 app.use((req, res, next) => {
   // Set Content-Type header to JSON for all responses
+  res.setHeader("Content-Type", "application/json");
 
   // Set Access-Control headers
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH");
-  res.header(
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH");
+  res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization, Cross-Origin-Opener-Policy"
   );
 
   console.log(req.path, req.method);
   next();
 });
+
 
 // Serve static files
 // if (process.env.NODE_ENV === 'production') {
