@@ -12,9 +12,9 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: process.env.API_URL || 'http://localhost:8080',
+        target: process.env.API_URL || 'http://3.26.63.216:8080',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, '/api'), // Keeps the /api prefix in the request path
       },
     },
   },
