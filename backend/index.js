@@ -48,16 +48,16 @@ app.use(cors());
 //   methods: 'GET,POST,PUT,DELETE',
 //   credentials: true
 // }));
-const __filename = fileURLToPath(import.meta.url);
-const buildPath = path.join(__dirname, "../frontend/build")
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const buildPath = path.join(__dirname, "../frontend/build")
+// const __dirname = path.dirname(__filename);
 
 app.use(cors({
   origin: "*",
   credentials: true,
   optionSuccessStatus: 200,
 }));
-app.use(express.static(buildPath))
+// app.use(express.static(buildPath))
 
 app.use((req, res, next) => {
   // Set Content-Type header to JSON for all responses
