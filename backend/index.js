@@ -49,6 +49,7 @@ app.use(cors());
 //   credentials: true
 // }));
 const __filename = fileURLToPath(import.meta.url);
+const buildPath = path.join(__dirname, "../frontend/build")
 const __dirname = path.dirname(__filename);
 
 app.use(cors({
@@ -56,6 +57,7 @@ app.use(cors({
   credentials: true,
   optionSuccessStatus: 200,
 }));
+app.use(express.static(buildPath))
 
 app.use((req, res, next) => {
   // Set Content-Type header to JSON for all responses
@@ -72,14 +74,14 @@ app.use((req, res, next) => {
 });
 
 // Serve static files
-if (process.env.NODE_ENV === 'production') {
-  const staticPath = path.join(__dirname, '../frontend/dist');
-  app.use(express.static(staticPath));
+// if (process.env.NODE_ENV === 'production') {
+//   const staticPath = path.join(__dirname, '../frontend/dist');
+//   app.use(express.static(staticPath));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(staticPath, 'index.html'));
-  });
-}
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(staticPath, 'index.html'));
+//   });
+// }
 
 
 // if (process.env.NODE_ENV === 'production') {
