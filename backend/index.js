@@ -36,34 +36,20 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// app.use(cors({
-//   origin: 'http://13.210.135.127',
-//   methods: 'GET,POST,PUT,DELETE',
-//   credentials: true
-// }));
-
-
-// app.use(cors({
-//   origin: 'http://13.210.135.127',
-//   methods: 'GET,POST,PUT,DELETE',
-//   credentials: true
-// }));
-// const __filename = fileURLToPath(import.meta.url);
-// const buildPath = path.join(__dirname, "../frontend/build")
-// const __dirname = path.dirname(__filename);
-
+// CORS middleware
 app.use(cors({
   origin: "*",
   credentials: true,
   optionSuccessStatus: 200,
 }));
 
+// Logging middleware
 app.use((req, res, next) => {
   // Set Content-Type header to JSON for all responses
   res.setHeader("Content-Type", "application/json");
 
   // Set Access-Control headers
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization, Cross-Origin-Opener-Policy"
@@ -73,9 +59,10 @@ app.use((req, res, next) => {
   next();
 });
 
-
-// Serve static files
+// Serve static files (frontend)
 // if (process.env.NODE_ENV === 'production') {
+//   const __filename = fileURLToPath(import.meta.url);
+//   const __dirname = path.dirname(__filename);
 //   const staticPath = path.join(__dirname, '../frontend/dist');
 //   app.use(express.static(staticPath));
 
@@ -84,23 +71,13 @@ app.use((req, res, next) => {
 //   });
 // }
 
-
-// if (process.env.NODE_ENV === 'production') {
-//   const staticPath = path.join(__dirname, '../frontend/dist');
-//   app.use(express.static(staticPath));
-
-//   app.get('/*', (req, res) => {
-//     res.sendFile(path.join(staticPath, 'index.html'));
-//   });
-// }
-
-// Client routes with /api prefix
+// API routes
 app.use('/api/login', login);
 app.use('/api/register', register);
 app.use('/api/profile', profileHandler);
 app.use('/api/rptax', rptaxHandler);
 app.use('/api/buspermit', busPermitHandler);
-app.use('/api/cedula', cedulaHandler);
+app.use('/api/cedula', cedulaHandler);  
 app.use('/api/birthcertificate', birthCertHandler);
 app.use('/api/deathcertificate', deathCertHandler);
 app.use('/api/marriagecertificate', marriageCertHandler);
@@ -113,7 +90,7 @@ app.use('/api/email', emailHandler);
 app.use('/api/soa', generateSOAHandler);
 app.use('/api/token', jwttoken);
 
-// Admin routes with /api prefix
+// Admin routes
 app.use('/api/adminprofile', adminProfileHandler);
 app.use('/api/adminrptax', adminRptaxHandler);
 app.use('/api/adminbp', adminBPHandler);
