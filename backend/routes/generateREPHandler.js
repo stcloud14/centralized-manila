@@ -1,5 +1,5 @@
 import { Router } from 'express';
-// import conn1 from './connection1.js';
+import conn1 from './connection1.js';
 
 const router = Router();
 
