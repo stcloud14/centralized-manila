@@ -46,7 +46,7 @@ app.use(cors({
 // Logging middleware
 app.use((req, res, next) => {
   // Set Content-Type header to JSON for all responses
-  // res.setHeader("Content-Type", "application/json");
+  res.setHeader("Content-Type", "application/json");
 
   // Set Access-Control headers
   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST");
@@ -58,23 +58,7 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-// const corsOptions = {
-//   origin: 'https://centralized-manila.netlify.app',
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
-//   credentials: true,
-//   optionsSuccessStatus: 204
-// };
 
-// app.use(cors(corsOptions));
-
-// app.options('*', cors(corsOptions)); // Enable pre-flight across-the-board
-
-// // Logging middleware
-// app.use((req, res, next) => {
-//   console.log(`${req.method} ${req.path}`);
-//   next();
-// });
 // Serve static files (frontend)
 // if (process.env.NODE_ENV === 'production') {
 //   const __filename = fileURLToPath(import.meta.url);
