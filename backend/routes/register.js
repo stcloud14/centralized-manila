@@ -194,32 +194,54 @@ const __filename = fileURLToPath(import.meta.url);
 
 
 
-  router.post('/check-existence/email', async (req, res) => {
-    const { email, photoURL } = req.body;
+//   router.post('/check-existence/email', async (req, res) => {
+//     const { email, photoURL } = req.body;
   
-    const query = "SELECT user_id FROM user_contact WHERE user_email = ?";
-    const values = [email];
+//     const query = "SELECT user_id FROM user_contact WHERE user_email = ?";
+//     const values = [email];
   
-    try {
-      const result = await queryDatabase(query, values);
-      if (result.length > 0) {
-        const user_id = result[0].user_id;
+//     try {
+//       const result = await queryDatabase(query, values);
+//       if (result.length > 0) {
+//         const user_id = result[0].user_id;
   
-        if (photoURL) {
-          const query1 = "UPDATE user_image SET image_url = ? WHERE user_id = ?";
-          const values1 = [photoURL, user_id];
+//         if (photoURL) {
+//           const query1 = "UPDATE user_image SET image_url = ? WHERE user_id = ?";
+//           const values1 = [photoURL, user_id];
   
-          await queryDatabase(query1, values1);
-        }
+//           await queryDatabase(query1, values1);
+//         }
   
-        res.json({ exists: true, user_id, message: "User found." });
-      } else {
-        res.json({ exists: false, message: "User does not exist. Proceed to register." });
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Error checking user existence" });
+//         res.json({ exists: true, user_id, message: "User found." });
+//       } else {
+//         res.json({ exists: false, message: "User does not exist. Proceed to register." });
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).json({ error: "Error checking user existence" });
+//     }
+// });
+
+
+router.post('/check-existence/email', async (req, res) => {
+  const { email } = req.body;
+
+  const query = "SELECT user_id FROM user_contact WHERE user_email = ?";
+  const values = [email];
+
+  try {
+    const result = await queryDatabase(query, values);
+    if (result.length > 0) {
+      const user_id = result[0].user_id;
+      // If you need to do something with user_id or photoURL, do it here.
+      res.status(200).json({ exists: true, user_id: user_id });
+    } else {
+      res.status(200).json({ exists: false });
     }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error checking user existence" });
+  }
 });
 
 
