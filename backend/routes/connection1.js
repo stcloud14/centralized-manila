@@ -2,9 +2,9 @@ import mysql from "mysql";
 import dotenv from 'dotenv';
 dotenv.config();
 
-const host = process.env.DB_HOST;
-const user = process.env.DB_USER;
-const password = process.env.DB_PASSWORD;
+const host = process.env.DB_HOST1;
+const user = process.env.DB_USER1;
+const password = process.env.DB_PASSWORD1;
 const database1 = process.env.DB_DATABASE1;
 
 
