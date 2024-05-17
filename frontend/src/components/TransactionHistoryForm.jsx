@@ -56,6 +56,7 @@ const TransactionHistoryForm = () => {
   const [selectedType, setSelectedType] = useState('');
   const [userPersonal, setUserPersonal]=useState({});
   const [soaData, setSoaData]=useState();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   console.log(userTransaction)
 
@@ -134,48 +135,59 @@ const TransactionHistoryForm = () => {
     };
   }, []);
   
-const handleSearch = (e) => {
-  const filteredTransactions = userTransaction
-    .filter((transaction) => {
-      const transactionId = transaction.transaction_id.toString().toUpperCase();
-
-      const isDateInRange = (() => {
-        if (!selectedDate || !selectedDatee) {
-          return true; // No date range selected, include all transactions
-        }
-
-        const transactionDate = new Date(transaction.date_processed);
-        const startDate = new Date(selectedDate);
-        const endDate = new Date(selectedDatee);
-        endDate.setHours(23, 59, 59, 999);
-
-        return startDate <= transactionDate && transactionDate <= endDate;
+  const handleSearch = () => {
+    const filteredTransactions = userTransaction
+      .filter((transaction) => {
+        const transactionId = transaction.transaction_id.toString().toUpperCase();
+        const searchInputUpper = searchInput.toUpperCase();
+  
+        const isDateInRange = (() => {
+          if (!selectedDate || !selectedDatee) {
+            return true; // No date range selected, include all transactions
+          }
+  
+          const transactionDate = new Date(transaction.date_processed);
+          const startDate = new Date(selectedDate);
+          const endDate = new Date(selectedDatee);
+          endDate.setHours(23, 59, 59, 999);
+  
+          return startDate <= transactionDate && transactionDate <= endDate;
+        })();
+  
+        return (
+          transactionId.includes(searchInputUpper) &&
+          isSubsequence(searchInputUpper, transactionId) &&
+          isDateInRange && // Check if the date is in range
+          (!selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || transaction.trans_type === selectedType) &&
+          (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase())
+        );
+      })
+      .filter((transaction) => {
+        // Exclude records with trans_type as null or 'default'
+        return transaction.trans_type !== null && transaction.trans_type.toLowerCase() !== 'default';
+      })
+      .sort((a, b) => {
+        // Sort the transactions based on the selected option and order
+        const valueA = a[sortOption];
+        const valueB = b[sortOption];
+  
+        if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
+        if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
       });
-
-      return (
-        transactionId.includes(searchInput) &&
-        isSubsequence(searchInput, transactionId) &&
-        isDateInRange() && // Call the function to check date range
-        (!selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || (transaction.trans_type) === (selectedType)) &&
-        (!selectedStatus || selectedStatus === 'All' || transaction.status_type.toLowerCase() === selectedStatus.toLowerCase())
-      );
-    })
-    .filter((transaction) => {
-      // Exclude records with trans_type as null or 'default'
-      return transaction.trans_type !== null && transaction.trans_type.toLowerCase() !== 'default';
-    })
-    .sort((a, b) => {
-      // Sort the transactions based on the selected option and order
-      const valueA = a[sortOption];
-      const valueB = b[sortOption];
-
-      if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
-      if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
-      return 0;
-    });
-
-  setFilteredTransactions(filteredTransactions);
-};
+  
+    setFilteredTransactions(filteredTransactions);
+  
+    // Calculate isButtonDisabled based on filteredTransactions and selectedStatus
+    const isButtonDisabled = ['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus) || filteredTransactions.length === 0;
+  
+    // Update the state of isButtonDisabled
+    setIsButtonDisabled(isButtonDisabled);
+  
+    setSelectedType('');
+    setSelectedStatus('');
+  };
+  
 
      
   // Make sure that the transaction searching is the same order in terms of characters
@@ -205,6 +217,7 @@ const handleSearch = (e) => {
     setSelectedDatee('');
     setSelectedStatus('');
     setSelectedType('');
+    setIsButtonDisabled(false);
   };
 
   // For handle sorting and filtering
@@ -313,6 +326,7 @@ const sortTransactions = (option, order) => {
                 filteredTransactions={filteredTransactions}
                 userPersonal={userPersonal}
                 soaData={soaData}
+                isButtonDisabled={isButtonDisabled}
               />
             ) : (
               // For Desktop View
@@ -338,6 +352,7 @@ const sortTransactions = (option, order) => {
                 filteredTransactions={filteredTransactions}
                 userPersonal={userPersonal}
                 soaData={soaData}
+                isButtonDisabled={isButtonDisabled}
               />
             )}
           </div>
