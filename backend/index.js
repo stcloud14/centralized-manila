@@ -46,7 +46,7 @@ app.use(cors({
 // Logging middleware
 app.use((req, res, next) => {
   // Set Content-Type header to JSON for all responses
-  res.setHeader("Content-Type", "application/json");
+  // res.setHeader("Content-Type", "application/json");
 
   // Set Access-Control headers
   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST");
