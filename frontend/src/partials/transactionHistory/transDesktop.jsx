@@ -12,8 +12,9 @@ import TransTypeDropdown from '../transDropdown/TransTypeDropdown';
 import StatusTypeDropdown from '../transDropdown/StatusTypeDropdown';
 import FilterButton from '../FilterButton';
 
-const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal, soaData }) => {
+const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenModal, handleClearFilter, handleSortChange, sortOption, sortOrder, SortIcon, sortedTransactions, handleInputChange, handleInputChange2, selectedDate, setSelectedDate, selectedDatee, setSelectedDatee, selectedStatus, selectedType, filteredTransactions, userPersonal, soaData, isButtonDisabled }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  //const isButtonDisabled = ['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus) || filteredTransactions.length === 0;
   const Base_Url = process.env.Base_Url;
   const formatAmount = (amount) => {
     const parsedAmount = parseFloat(amount);
@@ -460,9 +461,9 @@ const TransDesktop = ({ searchInput, setSearchInput, handleSearch, handleOpenMod
                 </button>
 
                 <button
-                  className={`group border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white px-4 py-1 rounded-full inline-flex items-center ${['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`group border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white px-4 py-1 rounded-full inline-flex items-center ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                   onClick={generatePDF}
-                  disabled={['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus)}
+                  disabled={isButtonDisabled}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                     <path className="stroke-emerald-500 group-hover:stroke-white" strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
