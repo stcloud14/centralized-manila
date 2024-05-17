@@ -91,15 +91,15 @@ app.use('/api/soa', generateSOAHandler);
 app.use('/api/token', jwttoken);
 
 // Admin routes
-app.use('/api/adminprofile', adminProfileHandler);
-app.use('/api/adminrptax', adminRptaxHandler);
-app.use('/api/adminbp', adminBPHandler);
-app.use('/api/adminlcr', adminLcrHandler);
-app.use('/api/adminctc', adminCedulahandler);
-app.use('/api/adminur', adminURHandler);
-app.use('/api/admin', adminDashboard);
-app.use('/api/audittrail', auditTrailHandler);
-app.use('/api/report', generateREPHandler);
+// app.use('/api/adminprofile', adminProfileHandler);
+// app.use('/api/adminrptax', adminRptaxHandler);
+// app.use('/api/adminbp', adminBPHandler);
+// app.use('/api/adminlcr', adminLcrHandler);
+// app.use('/api/adminctc', adminCedulahandler);
+// app.use('/api/adminur', adminURHandler);
+// app.use('/api/admin', adminDashboard);
+// app.use('/api/audittrail', auditTrailHandler);
+// app.use('/api/report', generateREPHandler);
 
 // Root endpoint
 app.get("*", (req, res) => {
