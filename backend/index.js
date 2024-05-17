@@ -36,29 +36,46 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// CORS middleware
+// // CORS middleware
+// app.use(cors({
+//   origin: "*",
+//   credentials: true,
+//   optionSuccessStatus: 200,
+// }));
+
+// // Logging middleware
+// app.use((req, res, next) => {
+//   // Set Content-Type header to JSON for all responses
+//   // res.setHeader("Content-Type", "application/json");
+
+//   // Set Access-Control headers
+//   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST");
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization, Cross-Origin-Opener-Policy"
+//   );
+
+//   console.log(req.path, req.method);
+//   next();
+// });
+
 app.use(cors({
-  origin: "*",
+  origin: 'https://centralized-manila.netlify.app', // Update this with the correct origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
   credentials: true,
-  optionSuccessStatus: 200,
 }));
 
 // Logging middleware
-app.use((req, res, next) => {
-  // Set Content-Type header to JSON for all responses
-  // res.setHeader("Content-Type", "application/json");
-
-  // Set Access-Control headers
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST");
+app.use((req, res, next) =&gt; {
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,POST,PUT,DELETE');
   res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization, Cross-Origin-Opener-Policy"
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization'
   );
-
   console.log(req.path, req.method);
   next();
 });
-
 // Serve static files (frontend)
 // if (process.env.NODE_ENV === 'production') {
 //   const __filename = fileURLToPath(import.meta.url);
