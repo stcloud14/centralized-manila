@@ -67,7 +67,7 @@ app.use(cors({
 }));
 
 // Logging middleware
-app.use((req, res, next) =&gt; {
+app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,POST,PUT,DELETE');
   res.setHeader(
     'Access-Control-Allow-Headers',
