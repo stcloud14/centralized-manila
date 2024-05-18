@@ -197,15 +197,17 @@ useEffect(() => {
   };
 
 
-  useEffect(() => {
-    const fetchUserImage = async () => {
+  useEffect(()=>{
+    const fetchUserImage= async()=>{
       try {
         const res = await axios.get(`${Base_Url}usersettings/${user_id}`);
         const fetchedUserImage = res.data[0].user_image;
         const fetchedImageURL = res.data[0].image_url;
         const verificationStatus = res.data[0].verification_status;
+
+        console.log(fetchedImageURL)
   
-        if (fetchedImageURL) {
+        if (fetchedImageURL !== null && fetchedImageURL !== undefined && fetchedImageURL !== '') {
           fetch(fetchedImageURL)
             .then(response => response.blob())
             .then(blob => {
@@ -213,8 +215,10 @@ useEffect(() => {
             })
             .catch(error => {
               console.error('Error fetching image:', error);
+
             });
-        } else if (fetchedUserImage) {
+        } else 
+        if (fetchedUserImage !== null && fetchedUserImage !== undefined && fetchedUserImage !== '') {
           setStoredImage(fetchedUserImage);
         }
   
@@ -222,9 +226,9 @@ useEffect(() => {
       } catch (err) {
         console.log(err);
       }
-    };
-    fetchUserImage();
-  }, [user_id]);
+    }
+    fetchUserImage()
+  },[])
 
 
 
@@ -254,23 +258,25 @@ useEffect(() => {
       const imagePath = '../uploads/profileImage/';
       const imageName = storedImage;
   
-      if (!imageName) {
+      if (imageName === undefined || imageName === null) {
         console.log('User image name is undefined or null.');
         return;
       }
   
       const isFileExists = await checkFileExists(imagePath, imageName);
   
-      if (isFileExists) {
-        const fileData = await fetchFileData(`${imagePath}${imageName}`);
-        if (fileData) {
-          setUserImage(fileData);
-          console.log(`File ${imageName} exists.`);
+      if (isFileExists !== null && isFileExists !== undefined) {
+        if (isFileExists) {
+          const fileData = await fetchFileData(`${imagePath}${imageName}`);
+          if (fileData) {
+            setUserImage(fileData);
+            console.log(`File ${imageName} exists.`);
+          } else {
+            console.log(`File data for ${imageName} is empty or undefined.`);
+          }
         } else {
-          console.log(`File data for ${imageName} is empty or undefined.`);
+          console.log(`File: ${imageName} does not exist.`);
         }
-      } else {
-        console.log(`File: ${imageName} does not exist.`);
       }
     } catch (error) {
       console.error('Error checking user image path:', error);
@@ -280,7 +286,7 @@ useEffect(() => {
   useEffect(() => {
     checkUserImage();
   }, [storedImage]);
-  
+
   const checkFileExists = async (folderPath, fileName) => {
     try {
       const filePath = `${folderPath}/${fileName}`;
@@ -291,7 +297,8 @@ useEffect(() => {
       console.error('Error checking file existence:', error);
       return false;
     }
-  };
+  };  
+
   const fetchFileData = async (filePath) => {
     try {
       const response = await fetch(filePath);
@@ -321,68 +328,73 @@ useEffect(() => {
     }
   };
 
+
   const handleUploadImage = async (e) => {
     e.preventDefault();
-  
+
     try {
       const formData = new FormData();
       formData.append('user_img', selectedFile);
-  
+
       const response = await axios.post(`${Base_Url}usersettings/uploadimage/${user_id}`, formData);
-  
+
       if (response.status === 200) {
         window.location.reload();
-        setIsSuccess(true);
-        setSelectedFile(null);
-        setIsButtonVisible(true);
-        setIsInputVisible(false);
-        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-        console.log('Upload successful');
-  
-        setTimeout(() => {
-          setIsSuccess(false);
-        }, 3000);
+          setIsSuccess(true);
+          setSelectedFile(null);
+          setIsButtonVisible(true);
+          setIsInputVisible(false);
+          contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+          console.log('Upload successful');
+
+          setTimeout(() => {
+              setIsSuccess(false);
+          }, 3000);
       } else {
-        console.error('Transaction error:', response.statusText);
+          console.error('Transaction error:', response.statusText);
       }
+        
     } catch (error) {
-      console.error('Error Uploading Image:', error.message);
+        console.error('Error Uploading Image:', error.message);
     }
   };
 
 
-const handleRemoveImage = async (e) => {
-  e.preventDefault();
+  const handleRemoveImage = async (e) => {
+    e.preventDefault();
 
-  try {
-    const response = await axios.delete(`${Base_Url}usersettings/removeimage/${user_id}`);
+    try {
 
-    if (response.status === 200) {
-      const fileInput = document.getElementById('user_img');
-      if (fileInput) {
-        fileInput.value = '';
+      const response = await axios.delete(`${Base_Url}usersettings/removeimage/${user_id}`);
+
+      if (response.status === 200) {
+          const fileInput = document.getElementById('user_img');
+          if (fileInput) {
+            fileInput.value = '';
+          }
+          window.location.reload();
+          setSelectedFile(null);
+          setPreSelectedFile(null);
+          setStoredImage(null);
+
+          setIsRemove(true);
+          setIsButtonVisible(true);
+          setIsInputVisible(false);
+          contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+          console.log('Remove successful');
+
+          setTimeout(() => {
+              setIsRemove(false);
+          }, 3000);
+      } else {
+          console.error('Transaction error:', response.statusText);
       }
-      window.location.reload();
-      setSelectedFile(null);
-      setPreSelectedFile(null);
-      setStoredImage(null);
-
-      setIsRemove(true);
-      setIsButtonVisible(true);
-      setIsInputVisible(false);
-      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-      console.log('Remove successful');
-
-      setTimeout(() => {
-        setIsRemove(false);
-      }, 3000);
-    } else {
-      console.error('Transaction error:', response.statusText);
+        
+    } catch (error) {
+        console.error('Error Removing Image:', error.message);
     }
-  } catch (error) {
-    console.error('Error Removing Image:', error.message);
+
   }
-};
   
 
   const [isloading, setIsLoading] = useState(false)
