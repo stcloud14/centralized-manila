@@ -414,7 +414,9 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
 
   useEffect(() => {
     if (transStats, cedulaCert && topRegions && topProvinces && topCities && revenue) {
+      setTimeout(() => {
         setIsLoading(false);
+      }, 2000);
     }
   }, []);
 

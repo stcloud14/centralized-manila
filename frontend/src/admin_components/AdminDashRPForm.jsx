@@ -431,7 +431,9 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
 
   useEffect(() => {
     if (transStats && taxPayment && taxClearance && topRegions && topProvinces && topCities && revenue) {
+      setTimeout(() => {
         setIsLoading(false);
+      }, 2000);
     }
   }, []);
 
