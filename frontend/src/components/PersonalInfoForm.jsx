@@ -55,7 +55,7 @@ const PersonalInfoForm =()=>{
             });
 
         } catch (error) {
-          window.location.reload();
+          // window.location.reload();
           navigate(`/`);
         }
     };

@@ -39,7 +39,7 @@ const ContactsForm = () => {
             });
 
         } catch (error) {
-          window.location.reload();
+          // window.location.reload();
           navigate(`/`);
         }
     };

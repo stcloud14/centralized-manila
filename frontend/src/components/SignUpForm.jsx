@@ -195,7 +195,7 @@ const handleClick = async (e) => {
           setTimeout(() => {
             setLoading(false);
             navigate("/");
-            window.location.reload();
+            // window.location.reload();
           }, 4000);
         }, 4000);
 
