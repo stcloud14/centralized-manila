@@ -61,6 +61,7 @@ const UserSettings =()=>{
             });
 
         } catch (error) {
+          window.location.reload();
           navigate(`/`);
         }
     };
