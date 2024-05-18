@@ -30,7 +30,6 @@ const TransactionHistoryForm = () => {
             });
 
         } catch (error) {
-          window.location.reload();
           navigate(`/`);
         }
     };
