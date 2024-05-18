@@ -414,9 +414,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
 
   useEffect(() => {
     if (businessPermit && topRegions && topProvinces && topCities && revenue) {
-      setTimeout(() => {
         setIsLoading(false);
-      }, 2000);
     }
   }, []);
 

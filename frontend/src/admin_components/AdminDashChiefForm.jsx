@@ -557,9 +557,7 @@ const AdminDashChiefForm = React.memo(
   ]);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
 
     return () => clearTimeout(timeoutId);
   }, [isLoading]);

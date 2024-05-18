@@ -427,9 +427,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
 
   useEffect(() => {
     if (transStats && birthCert && deathCert && marriageCert && topRegions && topProvinces && topCities && revenue) {
-      setTimeout(() => {
         setIsLoading(false);
-      }, 2000);
     }
   }, []);
 
