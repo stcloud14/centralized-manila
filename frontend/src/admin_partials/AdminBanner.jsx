@@ -8,8 +8,8 @@ function AdminBanner({ adminType, generateReports}) {
   
 
   const handleClear = () => {
-    // Handle clearing of selected dates
-    setSelectedYear('');
+    // Set the selected year to the current year
+    setSelectedYear(moment().format('YYYY'));
   };
 
 

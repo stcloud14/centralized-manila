@@ -551,9 +551,9 @@ const TransMobile = ({ searchInput, setSearchInput, handleSearch, handleSearchIn
 
               {filteredTransactions.length === 0 ? (
                 <div className="text-center text-sm py-4">
-                  {searchInput || selectedType || selectedStatus ? (
-                    <span>No records found.</span>
-                  ) : (
+                {searchInput || selectedType || selectedStatus || selectedDate || selectedDatee ? (
+                      <span>No records found.</span>
+                    ) : (
                     <span>No records available.</span>
                   )}
                 </div>
