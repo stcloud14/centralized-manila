@@ -253,52 +253,160 @@ useEffect(() => {
 
 
 
+  // const checkUserImage = async () => {
+  //   try {
+  //     const imagePath = '../uploads/profileImage/';
+  //     const imageName = storedImage;
+  
+  //     if (imageName === undefined || imageName === null) {
+  //       console.log('User image name is undefined or null.');
+  //       return;
+  //     }
+  
+  //     const isFileExists = await checkFileExists(imagePath, imageName);
+  
+  //     if (isFileExists !== null && isFileExists !== undefined) {
+  //       if (isFileExists) {
+  //         const fileData = await fetchFileData(`${imagePath}${imageName}`);
+  //         if (fileData) {
+  //           setUserImage(fileData);
+  //           console.log(`File ${imageName} exists.`);
+  //         } else {
+  //           console.log(`File data for ${imageName} is empty or undefined.`);
+  //         }
+  //       } else {
+  //         console.log(`File: ${imageName} does not exist.`);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error checking user image path:', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   checkUserImage();
+  // }, [storedImage]);
+
+  // const checkFileExists = async (folderPath, fileName) => {
+  //   try {
+  //     // Trim any trailing slashes from folderPath
+  //     const trimmedFolderPath = folderPath.replace(/\/+$/, '');
+  //     // Remove any leading slashes from fileName
+  //     const trimmedFileName = fileName.replace(/^\/+/, '');
+  //     const filePath = `${trimmedFolderPath}/${trimmedFileName}`;
+  //     const response = await axios.head(filePath);
+  
+  //     return response.status === 200;
+  //   } catch (error) {
+  //     console.error('Error checking file existence:', error);
+  //     return false;
+  //   }
+  // };
+  
+  // const fetchFileData = async (filePath) => {
+  //   try {
+  //     const response = await fetch(filePath);
+  
+  //     if (!response.ok) {
+  //       if (response.status === 404) {
+  //         console.log('File not found.');
+  //       } else {
+  //         throw new Error(`Failed to fetch file from ${filePath}`);
+  //       }
+  //       return null;
+  //     }
+  
+  //     const fileData = await response.blob();
+  
+  //     if (!fileData || fileData.size === 0) {
+  //       console.log('File data is empty or undefined.');
+  //       return null;
+  //     }
+  
+  //     const dataUrl = URL.createObjectURL(fileData);
+  
+  //     return dataUrl;
+  //   } catch (error) {
+  //     console.error('Error fetching file data:', error);
+  //     return null;
+  //   }
+  // };
+
+
+  // const handleUploadImage = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('user_img', selectedFile);
+
+  //     const response = await axios.post(`${Base_Url}usersettings/uploadimage/${user_id}`, formData);
+
+  //     if (response.status === 200) {
+  //       window.location.reload();
+  //         setIsSuccess(true);
+  //         setSelectedFile(null);
+  //         setIsButtonVisible(true);
+  //         setIsInputVisible(false);
+  //         contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+  //         console.log('Upload successful');
+
+  //         setTimeout(() => {
+  //             setIsSuccess(false);
+  //         }, 3000);
+  //     } else {
+  //         console.error('Transaction error:', response.statusText);
+  //     }
+        
+  //   } catch (error) {
+  //       console.error('Error Uploading Image:', error.message);
+  //   }
+  // };
+
+
   const checkUserImage = async () => {
     try {
-      const imagePath = '../uploads/profileImage/';
+      const imagePath = '/uploads/profileImage/'; // Adjusted the imagePath
       const imageName = storedImage;
   
-      if (imageName === undefined || imageName === null) {
+      if (!imageName) {
         console.log('User image name is undefined or null.');
         return;
       }
   
       const isFileExists = await checkFileExists(imagePath, imageName);
   
-      if (isFileExists !== null && isFileExists !== undefined) {
-        if (isFileExists) {
-          const fileData = await fetchFileData(`${imagePath}${imageName}`);
-          if (fileData) {
-            setUserImage(fileData);
-            console.log(`File ${imageName} exists.`);
-          } else {
-            console.log(`File data for ${imageName} is empty or undefined.`);
-          }
+      if (isFileExists) {
+        const fileData = await fetchFileData(`${imagePath}${imageName}`);
+        if (fileData) {
+          setUserImage(fileData);
+          console.log(`File ${imageName} exists.`);
         } else {
-          console.log(`File: ${imageName} does not exist.`);
+          console.log(`File data for ${imageName} is empty or undefined.`);
         }
+      } else {
+        console.log(`File: ${imageName} does not exist.`);
       }
     } catch (error) {
       console.error('Error checking user image path:', error);
     }
   };
-
+  
   useEffect(() => {
     checkUserImage();
   }, [storedImage]);
-
+  
   const checkFileExists = async (folderPath, fileName) => {
     try {
-      const filePath = `${folderPath}/${fileName}`;
-      const response = await axios.head(filePath);
+      const response = await axios.head(`${folderPath}${fileName}`); // Simplified path concatenation
   
       return response.status === 200;
     } catch (error) {
       console.error('Error checking file existence:', error);
       return false;
     }
-  };  
-
+  };
+  
   const fetchFileData = async (filePath) => {
     try {
       const response = await fetch(filePath);
@@ -327,38 +435,37 @@ useEffect(() => {
       return null;
     }
   };
-
-
+  
   const handleUploadImage = async (e) => {
     e.preventDefault();
-
+  
     try {
       const formData = new FormData();
       formData.append('user_img', selectedFile);
-
+  
       const response = await axios.post(`${Base_Url}usersettings/uploadimage/${user_id}`, formData);
-
+  
       if (response.status === 200) {
         window.location.reload();
-          setIsSuccess(true);
-          setSelectedFile(null);
-          setIsButtonVisible(true);
-          setIsInputVisible(false);
-          contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-          console.log('Upload successful');
-
-          setTimeout(() => {
-              setIsSuccess(false);
-          }, 3000);
+        setIsSuccess(true);
+        setSelectedFile(null);
+        setIsButtonVisible(true);
+        setIsInputVisible(false);
+        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+        console.log('Upload successful');
+  
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 3000);
       } else {
-          console.error('Transaction error:', response.statusText);
+        console.error('Transaction error:', response.statusText);
       }
-        
+  
     } catch (error) {
-        console.error('Error Uploading Image:', error.message);
+      console.error('Error Uploading Image:', error.message);
     }
   };
-
+  
 
   const handleRemoveImage = async (e) => {
     e.preventDefault();
