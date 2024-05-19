@@ -179,7 +179,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
       // Push total row to tableData
       tableData.push(['Total', totalBP, totalTotalCount]);
 
-      const columnHeaders = ['', 'BP', 'Total Count'];
+      const columnHeaders = ['', 'Business Permit', 'Total Count'];
 
       // Add the table
       pdf.autoTable({
