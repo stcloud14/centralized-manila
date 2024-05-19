@@ -37,28 +37,13 @@ app.use(express.json());
 app.use(cors());
 
 // CORS middleware
-// app.use(cors({
-//   origin: "*",
-//   credentials: true,
-//   optionSuccessStatus: 200,
-// }));
+app.use(cors({
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+}));
 
-// // Logging middleware
-// app.use((req, res, next) => {
-//   // Set Content-Type header to JSON for all responses
-//   res.setHeader("Content-Type", "application/json");
-
-//   // Set Access-Control headers
-//   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST");
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization, Cross-Origin-Opener-Policy"
-//   );
-
-//   console.log(req.path, req.method);
-//   next();
-// });
-
+// Logging middleware
 app.use((req, res, next) => {
   // Set Content-Type header to JSON for all responses
   res.setHeader("Content-Type", "application/json");
@@ -70,22 +55,9 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization, Cross-Origin-Opener-Policy"
   );
 
-  // Log requests to specific endpoints and endpoints with user IDs
-  const allowedEndpoints = [
-
-    // Add other endpoints you want to log here
-  ];
-
-  // Match endpoints with user IDs using regular expression
-  const userIdPattern = /^\/api\/profile\/[A-Za-z0-9]+$/;
-
-  if (allowedEndpoints.includes(req.path) || userIdPattern.test(req.path)) {
-    console.log(req.path, req.method);
-  }
-
+  console.log(req.path, req.method);
   next();
 });
-
 
 // Serve static files (frontend)
 // if (process.env.NODE_ENV === 'production') {
