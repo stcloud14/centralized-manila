@@ -194,7 +194,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
               // Push total row to tableData
               tableData.push(['Total', totalTP, totalTC, totalTotalCount]);
 
-              const columnHeaders = ['', 'TP', 'TC', 'Total Count'];
+              const columnHeaders = ['', 'Tax Payment', 'Tax Clearance', 'Total Count'];
 
               // Add the table
               pdf.autoTable({

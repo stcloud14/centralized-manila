@@ -177,7 +177,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
       // Push total row to tableData
       tableData.push(['Total', totalCTC, totalTotalCount]);
 
-      const columnHeaders = ['', 'CTC', 'Total Count'];
+      const columnHeaders = ['', 'Community Tax Certificate', 'Total Count'];
 
       // Add the table
       pdf.autoTable({

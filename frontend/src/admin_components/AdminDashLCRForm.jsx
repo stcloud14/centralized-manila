@@ -190,7 +190,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
       // Push total row to tableData
       tableData.push(['Total', totalBC, totalDC, totalMC, totalTotalCount]);
 
-      const columnHeaders = ['', 'BC', 'DC', 'MC', 'Total Count'];
+      const columnHeaders = ['', 'Birth Certificate', 'Death Certificate', 'Marriage Certificate', 'Total Count'];
 
       // Add the table
       pdf.autoTable({
