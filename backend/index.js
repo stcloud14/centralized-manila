@@ -47,9 +47,9 @@ app.use(cors({
 app.use((req, res, next) => {
   // Set Content-Type header to JSON for all responses
   res.setHeader("Content-Type", "application/json");
-
+  res.header("Access-Control-Allow-Origin", "*");
   // Set Access-Control headers
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization, Cross-Origin-Opener-Policy"
