@@ -179,16 +179,22 @@ const TransactionHistoryForm = () => {
     setFilteredTransactions(filteredTransactions);
   
     // Calculate isButtonDisabled based on filteredTransactions and selectedStatus
-    const isButtonDisabled = ['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus) || filteredTransactions.length === 0;
+    // const isButtonDisabled = ['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus) || filteredTransactions.length === 0;
   
     // Update the state of isButtonDisabled
-    setIsButtonDisabled(isButtonDisabled);
+    // setIsButtonDisabled(isButtonDisabled);
   
-    setSelectedType('');
-    setSelectedStatus('');
+    // setSelectedType('');
+    // setSelectedStatus('');
   };
-  
 
+  useEffect(() => {
+    const isButtonDisabled =
+      ['Paid', 'Processing', 'Expired', 'Canceled', 'Complete', 'Rejected'].includes(selectedStatus) || filteredTransactions.length === 0;
+
+    setIsButtonDisabled(isButtonDisabled);
+  }, [filteredTransactions, selectedStatus]);
+  
      
   // Make sure that the transaction searching is the same order in terms of characters
   const isSubsequence = (search, str) => {
