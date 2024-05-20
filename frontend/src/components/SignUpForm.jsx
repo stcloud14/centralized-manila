@@ -265,7 +265,6 @@ const handleClick = async (e) => {
             console.error(fetchError);
           }
         }
-        setLoading(false)
 
         console.log('Successful Register');
         
@@ -277,6 +276,7 @@ const handleClick = async (e) => {
         
         setTimeout(() => {
           setIsSuccess(false);
+          setLoading(false)
           navigate(`/home/${user_id}`);
         }, 5000);
 
