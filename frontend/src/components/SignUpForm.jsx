@@ -200,8 +200,9 @@ const handleClick = async (e) => {
         }, 4000);
 
 
-      } else {
-
+      } 
+      else {
+        setIsSuccess(true);
         const formData = new FormData();
 
         selectedFiles.forEach((fileInfo) => {
@@ -265,7 +266,7 @@ const handleClick = async (e) => {
           }
         }
         setLoading(false)
-        setIsSuccess(true);
+
         console.log('Successful Register');
         
         const res = await axios.post(`${Base_Url}token/generate-token`, { user_id });
