@@ -573,8 +573,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               ) : null} */}
 
               {/* Registry */}
-              {/*{admin_type === 'chief_admin' || admin_type === 'registry_admin' ? (*/}
-              {admin_type === 'chief_admin' ? null : ( 
+              {admin_type === 'chief_admin' || admin_type === 'registry_admin' ? (
               <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
@@ -609,7 +608,8 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              end to={`/admin_userlist/${admin_type}`}
+                              end to={admin_type === 'chief_admin' ? `/admin_userlist/${admin_type}` : `/admin_userlist/${admin_type}`}
+
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -619,9 +619,10 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                               </span>
                             </NavLink>
                           </li>
+
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              end to={`/admin_verifyreqs/${admin_type}`}
+                             end to={admin_type === 'chief_admin' ? `/admin_verifyreqs/${admin_type}` : `/admin_verifyreqs/${admin_type}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -631,13 +632,13 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                               </span>
                             </NavLink>
                           </li>
-                        </ul>
+                         </ul>
                       </div>
                     </React.Fragment>
                   );
                 }}
               </AdminSidebarLinkGroup>
-            )}
+              ) : null}
 
             </ul>
           </div>
