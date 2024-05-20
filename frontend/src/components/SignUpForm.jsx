@@ -199,9 +199,9 @@ const handleClick = async (e) => {
           }, 4000);
         }, 4000);
 
-
       } 
       else {
+        setLoading(true)
         setIsSuccess(true);
         const formData = new FormData();
 
@@ -528,6 +528,7 @@ console.log(selectedFiles)
                   )} 
    
                 <div className="text-center">
+                  
                   {loading ? (
                     <div className="pt-3 font-medium flex pb-2 sm:mt-0 text-xs md:text-sm items-center justify-center">
                     <svg
