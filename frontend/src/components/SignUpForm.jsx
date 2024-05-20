@@ -224,9 +224,6 @@ const handleClick = async (e) => {
           const user_id = response.data.user_id;
           try {
             const res = await axios.get(`${Base_Url}email/regis/${user_id}`);
-            
-            // const date = new Date();
-            // const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
             if (res.data.user_email) {
               const updatedUserEmail = res.data.user_email;
@@ -241,14 +238,9 @@ const handleClick = async (e) => {
               const trans_type = 'Welcome New User';
   
               const rowData = { ...userReg, trans_type};
-
-              // const status_type = 'P E N D I N G';
   
               const body = {
                 data: rowData,
-                // formattedDate: formattedDate,
-                // status_type: status_type,
-                // f_name: f_name,
                 l_name: l_name
               };
     
@@ -258,7 +250,6 @@ const handleClick = async (e) => {
     
                 if (emailResponse.data && emailResponse.data.message) {
                   console.log('SENT EMAIL');
-                  // alert(emailResponse.data.message);
                 } else {
                   console.log("Failed to send email.");
                 }

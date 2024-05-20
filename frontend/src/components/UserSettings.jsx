@@ -502,7 +502,7 @@ useEffect(() => {
     }
 
   }
-  
+
 
   const [isloading, setIsLoading] = useState(false)
 
@@ -741,8 +741,10 @@ useEffect(() => {
                       className="inline-block h-72 w-72 rounded-full border-2 border-black dark:border-white p-1 object-cover object-center relative z-1"
                       src={preSelectedFile || userImage || defaultImg}
                       alt="User Profile"
+                
                       onError={(e) => {
                         console.error('Error loading image for user profile:', e);
+                        e.target.src = userImage;
                       }}
                     />
          
