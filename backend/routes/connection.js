@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-let pool;
+let conn2;
 
 async function createPool() {
-  pool = mysql.createPool({
+  conn2 = mysql.createPool({
     host: process.env.CLIENT_DB_HOST,
     user: process.env.CLIENT_DB_USER,
     password: process.env.CLIENT_DB_PASSWORD,
@@ -17,13 +17,13 @@ async function createPool() {
     queueLimit: 0,
   });
 
-  console.log("Database pool created");
+  console.log("Database conn2 created");
 }
 
 async function queryDatabase(query, params) {
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await conn2.getConnection();
     const [results] = await connection.execute(query, params);
     return results;
   } catch (err) {
