@@ -1,26 +1,35 @@
 import { Router } from 'express';
-import conn2 from './connection.js'
+import conn2 from './connection.js';
 import bcrypt from 'bcrypt';
 
 const router = Router();
 
-  router.post('/forgot-pass/:mobile_no', (req, res) => {
+async function queryDatabase(query, values) {
+    try {
+        const connection = await conn2.getConnection();
+        try {
+            const [rows] = await connection.query(query, values);
+            return rows;
+        } finally {
+            connection.release();
+        }
+    } catch (err) {
+        throw err;
+    }
+}
+
+router.post('/forgot-pass/:mobile_no', async (req, res) => {
     const mobile_no = req.params.mobile_no;
     console.log(mobile_no);
 
     const sql = "SELECT * FROM user_auth WHERE mobile_no = ?";
+    const sql1 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
 
-    const sql1 = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)"
-
-    conn2.query(sql, [mobile_no], async (err, results) => {
-        if (err) {
-            console.error("Authentication Error:", err);
-            return res.status(500).json({ message: "Error occurred while authenticating." });
-        }
+    try {
+        const results = await queryDatabase(sql, [mobile_no]);
         if (results.length === 0) {
             return res.status(404).json({ message: "Number Not Found. Please check." });
         }
-        // Assuming you have a user_id in the results (change accordingly based on your database schema)
         const user_id = results[0].user_id;
         const notif_title = 'Successfully changed your password!';
         const date = new Date();
@@ -29,141 +38,45 @@ const router = Router();
 
         const value1 = [user_id, formattedDate, notif_title, notif_message];
 
-        conn2.query(sql1, value1, (err1, results1) => {
-            if (err1) {
-                console.error("Notification Error:", err1);
-                return res.status(500).json({ message: "Error occurred while inserting notification." });
-            }
-            res.status(200).json({
-                results,
-                results1,
-                message: "Authentication successful! Notification sent."
-            });
+        await queryDatabase(sql1, value1);
+        res.status(200).json({
+            results,
+            message: "Authentication successful! Notification sent."
         });
-    });
-  });
+    } catch (err) {
+        console.error("Error:", err);
+        return res.status(500).json({ message: "Error occurred while authenticating." });
+    }
+});
 
-
-  router.post('/verify_pass/:user_id', (req, res) => {
-    const user_id = req.params.user_id;
-    const { current_password } = req.body;
-    console.log("current_password", current_password)
-  
-    // Query the database to fetch the user's current password based on user_id
-    const sql = "SELECT user_pass FROM user_auth WHERE user_id = ?";
-    conn2.query(sql, [user_id], async (err, results) => {
-      if (err) {
-        console.error("Database Error:", err);
-        return res.status(500).json({ error: "Internal server error" });
-      }
-  
-      if (results.length === 0) {
-        return res.status(404).json({ error: "User not found" });
-      }
-  
-      const userPassword = results[0].user_pass;
-  
-      // Compare the provided current password with the fetched user's password
-      bcrypt.compare(current_password, userPassword, (bcryptErr, isMatch) => {
-        if (bcryptErr) {
-          console.error("Bcrypt Error:", bcryptErr);
-          return res.status(500).json({ error: "Internal server error" });
-        }
-  
-        if (isMatch) {
-          // Passwords match, current password is correct
-          return res.status(200).json({ isValid: true });
-        } else {
-          // Passwords don't match, current password is incorrect
-          return res.status(401).json({ isValid: false });
-        }
-      });
-    });
-  });
-
-  // router.put('/reset_password/:user_id', async (req, res) => {
-  //   const user_id = req.params.user_id;
-  //   const { new_user_pass } = req.body;
-  
-  //   // Update the user's password in the database
-  //   const hashedPassword = await bcrypt.hash(new_user_pass, 10);
-  //   const updateSql = "UPDATE user_auth SET user_pass = ? WHERE user_id = ?";
-  //   conn2.query(updateSql, [hashedPassword, user_id], (updateErr) => {
-  //     if (updateErr) {
-  //       console.error("Password Update Error:", updateErr);
-  //       return res.status(500).json({ message: "Error occurred while updating the password." });
-  //     }
-  
-  //     res.status(200).json({ message: "Password changed successfully!" });
-  //   });
-  // });
-
-  router.put('/reset_password/:user_id', async (req, res) => {
+router.put('/reset_password/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
     const { new_user_pass } = req.body;
-  
-    // Update the user's password in the database
     const hashedPassword = await bcrypt.hash(new_user_pass, 10);
     const updateSql = "UPDATE user_auth SET user_pass = ? WHERE user_id = ?";
-    
-    // First, fetch the mobile number associated with the user_id
-    const mobileNumberQuery = "SELECT mobile_no FROM user_auth WHERE user_id = ?";
-    conn2.query(mobileNumberQuery, [user_id], async (err, results) => {
-      if (err) {
-        console.error("Database Error:", err);
-        return res.status(500).json({ error: "Internal server error" });
-      }
-  
-      if (results.length === 0) {
-        return res.status(404).json({ error: "User not found" });
-      }
-  
-      const mobile_no = results[0].mobile_no;
-  
-      // Execute the update query to change the password
-      conn2.query(updateSql, [hashedPassword, user_id], async (updateErr) => {
-        if (updateErr) {
-          console.error("Password Update Error:", updateErr);
-          return res.status(500).json({ message: "Error occurred while updating the password." });
-        }
-  
-        // Send notification
-        const notif_title = 'Successfully changed your password!';
-        const date = new Date();
-        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-        const notif_message = `</span> Congratulations! Your password has been successfully changed. </p>`;
-  
-        const notificationQuery = "INSERT INTO user_notif (`user_id`, `date`, `title`, `message`) VALUES (?, ?, ?, ?)";
-        const notificationValues = [user_id, formattedDate, notif_title, notif_message];
-  
-        conn2.query(notificationQuery, notificationValues, (notifErr, results) => {
-          if (notifErr) {
-            console.error("Notification Error:", notifErr);
-            return res.status(500).json({ message: "Error occurred while inserting notification." });
-          }
-          res.status(200).json({ message: "Password changed successfully! Notification sent." });
-        });
-      });
-    });
-  });
-  
 
-  router.put('/reset_pass/:mobile_no', async (req, res) => {
+    try {
+        await queryDatabase(updateSql, [hashedPassword, user_id]);
+        res.status(200).json({ message: "Password changed successfully!" });
+    } catch (err) {
+        console.error("Error:", err);
+        return res.status(500).json({ message: "Error occurred while updating the password." });
+    }
+});
+
+router.put('/reset_pass/:mobile_no', async (req, res) => {
     const mobile_no = req.params.mobile_no;
     const { new_user_pass } = req.body;
-  
-      // Update the user's password in the database
-      const hashedPassword = await bcrypt.hash(new_user_pass, 10);
-      const updateSql = "UPDATE user_auth SET user_pass = ? WHERE mobile_no = ?";
-      conn2.query(updateSql, [hashedPassword, mobile_no], (updateErr) => {
-        if (updateErr) {
-          console.error("Password Update Error:", updateErr);
-          return res.status(500).json({ message: "Error occurred while updating the password." });
-        }
-  
+    const hashedPassword = await bcrypt.hash(new_user_pass, 10);
+    const updateSql = "UPDATE user_auth SET user_pass = ? WHERE mobile_no = ?";
+
+    try {
+        await queryDatabase(updateSql, [hashedPassword, mobile_no]);
         res.status(200).json({ message: "Password changed successfully!" });
-      // });
-    });
-  });
+    } catch (err) {
+        console.error("Error:", err);
+        return res.status(500).json({ message: "Error occurred while updating the password." });
+    }
+});
 
 export default router;

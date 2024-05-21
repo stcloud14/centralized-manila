@@ -1716,16 +1716,32 @@ router.post('/canceltrans/:transaction_id', async (req, res) => {
 });
 
 
-function queryDatabase(query, values) {
-    return new Promise((resolve, reject) => {
-        conn2.query(query, values, (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        });
-    });
+// function queryDatabase(query, values) {
+//     return new Promise((resolve, reject) => {
+//         conn2.query(query, values, (err, data) => {
+//             if (err) {
+//                 reject(err);
+//             } else {
+//                 resolve(data);
+//             }
+//         });
+//     });
+// }
+
+
+
+async function queryDatabase(query, values) {
+    try {
+        const connection = await conn2.getConnection();
+        try {
+            const [rows] = await connection.query(query, values);
+            return rows;
+        } finally {
+            connection.release();
+        }
+    } catch (err) {
+        throw err;
+    }
 }
 
 
