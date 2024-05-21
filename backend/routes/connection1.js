@@ -1,25 +1,18 @@
-import mysql from "mysql";
+import mysql from 'mysql2';
 import dotenv from 'dotenv';
 import axios from 'axios'; // Import axios for making HTTP requests
 dotenv.config();
 
-const host = process.env.DB_HOST1;
-const user = process.env.DB_USER1;
-const password = process.env.DB_PASSWORD1;
-const database = process.env.DB_DATABASE1;
-const charset1 = process.env.charset1;
-const port1 = process.env.port1;
 
 let conn1;
 
 function handleDisconnect() {
   conn1 = mysql.createConnection({
-    host: host,
-    user: user,
-    password: password,
-    database: database,
-    charset1: charset1,
-    port1: port1,
+    host: process.env.ADMIN_DB_HOST,
+    user: process.env.ADMIN_DB_USER,
+    password: process.env.ADMIN_DB_PASSWORD,
+    database: process.env.ADMIN_DB_DATABASE,
+    port: process.env.ADMIN_DB_PORT,
   });
 
   conn1.connect((err) => {
