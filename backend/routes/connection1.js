@@ -7,6 +7,7 @@ const host = process.env.DB_HOST1;
 const user = process.env.DB_USER1;
 const password = process.env.DB_PASSWORD1;
 const database = process.env.DB_DATABASE1;
+const charset1 = process.env.charset1;
 
 let conn1;
 
@@ -16,6 +17,7 @@ function handleDisconnect() {
     user: user,
     password: password,
     database: database,
+    charset1: charset1,
   });
 
   conn1.connect((err) => {
