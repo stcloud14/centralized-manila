@@ -7,7 +7,7 @@ let conn1;
 
 
 async function createPool() {
-  pool = mysql.createPool({
+  conn1 = mysql.createPool({
     host: process.env.ADMIN_DB_HOST,
     user: process.env.ADMIN_DB_USER,
     password: process.env.ADMIN_DB_PASSWORD,
@@ -18,13 +18,13 @@ async function createPool() {
     queueLimit: 0,
   });
 
-  console.log("Database pool created");
+  console.log("Database conn1 created");
 }
 
 async function queryDatabase(query, params) {
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await conn1.getConnection();
     const [results] = await connection.execute(query, params);
     return results;
   } catch (err) {
