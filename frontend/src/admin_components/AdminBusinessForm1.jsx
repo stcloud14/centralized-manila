@@ -22,21 +22,43 @@ const AdminBusinessForm1 =()=>{
   const [isFetchedData, setIsFetchedData] = useState(false);
 
   const [businessPermit, setBusinessPermit] = useState([]);
+  const [businessData, setBusinessData] = useState([]);
+  const [busOffice, setBusOffice] = useState(null);
   console.log("userrole", admin_type)
   const Base_Url = process.env.Base_Url;
 
   const fetchUserTransaction = async () => {
     try {
-      const res = await axios.get(`${Base_Url}adminbp/`);
-      console.log('Response:', res.data);
-      setBusinessPermit(res.data.businesspermit);
-      console.log('FETCHED DATA')
-      setIsFetchedData(true);
+        const res = await axios.get(`${Base_Url}adminbp/`);
+        console.log('Response:', res.data);
+
+        const { businesspermit, businesspermit1 } = res.data;
+
+        const busOfficeArray = [];
+        const businessDataArray = [];
+
+        Object.keys(businesspermit1).forEach(transactionId => {
+            const busOffice = businesspermit1[transactionId].bus_office;
+            const busActivity = businesspermit1[transactionId].bus_activity;
+
+            busOfficeArray.push({ transaction_id: transactionId, bus_office: busOffice });
+            businessDataArray.push({ transaction_id: transactionId, ...busActivity });
+        });
+
+        console.log('Bus Office:', busOfficeArray);
+        console.log('Business Data:', businessDataArray);
+
+        setBusinessPermit(businesspermit);
+        setBusOffice(busOfficeArray);
+        setBusinessData(businessDataArray);
+
+        console.log('FETCHED DATA');
+        setIsFetchedData(true);
 
     } catch (err) {
-      console.log(err);
+        console.log(err);
     }
-  };
+};
 
   const fetchExpiredTransaction = async () => {
     try {
@@ -134,6 +156,8 @@ const AdminBusinessForm1 =()=>{
           <div className="grid grid-cols-1 gap-4 mx-4 my-4">
             
             <AdminBusinessRequests
+              busOffice={busOffice}
+              businessData={businessData}
               businessPermit={businessPermit}
               handleUpdateData={handleUpdateData}
             />

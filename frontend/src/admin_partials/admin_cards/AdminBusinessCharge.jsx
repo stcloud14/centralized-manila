@@ -8,7 +8,7 @@ import BPTableView from '../admin_business/BPTableView';
 import Loading from '../../partials/Loading';
 import AdminBPCharges from '../admin_modals/AdminBPCharges';
 
-const AdminBusinessRequests = ({ businessData, businessPermit, handleUpdateData }) => {
+const AdminBusinessRequests = ({ busOffice, businessData, businessPermit, handleUpdateData }) => {
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
   const [modalViewCharge, setModalViewCharge] = useState(false);
@@ -289,11 +289,11 @@ useEffect(() => {
     }
   
 
-      const retrieveResponse = await axios.get(`${Base_Url}payment/create-checkout-retrieve/${transaction_id}`);
+      // const retrieveResponse = await axios.get(`${Base_Url}payment/create-checkout-retrieve/${transaction_id}`);
 
-      const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
-      const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
-      const service_requested = retrieveResponse.data.data.attributes.description;
+      // const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
+      // const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
+      // const service_requested = retrieveResponse.data.data.attributes.description;
       
       const response = await axios.post(`${Base_Url}adminbp/updatereject/${transaction_id}`, body);
 
@@ -367,9 +367,9 @@ useEffect(() => {
               l_name: l_name,
               sex_type: sex_type,
               status_type: statusType,
-              formatted_payment_method: formatted_payment_method,
-              transaction_id: transaction_id,
-              service_requested: service_requested,
+              //formatted_payment_method: formatted_payment_method,
+              //transaction_id: transaction_id,
+              //service_requested: service_requested,
             };
   
             // Proceed with additional logic after updating state
@@ -747,6 +747,7 @@ useEffect(() => {
             {selectedTransaction && modalView && (
             <AdminBPView
               // selectedTransaction={selectedTransaction}
+              busOffice={busOffice}
               businessData={businessData}
               selectedTransaction={selectedTransaction}
               isOpen={modalView}
@@ -758,6 +759,7 @@ useEffect(() => {
             {selectedTransaction && modalViewCharge && (
             <AdminBPCharges
               // selectedTransaction={selectedTransaction}
+              busOffice={busOffice}
               businessData={businessData}
               selectedTransaction={selectedTransaction}
               isOpen={modalViewCharge}

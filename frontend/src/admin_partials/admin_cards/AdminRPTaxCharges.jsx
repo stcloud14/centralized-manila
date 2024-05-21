@@ -333,13 +333,13 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
       rejectCause
     }
   
-      const retrieveResponse = await axios.get(`${Base_Url}payment/create-checkout-retrieve/${transaction_id}`);
+      // const retrieveResponse = await axios.get(`${Base_Url}payment/create-checkout-retrieve/${transaction_id}`);
 
       // console.log("retrieveResponse" , retrieveResponse.data)
-      const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
-      const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
+      // const payment_method = retrieveResponse.data.data.attributes.payments[0].attributes.source.type;
+      // const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
       // console.log("payment_method", formatted_payment_method);
-      const service_requested = retrieveResponse.data.data.attributes.description;
+      // const service_requested = retrieveResponse.data.data.attributes.description;
       // console.log("Service Requested", service_requested)
       
       const response = await axios.post(`${Base_Url}adminrptax/updatereject/${transaction_id}`, body);
@@ -413,9 +413,9 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
               l_name: l_name,
               sex_type: sex_type,
               status_type: statusType,
-              formatted_payment_method: formatted_payment_method,
-              transaction_id: transaction_id,
-              service_requested: service_requested,
+              // formatted_payment_method: formatted_payment_method,
+              // transaction_id: transaction_id,
+              // service_requested: service_requested,
             };
   
             // Proceed with additional logic after updating state
