@@ -1,4 +1,5 @@
 import mysql from 'mysql2';
+// import mysql from 'mysql';
 import dotenv from 'dotenv';
 import axios from 'axios'; // Import axios for making HTTP requests
 dotenv.config();
