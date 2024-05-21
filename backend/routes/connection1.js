@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const conn1 = mysql.createPool({
-  connectionLimit: 75,
+  connectionLimit: 15,
   host: process.env.ADMIN_DB_HOST,
   user: process.env.ADMIN_DB_USER,
   password: process.env.ADMIN_DB_PASSWORD,
