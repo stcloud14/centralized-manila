@@ -573,7 +573,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               ) : null} */}
 
               {/* Registry */}
-              {admin_type === 'chief_admin' || admin_type === 'registry_admin' ? (
+              {admin_type === 'registry_admin' ? (
               <AdminSidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
