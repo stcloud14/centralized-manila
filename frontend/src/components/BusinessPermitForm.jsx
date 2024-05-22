@@ -796,6 +796,7 @@ const BusinessPermitForm =()=>{
 
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [isVerifiedStatus, setIsVerifiedStatus] = useState();
+  console.log(isVerifiedStatus)
 
   useEffect(()=>{
     const fetchUserVerification= async()=>{

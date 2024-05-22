@@ -17,7 +17,7 @@ function DropdownNotifications({ align }) {
   const dropdown = useRef(null);
 
   const params = useParams();
-  console.log('This is a parameter: ' + JSON.stringify(params));
+  // console.log('This is a parameter: ' + JSON.stringify(params));
 
   const { user_id } = useParams();
 
@@ -90,7 +90,7 @@ const handleRead = async () => {
   };
 
   useEffect(() => {
-    console.log('Changed displayed info');
+    // console.log('Changed displayed info');
     const selectedArray = isChecked ? unreadNotif : allNotif;
     setNotifications(selectedArray);
   }, [isChecked]);

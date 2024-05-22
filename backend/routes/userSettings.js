@@ -8,63 +8,56 @@ import conn2 from './connection.js';
 
 const router = Router();
 
-  router.get('/:user_id', (req, res) => {
-    const user_id = req.params.user_id;
-    const sql = "SELECT uv.verification_status, ui.user_image, ui.image_url FROM user_verification uv LEFT JOIN user_image ui ON uv.user_id = ui.user_id WHERE uv.user_id = ?";
-    conn2.query(sql, [user_id], (err, result) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error retrieving user image');
-      } else {
-        res.json(result);
-      }
-    });
-  });
+router.get('/:user_id', async (req, res) => {
+  const user_id = req.params.user_id;
+  const sql = "SELECT uv.verification_status, ui.user_image, ui.image_url FROM user_verification uv LEFT JOIN user_image ui ON uv.user_id = ui.user_id WHERE uv.user_id = ?";
 
-  router.get('/check_verification_status/:user_id', (req, res) => {
-    const user_id = req.params.user_id;
-  
-    // Query to select user_id and verification_status from user_verification
-    const query = `SELECT user_id, verification_status FROM user_verification WHERE user_id = ?`;
-  
-    // Execute the query
-    conn2.query(query, [user_id], (err, results) => {
-      if (err) {
-        console.error('Error executing query:', err);
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-  
-      if (results.length === 0) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      // Return user_id and verification_status
-      res.json({ user_id: results[0].user_id, verification: results[0].verification_status });
-    });
-  });
+  try {
+    const result = await queryDatabase(sql, [user_id]);
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving user image');
+  }
+});
 
-  
-  router.get('/check_application_status/:user_id', (req, res) => {
-    const user_id = req.params.user_id;
-  
-    // Query to select user_id and verification_status from user_verification
-    const query = `SELECT user_id, application_status FROM user_verification WHERE user_id = ?`;
-  
-    // Execute the query
-    conn2.query(query, [user_id], (err, results) => {
-      if (err) {
-        console.error('Error executing query:', err);
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-  
-      if (results.length === 0) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      // Return user_id and verification_status
-      res.json({ user_id: results[0].user_id, application: results[0].application_status });
-    });
-  });
+// Route to check verification status
+router.get('/check_verification_status/:user_id', async (req, res) => {
+  const user_id = req.params.user_id;
+  const query = "SELECT user_id, verification_status FROM user_verification WHERE user_id = ?";
+
+  try {
+    const results = await queryDatabase(query, [user_id]);
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ user_id: results[0].user_id, verification: results[0].verification_status });
+  } catch (err) {
+    console.error('Error executing query:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Route to check application status
+router.get('/check_application_status/:user_id', async (req, res) => {
+  const user_id = req.params.user_id;
+  const query = "SELECT user_id, application_status FROM user_verification WHERE user_id = ?";
+
+  try {
+    const results = await queryDatabase(query, [user_id]);
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ user_id: results[0].user_id, application: results[0].application_status });
+  } catch (err) {
+    console.error('Error executing query:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
@@ -136,6 +129,7 @@ const router = Router();
 
     try {
       // Check if the user already has an image in the database
+
       const existingImage = await queryDatabase("SELECT user_image FROM user_image WHERE user_id = ?", [user_id]);
 
       if (existingImage && existingImage.length > 0) {
@@ -192,12 +186,15 @@ const router = Router();
   router.delete('/removeimage/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
 
+    const sql = "DELETE FROM user_image WHERE user_id = ?";
+
     try {
       // Delete the user image from the database
-      await queryDatabase("DELETE FROM user_image WHERE user_id = ?", [user_id]);
+      const result = await queryDatabase(sql, [user_id]);
 
       res.json({
         success: true,
+        result: result,
         message: "File deleted successfully",
       });
 
