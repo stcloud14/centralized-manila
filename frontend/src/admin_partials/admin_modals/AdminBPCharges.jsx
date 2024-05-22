@@ -9,7 +9,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
   const { user_id, transaction_id, status_type, date_processed } = selectedTransaction;
 
   const busOfficeForTransaction = busOffice.find(office => office.transaction_id === transaction_id);
-  const businessDataForTransaction = businessData.filter(data => data.transaction_id === transaction_id);
+  const businessDataForTransaction = businessData.find(data => data.transaction_id === transaction_id);
 
   const date = moment(date_processed).format('MMMM D, YYYY');
   const time = moment(date_processed).format('h:mm A');
@@ -418,7 +418,41 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
             </div>
 
               <div className='border-t dark:border-gray-500'></div>
-              {businessDataForTransaction && businessDataForTransaction.length > 0 ? (businessDataForTransaction.map((business, index) => (
+
+              {businessDataForTransaction && Object.keys(businessDataForTransaction).length > 0 && (
+                      Object.keys(businessDataForTransaction).map((key, index) => {
+                        if (key !== 'transaction_id') {
+                          const business = businessDataForTransaction[key];
+                          return (
+                            <div key={index}>
+                              <div className="flex flex-col sm:flex-row items-start justify-between my-1">
+                                <span className="font-medium whitespace-nowrap">Line of Business</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_line || '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">PSIC</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_psic || '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Products/Services</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_products || '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">No. of units</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_units_no || '-'}</span>
+                              </div>
+                              <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+                                <span className="font-medium whitespace-nowrap">Total Capitalization</span>
+                                <span className="whitespace-nowrap md:mb-0 mb-1">{business.bus_total_cap || '-'}</span>
+                              </div>
+                              <div className='border-t dark:border-gray-500'></div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      })
+                    )}
+              {/* {businessDataForTransaction && businessDataForTransaction.length > 0 ? (businessDataForTransaction.map((business, index) => (
                 <div key={index}>
                   <div className="flex flex-col sm:flex-row items-start justify-between my-1">
                     <span className="font-medium whitespace-nowrap">Line of Business</span>
@@ -469,7 +503,7 @@ const AdminBPCharges = ({ selectedTransaction, isOpen, busOffice, businessData, 
                   <div className='border-t dark:border-gray-500'></div>
                 </div>
               ))
-            )}
+            )} */}
 
               
 <br />

@@ -45,13 +45,14 @@ const AdminBusinessForm3 =()=>{
             busOfficeArray.push({ transaction_id: transactionId, bus_office: busOffice });
             businessDataArray.push({ transaction_id: transactionId, ...busActivity });
         });
+        
+        setBusinessData(businessDataArray);
 
         console.log('Bus Office:', busOfficeArray);
         console.log('Business Data:', businessDataArray);
 
         setBusinessPermit(businesspermit);
         setBusOffice(busOfficeArray);
-        setBusinessData(businessDataArray);
 
         console.log('FETCHED DATA');
         setIsFetchedData(true);
