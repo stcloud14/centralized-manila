@@ -27,6 +27,7 @@ const TransactionHistoryForm = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
+            setReload(false);
         } catch (error) {
             window.location.href = '/';
         }
@@ -42,6 +43,9 @@ const TransactionHistoryForm = () => {
   // const location = useLocation();
   // const { pathname } = location;
   // const user_id = pathname.split("/")[2];
+
+  const [Reload, setReload] = useState(true);
+
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userTransaction, setUserTransaction] = useState([]);
@@ -295,7 +299,10 @@ const sortTransactions = (option, order) => {
   );
 
 
-
+  if (Reload) {
+    return // Display a loading message or spinner while checking the token
+  }
+ 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
       {/* Sidebar */}

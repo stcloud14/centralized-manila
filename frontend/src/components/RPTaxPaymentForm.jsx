@@ -21,6 +21,7 @@ const RPTaxPaymentForm =()=>{
   // const location = useLocation();
   // const { pathname } = location;
   // const user_id = pathname.split("/")[2];
+  const [Reload, setReload] = useState(true);
 
   const date = new Date();
   const currentDate = date.toISOString().split('T')[0];
@@ -41,6 +42,7 @@ const RPTaxPaymentForm =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
+            setReload(false);
         } catch (error) {
             window.location.href = '/';
         }
@@ -333,7 +335,9 @@ const handleCheckboxChange = (e) => {
     setIsModalVisible(!isModalVisible);
   };
 
-  
+  if (Reload) {
+    return // Display a loading message or spinner while checking the token
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

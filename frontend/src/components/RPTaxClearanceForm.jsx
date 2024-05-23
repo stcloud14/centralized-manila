@@ -17,6 +17,8 @@ const RPTaxClearanceForm =()=>{
   const { user_id } = useParams();
   const navigate = useNavigate();
   const Base_Url = process.env.Base_Url;
+  const [Reload, setReload] = useState(true);
+
 
   // const location = useLocation();
   // const { pathname } = location;
@@ -38,6 +40,7 @@ const RPTaxClearanceForm =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
+            setReload(false);
         } catch (error) {
             window.location.href = '/';
         }
@@ -285,7 +288,9 @@ const RPTaxClearanceForm =()=>{
     setIsModalVisible(!isModalVisible);
   };
 
-  
+  if (Reload) {
+    return // Display a loading message or spinner while checking the token
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

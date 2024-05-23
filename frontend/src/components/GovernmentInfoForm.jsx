@@ -14,6 +14,7 @@ const GovernmentInfoForm = () => {
   const [userPersonal, setUserPersonal] = useState({});
   const [originalUserPersonal, setOriginalUserPersonal] = useState({});
   const navigate = useNavigate();
+  const [Reload, setReload] = useState(true);
 
   
   const Base_Url = process.env.Base_Url;
@@ -30,6 +31,7 @@ const GovernmentInfoForm = () => {
                       Authorization: `Bearer ${token}`
                   }
               });
+              setReload(false);
           } catch (error) {
               window.location.href = '/';
           }
@@ -143,7 +145,9 @@ const GovernmentInfoForm = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  
+  if (Reload) {
+    return // Display a loading message or spinner while checking the token
+  }
 
 return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

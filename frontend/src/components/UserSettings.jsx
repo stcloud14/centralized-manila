@@ -15,6 +15,8 @@ const UserSettings =()=>{
 
   const Base_Url = process.env.Base_Url;
 
+  const [Reload, setReload] = useState(true);
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user_id } = useParams();
 
@@ -58,6 +60,7 @@ const UserSettings =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
+            setReload(false);
         } catch (error) {
             window.location.href = '/';
         }
@@ -690,6 +693,10 @@ useEffect(() => {
   };
 
   const isEdge = window.navigator.userAgent.includes('Edg');
+
+  if(Reload){
+    return
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
