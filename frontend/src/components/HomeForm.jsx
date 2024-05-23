@@ -16,6 +16,7 @@ const HomeForm = () => {
 
 
   const Base_Url = process.env.Base_Url;
+  const [loading, setLoading] = useState(true);
 
   console.log("Base_Url", Base_Url)
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -33,6 +34,7 @@ const HomeForm = () => {
                       Authorization: `Bearer ${token}`
                   }
               });
+              setLoading(false);
           } catch (error) {
               window.location.href = '/';
           }
@@ -62,6 +64,10 @@ const HomeForm = () => {
       window.watsonAssistantChatScriptAppended = true;
     }
   }, []);
+
+  if (loading) {
+    return // Display a loading message or spinner while checking the token
+  }
  
 
   return (
