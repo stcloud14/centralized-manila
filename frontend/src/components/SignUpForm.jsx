@@ -412,7 +412,7 @@ console.log(selectedFiles)
                 </div>
          
                 <div className="grid md:grid-cols-3 md:gap-6 sm:grid-cols-1">
-                  <div className="relative z-0 w-full mb-6 group">
+                  <div className="relative z-0 w-full mb-8 group">
                     <select onChange={handleChange} value={userReg.cvl_status} defaultValue={0} name="cvl_status" id="cvl_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer" >
                       <option value="0" className='dark:bg-[#3d3d3d] dark:text-white'>Select Civil Status</option>
                       <option value="1" className='dark:bg-[#3d3d3d] dark:text-white'>Single</option>
@@ -422,7 +422,7 @@ console.log(selectedFiles)
                     </select>
                     <label htmlFor="cvl_status" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Civil Status</label>
                   </div>
-                  <div className="relative z-0 w-full mb-6 group">
+                  <div className="relative z-0 w-full mb-8 group">
                     <select onChange={handleChange} value={userReg.czn_status} defaultValue={0} name="czn_status" id="czn_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
                       <option value="0" className='dark:bg-[#3d3d3d] dark:text-white'>Select Citizenship</option>
                       <option value="1" className='dark:bg-[#3d3d3d] dark:text-white'>Citizen</option>
@@ -431,7 +431,7 @@ console.log(selectedFiles)
                     </select> 
                     <label htmlFor="czn_status" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
                   </div>
-                  <div className="relative z-0 w-full mb-6 group">
+                  <div className="relative z-0 w-full mb-8 group">
                     <select onChange={handleChange} value={userReg.res_status} defaultValue={0} name="res_status" id="res_status" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum cursor-pointer">
                       <option value="0" className='dark:bg-[#3d3d3d] dark:text-white'>Select Residency Status</option>
                       <option value="1" className='dark:bg-[#3d3d3d] dark:text-white'>Resident</option>
@@ -450,17 +450,17 @@ console.log(selectedFiles)
                     name="user_email"
                     id="user_email"
                     className={`block py-2.5 px-0 w-full text-sm ${
-                      emailFromParams ? "text-gray-500 bg-gray-200" : "text-gray-900 bg-transparent"
+                      emailFromParams ? "text-gray-300 bg-slate-200 cursor-not-allowed rounded-md pl-2" : "text-gray-900 bg-transparent"
                     } border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum`}
                     placeholder=" "
                     required
                     disabled={emailFromParams ? true : false}
                   />
-                      <label htmlFor="user_email" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email Address</label>
+                      <label htmlFor="user_email" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Email Address</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group ">
                       <input onChange={handleChange} value={userReg.mobile_no ? `+63 - ${userReg.mobile_no}` : '+63 - '} maxLength={16} type="text" name="mobile_no" id="mobile_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
-                      <label htmlFor="mobile_no" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile Number (+63)</label>
+                      <label htmlFor="mobile_no" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Mobile Number (+63)</label>
                   </div>
                 </div>
 
