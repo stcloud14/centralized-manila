@@ -81,8 +81,6 @@ const LandingPageForm = () => {
         email,
         photoURL
       };
-
-      console.log("body", body)
       
       // Check if the user exists
       const existenceCheckResponse = await axios.post(`${Base_Url}register/check-existence/email`, body);
@@ -100,10 +98,8 @@ const LandingPageForm = () => {
       } else {
         // If user doesn't exist, redirect to registration page
         console.log("User does not exist. Proceed with registration");
-        
         const queryParams = new URLSearchParams(body).toString();
         window.location.href = `/register?${queryParams}`;
-
       }
     } catch (error) {
       // Handle errors
