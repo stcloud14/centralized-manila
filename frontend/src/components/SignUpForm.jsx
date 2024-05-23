@@ -30,15 +30,15 @@ const SignUpForm =()=>{
       birth_date: userReg.birth_date,
       birth_place: userReg.birth_place,
       sex_type: userReg.sex_type,
-      suffix_type: "",
-      cvl_status: "",
-      czn_status: "",
-      res_status: "",
+      suffix_type: userReg.suffix_type,
+      cvl_status: userReg.cvl_status,
+      czn_status: userReg.czn_status,
+      res_status: userReg.res_status,
       user_email: "", // Reset user_email
-      mobile_no: "",
-      user_pass: "",
-      user_valid_id_name: "",
-      user_valid_id_short: "",
+      mobile_no: userReg.mobile_no,
+      user_pass: userReg.user_pass,
+      user_valid_id_name: userReg.user_valid_id_name,
+      user_valid_id_short: userReg.user_valid_id_short,
       photoURL: "" // Reset photoURL
     });
   
