@@ -22,7 +22,6 @@ const GovernmentInfoForm = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-  
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
@@ -31,15 +30,16 @@ const GovernmentInfoForm = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-
         } catch (error) {
-          // window.location.reload();
-          navigate(`/`);
+            window.location.href = '/';
         }
     };
-  
-    checkToken(token); // Pass the token to the checkToken function
-}, [navigate, user_id]);
+    if (token) {
+        checkToken(token); 
+    } else {
+        window.location.href = '/';
+    }
+}, [user_id]);
 
   useEffect(() => {
     const fetchUserPersonal = async () => {

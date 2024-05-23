@@ -66,27 +66,26 @@ const BusinessPermitForm =()=>{
   };
   
 
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-  
-    const checkToken = async (token) => {
-        try {
-            // Make a request to backend API to verify token and check user access
-            const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-        } catch (error) {
-          // window.location.reload();
-          navigate(`/`);
-        }
-    };
-  
-    checkToken(token); // Pass the token to the checkToken function
-}, [navigate, user_id]);
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      const checkToken = async (token) => {
+          try {
+              // Make a request to backend API to verify token and check user access
+              const response = await axios.get(`${Base_Url}token/protect-token/${user_id}`, {
+                  headers: {
+                      Authorization: `Bearer ${token}`
+                  }
+              });
+          } catch (error) {
+              window.location.href = '/';
+          }
+      };
+      if (token) {
+          checkToken(token); 
+      } else {
+          window.location.href = '/';
+      }
+  }, [user_id]);
 
   const [busPermit, setBusPermit] = useState((prevData) => ({
     ...prevData,

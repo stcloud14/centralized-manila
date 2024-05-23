@@ -44,7 +44,6 @@ const PersonalInfoForm =()=>{
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-  
     const checkToken = async (token) => {
         try {
             // Make a request to backend API to verify token and check user access
@@ -53,15 +52,16 @@ const PersonalInfoForm =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
-
         } catch (error) {
-          // window.location.reload();
-          navigate(`/`);
+            window.location.href = '/';
         }
     };
-  
-    checkToken(token); 
-}, [navigate, user_id]);
+    if (token) {
+        checkToken(token); 
+    } else {
+        window.location.href = '/';
+    }
+}, [user_id]);
   
     useEffect(() => {
     const fetchUserPersonal = async () => {
