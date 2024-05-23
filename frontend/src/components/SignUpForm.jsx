@@ -13,13 +13,26 @@ import ResidencyDropdown from '../partials/profile/ResidencyDropdown';
 import ApplyVerificationModal from '../partials/business/ApplyVerificationModal';
 
 const SignUpForm =()=>{
-
+  
   const photoURL = localStorage.getItem('photoURL');
-  const emailFromParams = localStorage.getItem('email');
+  const [emailFromParams, setEmailFromParams] = useState(false);
 
   console.log("Email", emailFromParams)
   console.log("body", photoURL)
 
+  const handleRemoveDisable = () => {
+    setUserReg({ user_email: "" });
+    setEmailFromParams(false);
+    localStorage.removeItem('email');
+  };
+  
+  useEffect(() => {
+    const email = localStorage.getItem('email');
+    if (email) {
+      setUserReg({ user_email: email, photoURL: photoURL });
+      setEmailFromParams(true);
+    }
+  }, []);
 
     const [userReg, setUserReg] = useState({
         f_name:"",
@@ -297,6 +310,7 @@ const handleClick = async (e) => {
 };
 
 
+
 const [showPassword, setShowPassword] = useState(false);
 const handleTogglePassword = () => {
   setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -442,22 +456,36 @@ console.log(selectedFiles)
                 </div>
 
                 <div className="grid md:grid-cols-2 md:gap-6 sm:grid-cols-1">
-                  <div className="relative z-0 w-full mb-6 group ">
-                  <input
-                    onChange={handleChange}
-                    value={userReg.user_email}
-                    type="email"
-                    name="user_email"
-                    id="user_email"
-                    className={`block py-2.5 px-0 w-full text-sm ${
-                      emailFromParams ? "text-gray-300 bg-slate-200 cursor-not-allowed rounded-md pl-2" : "text-gray-900 bg-transparent"
-                    } border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum`}
-                    placeholder=" "
-                    required
-                    disabled={emailFromParams ? true : false}
-                  />
-                      <label htmlFor="user_email" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Email Address</label>
-                  </div>
+                <div className="relative z-0 w-full mb-6 group">
+                <input
+                  onChange={handleChange}
+                  value={userReg.user_email}
+                  type="email"
+                  name="user_email"
+                  id="user_email"
+                  className={`block py-2.5 px-0 w-full text-sm ${
+                    emailFromParams ? "text-gray-300 bg-slate-200 cursor-not-allowed rounded-md pl-2" : "text-gray-900 bg-transparent"
+                  } border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum`}
+                  placeholder=" "
+                  required
+                  disabled={emailFromParams}
+                />
+                <label
+                  htmlFor="user_email"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+                >
+                  Email Address
+                </label>
+                {emailFromParams && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveDisable}
+                    className="absolute right-0 top-0 mt-2 mr-2 text-gray-500 hover:text-gray-900"
+                  >
+                    X
+                  </button>
+                )}
+              </div>
                   <div className="relative z-0 w-full mb-6 group ">
                       <input onChange={handleChange} value={userReg.mobile_no ? `+63 - ${userReg.mobile_no}` : '+63 - '} maxLength={16} type="text" name="mobile_no" id="mobile_no" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
                       <label htmlFor="mobile_no" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Mobile Number (+63)</label>
