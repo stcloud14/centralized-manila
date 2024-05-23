@@ -39,7 +39,8 @@ const CedulaForm =()=>{
 
   const Base_Url = process.env.Base_Url;
 
-  
+  const [Reload, setReload] = useState(true);
+
 
   // const user_id = pathname.split("/")[2];
   
@@ -53,6 +54,7 @@ const CedulaForm =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
+            setReload(false);
         } catch (error) {
             window.location.href = '/';
         }
@@ -582,6 +584,10 @@ const [isModalVisible, setIsModalVisible] = useState(true);
   };
 
   
+  if (Reload) {
+    return // Display a loading message or spinner while checking the token
+  }
+ 
   
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

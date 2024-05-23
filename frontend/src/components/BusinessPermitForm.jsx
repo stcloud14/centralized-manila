@@ -38,6 +38,9 @@ const BusinessPermitForm =()=>{
   // const { pathname } = location;
   // const user_id = pathname.split("/")[2];
 
+  const [Reload, setReload] = useState(true);
+
+
   const [fileUploaded, setFileUploaded] = useState(false); // Managing whether a file has been uploaded or not
 
   const handleRemove = (fieldNameToRemove) => {
@@ -76,6 +79,7 @@ const BusinessPermitForm =()=>{
                       Authorization: `Bearer ${token}`
                   }
               });
+              setReload(false);
           } catch (error) {
               window.location.href = '/';
           }
@@ -830,7 +834,13 @@ const BusinessPermitForm =()=>{
         : fileNameWithoutExtension;
 
     return extension ? truncatedName + '.' + extension : truncatedName;
-}
+  }
+
+
+  if (Reload) {
+    return // Display a loading message or spinner while checking the token
+  }
+
 
 
   return (

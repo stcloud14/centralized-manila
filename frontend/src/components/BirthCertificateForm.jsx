@@ -36,6 +36,7 @@ const BirthCertificateForm =()=>{
   // const user_id = pathname.split("/")[2];
 
   const Base_Url = process.env.Base_Url;
+  const [Reload, setReload] = useState(true);
 
 
   useEffect(() => {
@@ -48,6 +49,7 @@ const BirthCertificateForm =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
+            setReload(false);
         } catch (error) {
             window.location.href = '/';
         }
@@ -431,6 +433,10 @@ const BirthCertificateForm =()=>{
   };
 
   
+  if (Reload) {
+    return // Display a loading message or spinner while checking the token
+  }
+ 
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

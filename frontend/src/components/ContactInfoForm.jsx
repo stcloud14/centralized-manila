@@ -17,6 +17,7 @@ const ContactInfoForm = () => {
   const navigate = useNavigate();
 
   const Base_Url = process.env.Base_Url;
+  const [Reload, setReload] = useState(true);
 
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const ContactInfoForm = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
+            setReload(false);
         } catch (error) {
             window.location.href = '/';
         }
@@ -153,7 +155,9 @@ const ContactInfoForm = () => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    
+    if (Reload) {
+      return // Display a loading message or spinner while checking the token
+    }
  
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
