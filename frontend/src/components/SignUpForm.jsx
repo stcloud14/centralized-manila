@@ -24,6 +24,7 @@ const SignUpForm =()=>{
     setUserReg({ user_email: "" });
     setEmailFromParams(false);
     localStorage.removeItem('email');
+    localStorage.removeItem('photoURL')
   };
   
   useEffect(() => {
