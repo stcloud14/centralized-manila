@@ -76,11 +76,15 @@ const LandingPageForm = () => {
       const provider = new GoogleAuthProvider(); // Declare the provider
       const result = await signInWithPopup(auth, provider);
       const { email, photoURL } = result.user;
-  
+      localStorage.setItem('photoURL', photoURL);
+      localStorage.setItem('email', email);
+
       const body = {
         email,
         photoURL
       };
+
+
       
       // Check if the user exists
       const existenceCheckResponse = await axios.post(`${Base_Url}register/check-existence/email`, body);
@@ -98,8 +102,13 @@ const LandingPageForm = () => {
       } else {
         // If user doesn't exist, redirect to registration page
         console.log("User does not exist. Proceed with registration");
-        const queryParams = new URLSearchParams(body).toString();
-        window.location.href = `/register?${queryParams}`;
+        // const bodyParams = JSON.stringify({ photoURL, emailFromParams });
+
+        // Store data in localStorage
+      
+        // Redirect to registration page
+        window.location.href = `/register`;
+        // window.location.href = `/register?${queryParams}`;
       }
     } catch (error) {
       // Handle errors

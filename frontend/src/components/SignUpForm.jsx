@@ -14,9 +14,12 @@ import ApplyVerificationModal from '../partials/business/ApplyVerificationModal'
 
 const SignUpForm =()=>{
 
-  const urlParams = new URLSearchParams(location.search);
-  const photoURL = urlParams.get('photoURL');
-  const emailFromParams = urlParams.get('email');
+  const photoURL = localStorage.getItem('photoURL');
+  const emailFromParams = localStorage.getItem('email');
+
+  console.log("Email", emailFromParams)
+  console.log("body", photoURL)
+
 
     const [userReg, setUserReg] = useState({
         f_name:"",
