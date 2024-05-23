@@ -15,25 +15,48 @@ import ApplyVerificationModal from '../partials/business/ApplyVerificationModal'
 const SignUpForm =()=>{
   
   const photoURL = localStorage.getItem('photoURL');
-  const [emailFromParams, setEmailFromParams] = useState(false);
+
+  const [emailFromParams, setEmailFromParams] = useState(localStorage.getItem('email') || false);
 
   console.log("Email", emailFromParams)
   console.log("body", photoURL)
 
   const handleRemoveDisable = () => {
-    setUserReg({ user_email: "" });
+    // Update userReg with default values
+    setUserReg({
+      f_name: userReg.f_name,
+      m_name: userReg.m_name,
+      l_name: userReg.l_name,
+      birth_date: userReg.birth_date,
+      birth_place: userReg.birth_place,
+      sex_type: userReg.sex_type,
+      suffix_type: "",
+      cvl_status: "",
+      czn_status: "",
+      res_status: "",
+      user_email: "", // Reset user_email
+      mobile_no: "",
+      user_pass: "",
+      user_valid_id_name: "",
+      user_valid_id_short: "",
+      photoURL: "" // Reset photoURL
+    });
+  
+    // Reset emailFromParams
     setEmailFromParams(false);
+  
+    // Remove items from localStorage
     localStorage.removeItem('email');
-    localStorage.removeItem('photoURL')
+    localStorage.removeItem('photoURL');
   };
   
   useEffect(() => {
-    const email = localStorage.getItem('email');
-    if (email) {
-      setUserReg({ user_email: email, photoURL: photoURL });
-      setEmailFromParams(true);
-    }
-  }, []);
+    setUserReg(prevUserReg => ({
+      ...prevUserReg,
+      user_email: emailFromParams || "",
+      photoURL: photoURL || ""
+    }));
+  }, [emailFromParams, photoURL]);
 
     const [userReg, setUserReg] = useState({
         f_name:"",
