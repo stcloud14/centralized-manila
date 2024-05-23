@@ -34,6 +34,8 @@ router.post('/check-existence', async (req, res) => {
 router.post('/', async (req, res) => {
     const mobile_no = req.body.mobile_no;
     const user_pass = String(req.body.user_pass);
+    const { photoURL } = req.body;
+
     
 
     const plainMobileNo = mobile_no.replace(/[-\s]/g, '');
@@ -81,8 +83,8 @@ router.post('/', async (req, res) => {
     const query5 = "INSERT INTO user_birth (`user_id`, `birth_date`, `birth_place`) VALUES (?, ?, ?)";
     const values5 = [primaryKey, req.body.birth_date, req.body.birth_place];
 
-    const query6 = "INSERT INTO user_image (`user_id`) VALUES (?)";
-    const values6 = [primaryKey];
+    const query6 = "INSERT INTO user_image (`user_id`, `image_url`) VALUES (?, ?)";
+    const values6 = [primaryKey, photoURL];
 
     const query7 = "INSERT INTO user_verification (`user_id`, `verification_status`, `application_status`, `user_valid_id`) VALUES (?, ?, ?, ?)";
     const values7 = [primaryKey, verification_status, application_status, req.body.user_valid_id_name];

@@ -13,6 +13,11 @@ import ResidencyDropdown from '../partials/profile/ResidencyDropdown';
 import ApplyVerificationModal from '../partials/business/ApplyVerificationModal';
 
 const SignUpForm =()=>{
+
+  const urlParams = new URLSearchParams(location.search);
+  const photoURL = urlParams.get('photoURL');
+  const emailFromParams = urlParams.get('email');
+
     const [userReg, setUserReg] = useState({
         f_name:"",
         m_name:"",
@@ -24,11 +29,12 @@ const SignUpForm =()=>{
         cvl_status:"",
         czn_status:"",
         res_status:"",
-        user_email:"",
+        user_email: emailFromParams || "",
         mobile_no:"",
         user_pass:"",
         user_valid_id_name:"",
         user_valid_id_short:"",
+        photoURL: photoURL || "",  // Initialize with photoURL from URL parameters
     });
 
     const [selectedFiles, setSelectedFiles] = useState([
@@ -434,7 +440,19 @@ console.log(selectedFiles)
 
                 <div className="grid md:grid-cols-2 md:gap-6 sm:grid-cols-1">
                   <div className="relative z-0 w-full mb-6 group ">
-                      <input onChange={handleChange} value={userReg.user_email} type="email" name="user_email" id="user_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum" placeholder=" " required />
+                  <input
+                    onChange={handleChange}
+                    value={userReg.user_email}
+                    type="email"
+                    name="user_email"
+                    id="user_email"
+                    className={`block py-2.5 px-0 w-full text-sm ${
+                      emailFromParams ? "text-gray-500 bg-gray-200" : "text-gray-900 bg-transparent"
+                    } border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum`}
+                    placeholder=" "
+                    required
+                    disabled={emailFromParams ? true : false}
+                  />
                       <label htmlFor="user_email" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email Address</label>
                   </div>
                   <div className="relative z-0 w-full mb-6 group ">
