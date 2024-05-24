@@ -37,7 +37,6 @@ const  AdminAuditTrailForm = () => {
     const token = localStorage.getItem('token');
     
     const checkToken = async (token) => {
-        try {
             const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -51,9 +50,7 @@ const  AdminAuditTrailForm = () => {
             } else {
                 window.location.href = '/indexadmin';
             }
-        } catch (error) {
-            window.location.href = '/indexadmin';
-        }
+
     };
 
     if (token) {
