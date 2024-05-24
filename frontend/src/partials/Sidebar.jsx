@@ -397,7 +397,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </SidebarLinkGroup>
             
              {/* News */}
-             <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
+             {/* <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink
                     end
                     to={`/news/${user_id}`}
@@ -415,7 +415,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     </span>
                   </div>
                 </NavLink>
-             </li>
+             </li> */}
 
              {/* Transaction History */}
              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
