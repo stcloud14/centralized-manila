@@ -55,7 +55,7 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization, Cross-Origin-Opener-Policy"
   );
 
-  console.log(req.path, req.method);
+  // console.log(req.path, req.method);
   next();
 });
 
