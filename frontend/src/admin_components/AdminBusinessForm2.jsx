@@ -18,7 +18,32 @@ const AdminBusinessForm2 =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    
+    const checkToken = async (token) => {
+
+            const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const { admin_type } = response.data;
+            if (admin_type === 'business_admin') {
+                // Allow access to the audit page
+                setReload(false);
+            } else {
+                window.location.href = '/indexadmin';
+            }
+    };
+
+    if (token) {
+        checkToken(token);
+    } else {
+        // Redirect to indexadmin if token is not present
+        window.location.href = '/indexadmin';
+    }
+}, []);
 
   const [businessPermit, setBusinessPermit] = useState([]);
   const [businessData, setBusinessData] = useState([]);
