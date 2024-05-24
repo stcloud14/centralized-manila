@@ -6,7 +6,7 @@ import AdminSidebar from '../admin_partials/AdminSidebar';
 import AdminHeader from '../admin_partials/AdminHeader';
 import AdminFooter from '../admin_partials/AdminFooter';
 
-import AdminRPTaxProcessing from '../admin_partials/admin_cards/AdminRPTaxProcessing';
+import AdminAllArchives from '../admin_partials/admin_cards/AdminAllArchives';
 
 
 const AdminArchivesForm = () => {
@@ -19,53 +19,76 @@ const AdminArchivesForm = () => {
 
   const [taxPayment, setTaxPayment] = useState([]);
   const [taxClearance, setTaxClearance] = useState([]);
+  const [businessPermit, setBusinessPermit] = useState([]);
+  const [businessData, setBusinessData] = useState([]);
+  const [busOffice, setBusOffice] = useState(null);
+  const [ctcCedula, setctcCedula] = useState([]);
+  const [birthCert, setBirthCert] = useState([]);
+  const [deathCert, setDeathCert] = useState([]);
+  const [marriageCert, setMarriageCert] = useState([]);
+
   const Base_Url = process.env.Base_Url;
 
   console.log("userrole", admin_type)
 
-  const fetchUserTransaction = async () => {
+  const fetchUserTransaction = async (endpoint) => {
     try {
-      const res = await axios.get(`${Base_Url}adminrptax/processing/`);
-      setTaxPayment(res.data.taxpayment);
-      setTaxClearance(res.data.taxclearance);
+      const res = await axios.get(`${Base_Url}adminarchives/${endpoint}`);
+      console.log('Response:', res.data);
+  
+      switch (endpoint) {
+        case 'rptax':
+          setTaxPayment(res.data.taxpayment);
+          setTaxClearance(res.data.taxclearance);
+          break;
+        case 'buspermit':
+          const { businesspermit, businesspermit1 } = res.data;
+          const busOfficeArray = [];
+          const businessDataArray = [];
+  
+          Object.keys(businesspermit1).forEach(transactionId => {
+            const busOffice = businesspermit1[transactionId].bus_office;
+            const busActivity = businesspermit1[transactionId].bus_activity;
+  
+            busOfficeArray.push({ transaction_id: transactionId, bus_office: busOffice });
+            businessDataArray.push({ transaction_id: transactionId, ...busActivity });
+          });
+  
+          setBusinessPermit(businesspermit);
+          setBusOffice(busOfficeArray);
+          setBusinessData(businessDataArray);
+          break;
+        case 'cedulacert':
+          setctcCedula(res.data.cedulacert);
+          break;
+        case 'lcr':
+          setBirthCert(res.data.birthcert);
+          setDeathCert(res.data.deathcert);
+          setMarriageCert(res.data.marriagecert);
+          break;
+        default:
+          break;
+      }
+  
+      setIsFetchedData(true);
     } catch (err) {
-      console.log(err);
+      console.log('Fetch error:', err);
     }
   };
-
+  
   const handleUpdateData = () => {
     fetchUserTransaction();
   };
-
-
+  
   useEffect(() => {
-    fetchUserTransaction();
+    fetchUserTransaction('rptax');
+    fetchUserTransaction('buspermit');
+    fetchUserTransaction('cedulacert');
+    fetchUserTransaction('lcr');
   }, []);
-
-  const fetchExpiredTransaction = async () => {
-    try {
-      await axios.post(`${Base_Url}email/updateexpired`);
-      console.log('Sent emails')
-      
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-    useEffect(() => {
-      const fetchData = async () => {
-          try {
-              await fetchExpiredTransaction();
   
-              await fetchUserTransaction();
-          } catch (error) {
-              console.error(error);
-          }
-      };
-  
-      fetchData();
-    }, []);
- 
+
+
   
 
   return (
@@ -123,9 +146,16 @@ const AdminArchivesForm = () => {
 
           {/*  Two Sections */}
           <div className="grid grid-cols-1 gap-4 mx-4 my-4">
-            <AdminRPTaxProcessing
+            <AdminAllArchives
             taxPayment={taxPayment}
             taxClearance={taxClearance}
+            busOffice={busOffice}
+            businessData={businessData}
+            businessPermit = {businessPermit}
+            ctcCedula={ctcCedula} 
+            birthCert={birthCert}
+            deathCert={deathCert}
+            marriageCert={marriageCert}
             handleUpdateData={handleUpdateData}
             />
 

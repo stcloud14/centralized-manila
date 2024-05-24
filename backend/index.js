@@ -29,6 +29,7 @@ import adminLcrHandler from './routes/adminLcrHandler.js';
 import adminCedulahandler from './routes/adminCedulahandler.js';
 import adminDashboard from './routes/adminDashboard.js';
 import auditTrailHandler from './routes/auditTrailHandler.js';
+import adminArchivesHandler from './routes/adminArchivesHandler.js'
 import generateREPHandler from './routes/generateREPHandler.js';
 
 const app = express();
@@ -93,6 +94,7 @@ app.use('/api/token', jwttoken);
 // Admin routes
 app.use('/api/adminprofile', adminProfileHandler);
 app.use('/api/adminrptax', adminRptaxHandler);
+app.use('/api/adminarchives', adminArchivesHandler);
 app.use('/api/adminbp', adminBPHandler);
 app.use('/api/adminlcr', adminLcrHandler);
 app.use('/api/adminctc', adminCedulahandler);
