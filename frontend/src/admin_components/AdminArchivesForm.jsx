@@ -97,6 +97,26 @@ const AdminArchivesForm = () => {
                   <div className="w-4 h-1 mr-2 bg-[#0057e7]"></div>
                   <p className="text-slate-700 dark:text-white">Tax Payment</p>
                 </div>
+                <div className="flex items-center">
+                  <div className="w-4 h-1 mr-2 bg-[#d62d20]"></div>
+                  <p className="text-slate-700 dark:text-white">Business Permit</p>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-4 h-1 mr-2 bg-[#ffa700]"></div>
+                  <p className="text-slate-700 dark:text-white">CTC/Cedula</p>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-4 h-1 mr-2 bg-[#008744] dark:bg-[#026b37]"></div>
+                  <p className="text-slate-700 dark:text-white">Birth Certificate</p>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-4 h-1 mr-2 bg-[#17bf6c]"></div>
+                  <p className="text-slate-700 dark:text-white">Death Certificate</p>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-4 h-1 mr-2 bg-[#78ffbc]"></div>
+                  <p className="text-slate-700 dark:text-white">Marriage Certificate</p>
+                </div>
               </div>
             </div>
           </div>
