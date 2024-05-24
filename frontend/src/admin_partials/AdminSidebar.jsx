@@ -665,7 +665,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               ) : null}
 
 
-              {admin_type !== 'chief_admin'  ? (
+              {admin_type !== 'chief_admin' && admin_type !== 'registry_admin' && (
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
                 end 
@@ -685,7 +685,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
-              ) : null} 
+              )} 
 
             </ul>
 

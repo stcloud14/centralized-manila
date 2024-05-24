@@ -6,9 +6,12 @@ import { tailwindConfig } from '../../utils/Utils';
 
   const URstats = React.memo(({ verifiedUsers }) => {
 
-  const totalUsers = verifiedUsers && verifiedUsers.length > 0 ? verifiedUsers[0].total_users : 0;
-  const totalUnverified = verifiedUsers && verifiedUsers.length > 0 ? verifiedUsers[0].total_unverified : 0;
-  const totalVerified = verifiedUsers && verifiedUsers.length > 0 ? verifiedUsers[0].total_verified : 0;
+    console.log(verifiedUsers)
+
+    const totalUsers = verifiedUsers && verifiedUsers.length > 0 ? parseInt(verifiedUsers[0].total_users, 10) : 0;
+    const totalUnverified = verifiedUsers && verifiedUsers.length > 0 ? parseInt(verifiedUsers[0].total_unverified, 10) : 0;
+    const totalVerified = verifiedUsers && verifiedUsers.length > 0 ? parseInt(verifiedUsers[0].total_verified, 10) : 0;
+    
 
   const chartData = {
     labels: ['Reasons'],
