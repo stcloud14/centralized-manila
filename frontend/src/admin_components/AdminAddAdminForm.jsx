@@ -75,18 +75,31 @@ const AdminAddAdminForm =()=>{
         <h1 className='font-medium text-center text-slate-700 dark:text-white'>Chief Admin</h1>
           <h1 className='mb-5 text-sm italic text-center text-slate-700 dark:text-gray-300'>Add Administrator</h1> 
             <form onSubmit="" className={`overflow-y-auto`}>
-              <form className={`max-w-2xl mx-auto`}>
-                <div className="grid gap-6">
-
-
-                    <div className="mt-5 relative z-0 mb-2 grid grid-cols-2 gap-6">
-                      <div className="relative flex flex-col col-span-1">
-                        <input type="text" name="adminid" id="adminid" placeholder=" " onChange={(e) => setAdminId(e.target.value)} value={adminId} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"/>
-                        <label htmlFor="" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                          Admin ID
-                        </label>
+              <form className={`max-w-md mx-auto`}>
+                
+                    <div className="relative z-0 w-full mb-6 group">
+                      <input type="text" name="adminid" id="adminid" placeholder=" " onChange={(e) => setAdminId(e.target.value)} value={adminId} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"/>
+                      <label htmlFor="" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Admin ID
+                      </label>
+                    </div>
+                    <div className="grid-cols-3 grid gap-6">
+                      <div class="relative z-0 w-full mb-6 group col-span-2">
+                        <input type="text" name="password" id="password" placeholder=" " onChange={(e) => setPassword(e.target.value)}  value={password} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"/>
+                        <label htmlFor="" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Password
+                          </label>
+                        </div>
+                      <div class="relative z-0 w-full mb-6 group col-span-1">
+                        <button 
+                          onClick=""
+                          type="submit" 
+                          className="w-full text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-4 py-2.5 text-center ml-0 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                          Generate
+                        </button>
                       </div>
-                      <div className="relative flex flex-col group col-span-1">
+                    </div>
+                      <div className="relative z-0 w-full mb-6 group">
                         <select onChange={handleAdminTypeChange} value={adminType} defaultValue={0} name="admintype" id="admintype" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer">
                           <option value="0" className='dark:bg-[#3d3d3d]'>Select Admin Type</option>
                           <option value="1" className='dark:bg-[#3d3d3d]'>Chief Admin</option>
@@ -101,25 +114,6 @@ const AdminAddAdminForm =()=>{
                           Admin Type
                         </label>
                       </div>
-                    </div>
-                    
-                    <div className="relative z-0 mb-2 grid grid-cols-5 gap-6">
-                      <div class="flex flex-col col-span-full  sm:col-span-3">
-                        <input type="text" name="password" id="password" placeholder=" " onChange={(e) => setPassword(e.target.value)}  value={password} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"/>
-                        <label htmlFor="" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Password
-                          </label>
-                        </div>
-                      <div class="flex flex-col col-span-full sm:col-span-2">
-                        <button 
-                          onClick=""
-                          type="submit" 
-                          className="w-full sm:w-auto text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-normal rounded-full text-sm px-4 py-2.5 text-center ml-0 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
-                          Generate Strong Password
-                        </button>
-                      </div>
-                    </div>
-                </div>
 
                   {/* Submit Button */}
                   <div className="flex justify-end items-end mt-10 mb-4">
@@ -127,7 +121,7 @@ const AdminAddAdminForm =()=>{
                          + Add Admin
                     </button>
                   </div>
-                              {/* PROCESS MODAL */}
+         {/* PROCESS MODAL */}
           {isCompleteConfirm && (
               <div className="fixed z-50 inset-0 overflow-y-auto">
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
