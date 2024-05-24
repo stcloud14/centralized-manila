@@ -220,12 +220,17 @@ const AdminLCRDeathView = ({ selectedTransaction, isOpen, handleClose, transType
                             <span className="whitespace-nowrap md:mb-0 mb-1">{selectedTransaction.time}</span>
                           </div>
 
-                          {transType === 'Death Certificate' ? 
+                          {transType === 'Death Certificate' ? (
                           <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                             <span className="font-medium whitespace-nowrap">Status</span>
-                            <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>
+                            {status_type === "Pending" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-yellow-200 text-yellow-800 w-24">{selectedTransaction.status_type}</span>}
+                            {status_type === "Paid" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>}
+                            {status_type === "Processing" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>}
+                            {status_type === "Complete" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-blue-200 text-blue-800 w-24">{selectedTransaction.status_type}</span>}
+                            {status_type === "Rejected" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-red-200 text-red-800 w-24">{selectedTransaction.status_type}</span>}
+                            {status_type === "Expired" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-orange-200 text-orange-800 w-24">{selectedTransaction.status_type}</span>}
                           </div>
-                          :null }
+                          ) : null}
                           
 
                           <hr className='mt-7 mb-1'/>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Flatpickr from 'react-flatpickr';
 
@@ -15,6 +16,8 @@ import ArchivesCardView from '../admin_archives/ArchivesCardView';
 import StatusTypeDropdown from '../../partials/transDropdown/StatusTypeDropdown';
 
 const AdminAllArchives = ({ taxPayment, taxClearance, busOffice, businessData, businessPermit, ctcCedula, birthCert, deathCert, marriageCert, handleUpdateData }) => {
+
+  const { admin_type } = useParams();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [viewMode, setViewMode] = useState('table');
@@ -48,199 +51,59 @@ const AdminAllArchives = ({ taxPayment, taxClearance, busOffice, businessData, b
 
 
   const handleSearch = () => {
-    const filteredClearance = taxClearance.filter(transaction => {
-      const transactionId = transaction.transaction_id.toUpperCase();
-      const userId = transaction.user_id.toUpperCase();
-      const status = transaction.status_type.toUpperCase();
-      const query = searchQuery.toUpperCase();
-      
-  
-      const isDateInRange = () => {
-        if (!selectedDate || !selectedDatee) {
-          return true; // No date range selected, include all transactions
-        }
-  
-        const transactionDate = new Date(transaction.date_processed);
-        const startDate = new Date(selectedDate);
-        const endDate = new Date(selectedDatee);
-        endDate.setHours(23, 59, 59, 999);
-  
-        return startDate <= transactionDate && transactionDate <= endDate;
-      };
-  
-      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 ||
-        (selectedType === 'Real Property Tax Payment' && transaction.trans_type === 'Real Property Tax Payment') ||
-        (selectedType === 'Real Property Tax Clearance' && transaction.trans_type === 'Real Property Tax Clearance');
 
-      const isStatusMatch = !selectedStatus || selectedStatus === 'All' || parseInt(selectedStatus) === 0 ||
-        (selectedStatus === 'Complete' && transaction.trans_type === 'Complete') ||
-        (selectedStatus === 'Rejected' && transaction.trans_type === 'Rejected') ||
-        (selectedStatus === 'Expired' && transaction.trans_type === 'Expired'); 
-  
-      return transactionId.includes(query) && (userId.includes(searchUserID.toUpperCase()) || searchUserID === '') && isTypeMatch && isStatusMatch && isDateInRange();
+    const allTransactions = [
+        ...taxPayment,
+        ...taxClearance,
+        ...busOffice,
+        ...businessData,
+        ...businessPermit,
+        ...ctcCedula,
+        ...birthCert,
+        ...deathCert,
+        ...marriageCert,
+      ];
+
+      const filteredTransactions = allTransactions.filter(transaction => {
+
+      const transactionDate = new Date(transaction.date);
+        if (selectedDate && transactionDate < selectedDate) {
+        return false;
+        }
+        if (selectedDatee && transactionDate > selectedDatee) {
+        return false;
+        }
+
+        if (searchQuery && transaction.transaction_id && !transaction.transaction_id.includes(searchQuery)) {
+        return false;
+        }
+
+        if (searchUserID && transaction.user_id && !transaction.user_id.includes(searchUserID)) {
+        return false;
+        }
+
+        if (selectedType !== 'All' && transaction.trans_type !== selectedType) {
+        return false;
+        }
+
+        if (selectedStatus !== 'All' && transaction.status_type !== selectedStatus) {
+        return false;
+        }
+
+        return true;
     });
   
-    const filteredPayment = taxPayment.filter(transaction => {
-      const transactionId = transaction.transaction_id.toUpperCase();
-      const query = searchQuery.toUpperCase();
-      const TIN = transaction.rp_tdn.toUpperCase();
-      const PIN = transaction.rp_pin.toUpperCase();
+    // Update filtered transaction states based on their types
+    setFilteredTaxClearance(filteredTransactions.filter(transaction => transaction.trans_type === 'Real Property Tax Clearance'));
+    setFilteredTaxPayment(filteredTransactions.filter(transaction => transaction.trans_type === 'Real Property Tax Payment'));
+    setFilteredBusinessPermit(filteredTransactions.filter(transaction => transaction.trans_type === 'Business Permit'));
+    setFilteredctcCedula(filteredTransactions.filter(transaction => transaction.trans_type === 'Community Tax Certificate'));
+    setFilteredBirthCert(filteredTransactions.filter(transaction => transaction.trans_type === 'Birth Certificate'));
+    setFilteredDeathCert(filteredTransactions.filter(transaction => transaction.trans_type === 'Death Certificate'));
+    setFilteredMarriageCert(filteredTransactions.filter(transaction => transaction.trans_type === 'Marriage Certificate'));
+  };
   
-      const isDateInRange = () => {
-        if (!selectedDate || !selectedDatee) {
-          return true; // No date range selected, include all transactions
-        }
   
-        const transactionDate = new Date(transaction.date_processed);
-        const startDate = new Date(selectedDate);
-        const endDate = new Date(selectedDatee);
-        endDate.setHours(23, 59, 59, 999);
-  
-        return startDate <= transactionDate && transactionDate <= endDate;
-      };
-  
-      const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 ||
-        (selectedType === 'Real Property Tax Payment' && transaction.trans_type === 'Real Property Tax Payment') ||
-        (selectedType === 'Real Property Tax Clearance' && transaction.trans_type === 'Real Property Tax Clearance');
-  
-      return transactionId.includes(query) && (TIN.includes(searchTDN.toUpperCase()) || searchTDN === '') && (searchPIN === '' || PIN.includes(searchPIN.toUpperCase())) && isTypeMatch && isDateInRange();
-    });
-
-    const filteredBP = businessPermit.filter(transaction => {
-        const transactionId = (transaction?.transaction_id || '').toUpperCase();
-        const query = searchQuery.toUpperCase();
-        const tinId = (transaction?.bus_tin || '').toUpperCase();
-    
-        const isDateInRange = () => {
-          if (!selectedDate || !selectedDatee) {
-            return true; // No date range selected, include all transactions
-          }
-    
-          const transactionDate = new Date(transaction.date_processed);
-          const startDate = new Date(selectedDate);
-          const endDate = new Date(selectedDatee);
-          endDate.setHours(23, 59, 59, 999);
-    
-          return startDate <= transactionDate && transactionDate <= endDate;
-        };
-    
-        const isTINMatch = tinId.includes(searchTIN.toUpperCase());
-        const isBusinessTypeMatch = selectedType === 'All' || transaction?.bus_type === selectedType;
-    
-        return transactionId.includes(query) && isTINMatch && isBusinessTypeMatch && isDateInRange();
-      });
-
-      const filteredCTC = ctcCedula.filter(transaction => {
-        const transactionId = transaction.transaction_id.toUpperCase();
-        const query = searchQuery.toUpperCase();
-        const fullName = `${transaction.f_name} ${transaction.l_name}`.toUpperCase(); 
-        
-        const isDateInRange = () => {
-          if (!selectedDate || !selectedDatee) {
-            return true;
-          }
-    
-          const transactionDate = new Date(transaction.date_processed);
-          const startDate = new Date(selectedDate);
-          const endDate = new Date(selectedDatee);
-          endDate.setHours(23, 59, 59, 999);
-    
-          return startDate <= transactionDate && transactionDate <= endDate;
-        };
-    
-        const isOwnerMatch = searchOwner === '' || fullName.includes(searchOwner);
-        
-        return transactionId.includes(query) && isOwnerMatch && isDateInRange();
-      });
-
-
-      const filteredBC = birthCert.filter(transaction => {
-        const transactionId = transaction.transaction_id.toUpperCase();
-        const query = searchQuery.toUpperCase();
-        const Name = ((transaction.f_name || '') + (transaction.m_name || '') + (transaction.l_name || '')).toUpperCase().includes(searchOwner.toUpperCase());
-    
-        const isDateInRange = () => {
-          if (!selectedDate || !selectedDatee) {
-            return true; // No date range selected, include all transactions
-          }
-    
-          const transactionDate = new Date(transaction.date_processed);
-          const startDate = new Date(selectedDate);
-          const endDate = new Date(selectedDatee);
-          endDate.setHours(23, 59, 59, 999);
-    
-          return startDate <= transactionDate && transactionDate <= endDate;
-        };
-    
-        const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 ||
-          (selectedType === 'Birth Certificate' && transaction.trans_type === 'Birth Certificate') ||
-          (selectedType === 'Death Certificate' && transaction.trans_type === 'Death Certificate') ||
-          (selectedType === 'Marriage Certificate' && transaction.trans_type === 'Marriage Certificate');
-    
-        return transactionId.includes(query) && Name && isTypeMatch && isDateInRange();
-      });
-    
-      const filteredDC = deathCert.filter(transaction => {
-        const transactionId = transaction.transaction_id.toUpperCase();
-        const query = searchQuery.toUpperCase();
-        const Name = ((transaction.f_name || '') + (transaction.m_name || '') + (transaction.l_name || '')).toUpperCase().includes(searchOwner.toUpperCase());
-    
-        const isDateInRange = () => {
-          if (!selectedDate || !selectedDatee) {
-            return true; // No date range selected, include all transactions
-          }
-    
-          const transactionDate = new Date(transaction.date_processed);
-          const startDate = new Date(selectedDate);
-          const endDate = new Date(selectedDatee);
-          endDate.setHours(23, 59, 59, 999);
-    
-          return startDate <= transactionDate && transactionDate <= endDate;
-        };
-    
-        const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 ||
-          (selectedType === 'Birth Certificate' && transaction.trans_type === 'Birth Certificate') ||
-          (selectedType === 'Death Certificate' && transaction.trans_type === 'Death Certificate') ||
-          (selectedType === 'Marriage Certificate' && transaction.trans_type === 'Marriage Certificate');
-    
-        return transactionId.includes(query) && Name && isTypeMatch && isDateInRange();
-      });
-    
-      const filteredMC = marriageCert.filter(transaction => {
-        const transactionId = transaction.transaction_id.toUpperCase();
-        const query = searchQuery.toUpperCase();
-        const Name = ((transaction.f_name || '') + (transaction.m_name || '') + (transaction.l_name || '')).toUpperCase().includes(searchOwner.toUpperCase());
-    
-        const isDateInRange = () => {
-          if (!selectedDate || !selectedDatee) {
-            return true; // No date range selected, include all transactions
-          }
-    
-          const transactionDate = new Date(transaction.date_processed);
-          const startDate = new Date(selectedDate);
-          const endDate = new Date(selectedDatee);
-          endDate.setHours(23, 59, 59, 999);
-    
-          return startDate <= transactionDate && transactionDate <= endDate;
-        };
-    
-        const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 ||
-          (selectedType === 'Birth Certificate' && transaction.trans_type === 'Birth Certificate') ||
-          (selectedType === 'Death Certificate' && transaction.trans_type === 'Death Certificate') ||
-          (selectedType === 'Marriage Certificate' && transaction.trans_type === 'Marriage Certificate');
-    
-        return transactionId.includes(query) && Name && isTypeMatch && isDateInRange();
-      });
-    
-      
-    setFilteredTaxClearance(filteredClearance);
-    setFilteredTaxPayment(filteredPayment);
-    setFilteredBusinessPermit(filteredBP);
-    setFilteredctcCedula(filteredCTC);
-    setFilteredBirthCert(filteredBC);
-    setFilteredDeathCert(filteredDC);
-    setFilteredMarriageCert(filteredMC);
-  };  
   
   useEffect(() => {
     setFilteredTaxClearance(taxClearance);
@@ -269,6 +132,7 @@ const AdminAllArchives = ({ taxPayment, taxClearance, busOffice, businessData, b
   useEffect(() => {
     setFilteredMarriageCert(marriageCert);
   }, [marriageCert]);
+
   
   const handleClearFilter = () => {
     setSearchQuery('');
@@ -284,6 +148,7 @@ const AdminAllArchives = ({ taxPayment, taxClearance, busOffice, businessData, b
     setFilteredBirthCert(birthCert);
     setFilteredDeathCert(deathCert);
     setFilteredMarriageCert(marriageCert);
+    setDropdownOpen(false);
   };
   
   const handleInputChange = (e) => {
@@ -359,7 +224,7 @@ const AdminAllArchives = ({ taxPayment, taxClearance, busOffice, businessData, b
           filteredDeathCert={filteredDeathCert}
           filteredMarriageCert={filteredMarriageCert}
           handleModalOpen={handleModalOpen}
-          section={'Processing'}
+          admin_type={admin_type}
         />
       );
     } else if (viewMode === 'card') {
@@ -373,7 +238,7 @@ const AdminAllArchives = ({ taxPayment, taxClearance, busOffice, businessData, b
           filteredDeathCert={filteredDeathCert}
           filteredMarriageCert={filteredMarriageCert}
           handleModalOpen={handleModalOpen}
-          section={'Processing'}
+          admin_type={admin_type}
         />
       );
     }

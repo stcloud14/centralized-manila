@@ -677,20 +677,18 @@ const AdminBPView = ({ selectedTransaction, isOpen, busOffice, businessData, bus
               {status_type === "Pending" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-yellow-200 text-yellow-800 w-24">{selectedTransaction.status_type}</span>}
               {status_type === "Paid" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-emerald-200 text-emerald-800 w-24">{selectedTransaction.status_type}</span>}
               {status_type === "Processing" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-purple-200 text-purple-800 w-24">{selectedTransaction.status_type}</span>}
+              {status_type === "Complete" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-blue-200 text-blue-800 w-24">{selectedTransaction.status_type}</span>}
+              {status_type === "Rejected" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-red-200 text-red-800 w-24">{selectedTransaction.status_type}</span>}
+              {status_type === "Expired" && <span className="whitespace-nowrap md:mb-0 mb-1 text-xs py-0.5 font-semibold rounded-full bg-orange-200 text-orange-800 w-24">{selectedTransaction.status_type}</span>}
             </div>
             ) : null}
 
             {/* <hr className='mb-1'/> */}
-            <div className="flex flex-col text-sm italic sm:flex-row text-start mb-1">
-            {/* <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : "Amount to Pay"}</span>
-              <span className="font-semibold whitespace-nowrap ml-4"> 
-              {selectedTransaction && selectedTransaction.amount !== 0 ? (
-                `P ${selectedTransaction.bus_amount !== undefined ? selectedTransaction.bus_amount + '.00' : 
-              selectedTransaction.amount !== undefined ? selectedTransaction.amount + '.00' : '-'}`
-              ) : "Kindly input additional charges"}
-              </span> */}
-              <span>Note: Awaiting user payment</span>
-            </div>
+            {status_type === 'Pending' ? (
+              <div className="flex flex-col text-sm italic sm:flex-row text-start mb-1">
+                <span>Note: Awaiting user payment</span>
+              </div>
+            ) : null}
           </div>
 
           <div className="bg-white dark:bg-[#212121] px-4 pt-3 pb-5 gap-3 sm:px-6 flex items-center justify-end">

@@ -1,18 +1,26 @@
 import React from 'react';
 import StatusBadgeDesktop from '../../partials/StatusBadgeDesktop';
 
-const ArchivesTableView = ({ filteredTaxClearance, filteredTaxPayment, filteredBusinessPermit, filteredctcCedula, filteredBirthCert, filteredDeathCert, filteredMarriageCert, handleModalOpen, section }) => {
+const ArchivesTableView = ({ filteredTaxClearance, filteredTaxPayment, filteredBusinessPermit, filteredctcCedula, filteredBirthCert, filteredDeathCert, filteredMarriageCert, handleModalOpen, admin_type }) => {
 
-  // Combine all transactions into one array
-  const allTransactions = [
-    ...filteredTaxClearance,
-    ...filteredTaxPayment,
-    ...filteredBusinessPermit,
-    ...filteredctcCedula,
-    ...filteredBirthCert,
-    ...filteredDeathCert,
-    ...filteredMarriageCert
-  ];
+
+    let allTransactions = [];
+    switch(admin_type) {
+      case 'rptax_admin':
+        allTransactions = [...filteredTaxClearance, ...filteredTaxPayment];
+        break;
+      case 'business_admin':
+        allTransactions = [...filteredBusinessPermit];
+        break;
+      case 'cedula_admin':
+        allTransactions = [...filteredctcCedula];
+        break;
+      case 'lcr_admin':
+        allTransactions = [...filteredBirthCert, ...filteredDeathCert, ...filteredMarriageCert];
+        break;
+      default:
+        allTransactions = [];
+    }
 
   // Sort transactions based on date, with the latest on top
   allTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));

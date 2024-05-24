@@ -112,34 +112,48 @@ const AdminArchivesForm = () => {
               <h1 className="mb-7 text-sm italic text-center text-slate-700 dark:text-gray-300">Transactions</h1>
 
               <div className="flex items-center justify-center space-x-6 text-xs">
-                <div className="flex items-center">
-                  <div className="w-4 h-1 mr-2 bg-blue-500"></div>
-                  <p className="text-slate-700 dark:text-white">Tax Clearance</p>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-4 h-1 mr-2 bg-[#0057e7]"></div>
-                  <p className="text-slate-700 dark:text-white">Tax Payment</p>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-4 h-1 mr-2 bg-[#d62d20]"></div>
-                  <p className="text-slate-700 dark:text-white">Business Permit</p>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-4 h-1 mr-2 bg-[#ffa700]"></div>
-                  <p className="text-slate-700 dark:text-white">CTC/Cedula</p>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-4 h-1 mr-2 bg-[#008744] dark:bg-[#026b37]"></div>
-                  <p className="text-slate-700 dark:text-white">Birth Certificate</p>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-4 h-1 mr-2 bg-[#17bf6c]"></div>
-                  <p className="text-slate-700 dark:text-white">Death Certificate</p>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-4 h-1 mr-2 bg-[#78ffbc]"></div>
-                  <p className="text-slate-700 dark:text-white">Marriage Certificate</p>
-                </div>
+                {admin_type === 'rptax_admin' && (
+                  <>
+                  <div className="flex items-center">
+                    <div className="w-4 h-1 mr-2 bg-blue-500"></div>
+                    <p className="text-slate-700 dark:text-white">Tax Clearance</p>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-4 h-1 mr-2 bg-[#0057e7]"></div>
+                    <p className="text-slate-700 dark:text-white">Tax Payment</p>
+                  </div>
+                  </>
+                )}
+                {admin_type === 'business_admin' && (
+                  <div className="flex items-center">
+                    <div className="w-4 h-1 mr-2 bg-[#d62d20]"></div>
+                    <p className="text-slate-700 dark:text-white">Business Permit</p>
+                  </div>
+                )}
+                {admin_type === 'cedula_admin' && (
+                  <div className="flex items-center">
+                    <div className="w-4 h-1 mr-2 bg-[#ffa700]"></div>
+                    <p className="text-slate-700 dark:text-white">CTC/Cedula</p>
+                  </div>
+                )}
+                {admin_type === 'lcr_admin' && (
+                  <>
+                  <div className="flex items-center">
+                    <div className="w-4 h-1 mr-2 bg-[#008744] dark:bg-[#026b37]"></div>
+                    <p className="text-slate-700 dark:text-white">Birth Certificate</p>
+                  </div>
+                
+                  <div className="flex items-center">
+                    <div className="w-4 h-1 mr-2 bg-[#17bf6c]"></div>
+                    <p className="text-slate-700 dark:text-white">Death Certificate</p>
+                  </div>
+                
+                  <div className="flex items-center">
+                    <div className="w-4 h-1 mr-2 bg-[#78ffbc]"></div>
+                    <p className="text-slate-700 dark:text-white">Marriage Certificate</p>
+                  </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
