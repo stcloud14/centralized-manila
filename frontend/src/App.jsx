@@ -63,6 +63,7 @@ import AdminAuditTrail from './admin_pages/AdminAuditTrail';
 import AdminSettings from './admin_components/AdminSettings';
 import AdminContacts from './admin_pages/AdminContacts';
 import AdminAddAdmin from './admin_pages/AdminAddAdmin';
+import AdminArchives from './admin_pages/AdminArchives';
 
 function App() {
   const location = useLocation();
@@ -136,6 +137,7 @@ function App() {
         <Route exact path="/admin_audittrail/:admin_type" element={<AdminAuditTrail />} />
         <Route exact path="/admin_contacts/:admin_type" element={<AdminContacts />} />
         <Route exact path="/admin_add_admin/:admin_type" element={<AdminContacts />} />
+        <Route exact path="/admin_archives/:admin_type" element={<AdminArchives />} />
 
         {/* Admin Dashboard Routes */}
         <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />

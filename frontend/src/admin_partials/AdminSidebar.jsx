@@ -363,29 +363,6 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               </AdminSidebarLinkGroup>
               ) : null}
 
-              {admin_type === 'rptax_admin'  ? (
-              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
-                <NavLink 
-                end 
-                to={`/admin_archive_rptax/${admin_type}`}
-                  className={({ isActive }) =>
-                  'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
-                }
-                >
-                  <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg"  className={`w-6 h-6 fill-current text-slate-400 `} viewBox="0 0 24 24">
-                    <path d="M3.375 3C2.339 3 1.5 3.84 1.5 4.875v.75c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875v-.75C22.5 3.839 21.66 3 20.625 3H3.375Z" />
-                    <path fill-rule="evenodd" d="m3.087 9 .54 9.176A3 3 0 0 0 6.62 21h10.757a3 3 0 0 0 2.995-2.824L20.913 9H3.087Zm6.163 3.75A.75.75 0 0 1 10 12h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
-                  </svg>
-                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                      Archives
-                    </span>
-                  </div>
-                </NavLink>
-              </li>
-              ) : null} 
-
-
 
               {/* Business Permit */}
               {admin_type === 'business_admin' ? (
@@ -687,7 +664,31 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               </AdminSidebarLinkGroup>
               ) : null}
 
+
+              {admin_type !== 'chief_admin'  ? (
+              <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
+                <NavLink 
+                end 
+                to={`/admin_archives/${admin_type}`}
+                  className={({ isActive }) =>
+                  'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
+                }
+                >
+                  <div className="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg"  className={`w-6 h-6 fill-current text-slate-400 `} viewBox="0 0 24 24">
+                    <path d="M3.375 3C2.339 3 1.5 3.84 1.5 4.875v.75c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875v-.75C22.5 3.839 21.66 3 20.625 3H3.375Z" />
+                    <path fill-rule="evenodd" d="m3.087 9 .54 9.176A3 3 0 0 0 6.62 21h10.757a3 3 0 0 0 2.995-2.824L20.913 9H3.087Zm6.163 3.75A.75.75 0 0 1 10 12h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+                  </svg>
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Archives
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
+              ) : null} 
+
             </ul>
+
           </div>
           
           {/* Maintenance group */}
