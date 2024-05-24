@@ -72,4 +72,19 @@ router.post("/admin", async (req, res) => {
     }
 });
 
+router.post("/admin/add", async (req, res) => {
+    const { mobile_no, password, adminType } = req.body;
+
+    try {  
+        const insertSql = "INSERT INTO admin_auth (mobile_no, password, admin_type) VALUES (?, ?, ?)";
+        await queryDatabase(conn1, insertSql, [mobile_no, password, adminType]);
+        
+        return res.status(201).json({ message: "Admin added successfully" });
+    } catch (err) {
+        console.error("Error adding admin:", err);
+        return res.status(500).json({ message: "Error occurred while adding admin" });
+    }
+});
+
+
 export default router;
