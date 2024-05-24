@@ -14,6 +14,8 @@ const  AdminAuditTrailForm = () => {
   
   const { user_id} = useParams();
 
+  const { admin_type } = useParams();
+
   // const location = useLocation();
   // const { pathname } = location;
   // const user_id = pathname.split("/")[2];
@@ -29,6 +31,38 @@ const  AdminAuditTrailForm = () => {
   const [selectedType, setSelectedType] = useState('All');
 
   const Base_Url = process.env.Base_Url;
+
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    
+    const checkToken = async (token) => {
+        try {
+            const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const { admin_type } = response.data;
+            // Assuming admin_type is received in the response from the backend
+            if (admin_type === 'chief_admin') {
+                // Allow access to the audit page
+                setReload(false);
+            } else {
+                window.location.href = '/indexadmin';
+            }
+        } catch (error) {
+            window.location.href = '/indexadmin';
+        }
+    };
+
+    if (token) {
+        checkToken(token);
+    } else {
+        // Redirect to indexadmin if token is not present
+        window.location.href = '/indexadmin';
+    }
+}, []);
 
 
   useEffect(() => {

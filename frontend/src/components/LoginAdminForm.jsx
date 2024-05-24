@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,6 +7,7 @@ const LoginAdminForm = () => {
     admin_name: "",
     admin_pass: "",
   });
+  const [authenticated, setAuthenticated] = useState(false);
 
   const [loginError, setLoginError] = useState(null);
   const [userAuth, setUserAuth] = useState({ admin_type: null }); // Add this line
@@ -21,6 +22,62 @@ const LoginAdminForm = () => {
   };
   const Base_Url = process.env.Base_Url;
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      authenticateWithToken(token);
+    }
+  }, []);
+  
+  const authenticateWithToken = async (token) => {
+    try {
+      const response = await axios.get(`${Base_Url}token/protected-route/admin`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("response", response)
+  
+      if (response.status === 200) {
+        const adminType = response.data.admin_type;
+  
+        // Assuming setAuthenticated is a function to set authentication state
+        setAuthenticated(true);
+  
+        // Navigate based on admin type
+        switch (adminType) {
+          case 'chief_admin':
+            navigate(`/admin_dash_chief/${adminType}`);
+            break;
+          case 'rptax_admin':
+            navigate(`/admin_dash_rp/${adminType}`);
+            break;
+          case 'business_admin':
+            navigate(`/admin_dash_bp/${adminType}`);
+            break;
+          case 'cedula_admin':
+              navigate(`/admin_dash_ctc/${adminType}`);
+              break;
+          case 'lcr_admin':
+              navigate(`/admin_dash_lcr/${adminType}`);
+              break;
+          case 'registry_admin':
+              navigate(`/admin_dash_ur/${adminType}`);
+              break;
+          default:
+            // Handle unknown admin types or show error message
+            break;
+        }
+      }
+    } catch (error) {
+      // Handle authentication failure here
+      console.error('Authentication failed:', error);
+      // Assuming setAuthenticated is a function to set authentication state
+      setAuthenticated(false);
+      localStorage.removeItem('token');
+      // Redirect or show error message as needed
+    }
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
   
@@ -29,29 +86,80 @@ const LoginAdminForm = () => {
   
       if (response.data && response.data.message === 'Login successful') {
         const admin = response.data.admin;
-        const { admin_type } = response.data.admin;
+        const { admin_type } = admin;
   
         setUserAuth((prev) => ({ ...prev, admin_type }));
   
+        // Log the admin_type for debugging
+        console.log("Admin Type:", admin_type);
+  
         switch (admin.role) {
           case 'chief_admin':
-            navigate(`/admin_dash_chief/${admin_type}`);
+            try {
+              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const { token } = tokenResponse.data;
+              localStorage.setItem('token', token);
+              navigate(`/admin_dash_chief/${admin_type}`);
+            } catch (error) {
+              console.error('Token Generation Error:', error);
+              setLoginError("Token generation failed for chief admin.");
+            }
             break;
           case 'rptax_admin':
-            navigate(`/admin_dash_rp/${admin_type}`);
+            try {
+              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const { token } = tokenResponse.data;
+              localStorage.setItem('token', token);
+              navigate(`/admin_dash_rp/${admin_type}`);
+            } catch (error) {
+              console.error('Token Generation Error:', error);
+              setLoginError("Token generation failed for rptax admin.");
+            }
             break;
           case 'business_admin':
-            navigate(`/admin_dash_bp/${admin_type}`);
+            try {
+              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const { token } = tokenResponse.data;
+              localStorage.setItem('token', token);
+              navigate(`/admin_dash_bp/${admin_type}`);
+            } catch (error) {
+              console.error('Token Generation Error:', error);
+              setLoginError("Token generation failed for rptax admin.");
+            }
             break;
           case 'cedula_admin':
-            navigate(`/admin_dash_ctc/${admin_type}`);
+            try {
+              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const { token } = tokenResponse.data;
+              localStorage.setItem('token', token);
+              navigate(`/admin_dash_ctc/${admin_type}`);
+            } catch (error) {
+              console.error('Token Generation Error:', error);
+              setLoginError("Token generation failed for rptax admin.");
+            }
             break;
           case 'lcr_admin':
+            try {
+              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const { token } = tokenResponse.data;
+              localStorage.setItem('token', token);
               navigate(`/admin_dash_lcr/${admin_type}`);
-              break;
+            } catch (error) {
+              console.error('Token Generation Error:', error);
+              setLoginError("Token generation failed for rptax admin.");
+            }
+            break;
           case 'registry_admin':
+            try {
+              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const { token } = tokenResponse.data;
+              localStorage.setItem('token', token);
               navigate(`/admin_dash_ur/${admin_type}`);
-              break;
+            } catch (error) {
+              console.error('Token Generation Error:', error);
+              setLoginError("Token generation failed for rptax admin.");
+            }
+            break;
           default:
             setLoginError("Unknown or unsupported role");
         }
