@@ -66,7 +66,7 @@ const ArchivesCardView = ({ filteredTaxClearance, filteredTaxPayment, filteredBu
             <div className="flex justify-start items-center text-xs text-slate-600 dark:text-slate-300 my-1">
               <span>Status: {transaction.status_type}</span>
             </div>
-            <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount Paid: P {transaction.amount}</div>
+            <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Amount: P {transaction.amount}</div>
           </div>
         </div>
       ))}
