@@ -24,6 +24,7 @@ const AdminAddAdminForm =()=>{
     setAdminType(e.target.value);
     console.log("Admin Type:", adminType);
   };
+  const [Reload, setReload] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -115,6 +116,10 @@ const AdminAddAdminForm =()=>{
   const handleConfirmClose = () => {
     setIsCompleteConfirm(false);
   };
+
+  if(Reload){
+    return;
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

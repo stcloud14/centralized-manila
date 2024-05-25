@@ -25,7 +25,8 @@ const AdminBusinessForm3 =()=>{
   const [businessPermit, setBusinessPermit] = useState([]);
   const [businessData, setBusinessData] = useState([]);
   const [busOffice, setBusOffice] = useState(null);
-  console.log("userrole", admin_type)
+
+  const [Reload, setReload] = useState(true)
 
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const AdminBusinessForm3 =()=>{
                 }
             });
             const { admin_type } = response.data;
-            if (admin_type === 'cedula_admin') {
+            if (admin_type === 'business_admin') {
                 // Allow access to the audit page
                 setReload(false);
             } else {
@@ -125,7 +126,9 @@ const AdminBusinessForm3 =()=>{
       }
     }, [isFetchedData]);
 
-  
+  if(Reload){
+    return;
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

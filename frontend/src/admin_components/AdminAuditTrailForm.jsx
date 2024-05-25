@@ -30,6 +30,8 @@ const  AdminAuditTrailForm = () => {
   const [selectedStatus, setSelectedStatus] = useState('All');
   const [selectedType, setSelectedType] = useState('All');
 
+  const [Reload, setReload] = useState(true)
+
   const Base_Url = process.env.Base_Url;
 
   
@@ -145,6 +147,10 @@ const  AdminAuditTrailForm = () => {
     console.log("Dropdown Value Changed:", selectedStatus);
     setSelectedStatus(selectedStatus);
   };
+
+  if(Reload){
+    return;
+  }
 
   
 

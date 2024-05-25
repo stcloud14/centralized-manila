@@ -210,7 +210,7 @@ router.get('/cedulacert', async (req, res) => {
             });
         }
 
-        console.log('User Transactions:', userTransactions);
+        // console.log('User Transactions:', userTransactions);
 
     res.json({
       cedulacert: userTransactions,

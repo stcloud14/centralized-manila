@@ -18,6 +18,8 @@ const AdminBusinessForm2 =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [Reload, setReload] = useState(true)
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     
@@ -111,6 +113,10 @@ const AdminBusinessForm2 =()=>{
       fetchData();
     }, []);
 
+
+    if(Reload){
+      return;
+    }
   
 
   return (
