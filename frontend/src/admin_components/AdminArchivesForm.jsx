@@ -31,6 +31,33 @@ const AdminArchivesForm = () => {
 
   console.log("userrole", admin_type)
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    
+    const checkToken = async (token) => {
+
+            const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const { admin_type } = response.data;
+            if (admin_type) {
+                // Allow access to the audit page
+                setReload(false);
+            } else {
+                window.location.href = '/indexadmin';
+            }
+    };
+
+    if (token) {
+        checkToken(token);
+    } else {
+        // Redirect to indexadmin if token is not present
+        window.location.href = '/indexadmin';
+    }
+}, []);
+
   const fetchUserTransaction = async (endpoint) => {
     try {
       const res = await axios.get(`${Base_Url}adminarchives/${endpoint}`);
