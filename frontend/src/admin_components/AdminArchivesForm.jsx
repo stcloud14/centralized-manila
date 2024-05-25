@@ -31,7 +31,7 @@ const AdminArchivesForm = () => {
 
   const Base_Url = process.env.Base_Url;
 
-  console.log("userrole", admin_type)
+  // console.log("userrole", admin_type)
 
   useEffect(() => {
     const token = localStorage.getItem('token');
