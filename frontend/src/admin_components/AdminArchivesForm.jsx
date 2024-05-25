@@ -26,29 +26,37 @@ const AdminArchivesForm = () => {
   const [birthCert, setBirthCert] = useState([]);
   const [deathCert, setDeathCert] = useState([]);
   const [marriageCert, setMarriageCert] = useState([]);
-
+  const [fetchData, setIsFetchedData] = useState(false)
   const [Reload, setReload] = useState(true)
 
   const Base_Url = process.env.Base_Url;
 
   // console.log("userrole", admin_type)
-
   useEffect(() => {
     const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
-
+      try{
             const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (admin_type) {
-                // Allow access to the audit page
+
+            const adminType = response.data.admin_type;
+            const tokenType = response.data.tokenAdmin;
+            console.log("response", response)
+            console.log("adminType", response.data.admin_type)
+
+            console.log("tokenType", response.data.tokenAdmin)
+            if (adminType === tokenType) {
                 setReload(false);
             } else {
                 window.location.href = '/indexadmin';
             }
+          }catch{
+            window.location.href = `/indexadmin`;
+          }
     };
 
     if (token) {

@@ -78,29 +78,29 @@ const AdminLCRForm1 =()=>{
     fetchUserTransaction();
   }, []);  
 
-  // const fetchExpiredTransaction = async () => {
-  //   try {
-  //     await axios.post(`${Base_Url}email/updateexpired`);
-  //     console.log('Sent emails')
+  const fetchExpiredTransaction = async () => {
+    try {
+      await axios.post(`${Base_Url}email/updateexpired`);
+      console.log('Sent emails')
       
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    // useEffect(() => {
-    //   const fetchData = async () => {
-    //       try {
-    //           await fetchExpiredTransaction();
+    useEffect(() => {
+      const fetchData = async () => {
+          try {
+              await fetchExpiredTransaction();
   
-    //           await fetchUserTransaction();
-    //       } catch (error) {
-    //           console.error(error);
-    //       }
-    //   };
+              await fetchUserTransaction();
+          } catch (error) {
+              console.error(error);
+          }
+      };
   
-    //   fetchData();
-    // }, []);
+      fetchData();
+    }, []);
 
     if(Reload){
       return

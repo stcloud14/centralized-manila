@@ -39,8 +39,8 @@ const AdminAddAdminForm =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
-            // Assuming admin_type is received in the response from the backend
-            if (admin_type === 'chief_admin') {
+            const adminType = response.data.admin_type;
+            if (adminType === 'chief_admin') {
                 // Allow access to the audit page
                 setReload(false);
             } else {

@@ -23,7 +23,6 @@ const AdminVerifyReqsForm =()=>{
     const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
-      try{
             const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -37,12 +36,6 @@ const AdminVerifyReqsForm =()=>{
             } else {
                 window.location.href = '/indexadmin';
             }
-          } catch {
-            window.location.href = '/indexadmin';
-
-          }
-
-
     };
 
     if (token) {
