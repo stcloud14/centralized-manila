@@ -53,6 +53,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
         window.location.href = '/indexadmin';
     }
 }, []);
+
   useEffect(() => {
     const fetchREPORTData = async () => {
       try {
