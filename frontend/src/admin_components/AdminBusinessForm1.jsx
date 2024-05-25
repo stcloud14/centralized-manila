@@ -26,7 +26,6 @@ const AdminBusinessForm1 =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'business_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -49,6 +48,8 @@ const AdminBusinessForm1 =()=>{
   const [businessPermit, setBusinessPermit] = useState([]);
   const [businessData, setBusinessData] = useState([]);
   const [busOffice, setBusOffice] = useState(null);
+
+  const [Reload, setReload] = useState(true)
   console.log("userrole", admin_type)
   const Base_Url = process.env.Base_Url;
 
@@ -121,7 +122,9 @@ const AdminBusinessForm1 =()=>{
       }
     }, [isFetchedData]);
 
-  
+  if(Reload){
+    return
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
