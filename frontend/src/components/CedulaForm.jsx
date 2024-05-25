@@ -825,7 +825,7 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                     <label htmlFor="ctc_employmentstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Employment Status<Req /></label>
                   </div>
                   
-                  <div className="flex flex-row group ml-4 items-center">
+                  <div className="flex flex-row group ml-4 items-center md:col-span-2">
                       
                   <p className="text-xs text-slate-700 dark:text-white mt-2.5 mb-1.5">
                     {selectedFile.value && selectedFile.fieldName === 'ctc_attachment' ? (
@@ -850,6 +850,13 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                       <RemoveButton handleRemove={handleRemove} />
                     </td>
                   )}
+
+                    <span className="text-[0.60rem] text-gray-500 dark:text-gray-400 items-center ml-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-3 h-3 pb-0.5 inline-block text-gray-500 dark:text-gray-400">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+                      </svg>
+                      If you are a STUDENT, upload SCHOOL ID. If you are EMPLOYED, upload PROOF OF INCOME.
+                    </span>
 
                   </div>
                   
