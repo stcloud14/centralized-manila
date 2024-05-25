@@ -285,7 +285,7 @@ const handleProceed = (e) => {
   
   // Please fill up the necessary forms
    const requiredFields = ['ctc_lname','ctc_fname','ctc_sex','ctc_region','ctc_province','ctc_municipal',
- 'ctc_reqbrgy','ctc_reqhnum','ctc_reqstreet','ctc_reqzip','ctc_civilstatus','ctc_cznstatus', 'ctc_taxpayeraccno', 'ctc_residencetaxdue',
+ 'ctc_reqbrgy','ctc_reqhnum','ctc_reqstreet','ctc_reqzip','ctc_civilstatus','ctc_cznstatus', 'ctc_residencetaxdue',
 'ctc_employmentstatus','ctc_validid','ctc_profession']; //The input fields that is required
    const isIncomplete = requiredFields.some((field) => !CtcCedula[field]);
 
@@ -318,6 +318,18 @@ const handleInputChange = (e) => {
   
   
   setCtcCedula((prevData) => {
+    let newState = {
+      ...prevData,
+      [name]: updatedValue,
+    };
+
+    if (name === 'ctc_employmentstatus') {
+      newState = {
+        ...newState,
+        ctc_taxpayeraccno: value === 'UNEMPLOYED' ? '' : prevData.ctc_taxpayeraccno,
+      };
+    }
+
 
     if (name === 'ctc_incomeca') {
 
@@ -482,7 +494,6 @@ const handleInputChange = (e) => {
       };
     }
 
-    
     if (name === 'ctc_height' || name === 'ctc_weight') {
       // Remove non-numeric characters and multiple dots from the input value
       let numericValue = value.replace(/[^\d.]/g, ''); // Remove non-numeric characters and multiple dots
@@ -496,9 +507,10 @@ const handleInputChange = (e) => {
         [name]: numericValue,
       };
 
-    } else {
+    }  else {
       return {
         ...prevData,
+        ...newState, // Merge newState with prevData
         [id]: updatedValue,
       };
     }
@@ -806,7 +818,9 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div className="relative z-0 w-full mb-6 group">
                     <select onChange={handleInputChange} value={CtcCedula.ctc_employmentstatus} name="ctc_employmentstatus" id="ctc_employmentstatus" defaultValue={0} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer cursor-pointer" required>
-                      <EmploymentStatusDropdown/>
+                    <option value="0" className='dark:bg-[#3d3d3d]'>Select Employment Status</option>
+                    <option value="EMPLOYED" className='dark:bg-[#3d3d3d]'>Employed </option>
+                    <option value="UNEMPLOYED" className='dark:bg-[#3d3d3d]'>Unemployed</option>
                     </select>
                     <label htmlFor="ctc_employmentstatus" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Employment Status<Req /></label>
                   </div>
@@ -841,11 +855,27 @@ const [isModalVisible, setIsModalVisible] = useState(true);
                   
                 </div>
 
-                <div className="grid md:grid-cols-2 md:gap-6">
-                  <div className="relative z-0 w-full mb-6 group">
-                    <input onChange={handleInputChange} value={CtcCedula.ctc_taxpayeraccno} type="text" name="ctc_taxpayeraccno" id="ctc_taxpayeraccno" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required/>
-                    <label htmlFor="ctc_taxpayeraccno" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tax Payer Account No.<Req /></label>
-                  </div>
+        <div className="grid md:grid-cols-2 md:gap-6">
+        <div className="relative z-0 w-full mb-6 group">
+          <input
+            onChange={handleInputChange}
+            value={CtcCedula.ctc_taxpayeraccno}
+            type="text"
+            name="ctc_taxpayeraccno"
+            id="ctc_taxpayeraccno"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            disabled={CtcCedula.ctc_employmentstatus === 'UNEMPLOYED'}
+            {...(CtcCedula.ctc_employmentstatus !== 'UNEMPLOYED' && { required: true })}
+          />
+          <label
+            htmlFor="ctc_taxpayeraccno"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Tax Payer Account No.
+            {CtcCedula.ctc_employmentstatus !== 'UNEMPLOYED' && <Req />}
+          </label>
+        </div>
                   
                   <div className="relative z-0 w-full mb-6 group">
                     <Flatpickr
