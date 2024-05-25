@@ -39,7 +39,9 @@ const AdminBusinessForm3 =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (admin_type === 'business_admin') {
+            const adminType = response.data.admin_type;
+
+            if (adminType === 'business_admin') {
                 // Allow access to the audit page
                 setReload(false);
             } else {
