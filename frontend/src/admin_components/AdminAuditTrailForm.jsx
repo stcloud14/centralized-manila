@@ -44,7 +44,6 @@ const  AdminAuditTrailForm = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             // Assuming admin_type is received in the response from the backend
             if (admin_type === 'chief_admin') {
                 // Allow access to the audit page
