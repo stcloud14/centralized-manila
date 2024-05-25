@@ -19,7 +19,8 @@ import notifications from './routes/notifications.js';
 import forgotPassword from './routes/forgotPassword.js';
 import emailHandler from './routes/emailHandler.js';
 import generateSOAHandler from './routes/generateSOAHandler.js';
-import jwttoken from './routes/token.js';
+import token from './routes/token.js';
+import admintoken from './routes/admintoken.js'
 
 import adminProfileHandler from './routes/adminProfileHandler.js';
 import adminRptaxHandler from './routes/adminRptaxHandler.js';
@@ -89,7 +90,8 @@ app.use('/api/notifications', notifications);
 app.use('/api/forgotpass', forgotPassword);
 app.use('/api/email', emailHandler);
 app.use('/api/soa', generateSOAHandler);
-app.use('/api/token', jwttoken);
+app.use('/api/token', token);
+app.use('/api/admintoken', admintoken);
 
 // Admin routes
 app.use('/api/adminprofile', adminProfileHandler);

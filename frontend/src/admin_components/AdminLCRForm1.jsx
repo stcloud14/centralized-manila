@@ -24,19 +24,24 @@ const AdminLCRForm1 =()=>{
     const token = localStorage.getItem('token');
     
     const checkToken = async (token) => {
-
-            const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            if (admin_type === 'lcr_admin') {
-                // Allow access to the audit page
-                setReload(false);
-            } else {
-                window.location.href = '/indexadmin';
+      try{
+        const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
             }
-    };
+        });
+        const adminType = response.data.admin_type;
+        console.log("response", response)
+        if (adminType === 'lcr_admin') {
+            setReload(false);
+        } else {
+            window.location.href = '/indexadmin';
+        }
+      } catch {
+        window.location.href = '/indexadmin';
+      }
+};
+
 
     if (token) {
         checkToken(token);
@@ -73,29 +78,29 @@ const AdminLCRForm1 =()=>{
     fetchUserTransaction();
   }, []);  
 
-  const fetchExpiredTransaction = async () => {
-    try {
-      await axios.post(`${Base_Url}email/updateexpired`);
-      console.log('Sent emails')
+  // const fetchExpiredTransaction = async () => {
+  //   try {
+  //     await axios.post(`${Base_Url}email/updateexpired`);
+  //     console.log('Sent emails')
       
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-    useEffect(() => {
-      const fetchData = async () => {
-          try {
-              await fetchExpiredTransaction();
+    // useEffect(() => {
+    //   const fetchData = async () => {
+    //       try {
+    //           await fetchExpiredTransaction();
   
-              await fetchUserTransaction();
-          } catch (error) {
-              console.error(error);
-          }
-      };
+    //           await fetchUserTransaction();
+    //       } catch (error) {
+    //           console.error(error);
+    //       }
+    //   };
   
-      fetchData();
-    }, []);
+    //   fetchData();
+    // }, []);
 
     if(Reload){
       return

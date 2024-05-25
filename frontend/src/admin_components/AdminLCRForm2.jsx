@@ -24,18 +24,23 @@ const AdminLCRForm2 =()=>{
     const token = localStorage.getItem('token');
     
     const checkToken = async (token) => {
-
-            const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
+      try{
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (admin_type === 'lcr_admin') {
-                // Allow access to the audit page
+            const adminType = response.data.admin_type;
+            console.log("response", response)
+            if (adminType === 'lcr_admin') {
                 setReload(false);
             } else {
                 window.location.href = '/indexadmin';
             }
+          } catch {
+            window.location.href = '/indexadmin';
+
+          }
     };
 
     if (token) {
@@ -45,6 +50,7 @@ const AdminLCRForm2 =()=>{
         window.location.href = '/indexadmin';
     }
 }, []);
+
 
   const Base_Url = process.env.Base_Url;
 

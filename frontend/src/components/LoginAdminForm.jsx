@@ -31,7 +31,7 @@ const LoginAdminForm = () => {
   
   const authenticateWithToken = async (token) => {
     try {
-      const response = await axios.get(`${Base_Url}token/protected-route/admin`, {
+      const response = await axios.get(`${Base_Url}admintoken/protected-route/admin`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -78,6 +78,7 @@ const LoginAdminForm = () => {
       // Redirect or show error message as needed
     }
   };
+
   const handleLogin = async (e) => {
     e.preventDefault();
   
@@ -96,7 +97,7 @@ const LoginAdminForm = () => {
         switch (admin.role) {
           case 'chief_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
               localStorage.setItem('token', token);
               navigate(`/admin_dash_chief/${admin_type}`);
@@ -107,7 +108,7 @@ const LoginAdminForm = () => {
             break;
           case 'rptax_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
               localStorage.setItem('token', token);
               navigate(`/admin_dash_rp/${admin_type}`);
@@ -118,7 +119,7 @@ const LoginAdminForm = () => {
             break;
           case 'business_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
               localStorage.setItem('token', token);
               navigate(`/admin_dash_bp/${admin_type}`);
@@ -129,7 +130,7 @@ const LoginAdminForm = () => {
             break;
           case 'cedula_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
               localStorage.setItem('token', token);
               navigate(`/admin_dash_ctc/${admin_type}`);
@@ -140,7 +141,7 @@ const LoginAdminForm = () => {
             break;
           case 'lcr_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
               localStorage.setItem('token', token);
               navigate(`/admin_dash_lcr/${admin_type}`);
@@ -151,7 +152,7 @@ const LoginAdminForm = () => {
             break;
           case 'registry_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}token/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
               localStorage.setItem('token', token);
               navigate(`/admin_dash_ur/${admin_type}`);
