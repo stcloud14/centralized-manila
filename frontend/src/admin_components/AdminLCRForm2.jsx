@@ -18,6 +18,8 @@ const AdminLCRForm2 =()=>{
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [Reload, setReload] = useState(true);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     
@@ -28,7 +30,6 @@ const AdminLCRForm2 =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'lcr_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -71,6 +72,10 @@ const AdminLCRForm2 =()=>{
   useEffect(() => {
     fetchUserTransaction();
   }, []);
+
+  if(Reload){
+    return
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
