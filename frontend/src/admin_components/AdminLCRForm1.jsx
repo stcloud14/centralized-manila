@@ -21,7 +21,7 @@ const AdminLCRForm1 =()=>{
   const [Reload, setReload] = useState(true)
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
       try{

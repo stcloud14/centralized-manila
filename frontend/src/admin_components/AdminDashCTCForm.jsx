@@ -27,16 +27,18 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
   const Base_Url = process.env.Base_Url;
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/admin/${admin_type}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (admin_type === 'cedula_admin') {
+            const adminType = response.data.admin_type;
+
+            if (adminType === 'cedula_admin') {
                 // Allow access to the audit page
                 setReload(false);
             } else {

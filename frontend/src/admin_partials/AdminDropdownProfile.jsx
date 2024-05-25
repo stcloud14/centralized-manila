@@ -131,7 +131,7 @@ const AdminDropdownProfile = ({ align, admin_type, userImage }) => {
                 className="font-medium text-sm text-slate-400 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
                 to="/indexadmin"
                 onClick={() => {
-                  localStorage.removeItem('token');
+                  localStorage.removeItem('Admin_token');
                   window.location.reload= (`/indexadmin`);
                   setDropdownOpen(false);
                   setDropdownOpen(!dropdownOpen)}}

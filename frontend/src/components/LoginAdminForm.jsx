@@ -23,7 +23,7 @@ const LoginAdminForm = () => {
   const Base_Url = process.env.Base_Url;
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('Admin_token');
     if (token) {
       authenticateWithToken(token);
     }
@@ -74,7 +74,7 @@ const LoginAdminForm = () => {
       console.error('Authentication failed:', error);
       // Assuming setAuthenticated is a function to set authentication state
       setAuthenticated(false);
-      localStorage.removeItem('token');
+      localStorage.removeItem('Admin_token');
       // Redirect or show error message as needed
     }
   };
@@ -99,7 +99,7 @@ const LoginAdminForm = () => {
             try {
               const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
-              localStorage.setItem('token', token);
+              localStorage.setItem('Admin_token', token);
               navigate(`/admin_dash_chief/${admin_type}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
@@ -110,7 +110,7 @@ const LoginAdminForm = () => {
             try {
               const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
-              localStorage.setItem('token', token);
+              localStorage.setItem('Admin_token', token);
               navigate(`/admin_dash_rp/${admin_type}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
@@ -121,7 +121,7 @@ const LoginAdminForm = () => {
             try {
               const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
-              localStorage.setItem('token', token);
+              localStorage.setItem('Admin_token', token);
               navigate(`/admin_dash_bp/${admin_type}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
@@ -132,7 +132,7 @@ const LoginAdminForm = () => {
             try {
               const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
-              localStorage.setItem('token', token);
+              localStorage.setItem('Admin_token', token);
               navigate(`/admin_dash_ctc/${admin_type}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
@@ -143,7 +143,7 @@ const LoginAdminForm = () => {
             try {
               const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
-              localStorage.setItem('token', token);
+              localStorage.setItem('Admin_token', token);
               navigate(`/admin_dash_lcr/${admin_type}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
@@ -154,7 +154,7 @@ const LoginAdminForm = () => {
             try {
               const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
               const { token } = tokenResponse.data;
-              localStorage.setItem('token', token);
+              localStorage.setItem('Admin_token', token);
               navigate(`/admin_dash_ur/${admin_type}`);
             } catch (error) {
               console.error('Token Generation Error:', error);

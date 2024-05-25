@@ -21,7 +21,7 @@ const AdminLCRForm2 =()=>{
   const [Reload, setReload] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
       try{
@@ -39,7 +39,6 @@ const AdminLCRForm2 =()=>{
             }
           } catch {
             window.location.href = '/indexadmin';
-
           }
     };
 
