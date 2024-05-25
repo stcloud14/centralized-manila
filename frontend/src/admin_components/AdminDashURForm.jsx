@@ -20,6 +20,8 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
 
   const [reportData, setReportData]=useState();
 
+  const [Reload, setReload] = useState(true)
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     
@@ -30,7 +32,6 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'registry_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -326,6 +327,10 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
       }, 2000);
     }
   }, []);
+
+  if(Reload){
+    return
+  }
 
 
   return (

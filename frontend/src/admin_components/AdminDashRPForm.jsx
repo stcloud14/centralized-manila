@@ -18,12 +18,11 @@ import Revenue from '../admin_partials/misc/Revenue';
 const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, topProvinces, topCities, revenue, totalRP })=>{
 
   const { admin_type } = useParams();
-  // const location = useLocation();
-  // const { pathname, state } = location;
-  // const admin_type = pathname.split("/")[2];
-  // const adminRole = state && state.user_role;
 
   const [reportData, setReportData]=useState();
+
+  const [Reload, setReload] = useState(true);
+
   const Base_Url = process.env.Base_Url;
 
 
@@ -37,7 +36,6 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'rptax_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -465,6 +463,10 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
     }
   }, []);
 
+
+  if(Reload){
+    return
+  }
 
 
   return (
