@@ -30,11 +30,11 @@ const AdminBusinessForm3 =()=>{
 
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

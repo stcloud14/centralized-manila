@@ -32,7 +32,9 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (admin_type === 'registry_admin') {
+            const adminType = response.data.admin_type;
+
+            if (adminType === 'registry_admin') {
                 // Allow access to the audit page
                 setReload(false);
             } else {

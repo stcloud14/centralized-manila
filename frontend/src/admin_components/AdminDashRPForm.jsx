@@ -36,7 +36,9 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (admin_type === 'rptax_admin') {
+            const adminType = response.data.admin_type;
+
+            if (adminType === 'rptax_admin') {
                 // Allow access to the audit page
                 setReload(false);
             } else {

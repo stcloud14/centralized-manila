@@ -45,7 +45,9 @@ const AdminCedulaForm1 =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (admin_type === 'cedula_admin') {
+            const adminType = response.data.admin_type;
+
+            if (adminType === 'cedula_admin') {
                 // Allow access to the audit page
                 setReload(false);
             } else {

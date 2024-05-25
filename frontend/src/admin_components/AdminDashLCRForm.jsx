@@ -42,7 +42,9 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (admin_type === 'lcr_admin') {
+            const adminType = response.data.admin_type;
+
+            if (adminType === 'lcr_admin') {
                 // Allow access to the audit page
                 setReload(false);
             } else {

@@ -31,12 +31,14 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token-admin/${admin_type}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (admin_type === 'business_admin') {
+            const adminType = response.data.admin_type;
+
+            if (adminType === 'business_admin') {
                 // Allow access to the audit page
                 setReload(false);
             } else {

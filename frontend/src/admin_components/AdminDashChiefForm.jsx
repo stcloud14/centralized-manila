@@ -62,8 +62,8 @@ const AdminDashChiefForm = React.memo(
                 }
             });
             console.log(response)
-            // const adminType = response.data.admin_type;
-            if (admin_type === 'chief_admin') {
+            const adminType = response.data.admin_type;
+            if (adminType === 'chief_admin') {
                 // Allow access to the audit page
                 setReload(false);
             } else {
