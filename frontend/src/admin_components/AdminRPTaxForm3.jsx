@@ -99,6 +99,10 @@ const AdminRPTaxForm3 = () => {
     }
   }, [isFetchedData]);
 
+  if(Reload){
+    return
+  }
+
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

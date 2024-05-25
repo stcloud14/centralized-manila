@@ -19,6 +19,8 @@ const AdminRPTaxForm2 = () => {
 
   const [taxPayment, setTaxPayment] = useState([]);
   const [taxClearance, setTaxClearance] = useState([]);
+
+  const [Reload, setReload] = useState(true)
   const Base_Url = process.env.Base_Url;
 
   console.log("userrole", admin_type)
@@ -33,7 +35,6 @@ const AdminRPTaxForm2 = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'rptax_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -93,7 +94,9 @@ const AdminRPTaxForm2 = () => {
       fetchData();
     }, []);
  
-  
+  if(Reload){
+    return
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">

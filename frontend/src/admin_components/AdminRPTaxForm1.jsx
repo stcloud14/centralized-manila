@@ -15,6 +15,17 @@ const AdminRPTaxForm1 = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFetchedData, setIsFetchedData] = useState(false);
+  const Base_Url = process.env.Base_Url;
+
+  const [taxPayment, setTaxPayment] = useState([]);
+  const [taxClearance, setTaxClearance] = useState([]);
+
+  const [Reload, setReload] = useState(true);
+
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     
@@ -25,7 +36,6 @@ const AdminRPTaxForm1 = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'rptax_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -42,14 +52,6 @@ const AdminRPTaxForm1 = () => {
     }
 }, []);
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isFetchedData, setIsFetchedData] = useState(false);
-  const Base_Url = process.env.Base_Url;
-
-  const [taxPayment, setTaxPayment] = useState([]);
-  const [taxClearance, setTaxClearance] = useState([]);
-
-  console.log("userrole", admin_type)
 
   const fetchUserTransaction = async () => {
     try {
@@ -105,7 +107,9 @@ const AdminRPTaxForm1 = () => {
   }, [isFetchedData]);
 
 
-
+  if(Reload){
+    return
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
