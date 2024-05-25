@@ -18,15 +18,12 @@ import logoImage from '../images/mnl_header_pdf.png';
 const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, topCities, revenue, totalBP })=>{
 
   const { admin_type } = useParams();
- // const location = useLocation();
- // const { pathname, state } = location;
-  // console.log("pathname", pathname);
- // const admin_type = pathname.split("/")[2];
-  
-  // console.log("userrole", admin_type)
+
   const Base_Url = process.env.Base_Url;
 
   const [reportData, setReportData]=useState();
+
+  const [Reload, setReload] = useState(true)
 
 
   useEffect(() => {
@@ -39,7 +36,6 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'business_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -446,6 +442,10 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
     }
   }, []);
 
+
+  if(Reload){
+    return;
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
