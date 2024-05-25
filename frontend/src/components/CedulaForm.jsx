@@ -284,22 +284,27 @@ const handleProceed = (e) => {
   e.preventDefault();
   
   // Please fill up the necessary forms
-   const requiredFields = ['ctc_lname','ctc_fname','ctc_sex','ctc_region','ctc_province','ctc_municipal',
- 'ctc_reqbrgy','ctc_reqhnum','ctc_reqstreet','ctc_reqzip','ctc_civilstatus','ctc_cznstatus', 'ctc_residencetaxdue',
-'ctc_employmentstatus','ctc_validid','ctc_profession']; //The input fields that is required
-   const isIncomplete = requiredFields.some((field) => !CtcCedula[field]);
+  const requiredFields = ['ctc_lname','ctc_fname','ctc_sex','ctc_region','ctc_province','ctc_municipal',
+    'ctc_reqbrgy','ctc_reqhnum','ctc_reqstreet','ctc_reqzip','ctc_civilstatus','ctc_cznstatus', 'ctc_residencetaxdue',
+    'ctc_employmentstatus','ctc_validid','ctc_profession']; //The input fields that is required
+  
+  // Exclude ctc_taxpayeraccno from required fields if employment status is UNEMPLOYED
+  if (CtcCedula.ctc_employmentstatus !== 'UNEMPLOYED') {
+    requiredFields.push('ctc_taxpayeraccno');
+  }
 
-   if (isIncomplete) {
-     contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
+  const isIncomplete = requiredFields.some((field) => !CtcCedula[field]);
+
+  if (isIncomplete) {
+    contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });    
     setShowWarning(true); // Show warning message and prevent opening the modal
    
     setTimeout(() => {
       setShowWarning(false); // Set a timer to hide the warning message after 4 seconds
-     }, 4000);
-   } else {
-    
-    setIsModalOpen(true);// Proceed to open the modal
-   }
+    }, 4000);
+  } else {  
+    setIsModalOpen(true); // Proceed to open the modal
+  }
 };
 
 const handleCloseModal = () => {
