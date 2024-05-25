@@ -27,6 +27,8 @@ const AdminArchivesForm = () => {
   const [deathCert, setDeathCert] = useState([]);
   const [marriageCert, setMarriageCert] = useState([]);
 
+  const [Reload, setReload] = useState(true)
+
   const Base_Url = process.env.Base_Url;
 
   console.log("userrole", admin_type)
@@ -115,7 +117,9 @@ const AdminArchivesForm = () => {
   }, []);
   
 
-
+if(Reload){
+  return;
+}
   
 
   return (
