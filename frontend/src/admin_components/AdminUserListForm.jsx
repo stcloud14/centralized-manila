@@ -12,6 +12,7 @@ import AdminUserViewModal from '../admin_partials/admin_modals/AdminUserViewModa
 const AdminUserListForm = () => {
 
   const { user_id } = useParams();
+  const { admin_type } = useParams();
   // const location = useLocation();
  //  const { pathname } = location;
  //  const user_id = pathname.split("/")[2];
@@ -19,23 +20,25 @@ const AdminUserListForm = () => {
   const [userApplications, setUserApplications] = useState();
   const [filteredUserApplications, setFilteredUserApplications] = useState([]);
 
+  const [Reload, setReload] = useState(true)
+
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
-            const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
+
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
-            // Assuming admin_type is received in the response from the backend
-            if (admin_type === 'registry_admin') {
-                // Allow access to the audit page
+            const adminType = response.data.admin_type;
+            if (adminType === 'registry_admin') {
                 setReload(false);
             } else {
                 window.location.href = '/indexadmin';
             }
+
 
     };
 
@@ -165,6 +168,10 @@ const AdminUserListForm = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  if(Reload){
+    return
+  }
 
 
   return (

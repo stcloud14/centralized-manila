@@ -21,7 +21,7 @@ router.post('/generate-token-admin', (req, res) => {
 });
 
 function verifyTokenForAdmin(req, res, next) {
-    console.log('Token received:', req.headers['authorization']);
+    // console.log('Token received:', req.headers['authorization']);
     const token = req.headers['authorization'];
 
 
@@ -66,7 +66,8 @@ router.get('/protect-token-admin/:admin_type', verifyTokenForAdmin, (req, res) =
 
     res.status(200).json({ 
         message: `Authenticated user with user ID ${admin_type}.`,
-        admin_type: tokenAdmin  // Include the decoded admin_type in the response
+        admin_type: admin_type,
+        tokenAdmin: tokenAdmin,  // Include the decoded admin_type in the response
     });
 });
 

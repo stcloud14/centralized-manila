@@ -24,23 +24,33 @@ const AdminSettings =()=>{
   const { pathname } = location;
   const user_id = pathname.split("/")[2];
 
+  const [Reload, setReload] = useState(true)
+
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
-
-            const response = await axios.get(`${Base_Url}token/protect-token-admin/admin/${admin_type}`, {
+      try{
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
-            if (admin_type) {
-                // Allow access to the audit page
+
+            const adminType = response.data.admin_type;
+            const tokenType = response.data.tokenAdmin;
+            console.log("response", response)
+            console.log("adminType", response.data.admin_type)
+
+            console.log("tokenType", response.data.tokenAdmin)
+            if (adminType === tokenType) {
                 setReload(false);
             } else {
                 window.location.href = '/indexadmin';
             }
+          }catch{
+            window.location.href = `/indexadmin`;
+          }
     };
 
     if (token) {
@@ -304,6 +314,10 @@ const AdminSettings =()=>{
   };
 
   const isEdge = window.navigator.userAgent.includes('Edg');
+
+  if(Reload){
+    return
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
