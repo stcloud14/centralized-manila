@@ -53,10 +53,10 @@ function verifyTokenForAdmin(req, res, next) {
 
 router.get('/protect-token-admin/:admin_type', verifyTokenForAdmin, (req, res) => {
     const admin_type = req.params.admin_type;
-    console.log('Admin type from URL:', admin_type);
+    // console.log('Admin type from URL:', admin_type);
 
     const tokenAdmin = req.decoded.admin_type;
-    console.log('Admin type from token:', tokenAdmin);
+    // console.log('Admin type from token:', tokenAdmin);
 
 
     
