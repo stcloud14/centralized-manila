@@ -47,6 +47,8 @@ const AdminDashChiefForm = React.memo(
 
   const { admin_type } = useParams();
   const [reportData, setReportData]=useState();
+
+  const [Reload, setReload]=useState(true)
   const Base_Url = process.env.Base_Url;
 
   useEffect(() => {
@@ -59,7 +61,6 @@ const AdminDashChiefForm = React.memo(
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'chief_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -105,16 +106,6 @@ const AdminDashChiefForm = React.memo(
 
   console.log(taxPayment)
   console.log(verifiedUsers)
-  // console.log(taxClearance)
-  // console.log(businessPermit)
-  
-  // const adminRole = state && state.user_role;
-
-  // CA = Chief Administrator
-
-  // 0000 = Month and Date
-
-  // 0000 = Generate UIID
 
   const generateReportNumber = (admin_type) => {
 
@@ -591,6 +582,9 @@ const AdminDashChiefForm = React.memo(
     return () => clearTimeout(timeoutId);
   }, [isLoading]);
 
+  if(Reload){
+    return
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
