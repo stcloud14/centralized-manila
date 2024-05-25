@@ -45,16 +45,15 @@ const AdminArchivesForm = () => {
 
             const adminType = response.data.admin_type;
             const tokenType = response.data.tokenAdmin;
-            console.log("response", response)
-            console.log("adminType", response.data.admin_type)
 
-            console.log("tokenType", response.data.tokenAdmin)
             if (adminType === tokenType) {
                 setReload(false);
             } else {
                 window.location.href = '/indexadmin';
             }
           }catch{
+            const tokenType = response.data.tokenAdmin;
+            console.log
             window.location.href = `/indexadmin`;
           }
     };
