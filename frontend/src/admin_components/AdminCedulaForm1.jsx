@@ -12,13 +12,14 @@ const AdminCedulaForm1 =()=>{
 
   const { admin_type } = useParams();
 
-  // const location = useLocation();
-  // const { pathname } = location;
-  // const user_id = pathname.split("/")[2];
 
   console.log("userrole", admin_type)
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const [Reload, setReload] = useState(true)
+
+  //api calling from .env
   const Base_Url = process.env.Base_Url;
 
   
@@ -95,7 +96,9 @@ const AdminCedulaForm1 =()=>{
       fetchData();
     }, []);
 
-  
+  if(Reload){
+    return;
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
