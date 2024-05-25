@@ -52,8 +52,6 @@ const AdminArchivesForm = () => {
                 window.location.href = '/indexadmin';
             }
           }catch{
-            const tokenType = response.data.tokenAdmin;
-            console.log
             window.location.href = `/indexadmin`;
           }
     };
