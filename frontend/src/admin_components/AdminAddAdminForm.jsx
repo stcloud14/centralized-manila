@@ -19,11 +19,15 @@ const AdminAddAdminForm =()=>{
   const [isCompleteConfirm, setIsCompleteConfirm] = useState(false);
   const [warning, setWarning] = useState(false);
 
+  const { admin_type } = useParams();
+
   const handleAdminTypeChange = (e) => {
     const adminType = e.target.value;
     setAdminType(e.target.value);
     console.log("Admin Type:", adminType);
+
   };
+  console.log("admin_type", admin_type)
   const [Reload, setReload] = useState(true);
 
   useEffect(() => {
@@ -35,7 +39,6 @@ const AdminAddAdminForm =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             // Assuming admin_type is received in the response from the backend
             if (admin_type === 'chief_admin') {
                 // Allow access to the audit page
@@ -43,7 +46,6 @@ const AdminAddAdminForm =()=>{
             } else {
                 window.location.href = '/indexadmin';
             }
-
     };
 
     if (token) {
