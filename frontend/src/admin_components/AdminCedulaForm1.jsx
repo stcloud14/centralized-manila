@@ -12,17 +12,16 @@ const AdminCedulaForm1 =()=>{
 
   const { admin_type } = useParams();
 
+  // const location = useLocation();
+  // const { pathname } = location;
+  // const user_id = pathname.split("/")[2];
 
   console.log("userrole", admin_type)
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const [Reload, setReload] = useState(true)
-
-  //api calling from .env
   const Base_Url = process.env.Base_Url;
 
-  
+  const [Reload, setReload] = useState(true);
 
   const [ctcCedula, setctcCedula] = useState([]);
 
@@ -46,7 +45,6 @@ const AdminCedulaForm1 =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'cedula_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -97,7 +95,7 @@ const AdminCedulaForm1 =()=>{
     }, []);
 
   if(Reload){
-    return;
+    return
   }
 
   return (

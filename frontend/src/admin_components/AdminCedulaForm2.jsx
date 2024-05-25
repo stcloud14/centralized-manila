@@ -22,7 +22,7 @@ const AdminCedulaForm2 =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const Base_Url = process.env.Base_Url;
 
-  
+  const [Reload, setReload] = useState(true);
   useEffect(() => {
     const token = localStorage.getItem('token');
     
@@ -33,7 +33,6 @@ const AdminCedulaForm2 =()=>{
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'cedula_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -72,7 +71,9 @@ const AdminCedulaForm2 =()=>{
     fetchUserTransaction();
   };
 
-  
+  if(Reload){
+    return
+  }  
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
