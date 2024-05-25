@@ -19,12 +19,11 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
 
   const { admin_type } = useParams();
 
-  // const location = useLocation();
-  // const { pathname, state } = location;
-  // const admin_type = pathname.split("/")[2];
-  // const adminRole = state && state.user_role;
 
   const [reportData, setReportData]=useState();
+
+  const [Reload, setReload] = useState(true);
+
   const Base_Url = process.env.Base_Url;
 
   useEffect(() => {
@@ -37,7 +36,6 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { admin_type } = response.data;
             if (admin_type === 'cedula_admin') {
                 // Allow access to the audit page
                 setReload(false);
@@ -447,7 +445,9 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
     }
   }, []);
 
-
+  if(Reload){
+    return;
+  }
 
   return (
     <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
