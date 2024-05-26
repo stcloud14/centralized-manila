@@ -78,7 +78,7 @@ const AdminAdminListForm = () => {
       const handleSearch = () => {
         const filteredAdminUR = adminApplications.filter((transaction) => {
           const { mobile_no, admin_type, admin_name } = transaction || {};
-    
+
           const transactionId = mobile_no?.toString()?.toUpperCase();
           const Name = admin_name?.toString()?.toUpperCase();
           const isAdminTypeMatch = admin_type && (selectedType === 'All' || admin_type.toLowerCase() === selectedType.toLowerCase());
@@ -86,6 +86,8 @@ const AdminAdminListForm = () => {
           const isNameMatch = Name && (!searchName || Name.includes(searchName.toUpperCase()));
     
           return isAdminTypeMatch && isIdMatch && isNameMatch;
+
+
         });
     
         setFilteredAdminApplications(filteredAdminUR);
@@ -109,12 +111,20 @@ const AdminAdminListForm = () => {
       console.log("Selected Admin: ", selectedType);
     };
   
-    const handleClearFilter = () => {
+    const handleClearFilter = async () => {
       setSearchInput('');
       setSearchName('');
-      setFilteredAdminApplications(adminApplications);
-      setSelectedType('');
+      setSelectedType('All');
+      try {
+        const res = await axios.get(`${Base_Url}adminur/adminlist`);
+        const { adminList } = res.data;
+        setAdminApplications(adminList);
+        setFilteredAdminApplications(adminList);
+      } catch (err) {
+        console.log(err);
+      }
     };
+    
   
   
     const handleRemoveTransaction = (transaction) => {
