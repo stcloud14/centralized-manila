@@ -169,14 +169,43 @@ router.get('/adminlist', async (req, res) => {
   try {
     const result = await queryDatabase1(query);
 
+    const adminList = result.map(admin => {
+      return {
+        mobile_no: admin.mobile_no,
+        password: admin.password,
+        admin_type: formatAdminType(admin.admin_type) 
+      };
+    });
+
     res.json({
-      adminList: result
+      adminList
     });
   } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving data');
   }
 });
+
+// Function to format admin_type values
+function formatAdminType(adminType) {
+  switch (adminType) {
+    case 'business_admin':
+      return 'Business Permit Admin';
+    case 'rptax_admin':
+      return 'Real Property Tax Admin';
+    case 'cedula_admin':
+      return 'Cedula / Community Tax Certificate Admin';
+    case 'lcr_admin':
+      return 'Local Civil Registry Admin'; 
+    case 'chief_admin':
+      return 'Chief Admin';
+    case 'registry_admin':
+      return 'Registry Admin';               
+    default:
+      return adminType; 
+  }
+}
+
 
 
 
