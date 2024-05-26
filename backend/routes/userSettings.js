@@ -208,11 +208,14 @@ router.get('/check_application_status/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
 
     const sql = "UPDATE user_reg SET is_deleted = 1 WHERE user_id = ?";
-    const sql1 = "UPDATE user_auth SET is_deleted = 1 WHERE user_id = ?";
+    const sql1 = "UPDATE user_auth SET mobile_no = CONCAT(mobile_no, '#') WHERE user_id = ?";
+    const sql2 = "UPDATE user_contact SET mobile_no = CONCAT(mobile_no, '#') WHERE user_id = ?";
 
     try {
       // Delete the user account from the database
       const result = await queryDatabase(sql, [user_id]);
+      queryDatabase(sql1, [user_id]);
+      await queryDatabase(sql2, [user_id]);
 
       res.json({
         message: "User successfully deleted",
