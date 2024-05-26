@@ -7,7 +7,7 @@ import LCR from '../../images/LCR.png';
 import UR from '../../images/UR.png';
 import CHIEF from '../../images/CHIEF.png';
 
-const AdminListMobile = ({ handleOpenModal, adminApplications, handleSearch, searchInput, setSearchInput, selectedType, handleInputChange, handleClearFilter }) => {
+const AdminListMobile = ({ handleOpenModal, adminApplications, handleSearch, searchInput, setSearchInput, searchName, setSearchName, selectedType, handleInputChange, handleClearFilter }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const getAdminImage = (adminType) => {
@@ -93,6 +93,27 @@ const AdminListMobile = ({ handleOpenModal, adminApplications, handleSearch, sea
                   id="searchInput"
                   type="text"
                   placeholder="Search Admin Username..."
+                  className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
+                />                
+                </div>
+              </div> 
+
+              {/* Admin Name */}
+                <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                  <span className="hidden sm:block pr-10 text-xs">Admin Name:</span>
+                <div className="relative flex items-center">
+                  <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                      <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                      </svg>
+                  </span>
+                  <input
+                  value={searchName || ""}
+                  onChange={(e) => setSearchName(e.target.value.toUpperCase())}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                  id="searchName"
+                  type="text"
+                  placeholder="Search Admin Name..."
                   className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
                 />                
                 </div>

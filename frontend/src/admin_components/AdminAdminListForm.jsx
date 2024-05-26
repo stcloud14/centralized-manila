@@ -55,6 +55,7 @@ const AdminAdminListForm = () => {
     const [selectedTransaction, setSelectedTransaction] = useState(null);
   
     const [searchInput, setSearchInput] = useState('');
+    const [searchName, setSearchName] = useState('');
     const [selectedType, setSelectedType] = useState('All');
     const Base_Url = process.env.Base_Url;
   
@@ -76,19 +77,21 @@ const AdminAdminListForm = () => {
   
       const handleSearch = () => {
         const filteredAdminUR = adminApplications.filter((transaction) => {
-          const { mobile_no, admin_type } = transaction || {};
+          const { mobile_no, admin_type, admin_name } = transaction || {};
     
           const transactionId = mobile_no?.toString()?.toUpperCase();
+          const Name = admin_name?.toString()?.toUpperCase();
           const isAdminTypeMatch = admin_type && (selectedType === 'All' || admin_type.toLowerCase() === selectedType.toLowerCase());
           const isIdMatch = transactionId && (!searchInput || transactionId.includes(searchInput.toUpperCase()));
+          const isNameMatch = Name && (!searchName || Name.includes(searchName.toUpperCase()));
     
-          return isAdminTypeMatch && isIdMatch;
+          return isAdminTypeMatch && isIdMatch && isNameMatch;
         });
     
         setFilteredAdminApplications(filteredAdminUR);
     };
     
-    
+    console.log("admin applications:", adminApplications);
       
     const handleOpenModal = (transaction) => {
       setIsModalOpen(true);
@@ -108,6 +111,7 @@ const AdminAdminListForm = () => {
   
     const handleClearFilter = () => {
       setSearchInput('');
+      setSearchName('');
       setFilteredAdminApplications(adminApplications);
       setSelectedType('');
     };
@@ -166,6 +170,8 @@ const AdminAdminListForm = () => {
                   handleInputChange={handleInputChange}
                   searchInput={searchInput}
                   setSearchInput={setSearchInput}
+                  searchName={searchName}
+                  setSearchName={setSearchName}
                   selectedType={selectedType}
                   />
                 ) : (
@@ -178,6 +184,8 @@ const AdminAdminListForm = () => {
                   handleInputChange={handleInputChange}
                   searchInput={searchInput}
                   setSearchInput={setSearchInput}
+                  searchName={searchName}
+                  setSearchName={setSearchName}
                   selectedType={selectedType}
                   />
                 )}
