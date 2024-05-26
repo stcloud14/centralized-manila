@@ -53,7 +53,7 @@ function AdminBanner({ adminType, adminName, generateReports}) {
   return (
     <div className="relative px-2 sm:px-2 overflow-hidden mb-4">
       {/* Content */}
-      <div className="relative flex items-center justify-between">
+      <div className="relative flex items-start justify-between">
         <div className='mr-1'>
           <h1 className="text-sm lg:text-3xl md:text-3xl text-slate-800 dark:text-slate-100 font-medium mb-1">
             Welcome to Centralized
@@ -62,10 +62,13 @@ function AdminBanner({ adminType, adminName, generateReports}) {
             <span className='text-yellow-500'>n</span>
             <span className='text-green-500'>i</span>
             <span className='text-blue-600'>l</span>
-            <span className='text-red-500'>a</span>,
-            <span> {admin}, {admin_name}</span>!
+            <span className='text-red-500'>a</span>
+            <span>, {admin_name}</span>!
           </h1>
-          <p className="lg:text-sm dark:text-slate-400 font-thin text-xs">Discover what's happening today.</p>
+          <p className='inline-block rounded-sm md:text-base text-xs px-2.5 py-1 my-2 bg-slate-300 text-slate-800 dark:text-zinc-100 dark:bg-zinc-700 font-medium'>
+            {admin}
+          </p>
+          <p className="lg:text-sm dark:text-slate-400 font-thin text-xs md:ml-1">Discover what's happening today.</p>
         </div>
         
 
