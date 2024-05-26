@@ -7,6 +7,9 @@ import PersonalInfo from '../admin_userregistry/PersonalInfo';
 import ContactInfo from '../admin_userregistry/ContactInfo';
 import GovInfo from '../admin_userregistry/GovInfo';
 import AdminUserDeleteModal from '../admin_modals/AdminUserDeleteModal';
+import AdminInfo from '../admin_userregistry/AdminInfo';
+import { useParams } from 'react-router-dom'; 
+
 
 const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   const Base_Url = process.env.Base_Url;
@@ -20,105 +23,16 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading1, setIsLoading1] = useState(false);
 
+  const { admin_type, admin_uname } = useParams();
+
+
   // const [isDeleted, setIsDeleted] = useState(false);
 
-  const [userInfo, setUserInfo] = useState(() => {
-    // Initialize userInfo with the values of selectedTransaction
+  const [adminInfo, setAdminInfo] = useState(() => {
+    // Initialize adminInfo with the values of selectedTransaction
     return selectedTransaction || {};
   });
   
-  
-  const handleChangeData = (e) => {
-    console.log("Event:", e);
-    
-    // Check if the event is a typical event object with a target property
-    if (e && e.target) {
-      const { name, value } = e.target;
-      console.log("Name:", name);
-      console.log("Value:", value);
-    
-      if (!name) {
-        console.error("Name property is undefined on event.target");
-        return;
-      }
-      
-      // If the field is not birth_date, just update the value directly
-      const updatedValue = isNaN(value) ? value.toUpperCase() : value;
-    
-      // If the field is birth_date, convert it to ISO format
-      const formattedDate = name === 'birth_date' ? new Date(value).toISOString().split('T')[0] : null;
-      console.log("Formatted Date:", formattedDate);
-    
-      setUserInfo((prevData) => {
-        if (
-          name === 'mobile_no' ||
-          name === 'tel_no' ||
-          name === 'zip_code' ||
-          name === 'user_tin_id' ||
-          name === 'user_pgb_id' ||
-          name === 'user_philh_id' ||
-          name === 'user_sss_id' ||
-          name === 'user_gsis_id' ||
-          name === 'user_natl_id'
-        ) {
-          const digitValue = value.replace(/\D/g, '');
-    
-          return {
-            ...prevData,
-            [name]: digitValue,
-          };
-        }
-    
-        if (name === 'birth_date') {
-          // Assuming value is in the format YYYY-MM-DD
-          return {
-            ...prevData,
-            [name]: formattedDate,
-          };
-        }
-    
-        if (name === 'region_id') {
-          return {
-            ...prevData,
-            [name]: value,
-            prov_id: '',
-            city_id: '',
-          };
-        }
-    
-        if (name === 'prov_id') {
-          return {
-            ...prevData,
-            [name]: value,
-            city_id: '',
-          };
-        }
-    
-        return {
-          ...prevData,
-          [name]: updatedValue,
-        };
-      });
-    } else {
-      // Handle the scenario where 'e' is the selected date directly
-      const name = 'birth_date'; // Assuming birth_date is the field being updated
-      const value = e; // 'e' is the selected date
-  
-      // Convert the selected date to ISO format and remove the time part
-      const formattedDate = new Date(value).toISOString().split('T')[0];
-      console.log("Formatted Date:", formattedDate);
-  
-      // Update the userInfo state with the formatted date
-      setUserInfo((prevData) => ({
-        ...prevData,
-        [name]: formattedDate,
-      }));
-    }
-  };
-  
-  
-  
-
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -128,7 +42,7 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
         const imageURL = selectedTransaction?.image_url ?? undefined;
         const imageName = selectedTransaction?.user_image ?? undefined;
 
-        console.log(selectedTransaction)
+        console.log("admin",selectedTransaction)
   
         // if (imageName === undefined || imageName === null) {
         //   setIsLoading(false);
@@ -219,7 +133,53 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   };
 
 
+  const handleChangeData = (e) => {
+    e.preventDefault();
+  
+    if (e && e.target) {
+      const { name, value } = e.target;
+  
+      if (!name) {
+        console.error("Name property is undefined on event.target");
+        return;
+      }
+  
+      setAdminInfo((prevData) => ({
+        ...prevData,
+        [name]: value
+      }));
+    }
+  };
+
+
   const handleSaveChanges = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const mobile_no = selectedTransaction.mobile_no;
+  
+      const response = await axios.post(`${Base_Url}adminchangepass/admin/change-password/${mobile_no}`, { 
+        new_password: adminInfo.new_password // Send the new password with the key 'new_password'
+      });
+  
+      if (response.status !== 200) {
+        throw new Error('Failed to save changes');
+      }
+  
+      setIsSuccess(true);
+      setTimeout(() => {
+        window.location.href = `/admin_adminlist/${admin_type}/${admin_uname}`; // Corrected the typo in window.location.href
+      }, 2500); // Adjusted the timeout duration to 25 seconds
+      
+      console.log('Changes saved successfully');
+    } catch (error) {
+      console.error('Error saving changes:', error.message);
+    }
+};
+
+
+
+ {/* const handleSaveChanges = async (e) => {
     e.preventDefault();
   
     try {
@@ -317,7 +277,7 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
     } catch (err) {
       console.error('Transaction error:', err);
     }
-  };
+  }; */}
 
 
   // const handleDeleteUser = async (e) => {
@@ -346,7 +306,7 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
 
   const handleEditClick = () => {
     setEditMode(!editMode);
-    setUserInfo('');
+    setAdminInfo('');
   };
 
   const handleCLoseClick = () => {
@@ -382,7 +342,7 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                   <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
                 </svg>
               </button>
-              <span className="font-semibold text-gray-700 bg-slate-200 dark:bg-[#212121] dark:text-gray-300 ml-6">User Profile Information</span>
+              <span className="font-semibold text-gray-700 bg-slate-200 dark:bg-[#212121] dark:text-gray-300 ml-6">Admin Profile Information</span>
             </div>
 
             {/* Content */}
@@ -401,7 +361,7 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
                         {editMode ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" /> : <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />}
                       </svg>
-                      <span>{editMode ? 'Cancel' : 'Edit User'}</span>
+                      <span>{editMode ? 'Cancel' : 'Edit Admin'}</span>
                     </button>
                     {editMode && (
                       <button
@@ -497,9 +457,7 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                 </div>
                 )}
 
-                <PersonalInfo selectedTransaction={selectedTransaction} userInfo={userInfo} handleChangeData={handleChangeData} editMode={editMode}/>
-                <ContactInfo selectedTransaction={selectedTransaction} userInfo={userInfo} handleChangeData={handleChangeData} editMode={editMode}/>
-                <GovInfo selectedTransaction={selectedTransaction} userInfo={userInfo} handleChangeData={handleChangeData} editMode={editMode}/>
+                <AdminInfo selectedTransaction={selectedTransaction} adminInfo={adminInfo} handleChangeData={handleChangeData} editMode={editMode}/>
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AdminListDesktop = ({ handleOpenModal, userApplications, searchInput, setSearchInput, searchEmail, setSearchEmail, searchFname, setSearchFname, searchLname, setSearchLname, handleClearFilter, handleSearch, handleInputChange, handleInputChange2, selectedType, selectedStatus }) => {
+const AdminListDesktop = ({ handleOpenModal, adminApplications, searchInput, setSearchInput, searchEmail, setSearchEmail, searchFname, setSearchFname, searchLname, setSearchLname, handleClearFilter, handleSearch, handleInputChange, handleInputChange2, selectedType, selectedStatus }) => {
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
@@ -214,8 +214,8 @@ const AdminListDesktop = ({ handleOpenModal, userApplications, searchInput, setS
             </thead>
             <tbody>
 
-            {userApplications && userApplications.length > 0 ? (
-            userApplications.map((transaction, index) => (
+            {adminApplications && adminApplications.length > 0 ? (
+            adminApplications.map((transaction, index) => (
 
             // <tr key={transaction?.transaction_id} onClick={() => handleOpenModal(transaction)} className='cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>
             <tr key={index} onClick={() => handleOpenModal(transaction)} className='cursor-pointer bg-white border-b dark:bg-[#333333] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#3d3d3d]'>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AdminListMobile = ({ handleOpenModal, userApplications, searchInput, setSearchInput, searchEmail, setSearchEmail, searchFname, setSearchFname, searchLname, setSearchLname, handleClearFilter, handleSearch, handleInputChange, handleInputChange2, selectedType, selectedStatus }) => {
+const AdminListMobile = ({ handleOpenModal, adminApplications, searchInput, setSearchInput, searchEmail, setSearchEmail, searchFname, setSearchFname, searchLname, setSearchLname, handleClearFilter, handleSearch, handleInputChange, handleInputChange2, selectedType, selectedStatus }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -165,8 +165,8 @@ const AdminListMobile = ({ handleOpenModal, userApplications, searchInput, setSe
             </div>
             </div>
 
-            {userApplications?.length > 0 ? (
-                userApplications.map((transaction, index) => (
+            {adminApplications?.length > 0 ? (
+                adminApplications.map((transaction, index) => (
                   <div key={index} className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
                     <div className="text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
                       Adnmin Type: {transaction.admin_type}
