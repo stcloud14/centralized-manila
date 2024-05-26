@@ -27,12 +27,14 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
   const [searchQuery, setSearchQuery] = useState(''); 
   const [searchOwner, setSearchOwner] = useState(''); 
   const [filteredctcCedula, setFilteredctcCedula] = useState([]);
+  
+  const [sortOrder, setSortOrder] = useState('desc');
 
   const Base_Url = process.env.Base_Url;
 
   
   const handleSearch = () => {
-    const filteredData = ctcCedula.filter(transaction => {
+    let filteredData = ctcCedula.filter(transaction => {
       const transactionId = transaction.transaction_id.toUpperCase();
       const query = searchQuery.toUpperCase();
       const fullName = `${transaction.f_name} ${transaction.l_name}`.toUpperCase(); 
@@ -55,8 +57,18 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
       return transactionId.includes(query) && isOwnerMatch && isDateInRange();
     });
   
+    // Sort the filtered data by date based on the selected sort order
+    if (filteredData.length > 0) {
+      filteredData = filteredData.sort((a, b) => {
+        const dateA = new Date(a.date_processed);
+        const dateB = new Date(b.date_processed);
+        return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+    }
+  
     setFilteredctcCedula(filteredData);
   };
+  
   
   useEffect(() => {
     setFilteredctcCedula(ctcCedula);
@@ -455,6 +467,24 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                   />
                   </span>
               </div>
+
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                  <span className="hidden sm:block text-xs">Sort Date by:</span>
+                  <select
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value)}
+                    name="sortOrder"
+                    id="sortOrder"
+                    className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
+                  >
+                    <option value="asc" className="dark:bg-[#3d3d3d]">
+                      Oldest to Newest
+                    </option>
+                    <option value="desc" className="dark:bg-[#3d3d3d]">
+                      Newest to Oldest
+                    </option>
+                  </select>
+                </div>
 
               {/* Transaction ID */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
