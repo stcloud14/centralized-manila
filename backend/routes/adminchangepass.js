@@ -1,9 +1,5 @@
-import { Router, response } from 'express';
-import moment from 'moment/moment.js';
-import conn2 from './connection.js';
+import { Router } from 'express';
 import conn1 from './connection1.js';
-
-import auditMiddleware from './auditMiddleware.js';
 
 const router = Router();
 
@@ -15,8 +11,6 @@ async function queryDatabase1(connection1, query, values) {
         throw err;
     }
 }
-
-
 
 router.post('/admin/change-password/:mobile_no', async (req, res) => {
     const { mobile_no } = req.params;
