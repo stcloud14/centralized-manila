@@ -488,7 +488,7 @@ console.log(selectedFiles)
                   name="user_email"
                   id="user_email"
                   className={`block py-2.5 px-0 w-full text-sm ${
-                    emailFromParams ? "text-gray-300 bg-slate-200 cursor-not-allowed rounded-md pl-2" : "text-gray-900 bg-transparent"
+                    emailFromParams ? "text-gray-300 bg-slate-200 rounded-md pl-2" : "text-gray-900 bg-transparent"
                   } border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mobnum`}
                   placeholder=" "
                   required
