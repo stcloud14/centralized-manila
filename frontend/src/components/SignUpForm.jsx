@@ -228,6 +228,7 @@ const handleClick = async (e) => {
       // Check if the user already exists
       const existenceCheckResponse = await axios.post(`${Base_Url}register/check-existence`, {
         mobile_no: userReg.mobile_no,
+        user_email: userReg.user_email
       });
 
 
@@ -237,16 +238,18 @@ const handleClick = async (e) => {
         setTimeout(() => {
           setisDeclined(false)
           setLoading(true)
-          // alert(existenceCheckResponse.data.message);
+          alert(existenceCheckResponse.data.message);
           setTimeout(() => {
             setLoading(false);
             navigate("/");
             // window.location.reload();
-          }, 4000);
-        }, 4000);
+          }, 1500);
+        });
 
       } 
+
       else {
+  
         setLoading(true)
         setIsSuccess(true);
         const formData = new FormData();
@@ -257,7 +260,17 @@ const handleClick = async (e) => {
         });
 
 
-        const response = await axios.post(`${Base_Url}register`, userReg);
+        const user_existing = existenceCheckResponse.data.user_id[0].user_id;
+        console.log(user_existing)
+      
+
+        let response;
+
+        if (existenceCheckResponse.data.user_existing) {
+          response = await axios.post(`${Base_Url}register/existing/${user_existing}`, userReg);
+        } else {
+          response = await axios.post(`${Base_Url}register`, userReg);
+        }
 
         const user_id = response.data.user_id;
 
@@ -324,7 +337,7 @@ const handleClick = async (e) => {
           setIsSuccess(false);
           setLoading(false)
           navigate(`/home/${user_id}`);
-        }, 5000);
+        }, 1500);
 
       }
     } catch (err) {
