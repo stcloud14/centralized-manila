@@ -55,11 +55,7 @@ const AdminAdminListForm = () => {
     const [selectedTransaction, setSelectedTransaction] = useState(null);
   
     const [searchInput, setSearchInput] = useState('');
-    const [searchFname, setSearchFname] = useState('');
-    const [searchLname, setSearchLname] = useState('');
-    const [searchEmail, setSearchEmail] = useState('');
     const [selectedType, setSelectedType] = useState('All');
-    const [selectedStatus, setSelectedStatus] = useState('All');
     const Base_Url = process.env.Base_Url;
   
     useEffect(() => {
@@ -77,55 +73,22 @@ const AdminAdminListForm = () => {
         fetchUserApplications();
       }, []);
 
-    // const handleSearch = () => {
-    //   const filteredURRegistry = userApplications.filter((transaction) => {
-    //     const { mobile_no, f_name, l_name, user_email, sex_type, verification_status } = transaction || {};
-        
-    //     const transactionId = mobile_no?.toString()?.toUpperCase();
-    //     const isFNameMatch = !searchFname || f_name?.toString()?.toUpperCase().includes(searchFname);
-    //     const isLNameMatch = !searchLname || l_name?.toString()?.toUpperCase().includes(searchLname);
-    //     const isEmailMatch = !searchEmail || user_email?.toString()?.includes(searchEmail);
-    //     const isIdMatch = transactionId && transactionId.includes(searchInput);
-    //     const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || sex_type === selectedType;
-    //     const isStatusMatch = !selectedStatus || selectedStatus === 'All' || verification_status === selectedStatus;
-    
-    //     return isFNameMatch && isLNameMatch && isEmailMatch && isIdMatch && isTypeMatch && isStatusMatch;
-    //   });
-    
-    //   setFilteredUserApplications(filteredURRegistry);
-    // };
   
-    // const handleSearch = () => {
-    //   const filteredURRegistry = userApplications.filter((transaction) => {
-    //     const { mobile_no, f_name, l_name, user_email, sex_type, verification_status } = transaction || {};
-        
-    //     const transactionId = mobile_no?.toString()?.toUpperCase();
-    //     const isFNameMatch = !searchFname || f_name?.toString()?.toUpperCase().includes(searchFname);
-    //     const isLNameMatch = !searchLname || l_name?.toString()?.toUpperCase().includes(searchLname);
-    //     const isEmailMatch = !searchEmail || user_email?.toString()?.includes(searchEmail);
-    //     const isIdMatch = transactionId && transactionId.includes(searchInput);
-    //     const isTypeMatch = !selectedType || selectedType === 'All' || parseInt(selectedType) === 0 || sex_type === selectedType;
-    //     const isStatusMatch = !selectedStatus || selectedStatus === 'All' || verification_status === selectedStatus;
-    
-    //     return isFNameMatch && isLNameMatch && isEmailMatch && isIdMatch && isTypeMatch && isStatusMatch;
-    //   });
-    
-    //   setFilteredUserApplications(filteredURRegistry);
-    // };
-  
-    const handleSearch = () => {
-        const filteredURRegistry = adminApplications.filter((transaction) => {
+      const handleSearch = () => {
+        const filteredAdminUR = adminApplications.filter((transaction) => {
           const { mobile_no, admin_type } = transaction || {};
-      
+    
           const transactionId = mobile_no?.toString()?.toUpperCase();
+          const isAdminTypeMatch = admin_type && (selectedType === 'All' || admin_type.toLowerCase() === selectedType.toLowerCase());
           const isIdMatch = transactionId && (!searchInput || transactionId.includes(searchInput.toUpperCase()));
-          const isTypeMatch = !selectedType || selectedType === 'All' || admin_type === selectedType;
-      
-          return isIdMatch && isTypeMatch;
+    
+          return isAdminTypeMatch && isIdMatch;
         });
-      
-        setFilteredAdminApplications(filteredURRegistry);
-      };
+    
+        setFilteredAdminApplications(filteredAdminUR);
+    };
+    
+    
       
     const handleOpenModal = (transaction) => {
       setIsModalOpen(true);
@@ -140,20 +103,12 @@ const AdminAdminListForm = () => {
     const handleInputChange = (e) => {
       const selectedType = e.target.value;
       setSelectedType(selectedType);
-    };
-    
-    const handleInputChange2 = (e) => {
-      const selectedStatus = e.target.value;
-      setSelectedStatus(selectedStatus);
+      console.log("Selected Admin: ", selectedType);
     };
   
     const handleClearFilter = () => {
       setSearchInput('');
-      setSearchFname('');
-      setSearchLname('');
-      setSearchEmail('');
       setFilteredAdminApplications(adminApplications);
-      setSelectedStatus('');
       setSelectedType('');
     };
   
@@ -188,9 +143,6 @@ const AdminAdminListForm = () => {
       return
     }
 
-
-
-
     return (
         <div className="flex h-screen overflow-hidden dark:bg-[#212121]">
           {/* Sidebar */}
@@ -212,17 +164,9 @@ const AdminAdminListForm = () => {
                   handleSearch={handleSearch}
                   handleClearFilter={handleClearFilter}
                   handleInputChange={handleInputChange}
-                  handleInputChange2={handleInputChange2}
                   searchInput={searchInput}
                   setSearchInput={setSearchInput}
-                  searchFname={searchFname}
-                  setSearchFname={setSearchFname}
-                  searchLname={searchLname}
-                  setSearchLname={setSearchLname}
-                  searchEmail={searchEmail}
-                  setSearchEmail={setSearchEmail}
                   selectedType={selectedType}
-                  selectedStatus={selectedStatus}
                   />
                 ) : (
                   // For Desktop View
@@ -232,17 +176,9 @@ const AdminAdminListForm = () => {
                   handleSearch={handleSearch}
                   handleClearFilter={handleClearFilter}
                   handleInputChange={handleInputChange}
-                  handleInputChange2={handleInputChange2}
                   searchInput={searchInput}
                   setSearchInput={setSearchInput}
-                  searchFname={searchFname}
-                  setSearchFname={setSearchFname}
-                  searchLname={searchLname}
-                  setSearchLname={setSearchLname}
-                  searchEmail={searchEmail}
-                  setSearchEmail={setSearchEmail}
                   selectedType={selectedType}
-                  selectedStatus={selectedStatus}
                   />
                 )}
               </div>

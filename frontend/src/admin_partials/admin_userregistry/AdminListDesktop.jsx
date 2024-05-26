@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AdminListDesktop = ({ handleOpenModal, adminApplications, searchInput, setSearchInput, searchEmail, setSearchEmail, searchFname, setSearchFname, searchLname, setSearchLname, handleClearFilter, handleSearch, handleInputChange, handleInputChange2, selectedType, selectedStatus }) => {
+const AdminListDesktop = ({ handleOpenModal, adminApplications, handleSearch, searchInput, setSearchInput, selectedType, handleInputChange, handleClearFilter }) => {
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
@@ -37,7 +37,7 @@ const AdminListDesktop = ({ handleOpenModal, adminApplications, searchInput, set
           {isDropdownOpen && (
           <div className="absolute w-[270px] origin-top-right py-2 px-3 bg-white dark:bg-[#212121] dark:text-slate-400 rounded-sm shadow-2xl z-20 md:right-10 sm:w-[405px]">
 
-        {/* Last Name */}
+        {/* Mobile No / Admin ID / Admin Username */}
         <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
             <span className="hidden sm:block pr-10 text-xs">Admin Username:</span>
           <div className="relative flex items-center">
@@ -46,38 +46,9 @@ const AdminListDesktop = ({ handleOpenModal, adminApplications, searchInput, set
                 <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
             </span>
-            {/* <input value={searchFname} onChange={(e) => setSearchFname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search First Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/> */}
-            <input value={searchFname} onChange={(e) => setSearchFname(e.target.value ? e.target.value.toUpperCase() : '')}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Admin Username..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
+            <input value={searchInput} onChange={(e) => setSearchInput(e.target.value ? e.target.value.toUpperCase() : '')}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Admin Username..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
           </div>
         </div>
-
-        {/* First Name */}
-        <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-          <span className="hidden sm:block pr-10 text-xs">Admin Type:</span>
-            <div className="relative flex items-center">
-              <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                  <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                  </svg>
-              </span>
-              {/* <input value={searchLname} onChange={(e) => setSearchLname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Last Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/> */}
-              <input value={searchLname} onChange={(e) => setSearchLname(e.target.value ? e.target.value.toUpperCase() : '')}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Admin Type..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-
-            </div>
-          </div>
-          <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
-          <span className="hidden sm:block pr-10 text-xs">Admin Type:</span>
-            <div className="relative flex items-center">
-              <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                  <path className='stroke-slate-400 dark:stroke-white' strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                  </svg>
-              </span>
-              {/* <input value={searchLname} onChange={(e) => setSearchLname(e.target.value.toUpperCase())}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Last Name..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/> */}
-              <input value={searchLname} onChange={(e) => setSearchLname(e.target.value ? e.target.value.toUpperCase() : '')}  onKeyDown={(e) => e.key === 'Enter' && handleSearch()} id="searchInput" type="text" placeholder="Search Admin Type..." className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"/>
-
-            </div>
-          </div>
 
           {/* Activity */}
           {/* <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
@@ -124,16 +95,17 @@ const AdminListDesktop = ({ handleOpenModal, adminApplications, searchInput, set
             {/* </div> */}
           {/* </div> */}
 
-          {/* Status */}
+          {/* Admin Type */}
           <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
             <span className="hidden sm:block text-xs">Admin Type:</span>
-              <select  value={selectedStatus} onChange={handleInputChange2} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px] sm:w-[210px]">
+              <select  value={selectedType} onChange={handleInputChange} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px] sm:w-[210px]">
                   <option value="All" className="dark:bg-[#3d3d3d]">Select Admin Type</option>
-                  <option value="chief_admin" className="dark:bg-[#3d3d3d]">chief_admin</option>
-                  <option value="rptax_admin" className="dark:bg-[#3d3d3d]">rptax_admin</option>
-                  <option value="business_admin" className="dark:bg-[#3d3d3d]">business_admin</option>
-                  <option value="lcr_admin" className="dark:bg-[#3d3d3d]">lcr_admin</option>
-                  <option value="registry_admin" className="dark:bg-[#3d3d3d]">registry_admin</option>
+                  <option value="Chief Admin" className="dark:bg-[#3d3d3d]">Chief Admin</option>
+                  <option value="Real Property Tax Admin" className="dark:bg-[#3d3d3d]">Real Property Tax Admin</option>
+                  <option value="Business Permit Admin" className="dark:bg-[#3d3d3d]">Business Permit Admin</option>
+                  <option value="Cedula / Community Tax Certificate Admin" className="dark:bg-[#3d3d3d]">Cedula / Community Tax Certificate Admin</option>
+                  <option value="Local Civil Registry Admin" className="dark:bg-[#3d3d3d]">Local Civil Registry Admin</option>
+                  <option value="Registry Admin" className="dark:bg-[#3d3d3d]">Registry Admin</option>
               </select>
           </div>
 
