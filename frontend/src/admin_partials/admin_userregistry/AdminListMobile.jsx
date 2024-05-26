@@ -84,17 +84,17 @@ const AdminListMobile = ({ handleOpenModal, userApplications, searchInput, setSe
               </div>
 
               {/* Activity */}
-              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+              {/* <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                 <span className="hidden sm:block text-xs">Sex:</span>
                   <select  value={selectedStatus} onChange={handleInputChange} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px] sm:w-[210px]">
                       <option value="All" className="dark:bg-[#3d3d3d]">Select Sex</option>
                       <option value="Male" className="dark:bg-[#3d3d3d]">Male</option>
                       <option value="Female" className="dark:bg-[#3d3d3d]">Female</option>
                   </select>
-              </div>
+              </div> */}
 
               {/* Mobile Number */}
-              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+              {/* <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block pr-10 text-xs">Mobile Number:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
@@ -112,10 +112,10 @@ const AdminListMobile = ({ handleOpenModal, userApplications, searchInput, setSe
                   className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
                 />                
                 </div>
-              </div>
+              </div> */}
 
                 {/* Email */}
-                <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                {/* <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block pr-10 text-xs">Email:</span>
                 <div className="relative flex items-center">
                   <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
@@ -133,7 +133,7 @@ const AdminListMobile = ({ handleOpenModal, userApplications, searchInput, setSe
                   className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
                 />                
                 </div>
-              </div>
+              </div> */}
 
               {/* Status */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
@@ -169,15 +169,16 @@ const AdminListMobile = ({ handleOpenModal, userApplications, searchInput, setSe
                 userApplications.map((transaction, index) => (
                   <div key={index} className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
                     <div className="text-xs font-semibold text-slate-60 bg-slate-200 dark:bg-[#212121] dark:text-white rounded-t-sm px-4 py-1.5">
-                      Name: {transaction.l_name}, {transaction.f_name} {transaction.m_name}
+                      Adnmin Type: {transaction.admin_type}
                     </div>
                     <div className="px-4 py-5">
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Sex: {transaction.sex_type ? transaction.sex_type.toUpperCase() : ""}</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Place of Birth: {transaction.birth_place}</div>
+                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Admin Username: {transaction.mobile_no ? transaction.mobile_no.toUpperCase() : ""}</div>
+                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Admin Type: {transaction.admin_type ? transaction.admin_type.toUpperCase() : ""}</div>
+                      {/*<div className="text-xs text-slate-600 dark:text-slate-300 my-1">Place of Birth: {transaction.birth_place}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date of Birth: {transaction.birth_date}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Mobile Number: {transaction.mobile_no}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Email: {transaction.user_email}</div>
-                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Verification Status: {transaction.verification_status.toUpperCase()}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Verification Status: {transaction.verification_status.toUpperCase()}</div> */}
                       <div className="mt-5 flex space-x-3 justify-center">
                         <div onClick={() => handleOpenModal(transaction)} className="flex group justify-center items-center w-full text-center px-2 py-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-sm mt-2">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-0.5">
