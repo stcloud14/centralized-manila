@@ -9,6 +9,7 @@ import GovInfo from '../admin_userregistry/GovInfo';
 import AdminUserDeleteModal from '../admin_modals/AdminUserDeleteModal';
 import AdminInfo from '../admin_userregistry/AdminInfo';
 import { useParams } from 'react-router-dom'; 
+import Loading from '../../partials/Loading';
 
 
 const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
@@ -134,6 +135,15 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
 
 
   const handleChangeData = (e) => {
+    const { name, value } = e.target;
+    setAdminInfo((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  {/**
+  const handleChangeData = (e) => {
     e.preventDefault();
   
     if (e && e.target) {
@@ -149,17 +159,16 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
         [name]: value
       }));
     }
-  };
-
+  }; */}
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
+    setIsLoading1(true); 
   
     try {
       const mobile_no = selectedTransaction.mobile_no;
-  
       const response = await axios.post(`${Base_Url}adminchangepass/admin/change-password/${mobile_no}`, { 
-        new_password: adminInfo.new_password // Send the new password with the key 'new_password'
+        new_password: adminInfo.new_password 
       });
   
       if (response.status !== 200) {
@@ -168,14 +177,17 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   
       setIsSuccess(true);
       setTimeout(() => {
-        window.location.href = `/admin_adminlist/${admin_type}/${admin_uname}`; // Corrected the typo in window.location.href
-      }, 2500); // Adjusted the timeout duration to 25 seconds
-      
+        window.location.href = `/admin_adminlist/${admin_type}/${admin_uname}`; 
+      }, 2500); 
       console.log('Changes saved successfully');
     } catch (error) {
       console.error('Error saving changes:', error.message);
+    } finally {
+      setTimeout(() => {
+        setIsLoading1(false);
+      }, 3000); 
     }
-};
+  };
 
 
 
@@ -368,10 +380,17 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                         className="text-white font-medium dark:text-white dark:bg-emerald-500 dark:hover:bg-emerald-600 flex items-center bg-emerald-500 hover:bg-emerald-600 hover:border-emerald-500 rounded-sm px-2 py-1.5 ml-2"
                         onClick={handleSaveChanges}
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                        </svg>
-                        <span>Save</span>
+                        {isLoading1 ? (
+                          <svg className="animate-spin h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                          </svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                          </svg>
+                        )}
+                        <span>{isLoading1 ? 'Saving...' : 'Save'}</span>
                       </button>
                     )}
                   </div>
