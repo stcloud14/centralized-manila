@@ -595,7 +595,7 @@ console.log(selectedFiles)
                 {isDeclined && (
                     <div className="my-5 text-center">
                       <div className="text-red-700 text-sm bg-red-200 text-center rounded-full py-1.5 mb-5">
-                        <h1>Account already exists. redirecting to login.</h1> 
+                        <h1>Account already exists. Redirecting to login.</h1> 
                       </div>
                     </div>
                   )} 
