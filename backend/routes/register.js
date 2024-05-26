@@ -21,7 +21,7 @@ router.post('/check-existence', async (req, res) => {
     const values1 = [user_email];
 
     const query2 = "SELECT user_id FROM user_auth WHERE mobile_no LIKE ?";
-    const values2 = [`${plainMobileNo}%+`];
+    const values2 = [`${plainMobileNo}%#`];
 
     
 
