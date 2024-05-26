@@ -1,8 +1,34 @@
 import React, { useState } from 'react';
 
+import RPTAX from '../../images/RPTAX.png';
+import BP from '../../images/BP.png';
+import CTC from '../../images/CTC.png';
+import LCR from '../../images/LCR.png';
+import UR from '../../images/UR.png';
+import CHIEF from '../../images/CHIEF.png';
+
 const AdminListDesktop = ({ handleOpenModal, adminApplications, handleSearch, searchInput, setSearchInput, selectedType, handleInputChange, handleClearFilter }) => {
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+    const getAdminImage = (adminType) => {
+      switch(adminType) {
+        case 'Chief Admin':
+          return CHIEF;
+        case 'Real Property Tax Admin':
+          return RPTAX;
+        case 'Business Permit Admin':
+          return BP;
+        case 'Cedula / Community Tax Certificate Admin':
+          return CTC;
+        case 'Local Civil Registry Admin':
+          return LCR;
+        case 'Registry Admin':
+          return UR;
+        default:
+          return null;
+      }
+    };
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -143,6 +169,12 @@ const AdminListDesktop = ({ handleOpenModal, adminApplications, handleSearch, se
                           Admin Type
                         </div>
                     </th>
+
+                    <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <div className="flex items-center pl-3">
+                          Admin Name
+                        </div>
+                    </th>
                     
                     {/* <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                         <div className="flex items-center pl-3">
@@ -197,11 +229,23 @@ const AdminListDesktop = ({ handleOpenModal, adminApplications, handleSearch, se
                   {transaction.mobile_no}
                 </div>
               </td>
-              <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
+              <td className="px-1 py-2 whitespace-nowrap">
                 <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                   {transaction.admin_type}
                 </div>
               </td>
+              
+              <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400 flex items-center">
+                <img
+                  src={getAdminImage(transaction.admin_type)}
+                  alt={transaction.admin_name}
+                  className="h-4 w-4 mr-1"
+                />
+                <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
+                  {transaction.admin_name}
+                </div>
+              </td>
+
               {/* <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                 <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                   {transaction.m_name}
