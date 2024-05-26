@@ -190,7 +190,7 @@ router.get('/adminlist', async (req, res) => {
 function formatAdminType(adminType) {
   switch (adminType) {
     case 'business_admin':
-      return 'Business Admin';
+      return 'Business Permit Admin';
     case 'rptax_admin':
       return 'Real Property Tax Admin';
     case 'cedula_admin':
