@@ -7,17 +7,20 @@ import conn1 from './connection1.js';
 
 const router = Router();
 
-  router.get('/:admin_type', (req, res) => {
+  router.get('/:admin_type/:admin_uname', async (req, res) => {
     const admin_type = req.params.admin_type;
-    const sql = "SELECT admin_image FROM admin_profile WHERE admin_type = ?";
-    conn1.query(sql, [admin_type], (err, result) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error retrieving user image');
-      } else {
-        res.json(result);
-      }
-    });
+    const admin_uname = req.params.admin_uname;
+    const sql = "SELECT admin_image FROM admin_profile WHERE admin_type = ? AND admin_name = ?";
+
+    try {
+      const result = await queryDatabase(sql, [admin_type, admin_uname]);
+
+      res.json(result);
+
+    } catch (error) {
+      console.error('Error during file upload:', error);
+      res.status(500).json({ success: false, message: 'File upload failed' });
+    }
   });
 
   const __filename = fileURLToPath(import.meta.url);
@@ -54,9 +57,10 @@ const router = Router();
     next();
   };
 
-  router.post('/uploadimage/:admin_type', setUserMiddleware, upload.single('user_img'), async (req, res) => {
+  router.post('/uploadimage/:admin_type/:admin_uname', setUserMiddleware, upload.single('user_img'), async (req, res) => {
 
     const admin_type = req.params.admin_type;
+    const admin_uname = req.params.admin_uname;
     const uniqueFileName = req.uniqueFileName;
 
     if (!req.file) {
@@ -65,15 +69,9 @@ const router = Router();
 
     try {
       // Check if the user already has an image in the database
-      const existingImage = await queryDatabase("SELECT admin_image FROM admin_profile WHERE admin_type = ?", [admin_type]);
+      const existingImage = await queryDatabase("SELECT admin_image FROM admin_profile WHERE admin_type = ? AND admin_name = ?", [admin_type, admin_uname]);
 
-      if (existingImage && existingImage.length > 0) {
-        // If an image exists, update the record
-        await queryDatabase("UPDATE admin_profile SET `admin_image` = ? WHERE `admin_type` = ?", [uniqueFileName, admin_type]);
-      } else {
-        // If no image exists, insert a new record
-        await queryDatabase("INSERT INTO admin_profile (`admin_type`, `admin_image`) VALUES (?, ?)", [admin_type, uniqueFileName]);
-      }
+      await queryDatabase("UPDATE admin_profile SET `admin_image` = ? WHERE `admin_type` = ? AND admin_name = ?", [uniqueFileName, admin_type, admin_uname]);
 
       res.json({
         success: true,
@@ -86,7 +84,7 @@ const router = Router();
   });
 
 
-  router.delete('/removeimage/:admin_type', async (req, res) => {
+  router.delete('/removeimage/:admin_type/:admin_uname', async (req, res) => {
     const admin_type = req.params.admin_type;
 
     try {

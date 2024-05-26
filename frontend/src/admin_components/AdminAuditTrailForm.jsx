@@ -11,10 +11,8 @@ import AuditDesktop from '../admin_partials/audit_trail/auditDesktop';
 
 
 const  AdminAuditTrailForm = () => {
-  
-  const { user_id} = useParams();
 
-  const { admin_type, admin_uname } = useParams();
+  const { admin_type, user_id, admin_uname } = useParams();
 
   // const location = useLocation();
   // const { pathname } = location;
@@ -39,8 +37,8 @@ const  AdminAuditTrailForm = () => {
     const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
-        const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
-        headers: {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
             });

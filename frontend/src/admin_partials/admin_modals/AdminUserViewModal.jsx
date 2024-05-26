@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; 
 import axios from 'axios';
 
 import 'flatpickr/dist/themes/airbnb.css';
@@ -9,6 +10,9 @@ import GovInfo from '../admin_userregistry/GovInfo';
 import AdminUserDeleteModal from '../admin_modals/AdminUserDeleteModal';
 
 const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
+
+  const { admin_uname } = useParams();
+  
   const Base_Url = process.env.Base_Url;
 
   const [userImage, setUserImage] = useState(null);
@@ -231,7 +235,7 @@ const AdminUserViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
         trans_type,
       }
 
-      const response = await axios.put(`${Base_Url}adminur/updateuser/${selectedTransaction.user_id}`, body1);
+      const response = await axios.put(`${Base_Url}adminur/updateuser/${selectedTransaction.user_id}/${admin_uname}`, body1);
   
       if (response.status === 200) {
 

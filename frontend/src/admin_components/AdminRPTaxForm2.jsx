@@ -11,7 +11,7 @@ import AdminRPTaxProcessing from '../admin_partials/admin_cards/AdminRPTaxProces
 
 const AdminRPTaxForm2 = () => {
 
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -30,7 +30,7 @@ const AdminRPTaxForm2 = () => {
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -34,8 +34,8 @@ const AdminAddAdminForm =()=>{
     const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
-        const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
-          headers: {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
             });

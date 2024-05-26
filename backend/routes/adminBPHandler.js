@@ -288,7 +288,7 @@ router.get('/processing', async (req, res) => {
     }
 });
 
-router.post('/updateamount/:transaction_id', auditMiddleware, async (req, res) => {
+router.post('/updateamount/:transaction_id/:admin_uname', auditMiddleware, async (req, res) => {
     const transaction_id = req.params.transaction_id;
     const user_id = req.body.user_id;
     const trans_type = req.body.trans_type;
@@ -324,7 +324,7 @@ router.post('/updateamount/:transaction_id', auditMiddleware, async (req, res) =
     }
 });
 
-router.post('/updateprocess/:transaction_id', auditMiddleware, async (req, res) => {
+router.post('/updateprocess/:transaction_id/:admin_uname', auditMiddleware, async (req, res) => {
     const transaction_id = req.params.transaction_id;
     const user_id = req.body.user_id;
     const trans_type = req.body.trans_type;
@@ -354,7 +354,7 @@ router.post('/updateprocess/:transaction_id', auditMiddleware, async (req, res) 
     }
 });
 
-router.post('/updatecomplete/:transaction_id', auditMiddleware, async (req, res) => {
+router.post('/updatecomplete/:transaction_id/:admin_uname', auditMiddleware, async (req, res) => {
     const transaction_id = req.params.transaction_id;
     const user_id = req.body.user_id;
     const trans_type = req.body.trans_type;
@@ -385,7 +385,7 @@ router.post('/updatecomplete/:transaction_id', auditMiddleware, async (req, res)
 });
 
 
-router.post('/updatereject/:transaction_id', auditMiddleware, async (req, res) => {
+router.post('/updatereject/:transaction_id/:admin_uname', auditMiddleware, async (req, res) => {
     const transaction_id = req.params.transaction_id;
     const user_id = req.body.selectedTransaction.user_id;
     const trans_type = req.body.selectedTransaction.trans_type;

@@ -13,7 +13,7 @@ import AdminBusinessCharge from '../admin_partials/admin_cards/AdminBusinessChar
 
 
 const AdminBusinessForm3 =()=>{
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
   const Base_Url = process.env.Base_Url;
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -34,7 +34,7 @@ const AdminBusinessForm3 =()=>{
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -7,6 +7,7 @@ function auditMiddleware(req, res, next) {
     const { params, path, body } = req;
 
     const transaction_id = params.transaction_id;
+    const admin_name = params.admin_uname;
     const user_id = params.user_id;
 
     let id_no = (transaction_id !== undefined && transaction_id !== null) ? transaction_id : user_id;
@@ -91,8 +92,8 @@ function auditMiddleware(req, res, next) {
     }
             
     
-    const sql = "INSERT INTO audit_trail (`time_stamp`, `activity`, `admin`, `date`, `time`, `id_no`, `changes`) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    const values = [timeStamp, activity, admin, formattedDate, formattedTime, id_no, changes];
+    const sql = "INSERT INTO audit_trail (`time_stamp`, `activity`, `admin`, `admin_name`, `date`, `time`, `id_no`, `changes`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const values = [timeStamp, activity, admin, admin_name, formattedDate, formattedTime, id_no, changes];
 
 
     try {

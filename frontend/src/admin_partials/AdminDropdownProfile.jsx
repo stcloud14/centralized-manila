@@ -9,7 +9,7 @@ import cedulaImg from '../images/CTC.png'
 import lcrImg from '../images/LCR.png'
 import urImg from '../images/UR.png'
 
-const AdminDropdownProfile = ({ align, admin_type, userImage }) => {
+const AdminDropdownProfile = ({ align, admin_type, admin_uname, userImage }) => {
 
   let imageUrl;
   let userName;
@@ -17,27 +17,27 @@ const AdminDropdownProfile = ({ align, admin_type, userImage }) => {
   switch (admin_type) {
     case 'chief_admin':
       imageUrl = userImage ? userImage : chiefImg;
-      userName = 'CHIEF ADMIN';
+      userName = 'Chief Administrator';
       break;
     case 'rptax_admin':
         imageUrl = userImage ? userImage : rptaxImg;
-        userName = 'RPTAX ADMIN';
+        userName = 'Real Property Tax Administrator';
         break;
     case 'business_admin':
         imageUrl = userImage ? userImage : businessImg;
-        userName = 'BUSINESS PERMIT ADMIN';
+        userName = 'Business Permit Administrator';
         break;
     case 'cedula_admin':
         imageUrl = userImage ? userImage : cedulaImg;
-        userName = 'CTC/CEDULA ADMIN';
+        userName = 'CTC/Cedula Administrator';
         break;
     case 'lcr_admin':
         imageUrl = userImage ? userImage : lcrImg;
-        userName = 'LOCAL CIVIL REGISTRY ADMIN';
+        userName = 'Local Civil Registry Administrator';
         break;
     case 'registry_admin':
         imageUrl = userImage ? userImage : urImg;
-        userName = 'REGISTRY ADMIN';
+        userName = 'Registry Administrator';
         break;
     default:
         imageUrl = defaultImage;
@@ -113,14 +113,14 @@ const AdminDropdownProfile = ({ align, admin_type, userImage }) => {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-[#3d3d3d]">
-            <div className="font-medium text-slate-800 dark:text-slate-100">{userName}</div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 italic">Administrator</div>
+            <div className="font-medium text-slate-800 dark:text-slate-100">{admin_uname}</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400 italic">{userName}</div>
           </div>
           <ul>
             <li>
               <Link
                 className="font-medium text-sm text-slate-400 hover:text-blue-500 dark:hover:text-blue-600 flex items-center py-1 px-3"
-                to={`/admin_settings/${admin_type}`}
+                to={`/admin_settings/${admin_type}/${admin_uname}`}
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 Settings

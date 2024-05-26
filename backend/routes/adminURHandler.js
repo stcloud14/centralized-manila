@@ -181,7 +181,7 @@ router.get('/adminlist', async (req, res) => {
 
 
 
-router.post('/approve/:user_id', auditMiddleware, async (req, res) => {
+router.post('/approve/:user_id/:admin_uname', auditMiddleware, async (req, res) => {
 
     const user_id = req.params.user_id;
     const vStatus = 'Verified';
@@ -217,7 +217,7 @@ router.post('/approve/:user_id', auditMiddleware, async (req, res) => {
 });
 
 
-router.post('/decline/:user_id', auditMiddleware, async (req, res) => {
+router.post('/decline/:user_id/:admin_uname', auditMiddleware, async (req, res) => {
 
   const user_id = req.params.user_id;
   const vStatus = 'Unverified';

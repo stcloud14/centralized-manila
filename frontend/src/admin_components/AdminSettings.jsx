@@ -19,7 +19,7 @@ const AdminSettings =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const contentRef = useRef(null);
  
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
   const location = useLocation();
   const { pathname } = location;
   const user_id = pathname.split("/")[2];
@@ -31,7 +31,7 @@ const AdminSettings =()=>{
     
     const checkToken = async (token) => {
       try{
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -39,10 +39,7 @@ const AdminSettings =()=>{
 
             const adminType = response.data.admin_type;
             const tokenType = response.data.tokenAdmin;
-            console.log("response", response)
-            console.log("adminType", response.data.admin_type)
-
-            console.log("tokenType", response.data.tokenAdmin)
+          
             if (adminType === tokenType) {
                 setReload(false);
             } else {
@@ -61,38 +58,7 @@ const AdminSettings =()=>{
     }
 }, []);
 
-  let imageUrl;
-  let userName;
-
-  switch (admin_type) {
-    case 'chief_admin':
-      imageUrl = chiefImg;
-      userName = 'CHIEF ADMIN';
-    break;
-    case 'rptax_admin':
-      imageUrl = rptaxImg;
-      userName = 'RPTAX ADMIN';
-      break;
-    case 'business_admin':
-      imageUrl = businessImg;
-      userName = 'BUSINESS PERMIT ADMIN';
-      break;
-    case 'cedula_admin':
-      imageUrl = cedulaImg;
-      userName = 'CTC/CEDULA ADMIN';
-      break;
-    case 'lcr_admin':
-      imageUrl = lcrImg;
-      userName = 'LOCAL CIVIL REGISTRY ADMIN';
-      break;
-    case 'registry_admin':
-      imageUrl = urImg;
-      userName = 'REGISTRY ADMIN';
-      break;
-    default:
-      imageUrl = defaultImage;
-      break;
-  }
+  
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
@@ -143,10 +109,12 @@ const AdminSettings =()=>{
    
   };
 
+
+
   useEffect(()=>{
     const fetchUserImage= async()=>{
         try{
-            const res= await axios.get(`${Base_Url}adminprofile/${admin_type}`)
+            const res= await axios.get(`${Base_Url}adminprofile/${admin_type}/${admin_uname}`)
             setStoredImage(res.data[0])
 
         }catch(err){
@@ -159,7 +127,7 @@ const AdminSettings =()=>{
 
   const checkUserImage = async () => {
     try {
-      const imagePath = '../uploads/adminImages/';
+      const imagePath = '../../uploads/adminImages/';
       const imageName = storedImage?.admin_image;
   
       if (imageName === undefined || imageName === null) {
@@ -231,6 +199,39 @@ const AdminSettings =()=>{
     }
   };
 
+  let imageUrl;
+  let userName;
+
+  switch (admin_type) {
+    case 'chief_admin':
+      imageUrl = chiefImg;
+      userName = 'CHIEF ADMIN';
+    break;
+    case 'rptax_admin':
+      imageUrl = rptaxImg;
+      userName = 'RPTAX ADMIN';
+      break;
+    case 'business_admin':
+      imageUrl = businessImg;
+      userName = 'BUSINESS PERMIT ADMIN';
+      break;
+    case 'cedula_admin':
+      imageUrl = cedulaImg;
+      userName = 'CTC/CEDULA ADMIN';
+      break;
+    case 'lcr_admin':
+      imageUrl = lcrImg;
+      userName = 'LOCAL CIVIL REGISTRY ADMIN';
+      break;
+    case 'registry_admin':
+      imageUrl = urImg;
+      userName = 'REGISTRY ADMIN';
+      break;
+    default:
+      imageUrl = defaultImage;
+      break;
+  }
+
 
   const handleUploadImage = async (e) => {
    
@@ -238,7 +239,7 @@ const AdminSettings =()=>{
       const formData = new FormData();
       formData.append('user_img', selectedFile);
 
-      const response = await axios.post(`${Base_Url}adminprofile/uploadimage/${admin_type}`, formData);
+      const response = await axios.post(`${Base_Url}adminprofile/uploadimage/${admin_type}/${admin_uname}`, formData);
 
       if (response.status === 200) {
           setIsSuccess(true);
@@ -265,7 +266,7 @@ const AdminSettings =()=>{
 
     try {
 
-      const response = await axios.delete(`${Base_Url}adminprofile/removeimage/${admin_type}`);
+      const response = await axios.delete(`${Base_Url}adminprofile/removeimage/${admin_type}/${admin_uname}`);
 
       if (response.status === 200) {
           const fileInput = document.getElementById('user_img');
@@ -415,7 +416,7 @@ const AdminSettings =()=>{
                     </div>
                     {/* <h1 className='font-medium text-center text-slate-700 dark:text-white'>Change Password</h1> */}
                       <h1 className="font-base text-justify text-sm text-slate-700 dark:text-white ">
-                        To change the password of your administrator account, you will need to contact the System Admin or the {' '}
+                        To change your administrative account credentials and details, you will need to contact the Chief Administrator or the {' '}
                         <a className="text-sky-600 underline" href={`/admin_contacts/${user_id}`}>Electronic Data Processing (EDP)</a>
                         {' '}department.
                         </h1>

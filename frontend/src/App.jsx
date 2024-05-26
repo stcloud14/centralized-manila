@@ -137,7 +137,7 @@ function App() {
         <Route exact path="/admin_adminlist/:admin_type/:admin_uname" element={<AdminAdminList />} />
         <Route exact path="/admin_verifyreqs/:admin_type/:admin_uname" element={<AdminVerifyReqs />} />
         <Route exact path="/admin_audittrail/:admin_type/:admin_uname" element={<AdminAuditTrail />} />
-        <Route exact path="/admin_contacts/:admin_type/:admin_uname" element={<AdminContacts />} />
+        <Route exact path="/admin_contacts/:admin_type" element={<AdminContacts />} />
         <Route exact path="/admin_add_admin/:admin_type/:admin_uname" element={<AdminAddAdmin />} />
         <Route exact path="/admin_archives/:admin_type/:admin_uname" element={<AdminArchives />} />
 
