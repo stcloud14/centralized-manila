@@ -7,7 +7,7 @@ import conn1 from './connection1.js';
 
 const router = Router();
 
-  router.get('/:admin_type', (req, res) => {
+  router.get('/:admin_type/:admin_uname', (req, res) => {
     const admin_type = req.params.admin_type;
     const sql = "SELECT admin_image FROM admin_profile WHERE admin_type = ?";
     conn1.query(sql, [admin_type], (err, result) => {

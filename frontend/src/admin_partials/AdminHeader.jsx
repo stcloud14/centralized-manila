@@ -11,14 +11,14 @@ function AdminHeader({ sidebarOpen, setSidebarOpen }) {
   const [storedImage, setStoredImage] = useState('');
   const [userImage, setUserImage] = useState('');
 
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
   const Base_Url = process.env.Base_Url;
 
 
   useEffect(()=>{
     const fetchUserImage= async()=>{
         try{
-            const res= await axios.get(`${Base_Url}adminprofile/${admin_type}`)
+            const res= await axios.get(`${Base_Url}adminprofile/${admin_type}/${admin_uname}`)
             setStoredImage(res.data[0])
 
         }catch(err){
@@ -160,7 +160,7 @@ function AdminHeader({ sidebarOpen, setSidebarOpen }) {
             <ThemeToggle />
             {/*  Divider */}
             <hr className="w-px h-6 bg-slate-200 dark:bg-slate-700 border-none" />
-            <AdminDropdownProfile align="right" admin_type={admin_type} userImage={userImage} />
+            <AdminDropdownProfile align="right" admin_type={admin_type} admin_uname={admin_uname} userImage={userImage} />
           </div>
         </div>
       </div>

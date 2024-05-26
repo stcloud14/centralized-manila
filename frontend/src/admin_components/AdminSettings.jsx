@@ -415,7 +415,7 @@ const AdminSettings =()=>{
                     </div>
                     {/* <h1 className='font-medium text-center text-slate-700 dark:text-white'>Change Password</h1> */}
                       <h1 className="font-base text-justify text-sm text-slate-700 dark:text-white ">
-                        To change the password of your administrator account, you will need to contact the System Admin or the {' '}
+                        To change your administrative account credentials and details, you will need to contact the Chief Administrator or the {' '}
                         <a className="text-sky-600 underline" href={`/admin_contacts/${user_id}`}>Electronic Data Processing (EDP)</a>
                         {' '}department.
                         </h1>
