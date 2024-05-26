@@ -8,6 +8,8 @@ import ContactInfo from '../admin_userregistry/ContactInfo';
 import GovInfo from '../admin_userregistry/GovInfo';
 import AdminUserDeleteModal from '../admin_modals/AdminUserDeleteModal';
 import AdminInfo from '../admin_userregistry/AdminInfo';
+import { useParams } from 'react-router-dom'; 
+
 
 const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   const Base_Url = process.env.Base_Url;
@@ -20,6 +22,9 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading1, setIsLoading1] = useState(false);
+
+  const { admin_type, admin_uname } = useParams();
+
 
   // const [isDeleted, setIsDeleted] = useState(false);
 
@@ -37,7 +42,7 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
         const imageURL = selectedTransaction?.image_url ?? undefined;
         const imageName = selectedTransaction?.user_image ?? undefined;
 
-        console.log(selectedTransaction)
+        console.log("admin",selectedTransaction)
   
         // if (imageName === undefined || imageName === null) {
         //   setIsLoading(false);
@@ -127,85 +132,50 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
     }
   };
 
-  const handleChangeData = async (e) => {
-    e.preventDefault();
 
+  const handleChangeData = (e) => {
+    e.preventDefault();
+  
     if (e && e.target) {
-        const { name, value } = e.target;
-        console.log("Admin ID:", name);
-        console.log("Admin Updated Pass:", value);
-
-        if (!name) {
-            console.error("Name property is undefined on event.target");
-            return;
-        }
-
-        // If changing password field, fetch the current password from the backend
-        if (name === 'password') {
-            try {
-                const url = `${Base_Url}admin/change-password/${adminInfo.mobile_no}`;
-                const response = await fetch(url);
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.message || 'Failed to fetch current password');
-                }
-
-                // Make sure the response contains the current password
-                const currentPassword = data.current_password;
-
-                // Update the state with the new data
-                setAdminInfo((prevData) => ({
-                    ...prevData,
-                    [name]: value,
-                    current_password: currentPassword
-                }));
-            } catch (error) {
-                console.error('Error fetching current password:', error.message);
-                // Handle error, show error message, etc.
-            }
-        } else {
-            // If not changing password field, update the state immediately
-            setAdminInfo((prevData) => ({
-                ...prevData,
-                [name]: value
-            }));
-        }
+      const { name, value } = e.target;
+  
+      if (!name) {
+        console.error("Name property is undefined on event.target");
+        return;
+      }
+  
+      setAdminInfo((prevData) => ({
+        ...prevData,
+        [name]: value
+      }));
     }
-};
+  };
 
-const handleSaveChanges = async (e) => {
+
+  const handleSaveChanges = async (e) => {
     e.preventDefault();
-
+  
     try {
-        const mobile_no = adminInfo.mobile_no;
-        console.log('Mobile number:', mobile_no);
-        const url = `${Base_Url}admin/change-password`;
-
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                mobile_no: mobile_no,
-                new_password: adminInfo.password
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to save changes');
-        }
-
-        console.log('Changes saved successfully');
+      const mobile_no = selectedTransaction.mobile_no;
+  
+      const response = await axios.post(`${Base_Url}adminchangepass/admin/change-password/${mobile_no}`, { 
+        new_password: adminInfo.new_password // Send the new password with the key 'new_password'
+      });
+  
+      if (response.status !== 200) {
+        throw new Error('Failed to save changes');
+      }
+  
+      setIsSuccess(true);
+      setTimeout(() => {
+        window.location.href = `/admin_adminlist/${admin_type}/${admin_uname}`; // Corrected the typo in window.location.href
+      }, 2500); // Adjusted the timeout duration to 25 seconds
+      
+      console.log('Changes saved successfully');
     } catch (error) {
-        console.error('Error saving changes:', error.message);
+      console.error('Error saving changes:', error.message);
     }
 };
-
-
-
-
 
 
 
