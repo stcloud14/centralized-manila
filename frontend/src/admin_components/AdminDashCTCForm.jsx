@@ -17,7 +17,7 @@ import logoImage from '../images/mnl_header_pdf.png';
 
 const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, topCities, revenue, totalCC })=>{
 
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
 
 
   const [reportData, setReportData]=useState();
@@ -31,7 +31,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -493,7 +493,7 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner adminType={'CEDULA'} generateReports={generateReports} />
+                <AdminBanner adminType={'CEDULA'} adminName={admin_uname} generateReports={generateReports} />
   
                 <div className="grid grid-cols-12 gap-6">
                   <div className="flex flex-col col-span-full">

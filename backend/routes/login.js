@@ -47,7 +47,7 @@ router.post('/compare-password/:mobile_no/:user_pass', async (req, res) => {
 router.post("/admin", async (req, res) => {
     const { admin_name, admin_pass } = req.body;
 
-    const authSql = "SELECT * FROM admin_auth WHERE mobile_no = ? AND password = ?";
+    const authSql = "SELECT * FROM admin_auth au LEFT JOIN admin_profile ap ON au.mobile_no = ap.mobile_no WHERE au.mobile_no = ? AND au.password = ?";
     try {
         const authResults = await queryDatabase(conn1, authSql, [admin_name, admin_pass]);
         if (authResults.length === 0) {
@@ -55,11 +55,13 @@ router.post("/admin", async (req, res) => {
         }
 
         const admin_type = authResults[0].admin_type;
+        const admin_uname = authResults[0].admin_name;
 
         return res.status(200).json({
             admin: {
                 admin_type,
-                role: admin_type, // Using admin_type as the role
+                admin_uname,
+                role: admin_type,
             },
             message: "Login successful",
         });

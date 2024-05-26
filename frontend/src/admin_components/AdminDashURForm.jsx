@@ -16,7 +16,7 @@ import TopCities from '../admin_partials/misc/TopCities';
 const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>{
   const Base_Url = process.env.Base_Url;
 
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
 
   const [reportData, setReportData]=useState();
 
@@ -27,7 +27,7 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -377,7 +377,7 @@ const AdminDashURForm =({ verifiedUsers, topRegions, topProvinces, topCities})=>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner adminType={'UR'} generateReports={generateReports} />
+                <AdminBanner adminType={'UR'} adminName={admin_uname} generateReports={generateReports} />
   
                 <div className="grid grid-cols-12 gap-6">
                   <URstats verifiedUsers={verifiedUsers}/>

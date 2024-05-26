@@ -17,7 +17,7 @@ import Revenue from '../admin_partials/misc/Revenue';
 
 const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, topProvinces, topCities, revenue, totalRP })=>{
 
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
 
   const [reportData, setReportData]=useState();
 
@@ -31,7 +31,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -513,7 +513,7 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner adminType={'RPTAX'} generateReports={generateReports} />
+                <AdminBanner adminType={'RPTAX'} adminName={admin_uname} generateReports={generateReports} />
   
                 <div className="grid grid-cols-12 gap-6">
                   <RPstats taxPayment={taxPayment} />

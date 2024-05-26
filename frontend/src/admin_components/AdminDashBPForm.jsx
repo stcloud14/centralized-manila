@@ -17,7 +17,7 @@ import logoImage from '../images/mnl_header_pdf.png';
 
 const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, topCities, revenue, totalBP })=>{
 
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
 
   const Base_Url = process.env.Base_Url;
 
@@ -31,7 +31,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}token/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -491,7 +491,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner adminType={'BUSINESS'} generateReports={generateReports} />
+                <AdminBanner adminType={'BUSINESS'} adminName={admin_uname} generateReports={generateReports} />
   
                 <div className="grid grid-cols-12 gap-6">
                   <div className="flex flex-col col-span-full">

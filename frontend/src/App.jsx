@@ -122,32 +122,32 @@ function App() {
 
         {/* Admin Pages */}
         <Route exact path="/indexadmin" element={<LoginAdmin />} />
-        <Route exact path="/admin_settings/:admin_type" element={<AdminSettings />} />
-        <Route exact path="/admin_rptax1/:admin_type" element={<AdminRPTax1 />} />
-        <Route exact path="/admin_rptax2/:admin_type" element={<AdminRPTax2 />} />
-        <Route exact path="/admin_rptax3/:admin_type" element={<AdminRPTax3 />} />
-        <Route exact path="/admin_business1/:admin_type" element={<AdminBusiness1 />} />
-        <Route exact path="/admin_business2/:admin_type" element={<AdminBusiness2 />} />
-        <Route exact path="/admin_business3/:admin_type" element={<AdminBusiness3 />} />
-        <Route exact path="/admin_cedula1/:admin_type" element={<AdminCedula1 />} />
-        <Route exact path="/admin_cedula2/:admin_type" element={<AdminCedula2 />} />
-        <Route exact path="/admin_lcr1/:admin_type" element={<AdminLCR1 />} />
-        <Route exact path="/admin_lcr2/:admin_type" element={<AdminLCR2 />} />
-        <Route exact path="/admin_userlist/:admin_type" element={<AdminUserList />} />
-        <Route exact path="/admin_adminlist/:admin_type" element={<AdminAdminList />} />
-        <Route exact path="/admin_verifyreqs/:admin_type" element={<AdminVerifyReqs />} />
-        <Route exact path="/admin_audittrail/:admin_type" element={<AdminAuditTrail />} />
-        <Route exact path="/admin_contacts/:admin_type" element={<AdminContacts />} />
-        <Route exact path="/admin_add_admin/:admin_type" element={<AdminAddAdmin />} />
-        <Route exact path="/admin_archives/:admin_type" element={<AdminArchives />} />
+        <Route exact path="/admin_settings/:admin_type/:admin_uname" element={<AdminSettings />} />
+        <Route exact path="/admin_rptax1/:admin_type/:admin_uname" element={<AdminRPTax1 />} />
+        <Route exact path="/admin_rptax2/:admin_type/:admin_uname" element={<AdminRPTax2 />} />
+        <Route exact path="/admin_rptax3/:admin_type/:admin_uname" element={<AdminRPTax3 />} />
+        <Route exact path="/admin_business1/:admin_type/:admin_uname" element={<AdminBusiness1 />} />
+        <Route exact path="/admin_business2/:admin_type/:admin_uname" element={<AdminBusiness2 />} />
+        <Route exact path="/admin_business3/:admin_type/:admin_uname" element={<AdminBusiness3 />} />
+        <Route exact path="/admin_cedula1/:admin_type/:admin_uname" element={<AdminCedula1 />} />
+        <Route exact path="/admin_cedula2/:admin_type/:admin_uname" element={<AdminCedula2 />} />
+        <Route exact path="/admin_lcr1/:admin_type/:admin_uname" element={<AdminLCR1 />} />
+        <Route exact path="/admin_lcr2/:admin_type/:admin_uname" element={<AdminLCR2 />} />
+        <Route exact path="/admin_userlist/:admin_type/:admin_uname" element={<AdminUserList />} />
+        <Route exact path="/admin_adminlist/:admin_type/:admin_uname" element={<AdminAdminList />} />
+        <Route exact path="/admin_verifyreqs/:admin_type/:admin_uname" element={<AdminVerifyReqs />} />
+        <Route exact path="/admin_audittrail/:admin_type/:admin_uname" element={<AdminAuditTrail />} />
+        <Route exact path="/admin_contacts/:admin_type/:admin_uname" element={<AdminContacts />} />
+        <Route exact path="/admin_add_admin/:admin_type/:admin_uname" element={<AdminAddAdmin />} />
+        <Route exact path="/admin_archives/:admin_type/:admin_uname" element={<AdminArchives />} />
 
         {/* Admin Dashboard Routes */}
-        <Route exact path="/admin_dash_chief/:admin_type" element={<AdminDashChief />} />
-        <Route exact path="/admin_dash_rp/:admin_type" element={<AdminDashRP />} />
-        <Route exact path="/admin_dash_bp/:admin_type" element={<AdminDashBP />} />
-        <Route exact path="/admin_dash_ctc/:admin_type" element={<AdminDashCTC />} />
-        <Route exact path="/admin_dash_lcr/:admin_type" element={<AdminDashLCR />} />
-        <Route exact path="/admin_dash_ur/:admin_type" element={<AdminDashUR />} />
+        <Route exact path="/admin_dash_chief/:admin_type/:admin_uname" element={<AdminDashChief />} />
+        <Route exact path="/admin_dash_rp/:admin_type/:admin_uname" element={<AdminDashRP />} />
+        <Route exact path="/admin_dash_bp/:admin_type/:admin_uname" element={<AdminDashBP />} />
+        <Route exact path="/admin_dash_ctc/:admin_type/:admin_uname" element={<AdminDashCTC />} />
+        <Route exact path="/admin_dash_lcr/:admin_type/:admin_uname" element={<AdminDashLCR />} />
+        <Route exact path="/admin_dash_ur/:admin_type/:admin_uname" element={<AdminDashUR />} />
 
 
 

@@ -21,7 +21,7 @@ import logoImage from '../images/mnl_header_pdf.png';
 
 const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRegions, topProvinces, topCities, revenue, totalLCR })=>{
 
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
   // const location = useLocation();
  //  const { pathname, state } = location;
   // const admin_type = pathname.split("/")[2];
@@ -37,7 +37,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -510,7 +510,7 @@ const AdminDashLCRForm =({ transStats, birthCert, deathCert, marriageCert, topRe
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner adminType={'LCR'} generateReports={generateReports} />
+                <AdminBanner adminType={'LCR'} adminName={admin_uname} generateReports={generateReports} />
   
                 <div className="grid grid-cols-12 gap-6">
                   <BCstats birthCert={birthCert}/>

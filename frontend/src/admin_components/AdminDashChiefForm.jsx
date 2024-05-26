@@ -45,7 +45,7 @@ const AdminDashChiefForm = React.memo(
     topCities
   }) => {
 
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
   const [reportData, setReportData]=useState();
 
   const [Reload, setReload]=useState(true)
@@ -56,7 +56,7 @@ const AdminDashChiefForm = React.memo(
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -630,7 +630,7 @@ const AdminDashChiefForm = React.memo(
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {!isLoading && (
               <>
-                <AdminBanner adminType={'CHIEF'} generateReports={generateReports} />
+                <AdminBanner adminType={'CHIEF'} adminName={admin_uname} generateReports={generateReports} />
   
                 <div className="grid grid-cols-12 gap-6">
                 <MainCard transStats={transStats}/>

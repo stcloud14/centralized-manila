@@ -40,6 +40,7 @@ const LoginAdminForm = () => {
   
       if (response.status === 200) {
         const adminType = response.data.admin_type;
+        const adminName = response.data.admin_uname;
   
         // Assuming setAuthenticated is a function to set authentication state
         setAuthenticated(true);
@@ -47,22 +48,22 @@ const LoginAdminForm = () => {
         // Navigate based on admin type
         switch (adminType) {
           case 'chief_admin':
-            navigate(`/admin_dash_chief/${adminType}`);
+            navigate(`/admin_dash_chief/${adminType}/${adminName}`);
             break;
           case 'rptax_admin':
-            navigate(`/admin_dash_rp/${adminType}`);
+            navigate(`/admin_dash_rp/${adminType}/${adminName}`);
             break;
           case 'business_admin':
-            navigate(`/admin_dash_bp/${adminType}`);
+            navigate(`/admin_dash_bp/${adminType}/${adminName}`);
             break;
           case 'cedula_admin':
-              navigate(`/admin_dash_ctc/${adminType}`);
+              navigate(`/admin_dash_ctc/${adminType}/${adminName}`);
               break;
           case 'lcr_admin':
-              navigate(`/admin_dash_lcr/${adminType}`);
+              navigate(`/admin_dash_lcr/${adminType}/${adminName}`);
               break;
           case 'registry_admin':
-              navigate(`/admin_dash_ur/${adminType}`);
+              navigate(`/admin_dash_ur/${adminType}/${adminName}`);
               break;
           default:
             // Handle unknown admin types or show error message
@@ -87,20 +88,21 @@ const LoginAdminForm = () => {
   
       if (response.data && response.data.message === 'Login successful') {
         const admin = response.data.admin;
-        const { admin_type } = admin;
+        const { admin_type, admin_uname } = admin;
   
         setUserAuth((prev) => ({ ...prev, admin_type }));
   
         // Log the admin_type for debugging
         console.log("Admin Type:", admin_type);
+        console.log("Admin Name:", admin_uname);
   
         switch (admin.role) {
           case 'chief_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type, admin_uname });
               const { token } = tokenResponse.data;
               localStorage.setItem('Admin_token', token);
-              navigate(`/admin_dash_chief/${admin_type}`);
+              navigate(`/admin_dash_chief/${admin_type}/${admin_uname}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
               setLoginError("Token generation failed for chief admin.");
@@ -108,10 +110,10 @@ const LoginAdminForm = () => {
             break;
           case 'rptax_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type, admin_uname });
               const { token } = tokenResponse.data;
               localStorage.setItem('Admin_token', token);
-              navigate(`/admin_dash_rp/${admin_type}`);
+              navigate(`/admin_dash_rp/${admin_type}/${admin_uname}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
               setLoginError("Token generation failed for rptax admin.");
@@ -119,10 +121,10 @@ const LoginAdminForm = () => {
             break;
           case 'business_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type, admin_uname });
               const { token } = tokenResponse.data;
               localStorage.setItem('Admin_token', token);
-              navigate(`/admin_dash_bp/${admin_type}`);
+              navigate(`/admin_dash_bp/${admin_type}/${admin_uname}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
               setLoginError("Token generation failed for rptax admin.");
@@ -130,10 +132,10 @@ const LoginAdminForm = () => {
             break;
           case 'cedula_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type, admin_uname });
               const { token } = tokenResponse.data;
               localStorage.setItem('Admin_token', token);
-              navigate(`/admin_dash_ctc/${admin_type}`);
+              navigate(`/admin_dash_ctc/${admin_type}/${admin_uname}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
               setLoginError("Token generation failed for rptax admin.");
@@ -141,10 +143,10 @@ const LoginAdminForm = () => {
             break;
           case 'lcr_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type, admin_uname });
               const { token } = tokenResponse.data;
               localStorage.setItem('Admin_token', token);
-              navigate(`/admin_dash_lcr/${admin_type}`);
+              navigate(`/admin_dash_lcr/${admin_type}/${admin_uname}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
               setLoginError("Token generation failed for rptax admin.");
@@ -152,10 +154,10 @@ const LoginAdminForm = () => {
             break;
           case 'registry_admin':
             try {
-              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type });
+              const tokenResponse = await axios.post(`${Base_Url}admintoken/generate-token-admin`, { admin_type, admin_uname });
               const { token } = tokenResponse.data;
               localStorage.setItem('Admin_token', token);
-              navigate(`/admin_dash_ur/${admin_type}`);
+              navigate(`/admin_dash_ur/${admin_type}/${admin_uname}`);
             } catch (error) {
               console.error('Token Generation Error:', error);
               setLoginError("Token generation failed for rptax admin.");

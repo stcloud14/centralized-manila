@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import Flatpickr from 'react-flatpickr';
 
-function AdminBanner({ adminType, generateReports}) {
+function AdminBanner({ adminType, adminName, generateReports}) {
 
   const [selectedYear, setSelectedYear] = useState(moment().format('YYYY'));
   
@@ -30,6 +30,7 @@ function AdminBanner({ adminType, generateReports}) {
   
   console.log(selectedYear)
 
+  const admin_name = adminName;
   const admin = (() => {
     switch (adminType) {
       case 'CHIEF':
@@ -62,7 +63,7 @@ function AdminBanner({ adminType, generateReports}) {
             <span className='text-green-500'>i</span>
             <span className='text-blue-600'>l</span>
             <span className='text-red-500'>a</span>,
-            <span> {admin}</span>!
+            <span> {admin}, {admin_name}</span>!
           </h1>
           <p className="lg:text-sm dark:text-slate-400 font-thin text-xs">Discover what's happening today.</p>
         </div>

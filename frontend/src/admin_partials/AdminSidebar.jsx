@@ -5,7 +5,7 @@ import AdminSidebarLinkGroup from './AdminSidebarLinkGroup';
 
 function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
 
-  const { admin_type } = useParams(); 
+  const { admin_type, admin_uname } = useParams(); 
 
   const location = useLocation();
   const pathname = location.pathname;
@@ -17,17 +17,17 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
   const getAdminDashLink = (admin_type) => {
     switch (admin_type) {
       case 'chief_admin':
-        return `/admin_dash_chief/${admin_type}`;
+        return `/admin_dash_chief/${admin_type}/${admin_uname}`;
       case 'rptax_admin':
-        return `/admin_dash_rp/${admin_type}`;
+        return `/admin_dash_rp/${admin_type}/${admin_uname}`;
       case 'business_admin':
-        return `/admin_dash_bp/${admin_type}`;
+        return `/admin_dash_bp/${admin_type}/${admin_uname}`;
       case 'cedula_admin':
-        return `/admin_dash_ctc/${admin_type}`;
+        return `/admin_dash_ctc/${admin_type}/${admin_uname}`;
       case 'lcr_admin':
-        return `/admin_dash_lcr/${admin_type}`;
+        return `/admin_dash_lcr/${admin_type}/${admin_uname}`;
       case 'registry_admin':
-        return `/admin_dash_ur/${admin_type}`;
+        return `/admin_dash_ur/${admin_type}/${admin_uname}`;
       default:
         return '/';
     }
@@ -127,7 +127,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
                 end 
-                to={`/admin_dash_chief/${admin_type}`}
+                to={`/admin_dash_chief/${admin_type}/${admin_uname}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
@@ -149,7 +149,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
                 end 
-                to={`/admin_dash_rp/${admin_type}`}
+                to={`/admin_dash_rp/${admin_type}/${admin_uname}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
@@ -171,7 +171,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
                 end 
-                to={`/admin_dash_bp/${admin_type}`}
+                to={`/admin_dash_bp/${admin_type}/${admin_uname}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
@@ -193,7 +193,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
                 end 
-                to={`/admin_dash_ctc/${admin_type}`}
+                to={`/admin_dash_ctc/${admin_type}/${admin_uname}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
@@ -215,7 +215,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
                 end 
-                to={`/admin_dash_lcr/${admin_type}`}
+                to={`/admin_dash_lcr/${admin_type}/${admin_uname}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
@@ -237,7 +237,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
                 end 
-                to={`/admin_dash_ur/${admin_type}`}
+                to={`/admin_dash_ur/${admin_type}/${admin_uname}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
@@ -261,7 +261,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
               <NavLink 
               end 
-              to={`/admin_add_admin/${admin_type}`}
+              to={`/admin_add_admin/${admin_type}/${admin_uname}`}
                 className={({ isActive }) =>
                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
               }
@@ -316,7 +316,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              end to={admin_type === 'chief_admin' ? `/admin_rptax3/${admin_type}` : `/admin_rptax3/${admin_type}`}
+                              end to={admin_type === 'chief_admin' ? `/admin_rptax3/${admin_type}/${admin_uname}` : `/admin_rptax3/${admin_type}/${admin_uname}`}
 
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
@@ -330,7 +330,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
 
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              end to={admin_type === 'chief_admin' ? `/admin_rptax1/${admin_type}` : `/admin_rptax1/${admin_type}`}
+                              end to={admin_type === 'chief_admin' ? `/admin_rptax1/${admin_type}/${admin_uname}` : `/admin_rptax1/${admin_type}/${admin_uname}`}
 
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
@@ -344,7 +344,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
 
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                            end to={admin_type === 'chief_admin' ? `/admin_rptax2/${admin_type}` : `/admin_rptax2/${admin_type}`}
+                            end to={admin_type === 'chief_admin' ? `/admin_rptax2/${admin_type}/${admin_uname}` : `/admin_rptax2/${admin_type}/${admin_uname}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -400,7 +400,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                            end to={admin_type === 'chief_admin' ? `/admin_business3/${admin_type}` : `/admin_business3/${admin_type}`}
+                            end to={admin_type === 'chief_admin' ? `/admin_business3/${admin_type}/${admin_uname}` : `/admin_business3/${admin_type}/${admin_uname}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -412,7 +412,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                            end to={admin_type === 'chief_admin' ? `/admin_business1/${admin_type}` : `/admin_business1/${admin_type}`}
+                            end to={admin_type === 'chief_admin' ? `/admin_business1/${admin_type}/${admin_uname}` : `/admin_business1/${admin_type}/${admin_uname}`}
 
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
@@ -425,7 +425,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                            end to={admin_type === 'chief_admin' ? `/admin_business2/${admin_type}` : `/admin_business2/${admin_type}`}
+                            end to={admin_type === 'chief_admin' ? `/admin_business2/${admin_type}/${admin_uname}` : `/admin_business2/${admin_type}/${admin_uname}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -478,7 +478,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                            end to={admin_type === 'chief_admin' ? `/admin_cedula1/${admin_type}` : `/admin_cedula1/${admin_type}`}
+                            end to={admin_type === 'chief_admin' ? `/admin_cedula1/${admin_type}/${admin_uname}` : `/admin_cedula1/${admin_type}/${admin_uname}`}
 
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
@@ -492,7 +492,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
 
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                            end to={admin_type === 'chief_admin' ? `/admin_cedula2/${admin_type}` : `/admin_cedula2/${admin_type}`}
+                            end to={admin_type === 'chief_admin' ? `/admin_cedula2/${admin_type}/${admin_uname}` : `/admin_cedula2/${admin_type}/${admin_uname}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -544,7 +544,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                        <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
                          <li className="mb-1 last:mb-0">
                            <NavLink
-                           end to={admin_type === 'chief_admin' ? `/admin_lcr1/${admin_type}` : `/admin_lcr1/${admin_type}`}
+                           end to={admin_type === 'chief_admin' ? `/admin_lcr1/${admin_type}/${admin_uname}` : `/admin_lcr1/${admin_type}/${admin_uname}`}
 
                              className={({ isActive }) =>
                                'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
@@ -558,7 +558,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
 
                          <li className="mb-1 last:mb-0">
                            <NavLink
-                           end to={admin_type === 'chief_admin' ? `/admin_lcr2/${admin_type}` : `/admin_lcr2/${admin_type}`}
+                           end to={admin_type === 'chief_admin' ? `/admin_lcr2/${admin_type}/${admin_uname}` : `/admin_lcr2/${admin_type}/${admin_uname}`}
                              className={({ isActive }) =>
                                'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                              }
@@ -632,7 +632,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                              end to={admin_type === 'chief_admin' ? `/admin_userlist/${admin_type}` : `/admin_userlist/${admin_type}`}
+                              end to={admin_type === 'chief_admin' ? `/admin_userlist/${admin_type}/${admin_uname}` : `/admin_userlist/${admin_type}/${admin_uname}`}
 
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
@@ -646,7 +646,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
 
                           <li className="mb-1 last:mb-0">
                             <NavLink
-                             end to={admin_type === 'chief_admin' ? `/admin_verifyreqs/${admin_type}` : `/admin_verifyreqs/${admin_type}`}
+                             end to={admin_type === 'chief_admin' ? `/admin_verifyreqs/${admin_type}/${admin_uname}` : `/admin_verifyreqs/${admin_type}/${admin_uname}`}
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-400 hover:text-blue-500')
                               }
@@ -669,7 +669,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
                 <NavLink 
                 end 
-                to={`/admin_archives/${admin_type}`}
+                to={`/admin_archives/${admin_type}/${admin_uname}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
@@ -705,7 +705,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
             <ul className="submenu mt-3 text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600">
               {/* Audit Trails */}
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
-                <NavLink end to={`/admin_audittrail/${admin_type}`}
+                <NavLink end to={`/admin_audittrail/${admin_type}/${admin_uname}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
@@ -738,7 +738,7 @@ function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
             <ul className="submenu mt-3 text-slate-700 hover:text-blue-600 dark:text-white dark:hover:text-blue-600">
               {/* Audit Trails */}
               <li className="px-3 py-2 rounded-sm mb-0.5 last:mb-0">
-                <NavLink end to={`/admin_adminlist/${admin_type}`}
+                <NavLink end to={`/admin_adminlist/${admin_type}/${admin_uname}`}
                   className={({ isActive }) =>
                   'block transition duration-150 truncate ' + (isActive ? 'text-emerald-500' : 'text-slate-700 hover:text-blue-500 dark:text-white dark:hover:text-blue-600')
                 }
