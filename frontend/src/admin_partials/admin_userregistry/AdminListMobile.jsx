@@ -87,12 +87,12 @@ const AdminListMobile = ({ handleOpenModal, adminApplications, handleSearch, sea
                       </svg>
                   </span>
                   <input
-                  value={searchInput || ""}l
+                  value={searchInput || ""}
                   onChange={(e) => setSearchInput(e.target.value.toUpperCase())}
                   onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                   id="searchInput"
                   type="text"
-                  placeholder="Search Mobile Number..."
+                  placeholder="Search Admin Username..."
                   className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
                 />                
                 </div>
