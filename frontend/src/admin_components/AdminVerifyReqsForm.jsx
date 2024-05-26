@@ -12,7 +12,7 @@ import Flatpickr from 'react-flatpickr';
 
 const AdminVerifyReqsForm =()=>{
 
-  const { user_id } = useParams();
+  const { user_id, admin_type, admin_uname } = useParams();
   // const location = useLocation();
   // const { pathname } = location;
   // const user_id = pathname.split("/")[2];
@@ -23,7 +23,7 @@ const AdminVerifyReqsForm =()=>{
     const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

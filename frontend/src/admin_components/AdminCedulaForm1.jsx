@@ -10,7 +10,7 @@ import AdminCTCRequests from '../admin_partials/admin_cards/AdminCTCRequests';
 
 const AdminCedulaForm1 =()=>{
 
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
 
   // const location = useLocation();
   // const { pathname } = location;
@@ -40,7 +40,7 @@ const AdminCedulaForm1 =()=>{
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

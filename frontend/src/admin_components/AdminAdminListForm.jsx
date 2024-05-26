@@ -14,8 +14,8 @@ import AdminAdminViewModal from '../admin_partials/admin_modals/AdminAdminViewMo
 
 
 const AdminAdminListForm = () => {
-    const { user_id } = useParams();
-    const { admin_type } = useParams();
+   
+    const { admin_type, admin_uname } = useParams();
     // const location = useLocation();
    //  const { pathname } = location;
    //  const user_id = pathname.split("/")[2];
@@ -30,7 +30,7 @@ const AdminAdminListForm = () => {
       
       const checkToken = async (token) => {
   
-              const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+              const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                   headers: {
                       Authorization: `Bearer ${token}`
                   }

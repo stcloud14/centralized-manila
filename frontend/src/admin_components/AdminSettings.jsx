@@ -19,7 +19,7 @@ const AdminSettings =()=>{
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const contentRef = useRef(null);
  
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
   const location = useLocation();
   const { pathname } = location;
   const user_id = pathname.split("/")[2];
@@ -31,7 +31,7 @@ const AdminSettings =()=>{
     
     const checkToken = async (token) => {
       try{
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -19,7 +19,7 @@ const AdminAddAdminForm =()=>{
   const [isCompleteConfirm, setIsCompleteConfirm] = useState(false);
   const [warning, setWarning] = useState(false);
 
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
 
   const handleAdminTypeChange = (e) => {
     const adminType = e.target.value;
@@ -34,7 +34,7 @@ const AdminAddAdminForm =()=>{
     const token = localStorage.getItem('Admin_token');
     
     const checkToken = async (token) => {
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

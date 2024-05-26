@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; 
 import axios from 'axios';
 import Flatpickr from 'react-flatpickr';
 
@@ -12,6 +13,8 @@ import LCRTableView from "../admin_lcr/LCRTableView";
 import Loading from '../../partials/Loading';
 
 const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData }) => {
+  
+  const { admin_uname } = useParams();
   
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [viewMode, setViewMode] = useState('table'); 
@@ -228,7 +231,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
     try {
 
 
-      const response = await axios.post(`${Base_Url}adminlcr/updateprocess/${transaction_id}`, selectedTransaction);
+      const response = await axios.post(`${Base_Url}adminlcr/updateprocess/${transaction_id}/${admin_uname}`, selectedTransaction);
       console.log('Axios response:', response);
       setIsLoading(true);
       // Check the response status before proceeding
@@ -318,7 +321,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
       const service_requested = retrieveResponse.data.data.attributes.description;
       console.log("Service Requested", service_requested)
       
-      const response = await axios.post(`${Base_Url}adminlcr/updatereject/${transaction_id}`, body);
+      const response = await axios.post(`${Base_Url}adminlcr/updatereject/${transaction_id}/${admin_uname}`, body);
       setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {

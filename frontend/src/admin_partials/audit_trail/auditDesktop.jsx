@@ -78,6 +78,8 @@ const AuditDesktop = ({ auditTrail, searchInput, setSearchInput, handleSearch, h
         return UR;
     }
   };
+
+  console.log(auditTrail)
   
     return (
         <>
@@ -290,11 +292,14 @@ const AuditDesktop = ({ auditTrail, searchInput, setSearchInput, handleSearch, h
                   <span>{audit.admin}</span>
                   </td>
                   <td>
-                  <img
-                    name="userImage" 
-                    className="inline-block h-10 w-10 rounded-full object-cover object-center"
-                    src={getImage(audit.admin)}
-                  />
+                  <span title={audit.admin.admin_name}>
+                    <img
+                      name="userImage" 
+                      className="inline-block h-10 w-10 rounded-full object-cover object-center"
+                      src={getImage(audit.admin)}
+                      alt={audit.admin.admin_name}
+                    />
+                  </span>
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400">
                     {audit.date}

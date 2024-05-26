@@ -47,7 +47,7 @@ router.post('/compare-password/:mobile_no/:user_pass', async (req, res) => {
 router.post("/admin", async (req, res) => {
     const { admin_name, admin_pass } = req.body;
 
-    const authSql = "SELECT * FROM admin_auth au LEFT JOIN admin_profile ap ON au.mobile_no = ap.mobile_no WHERE au.mobile_no = ? AND au.password = ?";
+    const authSql = "SELECT au.admin_type, ap.admin_name FROM admin_auth au LEFT JOIN admin_profile ap ON au.mobile_no = ap.mobile_no AND ap.mobile_no IS NOT NULL WHERE au.mobile_no = ? AND au.password = ?";
     try {
         const authResults = await queryDatabase(conn1, authSql, [admin_name, admin_pass]);
         if (authResults.length === 0) {

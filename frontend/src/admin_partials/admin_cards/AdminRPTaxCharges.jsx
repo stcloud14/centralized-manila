@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom'; 
 import axios from 'axios';
 import Flatpickr from 'react-flatpickr';
 
@@ -9,6 +10,8 @@ import Loading from '../../partials/Loading';
 import AdminRPCharges from '../admin_modals/AdminRPCharges';
 
 const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
+
+  const { admin_uname } = useParams();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [viewMode, setViewMode] = useState('table');
@@ -238,7 +241,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
     // const user_id = selectedTransaction.user_id;
   
     try {
-      const response = await axios.post(`${Base_Url}adminrptax/updateamount/${transaction_id}`, body);
+      const response = await axios.post(`${Base_Url}adminrptax/updateamount/${transaction_id}/${admin_uname}`, body);
       setIsLoading(true);
       if (response.status === 200) {
         // Fetch user_email after successful payment
@@ -342,7 +345,7 @@ const AdminRPTaxCharges = ({ taxPayment, taxClearance, handleUpdateData }) => {
       // const service_requested = retrieveResponse.data.data.attributes.description;
       // console.log("Service Requested", service_requested)
       
-      const response = await axios.post(`${Base_Url}adminrptax/updatereject/${transaction_id}`, body);
+      const response = await axios.post(`${Base_Url}adminrptax/updatereject/${transaction_id}/${admin_uname}`, body);
       setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {

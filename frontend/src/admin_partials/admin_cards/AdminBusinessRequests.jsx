@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; 
 import axios from 'axios'
 import Flatpickr from 'react-flatpickr';
 
@@ -8,6 +9,9 @@ import BPTableView from '../admin_business/BPTableView';
 import Loading from '../../partials/Loading';
 
 const AdminBusinessRequests = ({ busOffice, businessData, businessPermit, handleUpdateData }) => {
+
+  const { admin_uname } = useParams();
+  
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -145,7 +149,7 @@ useEffect(() => {
       const user_id = selectedTransaction.user_id;
 
       try {
-        const response = await axios.post(`${Base_Url}adminbp/updateprocess/${transaction_id}`, selectedTransaction);
+        const response = await axios.post(`${Base_Url}adminbp/updateprocess/${transaction_id}/${admin_uname}`, selectedTransaction);
         setIsLoading(true);
       if (response.status === 200) {
 
@@ -230,7 +234,7 @@ useEffect(() => {
       const formatted_payment_method = payment_method.charAt(0).toUpperCase() + payment_method.slice(1);
       const service_requested = retrieveResponse.data.data.attributes.description;
       
-      const response = await axios.post(`${Base_Url}adminbp/updatereject/${transaction_id}`, body);
+      const response = await axios.post(`${Base_Url}adminbp/updatereject/${transaction_id}/${admin_uname}`, body);
       setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {

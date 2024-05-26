@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; 
 import axios from 'axios'
 import Flatpickr from 'react-flatpickr';
 
@@ -8,6 +9,8 @@ import CTCTableView from "../admin_cedula/CTCTableView";
 import Loading from '../../partials/Loading';
 
 const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
+
+  const { admin_uname } = useParams();
 
   const [viewMode, setViewMode] = useState('table');
   const [modalView, setModalView] = useState(false);
@@ -143,7 +146,7 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
     const user_id = selectedTransaction.user_id;
   
     try {
-      const response = await axios.post(`${Base_Url}adminctc/updateprocess/${transaction_id}`, selectedTransaction);
+      const response = await axios.post(`${Base_Url}adminctc/updateprocess/${transaction_id}/${admin_uname}`, selectedTransaction);
       setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {
@@ -231,7 +234,7 @@ const AdminCTCRequests = ({ ctcCedula, handleUpdateData }) => {
       const service_requested = retrieveResponse.data.data.attributes.description;
 
       
-      const response = await axios.post(`${Base_Url}adminctc/updatereject/${transaction_id}`, body);
+      const response = await axios.post(`${Base_Url}adminctc/updatereject/${transaction_id}/${admin_uname}`, body);
       setIsLoading(true);
       // Check the response status before proceeding
       if (response.status === 200) {

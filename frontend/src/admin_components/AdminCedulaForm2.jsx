@@ -11,7 +11,7 @@ import AdminCTCProcessing from '../admin_partials/admin_cards/AdminCTCProcessing
 
 const AdminCedulaForm2 =()=>{
   
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
  //  const location = useLocation();
  //  const { pathname, state } = location;
   // console.log("pathname", pathname);
@@ -28,7 +28,7 @@ const AdminCedulaForm2 =()=>{
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -14,7 +14,7 @@ import AdminBusinessProcessing from '../admin_partials/admin_cards/AdminBusiness
 
 const AdminBusinessForm2 =()=>{
   const Base_Url = process.env.Base_Url;
-  const { admin_type } = useParams();
+  const { admin_type, admin_uname } = useParams();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -25,7 +25,7 @@ const AdminBusinessForm2 =()=>{
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}token/protect-token-admin/${admin_type}`, {
+            const response = await axios.get(`${Base_Url}token/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

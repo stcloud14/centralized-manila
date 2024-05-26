@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; 
 import axios from 'axios';
 import 'flatpickr/dist/themes/airbnb.css';
 import PersonalInfo from '../admin_userregistry/PersonalInfo';
@@ -9,6 +10,8 @@ import AdminURViewImage from './AdminURViewImage';
 import defaultImage from '../../images/default_img.png'
 
 const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isOpen, handleClose }) => { 
+
+  const { admin_uname } = useParams();
 
   const [userImage, setUserImage] = useState('');
   const [isApproved, setIsApproved] = useState(false);
@@ -115,7 +118,7 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
         trans_type,
       }
 
-      const response = await axios.post(`${Base_Url}adminur/approve/${user_id}`, body1);
+      const response = await axios.post(`${Base_Url}adminur/approve/${user_id}/${admin_uname}`, body1);
   
       if (response.status === 200) {
 
@@ -211,7 +214,7 @@ const AdminURApplications = ({ selectedTransaction, handleRemoveTransaction, isO
         trans_type,
       }
 
-      const response = await axios.post(`${Base_Url}adminur/decline/${user_id}`, body1);
+      const response = await axios.post(`${Base_Url}adminur/decline/${user_id}/${admin_uname}`, body1);
   
       if (response.status === 200) {
 
