@@ -160,16 +160,12 @@ const query1 = `
 router.get('/adminlist', async (req, res) => {
   const query = `
     SELECT
-      a.mobile_no,
-      a.password,
-      a.admin_type,
-      p.admin_name
+      mobile_no,
+      password,
+      admin_type,
+      admin_name
     FROM
-      admin_auth AS a
-    INNER JOIN
-      admin_profile AS p
-    ON
-      a.mobile_no = p.mobile_no
+      admin_auth
   `;
   try {
     const result = await queryDatabase1(query);
@@ -179,7 +175,7 @@ router.get('/adminlist', async (req, res) => {
         mobile_no: admin.mobile_no,
         password: admin.password,
         admin_type: formatAdminType(admin.admin_type),
-        admin_name: admin.admin_name
+        admin_name: admin.admin_name 
       };
     });
 
@@ -191,7 +187,6 @@ router.get('/adminlist', async (req, res) => {
     res.status(500).send('Error retrieving data');
   }
 });
-
 
 // Function to format admin_type values
 function formatAdminType(adminType) {
