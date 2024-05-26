@@ -58,6 +58,7 @@ import AdminCedula2 from './admin_pages/AdminCedula2';
 import AdminLCR1 from './admin_pages/AdminLCR1';
 import AdminLCR2 from './admin_pages/AdminLCR2';
 import AdminUserList from './admin_pages/AdminUserList';
+import AdminAdminList from './admin_pages/AdminAdminList';
 import AdminVerifyReqs from './admin_pages/AdminVerifyReqs';
 import AdminAuditTrail from './admin_pages/AdminAuditTrail';
 import AdminSettings from './admin_components/AdminSettings';
@@ -133,6 +134,7 @@ function App() {
         <Route exact path="/admin_lcr1/:admin_type" element={<AdminLCR1 />} />
         <Route exact path="/admin_lcr2/:admin_type" element={<AdminLCR2 />} />
         <Route exact path="/admin_userlist/:admin_type" element={<AdminUserList />} />
+        <Route exact path="/admin_adminlist/:admin_type" element={<AdminAdminList />} />
         <Route exact path="/admin_verifyreqs/:admin_type" element={<AdminVerifyReqs />} />
         <Route exact path="/admin_audittrail/:admin_type" element={<AdminAuditTrail />} />
         <Route exact path="/admin_contacts/:admin_type" element={<AdminContacts />} />

@@ -1,6 +1,7 @@
 import { Router, response } from 'express';
 import moment from 'moment/moment.js';
 import conn2 from './connection.js';
+import conn1 from './connection1.js';
 
 import auditMiddleware from './auditMiddleware.js';
 
@@ -155,6 +156,28 @@ const query1 = `
         res.status(500).send('Error retrieving data');
     }
 });
+
+router.get('/adminlist', async (req, res) => {
+  const query = `
+    SELECT
+      mobile_no,
+      password,
+      admin_type
+    FROM
+      admin_auth
+  `;
+  try {
+    const result = await queryDatabase1(query);
+
+    res.json({
+      adminList: result
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving data');
+  }
+});
+
 
 
 
@@ -488,6 +511,20 @@ async function queryDatabase(query, values) {
   }
 }
 
+
+async function queryDatabase1(query, values) {
+  try {
+    const connection = await conn1.getConnection();
+    try {
+      const [rows] = await connection.query(query, values);
+      return rows;
+    } finally {
+      connection.release();
+    }
+  } catch (err) {
+    throw err;
+  }
+}
 
 
 
