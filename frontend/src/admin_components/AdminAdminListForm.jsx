@@ -14,14 +14,14 @@ import AdminAdminViewModal from '../admin_partials/admin_modals/AdminAdminViewMo
 
 
 const AdminAdminListForm = () => {
-   
-    const { admin_type, admin_uname } = useParams();
+    const { user_id } = useParams();
+    const { admin_type } = useParams();
     // const location = useLocation();
    //  const { pathname } = location;
    //  const user_id = pathname.split("/")[2];
   
-    const [userApplications, setUserApplications] = useState();
-    const [filteredUserApplications, setFilteredUserApplications] = useState([]);
+    const [adminApplications, setAdminApplications] = useState();
+    const [filteredAdminApplications, setFilteredAdminApplications] = useState([]);
   
     const [Reload, setReload] = useState(true)
   
@@ -67,8 +67,8 @@ const AdminAdminListForm = () => {
           try {
             const res = await axios.get(`${Base_Url}adminur/adminlist`);
             const { adminList } = res.data;
-            setUserApplications(adminList);
-            setFilteredUserApplications(adminList);
+            setAdminApplications(adminList);
+            setFilteredAdminApplications(adminList);
             console.log("adminList", adminList);
           } catch (err) {
             console.log(err);
@@ -114,7 +114,7 @@ const AdminAdminListForm = () => {
     // };
   
     const handleSearch = () => {
-        const filteredURRegistry = userApplications.filter((transaction) => {
+        const filteredURRegistry = adminApplications.filter((transaction) => {
           const { mobile_no, admin_type } = transaction || {};
       
           const transactionId = mobile_no?.toString()?.toUpperCase();
@@ -124,7 +124,7 @@ const AdminAdminListForm = () => {
           return isIdMatch && isTypeMatch;
         });
       
-        setFilteredUserApplications(filteredURRegistry);
+        setFilteredAdminApplications(filteredURRegistry);
       };
       
     const handleOpenModal = (transaction) => {
@@ -152,7 +152,7 @@ const AdminAdminListForm = () => {
       setSearchFname('');
       setSearchLname('');
       setSearchEmail('');
-      setFilteredUserApplications(userApplications);
+      setFilteredAdminApplications(adminApplications);
       setSelectedStatus('');
       setSelectedType('');
     };
@@ -160,7 +160,7 @@ const AdminAdminListForm = () => {
   
     const handleRemoveTransaction = (transaction) => {
   
-      const updatedUserApplications = userApplications.filter(
+      const updatedUserApplications = adminApplications.filter(
         (transaction) => transaction.transaction_id !== transaction
       );
     
@@ -208,7 +208,7 @@ const AdminAdminListForm = () => {
                   // For Mobile View
                   <AdminListMobile 
                   handleOpenModal={handleOpenModal} 
-                  userApplications={filteredUserApplications}
+                  adminApplications={filteredAdminApplications}
                   handleSearch={handleSearch}
                   handleClearFilter={handleClearFilter}
                   handleInputChange={handleInputChange}
@@ -228,7 +228,7 @@ const AdminAdminListForm = () => {
                   // For Desktop View
                   <AdminListDesktop 
                   handleOpenModal={handleOpenModal} 
-                  userApplications={filteredUserApplications}
+                  adminApplications={filteredAdminApplications}
                   handleSearch={handleSearch}
                   handleClearFilter={handleClearFilter}
                   handleInputChange={handleInputChange}

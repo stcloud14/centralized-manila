@@ -151,6 +151,47 @@ router.post("/admin/add", async (req, res) => {
     }
 });
 
+// Route to fetch the current password for a specific admin
+router.get('/admin/change-password/:mobile_no', async (req, res) => {
+    const { mobile_no } = req.params;
+
+    try {
+        // Fetch the current password from the database based on the mobile number
+        const authSql = "SELECT password AS current_password FROM admin_auth WHERE mobile_no = ?";
+        const authResults = await queryDatabase(authSql, [mobile_no]);
+
+        if (authResults.length === 0) {
+            return res.status(404).json({ message: "Admin not found" });
+        }
+
+        // Return the current password in the response
+        const currentPassword = authResults[0].current_password;
+        return res.status(200).json({ current_password: currentPassword });
+    } catch (err) {
+        console.error("Error fetching current password:", err);
+        return res.status(500).json({ message: "Error occurred while fetching current password" });
+    }
+});
+
+// Route to update the admin's password
+router.post('/admin/change-password', async (req, res) => {
+    const { mobile_no, new_password } = req.body;
+
+    try {
+        // Hash the new password
+        const saltRounds = 10;
+        const hashedNewPassword = await bcrypt.hash(new_password, saltRounds);
+
+        // Update the password in the database
+        const updatePasswordSql = "UPDATE admin_auth SET password = ? WHERE mobile_no = ?";
+        await queryDatabase(updatePasswordSql, [hashedNewPassword, mobile_no]);
+
+        return res.status(200).json({ message: "Password updated successfully" });
+    } catch (err) {
+        console.error("Error updating password:", err);
+        return res.status(500).json({ message: "Error occurred while updating password" });
+    }
+});
 
 
 export default router;
