@@ -25,7 +25,7 @@ const AdminBusinessForm2 =()=>{
     
     const checkToken = async (token) => {
 
-            const response = await axios.get(`${Base_Url}token/protect-token-admin/${admin_type}/${admin_uname}`, {
+            const response = await axios.get(`${Base_Url}admintoken/protect-token-admin/${admin_type}/${admin_uname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
