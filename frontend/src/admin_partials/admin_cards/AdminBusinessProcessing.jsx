@@ -30,6 +30,8 @@ const AdminBusinessProcessing = ({ busOffice, businessData, businessPermit, hand
   const [searchTIN, setSearchTIN] = useState('');
   const [selectType, setSelectType] = useState('All');
   const [filteredBusinessPermit, setFilteredBusinessPermit] = useState([]);
+  const [sortOrder, setSortOrder] = useState('desc');
+
   const Base_Url = process.env.Base_Url;
 
   const toggleDropdown = () => {
@@ -37,7 +39,7 @@ const AdminBusinessProcessing = ({ busOffice, businessData, businessPermit, hand
   };
 
   const handleSearch = () => {
-    const filteredData = businessPermit.filter(transaction => {
+    let filteredData = businessPermit.filter(transaction => {
     const transactionId = (transaction?.transaction_id || '').toUpperCase();
     const query = searchQuery.toUpperCase();
     const tinId = (transaction?.bus_tin || '').toUpperCase();
@@ -61,6 +63,15 @@ const AdminBusinessProcessing = ({ busOffice, businessData, businessPermit, hand
     return transactionId.includes(query) && isTINMatch && isBusinessTypeMatch && isDateInRange();
   });
 
+    // Sort the filtered data by date based on the selected sort order
+    if (filteredData.length > 0) {
+      filteredData = filteredData.sort((a, b) => {
+        const dateA = new Date(a.date_processed);
+        const dateB = new Date(b.date_processed);
+        return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+    }
+
   setFilteredBusinessPermit(filteredData);
 };
 
@@ -73,6 +84,7 @@ useEffect(() => {
     setSelectedDatee('');
     setSearchQuery('');
     setSearchTIN('');
+    setSortOrder('desc');
     setSelectType('All');
     setFilteredBusinessPermit(businessPermit);
   };
@@ -445,6 +457,25 @@ useEffect(() => {
                   />
                   </span>
               </div>
+
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                  <span className="hidden sm:block text-xs">Sort Date by:</span>
+                  <select
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value)}
+                    name="sortOrder"
+                    id="sortOrder"
+                    className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                
+                    <option value="desc" className="dark:bg-[#3d3d3d]">
+                      Newest to Oldest
+                    </option>
+                    <option value="asc" className="dark:bg-[#3d3d3d]">
+                      Oldest to Newest
+                    </option>
+
+                  </select>
+                </div>
 
                {/* Business Type Row */}
                <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
