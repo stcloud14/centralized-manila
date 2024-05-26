@@ -79,6 +79,7 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
     setSearchOwner('');
     setSelectedDate('');
     setSelectedDatee('');
+    setSortOrder('desc');
     setFilteredctcCedula(ctcCedula);
   };    
 
@@ -475,14 +476,15 @@ const AdminCTCProcessing = ({ ctcCedula, handleUpdateData  }) => {
                     onChange={(e) => setSortOrder(e.target.value)}
                     name="sortOrder"
                     id="sortOrder"
-                    className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm"
-                  >
-                    <option value="asc" className="dark:bg-[#3d3d3d]">
-                      Oldest to Newest
-                    </option>
+                    className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                
                     <option value="desc" className="dark:bg-[#3d3d3d]">
                       Newest to Oldest
                     </option>
+                    <option value="asc" className="dark:bg-[#3d3d3d]">
+                      Oldest to Newest
+                    </option>
+
                   </select>
                 </div>
 

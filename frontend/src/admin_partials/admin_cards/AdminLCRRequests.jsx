@@ -34,11 +34,13 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
   const [filteredBirthCert, setFilteredBirthCert] = useState([]); 
   const [filteredDeathCert, setFilteredDeathCert] = useState([]); 
   const [filteredMarriageCert, setFilteredMarriageCert] = useState([]); 
+  const [sortOrder, setSortOrder] = useState('desc');
+
 
   const Base_Url = process.env.Base_Url;
 
   const handleSearch = () => {
-    const filteredBC = birthCert.filter(transaction => {
+    let filteredBC = birthCert.filter(transaction => {
       const transactionId = transaction.transaction_id.toUpperCase();
       const query = searchQuery.toUpperCase();
       const Name = ((transaction.f_name || '') + (transaction.m_name || '') + (transaction.l_name || '')).toUpperCase().includes(searchOwner.toUpperCase());
@@ -64,7 +66,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
       return transactionId.includes(query) && Name && isTypeMatch && isDateInRange();
     });
   
-    const filteredDC = deathCert.filter(transaction => {
+    let filteredDC = deathCert.filter(transaction => {
       const transactionId = transaction.transaction_id.toUpperCase();
       const query = searchQuery.toUpperCase();
       const Name = ((transaction.f_name || '') + (transaction.m_name || '') + (transaction.l_name || '')).toUpperCase().includes(searchOwner.toUpperCase());
@@ -90,7 +92,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
       return transactionId.includes(query) && Name && isTypeMatch && isDateInRange();
     });
   
-    const filteredMC = marriageCert.filter(transaction => {
+    let filteredMC = marriageCert.filter(transaction => {
       const transactionId = transaction.transaction_id.toUpperCase();
       const query = searchQuery.toUpperCase();
       const Name = ((transaction.f_name || '') + (transaction.m_name || '') + (transaction.l_name || '')).toUpperCase().includes(searchOwner.toUpperCase());
@@ -115,6 +117,31 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
   
       return transactionId.includes(query) && Name && isTypeMatch && isDateInRange();
     });
+
+    if (filteredBC.length > 0) {
+      filteredBC = filteredBC.sort((a, b) => {
+        const dateA = new Date(a.date_processed);
+        const dateB = new Date(b.date_processed);
+        return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+    }
+  
+    if (filteredDC.length > 0) {
+      filteredDC = filteredDC.sort((a, b) => {
+        const dateA = new Date(a.date_processed);
+        const dateB = new Date(b.date_processed);
+        return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+    }
+  
+    if (filteredMC.length > 0) {
+      filteredMC = filteredMC.sort((a, b) => {
+        const dateA = new Date(a.date_processed);
+        const dateB = new Date(b.date_processed);
+        return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+    }
+  
   
     setFilteredBirthCert(filteredBC);
     setFilteredDeathCert(filteredDC);
@@ -139,6 +166,7 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
     setSelectedDate('');
     setSelectedDatee('');
     setSelectedType('All');
+    setSortOrder('desc');
     setFilteredBirthCert(birthCert);
     setFilteredDeathCert(deathCert);
     setFilteredMarriageCert(marriageCert);
@@ -536,11 +564,29 @@ const AdminLCRRequests = ({ birthCert, deathCert, marriageCert, handleUpdateData
                   </span>
               </div>
 
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                  <span className="hidden sm:block text-xs">Sort Date by:</span>
+                  <select
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value)}
+                    name="sortOrder"
+                    id="sortOrder"
+                    className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                      
+                    <option value="desc" className="dark:bg-[#3d3d3d]">
+                      Newest to Oldest
+                    </option>
+                    <option value="asc" className="dark:bg-[#3d3d3d]">
+                      Oldest to Newest
+                    </option>
+                  </select>
+                </div>
+
 
               {/* Type Row */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
                   <span className="hidden sm:block text-xs">Type:</span>
-                  <select value={selectedType} onChange={handleInputChange} name=""  id=""  className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                  <select value={selectedType} onChange={handleInputChange} name=""  id=""  className="bg-transparent text-xs w-[235px] sm:w-[210px] border border-slate-300 text-slate-700 dark:text-white pl-8 py-1 md:py-0.5 rounded-sm">
                     <option value="All" className="dark:bg-[#3d3d3d]">Select Type</option>
                     <option value="Birth Certificate" className="dark:bg-[#3d3d3d]">Birth Certificate</option>
                     <option value="Death Certificate" className="dark:bg-[#3d3d3d]">Death Certificate</option>

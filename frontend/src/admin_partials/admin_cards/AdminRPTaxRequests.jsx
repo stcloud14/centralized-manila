@@ -30,12 +30,13 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
   const [searchPIN, setSearchPIN] = useState('');
   const [filteredTaxClearance, setFilteredTaxClearance] = useState([]); 
   const [filteredTaxPayment, setFilteredTaxPayment] = useState([]); 
+  const [sortOrder, setSortOrder] = useState('desc');
 
   const Base_Url = process.env.Base_Url;
 
 
   const handleSearch = () => {
-    const filteredClearance = taxClearance.filter(transaction => {
+    let filteredClearance = taxClearance.filter(transaction => {
       const transactionId = transaction.transaction_id.toUpperCase();
       const query = searchQuery.toUpperCase();
       const TIN = transaction.rp_tdn.toUpperCase();
@@ -61,7 +62,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
       return transactionId.includes(query) && (TIN.includes(searchTDN.toUpperCase()) || searchTDN === '') && (searchPIN === '' || PIN.includes(searchPIN.toUpperCase())) && isTypeMatch && isDateInRange();
     });
   
-    const filteredPayment = taxPayment.filter(transaction => {
+    let filteredPayment = taxPayment.filter(transaction => {
       const transactionId = transaction.transaction_id.toUpperCase();
       const query = searchQuery.toUpperCase();
       const TIN = transaction.rp_tdn.toUpperCase();
@@ -86,6 +87,22 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
   
       return transactionId.includes(query) && (TIN.includes(searchTDN.toUpperCase()) || searchTDN === '') && (searchPIN === '' || PIN.includes(searchPIN.toUpperCase())) && isTypeMatch && isDateInRange();
     });
+  
+    if (filteredClearance.length > 0) {
+      filteredClearance = filteredClearance.sort((a, b) => {
+        const dateA = new Date(a.date_processed);
+        const dateB = new Date(b.date_processed);
+        return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+    }
+
+    if (filteredPayment.length > 0) {
+      filteredPayment = filteredPayment.sort((a, b) => {
+        const dateA = new Date(a.date_processed);
+        const dateB = new Date(b.date_processed);
+        return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+    }
   
     setFilteredTaxClearance(filteredClearance);
     setFilteredTaxPayment(filteredPayment);
@@ -105,6 +122,7 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
     setSearchPIN('');
     setSelectedDate('');
     setSelectedDatee('');
+    setSortOrder('desc');
     setSelectedType('All');
     setFilteredTaxClearance(taxClearance);
     setFilteredTaxPayment(taxPayment);
@@ -505,6 +523,24 @@ const AdminRPTaxRequests = ({ taxPayment, taxClearance, handleUpdateData }) => {
                   </span>
               </div>
 
+              <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
+                  <span className="hidden sm:block text-xs">Sort Date by:</span>
+                  <select
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value)}
+                    name="sortOrder"
+                    id="sortOrder"
+                    className="text-xs border bg-transparent border-slate-300 text-slate-700 dark:text-white pl-4 rounded-sm peer cursor-pointer py-1 md:py-0.5 w-[235px]">
+                
+                    <option value="desc" className="dark:bg-[#3d3d3d]">
+                      Newest to Oldest
+                    </option>
+                    <option value="asc" className="dark:bg-[#3d3d3d]">
+                      Oldest to Newest
+                    </option>
+                    
+                  </select>
+                </div>
 
               {/* Type Row */}
               <div className="flex justify-center sm:justify-between items-center pb-[6px] sm:pb-[8px]">
