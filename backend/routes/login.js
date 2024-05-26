@@ -133,6 +133,15 @@ router.post("/admin/add", async (req, res) => {
     const { mobile_no, password, adminType } = req.body;
 
     try {  
+        // Check if admin already exists
+        const existingAdminQuery = "SELECT * FROM admin_auth WHERE mobile_no = ?";
+        const existingAdmin = await queryDatabase(conn1, existingAdminQuery, [mobile_no]);
+
+        if (existingAdmin.length > 0) {
+            console.log("Admin account already exists");
+            return res.status(400).json({ message: "Admin account already exists" });
+        }
+
         const insertSql = "INSERT INTO admin_auth (mobile_no, password, admin_type) VALUES (?, ?, ?)";
         await queryDatabase(conn1, insertSql, [mobile_no, password, adminType]);
         
