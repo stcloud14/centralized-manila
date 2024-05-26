@@ -87,13 +87,11 @@ const AdminAdminListForm = () => {
     
           return isAdminTypeMatch && isIdMatch && isNameMatch;
 
-
         });
     
         setFilteredAdminApplications(filteredAdminUR);
     };
     
-    console.log("admin applications:", adminApplications);
       
     const handleOpenModal = (transaction) => {
       setIsModalOpen(true);
@@ -108,7 +106,6 @@ const AdminAdminListForm = () => {
     const handleInputChange = (e) => {
       const selectedType = e.target.value;
       setSelectedType(selectedType);
-      console.log("Selected Admin: ", selectedType);
     };
   
     const handleClearFilter = async () => {
