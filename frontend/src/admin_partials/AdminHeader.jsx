@@ -31,7 +31,7 @@ function AdminHeader({ sidebarOpen, setSidebarOpen }) {
 
   const checkUserImage = async () => {
     try {
-      const imagePath = '../uploads/adminImages/';
+      const imagePath = '../../uploads/adminImages/';
       const imageName = storedImage?.admin_image;
   
       if (imageName === undefined || imageName === null) {
