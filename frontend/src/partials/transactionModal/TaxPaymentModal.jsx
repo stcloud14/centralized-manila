@@ -343,17 +343,17 @@ const TaxPaymentModal = ({ user_id, selectedTransaction, onClose, onSubmit, hand
                     ) : null} */}
 
                     {transaction_id ? (
-                    <>
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Status</span>
                       <StatusBadgeModal statusType={status_type} />
                     </div>
+                    ) : null}
 
+                    {transaction_id && taxPaymentTransaction.reject_cause ? (
                     <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
                       <span className="font-medium whitespace-nowrap">Remarks</span>
                       <span className="whitespace-normal text-left md:mb-0 mb-1 text-red-500">{taxPaymentTransaction.reject_cause}</span>
                     </div>
-                  </>
                     ) : null}
 
                     <hr className='mb-1'/>

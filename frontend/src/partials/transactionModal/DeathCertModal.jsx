@@ -464,6 +464,14 @@ const cancelTrans = async (e) => {
               <StatusBadgeModal statusType={status_type} />
             </div>
             ) : null}
+
+            {transaction_id && deathTransaction.reject_cause ? (
+            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+              <span className="font-medium whitespace-nowrap">Remarks</span>
+              <span className="whitespace-normal text-left md:mb-0 mb-1 text-red-500">{deathTransaction.reject_cause}</span>
+            </div>
+            ) : null}
+
             <hr className='mb-1'/>
             <div className="flex justify-between">
             <span className="font-semibold whitespace-nowrap">{status_type === "Paid" ? "Amount Paid" : status_type === "Pending" ? "Amount to Pay" : "Amount"}</span>

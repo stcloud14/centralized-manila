@@ -466,17 +466,17 @@ const cancelTrans = async (e) => {
               <span className="whitespace-nowrap md:mb-0 mb-1">-</span>
             </div> */}
             {transaction_id ? (
-            <>
             <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
               <span className="font-medium whitespace-nowrap">Status</span>
               <StatusBadgeModal statusType={status_type} />
             </div>
+            ) : null}
 
+            {transaction_id && marriageTransaction.reject_cause ? (
             <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
               <span className="font-medium whitespace-nowrap">Remarks</span>
               <span className="whitespace-normal text-left md:mb-0 mb-1 text-red-500">{marriageTransaction.reject_cause}</span>
             </div>
-          </>
             ) : null}
 
             <hr className='mb-1'/>
