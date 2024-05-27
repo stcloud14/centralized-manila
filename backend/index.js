@@ -22,7 +22,7 @@ import generateSOAHandler from './routes/generateSOAHandler.js';
 import token from './routes/token.js';
 import admintoken from './routes/admintoken.js'
 
-import adminchangepass from './routes/adminchangepass.js'
+import admincredentials from './routes/admincredentials.js'
 import adminProfileHandler from './routes/adminProfileHandler.js';
 import adminRptaxHandler from './routes/adminRptaxHandler.js';
 import adminBPHandler from './routes/adminBPHandler.js';
@@ -95,7 +95,7 @@ app.use('/api/token', token);
 app.use('/api/admintoken', admintoken);
 
 // Admin routes
-app.use('/api/adminchangepass', adminchangepass);
+app.use('/api/admincredentials', admincredentials);
 app.use('/api/adminprofile', adminProfileHandler);
 app.use('/api/adminrptax', adminRptaxHandler);
 app.use('/api/adminarchives', adminArchivesHandler);

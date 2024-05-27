@@ -48,7 +48,7 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   
     try {
       const mobileNo = selectedTransaction.mobile_no;
-      const response = await axios.post(`${Base_Url}adminchangepass/admin/change-credentials/${mobileNo}`, { 
+      const response = await axios.post(`${Base_Url}admincredentials/admin/change-credentials/${mobileNo}`, { 
         mobile_no: adminInfo.mobile_no,
         admin_name: adminInfo.admin_name,
         new_password: adminInfo.new_password,
