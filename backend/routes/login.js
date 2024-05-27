@@ -13,6 +13,47 @@ async function queryDatabase(connection, query, values) {
         throw err;
     }
 }
+
+// Route to fetch the current password for a specific admin
+// router.post('/admin/change-password/:mobile_no', async (req, res) => {
+//     const { mobile_no } = req.params;
+//     const { new_password } = req.body;
+
+//     try {
+//         // Update the password in the database based on the mobile number
+//         const updateSql = "UPDATE admin_auth SET password = ? WHERE mobile_no = ?";
+//         // Using queryDatabase1 function with connection1
+//         await queryDatabase1(conn1, updateSql, [new_password, mobile_no]);
+
+//         console.log('Password updated successfully');
+
+//         return res.status(200).json({ message: 'Password updated successfully' });
+//     } catch (err) {
+//         console.error("Error updating password:", err);
+//         return res.status(500).json({ message: "Error occurred while updating password" });
+//     }
+// });
+
+// Route to update the admin's password
+// router.post('/admin/change-password', async (req, res) => {
+//     const { mobile_no, new_password } = req.body;
+
+//     try {
+//         // Hash the new password
+//         const saltRounds = 10;
+//         const hashedNewPassword = await bcrypt.hash(new_password, saltRounds);
+
+//         // Update the password in the database
+//         const updatePasswordSql = "UPDATE admin_auth SET password = ? WHERE mobile_no = ?";
+//         await queryDatabase(updatePasswordSql, [hashedNewPassword, mobile_no]);
+
+//         return res.status(200).json({ message: "Password updated successfully" });
+//     } catch (err) {
+//         console.error("Error updating password:", err);
+//         return res.status(500).json({ message: "Error occurred while updating password" });
+//     }
+// });
+
 // async function queryDatabase1(connection1, query, values) {
 //     try {
 //         const [rows] = await connection1.query(query, values);
@@ -152,45 +193,7 @@ router.post("/admin/add", async (req, res) => {
     }
 });
 
-// Route to fetch the current password for a specific admin
-// router.post('/admin/change-password/:mobile_no', async (req, res) => {
-//     const { mobile_no } = req.params;
-//     const { new_password } = req.body;
 
-//     try {
-//         // Update the password in the database based on the mobile number
-//         const updateSql = "UPDATE admin_auth SET password = ? WHERE mobile_no = ?";
-//         // Using queryDatabase1 function with connection1
-//         await queryDatabase1(conn1, updateSql, [new_password, mobile_no]);
-
-//         console.log('Password updated successfully');
-
-//         return res.status(200).json({ message: 'Password updated successfully' });
-//     } catch (err) {
-//         console.error("Error updating password:", err);
-//         return res.status(500).json({ message: "Error occurred while updating password" });
-//     }
-// });
-
-// Route to update the admin's password
-// router.post('/admin/change-password', async (req, res) => {
-//     const { mobile_no, new_password } = req.body;
-
-//     try {
-//         // Hash the new password
-//         const saltRounds = 10;
-//         const hashedNewPassword = await bcrypt.hash(new_password, saltRounds);
-
-//         // Update the password in the database
-//         const updatePasswordSql = "UPDATE admin_auth SET password = ? WHERE mobile_no = ?";
-//         await queryDatabase(updatePasswordSql, [hashedNewPassword, mobile_no]);
-
-//         return res.status(200).json({ message: "Password updated successfully" });
-//     } catch (err) {
-//         console.error("Error updating password:", err);
-//         return res.status(500).json({ message: "Error occurred while updating password" });
-//     }
-// });
 
 
 export default router;
