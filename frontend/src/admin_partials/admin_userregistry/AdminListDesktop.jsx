@@ -172,6 +172,12 @@ const AdminListDesktop = ({ handleOpenModal, adminApplications, handleSearch, se
 
                     <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
                         <div className="flex items-center pl-3">
+                          {/* Admin Pic */}
+                        </div>
+                    </th>
+
+                    <th scope="col" className="px-1 py-3 text-left text-xs font-bold dark:text-gray-300 uppercase">
+                        <div className="flex items-center pl-3">
                           Admin Name
                         </div>
                     </th>
@@ -234,13 +240,19 @@ const AdminListDesktop = ({ handleOpenModal, adminApplications, handleSearch, se
                   {transaction.admin_type}
                 </div>
               </td>
-              
-              <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400 flex items-center">
+
+              <td className="px-1 py-2 whitespace-nowrap">
+                <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                 <img
                   src={getAdminImage(transaction.admin_type)}
                   alt={transaction.admin_name}
                   className="h-4 w-4 mr-1"
                 />
+                </div>
+              </td>
+              
+              <td className="px-1 py-2 whitespace-nowrap text-xs md:text-sm text-slate-500 dark:text-slate-400 flex items-center">
+
                 <div className="font-medium text-slate-600 whitespace-nowrap dark:text-white pl-3">
                   {transaction.admin_name}
                 </div>
