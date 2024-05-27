@@ -87,7 +87,7 @@ router.post("/admin/add", async (req, res) => {
 
         if (existingAdmin.length > 0) {
             console.log("Admin account already exists");
-            return res.status(400).json({ message: "Admin account already exists" });
+            return res.status(409).json({ message: "Admin account already exists" }); 
         }
 
         // Hash password
@@ -107,6 +107,7 @@ router.post("/admin/add", async (req, res) => {
         return res.status(500).json({ message: "Error occurred while adding admin" });
     }
 });
+
 
 
 
