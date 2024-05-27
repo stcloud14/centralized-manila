@@ -113,6 +113,7 @@ const AdminAddAdminForm =()=>{
         setIsSuccess(false);
           setMobileNo("");
           setPassword("");
+          setName("");
           setAdminType("");
     }, 3000);
   };
