@@ -541,19 +541,19 @@ const cancelTrans = async (e) => {
             ) : null} */}
 
 
-        {transaction_id ? (
-          <>
-          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-            <span className="font-medium whitespace-nowrap">Status</span>
-            <StatusBadgeModal statusType={status_type} />
-          </div>
+          {transaction_id ? (
+            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+              <span className="font-medium whitespace-nowrap">Status</span>
+              <StatusBadgeModal statusType={status_type} />
+            </div>
+          ) : null}
 
-          <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
-            <span className="font-medium whitespace-nowrap">Remarks</span>
-            <span className="whitespace-normal text-left md:mb-0 mb-1 text-red-500">{birthTransaction.reject_cause}</span>
-          </div>
-        </>
-        ) : null}
+          {transaction_id && birthTransaction.reject_cause ? (
+            <div className="flex flex-col sm:flex-row items-start justify-between mb-1">
+              <span className="font-medium whitespace-nowrap">Remarks</span>
+              <span className="whitespace-normal text-left md:mb-0 mb-1 text-red-500">{birthTransaction.reject_cause}</span>
+            </div>
+          ) : null}
 
           <hr className='mb-1'/>
           <div className="flex justify-between">
