@@ -60,7 +60,7 @@ const AdminAddAdminForm =()=>{
 
   const generatePassword = () => {
     const length = 14; 
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?";
+    const charset = `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&+?/=~`;
   
     let generatedPassword = "";
     for (let i = 0; i < length; i++) {

@@ -160,12 +160,16 @@ const query1 = `
 router.get('/adminlist', async (req, res) => {
   const query = `
     SELECT
-      mobile_no,
-      password,
-      admin_type,
-      admin_name
+      au.mobile_no,
+      au.password,
+      au.admin_type,
+      au.admin_name,
+      ap.admin_image
     FROM
-      admin_auth
+      admin_auth au
+    LEFT JOIN
+    admin_profile ap
+      ON au.mobile_no = ap.mobile_no
   `;
   try {
     const result = await queryDatabase1(query);
@@ -175,7 +179,8 @@ router.get('/adminlist', async (req, res) => {
         mobile_no: admin.mobile_no,
         password: admin.password,
         admin_type: formatAdminType(admin.admin_type),
-        admin_name: admin.admin_name 
+        admin_name: admin.admin_name,
+        admin_image: admin.admin_image
       };
     });
 
