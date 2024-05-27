@@ -298,12 +298,14 @@ const AdminDashChiefForm =({ transStats, taxPayment, taxClearance, topRegions, t
                   pdf.setFontSize(10);
                   pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
 
-                  const thirdTableData = [
-                    ['Total Gross Revenue', RevenueData.totalRP ? `P ${RevenueData.totalRP.toLocaleString()}` : 'P 0'],
-                    ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
-                    ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
-                    ['Total Refund Issued', `${totalRefundIssued.toLocaleString()}`],
-                ]; // Sample data for the second table
+                  const formattedTotalGrossRevenue = new Intl.NumberFormat('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(RevenueData.totalRP);
+
+                    const thirdTableData = [
+                      ['Total Gross Revenue',`P ${formattedTotalGrossRevenue}`],
+                      ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
+                      ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
+                      ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
+                  ];
                   pdf.autoTable({
                       startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols
                       head: [['Financial Status', 'Amount']], // Header for the second table

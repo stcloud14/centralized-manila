@@ -279,11 +279,13 @@ const AdminDashCTCForm =({ transStats, cedulaCert, topRegions, topProvinces, top
           pdf.setFontSize(10);
           pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
 
+          const formattedTotalGrossRevenue = new Intl.NumberFormat('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(RevenueData.totalCC);
+
           const thirdTableData = [
-            ['Total Gross Revenue', RevenueData.totalCC ? `P ${RevenueData.totalCC.toLocaleString()}` : 'P 0'],
+            ['Total Gross Revenue',`P ${formattedTotalGrossRevenue}`],
             ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
             ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
-            ['Total Refund Issued', `${totalRefundIssued.toLocaleString()}`],
+            ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
         ]; // Sample data for the second table
           pdf.autoTable({
               startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols
