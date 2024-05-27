@@ -77,7 +77,6 @@ router.post("/admin", async (req, res) => {
     }
 });
 
-
 router.post("/admin/add", async (req, res) => {
     const { mobile_no, password, adminType, admin_name } = req.body;
     const saltRounds = 10;
@@ -90,16 +89,26 @@ router.post("/admin/add", async (req, res) => {
             console.log("Admin account already exists");
             return res.status(400).json({ message: "Admin account already exists" });
         }
+
+        // Hash password
         const hashedPassword = await bcrypt.hash(password, saltRounds);
-        const insertSql = "INSERT INTO admin_auth (mobile_no, password, admin_type, admin_name) VALUES (?, ?, ?, ?)";
-        await queryDatabase(conn1, insertSql, [mobile_no, hashedPassword, adminType, admin_name]);
-        
+
+        // Insert into admin_auth table
+        const insertAuthSql = "INSERT INTO admin_auth (mobile_no, password, admin_type, admin_name) VALUES (?, ?, ?, ?)";
+        await queryDatabase(conn1, insertAuthSql, [mobile_no, hashedPassword, adminType, admin_name]);
+
+        // Insert into admin_profile table
+        const insertProfileSql = "INSERT INTO admin_profile (mobile_no, admin_name, admin_type) VALUES (?, ?, ?)";
+        await queryDatabase(conn1, insertProfileSql, [mobile_no, admin_name, adminType]);
+
         return res.status(201).json({ message: "Admin added successfully" });
     } catch (err) {
         console.error("Error adding admin:", err);
         return res.status(500).json({ message: "Error occurred while adding admin" });
     }
 });
+
+
 
 
 
