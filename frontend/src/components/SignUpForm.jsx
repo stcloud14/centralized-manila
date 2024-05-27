@@ -252,21 +252,13 @@ const handleClick = async (e) => {
   
         setLoading(true)
         setIsSuccess(true);
-        const formData = new FormData();
 
-        selectedFiles.forEach((fileInfo) => {
-          const { fieldName, value } = fileInfo;
-          formData.append(fieldName, value);
-        });
-
-
-        const user_existing = existenceCheckResponse.data.user_id[0].user_id;
-        console.log(user_existing)
-      
+        const user_existing = existenceCheckResponse.data.user_id?.[0]?.user_id ?? null;
+        console.log(user_existing);
 
         let response;
 
-        if (existenceCheckResponse.data.user_existing) {
+        if (user_existing !== null && user_existing !== undefined) {
           response = await axios.post(`${Base_Url}register/existing/${user_existing}`, userReg);
         } else {
           response = await axios.post(`${Base_Url}register`, userReg);
@@ -274,10 +266,22 @@ const handleClick = async (e) => {
 
         const user_id = response.data.user_id;
 
-        const response1 = await fetch(`${Base_Url}register/valid-id/${user_id}`, {
-          method: 'POST',
-          body: formData,
+        const formData = new FormData();
+
+        selectedFiles.forEach((fileInfo) => {
+          const { fieldName, value } = fileInfo;
+          if (value !== null) {
+            formData.append(fieldName, value);
+          }
         });
+
+        if (formData.has('user_valid_id')) {
+          const response1 = await fetch(`${Base_Url}register/valid-id/${user_id}`, {
+            method: 'POST',
+            body: formData,
+          });
+        }
+
 
 
         if (response.status === 200 || response1.status === 200) {
