@@ -181,6 +181,9 @@ const AdminDashChiefForm = React.memo(
           const totalRefundAmount = RevenueData.totalRPaid || 0;
           const totalRefundIssued = RevenueData.totalCPaid || 0;
 
+          // Format Total Gross Revenue with comma as thousand separator
+          //const formattedTotalGrossRevenue = RevenueData.totalPaid.toLocaleString('en-US');
+
           const pdf = new jsPDF();
 
           // Date of Report
@@ -318,7 +321,7 @@ const AdminDashChiefForm = React.memo(
               TPData.Processing + TCData.Processing + BPData.Processing + CTCData.Processing + BCData.Processing + DCData.Processing + MCData.Processing
             ],
             ['Complete', 
-              TPData.Complete + TCData.Complete + BPData.Complete + CTCData.Complete + BCData.Complete + DCData.Complete + MCData.Complete
+              TCData.Complete + TPData.Complete + BPData.Complete + CTCData.Complete + BCData.Complete + DCData.Complete + MCData.Complete
             ],
             ['Rejected', 
               TPData.Rejected + TCData.Rejected + BPData.Rejected + CTCData.Rejected + BCData.Rejected + DCData.Rejected + MCData.Rejected
@@ -330,7 +333,10 @@ const AdminDashChiefForm = React.memo(
               TPData.Expired + TCData.Expired + BPData.Expired + CTCData.Expired + BCData.Expired + DCData.Expired + MCData.Expired
             ],
             ['Total Transaction:', TPData.Total + TCData.Total + BPData.Total + CTCData.Total + BCData.Total + DCData.Total + MCData.Total]
-          ];
+          ];            
+
+          // console.log('Second Table Data:', secondTableData);
+
           // Sample data for the second table
             pdf.autoTable({
                 startY: pdf.autoTable.previous.finalY + 8, // Start the second table below the line of symbols
@@ -350,21 +356,23 @@ const AdminDashChiefForm = React.memo(
             });
             
               const lineOfSymbols2 = repeatSymbol(symbol, repetitions);
-              const textXPosition2 = 15; // Adjust the X position
-              const textYPosition2 = pdf.autoTable.previous.finalY + 5; // Adjust the Y position
+              const textXPosition2 = 15; 
+              const textYPosition2 = pdf.autoTable.previous.finalY + 5; 
               pdf.setFont("helvetica", "normal");
               pdf.setFontSize(10);
               pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
 
+              const formattedTotalGrossRevenue = new Intl.NumberFormat('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(RevenueData.totalPaid);
+
               const thirdTableData = [
-                ['Total Gross Revenue', RevenueData.totalPaid ? `P ${RevenueData.totalPaid.toLocaleString()}` : ''],
-                ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
-                ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
-                ['Total Refund Issued', `${totalRefundIssued.toLocaleString()}`],
-            ]; // Sample data for the second table
+                  ['Total Gross Revenue',`P ${formattedTotalGrossRevenue}`],
+                  ['Average Monthly Revenue', `P ${averageMonthlyRevenue.toLocaleString()}`],
+                  ['Total Refund Amount', `P ${totalRefundAmount.toLocaleString()}`],
+                  ['Total Refund Issued', `P ${totalRefundIssued.toLocaleString()}`],
+              ]; 
               pdf.autoTable({
-                  startY: pdf.autoTable.previous.finalY + 7, // Start the second table below the line of symbols
-                  head: [['Financial Status', 'Amount']], // Header for the second table
+                  startY: pdf.autoTable.previous.finalY + 7, 
+                  head: [['Financial Status', 'Amount']], 
                   body: thirdTableData,
                   theme: 'plain',
                   headStyles: {
