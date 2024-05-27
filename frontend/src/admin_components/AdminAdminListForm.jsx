@@ -12,13 +12,17 @@ import AdminListMobile from '../admin_partials/admin_userregistry/AdminListMobil
 // import AdminUserViewModal from '../admin_partials/admin_modals/AdminUserViewModal';
 import AdminAdminViewModal from '../admin_partials/admin_modals/AdminAdminViewModals';
 
+import RPTAX from '../images/RPTAX.png';
+import BP from '../images/BP.png';
+import CTC from '../images/CTC.png';
+import LCR from '../images/LCR.png';
+import UR from '../images/UR.png';
+import CHIEF from '../images/CHIEF.png';
+
 
 const AdminAdminListForm = () => {
-    const { user_id } = useParams();
+    
     const { admin_type, admin_uname } = useParams();
-    // const location = useLocation();
-   //  const { pathname } = location;
-   //  const user_id = pathname.split("/")[2];
   
     const [adminApplications, setAdminApplications] = useState();
     const [filteredAdminApplications, setFilteredAdminApplications] = useState([]);
@@ -66,7 +70,6 @@ const AdminAdminListForm = () => {
             const { adminList } = res.data;
             setAdminApplications(adminList);
             setFilteredAdminApplications(adminList);
-            console.log("adminList", adminList);
           } catch (err) {
             console.log(err);
           }
@@ -149,6 +152,112 @@ const AdminAdminListForm = () => {
         window.removeEventListener('resize', handleResize);
       };
     }, []);
+
+
+
+    const [adminData, setAdminData] = useState([]);
+
+    console.log(filteredAdminApplications)
+    console.log(adminData)
+
+  const checkUserImage = async () => {
+    try {
+      const imagePath = '../../uploads/adminImages/';
+      const modifiedApplications = [...filteredAdminApplications];
+
+      for (const application of modifiedApplications) {
+        const imageName = application.admin_image;
+
+        if (!imageName) {
+
+          application.userImage = getDefaultImage(application.admin_type);
+
+        } else {
+
+          const isFileExists = await checkFileExists(imagePath, imageName);
+
+          if (isFileExists) {
+            const fileData = await fetchFileData(`${imagePath}${imageName}`);
+            if (fileData) {
+              application.userImage = fileData;
+            }
+          } else {
+            console.log(`File: ${imageName} does not exist.`);
+          }
+        }
+      }
+
+      setAdminData(modifiedApplications);
+    } catch (error) {
+      console.error('Error checking user image path:', error);
+    }
+  };
+
+  useEffect(() => {
+    checkUserImage();
+  }, [filteredAdminApplications]);
+
+  const checkFileExists = async (folderPath, fileName) => {
+    try {
+      const filePath = `${folderPath}/${fileName}`;
+      const response = await fetch(filePath);
+
+      return response.ok;
+    } catch (error) {
+      console.error('Error checking file existence:', error);
+      return false;
+    }
+  };
+
+  const fetchFileData = async (filePath) => {
+    try {
+      const response = await fetch(filePath);
+  
+      if (!response.ok) {
+        if (response.status === 404) {
+          console.log('File not found.');
+        } else {
+          throw new Error(`Failed to fetch file from ${filePath}`);
+        }
+        return null;
+      }
+  
+      const fileData = await response.blob();
+  
+      if (!fileData || fileData.size === 0) {
+        console.log('File data is empty or undefined.');
+        return null;
+      }
+  
+      const dataUrl = URL.createObjectURL(fileData);
+  
+      return dataUrl;
+    } catch (error) {
+      console.error('Error fetching file data:', error);
+      return null;
+    }
+  };
+  
+
+  const getDefaultImage = (admin_type) => {
+    switch (admin_type) {
+      case 'Chief Admin':
+        return CHIEF;
+      case 'Real Property Tax Admin':
+        return RPTAX;
+      case 'Business Permit Admin':
+        return BP;
+      case 'Cedula / Community Tax Certificate Admin':
+        return CTC;
+      case 'Local Civil Registry Admin':
+        return LCR;
+      case 'Registry Admin':
+        return UR;
+      default:
+        return null;
+    }
+  };
+
   
     if(Reload){
       return
@@ -171,7 +280,7 @@ const AdminAdminListForm = () => {
                   // For Mobile View
                   <AdminListMobile 
                   handleOpenModal={handleOpenModal} 
-                  adminApplications={filteredAdminApplications}
+                  adminApplications={adminData}
                   handleSearch={handleSearch}
                   handleClearFilter={handleClearFilter}
                   handleInputChange={handleInputChange}
@@ -185,7 +294,7 @@ const AdminAdminListForm = () => {
                   // For Desktop View
                   <AdminListDesktop 
                   handleOpenModal={handleOpenModal} 
-                  adminApplications={filteredAdminApplications}
+                  adminApplications={adminData}
                   handleSearch={handleSearch}
                   handleClearFilter={handleClearFilter}
                   handleInputChange={handleInputChange}

@@ -20,7 +20,6 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   const [editMode, setEditMode] = useState(false);
   // const [isOpenDelete, setIsOpenDelete] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading1, setIsLoading1] = useState(false);
 
@@ -29,110 +28,8 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
 
   // const [isDeleted, setIsDeleted] = useState(false);
 
-  const [adminInfo, setAdminInfo] = useState(() => {
-    // Initialize adminInfo with the values of selectedTransaction
-    return selectedTransaction || {};
-  });
+  const [adminInfo, setAdminInfo] = useState({});
   
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      
-      try {
-        const imagePath = '../uploads/profileImage/';
-        const imageURL = selectedTransaction?.image_url ?? undefined;
-        const imageName = selectedTransaction?.user_image ?? undefined;
-
-        console.log("admin",selectedTransaction)
-  
-        // if (imageName === undefined || imageName === null) {
-        //   setIsLoading(false);
-        //   setUserImage(null);
-        //   return;
-        // }
-
-        if (imageURL !== null && imageURL !== undefined && imageURL !== '') {
-          fetch(imageURL)
-            .then(response => response.blob())
-            .then(blob => {
-              setUserImage(URL.createObjectURL(blob));
-            })
-            .catch(error => {
-              console.error('Error fetching image:', error);
-
-            });
-        } else if (imageName !== null && imageName !== undefined && imageName !== '') {
-          setUserImage(imageName);
-        
-          const isFileExists = await checkFileExists(imagePath, imageName);
-    
-          if (isFileExists) {
-            const fileData = await fetchFileData(`${imagePath}${imageName}`);
-            if (fileData) {
-              setUserImage(fileData);
-            } else {
-              console.log(`File data for ${imageName} is empty or undefined.`);
-              setUserImage(null);
-            }
-          } else {
-            console.log(`File: ${imageName} does not exist.`);
-            setUserImage(null);
-          }
-        }
-      } catch (error) {
-        console.error('Error checking user image path:', error);
-      } finally {
-        setIsLoading(false);
-      }
-      
-    };
-  
-    fetchImage();
-  }, [selectedTransaction]);
-
-
-  const checkFileExists = async (folderPath, fileName) => {
-    try {
-      const filePath = `${folderPath}/${fileName}`;
-      const response = await fetch(filePath);
-
-      return response.ok;
-    } catch (error) {
-      console.error('Error checking file existence:', error);
-      return false;
-    }
-  };
-
-
-  const fetchFileData = async (filePath) => {
-    try {
-      const response = await fetch(filePath);
-  
-      if (!response.ok) {
-        if (response.status === 404) {
-          console.log('File not found.');
-        } else {
-          throw new Error(`Failed to fetch file from ${filePath}`);
-        }
-        return null;
-      }
-  
-      const fileData = await response.blob();
-  
-      if (!fileData || fileData.size === 0) {
-        console.log('File data is empty or undefined.');
-        return null;
-      }
-  
-      const dataUrl = URL.createObjectURL(fileData);
-  
-      return dataUrl;
-    } catch (error) {
-      console.error('Error fetching file data:', error);
-      return null;
-    }
-  };
-
 
   const handleChangeData = (e) => {
     const { name, value } = e.target;
@@ -142,33 +39,20 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
     }));
   };
 
-  {/**
-  const handleChangeData = (e) => {
-    e.preventDefault();
-  
-    if (e && e.target) {
-      const { name, value } = e.target;
-  
-      if (!name) {
-        console.error("Name property is undefined on event.target");
-        return;
-      }
-  
-      setAdminInfo((prevData) => ({
-        ...prevData,
-        [name]: value
-      }));
-    }
-  }; */}
+  console.log(adminInfo)
+
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
     setIsLoading1(true); 
   
     try {
-      const mobile_no = selectedTransaction.mobile_no;
-      const response = await axios.post(`${Base_Url}adminchangepass/admin/change-password/${mobile_no}`, { 
-        new_password: adminInfo.new_password 
+      const mobileNo = selectedTransaction.mobile_no;
+      const response = await axios.post(`${Base_Url}adminchangepass/admin/change-credentials/${mobileNo}`, { 
+        mobile_no: adminInfo.mobile_no,
+        admin_name: adminInfo.admin_name,
+        new_password: adminInfo.new_password,
+
       });
   
       if (response.status !== 200) {
@@ -190,132 +74,6 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
   };
 
 
-
- {/* const handleSaveChanges = async (e) => {
-    e.preventDefault();
-  
-    try {
-
-      const trans_type = 'User Registry';
-
-      const body1 = {
-        ...userInfo,
-        trans_type,
-      }
-
-      const response = await axios.put(`${Base_Url}adminur/updateuser/${selectedTransaction.user_id}`, body1);
-  
-      if (response.status === 200) {
-
-        try {
-          const res = await axios.get(`${Base_Url}email/${selectedTransaction.user_id}`);
-          
-          if (res.data.user_email) {
-            const updatedUserEmail = res.data.user_email;
-            const f_name = res.data.f_name;
-            const l_name = res.data.l_name;
-            const sex_type = res.data.sex_type;
-            const currentDate = new Date();
-                    const date = currentDate.toLocaleDateString('en-US', {
-                        month: 'long',
-                        day: 'numeric',
-                        year: 'numeric'
-                    });
-                    const time = currentDate.toLocaleTimeString('en-US', {
-                      hour: 'numeric',
-                      minute: 'numeric'
-                  });
-
-            console.log('FETCHED USER EMAIL:', updatedUserEmail);
-
-            const user_email = updatedUserEmail;
-
-            const trans_type = 'Updated User Information';
-
-            const type = 'Account Information'
-
-            const rowData = { ...userInfo, trans_type, type, date, time};
-
-            const status_type = 'U P D A T E D';
-
-            const body = {
-              data: rowData,
-              status_type: status_type,
-              f_name: f_name,
-              l_name: l_name,
-              sex_type: sex_type,
-            };
-  
-            // Proceed with additional logic after updating state
-            try {
-              const emailResponse = await axios.post(`${Base_Url}email/status-updated-email/${user_email}`, body);
-  
-              if (emailResponse.data && emailResponse.data.message) {
-                console.log('SENT EMAIL');
-                // alert(emailResponse.data.message);
-              } else {
-                console.log("Failed to send email.");
-              }
-            } catch (emailError) {
-              //
-            }
-          } else {
-            console.error('Transaction error:', res.statusText);
-          }
-        } catch (fetchError) {
-          console.log('NOT FETCHING EMAIL');
-          console.error(fetchError);
-        }
-
-
-        setIsSuccess(true);
-        setTimeout(() => {
-          setIsLoading1(true);
-          setIsSuccess(false);
-
-          setEditMode(false);
-          setUserInfo('');
-
-          setTimeout(() => {
-            setIsLoading1(false);
-            handleClose();
-            window.location.reload()
-          }, 3000);
-        }, 3000);
-
-      } else {
-        console.error('Transaction error:', response.statusText);
-      }
-    } catch (err) {
-      console.error('Transaction error:', err);
-    }
-  }; */}
-
-
-  // const handleDeleteUser = async (e) => {
-  //   e.preventDefault();
-  
-  //   try {
-  //     const response = await axios.delete(`${Base_Url}adminur/updateuser/${selectedTransaction.user_id}`);
-  
-  //     if (response.status === 200) {
-  //       setIsDeleted(true);
-  //       setEditMode(false);
-  //       setUserInfo('');
-  
-  //       setTimeout(() => {
-  //         setIsDeleted(false);
-  //         handleClose();
-  //       }, 1500);
-  //     } else {
-  //       console.error('Transaction error:', response.statusText);
-  //     }
-  //   } catch (err) {
-  //     console.error('Transaction error:', err);
-  //   }
-  // };
-
-
   const handleEditClick = () => {
     setEditMode(!editMode);
     setAdminInfo('');
@@ -327,12 +85,6 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
     handleClose();
     setEditMode(false);
   };
-
-  // const handleDeleteClick = () => {
-  //   setIsOpenDelete(!isOpenDelete);
-  // };
-
-
 
 
   return (
@@ -444,37 +196,18 @@ const AdminAdminViewModal = ({ isOpen, handleClose, selectedTransaction }) => {
                     </div>
                   )}  */}
 
-                {isLoading && (
-                  <div className="mb-5 inline-flex items-center justify-center md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1">
-                    <svg
-                      aria-hidden="true"
-                      className="w-10 h-10 md:w-15 md:h-15 lg:w-20 lg:h-20 pb-0 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                      viewBox="0 0 100 101"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                        fill="currentColor"
-                      />
-                      <path
-                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                        fill="currentFill"
-                      />
-                    </svg>
-                  </div>
-                )}
+              
 
 
-                {!isLoading && (
+                
                 <div className="mb-5">
                   <img
                     name="userImage"
                     className="inline-block md:h-44 md:w-44 w-32 h-32 rounded-sm border-2 border-black dark:border-white p-1 object-cover object-center"
-                    src={userImage ? userImage : defaultImage}
+                    src={selectedTransaction.userImage}
                   />
                 </div>
-                )}
+                
 
                 <AdminInfo selectedTransaction={selectedTransaction} adminInfo={adminInfo} handleChangeData={handleChangeData} editMode={editMode}/>
               </div>

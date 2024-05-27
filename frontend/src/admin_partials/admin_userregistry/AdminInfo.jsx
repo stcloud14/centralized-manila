@@ -4,7 +4,7 @@ const AdminInfo = ({ selectedTransaction, adminInfo, handleChangeData, editMode 
 
   const generatePassword = () => {
     const length = 14; 
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?";
+    const charset = `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&+?/=~`;
   
     let password = "";
     for (let i = 0; i < length; i++) {
@@ -28,6 +28,18 @@ const AdminInfo = ({ selectedTransaction, adminInfo, handleChangeData, editMode 
             type="text" 
             name="mobile_no" 
             id="mobile_no" 
+            className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" 
+          />
+        </div>
+        <div className="mt-2 md:px-32 px-12">
+          <label htmlFor="admin_name" className="block font-medium md:text-sm text-xs text-gray-700 dark:text-white text-left py-1 px-0.5">Admin Name</label>
+          <input 
+            value={editMode ? adminInfo.admin_name : selectedTransaction?.admin_name || ''} 
+            readOnly={!editMode}
+            onChange={handleChangeData} 
+            type="text" 
+            name="admin_name" 
+            id="admin_name" 
             className="block w-full md:text-sm  rounded border-0 py-1.5 text-gray-900 dark:text-white dark:bg-[#3d3d3d] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:md:text-sm text-xs sm:leading-6" 
           />
         </div>

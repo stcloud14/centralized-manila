@@ -93,18 +93,51 @@ router.post('/compare-password/:mobile_no/:user_pass', async (req, res) => {
     }
 });
 
+// router.post("/admin", async (req, res) => {
+//     const { admin_name, admin_pass } = req.body;
+
+//     const authSql = "SELECT au.admin_type, ap.admin_name FROM admin_auth au LEFT JOIN admin_profile ap ON au.mobile_no = ap.mobile_no AND ap.mobile_no IS NOT NULL WHERE au.mobile_no = ? AND au.password = ?";
+//     try {
+//         const authResults = await queryDatabase(conn1, authSql, [admin_name, admin_pass]);
+//         if (authResults.length === 0) {
+//             return res.status(401).json({ message: "Authentication failed. Please check your credentials." });
+//         }
+
+//         const admin_type = authResults[0].admin_type;
+//         const admin_uname = authResults[0].admin_name;
+
+//         return res.status(200).json({
+//             admin: {
+//                 admin_type,
+//                 admin_uname,
+//                 role: admin_type,
+//             },
+//             message: "Login successful",
+//         });
+//     } catch (err) {
+//         console.error("Authentication Error:", err);
+//         return res.status(500).json({ message: "Error occurred while authenticating." });
+//     }
+// });
+
 router.post("/admin", async (req, res) => {
     const { admin_name, admin_pass } = req.body;
 
-    const authSql = "SELECT au.admin_type, ap.admin_name FROM admin_auth au LEFT JOIN admin_profile ap ON au.mobile_no = ap.mobile_no AND ap.mobile_no IS NOT NULL WHERE au.mobile_no = ? AND au.password = ?";
+    const authSql = "SELECT au.admin_type, ap.admin_name, au.password FROM admin_auth au LEFT JOIN admin_profile ap ON au.mobile_no = ap.mobile_no AND ap.mobile_no IS NOT NULL WHERE au.mobile_no = ?";
     try {
-        const authResults = await queryDatabase(conn1, authSql, [admin_name, admin_pass]);
+        const authResults = await queryDatabase(conn1, authSql, [admin_name]);
         if (authResults.length === 0) {
             return res.status(401).json({ message: "Authentication failed. Please check your credentials." });
         }
 
         const admin_type = authResults[0].admin_type;
         const admin_uname = authResults[0].admin_name;
+        const hashedPassword = authResults[0].password;
+
+        const match = await bcrypt.compare(admin_pass, hashedPassword);
+        if (!match) {
+            return res.status(401).json({ message: "Authentication failed. Please check your credentials." });
+        }
 
         return res.status(200).json({
             admin: {
@@ -119,6 +152,7 @@ router.post("/admin", async (req, res) => {
         return res.status(500).json({ message: "Error occurred while authenticating." });
     }
 });
+
 
 // router.post("/admin", async (req, res) => {
 //     const { admin_name, admin_pass } = req.body;
@@ -172,7 +206,7 @@ router.post("/admin", async (req, res) => {
 
 router.post("/admin/add", async (req, res) => {
     const { mobile_no, password, adminType, admin_name } = req.body;
-
+    const saltRounds = 10;
     try {  
         // Check if admin already exists
         const existingAdminQuery = "SELECT * FROM admin_auth WHERE mobile_no = ?";
@@ -182,9 +216,9 @@ router.post("/admin/add", async (req, res) => {
             console.log("Admin account already exists");
             return res.status(400).json({ message: "Admin account already exists" });
         }
-
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
         const insertSql = "INSERT INTO admin_auth (mobile_no, password, admin_type, admin_name) VALUES (?, ?, ?, ?)";
-        await queryDatabase(conn1, insertSql, [mobile_no, password, adminType, admin_name]);
+        await queryDatabase(conn1, insertSql, [mobile_no, hashedPassword, adminType, admin_name]);
         
         return res.status(201).json({ message: "Admin added successfully" });
     } catch (err) {

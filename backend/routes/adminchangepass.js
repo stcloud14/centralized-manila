@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import conn1 from './connection1.js';
+import bcrypt from 'bcrypt';
+
 
 const router = Router();
 
@@ -12,23 +14,45 @@ async function queryDatabase1(connection1, query, values) {
     }
 }
 
-router.post('/admin/change-password/:mobile_no', async (req, res) => {
-    const { mobile_no } = req.params;
-    const { new_password } = req.body;
+router.post('/admin/change-credentials/:mobileNo', async (req, res) => {
+    const { mobileNo } = req.params;
+    const { mobile_no, admin_name, new_password } = req.body;
 
+    const saltRounds = 10;
+    const hashedNewPassword = await bcrypt.hash(new_password, saltRounds);
     try {
-        // Update the password in the database based on the mobile number
-        const updateSql = "UPDATE admin_auth SET password = ? WHERE mobile_no = ?";
-        // Using queryDatabase1 function with connection1
-        await queryDatabase1(conn1, updateSql, [new_password, mobile_no]);
+        let updateSql = "UPDATE admin_auth SET ";
+        let params = [];
+        
+        if (mobile_no !== null && mobile_no !== undefined) {
+            updateSql += "mobile_no = ?, ";
+            params.push(mobile_no);
+        }
+        if (admin_name !== null && admin_name !== undefined) {
+            updateSql += "admin_name = ?, ";
+            params.push(admin_name);
+        }
+        if (new_password !== null && new_password !== undefined) {
+            updateSql += "password = ?, ";  
+            params.push(hashedNewPassword); // Use hashed password
+        }
+        
+        updateSql = updateSql.slice(0, -2);
 
-        console.log('Password updated successfully');
+        updateSql += " WHERE mobile_no = ?";
+
+        params.push(mobileNo);
+
+        await queryDatabase1(conn1, updateSql, params);
 
         return res.status(200).json({ message: 'Password updated successfully' });
+
     } catch (err) {
+
         console.error("Error updating password:", err);
         return res.status(500).json({ message: "Error occurred while updating password" });
     }
 });
+
 
 export default router;

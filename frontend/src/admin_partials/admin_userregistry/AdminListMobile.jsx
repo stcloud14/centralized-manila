@@ -10,25 +10,6 @@ import CHIEF from '../../images/CHIEF.png';
 const AdminListMobile = ({ handleOpenModal, adminApplications, handleSearch, searchInput, setSearchInput, searchName, setSearchName, selectedType, handleInputChange, handleClearFilter }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-  const getAdminImage = (adminType) => {
-    switch(adminType) {
-      case 'Chief Admin':
-        return CHIEF;
-      case 'Real Property Tax Admin':
-        return RPTAX;
-      case 'Business Permit Admin':
-        return BP;
-      case 'Cedula / Community Tax Certificate Admin':
-        return CTC;
-      case 'Local Civil Registry Admin':
-        return LCR;
-      case 'Registry Admin':
-        return UR;
-      default:
-        return null;
-    }
-  };
-
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -178,17 +159,18 @@ const AdminListMobile = ({ handleOpenModal, adminApplications, handleSearch, sea
                 adminApplications.map((transaction, index) => (
                   <div key={index} className="bg-white dark:bg-[#333333] shadow-md rounded-sm mb-4">
                     <div className="px-4 py-5">
-                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Admin Username: {transaction.mobile_no ? transaction.mobile_no.toUpperCase() : ""}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 my-1 flex items-center">
+                        <span className="mr-2">Admin Name:</span>
+                        <img
+                          src={transaction.userImage}
+                          alt={transaction.admin_name}
+                          className="h-5 w-5 mr-1"
+                        />
+                        {transaction.admin_name ? transaction.admin_name.toUpperCase() : ""}
+                      </div>
                        <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Admin Type: {transaction.admin_type ? transaction.admin_type.toUpperCase() : ""}</div>
-                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1 flex items-center">
-                          <span className="mr-2">Admin Name:</span>
-                          <img
-                            src={getAdminImage(transaction.admin_type)}
-                            alt={transaction.admin_name}
-                            className="h-4 w-4 mr-1"
-                          />
-                          {transaction.admin_name ? transaction.admin_name.toUpperCase() : ""}
-                        </div>
+                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Admin Username: {transaction.mobile_no ? transaction.mobile_no.toUpperCase() : ""}</div>
+                       
                       {/*<div className="text-xs text-slate-600 dark:text-slate-300 my-1">Place of Birth: {transaction.birth_place}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Date of Birth: {transaction.birth_date}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-300 my-1">Mobile Number: {transaction.mobile_no}</div>
