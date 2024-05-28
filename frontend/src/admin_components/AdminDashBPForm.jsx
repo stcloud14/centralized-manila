@@ -280,7 +280,7 @@ const AdminDashBPForm =({ transStats, businessPermit, topRegions, topProvinces, 
           pdf.setFontSize(10);
           pdf.text(lineOfSymbols2, textXPosition2, textYPosition2);
 
-          const formattedTotalGrossRevenue = new Intl.NumberFormat('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(RevenueData.totalBP);
+          const formattedTotalGrossRevenue = new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(RevenueData.totalBP);
 
           const thirdTableData = [
             ['Total Gross Revenue',`P ${formattedTotalGrossRevenue}`],
