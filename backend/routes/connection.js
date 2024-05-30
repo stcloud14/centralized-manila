@@ -3,7 +3,10 @@ import mysql from 'mysql2/promise';
 import { createPool } from 'mysql2/promise';
 import dotenv from 'dotenv';
 
+// dotenv.config();
+
 dotenv.config();
+
 
 const conn2 = mysql.createPool({
   connectionLimit: 70,
