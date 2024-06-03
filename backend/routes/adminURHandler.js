@@ -212,11 +212,6 @@ function formatAdminType(adminType) {
       return adminType; 
   }
 }
-
-
-
-
-
 router.post('/approve/:user_id/:admin_uname', auditMiddleware, async (req, res) => {
 
     const user_id = req.params.user_id;
