@@ -221,7 +221,6 @@ router.post('/approve/:user_id/:admin_uname', auditMiddleware, async (req, res) 
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
     const notif_message = `</span> We're excited to inform you that your account verification process has been successfully approved!  </p>`;
-   
     try {
       const query = "UPDATE user_verification SET `verification_status` = ?, `application_status` = ? WHERE `user_id` = ?";
       const values = [vStatus, aStatus, user_id];
