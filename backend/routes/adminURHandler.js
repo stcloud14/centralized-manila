@@ -183,7 +183,6 @@ router.get('/adminlist', async (req, res) => {
         admin_image: admin.admin_image
       };
     });
-
     res.json({
       adminList
     });
