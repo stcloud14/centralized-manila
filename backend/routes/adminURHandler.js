@@ -191,6 +191,8 @@ router.get('/adminlist', async (req, res) => {
     res.status(500).send('Error retrieving data');
   }
 });
+
+
 // Function to format admin_type values
 function formatAdminType(adminType) {
   switch (adminType) {
